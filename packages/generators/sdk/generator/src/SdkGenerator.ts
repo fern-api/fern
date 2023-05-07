@@ -237,7 +237,7 @@ export class SdkGenerator {
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
-            intermediateRepresentation: this.intermediateRepresentation,
+            intermediateRepresentation,
             errorResolver: this.errorResolver,
             packageResolver: this.packageResolver,
             neverThrowErrors: config.neverThrowErrors,
@@ -245,6 +245,7 @@ export class SdkGenerator {
             allowCustomFetcher: config.allowCustomFetcher,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             timeoutInSeconds: config.timeoutInSeconds,
+            npmPackage,
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();

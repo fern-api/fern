@@ -48,6 +48,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
                             ts.factory.createStringLiteral(datetimeExample),
                         ]),
+                    date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _unknown: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
                     },
@@ -125,6 +126,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     datetime: () => {
                         throw new Error("Cannot convert datetime to property name");
                     },
+                    date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _unknown: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
                     },

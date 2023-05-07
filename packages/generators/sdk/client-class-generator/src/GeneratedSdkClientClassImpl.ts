@@ -3,7 +3,7 @@ import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
 import { HttpEndpoint, HttpHeader, PathParameter, SdkResponse, StreamingResponse } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
 import { VariableDeclaration, VariableId } from "@fern-fern/ir-model/variables";
-import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
+import { getTextOfTsNode, maybeAddDocs, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
@@ -31,6 +31,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
+        npmPackage: NpmPackage;
     }
 }
 
@@ -55,6 +56,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private allowCustomFetcher: boolean;
     private packageResolver: PackageResolver;
     private requireDefaultEnvironment: boolean;
+    private npmPackage: NpmPackage;
 
     constructor({
         intermediateRepresentation,
@@ -67,12 +69,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         allowCustomFetcher,
         requireDefaultEnvironment,
         timeoutInSeconds,
+        npmPackage,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
+        this.npmPackage = npmPackage;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -354,8 +358,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
     }
 
-    public getApiHeaders(context: SdkClientClassContext): GeneratedHeader[] {
-        return [
+    public getHeaders(context: SdkClientClassContext): GeneratedHeader[] {
+        const headers: GeneratedHeader[] = [
             ...this.intermediateRepresentation.headers
                 // auth headers are handled separately
                 .filter((header) => !this.isAuthorizationHeader(header))
@@ -373,7 +377,26 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         this.getReferenceToOption(this.getOptionKeyForAuthHeader(header))
                     ),
                 })),
+            {
+                header: this.intermediateRepresentation.sdkConfig.platformHeaders.language,
+                value: ts.factory.createStringLiteral("JavaScript"),
+            },
         ];
+
+        if (this.npmPackage.publishInfo != null) {
+            headers.push(
+                {
+                    header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkName,
+                    value: ts.factory.createStringLiteral(this.npmPackage.packageName),
+                },
+                {
+                    header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkVersion,
+                    value: ts.factory.createStringLiteral(this.npmPackage.version),
+                }
+            );
+        }
+
+        return headers;
     }
 
     /***********

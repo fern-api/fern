@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { PackageId } from "@fern-typescript/commons";
+import { NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
@@ -14,6 +14,7 @@ export declare namespace SdkClientClassGenerator {
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
+        npmPackage: NpmPackage;
     }
 
     export namespace generateService {
@@ -33,6 +34,7 @@ export class SdkClientClassGenerator {
     private allowCustomFetcher: boolean;
     private requireDefaultEnvironment: boolean;
     private timeoutInSeconds: number | "infinity" | undefined;
+    private npmPackage: NpmPackage;
 
     constructor({
         intermediateRepresentation,
@@ -43,6 +45,7 @@ export class SdkClientClassGenerator {
         allowCustomFetcher,
         requireDefaultEnvironment,
         timeoutInSeconds,
+        npmPackage,
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -52,6 +55,7 @@ export class SdkClientClassGenerator {
         this.allowCustomFetcher = allowCustomFetcher;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.timeoutInSeconds = timeoutInSeconds;
+        this.npmPackage = npmPackage;
     }
 
     public generateService({
@@ -69,6 +73,7 @@ export class SdkClientClassGenerator {
             allowCustomFetcher: this.allowCustomFetcher,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             timeoutInSeconds: this.timeoutInSeconds,
+            npmPackage: this.npmPackage,
         });
     }
 }

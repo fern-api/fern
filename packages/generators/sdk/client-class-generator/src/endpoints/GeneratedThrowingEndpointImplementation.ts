@@ -184,7 +184,7 @@ export class GeneratedThrowingEndpointImplementation implements GeneratedThrowin
             });
         }
 
-        elements.push(...this.generatedSdkClientClass.getApiHeaders(context));
+        elements.push(...this.generatedSdkClientClass.getHeaders(context));
 
         if (this.requestParameter != null) {
             for (const header of this.requestParameter.getAllHeaders(context)) {
