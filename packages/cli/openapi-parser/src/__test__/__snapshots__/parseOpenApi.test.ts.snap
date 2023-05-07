@@ -15825,6 +15825,3456 @@ exports[`open api parser hathora simple 1`] = `
 }
 `;
 
+exports[`open api parser hume simple 1`] = `
+{
+  "files": {
+    "openapi.yaml": {
+      "dependencies": [],
+      "description": "The Batch API provides access to Hume models through an asynchronous job-based interface. You can submit a job to have many different files processed in parallel. The status of a job can then be checked with the job ID. Email notifications are available to alert on completed jobs.",
+      "endpoints": [
+        {
+          "authed": false,
+          "description": "Sort and filter jobs.",
+          "errors": [],
+          "generatedRequestName": "ListJobsRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "listJobs",
+          "path": "/v0/batch/jobs",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "limit",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "int",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "status",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "ListJobsRequestStatusItem",
+                    "nameOverride": undefined,
+                    "schema": "Status",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "when",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ListJobsRequestWhen",
+                  "nameOverride": undefined,
+                  "schema": "When",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "timestamp_ms",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "int",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "sort_by",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ListJobsRequestSortBy",
+                  "nameOverride": undefined,
+                  "schema": "SortBy",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "direction",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ListJobsRequestDirection",
+                  "nameOverride": undefined,
+                  "schema": "Direction",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ListJobsResponseItem",
+                "nameOverride": undefined,
+                "schema": "Job<Request>",
+                "type": "reference",
+              },
+            },
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": "List Jobs",
+          "tags": [
+            "[3] List Jobs",
+          ],
+        },
+        {
+          "authed": false,
+          "description": "Start a new batch job.",
+          "errors": [],
+          "generatedRequestName": "StartJobRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "startJob",
+          "path": "/v0/batch/jobs",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "name": undefined,
+            "properties": [
+              {
+                "description": undefined,
+                "key": "json",
+                "schema": {
+                  "json": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "",
+                    "nameOverride": undefined,
+                    "schema": "BaseRequest",
+                    "type": "reference",
+                  },
+                  "type": "json",
+                },
+              },
+              {
+                "description": undefined,
+                "key": "file",
+                "schema": {
+                  "json": {
+                    "description": "Local media files (see recommended input filetypes) to be processed.
+
+If you wish to supply more than 100 files, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
+                    "type": "array",
+                    "value": {
+                      "description": undefined,
+                      "schema": {
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+            ],
+            "type": "multipart",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "StartJobResponse",
+              "nameOverride": undefined,
+              "schema": "JobId",
+              "type": "reference",
+            },
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": "Start Job",
+          "tags": [
+            "[1] Start Job",
+          ],
+        },
+        {
+          "authed": false,
+          "description": "Get the JSON predictions of a completed job.",
+          "errors": [],
+          "generatedRequestName": "GetJobPredictionsRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "getJobPredictions",
+          "path": "/v0/batch/jobs/{id}/predictions",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetJobPredictionsResponseItem",
+                "nameOverride": undefined,
+                "schema": "SourceResult",
+                "type": "reference",
+              },
+            },
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": "Get Job Predictions",
+          "tags": [
+            "[2] Get Job Predictions",
+          ],
+        },
+        {
+          "authed": false,
+          "description": "Get the artifacts ZIP of a completed job.",
+          "errors": [],
+          "generatedRequestName": "GetJobArtifactsRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "getJobArtifacts",
+          "path": "/v0/batch/jobs/{id}/artifacts",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": undefined,
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": "Get Job Artifacts",
+          "tags": [
+            "[2] Get Job Predictions",
+          ],
+        },
+        {
+          "authed": false,
+          "description": "Get the request details and state of a given job.",
+          "errors": [],
+          "generatedRequestName": "GetJobDetailsRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "getJobDetails",
+          "path": "/v0/batch/jobs/{id}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetJobDetailsResponse",
+              "nameOverride": undefined,
+              "schema": "Job<Request>",
+              "type": "reference",
+            },
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": "Get Job Details",
+          "tags": [
+            "[2] Get Job Predictions",
+          ],
+        },
+      ],
+      "nonRequestReferencedSchemas": [
+        "Status",
+        "When",
+        "SortBy",
+        "Direction",
+        "Job<Request>",
+        "BaseRequest",
+        "JobId",
+        "SourceResult",
+        "TimeInterval",
+        "EmotionScore",
+        "DescriptionsScore",
+        "Empty",
+        "BoundingBox",
+        "FacsScore",
+        "BurstPrediction",
+        "FacePrediction",
+        "FacemeshPrediction",
+        "LanguagePrediction",
+        "NerPrediction",
+        "ProsodyPrediction",
+        "Request",
+        "State",
+        "Granularity",
+        "PositionInterval",
+        "SentimentScore",
+        "ToxicityScore",
+        "ModelsPredictions",
+        "Null",
+        "GroupedPredictions<BurstPrediction>",
+        "GroupedPredictions<FacePrediction>",
+        "GroupedPredictions<FacemeshPrediction>",
+        "TranscriptionMetadata",
+        "GroupedPredictions<LanguagePrediction>",
+        "GroupedPredictions<NerPrediction>",
+        "GroupedPredictions<ProsodyPrediction>",
+        "Window",
+        "File",
+        "Prediction",
+        "Error",
+        "Source",
+        "Results",
+        "Url",
+      ],
+      "schemas": {
+        "BaseRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "BaseRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "models",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Models",
+                      "nameOverride": undefined,
+                      "schema": "Models",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "BaseRequestModels",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "transcription",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Transcription",
+                      "nameOverride": undefined,
+                      "schema": "Transcription",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "BaseRequestTranscription",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "urls",
+              "schema": {
+                "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
+
+If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "key": "callback_url",
+              "schema": {
+                "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "notify",
+              "schema": {
+                "description": "Whether to send an email notification to the user upon job completion/failure.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Bcp47Tag": {
+          "description": undefined,
+          "generatedName": "Bcp47Tag",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "zh",
+              "nameOverride": undefined,
+              "value": "zh",
+            },
+            {
+              "generatedName": "da",
+              "nameOverride": undefined,
+              "value": "da",
+            },
+            {
+              "generatedName": "nl",
+              "nameOverride": undefined,
+              "value": "nl",
+            },
+            {
+              "generatedName": "en",
+              "nameOverride": undefined,
+              "value": "en",
+            },
+            {
+              "generatedName": "EnAu",
+              "nameOverride": undefined,
+              "value": "en-AU",
+            },
+            {
+              "generatedName": "EnIn",
+              "nameOverride": undefined,
+              "value": "en-IN",
+            },
+            {
+              "generatedName": "EnNz",
+              "nameOverride": undefined,
+              "value": "en-NZ",
+            },
+            {
+              "generatedName": "EnGb",
+              "nameOverride": undefined,
+              "value": "en-GB",
+            },
+            {
+              "generatedName": "fr",
+              "nameOverride": undefined,
+              "value": "fr",
+            },
+            {
+              "generatedName": "FrCa",
+              "nameOverride": undefined,
+              "value": "fr-CA",
+            },
+            {
+              "generatedName": "de",
+              "nameOverride": undefined,
+              "value": "de",
+            },
+            {
+              "generatedName": "hi",
+              "nameOverride": undefined,
+              "value": "hi",
+            },
+            {
+              "generatedName": "HiLatn",
+              "nameOverride": undefined,
+              "value": "hi-Latn",
+            },
+            {
+              "generatedName": "id",
+              "nameOverride": undefined,
+              "value": "id",
+            },
+            {
+              "generatedName": "it",
+              "nameOverride": undefined,
+              "value": "it",
+            },
+            {
+              "generatedName": "ja",
+              "nameOverride": undefined,
+              "value": "ja",
+            },
+            {
+              "generatedName": "ko",
+              "nameOverride": undefined,
+              "value": "ko",
+            },
+            {
+              "generatedName": "no",
+              "nameOverride": undefined,
+              "value": "no",
+            },
+            {
+              "generatedName": "pl",
+              "nameOverride": undefined,
+              "value": "pl",
+            },
+            {
+              "generatedName": "pt",
+              "nameOverride": undefined,
+              "value": "pt",
+            },
+            {
+              "generatedName": "PtBr",
+              "nameOverride": undefined,
+              "value": "pt-BR",
+            },
+            {
+              "generatedName": "PtPt",
+              "nameOverride": undefined,
+              "value": "pt-PT",
+            },
+            {
+              "generatedName": "ru",
+              "nameOverride": undefined,
+              "value": "ru",
+            },
+            {
+              "generatedName": "es",
+              "nameOverride": undefined,
+              "value": "es",
+            },
+            {
+              "generatedName": "Es419",
+              "nameOverride": undefined,
+              "value": "es-419",
+            },
+            {
+              "generatedName": "sv",
+              "nameOverride": undefined,
+              "value": "sv",
+            },
+            {
+              "generatedName": "ta",
+              "nameOverride": undefined,
+              "value": "ta",
+            },
+            {
+              "generatedName": "tr",
+              "nameOverride": undefined,
+              "value": "tr",
+            },
+            {
+              "generatedName": "uk",
+              "nameOverride": undefined,
+              "value": "uk",
+            },
+          ],
+        },
+        "BoundingBox": {
+          "allOf": [],
+          "description": "A bounding box around a face.",
+          "generatedName": "BoundingBox",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "x",
+              "schema": {
+                "description": "x-coordinate of bounding box top left corner.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "y",
+              "schema": {
+                "description": "y-coordinate of bounding box top left corner.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "w",
+              "schema": {
+                "description": "Bounding box width.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "h",
+              "schema": {
+                "description": "Bounding box height.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "BurstPrediction": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "BurstPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "time",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "BurstPredictionTime",
+                "nameOverride": undefined,
+                "schema": "TimeInterval",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "emotions",
+              "schema": {
+                "description": "A high-dimensional embedding in emotion space.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "BurstPredictionEmotionsItem",
+                  "nameOverride": undefined,
+                  "schema": "EmotionScore",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "descriptions",
+              "schema": {
+                "description": "Modality-specific descriptive features and their scores.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "BurstPredictionDescriptionsItem",
+                  "nameOverride": undefined,
+                  "schema": "DescriptionsScore",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Completed": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Completed",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "created_timestamp_ms",
+              "schema": {
+                "description": "When this job was created (Unix timestamp in milliseconds).",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "started_timestamp_ms",
+              "schema": {
+                "description": "When this job started (Unix timestamp in milliseconds).",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "ended_timestamp_ms",
+              "schema": {
+                "description": "When this job ended (Unix timestamp in milliseconds).",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "num_predictions",
+              "schema": {
+                "description": "The number of predictions that were generated by this job.",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "num_errors",
+              "schema": {
+                "description": "The number of errors that occurred while running this job.",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "DescriptionsScore": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "DescriptionsScore",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "name",
+              "schema": {
+                "description": "Name of the descriptive feature being expressed.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "score",
+              "schema": {
+                "description": "Embedding value for the descriptive feature being expressed.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Direction": {
+          "description": undefined,
+          "generatedName": "Direction",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "asc",
+              "nameOverride": undefined,
+              "value": "asc",
+            },
+            {
+              "generatedName": "desc",
+              "nameOverride": undefined,
+              "value": "desc",
+            },
+          ],
+        },
+        "EmotionScore": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "EmotionScore",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "name",
+              "schema": {
+                "description": "Name of the emotion being expressed.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "score",
+              "schema": {
+                "description": "Embedding value for the emotion being expressed.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Empty": {
+          "description": "To include predictions for this model type, set this field to \`{}\`. It is currently not configurable further.",
+          "key": {
+            "type": "string",
+          },
+          "type": "map",
+          "value": {
+            "type": "unknown",
+          },
+        },
+        "Error": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Error",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "message",
+              "schema": {
+                "description": "An error message.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "file",
+              "schema": {
+                "description": "A file path relative to the top level source URL or file.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Face": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Face",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "fps_pred",
+              "schema": {
+                "description": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "prob_threshold",
+              "schema": {
+                "description": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "identify_faces",
+              "schema": {
+                "description": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "min_face_size",
+              "schema": {
+                "description": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "int",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "facs",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "FaceFacs",
+                  "nameOverride": undefined,
+                  "schema": "Empty",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "descriptions",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "FaceDescriptions",
+                  "nameOverride": undefined,
+                  "schema": "Empty",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "save_faces",
+              "schema": {
+                "description": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "FacePrediction": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "FacePrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "frame",
+              "schema": {
+                "description": "Frame number",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "time",
+              "schema": {
+                "description": "Time in seconds when face detection occurred.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "prob",
+              "schema": {
+                "description": "The predicted probability that a detected face was actually a face.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "box",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "FacePredictionBox",
+                "nameOverride": undefined,
+                "schema": "BoundingBox",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "emotions",
+              "schema": {
+                "description": "A high-dimensional embedding in emotion space.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "FacePredictionEmotionsItem",
+                  "nameOverride": undefined,
+                  "schema": "EmotionScore",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "facs",
+              "schema": {
+                "description": "FACS 2.0 features and their scores.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "FacePredictionFacsItem",
+                    "nameOverride": undefined,
+                    "schema": "FacsScore",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "key": "descriptions",
+              "schema": {
+                "description": "Modality-specific descriptive features and their scores.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "FacePredictionDescriptionsItem",
+                    "nameOverride": undefined,
+                    "schema": "DescriptionsScore",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "FacemeshPrediction": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "FacemeshPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "emotions",
+              "schema": {
+                "description": "A high-dimensional embedding in emotion space.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "FacemeshPredictionEmotionsItem",
+                  "nameOverride": undefined,
+                  "schema": "EmotionScore",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "FacsScore": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "FacsScore",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "name",
+              "schema": {
+                "description": "Name of the FACS 2.0 feature being expressed.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "score",
+              "schema": {
+                "description": "Embedding value for the FACS 2.0 feature being expressed.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Failed": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Failed",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "created_timestamp_ms",
+              "schema": {
+                "description": "When this job was created (Unix timestamp in milliseconds).",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "started_timestamp_ms",
+              "schema": {
+                "description": "When this job started (Unix timestamp in milliseconds).",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "ended_timestamp_ms",
+              "schema": {
+                "description": "When this job ended (Unix timestamp in milliseconds).",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "message",
+              "schema": {
+                "description": "An error message.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "File": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "File",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "filename",
+              "schema": {
+                "description": "The name of the file.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "content_type",
+              "schema": {
+                "description": "The content type of the file.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "md5sum",
+              "schema": {
+                "description": "The MD5 checksum of the file.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Granularity": {
+          "description": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
+          "generatedName": "Granularity",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "word",
+              "nameOverride": undefined,
+              "value": "word",
+            },
+            {
+              "generatedName": "sentence",
+              "nameOverride": undefined,
+              "value": "sentence",
+            },
+            {
+              "generatedName": "utterance",
+              "nameOverride": undefined,
+              "value": "utterance",
+            },
+            {
+              "generatedName": "conversational_turn",
+              "nameOverride": undefined,
+              "value": "conversational_turn",
+            },
+          ],
+        },
+        "GroupedPredictions<BurstPrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GroupedPredictionsBurstPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "id",
+              "schema": {
+                "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GroupedPredictionsBurstPredictionPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "BurstPrediction",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GroupedPredictions<FacePrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GroupedPredictionsFacePrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "id",
+              "schema": {
+                "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GroupedPredictionsFacePredictionPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "FacePrediction",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GroupedPredictions<FacemeshPrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GroupedPredictionsFacemeshPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "id",
+              "schema": {
+                "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GroupedPredictionsFacemeshPredictionPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "FacemeshPrediction",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GroupedPredictions<LanguagePrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GroupedPredictionsLanguagePrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "id",
+              "schema": {
+                "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GroupedPredictionsLanguagePredictionPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "LanguagePrediction",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GroupedPredictions<NerPrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GroupedPredictionsNerPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "id",
+              "schema": {
+                "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GroupedPredictionsNerPredictionPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "NerPrediction",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GroupedPredictions<ProsodyPrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GroupedPredictionsProsodyPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "id",
+              "schema": {
+                "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GroupedPredictionsProsodyPredictionPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "ProsodyPrediction",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "InProgress": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "InProgress",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "created_timestamp_ms",
+              "schema": {
+                "description": "When this job was created (Unix timestamp in milliseconds).",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "started_timestamp_ms",
+              "schema": {
+                "description": "When this job started (Unix timestamp in milliseconds).",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Job<Request>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "JobRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "user_id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "job_id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "request",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "JobRequestRequest",
+                "nameOverride": undefined,
+                "schema": "Request",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "state",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "JobRequestState",
+                "nameOverride": undefined,
+                "schema": "State",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "JobId": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "JobId",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "job_id",
+              "schema": {
+                "description": "The ID of the started job.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Language": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Language",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "granularity",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "LanguageGranularity",
+                  "nameOverride": undefined,
+                  "schema": "Granularity",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "identify_speakers",
+              "schema": {
+                "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "sentiment",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "LanguageSentiment",
+                  "nameOverride": undefined,
+                  "schema": "Empty",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "toxicity",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "LanguageToxicity",
+                  "nameOverride": undefined,
+                  "schema": "Empty",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "LanguagePrediction": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "LanguagePrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "text",
+              "schema": {
+                "description": "A segment of text (like a word or a sentence).",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "position",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "LanguagePredictionPosition",
+                "nameOverride": undefined,
+                "schema": "PositionInterval",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "time",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "LanguagePredictionTime",
+                  "nameOverride": undefined,
+                  "schema": "TimeInterval",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "confidence",
+              "schema": {
+                "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "speaker_confidence",
+              "schema": {
+                "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "emotions",
+              "schema": {
+                "description": "A high-dimensional embedding in emotion space.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "LanguagePredictionEmotionsItem",
+                  "nameOverride": undefined,
+                  "schema": "EmotionScore",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "sentiment",
+              "schema": {
+                "description": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from \`1\` (negative) to \`9\` (positive).
+
+Compared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of \`5\`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of \`5\`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "LanguagePredictionSentimentItem",
+                    "nameOverride": undefined,
+                    "schema": "SentimentScore",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "key": "toxicity",
+              "schema": {
+                "description": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "LanguagePredictionToxicityItem",
+                    "nameOverride": undefined,
+                    "schema": "ToxicityScore",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Models": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Models",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "face",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Face",
+                      "nameOverride": undefined,
+                      "schema": "Face",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsFace",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "burst",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Empty",
+                      "nameOverride": undefined,
+                      "schema": "Empty",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsBurst",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "prosody",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Prosody",
+                      "nameOverride": undefined,
+                      "schema": "Prosody",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsProsody",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "language",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Language",
+                      "nameOverride": undefined,
+                      "schema": "Language",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsLanguage",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "ner",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Ner",
+                      "nameOverride": undefined,
+                      "schema": "Ner",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsNer",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "facemesh",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Empty",
+                      "nameOverride": undefined,
+                      "schema": "Empty",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsFacemesh",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ModelsPredictions": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "ModelsPredictions",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "face",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "PredictionsOptionalNullFacePrediction",
+                      "nameOverride": undefined,
+                      "schema": "Predictions<optional<Null>, FacePrediction>",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsPredictionsFace",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "burst",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "PredictionsOptionalNullBurstPrediction",
+                      "nameOverride": undefined,
+                      "schema": "Predictions<optional<Null>, BurstPrediction>",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsPredictionsBurst",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "prosody",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
+                      "nameOverride": undefined,
+                      "schema": "Predictions<optional<TranscriptionMetadata>, ProsodyPrediction>",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsPredictionsProsody",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "language",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
+                      "nameOverride": undefined,
+                      "schema": "Predictions<optional<TranscriptionMetadata>, LanguagePrediction>",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsPredictionsLanguage",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "ner",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "PredictionsOptionalTranscriptionMetadataNerPrediction",
+                      "nameOverride": undefined,
+                      "schema": "Predictions<optional<TranscriptionMetadata>, NerPrediction>",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsPredictionsNer",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "facemesh",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "PredictionsOptionalNullFacemeshPrediction",
+                      "nameOverride": undefined,
+                      "schema": "Predictions<optional<Null>, FacemeshPrediction>",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "ModelsPredictionsFacemesh",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Ner": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Ner",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "identify_speakers",
+              "schema": {
+                "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "NerPrediction": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "NerPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "entity",
+              "schema": {
+                "description": "The recognized topic or entity.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "position",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "NerPredictionPosition",
+                "nameOverride": undefined,
+                "schema": "PositionInterval",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "entity_confidence",
+              "schema": {
+                "description": "Our NER model's relative confidence in the recognized topic or entity.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "support",
+              "schema": {
+                "description": "A measure of how often the entity is linked to by other entities.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "uri",
+              "schema": {
+                "description": "A URL which provides more information about the recognized topic or entity.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "link_word",
+              "schema": {
+                "description": "The specific word to which the emotion predictions are linked.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "time",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "NerPredictionTime",
+                  "nameOverride": undefined,
+                  "schema": "TimeInterval",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "confidence",
+              "schema": {
+                "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "speaker_confidence",
+              "schema": {
+                "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "emotions",
+              "schema": {
+                "description": "A high-dimensional embedding in emotion space.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "NerPredictionEmotionsItem",
+                  "nameOverride": undefined,
+                  "schema": "EmotionScore",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Null": {
+          "description": "No associated metadata for this model. Value will be \`null\`.",
+          "key": {
+            "type": "string",
+          },
+          "type": "map",
+          "value": {
+            "type": "unknown",
+          },
+        },
+        "PositionInterval": {
+          "allOf": [],
+          "description": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
+          "generatedName": "PositionInterval",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "begin",
+              "schema": {
+                "description": "The index of the first character in the text segment, inclusive.",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "end",
+              "schema": {
+                "description": "The index of the last character in the text segment, exclusive.",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Prediction": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Prediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "file",
+              "schema": {
+                "description": "A file path relative to the top level source URL or file.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "models",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "PredictionModels",
+                "nameOverride": undefined,
+                "schema": "ModelsPredictions",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Predictions<optional<Null>, BurstPrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "PredictionsOptionalNullBurstPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "metadata",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalNullBurstPredictionMetadata",
+                  "nameOverride": undefined,
+                  "schema": "Null",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "grouped_predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalNullBurstPredictionGroupedPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "GroupedPredictions<BurstPrediction>",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Predictions<optional<Null>, FacePrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "PredictionsOptionalNullFacePrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "metadata",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalNullFacePredictionMetadata",
+                  "nameOverride": undefined,
+                  "schema": "Null",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "grouped_predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalNullFacePredictionGroupedPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "GroupedPredictions<FacePrediction>",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Predictions<optional<Null>, FacemeshPrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "PredictionsOptionalNullFacemeshPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "metadata",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalNullFacemeshPredictionMetadata",
+                  "nameOverride": undefined,
+                  "schema": "Null",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "grouped_predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalNullFacemeshPredictionGroupedPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "GroupedPredictions<FacemeshPrediction>",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Predictions<optional<TranscriptionMetadata>, LanguagePrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "metadata",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
+                  "nameOverride": undefined,
+                  "schema": "TranscriptionMetadata",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "grouped_predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "GroupedPredictions<LanguagePrediction>",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Predictions<optional<TranscriptionMetadata>, NerPrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "PredictionsOptionalTranscriptionMetadataNerPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "metadata",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionMetadata",
+                  "nameOverride": undefined,
+                  "schema": "TranscriptionMetadata",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "grouped_predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "GroupedPredictions<NerPrediction>",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Predictions<optional<TranscriptionMetadata>, ProsodyPrediction>": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "metadata",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
+                  "nameOverride": undefined,
+                  "schema": "TranscriptionMetadata",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "grouped_predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "GroupedPredictions<ProsodyPrediction>",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Prosody": {
+          "allOf": [],
+          "description": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
+          "generatedName": "Prosody",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "granularity",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ProsodyGranularity",
+                  "nameOverride": undefined,
+                  "schema": "Granularity",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "identify_speakers",
+              "schema": {
+                "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "window",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ProsodyWindow",
+                  "nameOverride": undefined,
+                  "schema": "Window",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ProsodyPrediction": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "ProsodyPrediction",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "text",
+              "schema": {
+                "description": "A segment of text (like a word or a sentence).",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "time",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ProsodyPredictionTime",
+                "nameOverride": undefined,
+                "schema": "TimeInterval",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "confidence",
+              "schema": {
+                "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "speaker_confidence",
+              "schema": {
+                "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "emotions",
+              "schema": {
+                "description": "A high-dimensional embedding in emotion space.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ProsodyPredictionEmotionsItem",
+                  "nameOverride": undefined,
+                  "schema": "EmotionScore",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Queued": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Queued",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "created_timestamp_ms",
+              "schema": {
+                "description": "When this job was created (Unix timestamp in milliseconds).",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Request": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Request",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "models",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Models",
+                      "nameOverride": undefined,
+                      "schema": "Models",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "RequestModels",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "transcription",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Transcription",
+                      "nameOverride": undefined,
+                      "schema": "Transcription",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "RequestTranscription",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "key": "urls",
+              "schema": {
+                "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
+
+If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "key": "callback_url",
+              "schema": {
+                "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "notify",
+              "schema": {
+                "description": "Whether to send an email notification to the user upon job completion/failure.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "files",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "RequestFilesItem",
+                  "nameOverride": undefined,
+                  "schema": "File",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Results": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Results",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "predictions",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ResultsPredictionsItem",
+                  "nameOverride": undefined,
+                  "schema": "Prediction",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "errors",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ResultsErrorsItem",
+                  "nameOverride": undefined,
+                  "schema": "Error",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SentimentScore": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SentimentScore",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "name",
+              "schema": {
+                "description": "Level of sentiment, ranging from \`1\` (negative) to \`9\` (positive)",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "score",
+              "schema": {
+                "description": "Prediction for this level of sentiment",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SortBy": {
+          "description": undefined,
+          "generatedName": "SortBy",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "created",
+              "nameOverride": undefined,
+              "value": "created",
+            },
+            {
+              "generatedName": "started",
+              "nameOverride": undefined,
+              "value": "started",
+            },
+            {
+              "generatedName": "ended",
+              "nameOverride": undefined,
+              "value": "ended",
+            },
+          ],
+        },
+        "Source": {
+          "oneOf": {
+            "commonProperties": [],
+            "description": undefined,
+            "discriminantProperty": "type",
+            "generatedName": "Source",
+            "nameOverride": undefined,
+            "schemas": {
+              "file": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasSourceFile",
+                "nameOverride": undefined,
+                "schema": "Source_File",
+                "type": "reference",
+              },
+              "url": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasSourceUrl",
+                "nameOverride": undefined,
+                "schema": "Source_Url",
+                "type": "reference",
+              },
+            },
+            "type": "discriminated",
+          },
+          "type": "oneOf",
+        },
+        "SourceResult": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SourceResult",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "source",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "SourceResultSource",
+                "nameOverride": undefined,
+                "schema": "Source",
+                "type": "reference",
+              },
+            },
+            {
+              "key": "results",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "SourceResultResults",
+                  "nameOverride": undefined,
+                  "schema": "Results",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "key": "error",
+              "schema": {
+                "description": "An error message.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Source_File": {
+          "description": undefined,
+          "file": undefined,
+          "generatedName": "SourceFile",
+          "nameOverride": undefined,
+          "schema": "File",
+          "type": "reference",
+        },
+        "Source_Url": {
+          "description": undefined,
+          "file": undefined,
+          "generatedName": "SourceUrl",
+          "nameOverride": undefined,
+          "schema": "Url",
+          "type": "reference",
+        },
+        "State": {
+          "oneOf": {
+            "commonProperties": [],
+            "description": undefined,
+            "discriminantProperty": "status",
+            "generatedName": "State",
+            "nameOverride": undefined,
+            "schemas": {
+              "COMPLETED": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasStateCompleted",
+                "nameOverride": undefined,
+                "schema": "State_Completed",
+                "type": "reference",
+              },
+              "FAILED": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasStateFailed",
+                "nameOverride": undefined,
+                "schema": "State_Failed",
+                "type": "reference",
+              },
+              "IN_PROGRESS": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasStateInProgress",
+                "nameOverride": undefined,
+                "schema": "State_InProgress",
+                "type": "reference",
+              },
+              "QUEUED": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasStateQueued",
+                "nameOverride": undefined,
+                "schema": "State_Queued",
+                "type": "reference",
+              },
+            },
+            "type": "discriminated",
+          },
+          "type": "oneOf",
+        },
+        "State_Completed": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "Completed",
+              "nameOverride": undefined,
+              "schema": "Completed",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "generatedName": "StateCompleted",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "State_Failed": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "Failed",
+              "nameOverride": undefined,
+              "schema": "Failed",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "generatedName": "StateFailed",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "State_InProgress": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "InProgress",
+              "nameOverride": undefined,
+              "schema": "InProgress",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "generatedName": "StateInProgress",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "State_Queued": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "Queued",
+              "nameOverride": undefined,
+              "schema": "Queued",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "generatedName": "StateQueued",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Status": {
+          "description": undefined,
+          "generatedName": "Status",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "QUEUED",
+              "nameOverride": undefined,
+              "value": "QUEUED",
+            },
+            {
+              "generatedName": "IN_PROGRESS",
+              "nameOverride": undefined,
+              "value": "IN_PROGRESS",
+            },
+            {
+              "generatedName": "COMPLETED",
+              "nameOverride": undefined,
+              "value": "COMPLETED",
+            },
+            {
+              "generatedName": "FAILED",
+              "nameOverride": undefined,
+              "value": "FAILED",
+            },
+          ],
+        },
+        "TimeInterval": {
+          "allOf": [],
+          "description": "A time range with a beginning and end, measured in seconds.",
+          "generatedName": "TimeInterval",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "begin",
+              "schema": {
+                "description": "Beginning of time range in seconds.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "end",
+              "schema": {
+                "description": "End of time range in seconds.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ToxicityScore": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "ToxicityScore",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "name",
+              "schema": {
+                "description": "Category of toxicity.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "score",
+              "schema": {
+                "description": "Prediction for this category of toxicity",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Transcription": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Transcription",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "language",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Bcp47Tag",
+                      "nameOverride": undefined,
+                      "schema": "Bcp47Tag",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "TranscriptionLanguage",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "TranscriptionMetadata": {
+          "allOf": [],
+          "description": "Transcription metadata for your media file.",
+          "generatedName": "TranscriptionMetadata",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "confidence",
+              "schema": {
+                "description": "Value between \`0.0\` and \`1.0\` indicating our transcription model’s relative confidence in the transcription of your media file.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "key": "detected_language",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "allOf": [
+                    {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "Bcp47Tag",
+                      "nameOverride": undefined,
+                      "schema": "Bcp47Tag",
+                      "type": "reference",
+                    },
+                  ],
+                  "description": undefined,
+                  "generatedName": "TranscriptionMetadataDetectedLanguage",
+                  "nameOverride": undefined,
+                  "properties": [],
+                  "type": "object",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Url": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Url",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "url",
+              "schema": {
+                "description": "The URL of the source media file.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "When": {
+          "description": undefined,
+          "generatedName": "When",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "created_before",
+              "nameOverride": undefined,
+              "value": "created_before",
+            },
+            {
+              "generatedName": "created_after",
+              "nameOverride": undefined,
+              "value": "created_after",
+            },
+          ],
+        },
+        "Window": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Window",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "key": "length",
+              "schema": {
+                "description": "The length of the sliding window.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "key": "step",
+              "schema": {
+                "description": "The step size of the sliding window.",
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+      },
+      "securitySchemes": {},
+      "servers": [
+        {
+          "description": undefined,
+          "name": undefined,
+          "url": "https://api.hume.ai",
+        },
+      ],
+      "tags": [],
+      "title": "Hume AI Batch API",
+    },
+  },
+  "rootPackage": {
+    "file": "openapi.yaml",
+    "name": "",
+    "subpackages": [],
+  },
+}
+`;
+
 exports[`open api parser squidex simple 1`] = `
 {
   "files": {
