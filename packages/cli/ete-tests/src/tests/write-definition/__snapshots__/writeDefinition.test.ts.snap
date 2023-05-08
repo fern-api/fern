@@ -47,7 +47,7 @@ imports:
   root: __package__.yml
 
 service:
-  auth: true
+  auth: false
   base-path: ""
   endpoints:
     listPets:
