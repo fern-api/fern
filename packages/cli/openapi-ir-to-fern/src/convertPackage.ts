@@ -54,8 +54,11 @@ function getRootApiFile(openApiFile: OpenAPIFile, environment: Environment | und
         "error-discrimination": {
             strategy: "status-code",
         },
-        headers: globalHeaders,
     };
+
+    if (Object.keys(globalHeaders).length > 0) {
+        rootApiFile.headers = globalHeaders;
+    }
 
     if (authSchemes.auth != null) {
         rootApiFile.auth = authSchemes.auth;
