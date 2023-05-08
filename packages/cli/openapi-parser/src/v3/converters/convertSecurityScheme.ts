@@ -22,6 +22,8 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
         return SecurityScheme.basic();
     } else if (securityScheme.type === "openIdConnect") {
         return SecurityScheme.bearer();
+    } else if (securityScheme.type === "oauth2") {
+        return SecurityScheme.bearer();
     }
     throw new Error(`Failed to convert security scheme ${JSON.stringify(securityScheme)}`);
 }
