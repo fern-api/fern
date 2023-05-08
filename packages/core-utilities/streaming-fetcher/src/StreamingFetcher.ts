@@ -1,7 +1,8 @@
 import URLSearchParams from "@ungap/url-search-params";
 import axios, { AxiosAdapter, AxiosResponse } from "axios";
+import { Readable } from "stream";
 
-export type StreamingFetchFunction = (args: StreamingFetcher.Args) => Promise<void>;
+export type StreamingFetchFunction = (args: StreamingFetcher.Args) => Promise<Readable>;
 
 export declare namespace StreamingFetcher {
     export interface Args {
@@ -14,7 +15,7 @@ export declare namespace StreamingFetcher {
         withCredentials?: boolean;
         adapter?: AxiosAdapter;
 
-        onData: (data: unknown) => void;
+        onData?: (data: unknown) => void;
         onError?: (err: unknown) => void;
         onFinish?: () => void;
         abortController?: AbortController;
@@ -58,26 +59,31 @@ export const streamingFetcher: StreamingFetchFunction = async (args) => {
         return;
     }
 
-    response.data.on("data", (data: Buffer) => {
-        for (const line of data.toString().split("\n")) {
-            let data = line;
-            if (args.responseChunkPrefix != null) {
-                if (!data.startsWith(args.responseChunkPrefix)) {
-                    continue;
+    if (args.onData != null) {
+        const { onData } = args;
+        response.data.on("data", (data: Buffer) => {
+            for (const line of data.toString().split("\n")) {
+                let data = line;
+                if (args.responseChunkPrefix != null) {
+                    if (!data.startsWith(args.responseChunkPrefix)) {
+                        continue;
+                    }
+                    data = data.substring(args.responseChunkPrefix.length);
                 }
-                data = data.substring(args.responseChunkPrefix.length);
-            }
 
-            try {
-                const parsed = JSON.parse(data);
-                args.onData(parsed);
-            } catch (error) {
-                args.onError?.(error);
+                try {
+                    const parsed = JSON.parse(data);
+                    onData(parsed);
+                } catch (error) {
+                    args.onError?.(error);
+                }
             }
-        }
-    });
+        });
+    }
 
     if (args.onFinish != null) {
         response.data.on("end", args.onFinish);
     }
+
+    return response.data;
 };

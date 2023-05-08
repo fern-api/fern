@@ -4,6 +4,7 @@ import { ExpressImpl } from "./express/ExpressImpl";
 import { ExternalDependencies } from "./ExternalDependencies";
 import { FormDataImpl } from "./form-data/FormDataImpl";
 import { FsImpl } from "./fs/FsImpl";
+import { StreamImpl } from "./stream/StreamImpl";
 import { UrlJoinImpl } from "./url-join/UrlJoinImpl";
 import { URLSearchParamsImpl } from "./url-search-params/URLSearchParamsImpl";
 
@@ -23,6 +24,7 @@ export function createExternalDependencies({
         express: new ExpressImpl({ importsManager, dependencyManager }),
         formData: new FormDataImpl({ importsManager, dependencyManager }),
         fs: new FsImpl({ importsManager, dependencyManager }),
+        stream: new StreamImpl({ importsManager, dependencyManager }),
         URLSearchParams: new URLSearchParamsImpl({ importsManager, dependencyManager }),
     };
 }

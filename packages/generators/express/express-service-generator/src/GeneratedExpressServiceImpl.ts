@@ -1,4 +1,11 @@
-import { HttpEndpoint, HttpMethod, HttpRequestBody, HttpService, PathParameter } from "@fern-fern/ir-model/http";
+import {
+    HttpEndpoint,
+    HttpMethod,
+    HttpRequestBody,
+    HttpResponse,
+    HttpService,
+    PathParameter,
+} from "@fern-fern/ir-model/http";
 import { Package } from "@fern-fern/ir-model/ir";
 import { convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import { ExpressServiceContext, GeneratedExpressService } from "@fern-typescript/contexts";
@@ -207,7 +214,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                     : undefined,
                             response:
                                 endpoint.response != null
-                                    ? context.type.getReferenceToType(endpoint.response.responseBodyType).typeNode
+                                    ? this.getResponseBodyType(endpoint.response, context)
                                     : undefined,
                         })
                     ),
@@ -230,8 +237,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                   undefined,
                                                   GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME,
                                                   undefined,
-                                                  context.type.getReferenceToType(endpoint.response.responseBodyType)
-                                                      .typeNode
+                                                  this.getResponseBodyType(endpoint.response, context)
                                               ),
                                           ]
                                         : [],
@@ -888,5 +894,17 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
 
     private getMethodsInterfaceName(): string {
         return `${this.serviceClassName}Methods`;
+    }
+
+    private getResponseBodyType(response: HttpResponse, context: ExpressServiceContext): ts.TypeNode {
+        return HttpResponse._visit(response, {
+            json: (jsonResponse) => context.type.getReferenceToType(jsonResponse.responseBodyType).typeNode,
+            fileDownload: () => {
+                throw new Error("File download is not supported");
+            },
+            _unknown: () => {
+                throw new Error("Unknown HttpResponse: " + response.type);
+            },
+        });
     }
 }

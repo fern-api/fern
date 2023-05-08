@@ -67,7 +67,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 requestParameterIntersection,
                 excludeInitializers,
             }),
-            returnTypeWithoutPromise: ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
+            returnTypeWithoutPromise: context.base.externalDependencies.stream.Readable._getReferenceToType(),
         };
     }
 
@@ -139,24 +139,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         ];
     }
 
-    public getDocs(context: SdkClientClassContext): string | undefined {
-        const lines: string[] = [];
-        if (this.endpoint.docs != null) {
-            lines.push(this.endpoint.docs);
-        }
-
-        for (const error of this.endpoint.errors) {
-            const referenceToError = context.sdkError
-                .getReferenceToError(error.error)
-                .getExpression({ isForComment: true });
-            lines.push(`@throws {${getTextOfTsNode(referenceToError)}}`);
-        }
-
-        if (lines.length === 0) {
-            return undefined;
-        }
-
-        return lines.join("\n");
+    public getDocs(): string | undefined {
+        return this.endpoint.docs ?? undefined;
     }
 
     public getStatements(context: SdkClientClassContext): ts.Statement[] {
@@ -209,7 +193,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     ts.NodeFlags.Const
                 )
             ),
-            ts.factory.createExpressionStatement(
+            ts.factory.createReturnStatement(
                 context.base.coreUtilities.streamingFetcher.streamingFetcher._invoke(
                     {
                         ...fetcherArgs,

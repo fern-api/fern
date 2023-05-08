@@ -71,7 +71,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             }
         }
 
-        if (endpoint.response != null) {
+        if (endpoint.response?.type === "json") {
             switch (endpoint.response.responseBodyType._type) {
                 case "primitive":
                 case "container":
@@ -232,6 +232,10 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     ): ts.Expression {
         if (this.endpoint.response == null) {
             throw new Error("Cannot deserialize response because it's not defined");
+        }
+
+        if (this.endpoint.response.type === "fileDownload") {
+            throw new Error("Cannot deserialize file");
         }
 
         switch (this.endpoint.response.responseBodyType._type) {

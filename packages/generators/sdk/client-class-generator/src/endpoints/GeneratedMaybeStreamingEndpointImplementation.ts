@@ -3,7 +3,7 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
 import { zip } from "lodash-es";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
-import { GeneratedDefaultEndpointImplementation } from "./GeneratedDefaultEndpointImplementation";
+import { GeneratedDefaultEndpointImplementation } from "./default/GeneratedDefaultEndpointImplementation";
 import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./GeneratedStreamingEndpointImplementation";
 

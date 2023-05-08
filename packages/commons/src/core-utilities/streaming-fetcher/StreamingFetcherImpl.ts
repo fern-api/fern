@@ -14,6 +14,7 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
         pathInCoreUtilities: [{ nameOnDisk: "streaming-fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("axios", "0.27.2");
+            dependencyManager.addDependency("@ungap/url-search-params", "0.2.2");
         },
     };
 
@@ -98,9 +99,11 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                     )
                 );
             }
-            properties.push(
-                ts.factory.createPropertyAssignment(this.StreamingFetcher.Args.properties.onData, args.onData)
-            );
+            if (args.onData != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.StreamingFetcher.Args.properties.onData, args.onData)
+                );
+            }
             if (args.onError != null) {
                 properties.push(
                     ts.factory.createPropertyAssignment(this.StreamingFetcher.Args.properties.onError, args.onError)

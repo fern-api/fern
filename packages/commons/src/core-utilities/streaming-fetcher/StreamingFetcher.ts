@@ -34,7 +34,7 @@ export declare namespace StreamingFetcher {
         timeoutInSeconds: number | "infinity" | undefined;
         withCredentials: boolean;
 
-        onData: ts.Expression;
+        onData: ts.Expression | undefined;
         onError: ts.Expression | undefined;
         onFinish: ts.Expression | undefined;
         abortController: ts.Expression | undefined;

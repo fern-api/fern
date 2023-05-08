@@ -1,6 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
-import { HttpEndpoint, HttpHeader, PathParameter, SdkResponse, StreamingResponse } from "@fern-fern/ir-model/http";
+import {
+    HttpEndpoint,
+    HttpHeader,
+    JsonResponse,
+    PathParameter,
+    SdkResponse,
+    StreamingResponse,
+} from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
 import { VariableDeclaration, VariableId } from "@fern-fern/ir-model/variables";
 import { getTextOfTsNode, maybeAddDocs, NpmPackage, PackageId } from "@fern-typescript/commons";
@@ -9,10 +16,9 @@ import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
-import { GeneratedNonThrowingEndpointResponse } from "./endpoint-response/GeneratedNonThrowingEndpointResponse";
-import { GeneratedThrowingEndpointResponse } from "./endpoint-response/GeneratedThrowingEndpointResponse";
-import { GeneratedDefaultEndpointImplementation } from "./endpoints/GeneratedDefaultEndpointImplementation";
+import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
 import { GeneratedEndpointImplementation } from "./endpoints/GeneratedEndpointImplementation";
+import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedMaybeStreamingEndpointImplementation } from "./endpoints/GeneratedMaybeStreamingEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
@@ -91,24 +97,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             this.generatedEndpointImplementations = service.endpoints.map((endpoint) => {
                 const requestBody = endpoint.requestBody ?? undefined;
 
-                const getGeneratedEndpointResponse = () => {
-                    if (neverThrowErrors) {
-                        return new GeneratedNonThrowingEndpointResponse({
-                            packageId,
-                            endpoint,
-                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
-                            errorResolver,
-                        });
-                    } else {
-                        return new GeneratedThrowingEndpointResponse({
-                            packageId,
-                            endpoint,
-                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
-                            errorResolver,
-                        });
-                    }
-                };
-
                 const getGeneratedEndpointRequest = () => {
                     if (requestBody?.type === "fileUpload") {
                         return new GeneratedFileUploadEndpointRequest({
@@ -130,13 +118,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     }
                 };
 
-                const getNonStreamingEndpointImplementation = () => {
+                const getDefaultEndpointImplementation = ({ response }: { response: JsonResponse | undefined }) => {
                     return new GeneratedDefaultEndpointImplementation({
+                        packageId,
                         endpoint,
+                        response,
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
                         timeoutInSeconds,
-                        response: getGeneratedEndpointResponse(),
+                        neverThrowErrors,
+                        errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
+                        errorResolver,
                         request: getGeneratedEndpointRequest(),
                     });
                 };
@@ -154,21 +146,36 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 };
 
                 if (endpoint.sdkResponse == null) {
-                    return getNonStreamingEndpointImplementation();
+                    return getDefaultEndpointImplementation({ response: undefined });
                 }
 
                 return SdkResponse._visit<GeneratedEndpointImplementation>(endpoint.sdkResponse, {
-                    nonStreaming: getNonStreamingEndpointImplementation,
+                    fileDownload: () => {
+                        return new GeneratedFileDownloadEndpointImplementation({
+                            endpoint,
+                            generatedSdkClientClass: this,
+                            includeCredentialsOnCrossOriginRequests,
+                            timeoutInSeconds,
+                            request: getGeneratedEndpointRequest(),
+                        });
+                    },
+                    json: (jsonResponse) => getDefaultEndpointImplementation({ response: jsonResponse }),
                     streaming: getStreamingEndpointImplementation,
-                    maybeStreaming: (maybeStreamingResponse) =>
-                        new GeneratedMaybeStreamingEndpointImplementation({
+                    maybeStreaming: (maybeStreamingResponse) => {
+                        if (maybeStreamingResponse.nonStreaming.type === "fileDownload") {
+                            throw new Error("Streaming condition is not supported with file download");
+                        }
+                        return new GeneratedMaybeStreamingEndpointImplementation({
                             endpoint,
                             response: maybeStreamingResponse,
-                            nonStreamingEndpointImplementation: getNonStreamingEndpointImplementation(),
+                            nonStreamingEndpointImplementation: getDefaultEndpointImplementation({
+                                response: maybeStreamingResponse.nonStreaming,
+                            }),
                             streamingEndpointImplementation: getStreamingEndpointImplementation(
                                 maybeStreamingResponse.streaming
                             ),
-                        }),
+                        });
+                    },
                     _unknown: () => {
                         throw new Error("Unknown SdkResponse type: " + endpoint.sdkResponse?.type);
                     },
@@ -546,7 +553,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             return ts.factory.createBinaryExpression(
                 this.getReferenceToOption(GeneratedSdkClientClassImpl.CUSTOM_STREAMING_FETCHER_PROPERTY_NAME),
                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                context.base.coreUtilities.fetcher.fetcher._getReferenceTo()
+                context.base.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo()
             );
         } else {
             return context.base.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo();

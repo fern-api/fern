@@ -131,6 +131,12 @@ const FIXTURES: FixtureInfo[] = [
         outputMode: "github",
         apiName: "api",
     },
+    {
+        path: "file-download",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+    },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
