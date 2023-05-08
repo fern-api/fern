@@ -84,23 +84,31 @@ export function convertEndpoint({
     }
 
     if (endpoint.response != null) {
-        const responseTypeReference = convertToTypeReference({
-            schema: endpoint.response.schema,
-            prefix: isPackageYml ? undefined : ROOT_PREFIX,
-            schemas,
-        });
-        additionalTypeDeclarations = {
-            ...additionalTypeDeclarations,
-            ...responseTypeReference.additionalTypeDeclarations,
-        };
-        if (endpoint.responseIsStreaming) {
-            convertedEndpoint["response-stream"] = {
-                type: getTypeFromTypeReference(responseTypeReference.typeReference),
+        if (endpoint.response.type === "json") {
+            const responseTypeReference = convertToTypeReference({
+                schema: endpoint.response.schema,
+                prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                schemas,
+            });
+            additionalTypeDeclarations = {
+                ...additionalTypeDeclarations,
+                ...responseTypeReference.additionalTypeDeclarations,
             };
-        } else {
+            if (endpoint.responseIsStreaming) {
+                convertedEndpoint["response-stream"] = {
+                    type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                };
+            } else {
+                convertedEndpoint.response = {
+                    docs: endpoint.response.description ?? undefined,
+                    type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                };
+            }
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        } else if (endpoint.response.type === "file") {
             convertedEndpoint.response = {
                 docs: endpoint.response.description ?? undefined,
-                type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                type: "file",
             };
         }
     }
