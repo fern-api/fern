@@ -6077,7 +6077,7 @@ exports[`open api converter hathora simple 1`] = `
           },
           "DeleteApp": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/apps/v1/delete/{appId}",
             "path-parameters": {
               "appId": {
@@ -6239,7 +6239,7 @@ exports[`open api converter hathora simple 1`] = `
           },
           "DeleteBuild": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/builds/v1/{appId}/delete/{buildId}",
             "path-parameters": {
               "appId": {
@@ -11207,7 +11207,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteApp": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
@@ -11218,7 +11218,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteClient": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
               "app": {
@@ -11237,7 +11237,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteContributor": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/contributors/{id}",
             "path-parameters": {
               "app": {
@@ -11256,7 +11256,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteImage": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
@@ -11271,7 +11271,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteLanguage": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
               "app": {
@@ -11290,7 +11290,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteMyself": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/contributors/me",
             "path-parameters": {
               "app": {
@@ -11305,7 +11305,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRole": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
               "app": {
@@ -11324,7 +11324,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteWorkflow": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
               "app": {
@@ -12053,7 +12053,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteAsset": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -12083,7 +12083,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteAssetFolder": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
               "app": {
@@ -12126,7 +12126,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetContentGetAssetContentRequest",
+              "name": "AssetsGetAssetContentRequest",
               "query-parameters": {
                 "auto": {
                   "allow-multiple": undefined,
@@ -12220,7 +12220,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetContentGetAssetContentBySlugRequest",
+              "name": "AssetsGetAssetContentBySlugRequest",
               "query-parameters": {
                 "auto": {
                   "allow-multiple": undefined,
@@ -12306,7 +12306,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetFoldersGetAssetFoldersRequest",
+              "name": "AssetsGetAssetFoldersRequest",
               "query-parameters": {
                 "parentId": {
                   "allow-multiple": undefined,
@@ -12738,7 +12738,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteBackup": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
               "app": {
@@ -12777,7 +12777,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "BackupContentGetBackupContentV2Request",
+              "name": "BackupsGetBackupContentV2Request",
               "query-parameters": {
                 "app": {
                   "allow-multiple": undefined,
@@ -12861,7 +12861,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteComment": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
               "app": {
@@ -13067,7 +13067,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteContent": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -13101,7 +13101,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteContentStatus": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
               "app": {
@@ -13124,7 +13124,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteVersion": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
               "app": {
@@ -13789,7 +13789,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteComment": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/users/{userId}/notifications/{commentId}",
             "path-parameters": {
               "commentId": {
@@ -13813,7 +13813,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "UserNotificationsGetNotificationsRequest",
+              "name": "NotificationsGetNotificationsRequest",
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
@@ -13959,7 +13959,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteEvent": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
               "app": {
@@ -13974,7 +13974,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteEvents": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
               "app": {
@@ -13985,7 +13985,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRule": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
               "app": {
@@ -14000,7 +14000,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRuleEvents": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}/events",
             "path-parameters": {
               "app": {
@@ -14015,7 +14015,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRuleRun": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/run",
             "path-parameters": {
               "app": {
@@ -14317,7 +14317,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteField": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
               "app": {
@@ -14340,7 +14340,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteNestedField": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
               "app": {
@@ -14367,7 +14367,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteSchema": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
@@ -15341,7 +15341,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteContributor": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/teams/{team}/contributors/{id}",
             "path-parameters": {
               "id": {
@@ -15360,7 +15360,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteMyself": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/teams/{team}/contributors/me",
             "path-parameters": {
               "team": {
@@ -15575,7 +15575,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteUser": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
@@ -22569,7 +22569,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "DeleteIntegration": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
@@ -23129,7 +23129,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "DeleteOffer": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
               "offerId": {
@@ -23282,7 +23282,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "DeleteProduct": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {

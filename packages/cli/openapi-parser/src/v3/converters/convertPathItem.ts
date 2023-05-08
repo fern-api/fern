@@ -16,63 +16,107 @@ export function convertPathItem(
     const endpoints: Endpoint[] = [];
 
     if (pathItemObject.get != null) {
-        endpoints.push({
-            method: HttpMethod.Get,
-            path,
-            ...convertOperation(pathItemObject.get, pathItemObject.parameters, document, context),
-        });
+        endpoints.push(
+            convertOperation({
+                httpMethod: HttpMethod.Get,
+                path,
+                operation: pathItemObject.get,
+                pathItemParameters: pathItemObject.parameters,
+                document,
+                context,
+            })
+        );
     }
 
     if (pathItemObject.post != null) {
-        endpoints.push({
-            method: HttpMethod.Post,
-            path,
-            ...convertOperation(pathItemObject.post, pathItemObject.parameters, document, context),
-        });
+        endpoints.push(
+            convertOperation({
+                httpMethod: HttpMethod.Post,
+                path,
+                operation: pathItemObject.post,
+                pathItemParameters: pathItemObject.parameters,
+                document,
+                context,
+            })
+        );
     }
 
     if (pathItemObject.put != null) {
-        endpoints.push({
-            method: HttpMethod.Put,
-            path,
-            ...convertOperation(pathItemObject.put, pathItemObject.parameters, document, context),
-        });
+        endpoints.push(
+            convertOperation({
+                httpMethod: HttpMethod.Put,
+                path,
+                operation: pathItemObject.put,
+                pathItemParameters: pathItemObject.parameters,
+                document,
+                context,
+            })
+        );
     }
 
     if (pathItemObject.patch != null) {
-        endpoints.push({
-            method: HttpMethod.Patch,
-            path,
-            ...convertOperation(pathItemObject.patch, pathItemObject.parameters, document, context),
-        });
+        endpoints.push(
+            convertOperation({
+                httpMethod: HttpMethod.Patch,
+                path,
+                operation: pathItemObject.patch,
+                pathItemParameters: pathItemObject.parameters,
+                document,
+                context,
+            })
+        );
     }
 
     if (pathItemObject.delete != null) {
-        endpoints.push({
-            method: HttpMethod.Patch,
-            path,
-            ...convertOperation(pathItemObject.delete, pathItemObject.parameters, document, context),
-        });
+        endpoints.push(
+            convertOperation({
+                httpMethod: HttpMethod.Delete,
+                path,
+                operation: pathItemObject.delete,
+                pathItemParameters: pathItemObject.parameters,
+                document,
+                context,
+            })
+        );
     }
 
     return endpoints;
 }
 
-function convertOperation(
-    operation: OpenAPIV3.OperationObject,
-    pathItemParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] | undefined,
-    document: OpenAPIV3.Document,
-    context: OpenAPIV3ParserContext
-): Omit<Endpoint, "path" | "method"> {
-    if (operation.operationId == null) {
-        throw new Error(`Operation requires operation id: ${JSON.stringify(operation)}`);
+function convertOperation({
+    path,
+    httpMethod,
+    operation,
+    pathItemParameters,
+    document,
+    context,
+}: {
+    path: string;
+    httpMethod: HttpMethod;
+    operation: OpenAPIV3.OperationObject;
+    pathItemParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] | undefined;
+    document: OpenAPIV3.Document;
+    context: OpenAPIV3ParserContext;
+}): Endpoint {
+    const sdkName = maybeGetSdkName(operation);
+
+    const baseBreadcrumbs: string[] = [];
+    if (sdkName == null && operation.operationId == null) {
+        throw new Error(`${httpMethod} ${path} must specify either operationId or x-fern-sdk-method-name`);
+    } else if (sdkName != null) {
+        if (sdkName.groupName != null) {
+            baseBreadcrumbs.push(sdkName.groupName);
+        }
+        baseBreadcrumbs.push(sdkName.methodName);
+    } else if (operation.operationId != null) {
+        baseBreadcrumbs.push(operation.operationId);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isStreaming = (operation as any)["x-fern-streaming"] as boolean | undefined;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const requestNameOverride = (operation as any)["x-request-name"] as string | undefined;
-    const requestBreadcrumbs = [operation.operationId, "Request"];
+    const requestBreadcrumbs = [...baseBreadcrumbs, "Request"];
 
     const endpointParameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
     const convertedParameters = convertParameters(endpointParameters, context, requestBreadcrumbs);
@@ -102,12 +146,14 @@ function convertOperation(
         });
     }
 
-    const responseBreadcrumbs = [operation.operationId, "Response"];
+    const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
     return {
+        path,
+        method: httpMethod,
         summary: operation.summary,
         operationId: operation.operationId,
         tags: operation.tags ?? [],
-        sdkName: maybeGetSdkName(operation),
+        sdkName,
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
