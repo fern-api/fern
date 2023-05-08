@@ -69,7 +69,7 @@ export function convertEndpoint({
     });
     for (const header of endpointSpecificHeaders) {
         const convertedHeader = convertHeader({ header, isPackageYml, schemas });
-        queryParameters[header.name] = convertedHeader.value;
+        headers[header.name] = convertedHeader.value;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,
             ...convertedHeader.additionalTypeDeclarations,
@@ -93,11 +93,23 @@ export function convertEndpoint({
             ...additionalTypeDeclarations,
             ...convertedRequest.additionalTypeDeclarations,
         };
-    } else if (Object.keys(queryParameters).length > 0) {
-        convertedEndpoint.request = {
-            name: endpoint.requestNameOverride ?? endpoint.generatedRequestName,
-            "query-parameters": queryParameters,
-        };
+    } else {
+        const hasQueryParams = Object.keys(queryParameters).length > 0;
+        const hasHeaders = Object.keys(headers).length > 0;
+
+        const convertedRequest: RawSchemas.HttpRequestSchema = {};
+
+        if (hasQueryParams) {
+            convertedRequest["query-parameters"] = queryParameters;
+        }
+        if (hasHeaders) {
+            convertedRequest.headers = headers;
+        }
+        if (hasQueryParams || hasHeaders) {
+            convertedRequest.name = endpoint.requestNameOverride ?? endpoint.generatedRequestName;
+        }
+
+        convertedEndpoint.request = convertedRequest;
     }
 
     if (endpoint.response != null) {

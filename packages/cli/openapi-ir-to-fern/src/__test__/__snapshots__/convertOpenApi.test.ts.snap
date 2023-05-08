@@ -772,6 +772,7 @@ exports[`open api converter buzzshot simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "",
               "type": "root.Room",
@@ -857,6 +858,7 @@ exports[`open api converter buzzshot simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "",
               "type": "root.Room",
@@ -872,6 +874,7 @@ exports[`open api converter buzzshot simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "",
               "type": "root.Photo",
@@ -887,6 +890,7 @@ exports[`open api converter buzzshot simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "",
               "type": "root.Player",
@@ -4001,6 +4005,7 @@ empty.
             "auth": true,
             "method": "GET",
             "path": "/dev-orgs.auth-connections.list",
+            "request": {},
             "response": {
               "docs": "Success.",
               "type": "root.DevOrgAuthConnectionsListResponse",
@@ -4297,6 +4302,7 @@ JTI claim of the token in the authorization header.
             "auth": true,
             "method": "GET",
             "path": "/dev-users.self",
+            "request": {},
             "response": {
               "docs": "Success.",
               "type": "root.DevUsersSelfResponse",
@@ -4977,6 +4983,7 @@ response.
             "auth": true,
             "method": "GET",
             "path": "/webhooks.list",
+            "request": {},
             "response": {
               "docs": "Success.",
               "type": "root.WebhooksListResponse",
@@ -6105,6 +6112,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.AppId",
               },
             },
+            "request": {},
           },
           "GetAppInfo": {
             "auth": true,
@@ -6116,6 +6124,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.AppId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "root.Application",
@@ -6125,6 +6134,7 @@ exports[`open api converter hathora simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/apps/v1/list",
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "list<root.ApplicationWithDeployment>",
@@ -6172,6 +6182,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.AppId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "root.LoginAnonymousResponse",
@@ -6254,6 +6265,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.AppId",
               },
             },
+            "request": {},
             "response": {
               "docs": "",
               "type": "root.Build",
@@ -6273,6 +6285,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.BuildId",
               },
             },
+            "request": {},
           },
           "GetBuildInfo": {
             "auth": true,
@@ -6288,6 +6301,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.BuildId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "root.Build",
@@ -6303,6 +6317,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.AppId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "list<root.Build>",
@@ -6410,6 +6425,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.DeploymentId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "root.Deployment",
@@ -6425,6 +6441,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.AppId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "list<root.Deployment>",
@@ -6445,6 +6462,7 @@ exports[`open api converter hathora simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/discovery/v1/ping",
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "root.DiscoveryResponse",
@@ -6472,12 +6490,14 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "CreatePrivateLobbyDeprecatedRequest",
-              "query-parameters": {
+              "headers": {
                 "Authorization": {
                   "docs": undefined,
                   "type": "string",
                 },
+              },
+              "name": "CreatePrivateLobbyDeprecatedRequest",
+              "query-parameters": {
                 "local": {
                   "allow-multiple": undefined,
                   "docs": undefined,
@@ -6506,12 +6526,14 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "CreatePublicLobbyDeprecatedRequest",
-              "query-parameters": {
+              "headers": {
                 "Authorization": {
                   "docs": undefined,
                   "type": "string",
                 },
+              },
+              "name": "CreatePublicLobbyDeprecatedRequest",
+              "query-parameters": {
                 "local": {
                   "allow-multiple": undefined,
                   "docs": undefined,
@@ -6540,12 +6562,14 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "ListActivePublicLobbiesDeprecatedRequest",
-              "query-parameters": {
+              "headers": {
                 "Authorization": {
                   "docs": undefined,
                   "type": "string",
                 },
+              },
+              "name": "ListActivePublicLobbiesDeprecatedRequest",
+              "query-parameters": {
                 "local": {
                   "allow-multiple": undefined,
                   "docs": undefined,
@@ -6601,13 +6625,14 @@ exports[`open api converter hathora simple 1`] = `
                   },
                 },
               },
-              "headers": undefined,
-              "name": "CreateLobbyRequest",
-              "query-parameters": {
+              "headers": {
                 "Authorization": {
                   "docs": undefined,
                   "type": "string",
                 },
+              },
+              "name": "CreateLobbyRequest",
+              "query-parameters": {
                 "roomId": {
                   "allow-multiple": undefined,
                   "docs": undefined,
@@ -6643,13 +6668,14 @@ exports[`open api converter hathora simple 1`] = `
                   },
                 },
               },
-              "headers": undefined,
-              "name": "CreateLocalLobbyRequest",
-              "query-parameters": {
+              "headers": {
                 "Authorization": {
                   "docs": undefined,
                   "type": "string",
                 },
+              },
+              "name": "CreateLocalLobbyRequest",
+              "query-parameters": {
                 "roomId": {
                   "allow-multiple": undefined,
                   "docs": undefined,
@@ -6685,13 +6711,14 @@ exports[`open api converter hathora simple 1`] = `
                   },
                 },
               },
-              "headers": undefined,
-              "name": "CreatePrivateLobbyRequest",
-              "query-parameters": {
+              "headers": {
                 "Authorization": {
                   "docs": undefined,
                   "type": "string",
                 },
+              },
+              "name": "CreatePrivateLobbyRequest",
+              "query-parameters": {
                 "roomId": {
                   "allow-multiple": undefined,
                   "docs": undefined,
@@ -6727,13 +6754,14 @@ exports[`open api converter hathora simple 1`] = `
                   },
                 },
               },
-              "headers": undefined,
-              "name": "CreatePublicLobbyRequest",
-              "query-parameters": {
+              "headers": {
                 "Authorization": {
                   "docs": undefined,
                   "type": "string",
                 },
+              },
+              "name": "CreatePublicLobbyRequest",
+              "query-parameters": {
                 "roomId": {
                   "allow-multiple": undefined,
                   "docs": undefined,
@@ -6760,6 +6788,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.RoomId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "root.Lobby",
@@ -7016,6 +7045,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.ProcessId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "root.Process",
@@ -7124,6 +7154,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.RoomId",
               },
             },
+            "request": {},
           },
           "GetActiveRoomsForProcess": {
             "auth": true,
@@ -7139,6 +7170,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.ProcessId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "list<root.RoomWithoutAllocations>",
@@ -7158,6 +7190,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.RoomId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "root.ConnectionInfo",
@@ -7177,6 +7210,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.ProcessId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "list<root.RoomWithoutAllocations>",
@@ -7196,6 +7230,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.RoomId",
               },
             },
+            "request": {},
             "response": {
               "docs": "Ok",
               "type": "root.Room",
@@ -7215,6 +7250,7 @@ exports[`open api converter hathora simple 1`] = `
                 "type": "root.RoomId",
               },
             },
+            "request": {},
           },
         },
       },
@@ -7304,6 +7340,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "",
               "type": "file",
@@ -7319,6 +7356,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "",
               "type": "root.JobRequest",
@@ -7334,6 +7372,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "",
               "type": "list<root.SourceResult>",
@@ -12574,6 +12613,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "deleteClient": {
             "auth": true,
@@ -12589,6 +12629,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Client deleted.",
               "type": "root.ClientsDto",
@@ -12608,6 +12649,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Contributor removed.",
               "type": "root.ContributorsDto",
@@ -12623,6 +12665,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "App image removed.",
               "type": "root.AppDto",
@@ -12642,6 +12685,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Language deleted.",
               "type": "root.AppLanguagesDto",
@@ -12657,6 +12701,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Contributor removed.",
               "type": "root.ContributorsDto",
@@ -12676,6 +12721,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Role deleted.",
               "type": "root.RolesDto",
@@ -12695,6 +12741,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Workflow deleted.",
               "type": "root.WorkflowsDto",
@@ -12710,6 +12757,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Apps returned.",
               "type": "root.AppDto",
@@ -12719,6 +12767,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/apps",
+            "request": {},
             "response": {
               "docs": "Apps returned.",
               "type": "list<root.AppDto>",
@@ -12734,6 +12783,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Asset scripts returned.",
               "type": "root.AssetScriptsDto",
@@ -12749,6 +12799,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Clients returned.",
               "type": "root.ClientsDto",
@@ -12764,6 +12815,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Contributors returned.",
               "type": "root.ContributorsDto",
@@ -12779,6 +12831,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "App image found and content or (resized) image returned.",
               "type": "file",
@@ -12794,6 +12847,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Languages returned.",
               "type": "root.AppLanguagesDto",
@@ -12809,6 +12863,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "App permissions returned.",
               "type": "list<string>",
@@ -12824,6 +12879,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Roles returned.",
               "type": "root.RolesDto",
@@ -12839,6 +12895,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "App settings returned.",
               "type": "root.AppSettingsDto",
@@ -12854,6 +12911,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Apps returned.",
               "type": "list<root.AppDto>",
@@ -12869,6 +12927,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Workflows returned.",
               "type": "root.WorkflowsDto",
@@ -13473,6 +13532,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "getAsset": {
             "auth": true,
@@ -13488,6 +13548,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Asset found.",
               "type": "root.AssetDto",
@@ -13797,6 +13858,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Assets tags returned.",
               "type": "map<string, integer>",
@@ -14145,6 +14207,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "getBackupContent": {
             "auth": true,
@@ -14160,6 +14223,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Backup found and content returned.",
               "type": "file",
@@ -14205,6 +14269,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Backups returned.",
               "type": "root.BackupJobsDto",
@@ -14214,6 +14279,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/apps/restore",
+            "request": {},
             "response": {
               "docs": "Status returned.",
               "type": "root.RestoreJobDto",
@@ -14229,6 +14295,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "postRestoreJob": {
             "auth": true,
@@ -14281,6 +14348,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "getComments": {
             "auth": true,
@@ -14325,6 +14393,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "optional<string>",
               },
             },
+            "request": {},
             "response": {
               "docs": "Watching users returned.",
               "type": "list<string>",
@@ -14465,6 +14534,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Content draft created.",
               "type": "root.ContentsDto",
@@ -14522,6 +14592,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Content status change cancelled.",
               "type": "root.ContentsDto",
@@ -14545,6 +14616,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Content draft deleted.",
               "type": "root.ContentsDto",
@@ -14601,6 +14673,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "getContentVersion": {
             "auth": true,
@@ -14624,6 +14697,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "integer",
               },
             },
+            "request": {},
             "response": {
               "docs": "Content version returned.",
               "type": "file",
@@ -15005,11 +15079,13 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/diagnostics/dump",
+            "request": {},
           },
           "getGCDump": {
             "auth": true,
             "method": "GET",
             "path": "/api/diagnostics/gcdump",
+            "request": {},
           },
         },
       },
@@ -15026,6 +15102,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/event-consumers",
+            "request": {},
             "response": {
               "docs": "Event consumers returned.",
               "type": "root.EventConsumersDto",
@@ -15041,6 +15118,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Event consumer resetted asynchronously.",
               "type": "root.EventConsumerDto",
@@ -15056,6 +15134,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Event consumer started asynchronously.",
               "type": "root.EventConsumerDto",
@@ -15071,6 +15150,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Event consumer stopped asynchronously.",
               "type": "root.EventConsumerDto",
@@ -15152,6 +15232,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/languages",
+            "request": {},
             "response": {
               "docs": "Supported language codes returned.",
               "type": "list<root.LanguageDto>",
@@ -15212,6 +15293,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "getNotifications": {
             "auth": true,
@@ -15259,11 +15341,13 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "getInfo": {
             "auth": true,
             "method": "GET",
             "path": "/api/info",
+            "request": {},
             "response": {
               "docs": "Infos returned.",
               "type": "root.ExposedValues",
@@ -15273,6 +15357,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/ping",
+            "request": {},
           },
         },
       },
@@ -15295,6 +15380,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "App plan information returned.",
               "type": "root.PlansDto",
@@ -15310,6 +15396,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Team plan information returned.",
               "type": "root.PlansDto",
@@ -15382,6 +15469,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "deleteEvents": {
             "auth": true,
@@ -15393,6 +15481,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "deleteRule": {
             "auth": true,
@@ -15408,6 +15497,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "deleteRuleEvents": {
             "auth": true,
@@ -15423,6 +15513,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "deleteRuleRun": {
             "auth": true,
@@ -15434,6 +15525,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "disableRule": {
             "auth": true,
@@ -15449,6 +15541,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Rule disabled.",
               "type": "root.RuleDto",
@@ -15468,6 +15561,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Rule enabled.",
               "type": "root.RuleDto",
@@ -15477,6 +15571,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/rules/actions",
+            "request": {},
             "response": {
               "docs": "Rule actions returned.",
               "type": "map<string, root.RuleElementDto>",
@@ -15492,6 +15587,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Rule event type found.",
               "type": "unknown",
@@ -15501,6 +15597,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/rules/eventtypes",
+            "request": {},
             "response": {
               "docs": "Rule events returned.",
               "type": "list<string>",
@@ -15551,6 +15648,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Rules returned.",
               "type": "root.RulesDto",
@@ -15591,6 +15689,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "putRule": {
             "auth": true,
@@ -15675,6 +15774,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Rule simulated.",
               "type": "root.SimulatedRuleEventsDto",
@@ -15715,6 +15815,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
         },
       },
@@ -15745,6 +15846,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field deleted.",
               "type": "root.SchemaDto",
@@ -15772,6 +15874,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field deleted.",
               "type": "root.SchemaDto",
@@ -15791,6 +15894,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "disableField": {
             "auth": true,
@@ -15810,6 +15914,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field disabled.",
               "type": "root.SchemaDto",
@@ -15837,6 +15942,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field disabled.",
               "type": "root.SchemaDto",
@@ -15860,6 +15966,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field enabled.",
               "type": "root.SchemaDto",
@@ -15887,6 +15994,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field enabled.",
               "type": "root.SchemaDto",
@@ -15906,6 +16014,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema found.",
               "type": "root.SchemaDto",
@@ -15921,6 +16030,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schemas returned.",
               "type": "root.SchemasDto",
@@ -15944,6 +16054,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field hidden.",
               "type": "root.SchemaDto",
@@ -15971,6 +16082,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field hidden.",
               "type": "root.SchemaDto",
@@ -15994,6 +16106,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field shown.",
               "type": "root.SchemaDto",
@@ -16021,6 +16134,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field hidden.",
               "type": "root.SchemaDto",
@@ -16130,6 +16244,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema published.",
               "type": "root.SchemaDto",
@@ -16511,6 +16626,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field shown.",
               "type": "root.SchemaDto",
@@ -16538,6 +16654,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema field shown.",
               "type": "root.SchemaDto",
@@ -16557,6 +16674,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Schema unpublished.",
               "type": "root.SchemaDto",
@@ -16619,6 +16737,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Storage usage returned.",
               "type": "root.CurrentStorageDto",
@@ -16634,6 +16753,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Usage tracking results returned.",
               "type": "root.LogDownloadDto",
@@ -16657,6 +16777,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Storage usage returned.",
               "type": "list<root.StorageUsagePerDateDto>",
@@ -16680,6 +16801,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Storage usage returned.",
               "type": "list<root.StorageUsagePerDateDto>",
@@ -16695,6 +16817,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Storage usage returned.",
               "type": "root.CurrentStorageDto",
@@ -16718,6 +16841,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "API call returned.",
               "type": "root.CallsUsageDtoDto",
@@ -16741,6 +16865,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "API call returned.",
               "type": "root.CallsUsageDtoDto",
@@ -16771,6 +16896,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Contributor removed.",
               "type": "root.ContributorsDto",
@@ -16786,6 +16912,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Contributor removed.",
               "type": "root.ContributorsDto",
@@ -16801,6 +16928,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Contributors returned.",
               "type": "root.ContributorsDto",
@@ -16816,6 +16944,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Teams returned.",
               "type": "root.TeamDto",
@@ -16825,6 +16954,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/teams",
+            "request": {},
             "response": {
               "docs": "Teams returned.",
               "type": "list<root.TeamDto>",
@@ -16922,6 +17052,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Template returned.",
               "type": "root.TemplateDetailsDto",
@@ -16931,6 +17062,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api/templates",
+            "request": {},
             "response": {
               "docs": "Templates returned.",
               "type": "root.TemplatesDto",
@@ -17004,6 +17136,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
           },
           "getUser": {
             "auth": true,
@@ -17015,6 +17148,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "User returned.",
               "type": "root.UserDto",
@@ -17059,6 +17193,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "User locked.",
               "type": "root.UserDto",
@@ -17148,6 +17283,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "User unlocked.",
               "type": "root.UserDto",
@@ -17174,6 +17310,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "User found.",
               "type": "root.UserDto",
@@ -17189,6 +17326,7 @@ exports[`open api converter squidex simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "User found and image or fallback returned.",
               "type": "file",
@@ -17198,6 +17336,7 @@ exports[`open api converter squidex simple 1`] = `
             "auth": true,
             "method": "GET",
             "path": "/api",
+            "request": {},
             "response": {
               "docs": "User resources returned.",
               "type": "root.ResourcesDto",
@@ -23627,6 +23766,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "root.SharedIdentityBuyer",
@@ -23642,6 +23782,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedIdentityBuyer>",
@@ -23756,6 +23897,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "root.SharedWorkloadEntitlement",
@@ -23771,6 +23913,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadEntitlement>",
@@ -23790,6 +23933,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadEntitlement>",
@@ -23809,6 +23953,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadEntitlement>",
@@ -23828,6 +23973,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "root.ListEntitlementsByPartnerRequestPartner",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadEntitlement>",
@@ -23847,6 +23993,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadEntitlement>",
@@ -23921,6 +24068,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "root.SharedWorkloadEntitlementTerm",
@@ -23940,6 +24088,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadEntitlementTerm>",
@@ -24018,6 +24167,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "root.DeleteIntegrationRequestService",
               },
             },
+            "request": {},
             "response": {
               "docs": "Empty string if deletion is successful",
               "type": "string",
@@ -24041,6 +24191,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "root.GetIntegrationRequestService",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "root.SharedIdentityIntegration",
@@ -24056,6 +24207,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedIdentityIntegration>",
@@ -24127,6 +24279,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "root.VerifyIntegrationRequestService",
               },
             },
+            "request": {},
             "response": {
               "docs": "whether it is verified or not",
               "type": "boolean",
@@ -24157,6 +24310,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "root.SharedMeteringUsageRecordGroup",
@@ -24176,6 +24330,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "root.SharedMeteringUsageRecordReport",
@@ -24515,6 +24670,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Empty string if cancellation is successful",
               "type": "string",
@@ -24576,6 +24732,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Empty string if deletion is successful",
               "type": "string",
@@ -24595,6 +24752,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "root.SharedWorkloadOffer",
@@ -24610,6 +24768,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadOffer>",
@@ -24630,13 +24789,13 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListOffersByPartnerRequest",
-              "query-parameters": {
+              "headers": {
                 "Authorization": {
                   "docs": undefined,
                   "type": "string",
                 },
               },
+              "name": "ListOffersByPartnerRequest",
             },
             "response": {
               "docs": "OK",
@@ -24657,6 +24816,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadOffer>",
@@ -24738,6 +24898,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "Empty string if deletion is successful",
               "type": "string",
@@ -24757,6 +24918,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "root.SharedWorkloadProduct",
@@ -24776,6 +24938,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedAwsSaasProductDimension>",
@@ -24791,6 +24954,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadProduct>",
@@ -24810,6 +24974,7 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "root.ListProductsByPartnerRequestPartner",
               },
             },
+            "request": {},
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadProduct>",
@@ -25906,6 +26071,7 @@ exports[`open api converter vellum simple 1`] = `
                 "type": "string",
               },
             },
+            "request": {},
             "response": {
               "docs": "",
               "type": "root.ModelVersionRead",
