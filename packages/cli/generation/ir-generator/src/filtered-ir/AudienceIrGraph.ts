@@ -6,6 +6,7 @@ import {
     FileUploadRequestProperty,
     HttpEndpoint,
     HttpRequestBody,
+    HttpResponse,
     HttpService,
 } from "@fern-fern/ir-model/http";
 import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
@@ -119,11 +120,19 @@ export class AudienceIrGraph {
             });
         }
         if (httpEndpoint.response != null) {
-            populateReferencesFromTypeReference(
-                httpEndpoint.response.responseBodyType,
-                referencedTypes,
-                referencedSubpackages
-            );
+            HttpResponse._visit(httpEndpoint.response, {
+                fileDownload: noop,
+                json: (jsonResponse) => {
+                    populateReferencesFromTypeReference(
+                        jsonResponse.responseBodyType,
+                        referencedTypes,
+                        referencedSubpackages
+                    );
+                },
+                _unknown: () => {
+                    throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.type);
+                },
+            });
         }
         if (httpEndpoint.streamingResponse != null) {
             populateReferencesFromTypeReference(

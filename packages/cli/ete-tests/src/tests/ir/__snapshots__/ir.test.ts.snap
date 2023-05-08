@@ -9030,7 +9030,8 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                             },
                             "typeId": "type_nested:Response",
                             "_type": "named"
-                        }
+                        },
+                        "type": "json"
                     },
                     "sdkResponse": {
                         "responseBodyType": {
@@ -9099,7 +9100,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                             "typeId": "type_nested:Response",
                             "_type": "named"
                         },
-                        "type": "nonStreaming"
+                        "type": "json"
                     },
                     "errors": [],
                     "examples": [
@@ -11774,7 +11775,8 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             },
                             "typeId": "type_imdb:MovieId",
                             "_type": "named"
-                        }
+                        },
+                        "type": "json"
                     },
                     "sdkResponse": {
                         "responseBodyType": {
@@ -11843,7 +11845,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "typeId": "type_imdb:MovieId",
                             "_type": "named"
                         },
-                        "type": "nonStreaming"
+                        "type": "json"
                     },
                     "errors": [
                         {
@@ -19074,7 +19076,8 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "typeId": "type_imdb:MovieId",
                             "_type": "named"
-                        }
+                        },
+                        "type": "json"
                     },
                     "sdkResponse": {
                         "responseBodyType": {
@@ -19143,7 +19146,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "typeId": "type_imdb:MovieId",
                             "_type": "named"
                         },
-                        "type": "nonStreaming"
+                        "type": "json"
                     },
                     "errors": [
                         {
@@ -20425,7 +20428,8 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "typeId": "type_imdb:Movie",
                             "_type": "named"
-                        }
+                        },
+                        "type": "json"
                     },
                     "sdkResponse": {
                         "responseBodyType": {
@@ -20494,7 +20498,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "typeId": "type_imdb:Movie",
                             "_type": "named"
                         },
-                        "type": "nonStreaming"
+                        "type": "json"
                     },
                     "errors": [
                         {
@@ -22350,7 +22354,8 @@ exports[`ir {"name":"streaming"} 1`] = `
                         "responseBodyType": {
                             "primitive": "BOOLEAN",
                             "_type": "primitive"
-                        }
+                        },
+                        "type": "json"
                     },
                     "streamingResponse": {
                         "dataEventType": {
@@ -22371,7 +22376,8 @@ exports[`ir {"name":"streaming"} 1`] = `
                             "responseBodyType": {
                                 "primitive": "BOOLEAN",
                                 "_type": "primitive"
-                            }
+                            },
+                            "type": "json"
                         },
                         "condition": {
                             "requestPropertyKey": "stream",

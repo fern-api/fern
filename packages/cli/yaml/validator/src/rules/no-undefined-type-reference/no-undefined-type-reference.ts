@@ -32,11 +32,23 @@ export const NoUndefinedTypeReferenceRule: Rule = {
         return {
             definitionFile: {
                 typeReference: ({ typeReference, location }, { relativeFilepath, contents }) => {
-                    if (
-                        location === TypeReferenceLocation.InlinedRequestProperty &&
-                        parseRawFileType(typeReference) != null
-                    ) {
-                        return [];
+                    const parsedRawFileType = parseRawFileType(typeReference);
+                    if (parsedRawFileType != null) {
+                        if (location === TypeReferenceLocation.InlinedRequestProperty) {
+                            return [];
+                        }
+                        if (location === TypeReferenceLocation.Response) {
+                            if (parsedRawFileType.isOptional) {
+                                return [
+                                    {
+                                        severity: "error",
+                                        message: "File response cannot be optional",
+                                    },
+                                ];
+                            } else {
+                                return [];
+                            }
+                        }
                     }
 
                     const namedTypes = getAllNamedTypes({

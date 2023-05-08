@@ -1,5 +1,5 @@
-import { RawSchemas } from "@fern-api/yaml-schema";
-import { HttpEndpoint, NonStreamingResponse, SdkResponse, StreamCondition } from "@fern-fern/ir-model/http";
+import { parseRawFileType, RawSchemas } from "@fern-api/yaml-schema";
+import { HttpEndpoint, HttpResponse, SdkResponse, StreamCondition } from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
 
 export function convertHttpResponse({
@@ -11,7 +11,7 @@ export function convertHttpResponse({
 }): Pick<HttpEndpoint, "response" | "streamingResponse" | "sdkResponse"> {
     const { response, ["response-stream"]: responseStream, ["stream-condition"]: rawStreamCondition } = endpoint;
 
-    const nonStreamingResponse = response != null ? constructNonStreamingResponse(response, file) : undefined;
+    const httpResponse = response != null ? constructHttpResponse(response, file) : undefined;
     const streamingResponse =
         responseStream != null
             ? {
@@ -24,13 +24,19 @@ export function convertHttpResponse({
 
     const constructSdkResponse = () => {
         if (streamingResponse == null) {
-            if (nonStreamingResponse == null) {
+            if (httpResponse == null) {
                 return undefined;
             }
-            return SdkResponse.nonStreaming(nonStreamingResponse);
+            return HttpResponse._visit<SdkResponse>(httpResponse, {
+                json: SdkResponse.json,
+                fileDownload: SdkResponse.fileDownload,
+                _unknown: () => {
+                    throw new Error("Unknown HttpResponse: " + httpResponse.type);
+                },
+            });
         }
 
-        if (nonStreamingResponse == null) {
+        if (httpResponse == null) {
             return SdkResponse.streaming(streamingResponse);
         }
 
@@ -45,26 +51,32 @@ export function convertHttpResponse({
 
         return SdkResponse.maybeStreaming({
             streaming: streamingResponse,
-            nonStreaming: nonStreamingResponse,
+            nonStreaming: httpResponse,
             condition: streamCondition,
         });
     };
 
     return {
-        response: nonStreamingResponse,
+        response: httpResponse,
         streamingResponse,
         sdkResponse: constructSdkResponse(),
     };
 }
 
-function constructNonStreamingResponse(
-    response: RawSchemas.HttpResponseSchema,
-    file: FernFileContext
-): NonStreamingResponse {
-    return {
-        docs: typeof response !== "string" ? response.docs : undefined,
-        responseBodyType: file.parseTypeReference(response),
-    };
+function constructHttpResponse(response: RawSchemas.HttpResponseSchema, file: FernFileContext): HttpResponse {
+    const docs = typeof response !== "string" ? response.docs : undefined;
+    const responseType = typeof response === "string" ? response : response.type;
+
+    if (parseRawFileType(responseType) != null) {
+        return HttpResponse.fileDownload({
+            docs,
+        });
+    } else {
+        return HttpResponse.json({
+            docs,
+            responseBodyType: file.parseTypeReference(response),
+        });
+    }
 }
 
 const REQUEST_PROPERTY_STREAM_CONDITION_REGEX = /\$request.(.*)/;

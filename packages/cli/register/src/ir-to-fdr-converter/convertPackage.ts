@@ -50,8 +50,7 @@ function convertService(
                 })
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
-            response:
-                irEndpoint.response != null ? convertResponseBody(irEndpoint.response.responseBodyType) : undefined,
+            response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
@@ -112,6 +111,18 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
             },
         }),
     };
+}
+
+function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.register.HttpBody {
+    return Ir.http.HttpResponse._visit(irResponse, {
+        fileDownload: () => {
+            throw new Error("File download is not supported for registration.");
+        },
+        json: (jsonResponse) => convertResponseBody(jsonResponse.responseBodyType),
+        _unknown: () => {
+            throw new Error("Unknown HttpResponse: " + irResponse.type);
+        },
+    });
 }
 
 function convertResponseBody(irResponse: Ir.types.TypeReference): FernRegistry.api.v1.register.HttpBody {

@@ -216,12 +216,14 @@ async function visitEndpoint({
             }
             const nodePathForResponse = [...nodePathForEndpoint, "response"];
             if (typeof response === "string") {
-                await visitTypeReference(response, nodePathForResponse);
+                await visitTypeReference(response, nodePathForResponse, { location: TypeReferenceLocation.Response });
             } else {
                 await visitObject(response, {
                     docs: createDocsVisitor(visitor, nodePathForResponse),
                     type: async (type) => {
-                        await visitTypeReference(type, [...nodePathForResponse, "type"]);
+                        await visitTypeReference(type, [...nodePathForResponse, "type"], {
+                            location: TypeReferenceLocation.Response,
+                        });
                     },
                 });
             }
