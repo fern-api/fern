@@ -34,8 +34,7 @@ export function convertResponse({
         }
         const responseSchema =
             response.content?.[APPLICATION_JSON_CONTENT]?.schema ??
-            response.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema ??
-            response.content?.[TEXT_PLAIN_CONTENT]?.schema;
+            response.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
         if (responseSchema != null) {
             return {
                 type: "json",
@@ -44,7 +43,9 @@ export function convertResponse({
             };
         }
 
-        const fileResponseSchema = response.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema;
+        const fileResponseSchema =
+            response.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema ??
+            response.content?.[TEXT_PLAIN_CONTENT]?.schema;
         if (fileResponseSchema != null) {
             return {
                 type: "file",

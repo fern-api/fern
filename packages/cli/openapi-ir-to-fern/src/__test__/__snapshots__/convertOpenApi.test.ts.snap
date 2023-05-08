@@ -7096,7 +7096,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "string",
+              "type": "file",
             },
           },
         },
@@ -7644,7 +7644,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "string",
+              "type": "file",
             },
           },
           "GetLogsForDeployment": {
@@ -7678,7 +7678,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "unknown",
+              "type": "file",
             },
           },
           "GetLogsForProcess": {
@@ -7712,7 +7712,7 @@ exports[`open api converter hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "string",
+              "type": "file",
             },
           },
         },

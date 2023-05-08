@@ -11967,14 +11967,7 @@ exports[`open api parser hathora simple 1`] = `
           "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
-            "schema": {
-              "description": undefined,
-              "schema": {
-                "type": "string",
-              },
-              "type": "primitive",
-            },
-            "type": "json",
+            "type": "file",
           },
           "responseIsStreaming": false,
           "sdkName": undefined,
@@ -13268,14 +13261,7 @@ exports[`open api parser hathora simple 1`] = `
           "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
-            "schema": {
-              "description": undefined,
-              "schema": {
-                "type": "string",
-              },
-              "type": "primitive",
-            },
-            "type": "json",
+            "type": "file",
           },
           "responseIsStreaming": false,
           "sdkName": undefined,
@@ -13356,14 +13342,7 @@ exports[`open api parser hathora simple 1`] = `
           "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
-            "schema": {
-              "description": undefined,
-              "schema": {
-                "type": "string",
-              },
-              "type": "primitive",
-            },
-            "type": "json",
+            "type": "file",
           },
           "responseIsStreaming": false,
           "sdkName": undefined,
@@ -13444,10 +13423,7 @@ exports[`open api parser hathora simple 1`] = `
           "requestNameOverride": undefined,
           "response": {
             "description": "Ok",
-            "schema": {
-              "type": "unknown",
-            },
-            "type": "json",
+            "type": "file",
           },
           "responseIsStreaming": false,
           "sdkName": undefined,
