@@ -24,6 +24,8 @@ export declare namespace GeneratedFileUploadEndpointRequest {
 
 export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequest {
     private static FORM_DATA_VARIABLE_NAME = "_request";
+    private static OPTS_PARAMETER_NAME = "opts";
+    private static ON_UPLOAD_PROGRESS_OPT_NAME = "onUploadProgress";
 
     private requestParameter: FileUploadRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
@@ -84,6 +86,38 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         if (this.requestParameter != null) {
             parameters.push(this.requestParameter.getParameterDeclaration(context));
         }
+
+        parameters.push({
+            name: GeneratedFileUploadEndpointRequest.OPTS_PARAMETER_NAME,
+            type: getTextOfTsNode(
+                ts.factory.createTypeLiteralNode([
+                    ts.factory.createPropertySignature(
+                        undefined,
+                        GeneratedFileUploadEndpointRequest.ON_UPLOAD_PROGRESS_OPT_NAME,
+                        undefined,
+                        ts.factory.createFunctionTypeNode(
+                            undefined,
+                            [
+                                ts.factory.createParameterDeclaration(
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                    ts.factory.createIdentifier("event"),
+                                    undefined,
+                                    ts.factory.createTypeReferenceNode(
+                                        ts.factory.createIdentifier("ProgressEvent"),
+                                        undefined
+                                    )
+                                ),
+                            ],
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
+                        )
+                    ),
+                ])
+            ),
+            hasQuestionToken: true,
+        });
+
         return parameters;
     }
 
@@ -143,7 +177,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
 
     public getFetcherRequestArgs(
         context: SdkClientClassContext
-    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType"> {
+    ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "onUploadProgress"> {
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams != null ? this.queryParams.getReferenceTo(context) : undefined,
@@ -156,6 +190,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                         GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
                     ),
                 })
+            ),
+            onUploadProgress: ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(GeneratedFileUploadEndpointRequest.OPTS_PARAMETER_NAME),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                GeneratedFileUploadEndpointRequest.ON_UPLOAD_PROGRESS_OPT_NAME
             ),
         };
     }

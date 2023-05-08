@@ -30,6 +30,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
                 adapter: "adapter",
+                onUploadProgress: "onUploadProgress",
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args"),
         },
@@ -109,6 +110,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     ts.factory.createPropertyAssignment(
                         this.Fetcher.Args.properties.withCredentials,
                         ts.factory.createTrue()
+                    )
+                );
+            }
+            if (args.onUploadProgress) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.onUploadProgress,
+                        args.onUploadProgress
                     )
                 );
             }

@@ -14,6 +14,8 @@ export declare namespace StreamingFetcher {
         timeoutMs?: number;
         withCredentials?: boolean;
         adapter?: AxiosAdapter;
+        onUploadProgress?: (event: ProgressEvent) => void;
+        onDownloadProgress?: (event: ProgressEvent) => void;
 
         onData?: (data: unknown) => void;
         onError?: (err: unknown) => void;

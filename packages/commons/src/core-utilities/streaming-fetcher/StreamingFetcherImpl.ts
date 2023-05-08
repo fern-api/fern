@@ -28,6 +28,8 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
+                onUploadProgress: "onUploadProgress",
+                onDownloadProgress: "onDownloadProgress",
                 onData: "onData",
                 onError: "onError",
                 onFinish: "onFinish",
@@ -96,6 +98,14 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                     ts.factory.createPropertyAssignment(
                         this.StreamingFetcher.Args.properties.withCredentials,
                         ts.factory.createTrue()
+                    )
+                );
+            }
+            if (args.onUploadProgress != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.StreamingFetcher.Args.properties.onUploadProgress,
+                        args.onUploadProgress
                     )
                 );
             }

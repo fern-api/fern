@@ -13,7 +13,10 @@ export interface GeneratedEndpointRequest {
     ): OptionalKind<ParameterDeclarationStructure>[];
     getFetcherRequestArgs: (
         context: SdkClientClassContext
-    ) => Pick<Fetcher.Args & StreamingFetcher.Args, "headers" | "queryParameters" | "body" | "contentType">;
+    ) => Pick<
+        Fetcher.Args & StreamingFetcher.Args,
+        "headers" | "queryParameters" | "body" | "contentType" | "onUploadProgress"
+    >;
     getReferenceToRequestBody: (context: SdkClientClassContext) => ts.Expression | undefined;
     getReferenceToQueryParameter: (queryParameterKey: string, context: SdkClientClassContext) => ts.Expression;
 }

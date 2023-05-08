@@ -33,6 +33,7 @@ export declare namespace StreamingFetcher {
         body: ts.Expression | undefined;
         timeoutInSeconds: number | "infinity" | undefined;
         withCredentials: boolean;
+        onUploadProgress: ts.Expression | undefined;
 
         onData: ts.Expression | undefined;
         onError: ts.Expression | undefined;

@@ -80,5 +80,6 @@ export declare namespace Fetcher {
         body: ts.Expression | undefined;
         withCredentials: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
+        onUploadProgress: ts.Expression | undefined;
     }
 }
