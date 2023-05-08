@@ -81,7 +81,12 @@ function convertSdkResponse(
             return throwFileDownloadNotSupported(context);
         },
         streaming: IrVersions.V19.http.SdkResponse.streaming,
-        maybeStreaming: IrVersions.V19.http.SdkResponse.maybeStreaming,
+        maybeStreaming: (maybeStreamingResponse) =>
+            IrVersions.V19.http.SdkResponse.maybeStreaming({
+                condition: maybeStreamingResponse.condition,
+                streaming: maybeStreamingResponse.streaming,
+                nonStreaming: convertResponse(maybeStreamingResponse.nonStreaming, context),
+            }),
         json: IrVersions.V19.http.SdkResponse.nonStreaming,
         _unknown: () => {
             throw new Error("Unknown SdkResponse: " + sdkResponse.type);
