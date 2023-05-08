@@ -56,10 +56,10 @@ service:
       method: GET
       auth: false
       request:
+        name: ListPetsRequest
         query-parameters:
           limit:
             type: optional<integer>
-        name: ListPetsRequest
       response:
         docs: A paged array of pets
         type: root.Pets
@@ -68,7 +68,6 @@ service:
       path: /pets
       method: POST
       auth: false
-      request: {}
 
     showPetById:
       path: /pets/{petId}
@@ -77,7 +76,6 @@ service:
       path-parameters:
         petId:
           type: string
-      request: {}
       response:
         docs: Expected response to a valid request
         type: root.Pet

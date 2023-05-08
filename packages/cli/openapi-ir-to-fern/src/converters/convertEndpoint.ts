@@ -99,17 +99,19 @@ export function convertEndpoint({
 
         const convertedRequest: RawSchemas.HttpRequestSchema = {};
 
+        if (hasQueryParams || hasHeaders) {
+            convertedRequest.name = endpoint.requestNameOverride ?? endpoint.generatedRequestName;
+        }
         if (hasQueryParams) {
             convertedRequest["query-parameters"] = queryParameters;
         }
         if (hasHeaders) {
             convertedRequest.headers = headers;
         }
-        if (hasQueryParams || hasHeaders) {
-            convertedRequest.name = endpoint.requestNameOverride ?? endpoint.generatedRequestName;
-        }
 
-        convertedEndpoint.request = convertedRequest;
+        if (Object.keys(convertedRequest).length > 0) {
+            convertedEndpoint.request = convertedRequest;
+        }
     }
 
     if (endpoint.response != null) {
