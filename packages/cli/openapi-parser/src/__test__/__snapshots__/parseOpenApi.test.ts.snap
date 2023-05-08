@@ -15980,45 +15980,15 @@ exports[`open api parser hume simple 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": undefined,
-            "properties": [
-              {
-                "description": undefined,
-                "key": "json",
-                "schema": {
-                  "json": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "",
-                    "nameOverride": undefined,
-                    "schema": "BaseRequest",
-                    "type": "reference",
-                  },
-                  "type": "json",
-                },
-              },
-              {
-                "description": undefined,
-                "key": "file",
-                "schema": {
-                  "json": {
-                    "description": "Local media files (see recommended input filetypes) to be processed.
-
-If you wish to supply more than 100 files, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
-                    "type": "array",
-                    "value": {
-                      "description": undefined,
-                      "schema": {
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  },
-                  "type": "json",
-                },
-              },
-            ],
-            "type": "multipart",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "StartJobRequest",
+              "nameOverride": undefined,
+              "schema": "BaseRequest",
+              "type": "reference",
+            },
+            "type": "json",
           },
           "requestNameOverride": undefined,
           "response": {
@@ -16173,7 +16143,6 @@ If you wish to supply more than 100 files, consider providing them as an archive
         "SortBy",
         "Direction",
         "Job<Request>",
-        "BaseRequest",
         "JobId",
         "SourceResult",
         "Models",

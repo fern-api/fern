@@ -5,6 +5,7 @@ import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
 const APPLICATION_JSON_CONTENT = "application/json";
+const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
 const MULTIPART_CONTENT = "multipart/form-data";
 
 export function convertRequest({
@@ -53,7 +54,9 @@ export function convertRequest({
     }
 
     // otherwise, convert as json request.
-    const requestBodySchema = requestBody.content[APPLICATION_JSON_CONTENT]?.schema;
+    const requestBodySchema =
+        requestBody.content[APPLICATION_JSON_CONTENT]?.schema ??
+        requestBody.content[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
     if (requestBodySchema == null) {
         return undefined;
     }
