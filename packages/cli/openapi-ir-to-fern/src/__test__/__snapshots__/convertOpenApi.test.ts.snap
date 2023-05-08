@@ -615,7 +615,7 @@ exports[`open api converter buzzshot simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "listAccounts": {
@@ -3888,7 +3888,7 @@ empty.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "locate": {
@@ -3939,7 +3939,7 @@ empty.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "dev-org-auth-connections-create": {
@@ -4049,7 +4049,7 @@ organization.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "create": {
@@ -4238,7 +4238,7 @@ JTI claim of the token in the authorization header.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "list": {
@@ -4302,7 +4302,7 @@ JTI claim of the token in the authorization header.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "create": {
@@ -4432,7 +4432,7 @@ JTI claim of the token in the authorization header.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "create": {
@@ -4639,7 +4639,7 @@ records.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "create": {
@@ -4786,7 +4786,7 @@ tags.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "create": {
@@ -4880,7 +4880,7 @@ tags.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "create": {
@@ -5018,7 +5018,7 @@ won't receive any object events until successfully verified.
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "create": {
@@ -6057,7 +6057,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "CreateApp": {
@@ -6139,7 +6139,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "LoginAnonymous": {
@@ -6219,7 +6219,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "CreateBuild": {
@@ -6322,7 +6322,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "CreateDeployment": {
@@ -6414,7 +6414,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "GetPingServiceEndpoints": {
@@ -6434,7 +6434,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "CreatePrivateLobbyDeprecated": {
@@ -6535,7 +6535,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "CreateLobby": {
@@ -6773,7 +6773,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "GetLogsForApp": {
@@ -6887,7 +6887,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "GetMetrics": {
@@ -6942,7 +6942,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "GetProcessInfo": {
@@ -7022,7 +7022,7 @@ exports[`open api converter hathora simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "CreateRoom": {
@@ -11202,7 +11202,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "deleteApp": {
@@ -12009,7 +12009,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "bulkUpdateAssets": {
@@ -12733,7 +12733,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "deleteBackup": {
@@ -12856,7 +12856,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "deleteComment": {
@@ -12984,7 +12984,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "bulkUpdateContents": {
@@ -13587,7 +13587,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getDump": {
@@ -13608,7 +13608,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getEventConsumers": {
@@ -13673,7 +13673,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getAppHistory": {
@@ -13734,7 +13734,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getLanguages": {
@@ -13754,7 +13754,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getNews": {
@@ -13784,7 +13784,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "deleteComment": {
@@ -13835,7 +13835,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getAppPing": {
@@ -13871,7 +13871,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getPlans": {
@@ -13954,7 +13954,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "deleteEvent": {
@@ -14312,7 +14312,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "deleteField": {
@@ -15152,7 +15152,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getSearchResults": {
@@ -15188,7 +15188,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getCurrentStorageSize": {
@@ -15336,7 +15336,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "deleteContributor": {
@@ -15489,7 +15489,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getTemplate": {
@@ -15524,7 +15524,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "postTranslation": {
@@ -15570,7 +15570,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "deleteUser": {
@@ -15738,7 +15738,7 @@ exports[`open api converter squidex simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "getUser": {
@@ -22141,7 +22141,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "GetApiClientAccessToken": {
@@ -22181,7 +22181,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "GetBuyer": {
@@ -22269,7 +22269,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "AddEntitlementCredit": {
@@ -22468,7 +22468,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "GetEntitlementTerm": {
@@ -22521,7 +22521,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "CreateIntegration": {
@@ -22706,7 +22706,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "GetUsageRecordGroup": {
@@ -23063,7 +23063,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "CancelOffer": {
@@ -23226,7 +23226,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "ListOperations": {
@@ -23277,7 +23277,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "DeleteProduct": {
@@ -23418,7 +23418,7 @@ the same customer, dimension, and time, but a different quantity.",
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "GetRevenueReport": {
@@ -23652,7 +23652,7 @@ exports[`open api converter vellum simple 1`] = `
   "definitionFiles": {
     "__package__.yml": {
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "generate": {
@@ -24360,7 +24360,7 @@ exports[`open api converter vellum simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "list": {
@@ -24441,7 +24441,7 @@ exports[`open api converter vellum simple 1`] = `
         "root": "__package__.yml",
       },
       "service": {
-        "auth": true,
+        "auth": false,
         "base-path": "",
         "endpoints": {
           "retrieve": {
