@@ -7,13 +7,14 @@ import { getTextOfTsNode, maybeAddDocs, NpmPackage, PackageId } from "@fern-type
 import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
+import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
+import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
+import { GeneratedNonThrowingEndpointResponse } from "./endpoint-response/GeneratedNonThrowingEndpointResponse";
+import { GeneratedThrowingEndpointResponse } from "./endpoint-response/GeneratedThrowingEndpointResponse";
+import { GeneratedDefaultEndpointImplementation } from "./endpoints/GeneratedDefaultEndpointImplementation";
 import { GeneratedEndpointImplementation } from "./endpoints/GeneratedEndpointImplementation";
 import { GeneratedMaybeStreamingEndpointImplementation } from "./endpoints/GeneratedMaybeStreamingEndpointImplementation";
-import { GeneratedNonThrowingEndpointImplementation } from "./endpoints/GeneratedNonThrowingEndpointImplementation";
-import { GeneratedNonThrowingFileUploadEndpointImplementation } from "./endpoints/GeneratedNonThrowingFileUploadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
-import { GeneratedThrowingEndpointImplementation } from "./endpoints/GeneratedThrowingEndpointImplementation";
-import { GeneratedThrowingFileUploadEndpointImplementation } from "./endpoints/GeneratedThrowingFileUploadEndpointImplementation";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getParameterNameForPathParameter } from "./endpoints/utils/getParameterNameForPathParameter";
 import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
@@ -90,73 +91,67 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             this.generatedEndpointImplementations = service.endpoints.map((endpoint) => {
                 const requestBody = endpoint.requestBody ?? undefined;
 
-                if (requestBody?.type === "fileUpload") {
+                const getGeneratedEndpointResponse = () => {
                     if (neverThrowErrors) {
-                        return new GeneratedNonThrowingFileUploadEndpointImplementation({
+                        return new GeneratedNonThrowingEndpointResponse({
                             packageId,
                             endpoint,
-                            service,
-                            generatedSdkClientClass: this,
-                            errorResolver,
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
-                            includeCredentialsOnCrossOriginRequests,
-                            requestBody,
-                            timeoutInSeconds,
+                            errorResolver,
                         });
                     } else {
-                        return new GeneratedThrowingFileUploadEndpointImplementation({
+                        return new GeneratedThrowingEndpointResponse({
                             packageId,
                             endpoint,
-                            service,
-                            generatedSdkClientClass: this,
-                            errorResolver,
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
-                            includeCredentialsOnCrossOriginRequests,
-                            requestBody,
-                            timeoutInSeconds,
-                        });
-                    }
-                }
-
-                const getNonStreamingEndpointImplementation = () => {
-                    if (neverThrowErrors) {
-                        return new GeneratedNonThrowingEndpointImplementation({
-                            packageId,
-                            endpoint,
-                            service,
-                            generatedSdkClientClass: this,
                             errorResolver,
-                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
-                            includeCredentialsOnCrossOriginRequests,
-                            requestBody,
-                            timeoutInSeconds,
-                        });
-                    } else {
-                        return new GeneratedThrowingEndpointImplementation({
-                            packageId,
-                            endpoint,
-                            service,
-                            generatedSdkClientClass: this,
-                            errorResolver,
-                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
-                            includeCredentialsOnCrossOriginRequests,
-                            requestBody,
-                            timeoutInSeconds,
                         });
                     }
                 };
 
-                const getStreamingEndpointImplementation = (streamingResponse: StreamingResponse) =>
-                    new GeneratedStreamingEndpointImplementation({
+                const getGeneratedEndpointRequest = () => {
+                    if (requestBody?.type === "fileUpload") {
+                        return new GeneratedFileUploadEndpointRequest({
+                            packageId,
+                            service,
+                            endpoint,
+                            requestBody,
+                            generatedSdkClientClass: this,
+                        });
+                    } else {
+                        return new GeneratedDefaultEndpointRequest({
+                            packageId,
+                            sdkRequest: endpoint.sdkRequest ?? undefined,
+                            service,
+                            endpoint,
+                            requestBody,
+                            generatedSdkClientClass: this,
+                        });
+                    }
+                };
+
+                const getNonStreamingEndpointImplementation = () => {
+                    return new GeneratedDefaultEndpointImplementation({
+                        endpoint,
+                        generatedSdkClientClass: this,
+                        includeCredentialsOnCrossOriginRequests,
+                        timeoutInSeconds,
+                        response: getGeneratedEndpointResponse(),
+                        request: getGeneratedEndpointRequest(),
+                    });
+                };
+
+                const getStreamingEndpointImplementation = (streamingResponse: StreamingResponse) => {
+                    return new GeneratedStreamingEndpointImplementation({
                         packageId,
                         endpoint,
-                        service,
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
                         response: streamingResponse,
-                        requestBody,
                         timeoutInSeconds,
+                        request: getGeneratedEndpointRequest(),
                     });
+                };
 
                 if (endpoint.sdkResponse == null) {
                     return getNonStreamingEndpointImplementation();

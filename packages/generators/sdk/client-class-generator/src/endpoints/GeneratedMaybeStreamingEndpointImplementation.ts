@@ -3,18 +3,15 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
 import { zip } from "lodash-es";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
+import { GeneratedDefaultEndpointImplementation } from "./GeneratedDefaultEndpointImplementation";
 import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
-import { GeneratedNonThrowingEndpointImplementation } from "./GeneratedNonThrowingEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./GeneratedStreamingEndpointImplementation";
-import { GeneratedThrowingEndpointImplementation } from "./GeneratedThrowingEndpointImplementation";
 
 export declare namespace GeneratedMaybeStreamingEndpointImplementation {
     export interface Init {
         endpoint: HttpEndpoint;
         response: MaybeStreamingResponse;
-        nonStreamingEndpointImplementation:
-            | GeneratedThrowingEndpointImplementation
-            | GeneratedNonThrowingEndpointImplementation;
+        nonStreamingEndpointImplementation: GeneratedDefaultEndpointImplementation;
         streamingEndpointImplementation: GeneratedStreamingEndpointImplementation;
     }
 }
@@ -22,9 +19,7 @@ export declare namespace GeneratedMaybeStreamingEndpointImplementation {
 export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedEndpointImplementation {
     public endpoint: HttpEndpoint;
     private response: MaybeStreamingResponse;
-    private nonStreamingEndpointImplementation:
-        | GeneratedThrowingEndpointImplementation
-        | GeneratedNonThrowingEndpointImplementation;
+    private nonStreamingEndpointImplementation: GeneratedDefaultEndpointImplementation;
     private streamingEndpointImplementation: GeneratedStreamingEndpointImplementation;
 
     constructor({
