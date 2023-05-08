@@ -2,6 +2,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { Endpoint, Request, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
 import { ROOT_PREFIX } from "../convertPackage";
 import { Environment } from "../getEnvironment";
+import { convertHeader } from "./convertHeader";
 import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertToHttpMethod } from "./convertToHttpMethod";
@@ -20,12 +21,14 @@ export function convertEndpoint({
     schemas,
     environment,
     nonRequestReferencedSchemas,
+    globalHeaderNames,
 }: {
     endpoint: Endpoint;
     isPackageYml: boolean;
     schemas: Record<SchemaId, Schema>;
     environment: Environment | undefined;
     nonRequestReferencedSchemas: SchemaId[];
+    globalHeaderNames: Set<string>;
 }): ConvertedEndpoint {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
@@ -60,6 +63,19 @@ export function convertEndpoint({
         convertedEndpoint["path-parameters"] = pathParameters;
     }
 
+    const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
+    const endpointSpecificHeaders = endpoint.headers.filter((header) => {
+        return !globalHeaderNames.has(header.name);
+    });
+    for (const header of endpointSpecificHeaders) {
+        const convertedHeader = convertHeader({ header, isPackageYml, schemas });
+        headers[header.name] = convertedHeader.value;
+        additionalTypeDeclarations = {
+            ...additionalTypeDeclarations,
+            ...convertedHeader.additionalTypeDeclarations,
+        };
+    }
+
     if (endpoint.request != null) {
         const convertedRequest = getRequest({
             isPackageYml,
@@ -69,6 +85,7 @@ export function convertEndpoint({
             requestNameOverride: endpoint.requestNameOverride ?? undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
             nonRequestReferencedSchemas,
+            headers: Object.keys(headers).length > 0 ? headers : undefined,
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
@@ -76,11 +93,25 @@ export function convertEndpoint({
             ...additionalTypeDeclarations,
             ...convertedRequest.additionalTypeDeclarations,
         };
-    } else if (Object.keys(queryParameters).length > 0) {
-        convertedEndpoint.request = {
-            name: endpoint.requestNameOverride ?? endpoint.generatedRequestName,
-            "query-parameters": queryParameters,
-        };
+    } else {
+        const hasQueryParams = Object.keys(queryParameters).length > 0;
+        const hasHeaders = Object.keys(headers).length > 0;
+
+        const convertedRequest: RawSchemas.HttpRequestSchema = {};
+
+        if (hasQueryParams || hasHeaders) {
+            convertedRequest.name = endpoint.requestNameOverride ?? endpoint.generatedRequestName;
+        }
+        if (hasQueryParams) {
+            convertedRequest["query-parameters"] = queryParameters;
+        }
+        if (hasHeaders) {
+            convertedRequest.headers = headers;
+        }
+
+        if (Object.keys(convertedRequest).length > 0) {
+            convertedEndpoint.request = convertedRequest;
+        }
     }
 
     if (endpoint.response != null) {
@@ -146,6 +177,7 @@ function getRequest({
     generatedRequestName,
     queryParameters,
     nonRequestReferencedSchemas,
+    headers,
 }: {
     isPackageYml: boolean;
     request: Request;
@@ -154,6 +186,7 @@ function getRequest({
     generatedRequestName: string;
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
     nonRequestReferencedSchemas: SchemaId[];
+    headers?: Record<string, RawSchemas.HttpHeaderSchema>;
 }): ConvertedRequest {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     if (request.type === "json") {
@@ -188,9 +221,17 @@ function getRequest({
                 },
             };
 
-            if (Object.keys(queryParameters ?? {}).length > 0) {
-                convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
+            const hasQueryParams = Object.keys(queryParameters ?? {}).length > 0;
+            const hasHeaders = Object.keys(headers ?? {}).length > 0;
+
+            if (hasQueryParams) {
                 convertedRequest.value["query-parameters"] = queryParameters;
+            }
+            if (hasHeaders) {
+                convertedRequest.value.headers = headers;
+            }
+            if (hasQueryParams || hasHeaders) {
+                convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
             }
 
             return convertedRequest;
@@ -214,6 +255,7 @@ function getRequest({
             value: {
                 name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
                 "query-parameters": queryParameters,
+                headers,
                 body: {
                     properties,
                 },
@@ -245,6 +287,7 @@ function getRequest({
             value: {
                 name: requestNameOverride ?? request.name ?? generatedRequestName,
                 "query-parameters": queryParameters,
+                headers,
                 body: {
                     properties,
                 },

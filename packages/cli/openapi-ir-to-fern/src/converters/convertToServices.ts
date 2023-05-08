@@ -12,7 +12,15 @@ export interface ConvertedServices {
     additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
 }
 
-export function convertToServices(openApiFile: OpenAPIFile, environment: Environment | undefined): ConvertedServices {
+export function convertToServices({
+    openApiFile,
+    environment,
+    globalHeaderNames,
+}: {
+    openApiFile: OpenAPIFile;
+    environment: Environment | undefined;
+    globalHeaderNames: Set<string>;
+}): ConvertedServices {
     const { endpoints, schemas, nonRequestReferencedSchemas } = openApiFile;
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
@@ -33,6 +41,7 @@ export function convertToServices(openApiFile: OpenAPIFile, environment: Environ
                 schemas,
                 environment,
                 nonRequestReferencedSchemas,
+                globalHeaderNames,
             });
             additionalTypeDeclarations = {
                 ...additionalTypeDeclarations,

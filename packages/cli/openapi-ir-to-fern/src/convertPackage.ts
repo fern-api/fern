@@ -6,6 +6,7 @@ import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
 import { ConvertedServices, convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
 import { Environment, getEnvironments } from "./getEnvironment";
+import { getGlobalHeaders } from "./getGlobalHeaders";
 
 export const ROOT_PREFIX = "root";
 
@@ -17,10 +18,15 @@ export interface ConvertedPackage {
 }
 
 export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): ConvertedPackage {
-    const environments = getEnvironments(openApiFile);
-    const convertedServices = convertToServices(openApiFile, environments);
+    const environment = getEnvironments(openApiFile);
+    const rootApiFile = getRootApiFile(openApiFile, environment);
+    const convertedServices = convertToServices({
+        openApiFile,
+        environment,
+        globalHeaderNames: new Set(Object.keys(rootApiFile.headers ?? {})),
+    });
     return {
-        rootApiFile: getRootApiFile(openApiFile, environments),
+        rootApiFile,
         definitionFiles: {
             ...Object.fromEntries(
                 Object.entries(convertedServices.services).map(([file, service]) => [
@@ -40,6 +46,7 @@ export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): C
 
 function getRootApiFile(openApiFile: OpenAPIFile, environment: Environment | undefined): RootApiFileSchema {
     const authSchemes = convertSecuritySchemes(openApiFile.securitySchemes);
+    const globalHeaders = getGlobalHeaders(openApiFile);
 
     const rootApiFile: RootApiFileSchema = {
         name: "api",
@@ -47,6 +54,7 @@ function getRootApiFile(openApiFile: OpenAPIFile, environment: Environment | und
         "error-discrimination": {
             strategy: "status-code",
         },
+        headers: globalHeaders,
     };
 
     if (authSchemes.auth != null) {
