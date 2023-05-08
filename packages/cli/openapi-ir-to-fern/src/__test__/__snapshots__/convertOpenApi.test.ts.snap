@@ -7237,6 +7237,7 @@ exports[`open api converter hathora simple 1`] = `
               "headers": {
                 "Authorization": {
                   "docs": undefined,
+                  "name": "authorization",
                   "type": "string",
                 },
               },
@@ -7273,6 +7274,7 @@ exports[`open api converter hathora simple 1`] = `
               "headers": {
                 "Authorization": {
                   "docs": undefined,
+                  "name": "authorization",
                   "type": "string",
                 },
               },
@@ -7309,6 +7311,7 @@ exports[`open api converter hathora simple 1`] = `
               "headers": {
                 "Authorization": {
                   "docs": undefined,
+                  "name": "authorization",
                   "type": "string",
                 },
               },
@@ -7372,6 +7375,7 @@ exports[`open api converter hathora simple 1`] = `
               "headers": {
                 "Authorization": {
                   "docs": undefined,
+                  "name": "authorization",
                   "type": "string",
                 },
               },
@@ -7415,6 +7419,7 @@ exports[`open api converter hathora simple 1`] = `
               "headers": {
                 "Authorization": {
                   "docs": undefined,
+                  "name": "authorization",
                   "type": "string",
                 },
               },
@@ -7458,6 +7463,7 @@ exports[`open api converter hathora simple 1`] = `
               "headers": {
                 "Authorization": {
                   "docs": undefined,
+                  "name": "authorization",
                   "type": "string",
                 },
               },
@@ -7501,6 +7507,7 @@ exports[`open api converter hathora simple 1`] = `
               "headers": {
                 "Authorization": {
                   "docs": undefined,
+                  "name": "authorization",
                   "type": "string",
                 },
               },
@@ -25402,6 +25409,7 @@ the same customer, dimension, and time, but a different quantity.",
               "headers": {
                 "Authorization": {
                   "docs": undefined,
+                  "name": "authorization",
                   "type": "string",
                 },
               },

@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Header, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
+import { camelCase } from "lodash-es";
 import { ROOT_PREFIX } from "../convertPackage";
 import { convertToTypeReference } from "./convertToTypeReference";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
@@ -23,8 +24,10 @@ export function convertHeader({
         schemas,
         prefix: isPackageYml ? undefined : ROOT_PREFIX,
     });
+    const headerWithoutXPrefix = header.name.replace(/^x-|^X-/, "");
     return {
         value: {
+            name: camelCase(headerWithoutXPrefix),
             docs: header.description ?? undefined,
             type: getTypeFromTypeReference(typeReference.typeReference),
         },
