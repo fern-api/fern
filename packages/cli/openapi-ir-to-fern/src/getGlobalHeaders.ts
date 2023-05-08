@@ -8,16 +8,20 @@ export function getGlobalHeaders(openApiFile: OpenAPIFile): Record<string, RawSc
     const globalHeaders: Record<string, RawSchemas.HttpHeaderSchema> = {};
     let visitedFirstEndpoint = false;
     for (const endpoint of openApiFile.endpoints) {
-        const endpointHeaders = endpoint.headers;
         if (visitedFirstEndpoint) {
+            const endpointHeaderNames = new Set(
+                endpoint.headers.map((endpointHeader) => {
+                    return endpointHeader.name;
+                })
+            );
             for (const headerName of Object.keys(globalHeaders)) {
-                if (!(headerName in endpointHeaders)) {
+                if (!endpointHeaderNames.has(headerName)) {
                     // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
                     delete globalHeaders[headerName];
                 }
             }
         } else {
-            endpointHeaders.forEach((endpointHeader) => {
+            endpoint.headers.forEach((endpointHeader) => {
                 if (endpointHeader.name === "Authorization") {
                     // Authorization header will already be configured based on security schemes
                 } else {

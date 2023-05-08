@@ -562,16 +562,6 @@ exports[`open api converter axle simple 1`] = `
               },
             },
             "request": {
-              "headers": {
-                "x-client-id": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-              },
               "name": "GetAccountRequest",
               "query-parameters": {
                 "expand": {
@@ -607,19 +597,6 @@ exports[`open api converter axle simple 1`] = `
                 "type": "string",
               },
             },
-            "request": {
-              "headers": {
-                "x-client-id": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-              },
-              "name": "GetCarrierRequest",
-            },
             "response": {
               "docs": "",
               "type": "root.GetCarrierResponse",
@@ -629,19 +606,6 @@ exports[`open api converter axle simple 1`] = `
             "auth": false,
             "method": "GET",
             "path": "/carriers",
-            "request": {
-              "headers": {
-                "x-client-id": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-              },
-              "name": "GetCarriersRequest",
-            },
             "response": {
               "docs": "",
               "type": "root.GetCarriersResponse",
@@ -683,16 +647,7 @@ exports[`open api converter axle simple 1`] = `
                   },
                 },
               },
-              "headers": {
-                "x-client-id": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-              },
+              "headers": undefined,
               "name": "StartIgnitionRequest",
               "query-parameters": undefined,
             },
@@ -723,16 +678,6 @@ exports[`open api converter axle simple 1`] = `
               },
             },
             "request": {
-              "headers": {
-                "x-client-id": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-              },
               "name": "GetPolicyRequest",
               "query-parameters": {
                 "expand": {
@@ -771,16 +716,7 @@ exports[`open api converter axle simple 1`] = `
                   },
                 },
               },
-              "headers": {
-                "x-client-id": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-                "x-client-secret": {
-                  "docs": undefined,
-                  "type": "string",
-                },
-              },
+              "headers": undefined,
               "name": "ExchangeTokenRequest",
               "query-parameters": undefined,
             },
@@ -805,6 +741,18 @@ exports[`open api converter axle simple 1`] = `
     "display-name": "Axle API",
     "error-discrimination": {
       "strategy": "status-code",
+    },
+    "headers": {
+      "x-client-id": {
+        "docs": undefined,
+        "name": "clientId",
+        "type": "string",
+      },
+      "x-client-secret": {
+        "docs": undefined,
+        "name": "clientSecret",
+        "type": "string",
+      },
     },
     "name": "api",
   },
