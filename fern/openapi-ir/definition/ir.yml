@@ -198,6 +198,14 @@ types:
       json: Schema
 
   Response:
+    union:
+      file: FileResponse
+      json: JsonResponse
+
+  FileResponse:
+    extends: WithDescription
+
+  JsonResponse:
     extends: WithDescription
     properties:
       schema: Schema
