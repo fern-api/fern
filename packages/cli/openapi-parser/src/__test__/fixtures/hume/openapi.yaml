@@ -23,51 +23,6 @@ paths:
       description: Start a new batch job.
       requestBody:
         content:
-          multipart/form-data:
-            schema:
-              type: object
-              required:
-                - file
-              properties:
-                json:
-                  allOf:
-                    - "$ref": "#/components/schemas/BaseRequest"
-                    - default:
-                        callback_url:
-                        models:
-                          burst: {}
-                          face:
-                            descriptions:
-                            facs:
-                            fps_pred: 3.0
-                            identify_faces: false
-                            min_face_size: 60
-                            prob_threshold: 0.99
-                            save_faces: false
-                          facemesh: {}
-                          language:
-                            granularity: word
-                            identify_speakers: false
-                            sentiment:
-                            toxicity:
-                          ner:
-                            identify_speakers: false
-                          prosody:
-                            granularity: utterance
-                            identify_speakers: false
-                            window:
-                        notify: false
-                        urls: []
-                file:
-                  type: array
-                  description: |-
-                    Local media files (see recommended input filetypes) to be processed.
-
-                    If you wish to supply more than 100 files, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`).
-                  items:
-                    type: string
-                    format: binary
-                  maxItems: 100
           application/json; charset=utf-8:
             schema:
               "$ref": "#/components/schemas/BaseRequest"
