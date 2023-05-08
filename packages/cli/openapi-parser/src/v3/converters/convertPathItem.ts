@@ -158,7 +158,7 @@ function convertOperation({
         queryParameters: convertedParameters.queryParameters,
         headers: convertedParameters.headers,
         requestNameOverride: requestNameOverride ?? undefined,
-        generatedRequestName: getGeneratedTypeName(baseBreadcrumbs),
+        generatedRequestName: getGeneratedTypeName(requestBreadcrumbs),
         request: convertedRequest,
         response: convertResponse({ responses: operation.responses, context, responseBreadcrumbs }),
         errors: [],

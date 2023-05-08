@@ -3896,7 +3896,7 @@ empty.
             "method": "GET",
             "path": "/artifacts.locate",
             "request": {
-              "name": "ArtifactsLocate",
+              "name": "ArtifactsLocateRequest",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -3980,7 +3980,7 @@ empty.
             "method": "GET",
             "path": "/dev-orgs.auth-connections.get",
             "request": {
-              "name": "DevOrgAuthConnectionsGet",
+              "name": "DevOrgAuthConnectionsGetRequest",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4144,7 +4144,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/auth-tokens.get",
             "request": {
-              "name": "AuthTokensGet",
+              "name": "AuthTokensGetRequest",
               "query-parameters": {
                 "token_id": {
                   "allow-multiple": undefined,
@@ -4163,7 +4163,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/auth-tokens.list",
             "request": {
-              "name": "AuthTokensList",
+              "name": "AuthTokensListRequest",
               "query-parameters": {
                 "client_id": {
                   "allow-multiple": undefined,
@@ -4246,7 +4246,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/dev-users.list",
             "request": {
-              "name": "DevUsersList",
+              "name": "DevUsersListRequest",
               "query-parameters": {
                 "cursor": {
                   "allow-multiple": undefined,
@@ -4346,7 +4346,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/parts.get",
             "request": {
-              "name": "PartsGet",
+              "name": "PartsGetRequest",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4365,7 +4365,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/parts.list",
             "request": {
-              "name": "PartsList",
+              "name": "PartsListRequest",
               "query-parameters": {
                 "created_by": {
                   "allow-multiple": true,
@@ -4505,7 +4505,7 @@ records.
             "method": "GET",
             "path": "/rev-orgs.get",
             "request": {
-              "name": "RevOrgsGet",
+              "name": "RevOrgsGetRequest",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4524,7 +4524,7 @@ records.
             "method": "GET",
             "path": "/rev-orgs.list",
             "request": {
-              "name": "RevOrgsList",
+              "name": "RevOrgsListRequest",
               "query-parameters": {
                 "created_by": {
                   "allow-multiple": true,
@@ -4700,7 +4700,7 @@ permitted.
             "method": "GET",
             "path": "/tags.get",
             "request": {
-              "name": "TagsGet",
+              "name": "TagsGetRequest",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4719,7 +4719,7 @@ permitted.
             "method": "GET",
             "path": "/tags.list",
             "request": {
-              "name": "TagsList",
+              "name": "TagsListRequest",
               "query-parameters": {
                 "cursor": {
                   "allow-multiple": undefined,
@@ -4809,7 +4809,7 @@ tags.
             "method": "GET",
             "path": "/timeline-entries.get",
             "request": {
-              "name": "TimelineEntriesGet",
+              "name": "TimelineEntriesGetRequest",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4828,7 +4828,7 @@ tags.
             "method": "GET",
             "path": "/timeline-entries.list",
             "request": {
-              "name": "TimelineEntriesList",
+              "name": "TimelineEntriesListRequest",
               "query-parameters": {
                 "cursor": {
                   "allow-multiple": undefined,
@@ -4942,7 +4942,7 @@ response.
             "method": "GET",
             "path": "/webhooks.get",
             "request": {
-              "name": "WebhooksGet",
+              "name": "WebhooksGetRequest",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -5062,7 +5062,7 @@ won't receive any object events until successfully verified.
             "method": "GET",
             "path": "/works.export",
             "request": {
-              "name": "WorksExport",
+              "name": "WorksExportRequest",
               "query-parameters": {
                 "applies_to_part": {
                   "allow-multiple": true,
@@ -5126,7 +5126,7 @@ won't receive any object events until successfully verified.
             "method": "GET",
             "path": "/works.get",
             "request": {
-              "name": "WorksGet",
+              "name": "WorksGetRequest",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -5145,7 +5145,7 @@ won't receive any object events until successfully verified.
             "method": "GET",
             "path": "/works.list",
             "request": {
-              "name": "WorksList",
+              "name": "WorksListRequest",
               "query-parameters": {
                 "applies_to_part": {
                   "allow-multiple": true,
@@ -6306,7 +6306,7 @@ exports[`open api converter hathora simple 1`] = `
                   "file": "file",
                 },
               },
-              "name": "RunBuild",
+              "name": "RunBuildRequest",
               "query-parameters": undefined,
             },
             "response": {
@@ -6448,7 +6448,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "CreatePrivateLobbyDeprecated",
+              "name": "CreatePrivateLobbyDeprecatedRequest",
               "query-parameters": {
                 "local": {
                   "allow-multiple": undefined,
@@ -6478,7 +6478,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "CreatePublicLobbyDeprecated",
+              "name": "CreatePublicLobbyDeprecatedRequest",
               "query-parameters": {
                 "local": {
                   "allow-multiple": undefined,
@@ -6508,7 +6508,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "ListActivePublicLobbiesDeprecated",
+              "name": "ListActivePublicLobbiesDeprecatedRequest",
               "query-parameters": {
                 "local": {
                   "allow-multiple": undefined,
@@ -6720,7 +6720,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "ListActivePublicLobbies",
+              "name": "ListActivePublicLobbiesRequest",
               "query-parameters": {
                 "region": {
                   "allow-multiple": undefined,
@@ -6787,7 +6787,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetLogsForApp",
+              "name": "GetLogsForAppRequest",
               "query-parameters": {
                 "follow": {
                   "allow-multiple": undefined,
@@ -6826,7 +6826,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetLogsForDeployment",
+              "name": "GetLogsForDeploymentRequest",
               "query-parameters": {
                 "follow": {
                   "allow-multiple": undefined,
@@ -6860,7 +6860,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetLogsForProcess",
+              "name": "GetLogsForProcessRequest",
               "query-parameters": {
                 "follow": {
                   "allow-multiple": undefined,
@@ -6905,7 +6905,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetMetrics",
+              "name": "GetMetricsRequest",
               "query-parameters": {
                 "end": {
                   "allow-multiple": undefined,
@@ -6975,7 +6975,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetRunningProcesses",
+              "name": "GetRunningProcessesRequest",
               "query-parameters": {
                 "region": {
                   "allow-multiple": undefined,
@@ -7000,7 +7000,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetStoppedProcesses",
+              "name": "GetStoppedProcessesRequest",
               "query-parameters": {
                 "region": {
                   "allow-multiple": undefined,
@@ -11993,7 +11993,7 @@ exports[`open api converter squidex simple 1`] = `
                   "file": "file",
                 },
               },
-              "name": "AppsUploadImage",
+              "name": "AppsUploadImageRequest",
               "query-parameters": undefined,
             },
             "response": {
@@ -12066,7 +12066,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetsDeleteAsset",
+              "name": "AssetsDeleteAssetRequest",
               "query-parameters": {
                 "CheckReferrers": {
                   "allow-multiple": undefined,
@@ -12126,7 +12126,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetsGetAssetContent",
+              "name": "AssetsGetAssetContentRequest",
               "query-parameters": {
                 "auto": {
                   "allow-multiple": undefined,
@@ -12220,7 +12220,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetsGetAssetContentBySlug",
+              "name": "AssetsGetAssetContentBySlugRequest",
               "query-parameters": {
                 "auto": {
                   "allow-multiple": undefined,
@@ -12306,7 +12306,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetsGetAssetFolders",
+              "name": "AssetsGetAssetFoldersRequest",
               "query-parameters": {
                 "parentId": {
                   "allow-multiple": undefined,
@@ -12336,7 +12336,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetsGetAssets",
+              "name": "AssetsGetAssetsRequest",
               "query-parameters": {
                 "$filter": {
                   "allow-multiple": undefined,
@@ -12432,7 +12432,7 @@ exports[`open api converter squidex simple 1`] = `
                   "File": "file",
                 },
               },
-              "name": "AssetsPostAsset",
+              "name": "AssetsPostAssetRequest",
               "query-parameters": {
                 "Duplicate": {
                   "allow-multiple": undefined,
@@ -12507,7 +12507,7 @@ exports[`open api converter squidex simple 1`] = `
                   "File": "file",
                 },
               },
-              "name": "AssetsPostUpsertAsset",
+              "name": "AssetsPostUpsertAssetRequest",
               "query-parameters": {
                 "Duplicate": {
                   "allow-multiple": undefined,
@@ -12593,7 +12593,7 @@ exports[`open api converter squidex simple 1`] = `
                   "file": "file",
                 },
               },
-              "name": "AssetsPutAssetContent",
+              "name": "AssetsPutAssetContentRequest",
               "query-parameters": undefined,
             },
             "response": {
@@ -12777,7 +12777,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "BackupsGetBackupContentV2",
+              "name": "BackupsGetBackupContentV2Request",
               "query-parameters": {
                 "app": {
                   "allow-multiple": undefined,
@@ -12893,7 +12893,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "CommentsGetComments",
+              "name": "CommentsGetCommentsRequest",
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
@@ -13084,7 +13084,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsDeleteContent",
+              "name": "ContentsDeleteContentRequest",
               "query-parameters": {
                 "CheckReferrers": {
                   "allow-multiple": undefined,
@@ -13164,7 +13164,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsGetContent",
+              "name": "ContentsGetContentRequest",
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
@@ -13235,7 +13235,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsGetContents",
+              "name": "ContentsGetContentsRequest",
               "query-parameters": {
                 "ids": {
                   "allow-multiple": undefined,
@@ -13298,7 +13298,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsGetReferences",
+              "name": "ContentsGetReferencesRequest",
               "query-parameters": {
                 "q": {
                   "allow-multiple": undefined,
@@ -13331,7 +13331,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsGetReferencing",
+              "name": "ContentsGetReferencingRequest",
               "query-parameters": {
                 "q": {
                   "allow-multiple": undefined,
@@ -13393,7 +13393,7 @@ exports[`open api converter squidex simple 1`] = `
                 "docs": undefined,
                 "type": "map<string, root.ContentFieldData>",
               },
-              "name": "ContentsPostContent",
+              "name": "ContentsPostContentRequest",
               "query-parameters": {
                 "Id": {
                   "allow-multiple": undefined,
@@ -13483,7 +13483,7 @@ exports[`open api converter squidex simple 1`] = `
                 "docs": undefined,
                 "type": "map<string, root.ContentFieldData>",
               },
-              "name": "ContentsPostUpsertContent",
+              "name": "ContentsPostUpsertContentRequest",
               "query-parameters": {
                 "Patch": {
                   "allow-multiple": undefined,
@@ -13687,7 +13687,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "HistoryGetAppHistory",
+              "name": "HistoryGetAppHistoryRequest",
               "query-parameters": {
                 "channel": {
                   "allow-multiple": undefined,
@@ -13712,7 +13712,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "HistoryGetTeamHistory",
+              "name": "HistoryGetTeamHistoryRequest",
               "query-parameters": {
                 "channel": {
                   "allow-multiple": undefined,
@@ -13762,7 +13762,7 @@ exports[`open api converter squidex simple 1`] = `
             "method": "GET",
             "path": "/api/news/features",
             "request": {
-              "name": "NewsGetNews",
+              "name": "NewsGetNewsRequest",
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
@@ -13813,7 +13813,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "NotificationsGetNotifications",
+              "name": "NotificationsGetNotificationsRequest",
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
@@ -14106,7 +14106,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "RulesGetEvents",
+              "name": "RulesGetEventsRequest",
               "query-parameters": {
                 "ruleId": {
                   "allow-multiple": undefined,
@@ -14239,7 +14239,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "RulesPutRuleRun",
+              "name": "RulesPutRuleRunRequest",
               "query-parameters": {
                 "fromSnapshots": {
                   "allow-multiple": undefined,
@@ -15166,7 +15166,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "SearchGetSearchResults",
+              "name": "SearchGetSearchResultsRequest",
               "query-parameters": {
                 "query": {
                   "allow-multiple": undefined,
@@ -15604,7 +15604,7 @@ exports[`open api converter squidex simple 1`] = `
             "method": "GET",
             "path": "/api/user-management",
             "request": {
-              "name": "UserManagementGetUsers",
+              "name": "UserManagementGetUsersRequest",
               "query-parameters": {
                 "query": {
                   "allow-multiple": undefined,
@@ -15781,7 +15781,7 @@ exports[`open api converter squidex simple 1`] = `
             "method": "GET",
             "path": "/api/users",
             "request": {
-              "name": "UsersGetUsers",
+              "name": "UsersGetUsersRequest",
               "query-parameters": {
                 "query": {
                   "allow-multiple": undefined,
@@ -22762,7 +22762,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordGroupsByEntitlement",
+              "name": "ListUsageRecordGroupsByEntitlementRequest",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22802,7 +22802,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordGroupsByOrganization",
+              "name": "ListUsageRecordGroupsByOrganizationRequest",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22846,7 +22846,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordGroupsByProduct",
+              "name": "ListUsageRecordGroupsByProductRequest",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22890,7 +22890,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordReportsByEntitlement",
+              "name": "ListUsageRecordReportsByEntitlementRequest",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22935,7 +22935,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordReportsByOrganization",
+              "name": "ListUsageRecordReportsByOrganizationRequest",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22979,7 +22979,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordReportsByProduct",
+              "name": "ListUsageRecordReportsByProductRequest",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -23240,7 +23240,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListOperations",
+              "name": "ListOperationsRequest",
               "query-parameters": {
                 "crmOpportunityId": {
                   "allow-multiple": undefined,
@@ -23518,7 +23518,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListRevenueRecordDetails",
+              "name": "ListRevenueRecordDetailsRequest",
               "query-parameters": {
                 "buyerId": {
                   "allow-multiple": undefined,
@@ -23577,7 +23577,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListRevenueRecords",
+              "name": "ListRevenueRecordsRequest",
               "query-parameters": {
                 "buyerId": {
                   "allow-multiple": undefined,
