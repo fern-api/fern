@@ -3896,7 +3896,7 @@ empty.
             "method": "GET",
             "path": "/artifacts.locate",
             "request": {
-              "name": "ArtifactsLocateRequest",
+              "name": "ArtifactsLocate",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -3980,7 +3980,7 @@ empty.
             "method": "GET",
             "path": "/dev-orgs.auth-connections.get",
             "request": {
-              "name": "DevOrgAuthConnectionsGetRequest",
+              "name": "DevOrgAuthConnectionsGet",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4144,7 +4144,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/auth-tokens.get",
             "request": {
-              "name": "AuthTokensGetRequest",
+              "name": "AuthTokensGet",
               "query-parameters": {
                 "token_id": {
                   "allow-multiple": undefined,
@@ -4163,7 +4163,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/auth-tokens.list",
             "request": {
-              "name": "AuthTokensListRequest",
+              "name": "AuthTokensList",
               "query-parameters": {
                 "client_id": {
                   "allow-multiple": undefined,
@@ -4246,7 +4246,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/dev-users.list",
             "request": {
-              "name": "DevUsersListRequest",
+              "name": "DevUsersList",
               "query-parameters": {
                 "cursor": {
                   "allow-multiple": undefined,
@@ -4346,7 +4346,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/parts.get",
             "request": {
-              "name": "PartsGetRequest",
+              "name": "PartsGet",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4365,7 +4365,7 @@ JTI claim of the token in the authorization header.
             "method": "GET",
             "path": "/parts.list",
             "request": {
-              "name": "PartsListRequest",
+              "name": "PartsList",
               "query-parameters": {
                 "created_by": {
                   "allow-multiple": true,
@@ -4505,7 +4505,7 @@ records.
             "method": "GET",
             "path": "/rev-orgs.get",
             "request": {
-              "name": "RevOrgsGetRequest",
+              "name": "RevOrgsGet",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4524,7 +4524,7 @@ records.
             "method": "GET",
             "path": "/rev-orgs.list",
             "request": {
-              "name": "RevOrgsListRequest",
+              "name": "RevOrgsList",
               "query-parameters": {
                 "created_by": {
                   "allow-multiple": true,
@@ -4700,7 +4700,7 @@ permitted.
             "method": "GET",
             "path": "/tags.get",
             "request": {
-              "name": "TagsGetRequest",
+              "name": "TagsGet",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4719,7 +4719,7 @@ permitted.
             "method": "GET",
             "path": "/tags.list",
             "request": {
-              "name": "TagsListRequest",
+              "name": "TagsList",
               "query-parameters": {
                 "cursor": {
                   "allow-multiple": undefined,
@@ -4809,7 +4809,7 @@ tags.
             "method": "GET",
             "path": "/timeline-entries.get",
             "request": {
-              "name": "TimelineEntriesGetRequest",
+              "name": "TimelineEntriesGet",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -4828,7 +4828,7 @@ tags.
             "method": "GET",
             "path": "/timeline-entries.list",
             "request": {
-              "name": "TimelineEntriesListRequest",
+              "name": "TimelineEntriesList",
               "query-parameters": {
                 "cursor": {
                   "allow-multiple": undefined,
@@ -4942,7 +4942,7 @@ response.
             "method": "GET",
             "path": "/webhooks.get",
             "request": {
-              "name": "WebhooksGetRequest",
+              "name": "WebhooksGet",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -5062,7 +5062,7 @@ won't receive any object events until successfully verified.
             "method": "GET",
             "path": "/works.export",
             "request": {
-              "name": "WorksExportRequest",
+              "name": "WorksExport",
               "query-parameters": {
                 "applies_to_part": {
                   "allow-multiple": true,
@@ -5126,7 +5126,7 @@ won't receive any object events until successfully verified.
             "method": "GET",
             "path": "/works.get",
             "request": {
-              "name": "WorksGetRequest",
+              "name": "WorksGet",
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
@@ -5145,7 +5145,7 @@ won't receive any object events until successfully verified.
             "method": "GET",
             "path": "/works.list",
             "request": {
-              "name": "WorksListRequest",
+              "name": "WorksList",
               "query-parameters": {
                 "applies_to_part": {
                   "allow-multiple": true,
@@ -6077,7 +6077,7 @@ exports[`open api converter hathora simple 1`] = `
           },
           "DeleteApp": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/apps/v1/delete/{appId}",
             "path-parameters": {
               "appId": {
@@ -6239,7 +6239,7 @@ exports[`open api converter hathora simple 1`] = `
           },
           "DeleteBuild": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/builds/v1/{appId}/delete/{buildId}",
             "path-parameters": {
               "appId": {
@@ -6306,7 +6306,7 @@ exports[`open api converter hathora simple 1`] = `
                   "file": "file",
                 },
               },
-              "name": "RunBuildRequest",
+              "name": "RunBuild",
               "query-parameters": undefined,
             },
             "response": {
@@ -6448,7 +6448,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "CreatePrivateLobbyDeprecatedRequest",
+              "name": "CreatePrivateLobbyDeprecated",
               "query-parameters": {
                 "local": {
                   "allow-multiple": undefined,
@@ -6478,7 +6478,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "CreatePublicLobbyDeprecatedRequest",
+              "name": "CreatePublicLobbyDeprecated",
               "query-parameters": {
                 "local": {
                   "allow-multiple": undefined,
@@ -6508,7 +6508,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "ListActivePublicLobbiesDeprecatedRequest",
+              "name": "ListActivePublicLobbiesDeprecated",
               "query-parameters": {
                 "local": {
                   "allow-multiple": undefined,
@@ -6720,7 +6720,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "ListActivePublicLobbiesRequest",
+              "name": "ListActivePublicLobbies",
               "query-parameters": {
                 "region": {
                   "allow-multiple": undefined,
@@ -6787,7 +6787,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetLogsForAppRequest",
+              "name": "GetLogsForApp",
               "query-parameters": {
                 "follow": {
                   "allow-multiple": undefined,
@@ -6826,7 +6826,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetLogsForDeploymentRequest",
+              "name": "GetLogsForDeployment",
               "query-parameters": {
                 "follow": {
                   "allow-multiple": undefined,
@@ -6860,7 +6860,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetLogsForProcessRequest",
+              "name": "GetLogsForProcess",
               "query-parameters": {
                 "follow": {
                   "allow-multiple": undefined,
@@ -6905,7 +6905,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetMetricsRequest",
+              "name": "GetMetrics",
               "query-parameters": {
                 "end": {
                   "allow-multiple": undefined,
@@ -6975,7 +6975,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetRunningProcessesRequest",
+              "name": "GetRunningProcesses",
               "query-parameters": {
                 "region": {
                   "allow-multiple": undefined,
@@ -7000,7 +7000,7 @@ exports[`open api converter hathora simple 1`] = `
               },
             },
             "request": {
-              "name": "GetStoppedProcessesRequest",
+              "name": "GetStoppedProcesses",
               "query-parameters": {
                 "region": {
                   "allow-multiple": undefined,
@@ -11207,7 +11207,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteApp": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
@@ -11218,7 +11218,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteClient": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
               "app": {
@@ -11237,7 +11237,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteContributor": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/contributors/{id}",
             "path-parameters": {
               "app": {
@@ -11256,7 +11256,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteImage": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
@@ -11271,7 +11271,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteLanguage": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
               "app": {
@@ -11290,7 +11290,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteMyself": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/contributors/me",
             "path-parameters": {
               "app": {
@@ -11305,7 +11305,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRole": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
               "app": {
@@ -11324,7 +11324,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteWorkflow": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
               "app": {
@@ -11993,7 +11993,7 @@ exports[`open api converter squidex simple 1`] = `
                   "file": "file",
                 },
               },
-              "name": "AppsUploadImageRequest",
+              "name": "AppsUploadImage",
               "query-parameters": undefined,
             },
             "response": {
@@ -12053,7 +12053,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteAsset": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
@@ -12066,7 +12066,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetsDeleteAssetRequest",
+              "name": "AssetsDeleteAsset",
               "query-parameters": {
                 "CheckReferrers": {
                   "allow-multiple": undefined,
@@ -12083,7 +12083,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteAssetFolder": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
               "app": {
@@ -12126,7 +12126,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetContentGetAssetContentRequest",
+              "name": "AssetsGetAssetContent",
               "query-parameters": {
                 "auto": {
                   "allow-multiple": undefined,
@@ -12220,7 +12220,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetContentGetAssetContentBySlugRequest",
+              "name": "AssetsGetAssetContentBySlug",
               "query-parameters": {
                 "auto": {
                   "allow-multiple": undefined,
@@ -12306,7 +12306,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetFoldersGetAssetFoldersRequest",
+              "name": "AssetsGetAssetFolders",
               "query-parameters": {
                 "parentId": {
                   "allow-multiple": undefined,
@@ -12336,7 +12336,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "AssetsGetAssetsRequest",
+              "name": "AssetsGetAssets",
               "query-parameters": {
                 "$filter": {
                   "allow-multiple": undefined,
@@ -12432,7 +12432,7 @@ exports[`open api converter squidex simple 1`] = `
                   "File": "file",
                 },
               },
-              "name": "AssetsPostAssetRequest",
+              "name": "AssetsPostAsset",
               "query-parameters": {
                 "Duplicate": {
                   "allow-multiple": undefined,
@@ -12507,7 +12507,7 @@ exports[`open api converter squidex simple 1`] = `
                   "File": "file",
                 },
               },
-              "name": "AssetsPostUpsertAssetRequest",
+              "name": "AssetsPostUpsertAsset",
               "query-parameters": {
                 "Duplicate": {
                   "allow-multiple": undefined,
@@ -12593,7 +12593,7 @@ exports[`open api converter squidex simple 1`] = `
                   "file": "file",
                 },
               },
-              "name": "AssetsPutAssetContentRequest",
+              "name": "AssetsPutAssetContent",
               "query-parameters": undefined,
             },
             "response": {
@@ -12738,7 +12738,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteBackup": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
               "app": {
@@ -12777,7 +12777,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "BackupContentGetBackupContentV2Request",
+              "name": "BackupsGetBackupContentV2",
               "query-parameters": {
                 "app": {
                   "allow-multiple": undefined,
@@ -12861,7 +12861,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteComment": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
               "app": {
@@ -12893,7 +12893,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "CommentsGetCommentsRequest",
+              "name": "CommentsGetComments",
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
@@ -13067,7 +13067,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteContent": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
@@ -13084,7 +13084,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsDeleteContentRequest",
+              "name": "ContentsDeleteContent",
               "query-parameters": {
                 "CheckReferrers": {
                   "allow-multiple": undefined,
@@ -13101,7 +13101,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteContentStatus": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
               "app": {
@@ -13124,7 +13124,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteVersion": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
               "app": {
@@ -13164,7 +13164,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsGetContentRequest",
+              "name": "ContentsGetContent",
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
@@ -13235,7 +13235,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsGetContentsRequest",
+              "name": "ContentsGetContents",
               "query-parameters": {
                 "ids": {
                   "allow-multiple": undefined,
@@ -13298,7 +13298,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsGetReferencesRequest",
+              "name": "ContentsGetReferences",
               "query-parameters": {
                 "q": {
                   "allow-multiple": undefined,
@@ -13331,7 +13331,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "ContentsGetReferencingRequest",
+              "name": "ContentsGetReferencing",
               "query-parameters": {
                 "q": {
                   "allow-multiple": undefined,
@@ -13393,7 +13393,7 @@ exports[`open api converter squidex simple 1`] = `
                 "docs": undefined,
                 "type": "map<string, root.ContentFieldData>",
               },
-              "name": "ContentsPostContentRequest",
+              "name": "ContentsPostContent",
               "query-parameters": {
                 "Id": {
                   "allow-multiple": undefined,
@@ -13483,7 +13483,7 @@ exports[`open api converter squidex simple 1`] = `
                 "docs": undefined,
                 "type": "map<string, root.ContentFieldData>",
               },
-              "name": "ContentsPostUpsertContentRequest",
+              "name": "ContentsPostUpsertContent",
               "query-parameters": {
                 "Patch": {
                   "allow-multiple": undefined,
@@ -13687,7 +13687,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "HistoryGetAppHistoryRequest",
+              "name": "HistoryGetAppHistory",
               "query-parameters": {
                 "channel": {
                   "allow-multiple": undefined,
@@ -13712,7 +13712,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "HistoryGetTeamHistoryRequest",
+              "name": "HistoryGetTeamHistory",
               "query-parameters": {
                 "channel": {
                   "allow-multiple": undefined,
@@ -13762,7 +13762,7 @@ exports[`open api converter squidex simple 1`] = `
             "method": "GET",
             "path": "/api/news/features",
             "request": {
-              "name": "NewsGetNewsRequest",
+              "name": "NewsGetNews",
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
@@ -13789,7 +13789,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteComment": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/users/{userId}/notifications/{commentId}",
             "path-parameters": {
               "commentId": {
@@ -13813,7 +13813,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "UserNotificationsGetNotificationsRequest",
+              "name": "NotificationsGetNotifications",
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
@@ -13959,7 +13959,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteEvent": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
               "app": {
@@ -13974,7 +13974,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteEvents": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
               "app": {
@@ -13985,7 +13985,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRule": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
               "app": {
@@ -14000,7 +14000,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRuleEvents": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}/events",
             "path-parameters": {
               "app": {
@@ -14015,7 +14015,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRuleRun": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/rules/run",
             "path-parameters": {
               "app": {
@@ -14106,7 +14106,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "RulesGetEventsRequest",
+              "name": "RulesGetEvents",
               "query-parameters": {
                 "ruleId": {
                   "allow-multiple": undefined,
@@ -14239,7 +14239,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "RulesPutRuleRunRequest",
+              "name": "RulesPutRuleRun",
               "query-parameters": {
                 "fromSnapshots": {
                   "allow-multiple": undefined,
@@ -14317,7 +14317,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteField": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
               "app": {
@@ -14340,7 +14340,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteNestedField": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
               "app": {
@@ -14367,7 +14367,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteSchema": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
@@ -15166,7 +15166,7 @@ exports[`open api converter squidex simple 1`] = `
               },
             },
             "request": {
-              "name": "SearchGetSearchResultsRequest",
+              "name": "SearchGetSearchResults",
               "query-parameters": {
                 "query": {
                   "allow-multiple": undefined,
@@ -15341,7 +15341,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteContributor": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/teams/{team}/contributors/{id}",
             "path-parameters": {
               "id": {
@@ -15360,7 +15360,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteMyself": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/teams/{team}/contributors/me",
             "path-parameters": {
               "team": {
@@ -15575,7 +15575,7 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteUser": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
@@ -15604,7 +15604,7 @@ exports[`open api converter squidex simple 1`] = `
             "method": "GET",
             "path": "/api/user-management",
             "request": {
-              "name": "UserManagementGetUsersRequest",
+              "name": "UserManagementGetUsers",
               "query-parameters": {
                 "query": {
                   "allow-multiple": undefined,
@@ -15781,7 +15781,7 @@ exports[`open api converter squidex simple 1`] = `
             "method": "GET",
             "path": "/api/users",
             "request": {
-              "name": "UsersGetUsersRequest",
+              "name": "UsersGetUsers",
               "query-parameters": {
                 "query": {
                   "allow-multiple": undefined,
@@ -22569,7 +22569,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "DeleteIntegration": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
@@ -22762,7 +22762,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordGroupsByEntitlementRequest",
+              "name": "ListUsageRecordGroupsByEntitlement",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22802,7 +22802,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordGroupsByOrganizationRequest",
+              "name": "ListUsageRecordGroupsByOrganization",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22846,7 +22846,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordGroupsByProductRequest",
+              "name": "ListUsageRecordGroupsByProduct",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22890,7 +22890,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordReportsByEntitlementRequest",
+              "name": "ListUsageRecordReportsByEntitlement",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22935,7 +22935,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordReportsByOrganizationRequest",
+              "name": "ListUsageRecordReportsByOrganization",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -22979,7 +22979,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListUsageRecordReportsByProductRequest",
+              "name": "ListUsageRecordReportsByProduct",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
@@ -23129,7 +23129,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "DeleteOffer": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
               "offerId": {
@@ -23240,7 +23240,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListOperationsRequest",
+              "name": "ListOperations",
               "query-parameters": {
                 "crmOpportunityId": {
                   "allow-multiple": undefined,
@@ -23282,7 +23282,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "DeleteProduct": {
             "auth": true,
-            "method": "PATCH",
+            "method": "DELETE",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
@@ -23518,7 +23518,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListRevenueRecordDetailsRequest",
+              "name": "ListRevenueRecordDetails",
               "query-parameters": {
                 "buyerId": {
                   "allow-multiple": undefined,
@@ -23577,7 +23577,7 @@ the same customer, dimension, and time, but a different quantity.",
               },
             },
             "request": {
-              "name": "ListRevenueRecordsRequest",
+              "name": "ListRevenueRecords",
               "query-parameters": {
                 "buyerId": {
                   "allow-multiple": undefined,

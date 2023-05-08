@@ -21,6 +21,12 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const tag = endpoint.tags[0];
     const operationId = endpoint.operationId;
 
+    if (operationId == null) {
+        throw new Error(
+            `${endpoint.method} ${endpoint.path} must specify either operationId or x-fern-sdk-method-name`
+        );
+    }
+
     // if tag is null and operation is defined, add to __package__.yml
     if (tag == null) {
         return {
