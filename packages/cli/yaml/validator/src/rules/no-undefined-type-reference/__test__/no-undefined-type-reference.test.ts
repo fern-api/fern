@@ -15,6 +15,12 @@ describe("no-undefined-type-reference", () => {
 
         expect(violations).toEqual([
             {
+                message: "File response cannot be optional",
+                nodePath: ["service", "endpoints", "downloadFileOptional", "response"],
+                relativeFilepath: RelativeFilePath.of("file-download.yml"),
+                severity: "error",
+            },
+            {
                 message: "The file type can only be used as properties in inlined requests.",
                 nodePath: ["types", "FileAlias"],
                 relativeFilepath: RelativeFilePath.of("file-upload.yml"),

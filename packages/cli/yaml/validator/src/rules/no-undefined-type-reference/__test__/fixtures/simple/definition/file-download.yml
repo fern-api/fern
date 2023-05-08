@@ -1,0 +1,12 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    downloadFile:
+      method: POST
+      path: /
+      response: file
+    downloadFileOptional:
+      method: POST
+      path: /
+      response: optional<file>

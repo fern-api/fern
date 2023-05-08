@@ -1,0 +1,7 @@
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    path: /
+    method: GET
+    response: file
