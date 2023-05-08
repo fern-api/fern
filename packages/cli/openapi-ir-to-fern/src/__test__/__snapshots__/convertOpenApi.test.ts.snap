@@ -1787,10 +1787,6 @@ login screen as a login option.
               "docs": "ID of the authentication connection.",
               "type": "string",
             },
-            "type": {
-              "docs": undefined,
-              "type": "AuthConnectionType",
-            },
           },
           "docs": "Connection object that specifies the configuration for an
 authentication connection that is set up for a Dev organization.
@@ -2228,10 +2224,6 @@ it would appear on the login button as 'Log in to abclogin'.
 ",
               "type": "optional<string>",
             },
-            "type": {
-              "docs": undefined,
-              "type": "DevOrgAuthConnectionsCreateRequestType",
-            },
           },
           "docs": "Request to create a new enterprise authentication connection.
 ",
@@ -2326,10 +2318,6 @@ it would appear on the login button as 'Log in to abclogin'.
               "docs": "ID of the authentication connection which is to be updated.
 ",
               "type": "string",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "DevOrgAuthConnectionsUpdateRequestType",
             },
           },
           "docs": "Request to update an enterprise authentication connection for a Dev
@@ -2914,12 +2902,7 @@ always be returned in the specified sort-by order.
           ],
         },
         "OrgSummary": {
-          "base-properties": {
-            "type": {
-              "docs": undefined,
-              "type": "OrgType",
-            },
-          },
+          "base-properties": {},
           "docs": undefined,
           "union": {
             "rev_org": {
@@ -2938,12 +2921,7 @@ always be returned in the specified sort-by order.
           ],
         },
         "Part": {
-          "base-properties": {
-            "type": {
-              "docs": undefined,
-              "type": "PartType",
-            },
-          },
+          "base-properties": {},
           "docs": undefined,
           "union": {
             "capability": {
@@ -2999,12 +2977,7 @@ always be returned in the specified sort-by order.
           },
         },
         "PartSummary": {
-          "base-properties": {
-            "type": {
-              "docs": undefined,
-              "type": "PartType",
-            },
-          },
+          "base-properties": {},
           "docs": undefined,
           "union": {
             "capability": {
@@ -3059,10 +3032,6 @@ always be returned in the specified sort-by order.
             "owned_by": {
               "docs": "The users that own the part.",
               "type": "list<string>",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "PartType",
             },
           },
           "docs": undefined,
@@ -3174,10 +3143,6 @@ sort order. If not set, then no prior elements exist.
             "owned_by": {
               "docs": undefined,
               "type": "optional<PartsUpdateRequestOwnedBy>",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "PartType",
             },
           },
           "docs": undefined,
@@ -3568,10 +3533,6 @@ will appear in the response.
               "docs": "The ID of the object to create the timeline entry for.",
               "type": "string",
             },
-            "type": {
-              "docs": undefined,
-              "type": "TimelineEntriesCreateRequestType",
-            },
             "visibility": {
               "docs": undefined,
               "type": "optional<TimelineEntryVisibility>",
@@ -3660,10 +3621,6 @@ sort order. If not set, then no prior elements exist.
               "docs": "The ID of the timeline entry to update.",
               "type": "string",
             },
-            "type": {
-              "docs": undefined,
-              "type": "TimelineEntriesUpdateRequestType",
-            },
           },
           "docs": "The request to update a timeline entry.",
           "union": {
@@ -3735,12 +3692,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           },
         },
         "TimelineEntry": {
-          "base-properties": {
-            "type": {
-              "docs": undefined,
-              "type": "TimelineEntryType",
-            },
-          },
+          "base-properties": {},
           "docs": undefined,
           "union": {
             "timeline_comment": {
@@ -3856,12 +3808,7 @@ default visibility.
           ],
         },
         "UserSummary": {
-          "base-properties": {
-            "type": {
-              "docs": undefined,
-              "type": "UserType",
-            },
-          },
+          "base-properties": {},
           "docs": undefined,
           "union": {
             "dev_user": {
@@ -4211,12 +4158,7 @@ event types. Note this is mutually exclusive with 'add' and
           },
         },
         "Work": {
-          "base-properties": {
-            "type": {
-              "docs": undefined,
-              "type": "WorkType",
-            },
-          },
+          "base-properties": {},
           "docs": undefined,
           "union": {
             "issue": {
@@ -4324,10 +4266,6 @@ issues.
             "title": {
               "docs": "Title of the work object.",
               "type": "string",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "WorkType",
             },
           },
           "docs": undefined,
@@ -4464,10 +4402,6 @@ sort order. If not set, then no prior elements exist.
               "docs": "Updated title of the work object, or unchanged if not provided.
 ",
               "type": "optional<string>",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "WorkType",
             },
           },
           "docs": undefined,
@@ -10908,10 +10842,6 @@ exports[`open api converter squidex simple 1`] = `
               "docs": "Optional url to the editor.",
               "type": "optional<string>",
             },
-            "fieldType": {
-              "docs": undefined,
-              "type": "string",
-            },
             "hints": {
               "docs": "Hints to describe the field.",
               "type": "optional<string>",
@@ -11774,12 +11704,7 @@ exports[`open api converter squidex simple 1`] = `
           },
         },
         "RuleActionDto": {
-          "base-properties": {
-            "actionType": {
-              "docs": undefined,
-              "type": "string",
-            },
-          },
+          "base-properties": {},
           "docs": undefined,
           "union": {
             "Algolia": {
@@ -12121,12 +12046,7 @@ exports[`open api converter squidex simple 1`] = `
           ],
         },
         "RuleTriggerDto": {
-          "base-properties": {
-            "triggerType": {
-              "docs": undefined,
-              "type": "string",
-            },
-          },
+          "base-properties": {},
           "docs": undefined,
           "union": {
             "AssetChanged": {

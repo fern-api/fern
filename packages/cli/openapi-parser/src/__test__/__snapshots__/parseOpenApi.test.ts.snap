@@ -2934,7 +2934,6 @@ and a logical concept denoted by the tag's name.
         "atom-base-summary",
         "artifacts-prepare-response-form-data",
         "user-summary",
-        "auth-connection-type",
         "auth-token-status",
         "auth-token-grant-type",
         "auth-tokens-rev-info",
@@ -2945,10 +2944,8 @@ and a logical concept denoted by the tag's name.
         "auth-tokens-user-traits",
         "part-base",
         "part-base-summary",
-        "dev-org-auth-connections-create-request-type",
         "auth-connection",
         "auth-connection-toggle",
-        "dev-org-auth-connections-update-request-type",
         "external-identity",
         "user-base-summary",
         "dev-user",
@@ -2965,7 +2962,6 @@ and a logical concept denoted by the tag's name.
         "timeline-entry",
         "webhook",
         "work",
-        "org-type",
         "artifact-summary",
         "tag-with-value",
         "parts-update-request-owned-by",
@@ -2976,13 +2972,9 @@ and a logical concept denoted by the tag's name.
         "tags-update-allowed-values",
         "group-summary",
         "timeline-comment-body-type",
-        "timeline-entries-create-request-type",
         "timeline-entry-visibility",
-        "timeline-entries-update-request-type",
         "timeline-entries-update-request-timeline-comment-artifacts",
-        "timeline-entry-type",
         "atom-base",
-        "user-type",
         "webhook-event-type",
         "webhook-status",
         "event-part-created",
@@ -3320,17 +3312,6 @@ login screen as a login option.
                     "type": "string",
                   },
                   "type": "primitive",
-                },
-              },
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "AuthConnectionType",
-                  "nameOverride": undefined,
-                  "schema": "auth-connection-type",
-                  "type": "reference",
                 },
               },
             ],
@@ -4551,17 +4532,6 @@ it would appear on the login button as 'Log in to abclogin'.
                   },
                 },
               },
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "DevOrgAuthConnectionsCreateRequestType",
-                  "nameOverride": undefined,
-                  "schema": "dev-org-auth-connections-create-request-type",
-                  "type": "reference",
-                },
-              },
             ],
             "description": "Request to create a new enterprise authentication connection.
 ",
@@ -4796,17 +4766,6 @@ it would appear on the login button as 'Log in to abclogin'.
                     "type": "string",
                   },
                   "type": "primitive",
-                },
-              },
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "DevOrgAuthConnectionsUpdateRequestType",
-                  "nameOverride": undefined,
-                  "schema": "dev-org-auth-connections-update-request-type",
-                  "type": "reference",
                 },
               },
             ],
@@ -6225,19 +6184,7 @@ always be returned in the specified sort-by order.
         },
         "org-summary": {
           "oneOf": {
-            "commonProperties": [
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "OrgSummaryType",
-                  "nameOverride": undefined,
-                  "schema": "org-type",
-                  "type": "reference",
-                },
-              },
-            ],
+            "commonProperties": [],
             "description": undefined,
             "discriminantProperty": "type",
             "generatedName": "OrgSummary",
@@ -6271,19 +6218,7 @@ always be returned in the specified sort-by order.
         },
         "part": {
           "oneOf": {
-            "commonProperties": [
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "PartType",
-                  "nameOverride": undefined,
-                  "schema": "part-type",
-                  "type": "reference",
-                },
-              },
-            ],
+            "commonProperties": [],
             "description": undefined,
             "discriminantProperty": "type",
             "generatedName": "Part",
@@ -6463,19 +6398,7 @@ always be returned in the specified sort-by order.
         },
         "part-summary": {
           "oneOf": {
-            "commonProperties": [
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "PartSummaryType",
-                  "nameOverride": undefined,
-                  "schema": "part-type",
-                  "type": "reference",
-                },
-              },
-            ],
+            "commonProperties": [],
             "description": undefined,
             "discriminantProperty": "type",
             "generatedName": "PartSummary",
@@ -6585,17 +6508,6 @@ always be returned in the specified sort-by order.
                     },
                     "type": "primitive",
                   },
-                },
-              },
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "PartsCreateRequestType",
-                  "nameOverride": undefined,
-                  "schema": "part-type",
-                  "type": "reference",
                 },
               },
             ],
@@ -6915,17 +6827,6 @@ sort order. If not set, then no prior elements exist.
                     "schema": "parts-update-request-owned-by",
                     "type": "reference",
                   },
-                },
-              },
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "PartsUpdateRequestType",
-                  "nameOverride": undefined,
-                  "schema": "part-type",
-                  "type": "reference",
                 },
               },
             ],
@@ -8319,17 +8220,6 @@ will appear in the response.
                 },
               },
               {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "TimelineEntriesCreateRequestType",
-                  "nameOverride": undefined,
-                  "schema": "timeline-entries-create-request-type",
-                  "type": "reference",
-                },
-              },
-              {
                 "key": "visibility",
                 "schema": {
                   "description": undefined,
@@ -8558,17 +8448,6 @@ sort order. If not set, then no prior elements exist.
                   "type": "primitive",
                 },
               },
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "TimelineEntriesUpdateRequestType",
-                  "nameOverride": undefined,
-                  "schema": "timeline-entries-update-request-type",
-                  "type": "reference",
-                },
-              },
             ],
             "description": "The request to update a timeline entry.",
             "discriminantProperty": "type",
@@ -8761,19 +8640,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "timeline-entry": {
           "oneOf": {
-            "commonProperties": [
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "TimelineEntryType",
-                  "nameOverride": undefined,
-                  "schema": "timeline-entry-type",
-                  "type": "reference",
-                },
-              },
-            ],
+            "commonProperties": [],
             "description": undefined,
             "discriminantProperty": "type",
             "generatedName": "TimelineEntry",
@@ -9064,19 +8931,7 @@ default visibility.
         },
         "user-summary": {
           "oneOf": {
-            "commonProperties": [
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "UserSummaryType",
-                  "nameOverride": undefined,
-                  "schema": "user-type",
-                  "type": "reference",
-                },
-              },
-            ],
+            "commonProperties": [],
             "description": undefined,
             "discriminantProperty": "type",
             "generatedName": "UserSummary",
@@ -10080,19 +9935,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         "work": {
           "oneOf": {
-            "commonProperties": [
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "WorkType",
-                  "nameOverride": undefined,
-                  "schema": "work-type",
-                  "type": "reference",
-                },
-              },
-            ],
+            "commonProperties": [],
             "description": undefined,
             "discriminantProperty": "type",
             "generatedName": "Work",
@@ -10440,17 +10283,6 @@ issues.
                     "type": "string",
                   },
                   "type": "primitive",
-                },
-              },
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "WorksCreateRequestType",
-                  "nameOverride": undefined,
-                  "schema": "work-type",
-                  "type": "reference",
                 },
               },
             ],
@@ -10864,17 +10696,6 @@ sort order. If not set, then no prior elements exist.
                     },
                     "type": "primitive",
                   },
-                },
-              },
-              {
-                "key": "type",
-                "schema": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "WorksUpdateRequestType",
-                  "nameOverride": undefined,
-                  "schema": "work-type",
-                  "type": "reference",
                 },
               },
             ],
@@ -36636,16 +36457,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   },
                 },
               },
-              {
-                "key": "fieldType",
-                "schema": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              },
             ],
             "description": undefined,
             "discriminantProperty": "fieldType",
@@ -38999,18 +38810,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         },
         "RuleActionDto": {
           "oneOf": {
-            "commonProperties": [
-              {
-                "key": "actionType",
-                "schema": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              },
-            ],
+            "commonProperties": [],
             "description": undefined,
             "discriminantProperty": "actionType",
             "generatedName": "RuleActionDto",
@@ -39872,18 +39672,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         },
         "RuleTriggerDto": {
           "oneOf": {
-            "commonProperties": [
-              {
-                "key": "triggerType",
-                "schema": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              },
-            ],
+            "commonProperties": [],
             "description": undefined,
             "discriminantProperty": "triggerType",
             "generatedName": "RuleTriggerDto",

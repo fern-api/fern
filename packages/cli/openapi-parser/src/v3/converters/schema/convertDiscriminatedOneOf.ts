@@ -37,14 +37,18 @@ export function convertDiscriminatedOneOf({
             return [discriminantValue, subtypeReference];
         })
     );
-    const convertedProperties = Object.entries(properties).map(([propertyName, propertySchema]) => {
-        const isRequired = required != null && required.includes(propertyName);
-        const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
-        return {
-            key: propertyName,
-            schema,
-        };
-    });
+    const convertedProperties = Object.entries(properties)
+        .filter(([propertyName]) => {
+            return propertyName !== discriminant;
+        })
+        .map(([propertyName, propertySchema]) => {
+            const isRequired = required != null && required.includes(propertyName);
+            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
+            return {
+                key: propertyName,
+                schema,
+            };
+        });
     return wrapDiscriminantedOneOf({
         nameOverride,
         generatedName,
