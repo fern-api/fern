@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
+import { camelCase } from "lodash-es";
 import { convertToTypeReference } from "./converters/convertToTypeReference";
 import { getTypeFromTypeReference } from "./converters/utils/getTypeFromTypeReference";
 
@@ -16,18 +17,19 @@ export function getGlobalHeaders(openApiFile: OpenAPIFile): Record<string, RawSc
                 }
             }
         } else {
-            Object.entries(endpointHeaders).forEach(([headerName, httpHeader]) => {
-                if (headerName === "Authorization") {
+            endpointHeaders.forEach((endpointHeader) => {
+                if (endpointHeader.name === "Authorization") {
                     // Authorization header will already be configured based on security schemes
                 } else {
                     const typeReference = convertToTypeReference({
-                        schema: httpHeader.schema,
+                        schema: endpointHeader.schema,
                         schemas: openApiFile.schemas,
                     });
-                    globalHeaders[headerName] = {
-                        name: headerName,
+                    const headerWithoutXPrefix = endpointHeader.name.replace(/^x-|^X-/, "");
+                    globalHeaders[endpointHeader.name] = {
+                        name: camelCase(headerWithoutXPrefix),
                         type: getTypeFromTypeReference(typeReference.typeReference),
-                        docs: httpHeader.description ?? undefined,
+                        docs: endpointHeader.description ?? undefined,
                     };
                 }
             });
