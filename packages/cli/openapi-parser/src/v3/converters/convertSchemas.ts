@@ -310,12 +310,13 @@ function getSingularAllOf({
     return undefined;
 }
 
+// make sure these const sare sorted alphabetically
 const DEFAULT_KEY = ["default"];
 const DEFAULT_DESCRIPTION_KEYS = ["default", "description"];
 const DESCRIPTION_KEY = ["description"];
 
 function isAllOfElementEmpty(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject): boolean {
-    const keys = Object.keys(schema);
+    const keys = Object.keys(schema).sort();
     return isEqual(keys, DEFAULT_KEY) || isEqual(keys, DESCRIPTION_KEY) || isEqual(keys, DEFAULT_DESCRIPTION_KEYS);
 }
 
