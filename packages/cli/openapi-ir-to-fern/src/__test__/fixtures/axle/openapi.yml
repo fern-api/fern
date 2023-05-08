@@ -7,10 +7,10 @@ servers:
   - url: "https://api.axle.insure"
     variables: {}
     description: Production
-    x-server-name: Production
+    x-fern-server-name: Production
   - description: Sandbox
     url: "https://sandbox.axle.insure"
-    x-server-name: Sandbox
+    x-fern-server-name: Sandbox
 paths:
   /ignition:
     post:

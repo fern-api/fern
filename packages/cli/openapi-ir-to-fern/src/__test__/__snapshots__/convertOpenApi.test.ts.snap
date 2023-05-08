@@ -738,7 +738,12 @@ exports[`open api converter axle simple 1`] = `
         "type": "string",
       },
     },
+    "default-environment": "Production",
     "display-name": "Axle API",
+    "environments": {
+      "Production": "https://api.axle.insure",
+      "Sandbox": "https://sandbox.axle.insure",
+    },
     "error-discrimination": {
       "strategy": "status-code",
     },
