@@ -51,7 +51,7 @@ export function convertToServices(openApiFile: OpenAPIFile, environment: Environ
 
 function getEmptyService(): RawSchemas.HttpServiceSchema {
     return {
-        auth: true,
+        auth: false,
         "base-path": "",
         endpoints: {},
     };
