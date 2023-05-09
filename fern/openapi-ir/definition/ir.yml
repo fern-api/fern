@@ -30,6 +30,7 @@ types:
       tags: list<Tag>
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>
+      errors: map<StatusCode, HttpError>
       nonRequestReferencedSchemas:
         type: set<SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
@@ -54,6 +55,16 @@ types:
           of the type declarations. 
           [MyType -> propA -> propB] will turn into MyTypePropAPropB
           [MyType] will turn into MyType
+
+  StatusCode:
+    type: integer
+
+  HttpError:
+    extends:
+      - WithDescription
+      - WithName
+    properties:
+      schema: optional<Schema>
 
   Server:
     extends: WithDescription
@@ -127,7 +138,7 @@ types:
         type: boolean
         docs: Checks if `x-fern-streaming` is present and is true.
       response: optional<Response>
-      errors: list<HttpError>
+      errorStatusCode: list<StatusCode>
       server: list<Server>
 
   EndpointSdkName:
@@ -209,14 +220,6 @@ types:
     extends: WithDescription
     properties:
       schema: Schema
-
-  HttpError:
-    extends:
-      - WithDescription
-      - WithName
-    properties:
-      statusCode: integer
-      schema: optional<Schema>
 
   Schema:
     union:

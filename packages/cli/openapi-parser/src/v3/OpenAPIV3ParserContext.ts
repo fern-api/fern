@@ -1,8 +1,10 @@
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { SchemaId } from "@fern-fern/openapi-ir-model/ir";
+import { HttpError, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
+import { convertToError } from "./converters/convertToHttpError";
+import { ErrorBodyCollector } from "./ErrorBodyCollector";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
@@ -15,6 +17,8 @@ export class OpenAPIV3ParserContext {
 
     private twoOrMoreRequestsReferencedSchemas: Set<SchemaId> = new Set();
     private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
+
+    private errorBodies: Record<number, ErrorBodyCollector> = {};
 
     constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
         this.document = document;
@@ -73,5 +77,34 @@ export class OpenAPIV3ParserContext {
 
     public getReferencedSchemas(): Set<SchemaId> {
         return new Set([...this.nonRequestReferencedSchemas, ...this.twoOrMoreRequestsReferencedSchemas]);
+    }
+
+    public markSchemaForStatusCode(
+        statusCode: number,
+        schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
+    ): void {
+        if (this.errorBodies[statusCode] != null) {
+            this.errorBodies[statusCode]?.collect(schema);
+        } else {
+            const collector = new ErrorBodyCollector();
+            collector.collect(schema);
+            this.errorBodies[statusCode] = collector;
+        }
+    }
+
+    public getErrors(): Record<StatusCode, HttpError> {
+        return Object.fromEntries(
+            Object.entries(this.errorBodies).map(([statusCode, errorBodyCollector]) => {
+                const convertedError = convertToError({
+                    statusCode: parseInt(statusCode),
+                    errorBodyCollector,
+                    context: this,
+                });
+                if (convertedError == null) {
+                    return [];
+                }
+                return [statusCode, convertedError];
+            })
+        );
     }
 }

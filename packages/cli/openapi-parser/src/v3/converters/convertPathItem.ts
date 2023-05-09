@@ -147,6 +147,7 @@ function convertOperation({
     }
 
     const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
+    const convertedResponse = convertResponse({ responses: operation.responses, context, responseBreadcrumbs });
     return {
         path,
         method: httpMethod,
@@ -160,8 +161,8 @@ function convertOperation({
         requestNameOverride: requestNameOverride ?? undefined,
         generatedRequestName: getGeneratedTypeName(requestBreadcrumbs),
         request: convertedRequest,
-        response: convertResponse({ responses: operation.responses, context, responseBreadcrumbs }),
-        errors: [],
+        response: convertedResponse.value,
+        errorStatusCode: convertedResponse.errorStatusCodes,
         server: (operation.servers ?? []).map((server) => convertServer(server)),
         description: operation.description,
         responseIsStreaming: isStreaming ?? false,
