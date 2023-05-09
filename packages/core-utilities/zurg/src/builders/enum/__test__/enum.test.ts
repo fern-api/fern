@@ -11,7 +11,7 @@ describe("enum", () => {
 
     itValidate("invalid enum", enum_(["A", "B", "C"]), "D", [
         {
-            message: "Not one of the allowed values",
+            message: 'Expected enum. Received "D".',
             path: [],
         },
     ]);
@@ -22,7 +22,7 @@ describe("enum", () => {
         [],
         [
             {
-                message: "Not one of the allowed values",
+                message: "Expected string. Received list.",
                 path: [],
             },
         ]

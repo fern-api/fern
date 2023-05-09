@@ -1,6 +1,7 @@
 import { MaybeValid, Schema, SchemaType, ValidationError } from "../../Schema";
 import { entries } from "../../utils/entries";
-import { isPlainObject, NOT_AN_OBJECT_ERROR_MESSAGE } from "../../utils/isPlainObject";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
+import { isPlainObject } from "../../utils/isPlainObject";
 import { MaybePromise } from "../../utils/MaybePromise";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { getSchemaUtils } from "../schema-utils";
@@ -15,16 +16,34 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
             return validateAndTransformRecord({
                 value: raw,
                 isKeyNumeric: (await keySchema.getType()) === SchemaType.NUMBER,
-                transformKey: (key) => keySchema.parse(key, opts),
-                transformValue: (value) => valueSchema.parse(value, opts),
+                transformKey: (key) =>
+                    keySchema.parse(key, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                    }),
+                transformValue: (value, key) =>
+                    valueSchema.parse(value, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                    }),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         json: async (parsed, opts) => {
             return validateAndTransformRecord({
                 value: parsed,
                 isKeyNumeric: (await keySchema.getType()) === SchemaType.NUMBER,
-                transformKey: (key) => keySchema.json(key, opts),
-                transformValue: (value) => valueSchema.json(value, opts),
+                transformKey: (key) =>
+                    keySchema.json(key, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                    }),
+                transformValue: (value, key) =>
+                    valueSchema.json(value, {
+                        ...opts,
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                    }),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         getType: () => SchemaType.RECORD,
@@ -41,19 +60,21 @@ async function validateAndTransformRecord<TransformedKey extends string | number
     isKeyNumeric,
     transformKey,
     transformValue,
+    breadcrumbsPrefix = [],
 }: {
     value: unknown;
     isKeyNumeric: boolean;
     transformKey: (key: string | number) => MaybePromise<MaybeValid<TransformedKey>>;
-    transformValue: (value: unknown) => MaybePromise<MaybeValid<TransformedValue>>;
+    transformValue: (value: unknown, key: string | number) => MaybePromise<MaybeValid<TransformedValue>>;
+    breadcrumbsPrefix: string[] | undefined;
 }): Promise<MaybeValid<Record<TransformedKey, TransformedValue>>> {
     if (!isPlainObject(value)) {
         return {
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: NOT_AN_OBJECT_ERROR_MESSAGE,
+                    path: breadcrumbsPrefix,
+                    message: getErrorMessageForIncorrectType(value, "object"),
                 },
             ],
         };
@@ -77,7 +98,7 @@ async function validateAndTransformRecord<TransformedKey extends string | number
             }
             const transformedKey = await transformKey(key);
 
-            const transformedValue = await transformValue(value);
+            const transformedValue = await transformValue(value, key);
 
             if (acc.ok && transformedKey.ok && transformedValue.ok) {
                 return {
@@ -94,20 +115,10 @@ async function validateAndTransformRecord<TransformedKey extends string | number
                 errors.push(...acc.errors);
             }
             if (!transformedKey.ok) {
-                errors.push(
-                    ...transformedKey.errors.map((error) => ({
-                        path: [`${key} (key)`, ...error.path],
-                        message: error.message,
-                    }))
-                );
+                errors.push(...transformedKey.errors);
             }
             if (!transformedValue.ok) {
-                errors.push(
-                    ...transformedValue.errors.map((error) => ({
-                        path: [stringKey, ...error.path],
-                        message: error.message,
-                    }))
-                );
+                errors.push(...transformedValue.errors);
             }
 
             return {

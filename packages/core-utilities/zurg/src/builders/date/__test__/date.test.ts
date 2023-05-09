@@ -10,14 +10,21 @@ describe("date", () => {
 
     itValidateParse("non-string", date(), 42, [
         {
-            message: "Not an ISO 8601 date string",
+            message: "Expected string. Received 42.",
+            path: [],
+        },
+    ]);
+
+    itValidateParse("non-ISO", date(), "hello world", [
+        {
+            message: 'Expected ISO 8601 date string. Received "hello world".',
             path: [],
         },
     ]);
 
     itValidateJson("non-Date", date(), "hello", [
         {
-            message: "Not a Date object",
+            message: 'Expected Date object. Received "hello".',
             path: [],
         },
     ]);

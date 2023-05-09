@@ -1,7 +1,13 @@
+/* eslint-disable no-console */
+
 import { boolean, number, object, property, string } from "../builders";
 
 describe("skipValidation", () => {
     it("allows data that doesn't conform to the schema", async () => {
+        const warningLogs: string[] = [];
+        const originalConsoleWarn = console.warn;
+        console.warn = (...args) => warningLogs.push(args.join(" "));
+
         const schema = object({
             camelCase: property("snake_case", string()),
             numberProperty: number(),
@@ -25,5 +31,12 @@ describe("skipValidation", () => {
                 numberProperty: "oops",
             },
         });
+
+        expect(warningLogs).toEqual([
+            `Failed to validate.
+  - numberProperty: Expected number. Received "oops".`,
+        ]);
+
+        console.warn = originalConsoleWarn;
     });
 });

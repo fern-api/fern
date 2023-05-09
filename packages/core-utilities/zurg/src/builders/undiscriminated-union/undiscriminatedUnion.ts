@@ -37,12 +37,17 @@ async function validateAndTransformUndiscriminatedUnion<Transformed>(
     schemas: Schema<any, any>[]
 ): Promise<MaybeValid<Transformed>> {
     const errors: ValidationError[] = [];
-    for (const schema of schemas) {
+    for (const [index, schema] of schemas.entries()) {
         const transformed = await transform(schema);
         if (transformed.ok) {
             return transformed;
-        } else if (errors.length === 0) {
-            errors.push(...transformed.errors);
+        } else {
+            for (const error of errors) {
+                errors.push({
+                    path: error.path,
+                    message: `[Variant ${index}] ${error.message}`,
+                });
+            }
         }
     }
 

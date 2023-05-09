@@ -1,4 +1,5 @@
 import { BaseSchema, Schema, SchemaType } from "../../Schema";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { getSchemaUtils } from "../schema-utils";
 
@@ -8,25 +9,35 @@ const ISO_8601_REGEX =
 
 export function date(): Schema<string, Date> {
     const baseSchema: BaseSchema<string, Date> = {
-        parse: (raw) => {
-            if (typeof raw === "string" && ISO_8601_REGEX.test(raw)) {
-                return {
-                    ok: true,
-                    value: new Date(raw),
-                };
-            } else {
+        parse: (raw, { breadcrumbsPrefix = [] } = {}) => {
+            if (typeof raw !== "string") {
                 return {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: "Not an ISO 8601 date string",
+                            path: breadcrumbsPrefix,
+                            message: getErrorMessageForIncorrectType(raw, "string"),
                         },
                     ],
                 };
             }
+            if (!ISO_8601_REGEX.test(raw)) {
+                return {
+                    ok: false,
+                    errors: [
+                        {
+                            path: breadcrumbsPrefix,
+                            message: getErrorMessageForIncorrectType(raw, "ISO 8601 date string"),
+                        },
+                    ],
+                };
+            }
+            return {
+                ok: true,
+                value: new Date(raw),
+            };
         },
-        json: (date) => {
+        json: (date, { breadcrumbsPrefix = [] } = {}) => {
             if (date instanceof Date) {
                 return {
                     ok: true,
@@ -37,8 +48,8 @@ export function date(): Schema<string, Date> {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: "Not a Date object",
+                            path: breadcrumbsPrefix,
+                            message: getErrorMessageForIncorrectType(date, "Date object"),
                         },
                     ],
                 };

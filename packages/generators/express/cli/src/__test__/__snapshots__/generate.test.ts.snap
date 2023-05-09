@@ -486,6 +486,13 @@ export interface SchemaOptions {
      * @default false
      */
     skipValidation?: boolean;
+    /**
+     * each validation failure contains a \\"path\\" property, which is
+     * the breadcrumbs to the offending node in the JSON. you can supply
+     * a prefix that is prepended to all the errors' paths. this can be
+     * helpful for zurg's internal debug logging.
+     */
+    breadcrumbsPrefix?: string[];
 }
 ",
             "name": "Schema.d.ts",
@@ -532,32 +539,42 @@ export declare function date(): Schema<string, Date>;
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.date = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
 const ISO_8601_REGEX = /^([+-]?\\\\d{4}(?!\\\\d{2}\\\\b))((-?)((0[1-9]|1[0-2])(\\\\3([12]\\\\d|0[1-9]|3[01]))?|W([0-4]\\\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\\\d|[12]\\\\d{2}|3([0-5]\\\\d|6[1-6])))([T\\\\s]((([01]\\\\d|2[0-3])((:?)[0-5]\\\\d)?|24:?00)([.,]\\\\d+(?!:))?)?(\\\\17[0-5]\\\\d([.,]\\\\d+)?)?([zZ]|([+-])([01]\\\\d|2[0-3]):?([0-5]\\\\d)?)?)?)?$/;
 function date() {
     const baseSchema = {
-        parse: (raw) => {
-            if (typeof raw === \\"string\\" && ISO_8601_REGEX.test(raw)) {
-                return {
-                    ok: true,
-                    value: new Date(raw),
-                };
-            }
-            else {
+        parse: (raw, { breadcrumbsPrefix = [] } = {}) => {
+            if (typeof raw !== \\"string\\") {
                 return {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: \\"Not an ISO 8601 date string\\",
+                            path: breadcrumbsPrefix,
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(raw, \\"string\\"),
                         },
                     ],
                 };
             }
+            if (!ISO_8601_REGEX.test(raw)) {
+                return {
+                    ok: false,
+                    errors: [
+                        {
+                            path: breadcrumbsPrefix,
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(raw, \\"ISO 8601 date string\\"),
+                        },
+                    ],
+                };
+            }
+            return {
+                ok: true,
+                value: new Date(raw),
+            };
         },
-        json: (date) => {
+        json: (date, { breadcrumbsPrefix = [] } = {}) => {
             if (date instanceof Date) {
                 return {
                     ok: true,
@@ -569,8 +586,8 @@ function date() {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: \\"Not a Date object\\",
+                            path: breadcrumbsPrefix,
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(date, \\"Date object\\"),
                         },
                     ],
                 };
@@ -623,26 +640,36 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.enum_ = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 function enum_(values) {
     const validValues = new Set(values);
-    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.ENUM, (value, { allowUnrecognizedEnumValues } = {}) => {
-        if (typeof value === \\"string\\" && (validValues.has(value) || allowUnrecognizedEnumValues)) {
-            return {
-                ok: true,
-                value: value,
-            };
-        }
-        else {
+    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.ENUM, (value, { allowUnrecognizedEnumValues, breadcrumbsPrefix = [] } = {}) => {
+        if (typeof value !== \\"string\\") {
             return {
                 ok: false,
                 errors: [
                     {
-                        path: [],
-                        message: \\"Not one of the allowed values\\",
+                        path: breadcrumbsPrefix,
+                        message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"string\\"),
                     },
                 ],
             };
         }
+        if (!validValues.has(value) && !allowUnrecognizedEnumValues) {
+            return {
+                ok: false,
+                errors: [
+                    {
+                        path: breadcrumbsPrefix,
+                        message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"enum\\"),
+                    },
+                ],
+            };
+        }
+        return {
+            ok: true,
+            value: value,
+        };
     });
     return schemaCreator();
 }
@@ -855,12 +882,19 @@ export declare function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<R
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.list = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function list(schema) {
     const baseSchema = {
-        parse: async (raw, opts) => validateAndTransformArray(raw, (item) => schema.parse(item, opts)),
-        json: (parsed, opts) => validateAndTransformArray(parsed, (item) => schema.json(item, opts)),
+        parse: async (raw, opts) => validateAndTransformArray(raw, (item, index) => schema.parse(item, {
+            ...opts,
+            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`[\${index}]\`],
+        })),
+        json: (parsed, opts) => validateAndTransformArray(parsed, (item, index) => schema.json(item, {
+            ...opts,
+            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`[\${index}]\`],
+        })),
         getType: () => Schema_1.SchemaType.LIST,
     };
     return {
@@ -875,14 +909,14 @@ async function validateAndTransformArray(value, transformItem) {
             ok: false,
             errors: [
                 {
-                    message: \\"Not a list\\",
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"list\\"),
                     path: [],
                 },
             ],
         };
     }
-    const maybeValidItems = await Promise.all(value.map((item) => transformItem(item)));
-    return maybeValidItems.reduce((acc, item, index) => {
+    const maybeValidItems = await Promise.all(value.map((item, index) => transformItem(item, index)));
+    return maybeValidItems.reduce((acc, item) => {
         if (acc.ok && item.ok) {
             return {
                 ok: true,
@@ -894,10 +928,7 @@ async function validateAndTransformArray(value, transformItem) {
             errors.push(...acc.errors);
         }
         if (!item.ok) {
-            errors.push(...item.errors.map((error) => ({
-                path: [\`[\${index}]\`, ...error.path],
-                message: error.message,
-            })));
+            errors.push(...item.errors);
         }
         return {
             ok: false,
@@ -944,8 +975,9 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.stringLiteral = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 function stringLiteral(literal) {
-    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING_LITERAL, (value) => {
+    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING_LITERAL, (value, { breadcrumbsPrefix = [] } = {}) => {
         if (value === literal) {
             return {
                 ok: true,
@@ -957,8 +989,8 @@ function stringLiteral(literal) {
                 ok: false,
                 errors: [
                     {
-                        path: [],
-                        message: \`Not equal to \\"\${literal}\\"\`,
+                        path: breadcrumbsPrefix,
+                        message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \`\\"\${literal}\\"\`),
                     },
                 ],
             };
@@ -1014,6 +1046,7 @@ exports.getObjectUtils = exports.object = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const entries_1 = require(\\"../../utils/entries\\");
 const filterObject_1 = require(\\"../../utils/filterObject\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const keys_1 = require(\\"../../utils/keys\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
@@ -1053,11 +1086,15 @@ function object(schemas) {
                     }
                     return {
                         transformedKey: property.parsedKey,
-                        transform: (propertyValue) => property.valueSchema.parse(propertyValue, opts),
+                        transform: (propertyValue) => property.valueSchema.parse(propertyValue, {
+                            ...opts,
+                            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), rawKey],
+                        }),
                     };
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         json: async (parsed, opts) => {
@@ -1082,18 +1119,25 @@ function object(schemas) {
                     if ((0, property_1.isProperty)(property)) {
                         return {
                             transformedKey: property.rawKey,
-                            transform: (propertyValue) => property.valueSchema.json(propertyValue, opts),
+                            transform: (propertyValue) => property.valueSchema.json(propertyValue, {
+                                ...opts,
+                                breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey],
+                            }),
                         };
                     }
                     else {
                         return {
                             transformedKey: parsedKey,
-                            transform: (propertyValue) => property.json(propertyValue, opts),
+                            transform: (propertyValue) => property.json(propertyValue, {
+                                ...opts,
+                                breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey],
+                            }),
                         };
                     }
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         getType: () => Schema_1.SchemaType.OBJECT,
@@ -1106,14 +1150,14 @@ function object(schemas) {
     };
 }
 exports.object = object;
-async function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = \\"fail\\", skipValidation = false, }) {
+async function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = \\"fail\\", skipValidation = false, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"object\\"),
                 },
             ],
         };
@@ -1131,18 +1175,15 @@ async function validateAndTransformObject({ value, requiredKeys, getProperty, un
             }
             else {
                 transformed[preTransformedKey] = preTransformedItemValue;
-                errors.push(...value.errors.map((error) => ({
-                    path: [preTransformedKey, ...error.path],
-                    message: error.message,
-                })));
+                errors.push(...value.errors);
             }
         }
         else {
             switch (unrecognizedObjectKeys) {
                 case \\"fail\\":
                     errors.push({
-                        path: [preTransformedKey],
-                        message: \`Unrecognized key \\"\${preTransformedKey}\\"\`,
+                        path: [...breadcrumbsPrefix, preTransformedKey],
+                        message: \`Unexpected key \\"\${preTransformedKey}\\"\`,
                     });
                     break;
                 case \\"strip\\":
@@ -1156,7 +1197,7 @@ async function validateAndTransformObject({ value, requiredKeys, getProperty, un
     errors.push(...requiredKeys
         .filter((key) => missingRequiredKeys.has(key))
         .map((key) => ({
-        path: [],
+        path: breadcrumbsPrefix,
         message: \`Missing required key \\"\${key}\\"\`,
     })));
     if (errors.length === 0 || skipValidation) {
@@ -1350,6 +1391,7 @@ export declare function withParsedProperties<RawObjectShape, ParsedObjectShape, 
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.withParsedProperties = exports.getObjectLikeUtils = void 0;
 const filterObject_1 = require(\\"../../utils/filterObject\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function getObjectLikeUtils(schema) {
@@ -1388,8 +1430,8 @@ function withParsedProperties(objectLike, properties) {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                            path: opts?.breadcrumbsPrefix ?? [],
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(parsed, \\"object\\"),
                         },
                     ],
                 };
@@ -1484,7 +1526,8 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.boolean = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
-exports.boolean = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.BOOLEAN, (value) => {
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
+exports.boolean = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.BOOLEAN, (value, { breadcrumbsPrefix = [] } = {}) => {
     if (typeof value === \\"boolean\\") {
         return {
             ok: true,
@@ -1496,8 +1539,8 @@ exports.boolean = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: \\"Not a boolean\\",
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"boolean\\"),
                 },
             ],
         };
@@ -1547,7 +1590,8 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.number = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
-exports.number = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.NUMBER, (value) => {
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
+exports.number = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.NUMBER, (value, { breadcrumbsPrefix = [] } = {}) => {
     if (typeof value === \\"number\\") {
         return {
             ok: true,
@@ -1559,8 +1603,8 @@ exports.number = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: \\"Not a number\\",
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"number\\"),
                 },
             ],
         };
@@ -1582,7 +1626,8 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.string = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
-exports.string = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING, (value) => {
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
+exports.string = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING, (value, { breadcrumbsPrefix = [] } = {}) => {
     if (typeof value === \\"string\\") {
         return {
             ok: true,
@@ -1594,8 +1639,8 @@ exports.string = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: \\"Not a string\\",
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"string\\"),
                 },
             ],
         };
@@ -1659,6 +1704,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.record = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const entries_1 = require(\\"../../utils/entries\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
@@ -1668,16 +1714,30 @@ function record(keySchema, valueSchema) {
             return validateAndTransformRecord({
                 value: raw,
                 isKeyNumeric: (await keySchema.getType()) === Schema_1.SchemaType.NUMBER,
-                transformKey: (key) => keySchema.parse(key, opts),
-                transformValue: (value) => valueSchema.parse(value, opts),
+                transformKey: (key) => keySchema.parse(key, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`\${key} (key)\`],
+                }),
+                transformValue: (value, key) => valueSchema.parse(value, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`\${key}\`],
+                }),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         json: async (parsed, opts) => {
             return validateAndTransformRecord({
                 value: parsed,
                 isKeyNumeric: (await keySchema.getType()) === Schema_1.SchemaType.NUMBER,
-                transformKey: (key) => keySchema.json(key, opts),
-                transformValue: (value) => valueSchema.json(value, opts),
+                transformKey: (key) => keySchema.json(key, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`\${key} (key)\`],
+                }),
+                transformValue: (value, key) => valueSchema.json(value, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`\${key}\`],
+                }),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         getType: () => Schema_1.SchemaType.RECORD,
@@ -1688,14 +1748,14 @@ function record(keySchema, valueSchema) {
     };
 }
 exports.record = record;
-async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transformValue, }) {
+async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transformValue, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"object\\"),
                 },
             ],
         };
@@ -1714,7 +1774,7 @@ async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, t
             }
         }
         const transformedKey = await transformKey(key);
-        const transformedValue = await transformValue(value);
+        const transformedValue = await transformValue(value, key);
         if (acc.ok && transformedKey.ok && transformedValue.ok) {
             return {
                 ok: true,
@@ -1729,16 +1789,10 @@ async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, t
             errors.push(...acc.errors);
         }
         if (!transformedKey.ok) {
-            errors.push(...transformedKey.errors.map((error) => ({
-                path: [\`\${key} (key)\`, ...error.path],
-                message: error.message,
-            })));
+            errors.push(...transformedKey.errors);
         }
         if (!transformedValue.ok) {
-            errors.push(...transformedValue.errors.map((error) => ({
-                path: [stringKey, ...error.path],
-                message: error.message,
-            })));
+            errors.push(...transformedValue.errors);
         }
         return {
             ok: false,
@@ -2017,6 +2071,7 @@ export declare function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Ra
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.set = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const list_1 = require(\\"../list\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
@@ -2041,8 +2096,8 @@ function set(schema) {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: \\"Not a Set\\",
+                            path: opts?.breadcrumbsPrefix ?? [],
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(parsed, \\"Set\\"),
                         },
                     ],
                 };
@@ -2134,13 +2189,18 @@ function undiscriminatedUnion(schemas) {
 exports.undiscriminatedUnion = undiscriminatedUnion;
 async function validateAndTransformUndiscriminatedUnion(transform, schemas) {
     const errors = [];
-    for (const schema of schemas) {
+    for (const [index, schema] of schemas.entries()) {
         const transformed = await transform(schema);
         if (transformed.ok) {
             return transformed;
         }
-        else if (errors.length === 0) {
-            errors.push(...transformed.errors);
+        else {
+            for (const error of errors) {
+                errors.push({
+                    path: error.path,
+                    message: \`[Variant \${index}] \${error.message}\`,
+                });
+            }
         }
     }
     return {
@@ -2242,6 +2302,7 @@ export declare function union<D extends string | Discriminant<any, any>, U exten
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.union = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const keys_1 = require(\\"../../utils/keys\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
@@ -2262,10 +2323,12 @@ function union(discriminant, union) {
                 transformedDiscriminant: parsedDiscriminant,
                 transformDiscriminantValue: (discriminantValue) => discriminantValueSchema.parse(discriminantValue, {
                     allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), rawDiscriminant],
                 }),
                 getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
                 allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
                 transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.parse(additionalProperties, opts),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         json: async (parsed, opts) => {
@@ -2275,10 +2338,12 @@ function union(discriminant, union) {
                 transformedDiscriminant: rawDiscriminant,
                 transformDiscriminantValue: (discriminantValue) => discriminantValueSchema.json(discriminantValue, {
                     allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedDiscriminant],
                 }),
                 getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
                 allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
                 transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.json(additionalProperties, opts),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         getType: () => Schema_1.SchemaType.UNION,
@@ -2290,14 +2355,14 @@ function union(discriminant, union) {
     };
 }
 exports.union = union;
-async function transformAndValidateUnion({ value, discriminant, transformedDiscriminant, transformDiscriminantValue, getAdditionalPropertiesSchema, allowUnrecognizedUnionMembers = false, transformAdditionalProperties, }) {
+async function transformAndValidateUnion({ value, discriminant, transformedDiscriminant, transformDiscriminantValue, getAdditionalPropertiesSchema, allowUnrecognizedUnionMembers = false, transformAdditionalProperties, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"object\\"),
                 },
             ],
         };
@@ -2308,7 +2373,7 @@ async function transformAndValidateUnion({ value, discriminant, transformedDiscr
             ok: false,
             errors: [
                 {
-                    path: [],
+                    path: breadcrumbsPrefix,
                     message: \`Missing discriminant (\\"\${discriminant}\\")\`,
                 },
             ],
@@ -2318,10 +2383,7 @@ async function transformAndValidateUnion({ value, discriminant, transformedDiscr
     if (!transformedDiscriminantValue.ok) {
         return {
             ok: false,
-            errors: transformedDiscriminantValue.errors.map((error) => ({
-                path: [discriminant, ...error.path],
-                message: error.message,
-            })),
+            errors: transformedDiscriminantValue.errors,
         };
     }
     const additionalPropertiesSchema = getAdditionalPropertiesSchema(transformedDiscriminantValue.value);
@@ -2340,8 +2402,8 @@ async function transformAndValidateUnion({ value, discriminant, transformedDiscr
                 ok: false,
                 errors: [
                     {
-                        path: [discriminant],
-                        message: \\"Unrecognized discriminant value\\",
+                        path: [...breadcrumbsPrefix, discriminant],
+                        message: \\"Unexpected discriminant value\\",
                     },
                 ],
             };
@@ -2509,8 +2571,42 @@ exports.filterObject = filterObject;
                 "type": "file",
               },
               Object {
-                "contents": "export declare const NOT_AN_OBJECT_ERROR_MESSAGE = \\"Not an object\\";
-export declare function isPlainObject(value: unknown): value is Record<string, unknown>;
+                "contents": "export declare function getErrorMessageForIncorrectType(value: unknown, expectedType: string): string;
+",
+                "name": "getErrorMessageForIncorrectType.d.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.getErrorMessageForIncorrectType = void 0;
+function getErrorMessageForIncorrectType(value, expectedType) {
+    return \`Expected \${expectedType}. Received \${getTypeAsString(value)}.\`;
+}
+exports.getErrorMessageForIncorrectType = getErrorMessageForIncorrectType;
+function getTypeAsString(value) {
+    if (Array.isArray(value)) {
+        return \\"list\\";
+    }
+    if (value === null) {
+        return \\"null\\";
+    }
+    switch (typeof value) {
+        case \\"string\\":
+            return \`\\"\${value}\\"\`;
+        case \\"number\\":
+        case \\"boolean\\":
+        case \\"undefined\\":
+            return \`\${value}\`;
+    }
+    return typeof value;
+}
+",
+                "name": "getErrorMessageForIncorrectType.js",
+                "type": "file",
+              },
+              Object {
+                "contents": "export declare function isPlainObject(value: unknown): value is Record<string, unknown>;
 ",
                 "name": "isPlainObject.d.ts",
                 "type": "file",
@@ -2518,8 +2614,7 @@ export declare function isPlainObject(value: unknown): value is Record<string, u
               Object {
                 "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.isPlainObject = exports.NOT_AN_OBJECT_ERROR_MESSAGE = void 0;
-exports.NOT_AN_OBJECT_ERROR_MESSAGE = \\"Not an object\\";
+exports.isPlainObject = void 0;
 // borrowed from https://github.com/lodash/lodash/blob/master/isPlainObject.js
 function isPlainObject(value) {
     if (typeof value !== \\"object\\" || value === null) {
@@ -2581,6 +2676,12 @@ function transformAndMaybeSkipValidation(transform) {
         const transformed = await transform(value, opts);
         const { skipValidation = false } = opts ?? {};
         if (!transformed.ok && skipValidation) {
+            // eslint-disable-next-line no-console
+            console.warn([
+                \\"Failed to validate.\\",
+                ...transformed.errors.map((error) => \\"  - \\" +
+                    (error.path.length > 0 ? \`\${error.path.join(\\".\\")}: \${error.message}\` : error.message)),
+            ].join(\\"\\\\n\\"));
             return {
                 ok: true,
                 value: value,
@@ -16159,6 +16260,13 @@ export interface SchemaOptions {
      * @default false
      */
     skipValidation?: boolean;
+    /**
+     * each validation failure contains a \\"path\\" property, which is
+     * the breadcrumbs to the offending node in the JSON. you can supply
+     * a prefix that is prepended to all the errors' paths. this can be
+     * helpful for zurg's internal debug logging.
+     */
+    breadcrumbsPrefix?: string[];
 }
 ",
             "name": "Schema.d.ts",
@@ -16205,32 +16313,42 @@ export declare function date(): Schema<string, Date>;
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.date = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 // https://stackoverflow.com/questions/12756159/regex-and-iso8601-formatted-datetime
 const ISO_8601_REGEX = /^([+-]?\\\\d{4}(?!\\\\d{2}\\\\b))((-?)((0[1-9]|1[0-2])(\\\\3([12]\\\\d|0[1-9]|3[01]))?|W([0-4]\\\\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\\\\d|[12]\\\\d{2}|3([0-5]\\\\d|6[1-6])))([T\\\\s]((([01]\\\\d|2[0-3])((:?)[0-5]\\\\d)?|24:?00)([.,]\\\\d+(?!:))?)?(\\\\17[0-5]\\\\d([.,]\\\\d+)?)?([zZ]|([+-])([01]\\\\d|2[0-3]):?([0-5]\\\\d)?)?)?)?$/;
 function date() {
     const baseSchema = {
-        parse: (raw) => {
-            if (typeof raw === \\"string\\" && ISO_8601_REGEX.test(raw)) {
-                return {
-                    ok: true,
-                    value: new Date(raw),
-                };
-            }
-            else {
+        parse: (raw, { breadcrumbsPrefix = [] } = {}) => {
+            if (typeof raw !== \\"string\\") {
                 return {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: \\"Not an ISO 8601 date string\\",
+                            path: breadcrumbsPrefix,
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(raw, \\"string\\"),
                         },
                     ],
                 };
             }
+            if (!ISO_8601_REGEX.test(raw)) {
+                return {
+                    ok: false,
+                    errors: [
+                        {
+                            path: breadcrumbsPrefix,
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(raw, \\"ISO 8601 date string\\"),
+                        },
+                    ],
+                };
+            }
+            return {
+                ok: true,
+                value: new Date(raw),
+            };
         },
-        json: (date) => {
+        json: (date, { breadcrumbsPrefix = [] } = {}) => {
             if (date instanceof Date) {
                 return {
                     ok: true,
@@ -16242,8 +16360,8 @@ function date() {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: \\"Not a Date object\\",
+                            path: breadcrumbsPrefix,
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(date, \\"Date object\\"),
                         },
                     ],
                 };
@@ -16296,26 +16414,36 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.enum_ = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 function enum_(values) {
     const validValues = new Set(values);
-    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.ENUM, (value, { allowUnrecognizedEnumValues } = {}) => {
-        if (typeof value === \\"string\\" && (validValues.has(value) || allowUnrecognizedEnumValues)) {
-            return {
-                ok: true,
-                value: value,
-            };
-        }
-        else {
+    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.ENUM, (value, { allowUnrecognizedEnumValues, breadcrumbsPrefix = [] } = {}) => {
+        if (typeof value !== \\"string\\") {
             return {
                 ok: false,
                 errors: [
                     {
-                        path: [],
-                        message: \\"Not one of the allowed values\\",
+                        path: breadcrumbsPrefix,
+                        message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"string\\"),
                     },
                 ],
             };
         }
+        if (!validValues.has(value) && !allowUnrecognizedEnumValues) {
+            return {
+                ok: false,
+                errors: [
+                    {
+                        path: breadcrumbsPrefix,
+                        message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"enum\\"),
+                    },
+                ],
+            };
+        }
+        return {
+            ok: true,
+            value: value,
+        };
     });
     return schemaCreator();
 }
@@ -16528,12 +16656,19 @@ export declare function list<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<R
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.list = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function list(schema) {
     const baseSchema = {
-        parse: async (raw, opts) => validateAndTransformArray(raw, (item) => schema.parse(item, opts)),
-        json: (parsed, opts) => validateAndTransformArray(parsed, (item) => schema.json(item, opts)),
+        parse: async (raw, opts) => validateAndTransformArray(raw, (item, index) => schema.parse(item, {
+            ...opts,
+            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`[\${index}]\`],
+        })),
+        json: (parsed, opts) => validateAndTransformArray(parsed, (item, index) => schema.json(item, {
+            ...opts,
+            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`[\${index}]\`],
+        })),
         getType: () => Schema_1.SchemaType.LIST,
     };
     return {
@@ -16548,14 +16683,14 @@ async function validateAndTransformArray(value, transformItem) {
             ok: false,
             errors: [
                 {
-                    message: \\"Not a list\\",
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"list\\"),
                     path: [],
                 },
             ],
         };
     }
-    const maybeValidItems = await Promise.all(value.map((item) => transformItem(item)));
-    return maybeValidItems.reduce((acc, item, index) => {
+    const maybeValidItems = await Promise.all(value.map((item, index) => transformItem(item, index)));
+    return maybeValidItems.reduce((acc, item) => {
         if (acc.ok && item.ok) {
             return {
                 ok: true,
@@ -16567,10 +16702,7 @@ async function validateAndTransformArray(value, transformItem) {
             errors.push(...acc.errors);
         }
         if (!item.ok) {
-            errors.push(...item.errors.map((error) => ({
-                path: [\`[\${index}]\`, ...error.path],
-                message: error.message,
-            })));
+            errors.push(...item.errors);
         }
         return {
             ok: false,
@@ -16617,8 +16749,9 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.stringLiteral = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 function stringLiteral(literal) {
-    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING_LITERAL, (value) => {
+    const schemaCreator = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING_LITERAL, (value, { breadcrumbsPrefix = [] } = {}) => {
         if (value === literal) {
             return {
                 ok: true,
@@ -16630,8 +16763,8 @@ function stringLiteral(literal) {
                 ok: false,
                 errors: [
                     {
-                        path: [],
-                        message: \`Not equal to \\"\${literal}\\"\`,
+                        path: breadcrumbsPrefix,
+                        message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \`\\"\${literal}\\"\`),
                     },
                 ],
             };
@@ -16687,6 +16820,7 @@ exports.getObjectUtils = exports.object = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const entries_1 = require(\\"../../utils/entries\\");
 const filterObject_1 = require(\\"../../utils/filterObject\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const keys_1 = require(\\"../../utils/keys\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
@@ -16726,11 +16860,15 @@ function object(schemas) {
                     }
                     return {
                         transformedKey: property.parsedKey,
-                        transform: (propertyValue) => property.valueSchema.parse(propertyValue, opts),
+                        transform: (propertyValue) => property.valueSchema.parse(propertyValue, {
+                            ...opts,
+                            breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), rawKey],
+                        }),
                     };
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         json: async (parsed, opts) => {
@@ -16755,18 +16893,25 @@ function object(schemas) {
                     if ((0, property_1.isProperty)(property)) {
                         return {
                             transformedKey: property.rawKey,
-                            transform: (propertyValue) => property.valueSchema.json(propertyValue, opts),
+                            transform: (propertyValue) => property.valueSchema.json(propertyValue, {
+                                ...opts,
+                                breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey],
+                            }),
                         };
                     }
                     else {
                         return {
                             transformedKey: parsedKey,
-                            transform: (propertyValue) => property.json(propertyValue, opts),
+                            transform: (propertyValue) => property.json(propertyValue, {
+                                ...opts,
+                                breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedKey],
+                            }),
                         };
                     }
                 },
                 unrecognizedObjectKeys: opts?.unrecognizedObjectKeys,
                 skipValidation: opts?.skipValidation,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         getType: () => Schema_1.SchemaType.OBJECT,
@@ -16779,14 +16924,14 @@ function object(schemas) {
     };
 }
 exports.object = object;
-async function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = \\"fail\\", skipValidation = false, }) {
+async function validateAndTransformObject({ value, requiredKeys, getProperty, unrecognizedObjectKeys = \\"fail\\", skipValidation = false, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"object\\"),
                 },
             ],
         };
@@ -16804,18 +16949,15 @@ async function validateAndTransformObject({ value, requiredKeys, getProperty, un
             }
             else {
                 transformed[preTransformedKey] = preTransformedItemValue;
-                errors.push(...value.errors.map((error) => ({
-                    path: [preTransformedKey, ...error.path],
-                    message: error.message,
-                })));
+                errors.push(...value.errors);
             }
         }
         else {
             switch (unrecognizedObjectKeys) {
                 case \\"fail\\":
                     errors.push({
-                        path: [preTransformedKey],
-                        message: \`Unrecognized key \\"\${preTransformedKey}\\"\`,
+                        path: [...breadcrumbsPrefix, preTransformedKey],
+                        message: \`Unexpected key \\"\${preTransformedKey}\\"\`,
                     });
                     break;
                 case \\"strip\\":
@@ -16829,7 +16971,7 @@ async function validateAndTransformObject({ value, requiredKeys, getProperty, un
     errors.push(...requiredKeys
         .filter((key) => missingRequiredKeys.has(key))
         .map((key) => ({
-        path: [],
+        path: breadcrumbsPrefix,
         message: \`Missing required key \\"\${key}\\"\`,
     })));
     if (errors.length === 0 || skipValidation) {
@@ -17023,6 +17165,7 @@ export declare function withParsedProperties<RawObjectShape, ParsedObjectShape, 
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.withParsedProperties = exports.getObjectLikeUtils = void 0;
 const filterObject_1 = require(\\"../../utils/filterObject\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
 function getObjectLikeUtils(schema) {
@@ -17061,8 +17204,8 @@ function withParsedProperties(objectLike, properties) {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                            path: opts?.breadcrumbsPrefix ?? [],
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(parsed, \\"object\\"),
                         },
                     ],
                 };
@@ -17157,7 +17300,8 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.boolean = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
-exports.boolean = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.BOOLEAN, (value) => {
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
+exports.boolean = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.BOOLEAN, (value, { breadcrumbsPrefix = [] } = {}) => {
     if (typeof value === \\"boolean\\") {
         return {
             ok: true,
@@ -17169,8 +17313,8 @@ exports.boolean = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: \\"Not a boolean\\",
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"boolean\\"),
                 },
             ],
         };
@@ -17220,7 +17364,8 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.number = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
-exports.number = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.NUMBER, (value) => {
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
+exports.number = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.NUMBER, (value, { breadcrumbsPrefix = [] } = {}) => {
     if (typeof value === \\"number\\") {
         return {
             ok: true,
@@ -17232,8 +17377,8 @@ exports.number = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: \\"Not a number\\",
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"number\\"),
                 },
             ],
         };
@@ -17255,7 +17400,8 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.string = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const createIdentitySchemaCreator_1 = require(\\"../../utils/createIdentitySchemaCreator\\");
-exports.string = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING, (value) => {
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
+exports.string = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(Schema_1.SchemaType.STRING, (value, { breadcrumbsPrefix = [] } = {}) => {
     if (typeof value === \\"string\\") {
         return {
             ok: true,
@@ -17267,8 +17413,8 @@ exports.string = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)(
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: \\"Not a string\\",
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"string\\"),
                 },
             ],
         };
@@ -17332,6 +17478,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.record = void 0;
 const Schema_1 = require(\\"../../Schema\\");
 const entries_1 = require(\\"../../utils/entries\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
@@ -17341,16 +17488,30 @@ function record(keySchema, valueSchema) {
             return validateAndTransformRecord({
                 value: raw,
                 isKeyNumeric: (await keySchema.getType()) === Schema_1.SchemaType.NUMBER,
-                transformKey: (key) => keySchema.parse(key, opts),
-                transformValue: (value) => valueSchema.parse(value, opts),
+                transformKey: (key) => keySchema.parse(key, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`\${key} (key)\`],
+                }),
+                transformValue: (value, key) => valueSchema.parse(value, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`\${key}\`],
+                }),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         json: async (parsed, opts) => {
             return validateAndTransformRecord({
                 value: parsed,
                 isKeyNumeric: (await keySchema.getType()) === Schema_1.SchemaType.NUMBER,
-                transformKey: (key) => keySchema.json(key, opts),
-                transformValue: (value) => valueSchema.json(value, opts),
+                transformKey: (key) => keySchema.json(key, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`\${key} (key)\`],
+                }),
+                transformValue: (value, key) => valueSchema.json(value, {
+                    ...opts,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), \`\${key}\`],
+                }),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         getType: () => Schema_1.SchemaType.RECORD,
@@ -17361,14 +17522,14 @@ function record(keySchema, valueSchema) {
     };
 }
 exports.record = record;
-async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transformValue, }) {
+async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, transformValue, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"object\\"),
                 },
             ],
         };
@@ -17387,7 +17548,7 @@ async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, t
             }
         }
         const transformedKey = await transformKey(key);
-        const transformedValue = await transformValue(value);
+        const transformedValue = await transformValue(value, key);
         if (acc.ok && transformedKey.ok && transformedValue.ok) {
             return {
                 ok: true,
@@ -17402,16 +17563,10 @@ async function validateAndTransformRecord({ value, isKeyNumeric, transformKey, t
             errors.push(...acc.errors);
         }
         if (!transformedKey.ok) {
-            errors.push(...transformedKey.errors.map((error) => ({
-                path: [\`\${key} (key)\`, ...error.path],
-                message: error.message,
-            })));
+            errors.push(...transformedKey.errors);
         }
         if (!transformedValue.ok) {
-            errors.push(...transformedValue.errors.map((error) => ({
-                path: [stringKey, ...error.path],
-                message: error.message,
-            })));
+            errors.push(...transformedValue.errors);
         }
         return {
             ok: false,
@@ -17690,6 +17845,7 @@ export declare function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Ra
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.set = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
 const list_1 = require(\\"../list\\");
 const schema_utils_1 = require(\\"../schema-utils\\");
@@ -17714,8 +17870,8 @@ function set(schema) {
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: \\"Not a Set\\",
+                            path: opts?.breadcrumbsPrefix ?? [],
+                            message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(parsed, \\"Set\\"),
                         },
                     ],
                 };
@@ -17807,13 +17963,18 @@ function undiscriminatedUnion(schemas) {
 exports.undiscriminatedUnion = undiscriminatedUnion;
 async function validateAndTransformUndiscriminatedUnion(transform, schemas) {
     const errors = [];
-    for (const schema of schemas) {
+    for (const [index, schema] of schemas.entries()) {
         const transformed = await transform(schema);
         if (transformed.ok) {
             return transformed;
         }
-        else if (errors.length === 0) {
-            errors.push(...transformed.errors);
+        else {
+            for (const error of errors) {
+                errors.push({
+                    path: error.path,
+                    message: \`[Variant \${index}] \${error.message}\`,
+                });
+            }
         }
     }
     return {
@@ -17915,6 +18076,7 @@ export declare function union<D extends string | Discriminant<any, any>, U exten
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.union = void 0;
 const Schema_1 = require(\\"../../Schema\\");
+const getErrorMessageForIncorrectType_1 = require(\\"../../utils/getErrorMessageForIncorrectType\\");
 const isPlainObject_1 = require(\\"../../utils/isPlainObject\\");
 const keys_1 = require(\\"../../utils/keys\\");
 const maybeSkipValidation_1 = require(\\"../../utils/maybeSkipValidation\\");
@@ -17935,10 +18097,12 @@ function union(discriminant, union) {
                 transformedDiscriminant: parsedDiscriminant,
                 transformDiscriminantValue: (discriminantValue) => discriminantValueSchema.parse(discriminantValue, {
                     allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), rawDiscriminant],
                 }),
                 getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
                 allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
                 transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.parse(additionalProperties, opts),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         json: async (parsed, opts) => {
@@ -17948,10 +18112,12 @@ function union(discriminant, union) {
                 transformedDiscriminant: rawDiscriminant,
                 transformDiscriminantValue: (discriminantValue) => discriminantValueSchema.json(discriminantValue, {
                     allowUnrecognizedEnumValues: opts?.allowUnrecognizedUnionMembers,
+                    breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), parsedDiscriminant],
                 }),
                 getAdditionalPropertiesSchema: (discriminantValue) => union[discriminantValue],
                 allowUnrecognizedUnionMembers: opts?.allowUnrecognizedUnionMembers,
                 transformAdditionalProperties: (additionalProperties, additionalPropertiesSchema) => additionalPropertiesSchema.json(additionalProperties, opts),
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
             });
         },
         getType: () => Schema_1.SchemaType.UNION,
@@ -17963,14 +18129,14 @@ function union(discriminant, union) {
     };
 }
 exports.union = union;
-async function transformAndValidateUnion({ value, discriminant, transformedDiscriminant, transformDiscriminantValue, getAdditionalPropertiesSchema, allowUnrecognizedUnionMembers = false, transformAdditionalProperties, }) {
+async function transformAndValidateUnion({ value, discriminant, transformedDiscriminant, transformDiscriminantValue, getAdditionalPropertiesSchema, allowUnrecognizedUnionMembers = false, transformAdditionalProperties, breadcrumbsPrefix = [], }) {
     if (!(0, isPlainObject_1.isPlainObject)(value)) {
         return {
             ok: false,
             errors: [
                 {
-                    path: [],
-                    message: isPlainObject_1.NOT_AN_OBJECT_ERROR_MESSAGE,
+                    path: breadcrumbsPrefix,
+                    message: (0, getErrorMessageForIncorrectType_1.getErrorMessageForIncorrectType)(value, \\"object\\"),
                 },
             ],
         };
@@ -17981,7 +18147,7 @@ async function transformAndValidateUnion({ value, discriminant, transformedDiscr
             ok: false,
             errors: [
                 {
-                    path: [],
+                    path: breadcrumbsPrefix,
                     message: \`Missing discriminant (\\"\${discriminant}\\")\`,
                 },
             ],
@@ -17991,10 +18157,7 @@ async function transformAndValidateUnion({ value, discriminant, transformedDiscr
     if (!transformedDiscriminantValue.ok) {
         return {
             ok: false,
-            errors: transformedDiscriminantValue.errors.map((error) => ({
-                path: [discriminant, ...error.path],
-                message: error.message,
-            })),
+            errors: transformedDiscriminantValue.errors,
         };
     }
     const additionalPropertiesSchema = getAdditionalPropertiesSchema(transformedDiscriminantValue.value);
@@ -18013,8 +18176,8 @@ async function transformAndValidateUnion({ value, discriminant, transformedDiscr
                 ok: false,
                 errors: [
                     {
-                        path: [discriminant],
-                        message: \\"Unrecognized discriminant value\\",
+                        path: [...breadcrumbsPrefix, discriminant],
+                        message: \\"Unexpected discriminant value\\",
                     },
                 ],
             };
@@ -18182,8 +18345,42 @@ exports.filterObject = filterObject;
                 "type": "file",
               },
               Object {
-                "contents": "export declare const NOT_AN_OBJECT_ERROR_MESSAGE = \\"Not an object\\";
-export declare function isPlainObject(value: unknown): value is Record<string, unknown>;
+                "contents": "export declare function getErrorMessageForIncorrectType(value: unknown, expectedType: string): string;
+",
+                "name": "getErrorMessageForIncorrectType.d.ts",
+                "type": "file",
+              },
+              Object {
+                "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.getErrorMessageForIncorrectType = void 0;
+function getErrorMessageForIncorrectType(value, expectedType) {
+    return \`Expected \${expectedType}. Received \${getTypeAsString(value)}.\`;
+}
+exports.getErrorMessageForIncorrectType = getErrorMessageForIncorrectType;
+function getTypeAsString(value) {
+    if (Array.isArray(value)) {
+        return \\"list\\";
+    }
+    if (value === null) {
+        return \\"null\\";
+    }
+    switch (typeof value) {
+        case \\"string\\":
+            return \`\\"\${value}\\"\`;
+        case \\"number\\":
+        case \\"boolean\\":
+        case \\"undefined\\":
+            return \`\${value}\`;
+    }
+    return typeof value;
+}
+",
+                "name": "getErrorMessageForIncorrectType.js",
+                "type": "file",
+              },
+              Object {
+                "contents": "export declare function isPlainObject(value: unknown): value is Record<string, unknown>;
 ",
                 "name": "isPlainObject.d.ts",
                 "type": "file",
@@ -18191,8 +18388,7 @@ export declare function isPlainObject(value: unknown): value is Record<string, u
               Object {
                 "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.isPlainObject = exports.NOT_AN_OBJECT_ERROR_MESSAGE = void 0;
-exports.NOT_AN_OBJECT_ERROR_MESSAGE = \\"Not an object\\";
+exports.isPlainObject = void 0;
 // borrowed from https://github.com/lodash/lodash/blob/master/isPlainObject.js
 function isPlainObject(value) {
     if (typeof value !== \\"object\\" || value === null) {
@@ -18254,6 +18450,12 @@ function transformAndMaybeSkipValidation(transform) {
         const transformed = await transform(value, opts);
         const { skipValidation = false } = opts ?? {};
         if (!transformed.ok && skipValidation) {
+            // eslint-disable-next-line no-console
+            console.warn([
+                \\"Failed to validate.\\",
+                ...transformed.errors.map((error) => \\"  - \\" +
+                    (error.path.length > 0 ? \`\${error.path.join(\\".\\")}: \${error.message}\` : error.message)),
+            ].join(\\"\\\\n\\"));
             return {
                 ok: true,
                 value: value,

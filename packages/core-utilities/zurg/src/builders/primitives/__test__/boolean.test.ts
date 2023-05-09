@@ -5,10 +5,10 @@ import { boolean } from "../boolean";
 describe("boolean", () => {
     itSchemaIdentity(boolean(), true);
 
-    itValidate("non-boolean", boolean(), 42, [
+    itValidate("non-boolean", boolean(), {}, [
         {
             path: [],
-            message: "Not a boolean",
+            message: "Expected boolean. Received object.",
         },
     ]);
 });

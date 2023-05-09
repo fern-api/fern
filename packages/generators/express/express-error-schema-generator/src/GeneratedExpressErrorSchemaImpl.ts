@@ -60,6 +60,7 @@ export class GeneratedExpressErrorSchemaImpl
                         allowUnrecognizedUnionMembers: false,
                         unrecognizedObjectKeys: "strip",
                         skipValidation: false,
+                        breadcrumbsPrefix: [],
                     });
             case "unknown":
                 return referenceToBody;
@@ -70,6 +71,7 @@ export class GeneratedExpressErrorSchemaImpl
                     allowUnrecognizedUnionMembers: false,
                     unrecognizedObjectKeys: "strip",
                     skipValidation: false,
+                    breadcrumbsPrefix: [],
                 });
             default:
                 assertNever(this.type);

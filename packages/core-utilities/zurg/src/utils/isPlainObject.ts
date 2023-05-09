@@ -1,5 +1,3 @@
-export const NOT_AN_OBJECT_ERROR_MESSAGE = "Not an object";
-
 // borrowed from https://github.com/lodash/lodash/blob/master/isPlainObject.js
 export function isPlainObject(value: unknown): value is Record<string, unknown> {
     if (typeof value !== "object" || value === null) {

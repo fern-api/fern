@@ -43,6 +43,7 @@ export function buildUrl({
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
+                        breadcrumbsPrefix: [],
                     });
             }
 

@@ -63,6 +63,7 @@ export class GeneratedSdkErrorSchemaImpl
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipValidation,
+                        breadcrumbsPrefix: ["response"],
                     });
             case "unknown":
                 return referenceToBody;
@@ -73,6 +74,7 @@ export class GeneratedSdkErrorSchemaImpl
                     allowUnrecognizedUnionMembers: true,
                     unrecognizedObjectKeys: "passthrough",
                     skipValidation: this.skipValidation,
+                    breadcrumbsPrefix: ["response"],
                 });
             default:
                 assertNever(this.type);

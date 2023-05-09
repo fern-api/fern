@@ -12,7 +12,7 @@ describe("set", () => {
     itValidateParse("not a list", set(string()), 42, [
         {
             path: [],
-            message: "Not a list",
+            message: "Expected list. Received 42.",
         },
     ]);
 
@@ -23,7 +23,7 @@ describe("set", () => {
         [
             {
                 path: [],
-                message: "Not a Set",
+                message: "Expected Set. Received list.",
             },
         ]
     );
@@ -35,7 +35,7 @@ describe("set", () => {
         [
             {
                 path: ["[0]"],
-                message: "Not a string",
+                message: "Expected string. Received 42.",
             },
         ]
     );
@@ -43,7 +43,7 @@ describe("set", () => {
     itValidateJson("invalid item type", set(string()), new Set([42]), [
         {
             path: ["[0]"],
-            message: "Not a string",
+            message: "Expected string. Received 42.",
         },
     ]);
 });

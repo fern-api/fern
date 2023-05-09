@@ -82,4 +82,12 @@ export interface SchemaOptions {
      * @default false
      */
     skipValidation?: boolean;
+
+    /**
+     * each validation failure contains a "path" property, which is
+     * the breadcrumbs to the offending node in the JSON. you can supply
+     * a prefix that is prepended to all the errors' paths. this can be
+     * helpful for zurg's internal debug logging.
+     */
+    breadcrumbsPrefix?: string[];
 }

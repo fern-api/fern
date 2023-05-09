@@ -25,7 +25,7 @@ describe("list", () => {
     itValidate("not a list", list(string()), 42, [
         {
             path: [],
-            message: "Not a list",
+            message: "Expected list. Received 42.",
         },
     ]);
 
@@ -36,7 +36,7 @@ describe("list", () => {
         [
             {
                 path: ["[0]"],
-                message: "Not a string",
+                message: "Expected string. Received 42.",
             },
         ]
     );

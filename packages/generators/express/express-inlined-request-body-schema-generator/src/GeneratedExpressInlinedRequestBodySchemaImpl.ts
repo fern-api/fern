@@ -48,6 +48,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
             allowUnrecognizedEnumValues: false,
             allowUnrecognizedUnionMembers: false,
             skipValidation: false,
+            breadcrumbsPrefix: [],
         });
     }
 

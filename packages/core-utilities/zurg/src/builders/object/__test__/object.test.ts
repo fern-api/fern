@@ -228,7 +228,7 @@ describe("object", () => {
         [
             {
                 path: ["baz"],
-                message: 'Unrecognized key "baz"',
+                message: 'Unexpected key "baz"',
             },
         ]
     );
@@ -243,7 +243,7 @@ describe("object", () => {
         [
             {
                 path: [],
-                message: "Not an object",
+                message: "Expected object. Received list.",
             },
         ]
     );
@@ -259,7 +259,7 @@ describe("object", () => {
         [
             {
                 path: ["foo", "bar"],
-                message: "Not a number",
+                message: 'Expected number. Received "hello".',
             },
         ]
     );

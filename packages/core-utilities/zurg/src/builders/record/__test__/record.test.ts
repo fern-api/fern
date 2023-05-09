@@ -14,7 +14,7 @@ describe("record", () => {
         [
             {
                 path: [],
-                message: "Not an object",
+                message: "Expected object. Received list.",
             },
         ]
     );
@@ -22,14 +22,14 @@ describe("record", () => {
     itValidate("invalid key type", record(number(), string()), { hello: "world" }, [
         {
             path: ["hello (key)"],
-            message: "Not a number",
+            message: 'Expected number. Received "hello".',
         },
     ]);
 
     itValidate("invalid value type", record(string(), number()), { hello: "world" }, [
         {
             path: ["hello"],
-            message: "Not a number",
+            message: 'Expected number. Received "world".',
         },
     ]);
 });

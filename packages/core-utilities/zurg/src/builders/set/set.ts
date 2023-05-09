@@ -1,4 +1,5 @@
 import { BaseSchema, Schema, SchemaType } from "../../Schema";
+import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation";
 import { list } from "../list";
 import { getSchemaUtils } from "../schema-utils";
@@ -23,8 +24,8 @@ export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set
                     ok: false,
                     errors: [
                         {
-                            path: [],
-                            message: "Not a Set",
+                            path: opts?.breadcrumbsPrefix ?? [],
+                            message: getErrorMessageForIncorrectType(parsed, "Set"),
                         },
                     ],
                 };

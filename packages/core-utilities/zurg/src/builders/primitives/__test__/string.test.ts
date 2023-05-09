@@ -8,7 +8,7 @@ describe("string", () => {
     itValidate("non-string", string(), 42, [
         {
             path: [],
-            message: "Not a string",
+            message: "Expected string. Received 42.",
         },
     ]);
 });

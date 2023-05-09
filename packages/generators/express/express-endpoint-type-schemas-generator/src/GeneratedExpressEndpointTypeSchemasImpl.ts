@@ -111,6 +111,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
+                        breadcrumbsPrefix: [],
                     });
             case "primitive":
             case "container":
@@ -122,6 +123,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     allowUnrecognizedEnumValues: false,
                     allowUnrecognizedUnionMembers: false,
                     skipValidation: false,
+                    breadcrumbsPrefix: [],
                 });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
@@ -151,6 +153,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
+                        breadcrumbsPrefix: [],
                     });
             case "primitive":
             case "container":
@@ -164,6 +167,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
+                        breadcrumbsPrefix: [],
                     });
             default:
                 assertNever(this.endpoint.response.responseBodyType);

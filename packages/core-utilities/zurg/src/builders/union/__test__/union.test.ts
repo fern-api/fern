@@ -77,7 +77,7 @@ describe("union", () => {
         [
             {
                 path: [],
-                message: "Not an object",
+                message: "Expected object. Received list.",
             },
         ]
     );
@@ -109,7 +109,7 @@ describe("union", () => {
         [
             {
                 path: ["type"],
-                message: "Not one of the allowed values",
+                message: 'Expected enum. Received "bear".',
             },
         ]
     );

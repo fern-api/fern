@@ -8,14 +8,14 @@ describe("stringLiteral", () => {
     itValidate("incorrect string", stringLiteral("A"), "B", [
         {
             path: [],
-            message: 'Not equal to "A"',
+            message: 'Expected "A". Received "B".',
         },
     ]);
 
     itValidate("non-string", stringLiteral("A"), 42, [
         {
             path: [],
-            message: 'Not equal to "A"',
+            message: 'Expected "A". Received 42.',
         },
     ]);
 });

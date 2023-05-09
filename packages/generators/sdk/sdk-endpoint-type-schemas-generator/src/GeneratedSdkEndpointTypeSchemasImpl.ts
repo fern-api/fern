@@ -207,6 +207,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
+                        breadcrumbsPrefix: [],
                     });
             case "primitive":
             case "container":
@@ -220,6 +221,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
+                        breadcrumbsPrefix: [],
                     });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
@@ -249,6 +251,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
+                        breadcrumbsPrefix: ["response"],
                     });
             case "primitive":
             case "container":
@@ -262,6 +265,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
+                        breadcrumbsPrefix: ["response"],
                     });
             default:
                 assertNever(this.endpoint.response.responseBodyType);
@@ -277,6 +281,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             allowUnrecognizedUnionMembers: true,
             unrecognizedObjectKeys: "passthrough",
             skipValidation: this.skipResponseValidation,
+            breadcrumbsPrefix: ["response"],
         });
     }
 
@@ -345,6 +350,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
+                        breadcrumbsPrefix: ["response"],
                     });
             case "primitive":
             case "container":
@@ -358,6 +364,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
+                        breadcrumbsPrefix: ["response"],
                     });
             default:
                 assertNever(this.endpoint.streamingResponse.dataEventType);
