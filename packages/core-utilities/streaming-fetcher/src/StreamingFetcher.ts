@@ -52,6 +52,7 @@ export const streamingFetcher: StreamingFetchFunction = async (args) => {
                 clarifyTimeoutError: true,
             },
             withCredentials: args.withCredentials,
+            onUploadProgress: args.onUploadProgress,
             signal: args.abortController?.signal,
             responseType: "stream",
             adapter: args.adapter,

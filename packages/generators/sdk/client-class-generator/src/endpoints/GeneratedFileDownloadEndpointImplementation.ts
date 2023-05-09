@@ -81,6 +81,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     }
 
     public invokeFetcher(context: SdkClientClassContext): ts.Statement[] {
+        const ERROR_CALLBACK_PARAMETER_NAME = "error";
+
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
             url: this.getReferenceToEnvironment(context),
@@ -95,7 +97,39 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                     {
                         ...fetcherArgs,
                         onData: undefined,
-                        onError: undefined,
+                        onError: ts.factory.createArrowFunction(
+                            undefined,
+                            undefined,
+                            [
+                                ts.factory.createParameterDeclaration(
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                    ERROR_CALLBACK_PARAMETER_NAME
+                                ),
+                            ],
+                            undefined,
+                            undefined,
+                            ts.factory.createBlock(
+                                [
+                                    ts.factory.createThrowStatement(
+                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                            message: ts.factory.createPropertyAccessChain(
+                                                ts.factory.createAsExpression(
+                                                    ts.factory.createIdentifier(ERROR_CALLBACK_PARAMETER_NAME),
+                                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+                                                ),
+                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                                "message"
+                                            ),
+                                            statusCode: undefined,
+                                            responseBody: undefined,
+                                        })
+                                    ),
+                                ],
+                                true
+                            )
+                        ),
                         onFinish: undefined,
                         abortController: undefined,
                         terminator: undefined,
