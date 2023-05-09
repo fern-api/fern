@@ -72,6 +72,8 @@ export const fetcher: FetchFunction = async (args) => {
             withCredentials: args.withCredentials,
             adapter: args.adapter,
             onUploadProgress: args.onUploadProgress,
+            maxBodyLength: Infinity,
+            maxContentLength: Infinity,
         });
 
         let body: unknown;
