@@ -10,7 +10,15 @@ exports[`open api parser devrev simple 1`] = `
         {
           "authed": true,
           "description": "Gets the download URL for the artifact.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "ArtifactsLocateRequest",
           "headers": [],
           "method": "GET",
@@ -56,7 +64,14 @@ exports[`open api parser devrev simple 1`] = `
           "authed": true,
           "description": "Creates an artifact and generates an upload URL for its data.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "ArtifactsPrepareRequest",
           "headers": [],
           "method": "POST",
@@ -102,7 +117,14 @@ exports[`open api parser devrev simple 1`] = `
           "description": "Creates a JWT corresponding to the requested token type for the
 authenticated user.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "AuthTokensCreateRequest",
           "headers": [],
           "method": "POST",
@@ -148,7 +170,15 @@ authenticated user.
           "description": "Revokes the token that matches the given token ID issued under the
 given Dev organization.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "AuthTokensDeleteRequest",
           "headers": [],
           "method": "POST",
@@ -183,7 +213,15 @@ given Dev organization.
           "description": "Gets the token metadata corresponding to the given token ID under the
 given Dev organization.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "AuthTokensGetRequest",
           "headers": [],
           "method": "GET",
@@ -230,7 +268,15 @@ given Dev organization.
           "description": "Gets the token metadata for all the tokens corresponding to the given
 token type issued for a given subject.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "AuthTokensListRequest",
           "headers": [],
           "method": "GET",
@@ -312,7 +358,15 @@ token type issued for a given subject.
           "description": "Revokes all the tokens that matches the given token type created by the
 authenticated user.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "AuthTokensSelfDeleteRequest",
           "headers": [],
           "method": "POST",
@@ -347,7 +401,15 @@ authenticated user.
           "description": "Updates token metadata of a token issued under a given Dev
 organization.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "AuthTokensUpdateRequest",
           "headers": [],
           "method": "POST",
@@ -397,7 +459,14 @@ enable this. Keep in mind that at a time, only one authentication
 connection can be enabled for a Dev organization. At present, only 5
 enterprise connections can be created by an organization.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "DevOrgAuthConnectionsCreateRequest",
           "headers": [],
           "method": "POST",
@@ -445,7 +514,15 @@ enterprise connections can be created by an organization.
 are explicitly set up for a Dev organization can be deleted. Default
 connections can not be deleted using this method.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "DevOrgAuthConnectionsDeleteRequest",
           "headers": [],
           "method": "POST",
@@ -479,7 +556,15 @@ connections can not be deleted using this method.
         {
           "authed": true,
           "description": "Retrieves the details for an authentication connection.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "DevOrgAuthConnectionsGetRequest",
           "headers": [],
           "method": "GET",
@@ -529,7 +614,14 @@ organization. This list will include both social and enterprise
 connections which are either available by default or are explicitly
 created by the user.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "DevOrgAuthConnectionsListRequest",
           "headers": [],
           "method": "GET",
@@ -568,7 +660,15 @@ When a new authentication connection is enabled, the connection which
 is currently enabled for the Dev organization is automatically
 disabled.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "DevOrgAuthConnectionsToggleRequest",
           "headers": [],
           "method": "POST",
@@ -602,7 +702,15 @@ disabled.
         {
           "authed": true,
           "description": "Updates an authentication connection.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "DevOrgAuthConnectionsUpdateRequest",
           "headers": [],
           "method": "POST",
@@ -647,7 +755,14 @@ disabled.
         {
           "authed": true,
           "description": "Lists users within your organization.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "DevUsersListRequest",
           "headers": [],
           "method": "GET",
@@ -785,7 +900,14 @@ disabled.
         {
           "authed": true,
           "description": "Gets the authenticated user's information.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "DevUsersSelfRequest",
           "headers": [],
           "method": "GET",
@@ -818,7 +940,14 @@ disabled.
         {
           "authed": true,
           "description": "Creates new [part](https://devrev.ai/docs/product/parts).",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "PartsCreateRequest",
           "headers": [],
           "method": "POST",
@@ -862,7 +991,15 @@ disabled.
         {
           "authed": true,
           "description": "Deletes a [part](https://devrev.ai/docs/product/parts).",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "PartsDeleteRequest",
           "headers": [],
           "method": "POST",
@@ -907,7 +1044,15 @@ disabled.
           "authed": true,
           "description": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "PartsGetRequest",
           "headers": [],
           "method": "GET",
@@ -953,7 +1098,14 @@ disabled.
           "authed": true,
           "description": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "PartsListRequest",
           "headers": [],
           "method": "GET",
@@ -1111,7 +1263,15 @@ disabled.
           "authed": true,
           "description": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "PartsUpdateRequest",
           "headers": [],
           "method": "POST",
@@ -1157,7 +1317,14 @@ disabled.
           "description": "Creates a Rev organization in the authenticated user's Dev
 organization.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "RevOrgsCreateRequest",
           "headers": [],
           "method": "POST",
@@ -1201,7 +1368,15 @@ organization.
         {
           "authed": true,
           "description": "Deletes the Rev organization.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "RevOrgsDeleteRequest",
           "headers": [],
           "method": "POST",
@@ -1245,7 +1420,15 @@ organization.
         {
           "authed": true,
           "description": "Retrieves the Rev organization's information.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "RevOrgsGetRequest",
           "headers": [],
           "method": "GET",
@@ -1293,7 +1476,15 @@ organization.
 authenticated user's Dev Organization which the user is also authorized
 to access.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "RevOrgsListRequest",
           "headers": [],
           "method": "GET",
@@ -1490,7 +1681,15 @@ to access.
         {
           "authed": true,
           "description": "Updates the Rev organization's information.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "RevOrgsUpdateRequest",
           "headers": [],
           "method": "POST",
@@ -1536,7 +1735,14 @@ to access.
           "description": "Creates a new tag, which is used to create associations between objects
 and a logical concept denoted by the tag's name.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "TagsCreateRequest",
           "headers": [],
           "method": "POST",
@@ -1580,7 +1786,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Deletes a tag.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "TagsDeleteRequest",
           "headers": [],
           "method": "POST",
@@ -1624,7 +1838,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Gets a tag's information.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "TagsGetRequest",
           "headers": [],
           "method": "GET",
@@ -1669,7 +1891,14 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Lists the available tags.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "TagsListRequest",
           "headers": [],
           "method": "GET",
@@ -1749,7 +1978,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Updates a tag's information.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "TagsUpdateRequest",
           "headers": [],
           "method": "POST",
@@ -1793,7 +2030,14 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Creates a new entry on an object's timeline.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "TimelineEntriesCreateRequest",
           "headers": [],
           "method": "POST",
@@ -1837,7 +2081,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Gets an entry on an object's timeline.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "TimelineEntriesGetRequest",
           "headers": [],
           "method": "GET",
@@ -1882,7 +2134,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Lists the timeline entries for an object.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "TimelineEntriesListRequest",
           "headers": [],
           "method": "GET",
@@ -1973,7 +2233,14 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Updates an entry on an object's timeline.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "TimelineEntriesUpdateRequest",
           "headers": [],
           "method": "POST",
@@ -2017,7 +2284,14 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Creates a new webhook target.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WebhooksCreateRequest",
           "headers": [],
           "method": "POST",
@@ -2061,7 +2335,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Deletes the requested webhook.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WebhooksDeleteRequest",
           "headers": [],
           "method": "POST",
@@ -2105,7 +2387,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Gets the requested webhook's information.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WebhooksGetRequest",
           "headers": [],
           "method": "GET",
@@ -2150,7 +2440,14 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Lists the webhooks.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WebhooksListRequest",
           "headers": [],
           "method": "GET",
@@ -2183,7 +2480,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Updates the requested webhook.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WebhooksUpdateRequest",
           "headers": [],
           "method": "POST",
@@ -2229,7 +2534,14 @@ and a logical concept denoted by the tag's name.
           "description": "Creates new work ([issue](https://devrev.ai/docs/product/build),
 [ticket](https://devrev.ai/docs/product/support)) item.
 ",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WorksCreateRequest",
           "headers": [],
           "method": "POST",
@@ -2273,7 +2585,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Deletes a work item.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WorksDeleteRequest",
           "headers": [],
           "method": "POST",
@@ -2317,7 +2637,14 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Exports a collection of work items.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WorksExportRequest",
           "headers": [],
           "method": "GET",
@@ -2540,7 +2867,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Gets a work item's information.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WorksGetRequest",
           "headers": [],
           "method": "GET",
@@ -2585,7 +2920,14 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Lists a collection of work items.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WorksListRequest",
           "headers": [],
           "method": "GET",
@@ -2839,7 +3181,15 @@ and a logical concept denoted by the tag's name.
         {
           "authed": true,
           "description": "Updates a work item's information.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            401,
+            403,
+            404,
+            429,
+            500,
+            503,
+          ],
           "generatedRequestName": "WorksUpdateRequest",
           "headers": [],
           "method": "POST",
@@ -2881,6 +3231,99 @@ and a logical concept denoted by the tag's name.
           ],
         },
       ],
+      "errors": {
+        "400": {
+          "description": undefined,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": undefined,
+            "schema": "error-bad-request",
+            "type": "reference",
+          },
+        },
+        "401": {
+          "description": undefined,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": undefined,
+            "schema": "error-unauthorized",
+            "type": "reference",
+          },
+        },
+        "403": {
+          "description": undefined,
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "ForbiddenErrorBody",
+            "nameOverride": undefined,
+            "schema": "error-forbidden",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": undefined,
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "NotFoundErrorBody",
+            "nameOverride": undefined,
+            "schema": "error-not-found",
+            "type": "reference",
+          },
+        },
+        "429": {
+          "description": undefined,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": undefined,
+            "schema": "error-too-many-requests",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": undefined,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": undefined,
+            "schema": "error-internal-server-error",
+            "type": "reference",
+          },
+        },
+        "503": {
+          "description": undefined,
+          "generatedName": "ServiceUnavailableError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "ServiceUnavailableErrorBody",
+            "nameOverride": undefined,
+            "schema": "error-service-unavailable",
+            "type": "reference",
+          },
+        },
+      },
       "nonRequestReferencedSchemas": [
         "artifacts-locate-response",
         "artifacts-prepare-response",
@@ -3007,6 +3450,13 @@ and a logical concept denoted by the tag's name.
         "works-update-request-reported-by",
         "stage-update",
         "works-update-request-tags",
+        "error-bad-request",
+        "error-unauthorized",
+        "error-forbidden",
+        "error-not-found",
+        "error-too-many-requests",
+        "error-internal-server-error",
+        "error-service-unavailable",
       ],
       "schemas": {
         "artifact-summary": {
@@ -10992,7 +11442,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "GetAppsRequest",
           "headers": [],
           "method": "GET",
@@ -11029,7 +11479,10 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            422,
+            500,
+          ],
           "generatedRequestName": "CreateAppRequest",
           "headers": [],
           "method": "POST",
@@ -11152,7 +11605,11 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
           "generatedRequestName": "UpdateAppRequest",
           "headers": [],
           "method": "POST",
@@ -11288,7 +11745,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetAppInfoRequest",
           "headers": [],
           "method": "GET",
@@ -11334,7 +11793,10 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "DeleteAppRequest",
           "headers": [],
           "method": "DELETE",
@@ -11369,7 +11831,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "LoginAnonymousRequest",
           "headers": [],
           "method": "POST",
@@ -11426,7 +11890,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "LoginNicknameRequest",
           "headers": [],
           "method": "POST",
@@ -11505,7 +11971,10 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            401,
+            404,
+          ],
           "generatedRequestName": "LoginGoogleRequest",
           "headers": [],
           "method": "POST",
@@ -11584,7 +12053,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetBuildsRequest",
           "headers": [],
           "method": "GET",
@@ -11634,7 +12105,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetBuildInfoRequest",
           "headers": [],
           "method": "GET",
@@ -11692,7 +12165,11 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
           "generatedRequestName": "CreateBuildRequest",
           "headers": [],
           "method": "POST",
@@ -11738,7 +12215,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "RunBuildRequest",
           "headers": [],
           "method": "POST",
@@ -11801,7 +12278,11 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
           "generatedRequestName": "DeleteBuildRequest",
           "headers": [],
           "method": "DELETE",
@@ -11848,7 +12329,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetDeploymentsRequest",
           "headers": [],
           "method": "GET",
@@ -11898,7 +12381,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetDeploymentInfoRequest",
           "headers": [],
           "method": "GET",
@@ -11956,7 +12441,11 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
           "generatedRequestName": "CreateDeploymentRequest",
           "headers": [],
           "method": "POST",
@@ -12025,7 +12514,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "GetPingServiceEndpointsRequest",
           "headers": [],
           "method": "GET",
@@ -12058,7 +12547,13 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
           "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
           "headers": [
             {
@@ -12148,7 +12643,13 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
           "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
           "headers": [
             {
@@ -12238,7 +12739,10 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            401,
+            404,
+          ],
           "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
           "headers": [
             {
@@ -12332,7 +12836,13 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
           "generatedRequestName": "CreatePrivateLobbyRequest",
           "headers": [
             {
@@ -12443,7 +12953,13 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
           "generatedRequestName": "CreatePublicLobbyRequest",
           "headers": [
             {
@@ -12554,7 +13070,13 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
           "generatedRequestName": "CreateLocalLobbyRequest",
           "headers": [
             {
@@ -12665,7 +13187,13 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
           "generatedRequestName": "CreateLobbyRequest",
           "headers": [
             {
@@ -12802,7 +13330,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "ListActivePublicLobbiesRequest",
           "headers": [],
           "method": "GET",
@@ -12869,7 +13397,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetLobbyInfoRequest",
           "headers": [],
           "method": "GET",
@@ -12927,7 +13457,10 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            422,
+          ],
           "generatedRequestName": "SetLobbyStateRequest",
           "headers": [],
           "method": "POST",
@@ -13010,7 +13543,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "GetLogsForAppRequest",
           "headers": [],
           "method": "GET",
@@ -13095,7 +13628,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "GetLogsForProcessRequest",
           "headers": [],
           "method": "GET",
@@ -13176,7 +13709,7 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "GetLogsForDeploymentRequest",
           "headers": [],
           "method": "GET",
@@ -13257,7 +13790,10 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            422,
+          ],
           "generatedRequestName": "GetMetricsRequest",
           "headers": [],
           "method": "GET",
@@ -13381,7 +13917,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetRunningProcessesRequest",
           "headers": [],
           "method": "GET",
@@ -13448,7 +13986,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetStoppedProcessesRequest",
           "headers": [],
           "method": "GET",
@@ -13515,7 +14055,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetProcessInfoRequest",
           "headers": [],
           "method": "GET",
@@ -13573,7 +14115,10 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "CreateRoomRequest",
           "headers": [],
           "method": "POST",
@@ -13642,7 +14187,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetRoomInfoRequest",
           "headers": [],
           "method": "GET",
@@ -13700,7 +14247,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetActiveRoomsForProcessRequest",
           "headers": [],
           "method": "GET",
@@ -13762,7 +14311,9 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+          ],
           "generatedRequestName": "GetInactiveRoomsForProcessRequest",
           "headers": [],
           "method": "GET",
@@ -13824,7 +14375,10 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "DestroyRoomRequest",
           "headers": [],
           "method": "POST",
@@ -13871,7 +14425,10 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "SuspendRoomRequest",
           "headers": [],
           "method": "POST",
@@ -13918,7 +14475,11 @@ exports[`open api parser hathora simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
           "generatedRequestName": "GetConnectionInfoRequest",
           "headers": [],
           "method": "GET",
@@ -13974,6 +14535,68 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
       ],
+      "errors": {
+        "401": {
+          "description": undefined,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": undefined,
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": undefined,
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": undefined,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": undefined,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "nonRequestReferencedSchemas": [
         "ApplicationWithDeployment",
         "Record_string.never_",
@@ -15711,7 +16334,7 @@ exports[`open api parser hume simple 1`] = `
         {
           "authed": false,
           "description": "Sort and filter jobs.",
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "ListJobsRequest",
           "headers": [],
           "method": "GET",
@@ -15847,7 +16470,7 @@ exports[`open api parser hume simple 1`] = `
         {
           "authed": false,
           "description": "Start a new batch job.",
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "StartJobRequest",
           "headers": [],
           "method": "POST",
@@ -15891,7 +16514,7 @@ exports[`open api parser hume simple 1`] = `
         {
           "authed": false,
           "description": "Get the JSON predictions of a completed job.",
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "GetJobPredictionsRequest",
           "headers": [],
           "method": "GET",
@@ -15940,7 +16563,7 @@ exports[`open api parser hume simple 1`] = `
         {
           "authed": false,
           "description": "Get the artifacts ZIP of a completed job.",
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "GetJobArtifactsRequest",
           "headers": [],
           "method": "GET",
@@ -15977,7 +16600,7 @@ exports[`open api parser hume simple 1`] = `
         {
           "authed": false,
           "description": "Get the request details and state of a given job.",
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "GetJobDetailsRequest",
           "headers": [],
           "method": "GET",
@@ -16020,6 +16643,7 @@ exports[`open api parser hume simple 1`] = `
           ],
         },
       ],
+      "errors": {},
       "nonRequestReferencedSchemas": [
         "Status",
         "When",
@@ -18988,7 +19612,9 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "UserManagementGetUsersRequest",
           "headers": [],
           "method": "GET",
@@ -19070,7 +19696,10 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "UserManagementPostUserRequest",
           "headers": [],
           "method": "POST",
@@ -19117,7 +19746,10 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "UserManagementGetUserRequest",
           "headers": [],
           "method": "GET",
@@ -19165,7 +19797,11 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "UserManagementPutUserRequest",
           "headers": [],
           "method": "PUT",
@@ -19224,7 +19860,12 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            403,
+            404,
+            500,
+          ],
           "generatedRequestName": "UserManagementDeleteUserRequest",
           "headers": [],
           "method": "DELETE",
@@ -19261,7 +19902,12 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            403,
+            404,
+            500,
+          ],
           "generatedRequestName": "UserManagementLockUserRequest",
           "headers": [],
           "method": "PUT",
@@ -19309,7 +19955,12 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            403,
+            404,
+            500,
+          ],
           "generatedRequestName": "UserManagementUnlockUserRequest",
           "headers": [],
           "method": "PUT",
@@ -19357,7 +20008,9 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "UsersGetUserResourcesRequest",
           "headers": [],
           "method": "GET",
@@ -19393,7 +20046,9 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": "Search the user by query that contains the email address or the part of the email address.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "UsersGetUsersRequest",
           "headers": [],
           "method": "GET",
@@ -19449,7 +20104,10 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "UsersGetUserRequest",
           "headers": [],
           "method": "GET",
@@ -19497,7 +20155,7 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "UsersGetUserPictureRequest",
           "headers": [],
           "method": "GET",
@@ -19537,7 +20195,10 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "TranslationsPostTranslationRequest",
           "headers": [],
           "method": "POST",
@@ -19596,7 +20257,9 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "TemplatesGetTemplatesRequest",
           "headers": [],
           "method": "GET",
@@ -19632,7 +20295,10 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "TemplatesGetTemplateRequest",
           "headers": [],
           "method": "GET",
@@ -19680,7 +20346,10 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "TeamsGetContributorsRequest",
           "headers": [],
           "method": "GET",
@@ -19728,7 +20397,11 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "TeamsPostContributorRequest",
           "headers": [],
           "method": "POST",
@@ -19787,7 +20460,11 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "TeamsDeleteMyselfRequest",
           "headers": [],
           "method": "DELETE",
@@ -19835,7 +20512,11 @@ exports[`open api parser squidex simple 1`] = `
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "TeamsDeleteContributorRequest",
           "headers": [],
           "method": "DELETE",
@@ -19895,7 +20576,9 @@ exports[`open api parser squidex simple 1`] = `
           "authed": true,
           "description": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all teams, where you are assigned as a contributor.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "TeamsGetTeamsRequest",
           "headers": [],
           "method": "GET",
@@ -19936,7 +20619,11 @@ You will retrieve all teams, where you are assigned as a contributor.",
           "authed": true,
           "description": "You can only create an team when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new team automatically.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            409,
+            500,
+          ],
           "generatedRequestName": "TeamsPostTeamRequest",
           "headers": [],
           "method": "POST",
@@ -19983,7 +20670,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "TeamsGetTeamRequest",
           "headers": [],
           "method": "GET",
@@ -20031,7 +20721,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "TeamsPutTeamRequest",
           "headers": [],
           "method": "PUT",
@@ -20090,7 +20784,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "StatisticsGetLogRequest",
           "headers": [],
           "method": "GET",
@@ -20138,7 +20835,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "StatisticsGetUsagesRequest",
           "headers": [],
           "method": "GET",
@@ -20208,7 +20908,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "StatisticsGetUsagesForTeamRequest",
           "headers": [],
           "method": "GET",
@@ -20278,7 +20981,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "StatisticsGetCurrentStorageSizeRequest",
           "headers": [],
           "method": "GET",
@@ -20326,7 +21032,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "StatisticsGetTeamCurrentStorageSizeForTeamRequest",
           "headers": [],
           "method": "GET",
@@ -20374,7 +21083,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "StatisticsGetStorageSizesRequest",
           "headers": [],
           "method": "GET",
@@ -20448,7 +21160,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "StatisticsGetStorageSizesForTeamRequest",
           "headers": [],
           "method": "GET",
@@ -20522,7 +21237,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "SearchGetSearchResultsRequest",
           "headers": [],
           "method": "GET",
@@ -20590,7 +21308,12 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            409,
+            500,
+          ],
           "generatedRequestName": "SchemasPostFieldRequest",
           "headers": [],
           "method": "POST",
@@ -20660,7 +21383,12 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            409,
+            500,
+          ],
           "generatedRequestName": "SchemasPostNestedFieldRequest",
           "headers": [],
           "method": "POST",
@@ -20741,7 +21469,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutSchemaUiFieldsRequest",
           "headers": [],
           "method": "PUT",
@@ -20811,7 +21543,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutSchemaFieldOrderingRequest",
           "headers": [],
           "method": "PUT",
@@ -20881,7 +21617,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutNestedFieldOrderingRequest",
           "headers": [],
           "method": "PUT",
@@ -20962,7 +21702,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21043,7 +21787,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasDeleteFieldRequest",
           "headers": [],
           "method": "DELETE",
@@ -21113,7 +21861,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutNestedFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21205,7 +21957,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasDeleteNestedFieldRequest",
           "headers": [],
           "method": "DELETE",
@@ -21286,7 +22042,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A locked field cannot be updated or deleted.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasLockFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21356,7 +22116,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A locked field cannot be edited or deleted.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasLockNestedFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21437,7 +22201,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasHideFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21507,7 +22275,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasHideNestedFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21588,7 +22360,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasShowFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21658,7 +22434,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasShowNestedFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21739,7 +22519,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasEnableFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21809,7 +22593,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasEnableNestedFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21890,7 +22678,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasDisableFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -21960,7 +22752,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasDisableNestedFieldRequest",
           "headers": [],
           "method": "PUT",
@@ -22041,7 +22837,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasGetSchemasRequest",
           "headers": [],
           "method": "GET",
@@ -22089,7 +22888,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            409,
+            500,
+          ],
           "generatedRequestName": "SchemasPostSchemaRequest",
           "headers": [],
           "method": "POST",
@@ -22148,7 +22951,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasGetSchemaRequest",
           "headers": [],
           "method": "GET",
@@ -22207,7 +23013,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutSchemaRequest",
           "headers": [],
           "method": "PUT",
@@ -22277,7 +23087,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasDeleteSchemaRequest",
           "headers": [],
           "method": "DELETE",
@@ -22325,7 +23139,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutSchemaSyncRequest",
           "headers": [],
           "method": "PUT",
@@ -22395,7 +23213,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutCategoryRequest",
           "headers": [],
           "method": "PUT",
@@ -22465,7 +23287,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutPreviewUrlsRequest",
           "headers": [],
           "method": "PUT",
@@ -22535,7 +23361,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutScriptsRequest",
           "headers": [],
           "method": "PUT",
@@ -22605,7 +23435,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPutRulesRequest",
           "headers": [],
           "method": "PUT",
@@ -22675,7 +23509,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasPublishSchemaRequest",
           "headers": [],
           "method": "PUT",
@@ -22734,7 +23572,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SchemasUnpublishSchemaRequest",
           "headers": [],
           "method": "PUT",
@@ -22793,7 +23635,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "RulesGetActionsRequest",
           "headers": [],
           "method": "GET",
@@ -22836,7 +23680,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesGetRulesRequest",
           "headers": [],
           "method": "GET",
@@ -22884,7 +23731,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesPostRuleRequest",
           "headers": [],
           "method": "POST",
@@ -22943,7 +23794,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "RulesDeleteRuleRunRequest",
           "headers": [],
           "method": "DELETE",
@@ -22980,7 +23834,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesPutRuleRequest",
           "headers": [],
           "method": "PUT",
@@ -23050,7 +23908,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesDeleteRuleRequest",
           "headers": [],
           "method": "DELETE",
@@ -23098,7 +23960,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesEnableRuleRequest",
           "headers": [],
           "method": "PUT",
@@ -23157,7 +24023,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesDisableRuleRequest",
           "headers": [],
           "method": "PUT",
@@ -23216,7 +24086,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesTriggerRuleRequest",
           "headers": [],
           "method": "PUT",
@@ -23264,7 +24138,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "RulesPutRuleRunRequest",
           "headers": [],
           "method": "PUT",
@@ -23328,7 +24205,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "RulesDeleteRuleEventsRequest",
           "headers": [],
           "method": "DELETE",
@@ -23376,7 +24256,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesSimulatePostRequest",
           "headers": [],
           "method": "POST",
@@ -23435,7 +24319,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesSimulateGetRequest",
           "headers": [],
           "method": "GET",
@@ -23494,7 +24381,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesGetEventsRequest",
           "headers": [],
           "method": "GET",
@@ -23588,7 +24478,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "RulesDeleteEventsRequest",
           "headers": [],
           "method": "DELETE",
@@ -23625,7 +24518,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesPutEventRequest",
           "headers": [],
           "method": "PUT",
@@ -23673,7 +24570,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesDeleteEventRequest",
           "headers": [],
           "method": "DELETE",
@@ -23721,7 +24622,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "RulesGetEventTypesRequest",
           "headers": [],
           "method": "GET",
@@ -23760,7 +24663,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "RulesGetEventSchemaRequest",
           "headers": [],
           "method": "GET",
@@ -23803,7 +24709,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "PlansGetPlansRequest",
           "headers": [],
           "method": "GET",
@@ -23851,7 +24760,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "PlansPutPlanRequest",
           "headers": [],
           "method": "PUT",
@@ -23910,7 +24823,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "PlansGetTeamPlansRequest",
           "headers": [],
           "method": "GET",
@@ -23958,7 +24874,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "PlansPutTeamPlanRequest",
           "headers": [],
           "method": "PUT",
@@ -24017,7 +24937,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "PingGetInfoRequest",
           "headers": [],
           "method": "GET",
@@ -24053,7 +24975,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "Can be used to test, if the Squidex API is alive and responding.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "PingGetPingRequest",
           "headers": [],
           "method": "GET",
@@ -24078,7 +25002,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "Can be used to test, if the Squidex API is alive and responding.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "PingGetAppPingRequest",
           "headers": [],
           "method": "GET",
@@ -24115,7 +25041,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "NewsGetNewsRequest",
           "headers": [],
           "method": "GET",
@@ -24167,7 +25095,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "Provide a list of supported language codes, following the ISO2Code standard.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "LanguagesGetLanguagesRequest",
           "headers": [],
           "method": "GET",
@@ -24207,7 +25137,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "HistoryGetAppHistoryRequest",
           "headers": [],
           "method": "GET",
@@ -24275,7 +25208,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "HistoryGetTeamHistoryRequest",
           "headers": [],
           "method": "GET",
@@ -24343,7 +25279,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "EventConsumersGetEventConsumersRequest",
           "headers": [],
           "method": "GET",
@@ -24379,7 +25317,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "EventConsumersStartEventConsumerRequest",
           "headers": [],
           "method": "PUT",
@@ -24427,7 +25369,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "EventConsumersStopEventConsumerRequest",
           "headers": [],
           "method": "PUT",
@@ -24475,7 +25421,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "EventConsumersResetEventConsumerRequest",
           "headers": [],
           "method": "PUT",
@@ -24523,7 +25473,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+            501,
+          ],
           "generatedRequestName": "DiagnosticsGetDumpRequest",
           "headers": [],
           "method": "GET",
@@ -24548,7 +25501,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+            501,
+          ],
           "generatedRequestName": "DiagnosticsGetGcDumpRequest",
           "headers": [],
           "method": "GET",
@@ -24573,7 +25529,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsGetContentsRequest",
           "headers": [],
           "method": "GET",
@@ -24663,7 +25622,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsPostContentRequest",
           "headers": [],
           "method": "POST",
@@ -24779,7 +25742,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsGetContentsPostRequest",
           "headers": [],
           "method": "POST",
@@ -24849,7 +25816,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsGetContentRequest",
           "headers": [],
           "method": "GET",
@@ -24935,7 +25905,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsPostUpsertContentRequest",
           "headers": [],
           "method": "POST",
@@ -25062,7 +26036,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsPutContentRequest",
           "headers": [],
           "method": "PUT",
@@ -25143,7 +26121,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsPatchContentRequest",
           "headers": [],
           "method": "PATCH",
@@ -25224,7 +26206,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsDeleteContentRequest",
           "headers": [],
           "method": "DELETE",
@@ -25314,7 +26300,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsGetContentValidityRequest",
           "headers": [],
           "method": "GET",
@@ -25373,7 +26363,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsGetReferencesRequest",
           "headers": [],
           "method": "GET",
@@ -25459,7 +26452,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsGetReferencingRequest",
           "headers": [],
           "method": "GET",
@@ -25545,7 +26541,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "ContentsGetContentVersionRequest",
           "headers": [],
           "method": "GET",
@@ -25618,7 +26614,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsPostContentsRequest",
           "headers": [],
           "method": "POST",
@@ -25692,7 +26692,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsBulkUpdateContentsRequest",
           "headers": [],
           "method": "POST",
@@ -25766,7 +26770,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsPutContentStatusRequest",
           "headers": [],
           "method": "PUT",
@@ -25847,7 +26855,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsDeleteContentStatusRequest",
           "headers": [],
           "method": "DELETE",
@@ -25917,7 +26929,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsCreateDraftRequest",
           "headers": [],
           "method": "POST",
@@ -25987,7 +27003,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "ContentsDeleteVersionRequest",
           "headers": [],
           "method": "DELETE",
@@ -26057,7 +27077,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "CommentsGetWatchingUsersRequest",
           "headers": [],
           "method": "GET",
@@ -26123,7 +27146,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "When passing in a version you can retrieve all updates since then.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "CommentsGetCommentsRequest",
           "headers": [],
           "method": "GET",
@@ -26198,7 +27224,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "CommentsPostCommentRequest",
           "headers": [],
           "method": "POST",
@@ -26268,7 +27298,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "CommentsPutCommentRequest",
           "headers": [],
           "method": "PUT",
@@ -26338,7 +27372,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "CommentsDeleteCommentRequest",
           "headers": [],
           "method": "DELETE",
@@ -26397,7 +27435,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "When passing in a version you can retrieve all updates since then.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "NotificationsGetNotificationsRequest",
           "headers": [],
           "method": "GET",
@@ -26461,7 +27501,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "NotificationsDeleteCommentRequest",
           "headers": [],
           "method": "DELETE",
@@ -26509,7 +27553,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "BackupsGetBackupContentRequest",
           "headers": [],
           "method": "GET",
@@ -26560,7 +27604,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "BackupsDeleteBackupRequest",
           "headers": [],
           "method": "DELETE",
@@ -26608,7 +27656,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "BackupsGetBackupContentV2Request",
           "headers": [],
           "method": "GET",
@@ -26679,7 +27727,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "BackupsGetBackupsRequest",
           "headers": [],
           "method": "GET",
@@ -26727,7 +27778,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "BackupsPostBackupRequest",
           "headers": [],
           "method": "POST",
@@ -26764,7 +27819,9 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "BackupsGetRestoreJobRequest",
           "headers": [],
           "method": "GET",
@@ -26800,7 +27857,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "BackupsPostRestoreJobRequest",
           "headers": [],
           "method": "POST",
@@ -26836,7 +27896,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "AssetsGetAssetContentBySlugRequest",
           "headers": [],
           "method": "GET",
@@ -27115,7 +28175,7 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "AssetsGetAssetContentRequest",
           "headers": [],
           "method": "GET",
@@ -27368,7 +28428,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "Get all asset folders for the app.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsGetAssetFoldersRequest",
           "headers": [],
           "method": "GET",
@@ -27448,7 +28511,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsPostAssetFolderRequest",
           "headers": [],
           "method": "POST",
@@ -27507,7 +28574,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsPutAssetFolderRequest",
           "headers": [],
           "method": "PUT",
@@ -27577,7 +28648,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsDeleteAssetFolderRequest",
           "headers": [],
           "method": "DELETE",
@@ -27625,7 +28700,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsPutAssetFolderParentRequest",
           "headers": [],
           "method": "PUT",
@@ -27695,7 +28774,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "Get all tags for assets.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsGetTagsRequest",
           "headers": [],
           "method": "GET",
@@ -27749,7 +28831,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsPutTagRequest",
           "headers": [],
           "method": "PUT",
@@ -27825,7 +28911,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "Get all assets for the app.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsGetAssetsRequest",
           "headers": [],
           "method": "GET",
@@ -27979,7 +29068,12 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            413,
+            500,
+          ],
           "generatedRequestName": "AssetsPostAssetRequest",
           "headers": [],
           "method": "POST",
@@ -28086,7 +29180,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "Get all assets for the app.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsGetAssetsPostRequest",
           "headers": [],
           "method": "POST",
@@ -28145,7 +29243,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsGetAssetRequest",
           "headers": [],
           "method": "GET",
@@ -28204,7 +29305,12 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            413,
+            500,
+          ],
           "generatedRequestName": "AssetsPostUpsertAssetRequest",
           "headers": [],
           "method": "POST",
@@ -28307,7 +29413,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsPutAssetRequest",
           "headers": [],
           "method": "PUT",
@@ -28377,7 +29487,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsDeleteAssetRequest",
           "headers": [],
           "method": "DELETE",
@@ -28456,7 +29570,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsBulkUpdateAssetsRequest",
           "headers": [],
           "method": "POST",
@@ -28519,7 +29637,12 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "Use multipart request to upload an asset.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            413,
+            500,
+          ],
           "generatedRequestName": "AssetsPutAssetContentRequest",
           "headers": [],
           "method": "PUT",
@@ -28591,7 +29714,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AssetsPutAssetParentRequest",
           "headers": [],
           "method": "PUT",
@@ -28661,7 +29788,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsGetAssetScriptsRequest",
           "headers": [],
           "method": "GET",
@@ -28709,7 +29839,11 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPutAssetScriptsRequest",
           "headers": [],
           "method": "PUT",
@@ -28768,7 +29902,10 @@ You will be assigned as owner of the new team automatically.",
         {
           "authed": true,
           "description": "Gets all configured clients for the app with the specified name.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsGetClientsRequest",
           "headers": [],
           "method": "GET",
@@ -28817,7 +29954,11 @@ You will be assigned as owner of the new team automatically.",
           "authed": true,
           "description": "Create a new client for the app with the specified name.
 The client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPostClientRequest",
           "headers": [],
           "method": "POST",
@@ -28876,7 +30017,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": "Only the display name can be changed, create a new client if necessary.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPutClientRequest",
           "headers": [],
           "method": "PUT",
@@ -28946,7 +30091,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": "The application that uses this client credentials cannot access the API after it has been revoked.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsDeleteClientRequest",
           "headers": [],
           "method": "DELETE",
@@ -29005,7 +30154,10 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsGetContributorsRequest",
           "headers": [],
           "method": "GET",
@@ -29053,7 +30205,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPostContributorRequest",
           "headers": [],
           "method": "POST",
@@ -29112,7 +30268,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsDeleteMyselfRequest",
           "headers": [],
           "method": "DELETE",
@@ -29160,7 +30320,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsDeleteContributorRequest",
           "headers": [],
           "method": "DELETE",
@@ -29219,7 +30383,7 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "AppsGetImageRequest",
           "headers": [],
           "method": "GET",
@@ -29259,7 +30423,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsUploadImageRequest",
           "headers": [],
           "method": "POST",
@@ -29320,7 +30488,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsDeleteImageRequest",
           "headers": [],
           "method": "DELETE",
@@ -29368,7 +30540,10 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsGetLanguagesRequest",
           "headers": [],
           "method": "GET",
@@ -29416,7 +30591,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPostLanguageRequest",
           "headers": [],
           "method": "POST",
@@ -29475,7 +30654,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPutLanguageRequest",
           "headers": [],
           "method": "PUT",
@@ -29545,7 +30728,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsDeleteLanguageRequest",
           "headers": [],
           "method": "DELETE",
@@ -29604,7 +30791,10 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsGetRolesRequest",
           "headers": [],
           "method": "GET",
@@ -29652,7 +30842,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPostRoleRequest",
           "headers": [],
           "method": "POST",
@@ -29711,7 +30905,10 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsGetPermissionsRequest",
           "headers": [],
           "method": "GET",
@@ -29762,7 +30959,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPutRoleRequest",
           "headers": [],
           "method": "PUT",
@@ -29832,7 +31033,11 @@ The client secret is auto generated on the server and returned. The client does 
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsDeleteRoleRequest",
           "headers": [],
           "method": "DELETE",
@@ -29892,7 +31097,9 @@ The client secret is auto generated on the server and returned. The client does 
           "authed": true,
           "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "AppsGetAppsRequest",
           "headers": [],
           "method": "GET",
@@ -29933,7 +31140,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "authed": true,
           "description": "You can only create an app when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new app automatically.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            409,
+            500,
+          ],
           "generatedRequestName": "AppsPostAppRequest",
           "headers": [],
           "method": "POST",
@@ -29981,7 +31192,9 @@ You will be assigned as owner of the new app automatically.",
           "authed": true,
           "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "AppsGetTeamAppsRequest",
           "headers": [],
           "method": "GET",
@@ -30033,7 +31246,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsGetAppRequest",
           "headers": [],
           "method": "GET",
@@ -30081,7 +31297,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPutAppRequest",
           "headers": [],
           "method": "PUT",
@@ -30140,7 +31360,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsDeleteAppRequest",
           "headers": [],
           "method": "DELETE",
@@ -30177,7 +31401,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPutAppTeamRequest",
           "headers": [],
           "method": "PUT",
@@ -30236,7 +31464,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsGetSettingsRequest",
           "headers": [],
           "method": "GET",
@@ -30284,7 +31515,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPutSettingsRequest",
           "headers": [],
           "method": "PUT",
@@ -30343,7 +31578,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsGetWorkflowsRequest",
           "headers": [],
           "method": "GET",
@@ -30391,7 +31629,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPostWorkflowRequest",
           "headers": [],
           "method": "POST",
@@ -30450,7 +31692,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsPutWorkflowRequest",
           "headers": [],
           "method": "PUT",
@@ -30520,7 +31766,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
         {
           "authed": true,
           "description": undefined,
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "AppsDeleteWorkflowRequest",
           "headers": [],
           "method": "DELETE",
@@ -30577,6 +31827,94 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
       ],
+      "errors": {
+        "400": {
+          "description": undefined,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": undefined,
+            "schema": "ErrorDto",
+            "type": "reference",
+          },
+        },
+        "403": {
+          "description": undefined,
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "ForbiddenErrorBody",
+            "nameOverride": undefined,
+            "schema": "ErrorDto",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": undefined,
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
+        "409": {
+          "description": undefined,
+          "generatedName": "ConflictError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "ConflictErrorBody",
+            "nameOverride": undefined,
+            "schema": "ErrorDto",
+            "type": "reference",
+          },
+        },
+        "413": {
+          "description": undefined,
+          "generatedName": "ContentTooLargeError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "ContentTooLargeErrorBody",
+            "nameOverride": undefined,
+            "schema": "ErrorDto",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": undefined,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": undefined,
+            "schema": "ErrorDto",
+            "type": "reference",
+          },
+        },
+        "501": {
+          "description": undefined,
+          "generatedName": "NotImplementedError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "NotImplementedErrorBody",
+            "nameOverride": undefined,
+            "schema": "ErrorDto",
+            "type": "reference",
+          },
+        },
+      },
       "nonRequestReferencedSchemas": [
         "UsersDto",
         "UserDto",
@@ -43950,7 +45288,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "list all buyers by the given organization",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListBuyersByOrganizationRequest",
           "headers": [],
           "method": "GET",
@@ -43999,7 +45339,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "get buyer by the given organization and buyer id",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "GetBuyerRequest",
           "headers": [],
           "method": "GET",
@@ -44055,7 +45397,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "update buyer name and description by the given organization and buyer id",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "UpdateBuyerNameDescriptionRequest",
           "headers": [],
           "method": "PATCH",
@@ -44122,7 +45466,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all entitlements of the given buyer",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListEntitlementsByBuyerRequest",
           "headers": [],
           "method": "GET",
@@ -44182,7 +45528,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Create a new draft offer or update the existing draft offer. When updating draft offer, the offer.ID is required.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "CreateOrUpdateDraftOfferRequest",
           "headers": [],
           "method": "POST",
@@ -44238,7 +45587,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all entitlements under the organization",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListEntitlementsRequest",
           "headers": [],
           "method": "GET",
@@ -44287,7 +45638,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Get the entitlement by ID",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "GetEntitlementRequest",
           "headers": [],
           "method": "GET",
@@ -44343,7 +45696,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Add the credit amount to the given Entitlement. The credit amount is accumulated & saved in the current Entitlement Term of the gvien Entitlement.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "AddEntitlementCreditRequest",
           "headers": [],
           "method": "POST",
@@ -44410,7 +45766,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Update the name of the given Entitlement",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "UpdateEntitlementNameRequest",
           "headers": [],
           "method": "PATCH",
@@ -44477,7 +45835,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all Entitlement Terms of the given Entitlement",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListEntitlementTermsRequest",
           "headers": [],
           "method": "GET",
@@ -44537,7 +45897,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Get the entitlement term by ID",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "GetEntitlementTermRequest",
           "headers": [],
           "method": "GET",
@@ -44604,7 +45966,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "list UsageRecordGroups for the given organization and entitlement",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "ListUsageRecordGroupsByEntitlementRequest",
           "headers": [],
           "method": "GET",
@@ -44721,7 +46086,11 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "It is recommended to provide the ID in the request body CreateUsageRecordGroupParams, so the report can be deduplicated. All duplicate report will return error code 409.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            409,
+            500,
+          ],
           "generatedRequestName": "ReportUsageRecordGroupRequest",
           "headers": [],
           "method": "POST",
@@ -44788,7 +46157,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List usageRecordReports for the given organization and entitlement. Filter by entitlementTermId if it is given.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "ListUsageRecordReportsByEntitlementRequest",
           "headers": [],
           "method": "GET",
@@ -44920,7 +46292,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all integrations for the given organization.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListIntegrationsByOrganizationRequest",
           "headers": [],
           "method": "GET",
@@ -44969,7 +46343,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "For each organization, partner & service, there should be at most one integration.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "CreateIntegrationRequest",
           "headers": [],
           "method": "POST",
@@ -45025,7 +46402,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Get the integration for the given organization, partner & service.",
-          "errors": [],
+          "errorStatusCode": [
+            404,
+            500,
+          ],
           "generatedRequestName": "GetIntegrationRequest",
           "headers": [],
           "method": "GET",
@@ -45119,7 +46499,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Update the given integration.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "UpdateIntegrationRequest",
           "headers": [],
           "method": "PATCH",
@@ -45224,7 +46607,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "delete the integration for the given orgId, partner and service.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "DeleteIntegrationRequest",
           "headers": [],
           "method": "DELETE",
@@ -45317,7 +46702,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Verify the given integration, check whether it works correctly.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "VerifyIntegrationRequest",
           "headers": [],
           "method": "POST",
@@ -45410,7 +46797,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all offers under the given organization.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListOffersByOrganizationRequest",
           "headers": [],
           "method": "GET",
@@ -45459,7 +46848,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Create a private offer under the given organization.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "CreateOfferRequest",
           "headers": [],
           "method": "POST",
@@ -45515,7 +46907,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Get the offer by the given offer ID.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "GetOfferRequest",
           "headers": [],
           "method": "GET",
@@ -45571,7 +46965,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Only the offer with status = "DRAFT" or "CREATE_FAILED" is allowed to be deleted.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "DeleteOfferRequest",
           "headers": [],
           "method": "DELETE",
@@ -45626,7 +47022,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Only the offer with status = "PENDING_ACCEPTANCE" or "PENDING_CANCEL" is allowed to cancel.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "CancelOfferRequest",
           "headers": [],
           "method": "POST",
@@ -45681,7 +47080,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all entitlements under the given offer",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListEntitlementsByOfferRequest",
           "headers": [],
           "method": "GET",
@@ -45741,7 +47142,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all long running operations under the given organization, offer, entitlement, crmOpportunity or partnerOpportunity. Only provide one filter on a request.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListOperationsRequest",
           "headers": [],
           "method": "GET",
@@ -45851,7 +47254,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all entitlements under the given partner",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListEntitlementsByPartnerRequest",
           "headers": [],
           "method": "GET",
@@ -45927,7 +47332,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": false,
           "description": "List all offers under the given organization & cloud partner.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListOffersByPartnerRequest",
           "headers": [
             {
@@ -46015,7 +47422,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "list all products under the given organization and cloud partner",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListProductsByPartnerRequest",
           "headers": [],
           "method": "GET",
@@ -46091,7 +47500,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "list the revenue records for the given organization, product, entitlement, or buyer.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "ListRevenueRecordsRequest",
           "headers": [],
           "method": "GET",
@@ -46269,7 +47681,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "list the raw revenue record details for the given organization, product, entitlement, or buyer.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "ListRevenueRecordDetailsRequest",
           "headers": [],
           "method": "GET",
@@ -46447,7 +47862,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "list all products under the given organization",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListProductsByOrganizationRequest",
           "headers": [],
           "method": "GET",
@@ -46496,7 +47913,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "get product by product id",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "GetProductRequest",
           "headers": [],
           "method": "GET",
@@ -46552,7 +47971,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "currently only the Fulfillment URL is allowed to update via this API.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "UpdateProductRequest",
           "headers": [],
           "method": "PATCH",
@@ -46619,7 +48040,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "DeleteProductRequest",
           "headers": [],
           "method": "DELETE",
@@ -46674,7 +48097,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "list all metering dimensions of the given product",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListProductMeteringDimensionsRequest",
           "headers": [],
           "method": "GET",
@@ -46734,7 +48159,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all entitlements under the given product",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListEntitlementsByProductRequest",
           "headers": [],
           "method": "GET",
@@ -46794,7 +48221,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List all offers under the given organization & product.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "ListOffersByProductRequest",
           "headers": [],
           "method": "GET",
@@ -46854,7 +48283,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "list UsageRecordGroups for the given organization and product",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "ListUsageRecordGroupsByProductRequest",
           "headers": [],
           "method": "GET",
@@ -46971,7 +48403,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List usageRecordReports for the given organization and product",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "ListUsageRecordReportsByProductRequest",
           "headers": [],
           "method": "GET",
@@ -47088,7 +48523,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "Get the revenue report of the given organization, product, entitlement, or buyer.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "GetRevenueReportRequest",
           "headers": [],
           "method": "POST",
@@ -47144,7 +48582,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "list UsageRecordGroups under the given organization.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "ListUsageRecordGroupsByOrganizationRequest",
           "headers": [],
           "method": "GET",
@@ -47250,7 +48691,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "get UsageRecordGroup for the given organization and usageRecordGroup ID",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "GetUsageRecordGroupRequest",
           "headers": [],
           "method": "GET",
@@ -47306,7 +48749,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "List usageRecordReports under the given organization",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "ListUsageRecordReportsByOrganizationRequest",
           "headers": [],
           "method": "GET",
@@ -47412,7 +48858,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "get the usageRecordReport for a given organization and usageRecordReport ID.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "GetUsageRecordReportRequest",
           "headers": [],
           "method": "GET",
@@ -47468,7 +48916,10 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": true,
           "description": "get the daily usage report of the given entitlement, the default timespan is lifetime.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            500,
+          ],
           "generatedRequestName": "GetUsageReportRequest",
           "headers": [],
           "method": "POST",
@@ -47524,7 +48975,9 @@ exports[`open api parser suger simple 1`] = `
         {
           "authed": false,
           "description": "Get the Bearer Access Token by giving the Suger API Client ID & Client Secret.",
-          "errors": [],
+          "errorStatusCode": [
+            500,
+          ],
           "generatedRequestName": "GetApiClientAccessTokenRequest",
           "headers": [],
           "method": "POST",
@@ -47566,6 +49019,48 @@ exports[`open api parser suger simple 1`] = `
           ],
         },
       ],
+      "errors": {
+        "400": {
+          "description": undefined,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
+        "404": {
+          "description": undefined,
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "409": {
+          "description": undefined,
+          "generatedName": "ConflictError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": undefined,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
+      },
       "nonRequestReferencedSchemas": [
         "shared.IdentityBuyer",
         "shared.WorkloadEntitlement",
@@ -65436,7 +66931,7 @@ with all stable endpoints. You can find them here:
 
 Used to list documents. Optionally filter on supported fields.
 ",
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "DocumentsListRequest",
           "headers": [],
           "method": "GET",
@@ -65534,7 +67029,11 @@ Used to list documents. Optionally filter on supported fields.
 Generate a completion using a previously defined deployment.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "GenerateRequest",
           "headers": [],
           "method": "POST",
@@ -65582,7 +67081,7 @@ Generate a completion using a previously defined deployment.
 
 Used to retrieve a model version given its ID.
 ",
-          "errors": [],
+          "errorStatusCode": [],
           "generatedRequestName": "ModelVersionsRetrieveRequest",
           "headers": [],
           "method": "GET",
@@ -65631,7 +67130,11 @@ Used to retrieve a model version given its ID.
 Perform a search against a document index.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SearchRequest",
           "headers": [],
           "method": "POST",
@@ -65685,7 +67188,11 @@ Perform a search against a document index.
 Used to submit feedback regarding the quality of previously generated completions.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "SubmitCompletionActualsRequest",
           "headers": [],
           "method": "POST",
@@ -65728,7 +67235,11 @@ Used to submit feedback regarding the quality of previously generated completion
 Upload a document to be indexed and used for search.
 
 **Note:** Uses a base url of \`https://documents.vellum.ai\`.",
-          "errors": [],
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
           "generatedRequestName": "DocumentsUploadRequest",
           "headers": [],
           "method": "POST",
@@ -65854,6 +67365,32 @@ Upload a document to be indexed and used for search.
           ],
         },
       ],
+      "errors": {
+        "400": {
+          "description": undefined,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
+        "404": {
+          "description": undefined,
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": undefined,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
+      },
       "nonRequestReferencedSchemas": [
         "PaginatedSlimDocumentList",
         "GenerateResponse",

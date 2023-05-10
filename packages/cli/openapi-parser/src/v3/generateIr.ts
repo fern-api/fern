@@ -37,6 +37,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 return [key, convertSecurityScheme(securityScheme)];
             })
         ),
+        errors: context.getErrors(),
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
         dependencies: [],
     };
