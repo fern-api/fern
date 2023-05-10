@@ -9,9 +9,14 @@ const ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
     403: "ForbiddenError",
     404: "NotFoundError",
     408: "RequestTimeoutError",
+    409: "ConflictError",
+    413: "ContentTooLargeError",
     422: "UnprocessableEntityError",
     428: "PreconditionError",
+    429: "TooManyRequestsError",
     500: "InternalServerError",
+    501: "NotImplementedError",
+    503: "ServiceUnavailableError",
 };
 
 export function convertToError({

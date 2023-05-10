@@ -3284,6 +3284,19 @@ and a logical concept denoted by the tag's name.
             "type": "reference",
           },
         },
+        "429": {
+          "description": undefined,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": undefined,
+            "schema": "error-too-many-requests",
+            "type": "reference",
+          },
+        },
         "500": {
           "description": undefined,
           "generatedName": "InternalServerError",
@@ -3297,7 +3310,19 @@ and a logical concept denoted by the tag's name.
             "type": "reference",
           },
         },
-        "undefined": undefined,
+        "503": {
+          "description": undefined,
+          "generatedName": "ServiceUnavailableError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "ServiceUnavailableErrorBody",
+            "nameOverride": undefined,
+            "schema": "error-service-unavailable",
+            "type": "reference",
+          },
+        },
       },
       "nonRequestReferencedSchemas": [
         "artifacts-locate-response",
@@ -3429,7 +3454,9 @@ and a logical concept denoted by the tag's name.
         "error-unauthorized",
         "error-forbidden",
         "error-not-found",
+        "error-too-many-requests",
         "error-internal-server-error",
+        "error-service-unavailable",
       ],
       "schemas": {
         "artifact-summary": {
@@ -14533,6 +14560,14 @@ exports[`open api parser hathora simple 1`] = `
             "type": "unknown",
           },
         },
+        "429": {
+          "description": undefined,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
         "500": {
           "description": undefined,
           "generatedName": "InternalServerError",
@@ -14541,7 +14576,6 @@ exports[`open api parser hathora simple 1`] = `
             "type": "unknown",
           },
         },
-        "undefined": undefined,
       },
       "nonRequestReferencedSchemas": [
         "ApplicationWithDeployment",
@@ -31808,6 +31842,32 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "type": "unknown",
           },
         },
+        "409": {
+          "description": undefined,
+          "generatedName": "ConflictError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "ConflictErrorBody",
+            "nameOverride": undefined,
+            "schema": "ErrorDto",
+            "type": "reference",
+          },
+        },
+        "413": {
+          "description": undefined,
+          "generatedName": "ContentTooLargeError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "ContentTooLargeErrorBody",
+            "nameOverride": undefined,
+            "schema": "ErrorDto",
+            "type": "reference",
+          },
+        },
         "500": {
           "description": undefined,
           "generatedName": "InternalServerError",
@@ -31821,7 +31881,19 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "type": "reference",
           },
         },
-        "undefined": undefined,
+        "501": {
+          "description": undefined,
+          "generatedName": "NotImplementedError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "NotImplementedErrorBody",
+            "nameOverride": undefined,
+            "schema": "ErrorDto",
+            "type": "reference",
+          },
+        },
       },
       "nonRequestReferencedSchemas": [
         "UsersDto",
@@ -48948,6 +49020,18 @@ exports[`open api parser suger simple 1`] = `
             "type": "primitive",
           },
         },
+        "409": {
+          "description": undefined,
+          "generatedName": "ConflictError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
         "500": {
           "description": undefined,
           "generatedName": "InternalServerError",
@@ -48956,7 +49040,6 @@ exports[`open api parser suger simple 1`] = `
             "type": "unknown",
           },
         },
-        "undefined": undefined,
       },
       "nonRequestReferencedSchemas": [
         "shared.IdentityBuyer",
