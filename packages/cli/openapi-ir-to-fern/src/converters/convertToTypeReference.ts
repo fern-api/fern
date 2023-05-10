@@ -191,7 +191,7 @@ export function convertUnknownToTypeReference(): TypeReference {
 
 export function convertLiteralToTypeReference(value: string): TypeReference {
     return {
-        typeReference: `literal<"${value}"}>`,
+        typeReference: `literal<"${value}">`,
         additionalTypeDeclarations: {},
     };
 }
