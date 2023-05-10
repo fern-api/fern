@@ -13,6 +13,7 @@ describe("open api parser", () => {
     testFixture("suger", "swagger.json");
     testFixture("squidex", "openapi.json");
     testFixture("hume", "openapi.yaml");
+    testFixture("belvo", "openapi.yml");
 });
 
 function testFixture(fixtureName: string, filename: string) {
