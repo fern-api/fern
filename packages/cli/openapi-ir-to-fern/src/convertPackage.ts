@@ -5,6 +5,8 @@ import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
 import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
 import { ConvertedServices, convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
+import { convertToTypeReference } from "./converters/convertToTypeReference";
+import { getTypeFromTypeReference } from "./converters/utils/getTypeFromTypeReference";
 import { Environment, getEnvironments } from "./getEnvironment";
 import { getGlobalHeaders } from "./getGlobalHeaders";
 
@@ -96,8 +98,24 @@ function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedSer
             ...typeDeclaration.additionalTypeDeclarations,
         };
     }
+    const errors: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
+    for (const [statusCode, httpError] of Object.entries(openApiFile.errors)) {
+        const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
+            "status-code": parseInt(statusCode),
+        };
+        if (httpError.schema != null) {
+            const typeReference = convertToTypeReference({ schema: httpError.schema, schemas: openApiFile.schemas });
+            errorDeclaration.type = getTypeFromTypeReference(typeReference.typeReference);
+            types = {
+                ...types,
+                ...typeReference.additionalTypeDeclarations,
+            };
+        }
+        errors[httpError.generatedName] = errorDeclaration;
+    }
     return {
         types,
         service: convertedServices.services[RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)],
+        errors,
     };
 }

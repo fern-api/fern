@@ -4,6 +4,7 @@ exports[`open api converter axle simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "errors": {},
       "service": undefined,
       "types": {
         "Account": {
@@ -553,6 +554,7 @@ exports[`open api converter axle simple 1`] = `
         "endpoints": {
           "GetAccount": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/accounts/{id}",
             "path-parameters": {
@@ -589,6 +591,7 @@ exports[`open api converter axle simple 1`] = `
         "endpoints": {
           "GetCarrier": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/carriers/{id}",
             "path-parameters": {
@@ -604,6 +607,7 @@ exports[`open api converter axle simple 1`] = `
           },
           "GetCarriers": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/carriers",
             "response": {
@@ -624,6 +628,7 @@ exports[`open api converter axle simple 1`] = `
         "endpoints": {
           "StartIgnition": {
             "auth": false,
+            "errors": [],
             "method": "POST",
             "path": "/ignition",
             "request": {
@@ -669,6 +674,7 @@ exports[`open api converter axle simple 1`] = `
         "endpoints": {
           "GetPolicy": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/policies/{id}",
             "path-parameters": {
@@ -705,6 +711,7 @@ exports[`open api converter axle simple 1`] = `
         "endpoints": {
           "ExchangeToken": {
             "auth": false,
+            "errors": [],
             "method": "POST",
             "path": "/token/exchange",
             "request": {
@@ -768,6 +775,7 @@ exports[`open api converter buzzshot simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "errors": {},
       "service": undefined,
       "types": {
         "Game": {
@@ -1384,6 +1392,7 @@ exports[`open api converter buzzshot simple 1`] = `
         "endpoints": {
           "listAccounts": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/accounts",
             "request": {
@@ -1403,6 +1412,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listGames": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/games",
             "request": {
@@ -1442,6 +1452,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listGroups": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/groups",
             "request": {
@@ -1471,6 +1482,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listLocations": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/rooms",
             "request": {
@@ -1490,6 +1502,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listPhotos": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/photos",
             "request": {
@@ -1509,6 +1522,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "listPlayers": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/players",
             "request": {
@@ -1528,6 +1542,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrieveAccount": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/accounts/{id}",
             "path-parameters": {
@@ -1543,6 +1558,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrieveGame": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/games/{id}",
             "path-parameters": {
@@ -1583,6 +1599,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrieveGroup": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/groups/{id}",
             "path-parameters": {
@@ -1613,6 +1630,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrieveLocation": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/rooms/{id}",
             "path-parameters": {
@@ -1628,6 +1646,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrievePhoto": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/photos/{photo_id}",
             "path-parameters": {
@@ -1643,6 +1662,7 @@ exports[`open api converter buzzshot simple 1`] = `
           },
           "retrievePlayer": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/api/v2/players/{id}",
             "path-parameters": {
@@ -1675,6 +1695,36 @@ exports[`open api converter devrev simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "errors": {
+        "BadRequestError": {
+          "status-code": 400,
+          "type": "ErrorBadRequest",
+        },
+        "ForbiddenError": {
+          "status-code": 403,
+          "type": "ErrorForbidden",
+        },
+        "InternalServerError": {
+          "status-code": 500,
+          "type": "ErrorInternalServerError",
+        },
+        "NotFoundError": {
+          "status-code": 404,
+          "type": "ErrorNotFound",
+        },
+        "ServiceUnavailableError": {
+          "status-code": 503,
+          "type": "ErrorServiceUnavailable",
+        },
+        "TooManyRequestsError": {
+          "status-code": 429,
+          "type": "ErrorTooManyRequests",
+        },
+        "UnauthorizedError": {
+          "status-code": 401,
+          "type": "ErrorUnauthorized",
+        },
+      },
       "service": undefined,
       "types": {
         "ArtifactSummary": {
@@ -4591,6 +4641,15 @@ empty.
         "endpoints": {
           "locate": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/artifacts.locate",
             "request": {
@@ -4610,6 +4669,14 @@ empty.
           },
           "prepare": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/artifacts.prepare",
             "request": {
@@ -4643,6 +4710,14 @@ empty.
         "endpoints": {
           "dev-org-auth-connections-create": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.create",
             "request": {
@@ -4659,6 +4734,15 @@ empty.
           },
           "dev-org-auth-connections-delete": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.delete",
             "request": {
@@ -4677,6 +4761,15 @@ empty.
           },
           "dev-org-auth-connections-get": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/dev-orgs.auth-connections.get",
             "request": {
@@ -4696,6 +4789,14 @@ empty.
           },
           "dev-org-auth-connections-list": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/dev-orgs.auth-connections.list",
             "response": {
@@ -4705,6 +4806,15 @@ empty.
           },
           "dev-org-auth-connections-toggle": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.toggle",
             "request": {
@@ -4727,6 +4837,15 @@ empty.
           },
           "dev-org-auth-connections-update": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.update",
             "request": {
@@ -4755,6 +4874,14 @@ organization.
         "endpoints": {
           "create": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/auth-tokens.create",
             "request": {
@@ -4823,6 +4950,15 @@ requesting an application access token (AAT).
           },
           "delete": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/auth-tokens.delete",
             "request": {
@@ -4844,6 +4980,15 @@ JTI claim of the token in the authorization header.
           },
           "get": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/auth-tokens.get",
             "request": {
@@ -4863,6 +5008,15 @@ JTI claim of the token in the authorization header.
           },
           "list": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/auth-tokens.list",
             "request": {
@@ -4892,6 +5046,15 @@ JTI claim of the token in the authorization header.
           },
           "selfDelete": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/auth-tokens.self.delete",
             "request": {
@@ -4910,6 +5073,15 @@ JTI claim of the token in the authorization header.
           },
           "update": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/auth-tokens.update",
             "request": {
@@ -4948,6 +5120,14 @@ JTI claim of the token in the authorization header.
         "endpoints": {
           "list": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/dev-users.list",
             "request": {
@@ -4992,6 +5172,14 @@ JTI claim of the token in the authorization header.
           },
           "self": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/dev-users.self",
             "response": {
@@ -5012,6 +5200,14 @@ JTI claim of the token in the authorization header.
         "endpoints": {
           "create": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/parts.create",
             "request": {
@@ -5027,6 +5223,15 @@ JTI claim of the token in the authorization header.
           },
           "delete": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/parts.delete",
             "request": {
@@ -5049,6 +5254,15 @@ JTI claim of the token in the authorization header.
           },
           "get": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/parts.get",
             "request": {
@@ -5068,6 +5282,14 @@ JTI claim of the token in the authorization header.
           },
           "list": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/parts.list",
             "request": {
@@ -5117,6 +5339,15 @@ JTI claim of the token in the authorization header.
           },
           "update": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/parts.update",
             "request": {
@@ -5143,6 +5374,14 @@ JTI claim of the token in the authorization header.
         "endpoints": {
           "create": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/rev-orgs.create",
             "request": {
@@ -5188,6 +5427,15 @@ records.
           },
           "delete": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/rev-orgs.delete",
             "request": {
@@ -5210,6 +5458,15 @@ records.
           },
           "get": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/rev-orgs.get",
             "request": {
@@ -5229,6 +5486,15 @@ records.
           },
           "list": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/rev-orgs.list",
             "request": {
@@ -5293,6 +5559,15 @@ records.
           },
           "update": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/rev-orgs.update",
             "request": {
@@ -5353,6 +5628,14 @@ records.
         "endpoints": {
           "create": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/tags.create",
             "request": {
@@ -5386,6 +5669,15 @@ permitted.
           },
           "delete": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/tags.delete",
             "request": {
@@ -5408,6 +5700,15 @@ permitted.
           },
           "get": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/tags.get",
             "request": {
@@ -5427,6 +5728,14 @@ permitted.
           },
           "list": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/tags.list",
             "request": {
@@ -5456,6 +5765,15 @@ permitted.
           },
           "update": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/tags.update",
             "request": {
@@ -5503,6 +5821,14 @@ tags.
         "endpoints": {
           "create": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/timeline-entries.create",
             "request": {
@@ -5518,6 +5844,15 @@ tags.
           },
           "get": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/timeline-entries.get",
             "request": {
@@ -5537,6 +5872,15 @@ tags.
           },
           "list": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/timeline-entries.list",
             "request": {
@@ -5571,6 +5915,14 @@ tags.
           },
           "update": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/timeline-entries.update",
             "request": {
@@ -5597,6 +5949,14 @@ tags.
         "endpoints": {
           "create": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/webhooks.create",
             "request": {
@@ -5631,6 +5991,15 @@ response.
           },
           "delete": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/webhooks.delete",
             "request": {
@@ -5653,6 +6022,15 @@ response.
           },
           "get": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/webhooks.get",
             "request": {
@@ -5672,6 +6050,14 @@ response.
           },
           "list": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/webhooks.list",
             "response": {
@@ -5681,6 +6067,15 @@ response.
           },
           "update": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/webhooks.update",
             "request": {
@@ -5738,6 +6133,14 @@ won't receive any object events until successfully verified.
         "endpoints": {
           "create": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/works.create",
             "request": {
@@ -5753,6 +6156,15 @@ won't receive any object events until successfully verified.
           },
           "delete": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/works.delete",
             "request": {
@@ -5775,6 +6187,14 @@ won't receive any object events until successfully verified.
           },
           "export": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/works.export",
             "request": {
@@ -5839,6 +6259,15 @@ won't receive any object events until successfully verified.
           },
           "get": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/works.get",
             "request": {
@@ -5858,6 +6287,14 @@ won't receive any object events until successfully verified.
           },
           "list": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "GET",
             "path": "/works.list",
             "request": {
@@ -5932,6 +6369,15 @@ won't receive any object events until successfully verified.
           },
           "update": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+            ],
             "method": "POST",
             "path": "/works.update",
             "request": {
@@ -5975,6 +6421,32 @@ exports[`open api converter hathora simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "errors": {
+        "BadRequestError": {
+          "status-code": 400,
+          "type": "string",
+        },
+        "InternalServerError": {
+          "status-code": 500,
+          "type": "string",
+        },
+        "NotFoundError": {
+          "status-code": 404,
+          "type": "string",
+        },
+        "TooManyRequestsError": {
+          "status-code": 429,
+          "type": "string",
+        },
+        "UnauthorizedError": {
+          "status-code": 401,
+          "type": "string",
+        },
+        "UnprocessableEntityError": {
+          "status-code": 422,
+          "type": "string",
+        },
+      },
       "service": undefined,
       "types": {
         "ActiveConnectionInfo": {
@@ -6778,6 +7250,10 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "CreateApp": {
             "auth": true,
+            "errors": [
+              "root.UnprocessableEntityError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/apps/v1/create",
             "request": {
@@ -6793,6 +7269,10 @@ exports[`open api converter hathora simple 1`] = `
           },
           "DeleteApp": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/apps/v1/delete/{appId}",
             "path-parameters": {
@@ -6804,6 +7284,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetAppInfo": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/apps/v1/info/{appId}",
             "path-parameters": {
@@ -6819,6 +7302,7 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetApps": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/apps/v1/list",
             "response": {
@@ -6828,6 +7312,10 @@ exports[`open api converter hathora simple 1`] = `
           },
           "UpdateApp": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/apps/v1/update/{appId}",
             "path-parameters": {
@@ -6860,6 +7348,9 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "LoginAnonymous": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "POST",
             "path": "/auth/v1/{appId}/login/anonymous",
             "path-parameters": {
@@ -6875,6 +7366,10 @@ exports[`open api converter hathora simple 1`] = `
           },
           "LoginGoogle": {
             "auth": true,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+            ],
             "method": "POST",
             "path": "/auth/v1/{appId}/login/google",
             "path-parameters": {
@@ -6903,6 +7398,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "LoginNickname": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "POST",
             "path": "/auth/v1/{appId}/login/nickname",
             "path-parameters": {
@@ -6942,6 +7440,11 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "CreateBuild": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/builds/v1/{appId}/create",
             "path-parameters": {
@@ -6957,6 +7460,11 @@ exports[`open api converter hathora simple 1`] = `
           },
           "DeleteBuild": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/builds/v1/{appId}/delete/{buildId}",
             "path-parameters": {
@@ -6972,6 +7480,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetBuildInfo": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/builds/v1/{appId}/info/{buildId}",
             "path-parameters": {
@@ -6991,6 +7502,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetBuilds": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/builds/v1/{appId}/list",
             "path-parameters": {
@@ -7006,6 +7520,7 @@ exports[`open api converter hathora simple 1`] = `
           },
           "RunBuild": {
             "auth": true,
+            "errors": [],
             "method": "POST",
             "path": "/builds/v1/{appId}/run/{buildId}",
             "path-parameters": {
@@ -7046,6 +7561,11 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "CreateDeployment": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/deployments/v1/{appId}/create/{buildId}",
             "path-parameters": {
@@ -7094,6 +7614,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetDeploymentInfo": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/deployments/v1/{appId}/info/{deploymentId}",
             "path-parameters": {
@@ -7113,6 +7636,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetDeployments": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/deployments/v1/{appId}/list",
             "path-parameters": {
@@ -7139,6 +7665,7 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "GetPingServiceEndpoints": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/discovery/v1/ping",
             "response": {
@@ -7159,6 +7686,13 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "CreatePrivateLobbyDeprecated": {
             "auth": true,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/lobby/v1/{appId}/create/private",
             "path-parameters": {
@@ -7196,6 +7730,13 @@ exports[`open api converter hathora simple 1`] = `
           },
           "CreatePublicLobbyDeprecated": {
             "auth": true,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/lobby/v1/{appId}/create/public",
             "path-parameters": {
@@ -7233,6 +7774,10 @@ exports[`open api converter hathora simple 1`] = `
           },
           "ListActivePublicLobbiesDeprecated": {
             "auth": true,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/lobby/v1/{appId}/list",
             "path-parameters": {
@@ -7281,6 +7826,13 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "CreateLobby": {
             "auth": true,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/create",
             "path-parameters": {
@@ -7329,6 +7881,13 @@ exports[`open api converter hathora simple 1`] = `
           },
           "CreateLocalLobby": {
             "auth": true,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/create/local",
             "path-parameters": {
@@ -7373,6 +7932,13 @@ exports[`open api converter hathora simple 1`] = `
           },
           "CreatePrivateLobby": {
             "auth": true,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/create/private",
             "path-parameters": {
@@ -7417,6 +7983,13 @@ exports[`open api converter hathora simple 1`] = `
           },
           "CreatePublicLobby": {
             "auth": true,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/create/public",
             "path-parameters": {
@@ -7461,6 +8034,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetLobbyInfo": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/lobby/v2/{appId}/info/{roomId}",
             "path-parameters": {
@@ -7480,6 +8056,7 @@ exports[`open api converter hathora simple 1`] = `
           },
           "ListActivePublicLobbies": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/lobby/v2/{appId}/list/public",
             "path-parameters": {
@@ -7505,6 +8082,10 @@ exports[`open api converter hathora simple 1`] = `
           },
           "SetLobbyState": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/setState/{roomId}",
             "path-parameters": {
@@ -7548,6 +8129,7 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "GetLogsForApp": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/logs/v1/{appId}/all",
             "path-parameters": {
@@ -7583,6 +8165,7 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetLogsForDeployment": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {
@@ -7617,6 +8200,7 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetLogsForProcess": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/logs/v1/{appId}/process/{processId}",
             "path-parameters": {
@@ -7662,6 +8246,10 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "GetMetrics": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+            ],
             "method": "GET",
             "path": "/metrics/v1/{appId}/process/{processId}",
             "path-parameters": {
@@ -7717,6 +8305,9 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "GetProcessInfo": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/processes/v1/{appId}/info/{processId}",
             "path-parameters": {
@@ -7736,6 +8327,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetRunningProcesses": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/processes/v1/{appId}/list/running",
             "path-parameters": {
@@ -7761,6 +8355,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetStoppedProcesses": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/processes/v1/{appId}/list/stopped",
             "path-parameters": {
@@ -7797,6 +8394,10 @@ exports[`open api converter hathora simple 1`] = `
         "endpoints": {
           "CreateRoom": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/rooms/v1/{appId}/create",
             "path-parameters": {
@@ -7825,6 +8426,10 @@ exports[`open api converter hathora simple 1`] = `
           },
           "DestroyRoom": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/rooms/v1/{appId}/destroy/{roomId}",
             "path-parameters": {
@@ -7840,6 +8445,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetActiveRoomsForProcess": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/rooms/v1/{appId}/list/{processId}/active",
             "path-parameters": {
@@ -7859,6 +8467,11 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetConnectionInfo": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
             "path-parameters": {
@@ -7878,6 +8491,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetInactiveRoomsForProcess": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/rooms/v1/{appId}/list/{processId}/inactive",
             "path-parameters": {
@@ -7897,6 +8513,9 @@ exports[`open api converter hathora simple 1`] = `
           },
           "GetRoomInfo": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/rooms/v1/{appId}/info/{roomId}",
             "path-parameters": {
@@ -7916,6 +8535,10 @@ exports[`open api converter hathora simple 1`] = `
           },
           "SuspendRoom": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/rooms/v1/{appId}/suspend/{roomId}",
             "path-parameters": {
@@ -7957,6 +8580,7 @@ exports[`open api converter hume simple 1`] = `
         "endpoints": {
           "startJob": {
             "auth": false,
+            "errors": [],
             "method": "POST",
             "path": "/v0/batch/jobs",
             "request": {
@@ -8008,6 +8632,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "endpoints": {
           "getJobArtifacts": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}/artifacts",
             "path-parameters": {
@@ -8023,6 +8648,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "getJobDetails": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}",
             "path-parameters": {
@@ -8038,6 +8664,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "getJobPredictions": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}/predictions",
             "path-parameters": {
@@ -8064,6 +8691,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "endpoints": {
           "listJobs": {
             "auth": false,
+            "errors": [],
             "method": "GET",
             "path": "/v0/batch/jobs",
             "request": {
@@ -8110,6 +8738,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
     },
     "__package__.yml": {
+      "errors": {},
       "service": undefined,
       "types": {
         "Bcp47Tag": {
@@ -9247,6 +9876,36 @@ exports[`open api converter squidex simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "errors": {
+        "BadRequestError": {
+          "status-code": 400,
+          "type": "ErrorDto",
+        },
+        "ConflictError": {
+          "status-code": 409,
+          "type": "ErrorDto",
+        },
+        "ContentTooLargeError": {
+          "status-code": 413,
+          "type": "ErrorDto",
+        },
+        "ForbiddenError": {
+          "status-code": 403,
+          "type": "ErrorDto",
+        },
+        "InternalServerError": {
+          "status-code": 500,
+          "type": "ErrorDto",
+        },
+        "NotFoundError": {
+          "status-code": 404,
+          "type": "unknown",
+        },
+        "NotImplementedError": {
+          "status-code": 501,
+          "type": "ErrorDto",
+        },
+      },
       "service": undefined,
       "types": {
         "ActionTypeEnum": {
@@ -13263,6 +13922,11 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteApp": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}",
             "path-parameters": {
@@ -13274,6 +13938,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteClient": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
@@ -13293,6 +13962,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteContributor": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/contributors/{id}",
             "path-parameters": {
@@ -13312,6 +13986,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteImage": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/image",
             "path-parameters": {
@@ -13327,6 +14006,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteLanguage": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
@@ -13346,6 +14030,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteMyself": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/contributors/me",
             "path-parameters": {
@@ -13361,6 +14050,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRole": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
@@ -13380,6 +14074,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteWorkflow": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
@@ -13399,6 +14098,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getApp": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}",
             "path-parameters": {
@@ -13414,6 +14117,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getApps": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps",
             "response": {
@@ -13423,6 +14129,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getAssetScripts": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/scripts",
             "path-parameters": {
@@ -13438,6 +14148,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getClients": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
@@ -13453,6 +14167,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getContributors": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
@@ -13468,6 +14186,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getImage": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/api/apps/{app}/image",
             "path-parameters": {
@@ -13483,6 +14202,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getLanguages": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
@@ -13498,6 +14221,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getPermissions": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/roles/permissions",
             "path-parameters": {
@@ -13513,6 +14240,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getRoles": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
@@ -13528,6 +14259,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getSettings": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/settings",
             "path-parameters": {
@@ -13543,6 +14278,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getTeamApps": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/teams/{team}/apps",
             "path-parameters": {
@@ -13558,6 +14296,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getWorkflows": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
@@ -13573,6 +14315,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postApp": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.ConflictError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps",
             "request": {
@@ -13599,6 +14346,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postClient": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
@@ -13627,6 +14379,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postContributor": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
@@ -13648,6 +14405,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postLanguage": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
@@ -13676,6 +14438,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postRole": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
@@ -13704,6 +14471,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postWorkflow": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
@@ -13732,6 +14504,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putApp": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}",
             "path-parameters": {
@@ -13764,6 +14541,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putAppTeam": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/team",
             "path-parameters": {
@@ -13792,6 +14574,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putAssetScripts": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/scripts",
             "path-parameters": {
@@ -13844,6 +14631,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putClient": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
@@ -13892,6 +14684,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putLanguage": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
@@ -13932,6 +14729,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putRole": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
@@ -13968,6 +14770,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putSettings": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/settings",
             "path-parameters": {
@@ -14008,6 +14815,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putWorkflow": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
@@ -14052,6 +14864,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "uploadImage": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/image",
             "path-parameters": {
@@ -14088,6 +14905,11 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "bulkUpdateAssets": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/assets/bulk",
             "path-parameters": {
@@ -14128,6 +14950,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteAsset": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
@@ -14158,6 +14985,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteAssetFolder": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
@@ -14173,6 +15005,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getAsset": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
@@ -14192,6 +15028,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getAssetContent": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/api/assets/{id}",
             "path-parameters": {
@@ -14282,6 +15119,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getAssetContentBySlug": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/api/assets/{app}/{idOrSlug}/{more}",
             "path-parameters": {
@@ -14380,6 +15218,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getAssetFolders": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
@@ -14410,6 +15252,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getAssets": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/assets",
             "path-parameters": {
@@ -14465,6 +15311,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getAssetsPost": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/assets/query",
             "path-parameters": {
@@ -14486,6 +15337,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getTags": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/tags",
             "path-parameters": {
@@ -14501,6 +15356,12 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postAsset": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.ContentTooLargeError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/assets",
             "path-parameters": {
@@ -14542,6 +15403,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postAssetFolder": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
@@ -14574,6 +15440,12 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postUpsertAsset": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.ContentTooLargeError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
@@ -14614,6 +15486,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putAsset": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
@@ -14662,6 +15539,12 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putAssetContent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.ContentTooLargeError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/{id}/content",
             "path-parameters": {
@@ -14691,6 +15574,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putAssetFolder": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
@@ -14723,6 +15611,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putAssetFolderParent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/folders/{id}/parent",
             "path-parameters": {
@@ -14755,6 +15648,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putAssetParent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/{id}/parent",
             "path-parameters": {
@@ -14787,6 +15685,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putTag": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/tags/{name}",
             "path-parameters": {
@@ -14830,6 +15733,11 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteBackup": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
@@ -14845,6 +15753,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getBackupContent": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
@@ -14864,6 +15773,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getBackupContentV2": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/api/apps/backups/{id}",
             "path-parameters": {
@@ -14894,6 +15804,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getBackups": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
@@ -14909,6 +15823,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getRestoreJob": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/restore",
             "response": {
@@ -14918,6 +15835,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postBackup": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
@@ -14929,6 +15851,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postRestoreJob": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/restore",
             "request": {
@@ -14962,6 +15888,11 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteComment": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
@@ -14981,6 +15912,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getComments": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/comments/{commentsId}",
             "path-parameters": {
@@ -15010,6 +15945,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getWatchingUsers": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/watching/{resource}",
             "path-parameters": {
@@ -15029,6 +15968,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postComment": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/comments/{commentsId}",
             "path-parameters": {
@@ -15054,6 +15998,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putComment": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
@@ -15090,6 +16039,11 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "bulkUpdateContents": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/bulk",
             "path-parameters": {
@@ -15146,6 +16100,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "createDraft": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
@@ -15169,6 +16128,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteContent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
@@ -15203,6 +16167,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteContentStatus": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
@@ -15226,6 +16195,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteVersion": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
@@ -15249,6 +16223,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getContent": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
@@ -15282,6 +16260,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getContentValidity": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/validity",
             "path-parameters": {
@@ -15301,6 +16284,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getContentVersion": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/{version}",
             "path-parameters": {
@@ -15328,6 +16312,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getContents": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}",
             "path-parameters": {
@@ -15362,6 +16350,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getContentsPost": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/query",
             "path-parameters": {
@@ -15387,6 +16380,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getReferences": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/references",
             "path-parameters": {
@@ -15420,6 +16417,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getReferencing": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/referencing",
             "path-parameters": {
@@ -15453,6 +16454,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "patchContent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PATCH",
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
@@ -15482,6 +16488,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postContent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}",
             "path-parameters": {
@@ -15525,6 +16536,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postContents": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/import",
             "path-parameters": {
@@ -15569,6 +16585,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postUpsertContent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
@@ -15616,6 +16637,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putContent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
@@ -15645,6 +16671,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putContentStatus": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
@@ -15700,11 +16731,19 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getDump": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+              "root.NotImplementedError",
+            ],
             "method": "GET",
             "path": "/api/diagnostics/dump",
           },
           "getGCDump": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+              "root.NotImplementedError",
+            ],
             "method": "GET",
             "path": "/api/diagnostics/gcdump",
           },
@@ -15721,6 +16760,9 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getEventConsumers": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/event-consumers",
             "response": {
@@ -15730,6 +16772,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "resetEventConsumer": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/event-consumers/{consumerName}/reset",
             "path-parameters": {
@@ -15745,6 +16792,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "startEventConsumer": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/event-consumers/{consumerName}/start",
             "path-parameters": {
@@ -15760,6 +16812,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "stopEventConsumer": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/event-consumers/{consumerName}/stop",
             "path-parameters": {
@@ -15786,6 +16843,10 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getAppHistory": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/history",
             "path-parameters": {
@@ -15811,6 +16872,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getTeamHistory": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/teams/{team}/history",
             "path-parameters": {
@@ -15847,6 +16912,9 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getLanguages": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/languages",
             "response": {
@@ -15867,6 +16935,9 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getNews": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/news/features",
             "request": {
@@ -15897,6 +16968,11 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteComment": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/users/{userId}/notifications/{commentId}",
             "path-parameters": {
@@ -15912,6 +16988,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getNotifications": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/users/{userId}/notifications",
             "path-parameters": {
@@ -15948,6 +17027,9 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getAppPing": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/ping/{app}",
             "path-parameters": {
@@ -15959,6 +17041,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getInfo": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/info",
             "response": {
@@ -15968,6 +17053,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getPing": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/ping",
           },
@@ -15984,6 +17072,10 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getPlans": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/plans",
             "path-parameters": {
@@ -15999,6 +17091,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getTeamPlans": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/teams/{team}/plans",
             "path-parameters": {
@@ -16014,6 +17110,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putPlan": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/plan",
             "path-parameters": {
@@ -16035,6 +17136,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putTeamPlan": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/teams/{team}/plan",
             "path-parameters": {
@@ -16067,6 +17173,11 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteEvent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
@@ -16082,6 +17193,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteEvents": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
@@ -16093,6 +17208,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRule": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
@@ -16108,6 +17228,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRuleEvents": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}/events",
             "path-parameters": {
@@ -16123,6 +17247,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteRuleRun": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/run",
             "path-parameters": {
@@ -16134,6 +17262,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "disableRule": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/disable",
             "path-parameters": {
@@ -16153,6 +17286,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "enableRule": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/enable",
             "path-parameters": {
@@ -16172,6 +17310,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getActions": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/rules/actions",
             "response": {
@@ -16181,6 +17322,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getEventSchema": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/rules/eventtypes/{type}",
             "path-parameters": {
@@ -16196,6 +17341,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getEventTypes": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/rules/eventtypes",
             "response": {
@@ -16205,6 +17353,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getEvents": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
@@ -16240,6 +17392,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getRules": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
@@ -16255,6 +17411,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postRule": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
@@ -16276,6 +17437,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putEvent": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
@@ -16291,6 +17457,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putRule": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
@@ -16335,6 +17506,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putRuleRun": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/run",
             "path-parameters": {
@@ -16360,6 +17535,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "simulateGET": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/rules/{id}/simulate",
             "path-parameters": {
@@ -16379,6 +17558,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "simulatePOST": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/rules/simulate",
             "path-parameters": {
@@ -16400,6 +17584,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "triggerRule": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/trigger",
             "path-parameters": {
@@ -16426,6 +17615,11 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
@@ -16449,6 +17643,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteNestedField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
@@ -16476,6 +17675,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteSchema": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
@@ -16491,6 +17695,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "disableField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/disable",
             "path-parameters": {
@@ -16514,6 +17723,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "disableNestedField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable",
             "path-parameters": {
@@ -16541,6 +17755,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "enableField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/enable",
             "path-parameters": {
@@ -16564,6 +17783,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "enableNestedField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable",
             "path-parameters": {
@@ -16591,6 +17815,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getSchema": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
@@ -16610,6 +17838,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getSchemas": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/schemas",
             "path-parameters": {
@@ -16625,6 +17857,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "hideField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/hide",
             "path-parameters": {
@@ -16648,6 +17885,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "hideNestedField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide",
             "path-parameters": {
@@ -16675,6 +17917,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "lockField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/lock",
             "path-parameters": {
@@ -16698,6 +17945,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "lockNestedField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock",
             "path-parameters": {
@@ -16725,6 +17977,12 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.ConflictError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/schemas/{schema}/fields",
             "path-parameters": {
@@ -16750,6 +18008,12 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postNestedField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.ConflictError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
             "path-parameters": {
@@ -16779,6 +18043,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postSchema": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.ConflictError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/schemas",
             "path-parameters": {
@@ -16815,6 +18084,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "publishSchema": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/publish",
             "path-parameters": {
@@ -16834,6 +18108,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putCategory": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/category",
             "path-parameters": {
@@ -16866,6 +18145,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
@@ -16895,6 +18179,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putNestedField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
@@ -16928,6 +18217,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putNestedFieldOrdering": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
             "path-parameters": {
@@ -16957,6 +18251,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putPreviewUrls": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/preview-urls",
             "path-parameters": {
@@ -16982,6 +18281,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putRules": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/rules",
             "path-parameters": {
@@ -17014,6 +18318,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putSchema": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
@@ -17070,6 +18379,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putSchemaFieldOrdering": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
             "path-parameters": {
@@ -17095,6 +18409,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putSchemaSync": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/sync",
             "path-parameters": {
@@ -17131,6 +18450,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putSchemaUIFields": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
             "path-parameters": {
@@ -17167,6 +18491,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putScripts": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/scripts",
             "path-parameters": {
@@ -17192,6 +18521,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "showField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/show",
             "path-parameters": {
@@ -17215,6 +18549,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "showNestedField": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show",
             "path-parameters": {
@@ -17242,6 +18581,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "unpublishSchema": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/unpublish",
             "path-parameters": {
@@ -17272,6 +18616,10 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getSearchResults": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/search",
             "path-parameters": {
@@ -17308,6 +18656,10 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getCurrentStorageSize": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/storage/today",
             "path-parameters": {
@@ -17323,6 +18675,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getLog": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/log",
             "path-parameters": {
@@ -17338,6 +18694,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getStorageSizes": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
@@ -17361,6 +18721,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getStorageSizesForTeam": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
@@ -17384,6 +18748,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getTeamCurrentStorageSizeForTeam": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/teams/{team}/usages/storage/today",
             "path-parameters": {
@@ -17399,6 +18767,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getUsages": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
@@ -17422,6 +18794,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getUsagesForTeam": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
@@ -17456,6 +18832,11 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteContributor": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/teams/{team}/contributors/{id}",
             "path-parameters": {
@@ -17475,6 +18856,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "deleteMyself": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/teams/{team}/contributors/me",
             "path-parameters": {
@@ -17490,6 +18876,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getContributors": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/teams/{team}/contributors",
             "path-parameters": {
@@ -17505,6 +18895,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getTeam": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/teams/{team}",
             "path-parameters": {
@@ -17520,6 +18914,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getTeams": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/teams",
             "response": {
@@ -17529,6 +18926,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postContributor": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/teams/{team}/contributors",
             "path-parameters": {
@@ -17550,6 +18952,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postTeam": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.ConflictError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/teams",
             "request": {
@@ -17572,6 +18979,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putTeam": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/teams/{team}",
             "path-parameters": {
@@ -17611,6 +19023,10 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getTemplate": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/templates/{name}",
             "path-parameters": {
@@ -17626,6 +19042,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getTemplates": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/templates",
             "response": {
@@ -17646,6 +19065,10 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "postTranslation": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/translations",
             "path-parameters": {
@@ -17693,6 +19116,12 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "deleteUser": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/api/user-management/{id}",
             "path-parameters": {
@@ -17704,6 +19133,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getUser": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/user-management/{id}",
             "path-parameters": {
@@ -17719,6 +19152,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getUsers": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/user-management",
             "request": {
@@ -17748,6 +19184,12 @@ exports[`open api converter squidex simple 1`] = `
           },
           "lockUser": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/user-management/{id}/lock",
             "path-parameters": {
@@ -17763,6 +19205,10 @@ exports[`open api converter squidex simple 1`] = `
           },
           "postUser": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/api/user-management",
             "request": {
@@ -17797,6 +19243,11 @@ exports[`open api converter squidex simple 1`] = `
           },
           "putUser": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/user-management/{id}",
             "path-parameters": {
@@ -17837,6 +19288,12 @@ exports[`open api converter squidex simple 1`] = `
           },
           "unlockUser": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.ForbiddenError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "PUT",
             "path": "/api/user-management/{id}/unlock",
             "path-parameters": {
@@ -17863,6 +19320,10 @@ exports[`open api converter squidex simple 1`] = `
         "endpoints": {
           "getUser": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/users/{id}",
             "path-parameters": {
@@ -17878,6 +19339,7 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getUserPicture": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/api/users/{id}/picture",
             "path-parameters": {
@@ -17893,6 +19355,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getUserResources": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api",
             "response": {
@@ -17902,6 +19367,9 @@ exports[`open api converter squidex simple 1`] = `
           },
           "getUsers": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/api/users",
             "request": {
@@ -17942,6 +19410,24 @@ exports[`open api converter suger simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "errors": {
+        "BadRequestError": {
+          "status-code": 400,
+          "type": "unknown",
+        },
+        "ConflictError": {
+          "status-code": 409,
+          "type": "string",
+        },
+        "InternalServerError": {
+          "status-code": 500,
+          "type": "unknown",
+        },
+        "NotFoundError": {
+          "status-code": 404,
+          "type": "string",
+        },
+      },
       "service": undefined,
       "types": {
         "AzureAudience": {
@@ -24270,6 +25756,9 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetApiClientAccessToken": {
             "auth": false,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/public/apiClient/accessToken",
             "request": {
@@ -24311,6 +25800,9 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetBuyer": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
@@ -24330,6 +25822,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListBuyersByOrganization": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/buyer",
             "path-parameters": {
@@ -24345,6 +25840,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "UpdateBuyerNameDescription": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "PATCH",
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
@@ -24400,6 +25898,10 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "AddEntitlementCredit": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
             "path-parameters": {
@@ -24440,6 +25942,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetEntitlement": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}",
             "path-parameters": {
@@ -24459,6 +25964,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlements": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement",
             "path-parameters": {
@@ -24474,6 +25982,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementsByBuyer": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
             "path-parameters": {
@@ -24493,6 +26004,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementsByOffer": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/offer/{offerId}/entitlement",
             "path-parameters": {
@@ -24512,6 +26026,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementsByPartner": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/entitlement",
             "path-parameters": {
@@ -24531,6 +26048,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementsByProduct": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/entitlement",
             "path-parameters": {
@@ -24550,6 +26070,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "UpdateEntitlementName": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "PATCH",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
             "path-parameters": {
@@ -24601,6 +26124,9 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetEntitlementTerm": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
             "path-parameters": {
@@ -24624,6 +26150,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementTerms": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
             "path-parameters": {
@@ -24654,6 +26183,10 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "CreateIntegration": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/org/{orgId}/integration",
             "path-parameters": {
@@ -24698,6 +26231,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "DeleteIntegration": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
@@ -24721,6 +26257,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetIntegration": {
             "auth": true,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
@@ -24744,6 +26284,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListIntegrationsByOrganization": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/integration",
             "path-parameters": {
@@ -24759,6 +26302,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "UpdateIntegration": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "PATCH",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
@@ -24807,6 +26354,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "VerifyIntegration": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/org/{orgId}/integration/{partner}/{service}/verify",
             "path-parameters": {
@@ -24841,6 +26391,9 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetUsageRecordGroup": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
             "path-parameters": {
@@ -24860,6 +26413,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetUsageRecordReport": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
             "path-parameters": {
@@ -24879,6 +26435,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordGroupsByEntitlement": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
@@ -24923,6 +26483,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordGroupsByOrganization": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup",
             "path-parameters": {
@@ -24963,6 +26527,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordGroupsByProduct": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
             "path-parameters": {
@@ -25007,6 +26575,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordReportsByEntitlement": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
             "path-parameters": {
@@ -25056,6 +26628,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordReportsByOrganization": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport",
             "path-parameters": {
@@ -25096,6 +26672,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordReportsByProduct": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordReport",
             "path-parameters": {
@@ -25140,6 +26720,11 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ReportUsageRecordGroup": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.ConflictError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
@@ -25199,6 +26784,10 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "CancelOffer": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/org/{orgId}/offer/{offerId}/cancel",
             "path-parameters": {
@@ -25218,6 +26807,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "CreateOffer": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/org/{orgId}/offer",
             "path-parameters": {
@@ -25239,6 +26832,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "CreateOrUpdateDraftOffer": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/org/{orgId}/draftOffer",
             "path-parameters": {
@@ -25260,6 +26857,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "DeleteOffer": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
@@ -25279,6 +26879,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetOffer": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
@@ -25298,6 +26901,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListOffersByOrganization": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/offer",
             "path-parameters": {
@@ -25313,6 +26919,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListOffersByPartner": {
             "auth": false,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/offer",
             "path-parameters": {
@@ -25342,6 +26951,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListOffersByProduct": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/offer",
             "path-parameters": {
@@ -25372,6 +26984,9 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "ListOperations": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/operation",
             "path-parameters": {
@@ -25423,6 +27038,9 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "DeleteProduct": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "DELETE",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
@@ -25442,6 +27060,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetProduct": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
@@ -25461,6 +27082,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListProductMeteringDimensions": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/dimension",
             "path-parameters": {
@@ -25480,6 +27104,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListProductsByOrganization": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product",
             "path-parameters": {
@@ -25495,6 +27122,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListProductsByPartner": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/product",
             "path-parameters": {
@@ -25514,6 +27144,9 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "UpdateProduct": {
             "auth": true,
+            "errors": [
+              "root.InternalServerError",
+            ],
             "method": "PATCH",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
@@ -25565,6 +27198,10 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetRevenueReport": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/org/{orgId}/revenueReport",
             "path-parameters": {
@@ -25617,6 +27254,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetUsageReport": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/org/{orgId}/usageReport",
             "path-parameters": {
@@ -25649,6 +27290,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListRevenueRecordDetails": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
             "path-parameters": {
@@ -25708,6 +27353,10 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListRevenueRecords": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.InternalServerError",
+            ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecord",
             "path-parameters": {
@@ -25795,12 +27444,31 @@ exports[`open api converter vellum simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "errors": {
+        "BadRequestError": {
+          "status-code": 400,
+          "type": "unknown",
+        },
+        "InternalServerError": {
+          "status-code": 500,
+          "type": "unknown",
+        },
+        "NotFoundError": {
+          "status-code": 404,
+          "type": "unknown",
+        },
+      },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "generate": {
             "auth": true,
+            "errors": [
+              "BadRequestError",
+              "NotFoundError",
+              "InternalServerError",
+            ],
             "method": "POST",
             "path": "/v1/generate",
             "request": {
@@ -25836,6 +27504,11 @@ exports[`open api converter vellum simple 1`] = `
           },
           "search": {
             "auth": true,
+            "errors": [
+              "BadRequestError",
+              "NotFoundError",
+              "InternalServerError",
+            ],
             "method": "POST",
             "path": "/v1/search",
             "request": {
@@ -25871,6 +27544,11 @@ exports[`open api converter vellum simple 1`] = `
           },
           "submit-completion-actuals": {
             "auth": true,
+            "errors": [
+              "BadRequestError",
+              "NotFoundError",
+              "InternalServerError",
+            ],
             "method": "POST",
             "path": "/v1/submit-completion-actuals",
             "request": {
@@ -26512,6 +28190,7 @@ exports[`open api converter vellum simple 1`] = `
         "endpoints": {
           "list": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/v1/documents",
             "request": {
@@ -26547,6 +28226,11 @@ exports[`open api converter vellum simple 1`] = `
           },
           "upload": {
             "auth": true,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
             "method": "POST",
             "path": "/v1/upload-document",
             "request": {
@@ -26594,6 +28278,7 @@ exports[`open api converter vellum simple 1`] = `
         "endpoints": {
           "retrieve": {
             "auth": true,
+            "errors": [],
             "method": "GET",
             "path": "/v1/model-versions/{id}",
             "path-parameters": {
