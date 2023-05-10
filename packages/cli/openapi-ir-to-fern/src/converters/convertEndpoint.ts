@@ -59,6 +59,7 @@ export function convertEndpoint({
         path: endpoint.path,
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
+        docs: endpoint.description ?? undefined,
     };
 
     if (Object.keys(pathParameters).length > 0) {
