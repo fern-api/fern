@@ -79,6 +79,9 @@ function markErrorSchemas({
 }): StatusCode[] {
     const errorStatusCodes: StatusCode[] = [];
     for (const [statusCode, response] of Object.entries(responses)) {
+        if (statusCode === "default") {
+            continue;
+        }
         const parsedStatusCode = parseInt(statusCode);
         if (parsedStatusCode < 400 || parsedStatusCode > 600) {
             // if status code is not between [400, 600], then it won't count as an error

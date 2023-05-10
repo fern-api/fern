@@ -24,6 +24,8 @@ types:
         type: integer
       message:
         type: string
+
+errors: {}
 ",
     "name": "__package__.yml",
     "type": "file",
@@ -62,11 +64,13 @@ service:
       response:
         docs: A paged array of pets
         type: root.Pets
+      errors: []
 
     createPets:
       path: /pets
       method: POST
       auth: false
+      errors: []
 
     showPetById:
       path: /pets/{petId}
@@ -78,6 +82,7 @@ service:
       response:
         docs: Expected response to a valid request
         type: root.Pet
+      errors: []
 ",
     "name": "pets.yml",
     "type": "file",
