@@ -45,7 +45,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     public getNamesOfThrownExceptions(context: SdkClientClassContext): string[] {
         return this.endpoint.errors.map((error) =>
-            getTextOfTsNode(context.sdkError.getReferenceToError(error.error).getExpression({ isForComment: true }))
+            getTextOfTsNode(context.sdkError.getReferenceToError(error.error).getExpression())
         );
     }
 

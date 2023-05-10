@@ -96,7 +96,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         for (const errorName of this.response.getNamesOfThrownExceptions(context)) {
-            lines.push(`@throws {${errorName}}`);
+            lines.push(`@throws {@link ${errorName}}`);
         }
 
         if (lines.length === 0) {
