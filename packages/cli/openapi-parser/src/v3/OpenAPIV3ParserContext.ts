@@ -113,18 +113,18 @@ export class OpenAPIV3ParserContext {
     }
 
     public getErrors(): Record<StatusCode, HttpError> {
-        return Object.fromEntries(
-            Object.entries(this.errorBodies).map(([statusCode, errorBodyCollector]) => {
-                const convertedError = convertToError({
-                    statusCode: parseInt(statusCode),
-                    errorBodyCollector,
-                    context: this,
-                });
-                if (convertedError == null) {
-                    return [];
-                }
-                return [statusCode, convertedError];
-            })
-        );
+        const errors: Record<StatusCode, HttpError> = {};
+        Object.entries(this.errorBodies).forEach(([statusCode, errorBodyCollector]) => {
+            const parsedStatusCode = parseInt(statusCode);
+            const convertedError = convertToError({
+                statusCode: parsedStatusCode,
+                errorBodyCollector,
+                context: this,
+            });
+            if (convertedError != null) {
+                errors[parsedStatusCode] = convertedError;
+            }
+        });
+        return errors;
     }
 }
