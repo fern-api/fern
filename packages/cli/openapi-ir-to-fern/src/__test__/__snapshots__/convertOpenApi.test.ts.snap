@@ -560,7 +560,7 @@ exports[`open api converter axle simple 1`] = `
             "path": "/accounts/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The unique ID for the requested account. Returned as part of the Token Exchange flow in exchangeToken.",
                 "type": "string",
               },
             },
@@ -569,7 +569,7 @@ exports[`open api converter axle simple 1`] = `
               "query-parameters": {
                 "expand": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
                   "type": "optional<boolean>",
                 },
               },
@@ -598,7 +598,7 @@ exports[`open api converter axle simple 1`] = `
             "path": "/carriers/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The unique ID for the requested carrier. Returned in Account and Policy objects as \`carrier\`.",
                 "type": "string",
               },
             },
@@ -684,7 +684,7 @@ exports[`open api converter axle simple 1`] = `
             "path": "/policies/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The unique ID for the requested policy. Returned by Get Account for each Policy associated with the Account.",
                 "type": "string",
               },
             },
@@ -693,7 +693,7 @@ exports[`open api converter axle simple 1`] = `
               "query-parameters": {
                 "expand": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
                   "type": "optional<boolean>",
                 },
               },
@@ -764,12 +764,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
     },
     "headers": {
       "x-client-id": {
-        "docs": undefined,
+        "docs": "Your client ID. This will be shared with you during onboarding.",
         "name": "clientId",
         "type": "string",
       },
       "x-client-secret": {
-        "docs": undefined,
+        "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
         "name": "clientSecret",
         "type": "string",
       },
@@ -1409,7 +1409,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "query-parameters": {
                 "page": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
               },
@@ -1430,27 +1430,27 @@ exports[`open api converter buzzshot simple 1`] = `
               "query-parameters": {
                 "after": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "After",
                   "type": "optional<string>",
                 },
                 "before": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Before",
                   "type": "optional<string>",
                 },
                 "complete": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "complete",
                   "type": "optional<string>",
                 },
                 "date": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Date",
                   "type": "optional<string>",
                 },
                 "page": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
               },
@@ -1471,17 +1471,17 @@ exports[`open api converter buzzshot simple 1`] = `
               "query-parameters": {
                 "complete": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "complete",
                   "type": "optional<string>",
                 },
                 "is_event": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "is_event",
                   "type": "optional<string>",
                 },
                 "page": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
               },
@@ -1502,7 +1502,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "query-parameters": {
                 "page": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
               },
@@ -1523,7 +1523,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "query-parameters": {
                 "page": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
               },
@@ -1544,7 +1544,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "query-parameters": {
                 "page": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
               },
@@ -1562,7 +1562,7 @@ exports[`open api converter buzzshot simple 1`] = `
             "path": "/api/v2/accounts/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "A unique integer value identifying this account.",
                 "type": "string",
               },
             },
@@ -1579,7 +1579,7 @@ exports[`open api converter buzzshot simple 1`] = `
             "path": "/api/v2/games/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "A unique integer value identifying this group.",
                 "type": "string",
               },
             },
@@ -1588,22 +1588,22 @@ exports[`open api converter buzzshot simple 1`] = `
               "query-parameters": {
                 "after": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "After",
                   "type": "optional<string>",
                 },
                 "before": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Before",
                   "type": "optional<string>",
                 },
                 "complete": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "complete",
                   "type": "optional<string>",
                 },
                 "date": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Date",
                   "type": "optional<string>",
                 },
               },
@@ -1621,7 +1621,7 @@ exports[`open api converter buzzshot simple 1`] = `
             "path": "/api/v2/groups/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "A unique integer value identifying this group.",
                 "type": "string",
               },
             },
@@ -1630,12 +1630,12 @@ exports[`open api converter buzzshot simple 1`] = `
               "query-parameters": {
                 "complete": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "complete",
                   "type": "optional<string>",
                 },
                 "is_event": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "is_event",
                   "type": "optional<string>",
                 },
               },
@@ -1653,7 +1653,7 @@ exports[`open api converter buzzshot simple 1`] = `
             "path": "/api/v2/rooms/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "A unique integer value identifying this location.",
                 "type": "string",
               },
             },
@@ -1670,7 +1670,7 @@ exports[`open api converter buzzshot simple 1`] = `
             "path": "/api/v2/photos/{photo_id}",
             "path-parameters": {
               "photo_id": {
-                "docs": undefined,
+                "docs": "",
                 "type": "string",
               },
             },
@@ -1687,7 +1687,7 @@ exports[`open api converter buzzshot simple 1`] = `
             "path": "/api/v2/players/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "A unique integer value identifying this player.",
                 "type": "string",
               },
             },
@@ -4678,7 +4678,7 @@ empty.
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The ID of the artifact to get the URL for.",
                   "type": "string",
                 },
               },
@@ -4812,7 +4812,7 @@ connections can not be deleted using this method.
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "ID of the authentication connection.",
                   "type": "string",
                 },
               },
@@ -5052,7 +5052,8 @@ given Dev organization.
               "query-parameters": {
                 "token_id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The unique identifier of the token under a given Dev organization.
+",
                   "type": "string",
                 },
               },
@@ -5083,17 +5084,24 @@ token type issued for a given subject.
               "query-parameters": {
                 "client_id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "An identifier that represents the application, which requested the
+token. Only relevant for application access tokens.
+",
                   "type": "optional<string>",
                 },
                 "requested_token_type": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The type of the requested token. If no value is specified, the
+response will include tokens of all the types.
+",
                   "type": "optional<root.AuthTokenRequestedTokenType>",
                 },
                 "subject": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The subject associated with the token. In the absence of this
+parameter, the ID of the authenticated entity is treated as the
+subject.
+",
                   "type": "optional<string>",
                 },
               },
@@ -5201,32 +5209,38 @@ organization.
               "query-parameters": {
                 "cursor": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The cursor to resume iteration from. If not provided, then iteration
+starts from the beginning.
+",
                   "type": "optional<string>",
                 },
                 "email": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters Dev users based on email addresses.",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The maximum number of Dev users to return. The default is '50'.
+",
                   "type": "optional<integer>",
                 },
                 "mode": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The iteration mode to use, otherwise if not set, then "after" is
+used.
+",
                   "type": "optional<root.ListMode>",
                 },
                 "sort_by": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Fields to sort the Dev users by and the direction to sort them.
+",
                   "type": "optional<string>",
                 },
                 "state": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters Dev users based on state.",
                   "type": "optional<root.UserState>",
                 },
               },
@@ -5341,7 +5355,7 @@ organization.
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The ID of the part to retrieve.",
                   "type": "string",
                 },
               },
@@ -5370,37 +5384,42 @@ organization.
               "query-parameters": {
                 "created_by": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for parts created by any of these users.",
                   "type": "optional<string>",
                 },
                 "cursor": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The cursor to resume iteration from. If not provided, then iteration
+starts from the beginning.
+",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The maximum number of parts to return. The default is '50'.
+",
                   "type": "optional<integer>",
                 },
                 "mode": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The iteration mode to use, otherwise if not set, then "after" is
+used.
+",
                   "type": "optional<root.ListMode>",
                 },
                 "name": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for parts of the provided name(s).",
                   "type": "optional<string>",
                 },
                 "owned_by": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for parts owned by any of these users.",
                   "type": "optional<string>",
                 },
                 "type": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for parts of the provided type(s).",
                   "type": "optional<root.PartType>",
                 },
               },
@@ -5554,7 +5573,7 @@ records.
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The ID of the required Rev organization.",
                   "type": "string",
                 },
               },
@@ -5586,52 +5605,65 @@ to access.
               "query-parameters": {
                 "created_by": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters by creator.",
                   "type": "optional<string>",
                 },
                 "created_date.after": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filters for objects created after the provided timestamp (inclusive).
+",
                   "type": "optional<string>",
                 },
                 "created_date.before": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filters for objects created before the provided timestamp
+(inclusive).
+",
                   "type": "optional<string>",
                 },
                 "cursor": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The cursor to resume iteration from. If not provided, then iteration
+starts from the beginning.
+",
                   "type": "optional<string>",
                 },
                 "external_ref": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "List of external refs to filter Rev organizations for.",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The maximum number of Rev organizations to be retrieved per page.
+",
                   "type": "optional<integer>",
                 },
                 "mode": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The iteration mode to use, otherwise if not set, then "after" is
+used.
+",
                   "type": "optional<root.ListMode>",
                 },
                 "modified_date.after": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filters for objects created after the provided timestamp (inclusive).
+",
                   "type": "optional<string>",
                 },
                 "modified_date.before": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filters for objects created before the provided timestamp
+(inclusive).
+",
                   "type": "optional<string>",
                 },
                 "sort_by": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Fields to sort the Rev organizations by and the direction to sort
+them.
+",
                   "type": "optional<string>",
                 },
               },
@@ -5806,7 +5838,7 @@ permitted.
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The requested tag's ID.",
                   "type": "string",
                 },
               },
@@ -5834,17 +5866,21 @@ permitted.
               "query-parameters": {
                 "cursor": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The cursor to resume iteration from. If not provided, then iteration
+starts from the beginning.
+",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The maximum number of tags to return. The default is '50'.",
                   "type": "optional<integer>",
                 },
                 "mode": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The iteration mode to use, otherwise if not set, then "after" is
+used.
+",
                   "type": "optional<root.ListMode>",
                 },
               },
@@ -5954,7 +5990,7 @@ tags.
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The ID of the timeline entry to get.",
                   "type": "string",
                 },
               },
@@ -5983,22 +6019,28 @@ tags.
               "query-parameters": {
                 "cursor": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The cursor to resume iteration from. If not provided, then iteration
+starts from the beginning.
+",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The maximum number of entries to return. If not set, then this
+defaults to \`50\`.
+",
                   "type": "optional<integer>",
                 },
                 "mode": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The iteration mode to use, otherwise if not set, then "after" is
+used.
+",
                   "type": "optional<root.ListMode>",
                 },
                 "object": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The ID of the object to list timeline entries for.",
                   "type": "string",
                 },
               },
@@ -6137,7 +6179,7 @@ response.
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "ID for the webhook.",
                   "type": "string",
                 },
               },
@@ -6308,52 +6350,57 @@ won't receive any object events until successfully verified.
               "query-parameters": {
                 "applies_to_part": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for work belonging to any of the provided parts.",
                   "type": "optional<string>",
                 },
                 "created_by": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for work created by any of these users.",
                   "type": "optional<string>",
                 },
                 "first": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The number of work items to return. The default is '50', the maximum
+is '5000'.
+",
                   "type": "optional<integer>",
                 },
                 "issue.priority": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for issues with any of the provided priorities.",
                   "type": "optional<root.IssuePriority>",
                 },
                 "issue.rev_orgs": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for issues with any of the provided Rev organizations.
+",
                   "type": "optional<string>",
                 },
                 "owned_by": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for work owned by any of these users.",
                   "type": "optional<string>",
                 },
                 "stage.name": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for records in the provided stage(s).",
                   "type": "optional<string>",
                 },
                 "ticket.rev_org": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for tickets that are associated with any of the provided Rev
+organizations.
+",
                   "type": "optional<string>",
                 },
                 "ticket.severity": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for tickets with any of the provided severities.",
                   "type": "optional<root.TicketSeverity>",
                 },
                 "type": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for work of the provided types.",
                   "type": "optional<root.WorkType>",
                 },
               },
@@ -6382,7 +6429,7 @@ won't receive any object events until successfully verified.
               "query-parameters": {
                 "id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The work's ID.",
                   "type": "string",
                 },
               },
@@ -6410,62 +6457,70 @@ won't receive any object events until successfully verified.
               "query-parameters": {
                 "applies_to_part": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for work belonging to any of the provided parts.",
                   "type": "optional<string>",
                 },
                 "created_by": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for work created by any of these users.",
                   "type": "optional<string>",
                 },
                 "cursor": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The cursor to resume iteration from. If not provided, then iteration
+starts from the beginning.
+",
                   "type": "optional<string>",
                 },
                 "issue.priority": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for issues with any of the provided priorities.",
                   "type": "optional<root.IssuePriority>",
                 },
                 "issue.rev_orgs": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for issues with any of the provided Rev organizations.
+",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The maximum number of works to return. The default is '50'.
+",
                   "type": "optional<integer>",
                 },
                 "mode": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The iteration mode to use, otherwise if not set, then "after" is
+used.
+",
                   "type": "optional<root.ListMode>",
                 },
                 "owned_by": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for work owned by any of these users.",
                   "type": "optional<string>",
                 },
                 "stage.name": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for records in the provided stage(s).",
                   "type": "optional<string>",
                 },
                 "ticket.rev_org": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for tickets that are associated with any of the provided Rev
+organizations.
+",
                   "type": "optional<string>",
                 },
                 "ticket.severity": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for tickets with any of the provided severities.",
                   "type": "optional<root.TicketSeverity>",
                 },
                 "type": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Filters for work of the provided types.",
                   "type": "optional<root.WorkType>",
                 },
               },
@@ -8854,32 +8909,32 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "query-parameters": {
                 "direction": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The sort direction.",
                   "type": "optional<root.Direction>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The maximum number of jobs to include in the response.",
                   "type": "optional<integer>",
                 },
                 "sort_by": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The job timestamp to sort by.",
                   "type": "optional<root.SortBy>",
                 },
                 "status": {
                   "allow-multiple": true,
-                  "docs": undefined,
+                  "docs": "Include only jobs with these statuses.",
                   "type": "optional<root.Status>",
                 },
                 "timestamp_ms": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Defaults to the current date and time. See \`when\`.",
                   "type": "optional<integer>",
                 },
                 "when": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
                   "type": "optional<root.When>",
                 },
               },
@@ -14087,7 +14142,7 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app to delete.",
                 "type": "string",
               },
             },
@@ -14104,11 +14159,11 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the client that must be deleted.",
                 "type": "string",
               },
             },
@@ -14129,11 +14184,11 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/{app}/contributors/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the contributor.",
                 "type": "string",
               },
             },
@@ -14154,7 +14209,7 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app to update.",
                 "type": "string",
               },
             },
@@ -14175,11 +14230,11 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "language": {
-                "docs": undefined,
+                "docs": "The language to delete from the app.",
                 "type": "string",
               },
             },
@@ -14200,7 +14255,7 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/{app}/contributors/me",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14221,11 +14276,11 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "roleName": {
-                "docs": undefined,
+                "docs": "The name of the role.",
                 "type": "string",
               },
             },
@@ -14246,11 +14301,11 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the workflow to update.",
                 "type": "string",
               },
             },
@@ -14270,7 +14325,7 @@ exports[`open api converter squidex simple 1`] = `
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14304,7 +14359,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/apps/{app}/assets/scripts",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app to get the asset scripts for.",
                 "type": "string",
               },
             },
@@ -14324,7 +14379,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14344,7 +14399,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14361,7 +14416,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14381,7 +14436,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14401,7 +14456,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/apps/{app}/roles/permissions",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14421,7 +14476,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14441,7 +14496,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/apps/{app}/settings",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app to get the settings for.",
                 "type": "string",
               },
             },
@@ -14461,7 +14516,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/teams/{team}/apps",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The ID of the team.",
                 "type": "string",
               },
             },
@@ -14481,7 +14536,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14536,7 +14591,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14570,7 +14625,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14597,7 +14652,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14631,7 +14686,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14665,7 +14720,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/workflows",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -14699,7 +14754,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app to update.",
                 "type": "string",
               },
             },
@@ -14737,7 +14792,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/team",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app to update.",
                 "type": "string",
               },
             },
@@ -14771,7 +14826,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/scripts",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app to update.",
                 "type": "string",
               },
             },
@@ -14829,11 +14884,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/clients/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the client that must be updated.",
                 "type": "string",
               },
             },
@@ -14883,11 +14938,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/languages/{language}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "language": {
-                "docs": undefined,
+                "docs": "The language to update.",
                 "type": "string",
               },
             },
@@ -14929,11 +14984,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "roleName": {
-                "docs": undefined,
+                "docs": "The name of the role to be updated.",
                 "type": "string",
               },
             },
@@ -14971,7 +15026,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/settings",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app to update.",
                 "type": "string",
               },
             },
@@ -15017,11 +15072,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the workflow to update.",
                 "type": "string",
               },
             },
@@ -15067,7 +15122,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/image",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app to update.",
                 "type": "string",
               },
             },
@@ -15109,7 +15164,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/bulk",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -15155,11 +15210,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the asset to delete.",
                 "type": "string",
               },
             },
@@ -15168,12 +15223,12 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "CheckReferrers": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to check referrers of this asset.",
                   "type": "optional<boolean>",
                 },
                 "Permanent": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to delete the asset permanently.",
                   "type": "optional<boolean>",
                 },
               },
@@ -15191,11 +15246,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the asset folder to delete.",
                 "type": "string",
               },
             },
@@ -15211,11 +15266,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the asset to retrieve.",
                 "type": "string",
               },
             },
@@ -15232,7 +15287,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/assets/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the asset.",
                 "type": "string",
               },
             },
@@ -15241,72 +15296,72 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "auto": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to use auto format.",
                   "type": "optional<boolean>",
                 },
                 "bg": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Optional background color.",
                   "type": "optional<string>",
                 },
                 "cache": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The cache duration in seconds.",
                   "type": "optional<integer>",
                 },
                 "download": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Set it to 0 to prevent download.",
                   "type": "optional<integer>",
                 },
                 "focusX": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Override the y focus point.",
                   "type": "optional<double>",
                 },
                 "focusY": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Override the x focus point.",
                   "type": "optional<double>",
                 },
                 "force": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to force a new resize even if it already stored.",
                   "type": "optional<boolean>",
                 },
                 "format": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to force a new resize even if it already stored.",
                   "type": "optional<root.ImageFormat>",
                 },
                 "height": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The target height of the asset, if it is an image.",
                   "type": "optional<integer>",
                 },
                 "mode": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The resize mode when the width and height is defined.",
                   "type": "optional<root.ResizeMode>",
                 },
                 "nofocus": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to ignore the asset focus point if any.",
                   "type": "optional<boolean>",
                 },
                 "quality": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Optional image quality, it is is an jpeg image.",
                   "type": "optional<integer>",
                 },
                 "version": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional version of the asset.",
                   "type": "optional<integer>",
                 },
                 "width": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The target width of the asset, if it is an image.",
                   "type": "optional<integer>",
                 },
               },
@@ -15324,15 +15379,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/assets/{app}/{idOrSlug}/{more}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "idOrSlug": {
-                "docs": undefined,
+                "docs": "The id or slug of the asset.",
                 "type": "string",
               },
               "more": {
-                "docs": undefined,
+                "docs": "Optional suffix that can be used to seo-optimize the link to the image Has not effect.",
                 "type": "optional<string>",
               },
             },
@@ -15341,72 +15396,72 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "auto": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to use auto format.",
                   "type": "optional<boolean>",
                 },
                 "bg": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Optional background color.",
                   "type": "optional<string>",
                 },
                 "cache": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The cache duration in seconds.",
                   "type": "optional<integer>",
                 },
                 "download": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Set it to 0 to prevent download.",
                   "type": "optional<integer>",
                 },
                 "focusX": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Override the y focus point.",
                   "type": "optional<double>",
                 },
                 "focusY": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Override the x focus point.",
                   "type": "optional<double>",
                 },
                 "force": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to force a new resize even if it already stored.",
                   "type": "optional<boolean>",
                 },
                 "format": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to force a new resize even if it already stored.",
                   "type": "optional<root.ImageFormat>",
                 },
                 "height": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The target height of the asset, if it is an image.",
                   "type": "optional<integer>",
                 },
                 "mode": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The resize mode when the width and height is defined.",
                   "type": "optional<root.ResizeMode>",
                 },
                 "nofocus": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to ignore the asset focus point if any.",
                   "type": "optional<boolean>",
                 },
                 "quality": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Optional image quality, it is is an jpeg image.",
                   "type": "optional<integer>",
                 },
                 "version": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional version of the asset.",
                   "type": "optional<integer>",
                 },
                 "width": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The target width of the asset, if it is an image.",
                   "type": "optional<integer>",
                 },
               },
@@ -15427,7 +15482,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -15436,12 +15491,12 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "parentId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional parent folder id.",
                   "type": "optional<string>",
                 },
                 "scope": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The scope of the query.",
                   "type": "optional<root.AssetFolderScope>",
                 },
               },
@@ -15462,7 +15517,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -15471,37 +15526,37 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "$filter": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Optional OData filter.",
                   "type": "optional<string>",
                 },
                 "$orderby": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Optional OData order definition.",
                   "type": "optional<string>",
                 },
                 "$skip": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Optional number of items to skip.",
                   "type": "optional<double>",
                 },
                 "$top": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Optional number of items to take.",
                   "type": "optional<double>",
                 },
                 "ids": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional asset ids.",
                   "type": "optional<string>",
                 },
                 "parentId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional parent folder id.",
                   "type": "optional<string>",
                 },
                 "q": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional json query.",
                   "type": "optional<string>",
                 },
               },
@@ -15523,7 +15578,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/query",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -15549,7 +15604,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/tags",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -15571,7 +15626,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -15586,17 +15641,17 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "Duplicate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to duplicate the asset, event if the file has been uploaded.",
                   "type": "optional<boolean>",
                 },
                 "Id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional custom asset id.",
                   "type": "optional<string>",
                 },
                 "ParentId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional parent folder id.",
                   "type": "optional<string>",
                 },
               },
@@ -15618,7 +15673,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -15657,11 +15712,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The optional custom asset id.",
                 "type": "string",
               },
             },
@@ -15676,12 +15731,12 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "Duplicate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to duplicate the asset, event if the file has been uploaded.",
                   "type": "optional<boolean>",
                 },
                 "ParentId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional parent folder id.",
                   "type": "optional<string>",
                 },
               },
@@ -15703,11 +15758,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the asset.",
                 "type": "string",
               },
             },
@@ -15758,11 +15813,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/{id}/content",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the asset.",
                 "type": "string",
               },
             },
@@ -15793,11 +15848,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the asset folder.",
                 "type": "string",
               },
             },
@@ -15831,11 +15886,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/folders/{id}/parent",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the asset folder.",
                 "type": "string",
               },
             },
@@ -15869,11 +15924,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/{id}/parent",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the asset.",
                 "type": "string",
               },
             },
@@ -15907,11 +15962,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/assets/tags/{name}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "name": {
-                "docs": undefined,
+                "docs": "The tag to return.",
                 "type": "string",
               },
             },
@@ -15956,11 +16011,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the backup to delete.",
                 "type": "string",
               },
             },
@@ -15973,11 +16028,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the backup.",
                 "type": "string",
               },
             },
@@ -15994,7 +16049,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/backups/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the backup.",
                 "type": "string",
               },
             },
@@ -16003,12 +16058,12 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "app": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The name of the app.",
                   "type": "optional<string>",
                 },
                 "appId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The ID of the app.",
                   "type": "optional<string>",
                 },
               },
@@ -16029,7 +16084,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -16063,7 +16118,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -16118,15 +16173,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "commentId": {
-                "docs": undefined,
+                "docs": "The ID of the comment.",
                 "type": "string",
               },
               "commentsId": {
-                "docs": undefined,
+                "docs": "The ID of the comments.",
                 "type": "string",
               },
             },
@@ -16142,11 +16197,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/comments/{commentsId}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "commentsId": {
-                "docs": undefined,
+                "docs": "The ID of the comments.",
                 "type": "string",
               },
             },
@@ -16155,7 +16210,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The current version.",
                   "type": "optional<integer>",
                 },
               },
@@ -16176,11 +16231,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/watching/{resource}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "resource": {
-                "docs": undefined,
+                "docs": "The path to the resource.",
                 "type": "optional<string>",
               },
             },
@@ -16201,11 +16256,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/comments/{commentsId}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "commentsId": {
-                "docs": undefined,
+                "docs": "The ID of the comments.",
                 "type": "string",
               },
             },
@@ -16232,15 +16287,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "commentId": {
-                "docs": undefined,
+                "docs": "The ID of the comment.",
                 "type": "string",
               },
               "commentsId": {
-                "docs": undefined,
+                "docs": "The ID of the comments.",
                 "type": "string",
               },
             },
@@ -16274,11 +16329,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/bulk",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16336,15 +16391,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content item to create the draft for.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16365,15 +16420,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content item to delete.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16382,12 +16437,12 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "CheckReferrers": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to check referrers of this content.",
                   "type": "optional<boolean>",
                 },
                 "Permanent": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to delete the content permanently.",
                   "type": "optional<boolean>",
                 },
               },
@@ -16405,15 +16460,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content item to cancel.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16434,15 +16489,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content item to delete the draft from.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16462,15 +16517,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content to fetch.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16479,7 +16534,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional version.",
                   "type": "optional<integer>",
                 },
               },
@@ -16501,15 +16556,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}/validity",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content to fetch.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16522,19 +16577,19 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}/{version}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content to fetch.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
               "version": {
-                "docs": undefined,
+                "docs": "The version fo the content to fetch.",
                 "type": "integer",
               },
             },
@@ -16554,11 +16609,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16567,12 +16622,12 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "ids": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional ids of the content to fetch.",
                   "type": "optional<string>",
                 },
                 "q": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional json query.",
                   "type": "optional<string>",
                 },
               },
@@ -16594,11 +16649,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/query",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16624,15 +16679,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}/references",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content to fetch.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16641,7 +16696,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "q": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional json query.",
                   "type": "optional<string>",
                 },
               },
@@ -16662,15 +16717,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}/referencing",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content to fetch.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16679,7 +16734,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "q": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional json query.",
                   "type": "optional<string>",
                 },
               },
@@ -16701,15 +16756,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content item to patch.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16736,11 +16791,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16753,17 +16808,17 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "Id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional custom content id.",
                   "type": "optional<string>",
                 },
                 "Publish": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to automatically publish the content.",
                   "type": "optional<boolean>",
                 },
                 "Status": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The initial status.",
                   "type": "optional<string>",
                 },
               },
@@ -16785,11 +16840,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/import",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16835,15 +16890,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content item to update.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16856,17 +16911,17 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "Patch": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Makes the update as patch.",
                   "type": "optional<boolean>",
                 },
                 "Publish": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "True to automatically publish the content.",
                   "type": "optional<boolean>",
                 },
                 "Status": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The initial status.",
                   "type": "optional<string>",
                 },
               },
@@ -16888,15 +16943,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content item to update.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -16923,15 +16978,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the content item to change.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -17028,7 +17083,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/event-consumers/{consumerName}/reset",
             "path-parameters": {
               "consumerName": {
-                "docs": undefined,
+                "docs": "The name of the event consumer.",
                 "type": "string",
               },
             },
@@ -17049,7 +17104,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/event-consumers/{consumerName}/start",
             "path-parameters": {
               "consumerName": {
-                "docs": undefined,
+                "docs": "The name of the event consumer.",
                 "type": "string",
               },
             },
@@ -17070,7 +17125,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/event-consumers/{consumerName}/stop",
             "path-parameters": {
               "consumerName": {
-                "docs": undefined,
+                "docs": "The name of the event consumer.",
                 "type": "string",
               },
             },
@@ -17101,7 +17156,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/history",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17110,7 +17165,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "channel": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The name of the channel.",
                   "type": "optional<string>",
                 },
               },
@@ -17131,7 +17186,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}/history",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The ID of the team.",
                 "type": "string",
               },
             },
@@ -17140,7 +17195,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "channel": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The name of the channel.",
                   "type": "optional<string>",
                 },
               },
@@ -17198,7 +17253,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The latest received version.",
                   "type": "optional<integer>",
                 },
               },
@@ -17231,11 +17286,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/users/{userId}/notifications/{commentId}",
             "path-parameters": {
               "commentId": {
-                "docs": undefined,
+                "docs": "The ID of the comment.",
                 "type": "string",
               },
               "userId": {
-                "docs": undefined,
+                "docs": "The user id.",
                 "type": "string",
               },
             },
@@ -17250,7 +17305,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/users/{userId}/notifications",
             "path-parameters": {
               "userId": {
-                "docs": undefined,
+                "docs": "The user id.",
                 "type": "string",
               },
             },
@@ -17259,7 +17314,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "version": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The current version.",
                   "type": "optional<integer>",
                 },
               },
@@ -17290,7 +17345,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/ping/{app}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17339,7 +17394,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/plans",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17359,7 +17414,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}/plans",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The name of the team.",
                 "type": "string",
               },
             },
@@ -17380,7 +17435,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/plan",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17407,7 +17462,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}/plan",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The name of the team.",
                 "type": "string",
               },
             },
@@ -17445,11 +17500,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The event to enqueue.",
                 "type": "string",
               },
             },
@@ -17465,7 +17520,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17482,11 +17537,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the rule to delete.",
                 "type": "string",
               },
             },
@@ -17502,11 +17557,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/{id}/events",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the rule to cancel.",
                 "type": "string",
               },
             },
@@ -17522,7 +17577,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/run",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17539,11 +17594,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/{id}/disable",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the rule to disable.",
                 "type": "string",
               },
             },
@@ -17564,11 +17619,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/{id}/enable",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the rule to enable.",
                 "type": "string",
               },
             },
@@ -17601,7 +17656,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/rules/eventtypes/{type}",
             "path-parameters": {
               "type": {
-                "docs": undefined,
+                "docs": "The type name of the event.",
                 "type": "string",
               },
             },
@@ -17634,7 +17689,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17643,17 +17698,17 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "ruleId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The optional rule id to filter to events.",
                   "type": "optional<string>",
                 },
                 "skip": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The number of events to skip.",
                   "type": "optional<integer>",
                 },
                 "take": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The number of events to take.",
                   "type": "optional<integer>",
                 },
               },
@@ -17674,7 +17729,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17695,7 +17750,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17722,11 +17777,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The event to enqueue.",
                 "type": "string",
               },
             },
@@ -17743,11 +17798,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the rule to update.",
                 "type": "string",
               },
             },
@@ -17792,11 +17847,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/{id}/run",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the rule to run.",
                 "type": "string",
               },
             },
@@ -17805,7 +17860,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "fromSnapshots": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Runs the rule from snapeshots if possible.",
                   "type": "optional<boolean>",
                 },
               },
@@ -17822,11 +17877,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/{id}/simulate",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the rule to simulate.",
                 "type": "string",
               },
             },
@@ -17847,7 +17902,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/simulate",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -17874,11 +17929,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/rules/{id}/trigger",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the rule to disable.",
                 "type": "string",
               },
             },
@@ -17906,15 +17961,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to disable.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -17935,19 +17990,19 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to disable.",
                 "type": "integer",
               },
               "parentId": {
-                "docs": undefined,
+                "docs": "The parent field id.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -17968,11 +18023,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema to delete.",
                 "type": "string",
               },
             },
@@ -17989,15 +18044,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/disable",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to disable.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18018,19 +18073,19 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to disable.",
                 "type": "integer",
               },
               "parentId": {
-                "docs": undefined,
+                "docs": "The parent field id.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18051,15 +18106,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/enable",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to enable.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18080,19 +18135,19 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to enable.",
                 "type": "integer",
               },
               "parentId": {
-                "docs": undefined,
+                "docs": "The parent field id.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18112,11 +18167,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema to retrieve.",
                 "type": "string",
               },
             },
@@ -18136,7 +18191,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -18157,15 +18212,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/hide",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to hide.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18186,19 +18241,19 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to hide.",
                 "type": "integer",
               },
               "parentId": {
-                "docs": undefined,
+                "docs": "The parent field id.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18219,15 +18274,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/lock",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to lock.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18248,19 +18303,19 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to lock.",
                 "type": "integer",
               },
               "parentId": {
-                "docs": undefined,
+                "docs": "The parent field id.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18282,11 +18337,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18314,15 +18369,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "parentId": {
-                "docs": undefined,
+                "docs": "The parent field id.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18349,7 +18404,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -18391,11 +18446,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/publish",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema to publish.",
                 "type": "string",
               },
             },
@@ -18416,11 +18471,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/category",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18454,15 +18509,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to update.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18489,19 +18544,19 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to update.",
                 "type": "integer",
               },
               "parentId": {
-                "docs": undefined,
+                "docs": "The parent field id.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18528,15 +18583,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "parentId": {
-                "docs": undefined,
+                "docs": "The parent field id.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18563,11 +18618,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/preview-urls",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18594,11 +18649,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/rules",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18632,11 +18687,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18694,11 +18749,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18725,11 +18780,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/sync",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18767,11 +18822,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18809,11 +18864,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/scripts",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18840,15 +18895,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/show",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to show.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18869,19 +18924,19 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the field to show.",
                 "type": "integer",
               },
               "parentId": {
-                "docs": undefined,
+                "docs": "The parent field id.",
                 "type": "integer",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema.",
                 "type": "string",
               },
             },
@@ -18902,11 +18957,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/schemas/{schema}/unpublish",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "schema": {
-                "docs": undefined,
+                "docs": "The name of the schema to unpublish.",
                 "type": "string",
               },
             },
@@ -18937,7 +18992,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/search",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -18946,7 +19001,7 @@ The client secret is auto generated on the server and returned. The client does 
               "query-parameters": {
                 "query": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The search query.",
                   "type": "optional<string>",
                 },
               },
@@ -18978,7 +19033,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/usages/storage/today",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -18998,7 +19053,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/usages/log",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -19018,15 +19073,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "fromDate": {
-                "docs": undefined,
+                "docs": "The from date.",
                 "type": "string",
               },
               "toDate": {
-                "docs": undefined,
+                "docs": "The to date.",
                 "type": "string",
               },
             },
@@ -19046,15 +19101,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
               "fromDate": {
-                "docs": undefined,
+                "docs": "The from date.",
                 "type": "string",
               },
               "team": {
-                "docs": undefined,
+                "docs": "The ID of the team.",
                 "type": "string",
               },
               "toDate": {
-                "docs": undefined,
+                "docs": "The to date.",
                 "type": "string",
               },
             },
@@ -19074,7 +19129,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}/usages/storage/today",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The ID of the team.",
                 "type": "string",
               },
             },
@@ -19094,15 +19149,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
               "fromDate": {
-                "docs": undefined,
+                "docs": "The from date.",
                 "type": "string",
               },
               "toDate": {
-                "docs": undefined,
+                "docs": "The to date.",
                 "type": "string",
               },
             },
@@ -19122,15 +19177,15 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
             "path-parameters": {
               "fromDate": {
-                "docs": undefined,
+                "docs": "The from date.",
                 "type": "string",
               },
               "team": {
-                "docs": undefined,
+                "docs": "The name of the team.",
                 "type": "string",
               },
               "toDate": {
-                "docs": undefined,
+                "docs": "The to date.",
                 "type": "string",
               },
             },
@@ -19162,11 +19217,11 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}/contributors/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the contributor.",
                 "type": "string",
               },
               "team": {
-                "docs": undefined,
+                "docs": "The ID of the team.",
                 "type": "string",
               },
             },
@@ -19187,7 +19242,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}/contributors/me",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The ID of the team.",
                 "type": "string",
               },
             },
@@ -19207,7 +19262,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}/contributors",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The ID of the team.",
                 "type": "string",
               },
             },
@@ -19227,7 +19282,7 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/teams/{team}",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The name of the team.",
                 "type": "string",
               },
             },
@@ -19262,7 +19317,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
             "path": "/api/teams/{team}/contributors",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The ID of the team.",
                 "type": "string",
               },
             },
@@ -19318,7 +19373,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/teams/{team}",
             "path-parameters": {
               "team": {
-                "docs": undefined,
+                "docs": "The name of the team to update.",
                 "type": "string",
               },
             },
@@ -19362,7 +19417,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/templates/{name}",
             "path-parameters": {
               "name": {
-                "docs": undefined,
+                "docs": "The name of the template.",
                 "type": "string",
               },
             },
@@ -19406,7 +19461,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/apps/{app}/translations",
             "path-parameters": {
               "app": {
-                "docs": undefined,
+                "docs": "The name of the app.",
                 "type": "string",
               },
             },
@@ -19460,7 +19515,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the user to delete.",
                 "type": "string",
               },
             },
@@ -19476,7 +19531,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the user.",
                 "type": "string",
               },
             },
@@ -19498,17 +19553,17 @@ You will be assigned as owner of the new team automatically.",
               "query-parameters": {
                 "query": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Optional query to search by email address or username.",
                   "type": "optional<string>",
                 },
                 "skip": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The number of users to skip.",
                   "type": "optional<integer>",
                 },
                 "take": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The number of users to return.",
                   "type": "optional<integer>",
                 },
               },
@@ -19531,7 +19586,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/user-management/{id}/lock",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the user to lock.",
                 "type": "string",
               },
             },
@@ -19591,7 +19646,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/user-management/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the user.",
                 "type": "string",
               },
             },
@@ -19638,7 +19693,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/user-management/{id}/unlock",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the user to unlock.",
                 "type": "string",
               },
             },
@@ -19669,7 +19724,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/users/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the user (GUID).",
                 "type": "string",
               },
             },
@@ -19686,7 +19741,7 @@ You will be assigned as owner of the new team automatically.",
             "path": "/api/users/{id}/picture",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "The ID of the user (GUID).",
                 "type": "string",
               },
             },
@@ -19721,7 +19776,7 @@ You will be assigned as owner of the new team automatically.",
               "query-parameters": {
                 "query": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The query to search the user by email address. Case invariant.",
                   "type": "optional<string>",
                 },
               },
@@ -26153,11 +26208,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
               "buyerId": {
-                "docs": undefined,
+                "docs": "Buyer ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26176,7 +26231,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/buyer",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26195,11 +26250,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
               "buyerId": {
-                "docs": undefined,
+                "docs": "Buyer ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26255,11 +26310,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
             "path-parameters": {
               "entitlementId": {
-                "docs": undefined,
+                "docs": "Entitlement ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26299,11 +26354,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/entitlement/{entitlementId}",
             "path-parameters": {
               "entitlementId": {
-                "docs": undefined,
+                "docs": "Entitlement ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26322,7 +26377,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/entitlement",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26341,11 +26396,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
             "path-parameters": {
               "buyerId": {
-                "docs": undefined,
+                "docs": "Buyer ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26364,11 +26419,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/offer/{offerId}/entitlement",
             "path-parameters": {
               "offerId": {
-                "docs": undefined,
+                "docs": "Offer ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26387,11 +26442,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/partner/{partner}/entitlement",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "partner": {
-                "docs": undefined,
+                "docs": "Cloud Partner",
                 "type": "root.ListEntitlementsByPartnerRequestPartner",
               },
             },
@@ -26410,11 +26465,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/product/{productId}/entitlement",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "productId": {
-                "docs": undefined,
+                "docs": "Product ID",
                 "type": "string",
               },
             },
@@ -26433,11 +26488,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
             "path-parameters": {
               "entitlementId": {
-                "docs": undefined,
+                "docs": "Entitlement ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26488,15 +26543,15 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
             "path-parameters": {
               "entitlementId": {
-                "docs": undefined,
+                "docs": "Entitlement ID",
                 "type": "string",
               },
               "entitlementTermId": {
-                "docs": undefined,
+                "docs": "Entitlement Term ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26515,11 +26570,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
             "path-parameters": {
               "entitlementId": {
-                "docs": undefined,
+                "docs": "Entitlement ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26550,7 +26605,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/integration",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26598,15 +26653,15 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "partner": {
-                "docs": undefined,
+                "docs": "Cloud Partner",
                 "type": "root.DeleteIntegrationRequestPartner",
               },
               "service": {
-                "docs": undefined,
+                "docs": "Partner Service",
                 "type": "root.DeleteIntegrationRequestService",
               },
             },
@@ -26626,15 +26681,15 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "partner": {
-                "docs": undefined,
+                "docs": "Cloud Partner",
                 "type": "root.GetIntegrationRequestPartner",
               },
               "service": {
-                "docs": undefined,
+                "docs": "Partner Service",
                 "type": "root.GetIntegrationRequestService",
               },
             },
@@ -26653,7 +26708,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/integration",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26673,15 +26728,15 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "partner": {
-                "docs": undefined,
+                "docs": "Cloud Partner",
                 "type": "root.UpdateIntegrationRequestPartner",
               },
               "service": {
-                "docs": undefined,
+                "docs": "Partner Service",
                 "type": "root.UpdateIntegrationRequestService",
               },
             },
@@ -26725,15 +26780,15 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/integration/{partner}/{service}/verify",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "partner": {
-                "docs": undefined,
+                "docs": "Cloud Partner",
                 "type": "root.VerifyIntegrationRequestPartner",
               },
               "service": {
-                "docs": undefined,
+                "docs": "Partner Service",
                 "type": "root.VerifyIntegrationRequestService",
               },
             },
@@ -26763,11 +26818,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "usageRecordGroupId": {
-                "docs": undefined,
+                "docs": "UsageRecordGroup ID",
                 "type": "string",
               },
             },
@@ -26786,11 +26841,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "usageRecordReportId": {
-                "docs": undefined,
+                "docs": "UsageRecordReport ID",
                 "type": "string",
               },
             },
@@ -26810,11 +26865,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
               "entitlementId": {
-                "docs": undefined,
+                "docs": "Entitlement ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26823,22 +26878,22 @@ the same customer, dimension, and time, but a different quantity.",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
               },
@@ -26859,7 +26914,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/usageRecordGroup",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26868,22 +26923,22 @@ the same customer, dimension, and time, but a different quantity.",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
               },
@@ -26904,11 +26959,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "productId": {
-                "docs": undefined,
+                "docs": "Product ID",
                 "type": "string",
               },
             },
@@ -26917,22 +26972,22 @@ the same customer, dimension, and time, but a different quantity.",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
               },
@@ -26953,11 +27008,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
             "path-parameters": {
               "entitlementId": {
-                "docs": undefined,
+                "docs": "Entitlement ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -26966,27 +27021,27 @@ the same customer, dimension, and time, but a different quantity.",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "entitlementTermId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The Entitlement Term ID, if not given, return the UsageRecordReports under the Entitlement",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
               },
@@ -27007,7 +27062,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/usageRecordReport",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27016,22 +27071,22 @@ the same customer, dimension, and time, but a different quantity.",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
               },
@@ -27052,11 +27107,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/product/{productId}/usageRecordReport",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "productId": {
-                "docs": undefined,
+                "docs": "Product ID",
                 "type": "string",
               },
             },
@@ -27065,22 +27120,22 @@ the same customer, dimension, and time, but a different quantity.",
               "query-parameters": {
                 "endDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "startDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
               },
@@ -27102,11 +27157,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
               "entitlementId": {
-                "docs": undefined,
+                "docs": "Entitlement ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27166,11 +27221,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/offer/{offerId}/cancel",
             "path-parameters": {
               "offerId": {
-                "docs": undefined,
+                "docs": "Offer ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27190,7 +27245,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/offer",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27216,7 +27271,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/draftOffer",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27241,11 +27296,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
               "offerId": {
-                "docs": undefined,
+                "docs": "Offer ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27264,11 +27319,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
               "offerId": {
-                "docs": undefined,
+                "docs": "Offer ID",
                 "type": "string",
               },
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27287,7 +27342,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/offer",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27306,18 +27361,18 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/partner/{partner}/offer",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "partner": {
-                "docs": undefined,
+                "docs": "Cloud Partner",
                 "type": "root.ListOffersByPartnerRequestPartner",
               },
             },
             "request": {
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
+                  "docs": "Bearer Access Token",
                   "name": "authorization",
                   "type": "string",
                 },
@@ -27339,11 +27394,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/product/{productId}/offer",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "productId": {
-                "docs": undefined,
+                "docs": "Product ID",
                 "type": "string",
               },
             },
@@ -27373,7 +27428,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/operation",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27382,22 +27437,22 @@ the same customer, dimension, and time, but a different quantity.",
               "query-parameters": {
                 "crmOpportunityId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "filter by crmOpportunityId",
                   "type": "optional<string>",
                 },
                 "entitlementId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "filter by entitlementId",
                   "type": "optional<string>",
                 },
                 "offerId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "filter by offerId",
                   "type": "optional<string>",
                 },
                 "partnerOpportunityId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "filter by partnerOpportunityId",
                   "type": "optional<string>",
                 },
               },
@@ -27428,11 +27483,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "productId": {
-                "docs": undefined,
+                "docs": "Product ID",
                 "type": "string",
               },
             },
@@ -27451,11 +27506,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "productId": {
-                "docs": undefined,
+                "docs": "Product ID",
                 "type": "string",
               },
             },
@@ -27474,11 +27529,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/product/{productId}/dimension",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "productId": {
-                "docs": undefined,
+                "docs": "Product ID",
                 "type": "string",
               },
             },
@@ -27497,7 +27552,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/product",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27516,11 +27571,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/partner/{partner}/product",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "partner": {
-                "docs": undefined,
+                "docs": "Cloud Partner",
                 "type": "root.ListProductsByPartnerRequestPartner",
               },
             },
@@ -27539,11 +27594,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "productId": {
-                "docs": undefined,
+                "docs": "Product ID",
                 "type": "string",
               },
             },
@@ -27595,7 +27650,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/revenueReport",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27652,7 +27707,7 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/usageReport",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
             },
@@ -27689,11 +27744,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "partner": {
-                "docs": undefined,
+                "docs": "Cloud Partner",
                 "type": "root.ListRevenueRecordDetailsRequestPartner",
               },
             },
@@ -27702,37 +27757,37 @@ the same customer, dimension, and time, but a different quantity.",
               "query-parameters": {
                 "buyerId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filter revenue record details by the given buyer ID",
                   "type": "optional<string>",
                 },
                 "endDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "entitlementId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filter revenue record details by the given entitlement ID",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "productId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filter revenue record details by the given product ID",
                   "type": "optional<string>",
                 },
                 "startDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
               },
@@ -27753,11 +27808,11 @@ the same customer, dimension, and time, but a different quantity.",
             "path": "/org/{orgId}/partner/{partner}/revenueRecord",
             "path-parameters": {
               "orgId": {
-                "docs": undefined,
+                "docs": "Organization ID",
                 "type": "string",
               },
               "partner": {
-                "docs": undefined,
+                "docs": "Cloud Partner",
                 "type": "root.ListRevenueRecordsRequestPartner",
               },
             },
@@ -27766,37 +27821,37 @@ the same customer, dimension, and time, but a different quantity.",
               "query-parameters": {
                 "buyerId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filter revenue record details by the given buyer ID",
                   "type": "optional<string>",
                 },
                 "endDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "end date (UTC) in YYYY-MM-DD format, default is today",
                   "type": "optional<string>",
                 },
                 "entitlementId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filter revenue record details by the given entitlement ID",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination size, default 20, max value is 1000",
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "List pagination offset, default 0",
                   "type": "optional<integer>",
                 },
                 "productId": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filter revenue record details by the given product ID",
                   "type": "optional<string>",
                 },
                 "startDate": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "start date (UTC) in YYYY-MM-DD format, default is 30 days before the endDate",
                   "type": "optional<string>",
                 },
               },
@@ -28610,22 +28665,22 @@ Used to list documents. Optionally filter on supported fields.
               "query-parameters": {
                 "document_index_id": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
                   "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Number of results to return per page.",
                   "type": "optional<integer>",
                 },
                 "offset": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "The initial index from which to return the results.",
                   "type": "optional<integer>",
                 },
                 "ordering": {
                   "allow-multiple": undefined,
-                  "docs": undefined,
+                  "docs": "Which field to use when ordering the results.",
                   "type": "optional<string>",
                 },
               },
@@ -28705,7 +28760,7 @@ Used to retrieve a model version given its ID.
             "path": "/v1/model-versions/{id}",
             "path-parameters": {
               "id": {
-                "docs": undefined,
+                "docs": "A UUID string identifying this model version.",
                 "type": "string",
               },
             },

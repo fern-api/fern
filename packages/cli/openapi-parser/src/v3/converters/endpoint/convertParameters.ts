@@ -35,17 +35,17 @@ export function convertParameters(
                 : isRequired
                 ? Schema.primitive({
                       schema: PrimitiveSchemaValue.string(),
-                      description: resolvedParameter.description,
+                      description: undefined,
                   })
                 : Schema.optional({
                       value: Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: undefined }),
-                      description: resolvedParameter.description,
+                      description: undefined,
                   });
 
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
-            description: undefined,
+            description: resolvedParameter.description,
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);
