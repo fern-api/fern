@@ -1,5 +1,4 @@
 import { Endpoint, EndpointSdkName, HttpMethod, Schema } from "@fern-fern/openapi-ir-model/ir";
-import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { X_FERN_ASYNC_CONFIG } from "../extensions";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
@@ -142,21 +141,13 @@ function convertSyncAndAsyncEndpoints({
         const asynchronousEndpoint = convertToEndpoint({
             path,
             httpMethod,
-            sdkName:
-                sdkName != null
-                    ? {
-                          ...sdkName,
-                          methodName: camelCase(`${sdkName.methodName}_Async`),
-                      }
-                    : {
-                          groupName: undefined,
-                          methodName: camelCase(`${operation.operationId ?? ""}_Async`),
-                      },
+            sdkName,
             operation,
             pathItemParameters: pathItemParameterWithoutHeader,
             document,
             context,
             responseStatusCode: asyncResponseStatusCode,
+            suffix: "async",
         });
         asynchronousEndpoint.headers.push({
             name: headerToIgnore,
@@ -212,6 +203,7 @@ function convertToEndpoint({
     document,
     context,
     responseStatusCode,
+    suffix,
 }: {
     path: string;
     httpMethod: HttpMethod;
@@ -221,6 +213,7 @@ function convertToEndpoint({
     document: OpenAPIV3.Document;
     context: OpenAPIV3ParserContext;
     responseStatusCode?: number;
+    suffix?: string;
 }): Omit<Endpoint, "path" | "method"> {
     const baseBreadcrumbs: string[] = [];
     if (sdkName == null && operation.operationId == null) {
@@ -232,6 +225,10 @@ function convertToEndpoint({
         baseBreadcrumbs.push(sdkName.methodName);
     } else if (operation.operationId != null) {
         baseBreadcrumbs.push(operation.operationId);
+    }
+
+    if (suffix != null) {
+        baseBreadcrumbs.push(suffix);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
