@@ -102,6 +102,8 @@ function convertSyncAndAsyncEndpoints({
 }): Endpoint[] {
     const endpoints: Endpoint[] = [];
     const sdkName = getSdkName({ operation });
+    const parameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const asynConfig = (operation as any)[X_FERN_ASYNC_CONFIG] as Record<string, any> | undefined;
     if (asynConfig != null) {
@@ -109,10 +111,10 @@ function convertSyncAndAsyncEndpoints({
         const headerValue = asynConfig.discriminant.value as string;
         const asyncResponseStatusCode = asynConfig["response-status-code"] as number;
 
-        const pathItemParameterWithoutHeader = pathItemParameters?.filter((pathItemParameter) => {
-            const resolvedParameter = isReferenceObject(pathItemParameter)
-                ? context.resolveParameterReference(pathItemParameter)
-                : pathItemParameter;
+        const parametersWithoutHeader = parameters.filter((parameter) => {
+            const resolvedParameter = isReferenceObject(parameter)
+                ? context.resolveParameterReference(parameter)
+                : parameter;
             if (resolvedParameter.in === "header" && resolvedParameter.name === headerToIgnore) {
                 return false;
             }
@@ -131,7 +133,7 @@ function convertSyncAndAsyncEndpoints({
                     })
                 ),
             },
-            pathItemParameters: pathItemParameterWithoutHeader,
+            parameters: parametersWithoutHeader,
             document,
             context,
         });
@@ -146,7 +148,7 @@ function convertSyncAndAsyncEndpoints({
             httpMethod,
             sdkName,
             operation,
-            pathItemParameters: pathItemParameterWithoutHeader,
+            parameters: parametersWithoutHeader,
             document,
             context,
             responseStatusCode: asyncResponseStatusCode,
@@ -172,7 +174,7 @@ function convertSyncAndAsyncEndpoints({
                 httpMethod,
                 sdkName,
                 operation,
-                pathItemParameters,
+                parameters,
                 document,
                 context,
             }),
@@ -202,7 +204,7 @@ function convertToEndpoint({
     httpMethod,
     sdkName,
     operation,
-    pathItemParameters,
+    parameters,
     document,
     context,
     responseStatusCode,
@@ -212,7 +214,7 @@ function convertToEndpoint({
     httpMethod: HttpMethod;
     sdkName?: EndpointSdkName;
     operation: OpenAPIV3.OperationObject;
-    pathItemParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] | undefined;
+    parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[];
     document: OpenAPIV3.Document;
     context: OpenAPIV3ParserContext;
     responseStatusCode?: number;
@@ -240,8 +242,7 @@ function convertToEndpoint({
     const requestNameOverride = (operation as any)["x-request-name"] as string | undefined;
     const requestBreadcrumbs = [...baseBreadcrumbs, "Request"];
 
-    const endpointParameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
-    const convertedParameters = convertParameters(endpointParameters, context, requestBreadcrumbs);
+    const convertedParameters = convertParameters(parameters, context, requestBreadcrumbs);
     let convertedRequest =
         operation.requestBody != null
             ? convertRequest({
