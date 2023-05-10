@@ -106,7 +106,7 @@ export class OpenAPIV3ParserContext {
         if (this.errorBodies[statusCode] != null) {
             this.errorBodies[statusCode]?.collect(schema);
         } else {
-            const collector = new ErrorBodyCollector();
+            const collector = new ErrorBodyCollector(this);
             collector.collect(schema);
             this.errorBodies[statusCode] = collector;
         }

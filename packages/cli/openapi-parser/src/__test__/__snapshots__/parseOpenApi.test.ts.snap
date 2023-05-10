@@ -14541,7 +14541,11 @@ exports[`open api parser hathora simple 1`] = `
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "type": "unknown",
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
           },
         },
         "404": {
@@ -14549,7 +14553,11 @@ exports[`open api parser hathora simple 1`] = `
           "generatedName": "NotFoundError",
           "nameOverride": null,
           "schema": {
-            "type": "unknown",
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
           },
         },
         "422": {
@@ -14557,7 +14565,11 @@ exports[`open api parser hathora simple 1`] = `
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
-            "type": "unknown",
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
           },
         },
         "429": {
@@ -14565,7 +14577,11 @@ exports[`open api parser hathora simple 1`] = `
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "type": "unknown",
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
           },
         },
         "500": {
@@ -14573,7 +14589,11 @@ exports[`open api parser hathora simple 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "type": "unknown",
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
           },
         },
       },

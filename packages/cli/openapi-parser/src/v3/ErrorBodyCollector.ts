@@ -1,9 +1,19 @@
+import { Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
+import { convertSchema } from "./converters/convertSchemas";
+import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { isReferenceObject } from "./utils/isReferenceObject";
+import { isSchemaEqual } from "./utils/isSchemaEqual";
 
 export class ErrorBodyCollector {
     private references: Set<string> = new Set();
     private schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[] = [];
+    private convertedSchemas: Schema[] = [];
+    private context: OpenAPIV3ParserContext;
+
+    constructor(context: OpenAPIV3ParserContext) {
+        this.context = context;
+    }
 
     public collect(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject): void {
         if (isReferenceObject(schema)) {
@@ -14,7 +24,18 @@ export class ErrorBodyCollector {
                 this.references.add(schema.$ref);
             }
         } else {
-            this.schemas.push(schema);
+            const convertedCurrentSchema = convertSchema(schema, false, this.context, []);
+            let isDupe = false;
+            for (const convertedSchema of this.convertedSchemas) {
+                isDupe = isSchemaEqual(convertedSchema, convertedCurrentSchema);
+                if (isDupe) {
+                    break;
+                }
+            }
+            if (!isDupe) {
+                this.schemas.push(schema);
+                this.convertedSchemas.push(convertedCurrentSchema);
+            }
         }
     }
 
