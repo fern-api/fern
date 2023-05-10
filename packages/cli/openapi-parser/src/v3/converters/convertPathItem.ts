@@ -274,7 +274,10 @@ function convertToEndpoint({
     });
     return {
         summary: operation.summary,
-        operationId: operation.operationId,
+        operationId:
+            operation.operationId != null && suffix != null
+                ? operation.operationId + "_" + suffix
+                : operation.operationId,
         tags: operation.tags ?? [],
         sdkName,
         pathParameters: convertedParameters.pathParameters,
