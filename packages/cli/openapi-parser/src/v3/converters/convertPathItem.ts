@@ -113,7 +113,10 @@ function convertSyncAndAsyncEndpoints({
             const resolvedParameter = isReferenceObject(pathItemParameter)
                 ? context.resolveParameterReference(pathItemParameter)
                 : pathItemParameter;
-            return resolvedParameter.in !== "header" && resolvedParameter.name !== headerToIgnore;
+            if (resolvedParameter.in === "header" && resolvedParameter.name === headerToIgnore) {
+                return false;
+            }
+            return true;
         });
 
         const synchronousEndpoint = convertToEndpoint({
