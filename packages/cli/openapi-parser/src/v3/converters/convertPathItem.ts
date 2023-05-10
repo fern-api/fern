@@ -103,6 +103,7 @@ function convertSyncAndAsyncEndpoints({
     const endpoints: Endpoint[] = [];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sdkName = getSdkName({ operation });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const asynConfig = (operation as any)[X_FERN_ASYNC_CONFIG] as Record<string, any> | undefined;
     if (asynConfig != null) {
         const headerToIgnore = asynConfig.discriminant.name as string;
