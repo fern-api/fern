@@ -103,7 +103,7 @@ function convertSyncAndAsyncEndpoints({
 }): Endpoint[] {
     const endpoints: Endpoint[] = [];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const sdkName = getSdkName({ operation, httpMethod, path });
+    const sdkName = getSdkName({ operation });
     const asynConfig = (operation as any)[X_FERN_ASYNC_CONFIG] as Record<string, any> | undefined;
     if (asynConfig != null) {
         const headerToIgnore = asynConfig.discriminant.name as string;
@@ -118,6 +118,8 @@ function convertSyncAndAsyncEndpoints({
         });
 
         const synchronousEndpoint = convertToEndpoint({
+            path,
+            httpMethod,
             sdkName,
             operation: {
                 ...operation,
@@ -138,10 +140,18 @@ function convertSyncAndAsyncEndpoints({
         });
 
         const asynchronousEndpoint = convertToEndpoint({
-            sdkName: {
-                ...sdkName,
-                methodName: camelCase(`${sdkName.methodName}_Async`),
-            },
+            path,
+            httpMethod,
+            sdkName:
+                sdkName != null
+                    ? {
+                          ...sdkName,
+                          methodName: camelCase(`${sdkName.methodName}_Async`),
+                      }
+                    : {
+                          groupName: undefined,
+                          methodName: camelCase(`${operation.operationId ?? ""}_Async`),
+                      },
             operation,
             pathItemParameters: pathItemParameterWithoutHeader,
             document,
@@ -164,6 +174,8 @@ function convertSyncAndAsyncEndpoints({
     } else {
         endpoints.push({
             ...convertToEndpoint({
+                path,
+                httpMethod,
                 sdkName,
                 operation,
                 pathItemParameters,
@@ -177,15 +189,7 @@ function convertSyncAndAsyncEndpoints({
     return endpoints;
 }
 
-function getSdkName({
-    operation,
-    httpMethod,
-    path,
-}: {
-    operation: OpenAPIV3.OperationObject;
-    path: string;
-    httpMethod: HttpMethod;
-}): EndpointSdkName {
+function getSdkName({ operation }: { operation: OpenAPIV3.OperationObject }): EndpointSdkName | undefined {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sdkMethodName = (operation as any)["x-fern-sdk-method-name"] as string | undefined;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -196,17 +200,12 @@ function getSdkName({
             methodName: sdkMethodName,
         };
     }
-
-    if (operation.operationId == null) {
-        throw new Error(`${httpMethod} ${path} must specify either operationId or x-fern-sdk-method-name`);
-    }
-    return {
-        groupName: operation.tags?.[0] ?? undefined,
-        methodName: operation.operationId,
-    };
+    return undefined;
 }
 
 function convertToEndpoint({
+    path,
+    httpMethod,
     sdkName,
     operation,
     pathItemParameters,
@@ -214,7 +213,9 @@ function convertToEndpoint({
     context,
     responseStatusCode,
 }: {
-    sdkName: EndpointSdkName;
+    path: string;
+    httpMethod: HttpMethod;
+    sdkName?: EndpointSdkName;
     operation: OpenAPIV3.OperationObject;
     pathItemParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] | undefined;
     document: OpenAPIV3.Document;
@@ -222,10 +223,16 @@ function convertToEndpoint({
     responseStatusCode?: number;
 }): Omit<Endpoint, "path" | "method"> {
     const baseBreadcrumbs: string[] = [];
-    if (sdkName.groupName != null) {
-        baseBreadcrumbs.push(sdkName.groupName);
+    if (sdkName == null && operation.operationId == null) {
+        throw new Error(`${httpMethod} ${path} must specify either operationId or x-fern-sdk-method-name`);
+    } else if (sdkName != null) {
+        if (sdkName.groupName != null) {
+            baseBreadcrumbs.push(sdkName.groupName);
+        }
+        baseBreadcrumbs.push(sdkName.methodName);
+    } else if (operation.operationId != null) {
+        baseBreadcrumbs.push(operation.operationId);
     }
-    baseBreadcrumbs.push(sdkName.methodName);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isStreaming = (operation as any)["x-fern-streaming"] as boolean | undefined;
