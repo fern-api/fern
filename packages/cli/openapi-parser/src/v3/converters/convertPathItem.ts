@@ -101,7 +101,6 @@ function convertSyncAndAsyncEndpoints({
     context: OpenAPIV3ParserContext;
 }): Endpoint[] {
     const endpoints: Endpoint[] = [];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sdkName = getSdkName({ operation });
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const asynConfig = (operation as any)[X_FERN_ASYNC_CONFIG] as Record<string, any> | undefined;
