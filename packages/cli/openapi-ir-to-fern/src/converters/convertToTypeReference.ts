@@ -47,6 +47,8 @@ export function convertToTypeReference({
         return convertOptionalToTypeReference({ schema, prefix, schemas });
     } else if (schema.type === "enum") {
         return convertEnumToTypeReference({ schema, prefix });
+    } else if (schema.type === "literal") {
+        return convertLiteralToTypeReference(schema.value);
     } else if (schema.type === "object") {
         return convertObjectToTypeReference({ schema, prefix, schemas });
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -183,6 +185,13 @@ export function convertOptionalToTypeReference({
 export function convertUnknownToTypeReference(): TypeReference {
     return {
         typeReference: "unknown",
+        additionalTypeDeclarations: {},
+    };
+}
+
+export function convertLiteralToTypeReference(value: string): TypeReference {
+    return {
+        typeReference: `literal<"${value}"}>`,
         additionalTypeDeclarations: {},
     };
 }

@@ -1,7 +1,10 @@
-import { Endpoint, EndpointSdkName, HttpMethod } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, EndpointSdkName, HttpMethod, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
+import { X_FERN_ASYNC_CONFIG } from "../extensions";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
+import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertServer } from "./convertServer";
 import { convertParameters } from "./endpoint/convertParameters";
 import { convertRequest } from "./endpoint/convertRequest";
@@ -17,7 +20,7 @@ export function convertPathItem(
 
     if (pathItemObject.get != null) {
         endpoints.push(
-            convertOperation({
+            ...convertSyncAndAsyncEndpoints({
                 httpMethod: HttpMethod.Get,
                 path,
                 operation: pathItemObject.get,
@@ -30,7 +33,7 @@ export function convertPathItem(
 
     if (pathItemObject.post != null) {
         endpoints.push(
-            convertOperation({
+            ...convertSyncAndAsyncEndpoints({
                 httpMethod: HttpMethod.Post,
                 path,
                 operation: pathItemObject.post,
@@ -43,7 +46,7 @@ export function convertPathItem(
 
     if (pathItemObject.put != null) {
         endpoints.push(
-            convertOperation({
+            ...convertSyncAndAsyncEndpoints({
                 httpMethod: HttpMethod.Put,
                 path,
                 operation: pathItemObject.put,
@@ -56,7 +59,7 @@ export function convertPathItem(
 
     if (pathItemObject.patch != null) {
         endpoints.push(
-            convertOperation({
+            ...convertSyncAndAsyncEndpoints({
                 httpMethod: HttpMethod.Patch,
                 path,
                 operation: pathItemObject.patch,
@@ -69,7 +72,7 @@ export function convertPathItem(
 
     if (pathItemObject.delete != null) {
         endpoints.push(
-            convertOperation({
+            ...convertSyncAndAsyncEndpoints({
                 httpMethod: HttpMethod.Delete,
                 path,
                 operation: pathItemObject.delete,
@@ -83,7 +86,7 @@ export function convertPathItem(
     return endpoints;
 }
 
-function convertOperation({
+function convertSyncAndAsyncEndpoints({
     path,
     httpMethod,
     operation,
@@ -97,20 +100,132 @@ function convertOperation({
     pathItemParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] | undefined;
     document: OpenAPIV3.Document;
     context: OpenAPIV3ParserContext;
-}): Endpoint {
-    const sdkName = maybeGetSdkName(operation);
+}): Endpoint[] {
+    const endpoints: Endpoint[] = [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const sdkName = getSdkName({ operation, httpMethod, path });
+    const asynConfig = (operation as any)[X_FERN_ASYNC_CONFIG] as Record<string, any> | undefined;
+    if (asynConfig != null) {
+        const headerToIgnore = asynConfig.discriminant.name as string;
+        const headerValue = asynConfig.discriminant.value as string;
+        const asyncResponseStatusCode = asynConfig["response-status-code"] as number;
 
-    const baseBreadcrumbs: string[] = [];
-    if (sdkName == null && operation.operationId == null) {
-        throw new Error(`${httpMethod} ${path} must specify either operationId or x-fern-sdk-method-name`);
-    } else if (sdkName != null) {
-        if (sdkName.groupName != null) {
-            baseBreadcrumbs.push(sdkName.groupName);
-        }
-        baseBreadcrumbs.push(sdkName.methodName);
-    } else if (operation.operationId != null) {
-        baseBreadcrumbs.push(operation.operationId);
+        const pathItemParameterWithoutHeader = pathItemParameters?.filter((pathItemParameter) => {
+            const resolvedParameter = isReferenceObject(pathItemParameter)
+                ? context.resolveParameterReference(pathItemParameter)
+                : pathItemParameter;
+            return resolvedParameter.in !== "header" && resolvedParameter.name !== headerToIgnore;
+        });
+
+        const synchronousEndpoint = convertToEndpoint({
+            sdkName,
+            operation: {
+                ...operation,
+                responses: Object.fromEntries(
+                    Object.entries(operation.responses).filter(([statusCode]) => {
+                        return parseInt(statusCode) !== asyncResponseStatusCode;
+                    })
+                ),
+            },
+            pathItemParameters: pathItemParameterWithoutHeader,
+            document,
+            context,
+        });
+        endpoints.push({
+            ...synchronousEndpoint,
+            path,
+            method: httpMethod,
+        });
+
+        const asynchronousEndpoint = convertToEndpoint({
+            sdkName: {
+                ...sdkName,
+                methodName: camelCase(`${sdkName.methodName}_Async`),
+            },
+            operation,
+            pathItemParameters: pathItemParameterWithoutHeader,
+            document,
+            context,
+            responseStatusCode: asyncResponseStatusCode,
+        });
+        asynchronousEndpoint.headers.push({
+            name: headerToIgnore,
+            schema: Schema.literal({
+                description: null,
+                value: headerValue,
+            }),
+            description: undefined,
+        });
+        endpoints.push({
+            ...asynchronousEndpoint,
+            path,
+            method: httpMethod,
+        });
+    } else {
+        endpoints.push({
+            ...convertToEndpoint({
+                sdkName,
+                operation,
+                pathItemParameters,
+                document,
+                context,
+            }),
+            path,
+            method: httpMethod,
+        });
     }
+    return endpoints;
+}
+
+function getSdkName({
+    operation,
+    httpMethod,
+    path,
+}: {
+    operation: OpenAPIV3.OperationObject;
+    path: string;
+    httpMethod: HttpMethod;
+}): EndpointSdkName {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const sdkMethodName = (operation as any)["x-fern-sdk-method-name"] as string | undefined;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const sdkGroupName = (operation as any)["x-fern-sdk-group-name"] as string | undefined;
+    if (sdkMethodName != null) {
+        return {
+            groupName: sdkGroupName,
+            methodName: sdkMethodName,
+        };
+    }
+
+    if (operation.operationId == null) {
+        throw new Error(`${httpMethod} ${path} must specify either operationId or x-fern-sdk-method-name`);
+    }
+    return {
+        groupName: operation.tags?.[0] ?? undefined,
+        methodName: operation.operationId,
+    };
+}
+
+function convertToEndpoint({
+    sdkName,
+    operation,
+    pathItemParameters,
+    document,
+    context,
+    responseStatusCode,
+}: {
+    sdkName: EndpointSdkName;
+    operation: OpenAPIV3.OperationObject;
+    pathItemParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] | undefined;
+    document: OpenAPIV3.Document;
+    context: OpenAPIV3ParserContext;
+    responseStatusCode?: number;
+}): Omit<Endpoint, "path" | "method"> {
+    const baseBreadcrumbs: string[] = [];
+    if (sdkName.groupName != null) {
+        baseBreadcrumbs.push(sdkName.groupName);
+    }
+    baseBreadcrumbs.push(sdkName.methodName);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isStreaming = (operation as any)["x-fern-streaming"] as boolean | undefined;
@@ -147,10 +262,13 @@ function convertOperation({
     }
 
     const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
-    const convertedResponse = convertResponse({ responses: operation.responses, context, responseBreadcrumbs });
+    const convertedResponse = convertResponse({
+        responses: operation.responses,
+        context,
+        responseBreadcrumbs,
+        responseStatusCode,
+    });
     return {
-        path,
-        method: httpMethod,
         summary: operation.summary,
         operationId: operation.operationId,
         tags: operation.tags ?? [],
@@ -168,20 +286,6 @@ function convertOperation({
         responseIsStreaming: isStreaming ?? false,
         authed: isEndpointAuthed(operation, document),
     };
-}
-
-function maybeGetSdkName(operation: OpenAPIV3.OperationObject): EndpointSdkName | undefined {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const sdkMethodName = (operation as any)["x-fern-sdk-method-name"] as string | undefined;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const sdkGroupName = (operation as any)["x-fern-sdk-group-name"] as string | undefined;
-    if (sdkMethodName != null) {
-        return {
-            groupName: sdkGroupName,
-            methodName: sdkMethodName,
-        };
-    }
-    return undefined;
 }
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {

@@ -23,43 +23,29 @@ export function convertResponse({
     responses,
     context,
     responseBreadcrumbs,
+    responseStatusCode,
 }: {
     responses: OpenAPIV3.ResponsesObject;
     context: OpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
+    responseStatusCode?: number;
 }): ConvertedResponse {
     const errorStatusCodes = markErrorSchemas({ responses, context });
-    for (const statusCode of SUCCESSFUL_STATUS_CODES) {
+    for (const statusCode of responseStatusCode != null ? [responseStatusCode] : SUCCESSFUL_STATUS_CODES) {
         const response = responses[statusCode];
-
         if (response == null) {
             continue;
         }
 
-        const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-        const responseSchema =
-            resolvedResponse.content?.[APPLICATION_JSON_CONTENT]?.schema ??
-            resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
-        if (responseSchema != null) {
+        const convertedResponse = convertResolvedResponse({ response, context, responseBreadcrumbs });
+        if (convertedResponse?.type === "json") {
             return {
-                value: {
-                    type: "json",
-                    description: resolvedResponse.description,
-                    schema: convertSchema(responseSchema, false, context, responseBreadcrumbs),
-                },
+                value: convertedResponse,
                 errorStatusCodes,
             };
-        }
-
-        const fileResponseSchema =
-            resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema ??
-            resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema;
-        if (fileResponseSchema != null) {
+        } else if (convertedResponse?.type === "file") {
             return {
-                value: {
-                    type: "file",
-                    description: resolvedResponse.description,
-                },
+                value: convertedResponse,
                 errorStatusCodes: [],
             };
         }
@@ -68,6 +54,40 @@ export function convertResponse({
         value: undefined,
         errorStatusCodes,
     };
+}
+
+function convertResolvedResponse({
+    response,
+    context,
+    responseBreadcrumbs,
+}: {
+    response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
+    context: OpenAPIV3ParserContext;
+    responseBreadcrumbs: string[];
+}): Response | undefined {
+    const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
+    const responseSchema =
+        resolvedResponse.content?.[APPLICATION_JSON_CONTENT]?.schema ??
+        resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
+    if (responseSchema != null) {
+        return {
+            type: "json",
+            description: resolvedResponse.description,
+            schema: convertSchema(responseSchema, false, context, responseBreadcrumbs),
+        };
+    }
+
+    const fileResponseSchema =
+        resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema ??
+        resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema;
+    if (fileResponseSchema != null) {
+        return {
+            type: "file",
+            description: resolvedResponse.description,
+        };
+    }
+
+    return undefined;
 }
 
 function markErrorSchemas({

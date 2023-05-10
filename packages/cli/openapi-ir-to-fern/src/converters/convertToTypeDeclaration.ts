@@ -13,6 +13,7 @@ import {
 } from "@fern-fern/openapi-ir-model/ir";
 import {
     convertArrayToTypeReference,
+    convertLiteralToTypeReference,
     convertMapToTypeReference,
     convertOptionalToTypeReference,
     convertPrimitiveToTypeReference,
@@ -42,6 +43,8 @@ export function convertToTypeDeclaration(schema: Schema, schemas: Record<SchemaI
         return convertReferenceToTypeDeclaration({ schema, schemas });
     } else if (schema.type === "optional") {
         return convertOptionalToTypeDeclaration({ schema, schemas });
+    } else if (schema.type === "literal") {
+        return convertLiteralToTypeDeclaration(schema.value);
     } else if (schema.type === "unknown") {
         return convertUnknownToTypeDeclaration();
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -173,6 +176,16 @@ export function convertUnknownToTypeDeclaration(): TypeDeclarations {
         typeDeclaration: unknownTypeReference.typeReference,
         additionalTypeDeclarations: {
             ...unknownTypeReference.additionalTypeDeclarations,
+        },
+    };
+}
+
+export function convertLiteralToTypeDeclaration(value: string): TypeDeclarations {
+    const literalTypeReference = convertLiteralToTypeReference(value);
+    return {
+        typeDeclaration: literalTypeReference.typeReference,
+        additionalTypeDeclarations: {
+            ...literalTypeReference.additionalTypeDeclarations,
         },
     };
 }
