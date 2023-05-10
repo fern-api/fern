@@ -35,17 +35,16 @@ export function convertResponse({
         if (response == null) {
             continue;
         }
-        if (isReferenceObject(response)) {
-            throw new Error(`Converting referenced response is unsupported: ${JSON.stringify(response)}`);
-        }
+
+        const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
         const responseSchema =
-            response.content?.[APPLICATION_JSON_CONTENT]?.schema ??
-            response.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
+            resolvedResponse.content?.[APPLICATION_JSON_CONTENT]?.schema ??
+            resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
         if (responseSchema != null) {
             return {
                 value: {
                     type: "json",
-                    description: response.description,
+                    description: resolvedResponse.description,
                     schema: convertSchema(responseSchema, false, context, responseBreadcrumbs),
                 },
                 errorStatusCodes,
@@ -53,13 +52,13 @@ export function convertResponse({
         }
 
         const fileResponseSchema =
-            response.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema ??
-            response.content?.[TEXT_PLAIN_CONTENT]?.schema;
+            resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema ??
+            resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema;
         if (fileResponseSchema != null) {
             return {
                 value: {
                     type: "file",
-                    description: response.description,
+                    description: resolvedResponse.description,
                 },
                 errorStatusCodes: [],
             };
@@ -81,17 +80,15 @@ function markErrorSchemas({
     const errorStatusCodes: StatusCode[] = [];
     for (const [statusCode, response] of Object.entries(responses)) {
         const parsedStatusCode = parseInt(statusCode);
-        if (parsedStatusCode < 400 || parsedStatusCode > 500) {
-            // if status code is not between [400, 500], then it won't count as an error
+        if (parsedStatusCode < 400 || parsedStatusCode > 600) {
+            // if status code is not between [400, 600], then it won't count as an error
             continue;
         }
         errorStatusCodes.push(parsedStatusCode);
-        if (isReferenceObject(response)) {
-            throw new Error("Error references are not supported");
-        }
+        const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
         const errorSchema =
-            response.content?.[APPLICATION_JSON_CONTENT]?.schema ??
-            response.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema ??
+            resolvedResponse.content?.[APPLICATION_JSON_CONTENT]?.schema ??
+            resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema ??
             {}; // unknown response
         context.markSchemaForStatusCode(parsedStatusCode, errorSchema);
     }

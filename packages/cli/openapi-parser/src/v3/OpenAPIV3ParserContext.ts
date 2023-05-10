@@ -8,6 +8,7 @@ import { ErrorBodyCollector } from "./ErrorBodyCollector";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
+const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
 
 export class OpenAPIV3ParserContext {
     public logger: Logger;
@@ -61,6 +62,25 @@ export class OpenAPIV3ParserContext {
             return this.resolveParameterReference(resolvedParameter);
         }
         return resolvedParameter;
+    }
+
+    public resolveResponseReference(response: OpenAPIV3.ReferenceObject): OpenAPIV3.ResponseObject {
+        if (
+            this.document.components == null ||
+            this.document.components.responses == null ||
+            !response.$ref.startsWith(RESPONSE_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${response.$ref}`);
+        }
+        const parameterKey = response.$ref.substring(RESPONSE_REFERENCE_PREFIX.length);
+        const resolvedResponse = this.document.components.responses[parameterKey];
+        if (resolvedResponse == null) {
+            throw new Error(`${response.$ref} is undefined`);
+        }
+        if (isReferenceObject(resolvedResponse)) {
+            return this.resolveResponseReference(resolvedResponse);
+        }
+        return resolvedResponse;
     }
 
     public markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void {
