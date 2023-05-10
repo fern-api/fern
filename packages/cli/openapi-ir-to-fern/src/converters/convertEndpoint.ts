@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Endpoint, Request, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, HttpError, Request, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { ROOT_PREFIX } from "../convertPackage";
 import { Environment } from "../getEnvironment";
 import { convertHeader } from "./convertHeader";
@@ -22,6 +22,7 @@ export function convertEndpoint({
     environment,
     nonRequestReferencedSchemas,
     globalHeaderNames,
+    errors,
 }: {
     endpoint: Endpoint;
     isPackageYml: boolean;
@@ -29,6 +30,7 @@ export function convertEndpoint({
     environment: Environment | undefined;
     nonRequestReferencedSchemas: SchemaId[];
     globalHeaderNames: Set<string>;
+    errors: Record<StatusCode, HttpError>;
 }): ConvertedEndpoint {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
@@ -156,6 +158,16 @@ export function convertEndpoint({
             );
         }
     }
+
+    const errorsThrown: string[] = [];
+    endpoint.errorStatusCode.forEach((statusCode) => {
+        const errorName = errors[statusCode]?.generatedName;
+        if (errorName != null) {
+            errorsThrown.push(errorName);
+        }
+    });
+    convertedEndpoint.errors = isPackageYml ? errorsThrown : errorsThrown.map((error) => `${ROOT_PREFIX}.${error}`);
+
     return {
         value: convertedEndpoint,
         schemaIdsToExclude,

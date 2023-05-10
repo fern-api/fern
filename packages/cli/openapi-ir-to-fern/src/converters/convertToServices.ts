@@ -42,6 +42,7 @@ export function convertToServices({
                 environment,
                 nonRequestReferencedSchemas,
                 globalHeaderNames,
+                errors: openApiFile.errors,
             });
             additionalTypeDeclarations = {
                 ...additionalTypeDeclarations,
