@@ -75,7 +75,7 @@ class EndpointGenerator:
         response = self._endpoint.response
         if response is None:
             return AST.TypeHint.none()
-        return self._context.pydantic_generator_context.get_type_hint_for_type_reference(response.response_body_type)
+        return self._get_response_body_type(response)
 
     def _get_endpoint_path(self) -> str:
         base_path = self._service.base_path
@@ -325,6 +325,14 @@ class EndpointGenerator:
             writer.write_line(")")
             writer.write_line(f"raise {CAUGHT_ERROR_NAME}")
 
+    def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
+        return response.visit(
+            file_download=raise_file_download_unsupported,
+            json=lambda json_response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                json_response.response_body_type
+            ),
+        )
+
 
 def convert_http_method_to_fastapi_method_name(http_method: ir_types.HttpMethod) -> str:
     return http_method.visit(
@@ -338,3 +346,7 @@ def convert_http_method_to_fastapi_method_name(http_method: ir_types.HttpMethod)
 
 def raise_file_upload_unsupported() -> Never:
     raise RuntimeError("File upload is not supported")
+
+
+def raise_file_download_unsupported(file_download_response: ir_types.FileDownloadResponse) -> Never:
+    raise RuntimeError("File download is not supported")

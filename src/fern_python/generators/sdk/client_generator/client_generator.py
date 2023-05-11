@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import List, Optional, Set, Tuple
 
 import fern.ir.resources as ir_types
+from typing_extensions import Never
 
 from fern_python.codegen import AST, SourceFile
 from fern_python.external_dependencies import (
@@ -151,9 +152,7 @@ class ClientGenerator:
                                 endpoint=endpoint,
                                 request_body_parameters=request_body_parameters,
                             ),
-                            return_type=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                endpoint.response.response_body_type
-                            )
+                            return_type=self._get_response_body_type(endpoint.response)
                             if endpoint.response is not None
                             else AST.TypeHint.none(),
                         ),
@@ -499,9 +498,7 @@ class ClientGenerator:
                 writer.write("return ")
                 writer.write_node(
                     Pydantic.parse_obj_as(
-                        self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            endpoint.response.response_body_type
-                        ),
+                        self._get_response_body_type(endpoint.response),
                         AST.Expression(f"{ClientGenerator.RESPONSE_VARIABLE}.json()"),
                     )
                 )
@@ -559,9 +556,7 @@ class ClientGenerator:
                 writer.write("return ")
                 writer.write_node(
                     Pydantic.parse_obj_as(
-                        self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            endpoint.response.response_body_type
-                        ),
+                        self._get_response_body_type(endpoint.response),
                         AST.Expression(ClientGenerator.RESPONSE_JSON_VARIABLE),
                     )
                 )
@@ -829,6 +824,14 @@ class ClientGenerator:
         writer.write_node(AST.TypeHint.cast(AST.TypeHint.any(), AST.Expression("...")))
         writer.write_newline_if_last_line_not()
 
+    def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
+        return response.visit(
+            file_download=raise_file_download_unsupported,
+            json=lambda json_response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                json_response.response_body_type
+            ),
+        )
+
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
     return len(endpoint.full_path.head) == 0 and len(endpoint.full_path.parts) == 0
@@ -841,3 +844,7 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "optional":
             return unwrap_optional_type(container_as_union.optional)
     return type_reference
+
+
+def raise_file_download_unsupported(file_download_response: ir_types.FileDownloadResponse) -> Never:
+    raise RuntimeError("File download is not supported")

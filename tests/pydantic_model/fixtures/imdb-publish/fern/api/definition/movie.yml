@@ -43,6 +43,7 @@ types:
       rating:
         type: double
         docs: The rating scale is one to five stars
+      type: literal<"movie">
 
 errors:
   MovieNotFoundError:

@@ -17,12 +17,14 @@ class Movie(pydantic.BaseModel):
     title: str
     from_: str = pydantic.Field(alias="from")
     rating: float = pydantic.Field(description=("The rating scale is one to five stars\n"))
+    type: typing_extensions.Literal["movie"]
 
     class Partial(typing_extensions.TypedDict):
         id: typing_extensions.NotRequired[MovieId]
         title: typing_extensions.NotRequired[str]
         from_: typing_extensions.NotRequired[str]
         rating: typing_extensions.NotRequired[float]
+        type: typing_extensions.NotRequired[typing_extensions.Literal["movie"]]
 
     class Validators:
         """
@@ -47,6 +49,10 @@ class Movie(pydantic.BaseModel):
             @Movie.Validators.field("rating")
             def validate_rating(rating: float, values: Movie.Partial) -> float:
                 ...
+
+            @Movie.Validators.field("type")
+            def validate_type(type: typing_extensions.Literal["movie"], values: Movie.Partial) -> typing_extensions.Literal["movie"]:
+                ...
         """
 
         _pre_validators: typing.ClassVar[typing.List[Movie.Validators._PreRootValidator]] = []
@@ -59,6 +65,8 @@ class Movie(pydantic.BaseModel):
         _from__post_validators: typing.ClassVar[typing.List[Movie.Validators.FromValidator]] = []
         _rating_pre_validators: typing.ClassVar[typing.List[Movie.Validators.PreRatingValidator]] = []
         _rating_post_validators: typing.ClassVar[typing.List[Movie.Validators.RatingValidator]] = []
+        _type_pre_validators: typing.ClassVar[typing.List[Movie.Validators.PreTypeValidator]] = []
+        _type_post_validators: typing.ClassVar[typing.List[Movie.Validators.TypeValidator]] = []
 
         @typing.overload
         @classmethod
@@ -141,6 +149,20 @@ class Movie(pydantic.BaseModel):
         ) -> typing.Callable[[Movie.Validators.RatingValidator], Movie.Validators.RatingValidator]:
             ...
 
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["type"], *, pre: typing_extensions.Literal[True]
+        ) -> typing.Callable[[Movie.Validators.PreTypeValidator], Movie.Validators.PreTypeValidator]:
+            ...
+
+        @typing.overload
+        @classmethod
+        def field(
+            cls, field_name: typing_extensions.Literal["type"], *, pre: typing_extensions.Literal[False] = False
+        ) -> typing.Callable[[Movie.Validators.TypeValidator], Movie.Validators.TypeValidator]:
+            ...
+
         @classmethod
         def field(cls, field_name: str, *, pre: bool = False) -> typing.Any:
             def decorator(validator: typing.Any) -> typing.Any:
@@ -164,6 +186,11 @@ class Movie(pydantic.BaseModel):
                         cls._rating_pre_validators.append(validator)
                     else:
                         cls._rating_post_validators.append(validator)
+                if field_name == "type":
+                    if pre:
+                        cls._type_pre_validators.append(validator)
+                    else:
+                        cls._type_post_validators.append(validator)
                 return validator
 
             return decorator
@@ -198,6 +225,16 @@ class Movie(pydantic.BaseModel):
 
         class RatingValidator(typing_extensions.Protocol):
             def __call__(self, __v: float, __values: Movie.Partial) -> float:
+                ...
+
+        class PreTypeValidator(typing_extensions.Protocol):
+            def __call__(self, __v: typing.Any, __values: Movie.Partial) -> typing.Any:
+                ...
+
+        class TypeValidator(typing_extensions.Protocol):
+            def __call__(
+                self, __v: typing_extensions.Literal["movie"], __values: Movie.Partial
+            ) -> typing_extensions.Literal["movie"]:
                 ...
 
         class _PreRootValidator(typing_extensions.Protocol):
@@ -265,6 +302,22 @@ class Movie(pydantic.BaseModel):
     @pydantic.validator("rating", pre=False)
     def _post_validate_rating(cls, v: float, values: Movie.Partial) -> float:
         for validator in Movie.Validators._rating_post_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("type", pre=True)
+    def _pre_validate_type(
+        cls, v: typing_extensions.Literal["movie"], values: Movie.Partial
+    ) -> typing_extensions.Literal["movie"]:
+        for validator in Movie.Validators._type_pre_validators:
+            v = validator(v, values)
+        return v
+
+    @pydantic.validator("type", pre=False)
+    def _post_validate_type(
+        cls, v: typing_extensions.Literal["movie"], values: Movie.Partial
+    ) -> typing_extensions.Literal["movie"]:
+        for validator in Movie.Validators._type_post_validators:
             v = validator(v, values)
         return v
 

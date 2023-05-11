@@ -67,7 +67,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 map=lambda x: "from_map",
                 set=lambda x: "from_set",
                 optional=self._get_getter_name,
-                literal=self.visit_literal,
+                literal=lambda x: "from_string",
             ),
             named=lambda type_name: "from_" + type_name.name.snake_case.unsafe_name,
             primitive=lambda primitive: primitive.visit(
@@ -91,7 +91,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 map=lambda x: "get_as_map",
                 set=lambda x: "get_as_set",
                 optional=self._get_getter_name,
-                literal=self.visit_literal,
+                literal=lambda x: "get_as_string",
             ),
             named=lambda type_name: "get_as_" + type_name.name.snake_case.unsafe_name,
             primitive=lambda primitive: primitive.visit(
@@ -107,6 +107,3 @@ class AliasGenerator(AbstractTypeGenerator):
             ),
             unknown=lambda: "get_value",
         )
-
-    def visit_literal(self, wrapped_type: ir_types.Literal) -> str:
-        raise Exception("Literals are not supported")

@@ -67,7 +67,7 @@ class TypeReferenceToTypeHintConverter:
         )
 
     def visit_literal(self, wrapped_type: ir_types.Literal) -> AST.TypeHint:
-        raise Exception("Literals are not supported")
+        return AST.TypeHint.literal(AST.Expression(f'"{wrapped_type.get_as_union().string}"'))
 
     def _get_type_hint_for_named(
         self,
