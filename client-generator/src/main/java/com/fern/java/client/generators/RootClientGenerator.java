@@ -129,11 +129,13 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         typeSpecBuilder.addField(
                 FieldSpec.builder(generatedClientOptions.builderClassName(), CLIENT_OPTIONS_BUILDER_NAME)
+                        .addModifiers(Modifier.PRIVATE)
                         .initializer("$T.builder()", generatedClientOptions.getClassName())
                         .build());
 
-        FieldSpec.Builder environmentFieldBuilder =
-                FieldSpec.builder(generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME);
+        FieldSpec.Builder environmentFieldBuilder = FieldSpec.builder(
+                        generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME)
+                .addModifiers(Modifier.PRIVATE);
 
         AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(typeSpecBuilder);
         generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));

@@ -312,9 +312,9 @@ import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.Environment;
 
 public final class FernFernClientBuilder {
-  ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+  private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
-  Environment environment = Environment.PROD;
+  private Environment environment = Environment.PROD;
 
   public FernFernClientBuilder token(String token) {
     this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
