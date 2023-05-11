@@ -164,7 +164,7 @@ types:
     union:
       string:
         type: string
-        key: value
+        key: string
 
   # examples
 
