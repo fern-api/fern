@@ -41,4 +41,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         return None
 
     def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
-        pass
+        return None
+
+    def is_default_body_parameter_used(self) -> bool:
+        return False

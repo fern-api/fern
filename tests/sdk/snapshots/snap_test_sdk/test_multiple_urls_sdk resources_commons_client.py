@@ -16,9 +16,6 @@ from .errors.movie_not_found_error import MovieNotFoundError
 from .types.movie import Movie
 from .types.movie_id import MovieId
 
-# this is used as the default value for optional parameters
-_ = typing.cast(typing.Any, ...)
-
 
 class CommonsClient:
     def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PRODUCTION):

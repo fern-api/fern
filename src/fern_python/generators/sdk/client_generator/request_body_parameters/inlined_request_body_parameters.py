@@ -5,7 +5,7 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST
 
 from ...context.sdk_generator_context import SdkGeneratorContext
-from ..constants import DEFAULT_PARAMETER_VALUE
+from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 
 
@@ -32,7 +32,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                         property.value_type
                     ),
-                    initializer=AST.Expression(DEFAULT_PARAMETER_VALUE)
+                    initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
                     if AST.TypeHint.is_optional(type_hint)
                     else None,
                 ),
@@ -114,10 +114,15 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 writer.write_line("}")
 
             for optional_property in optional_properties:
-                writer.write_line(f"if {self._get_property_name(optional_property)} is not {DEFAULT_PARAMETER_VALUE}:")
+                writer.write_line(
+                    f"if {self._get_property_name(optional_property)} is not {DEFAULT_BODY_PARAMETER_VALUE}:"
+                )
                 with writer.indent():
                     writer.write_line(
                         f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}'
                     )
 
         return AST.CodeWriter(write)
+
+    def is_default_body_parameter_used(self) -> bool:
+        return self._are_any_properties_optional()

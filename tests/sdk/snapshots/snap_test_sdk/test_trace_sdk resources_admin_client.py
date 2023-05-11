@@ -21,9 +21,6 @@ from ..submission.types.workspace_submission_status import WorkspaceSubmissionSt
 from ..submission.types.workspace_submission_update import WorkspaceSubmissionUpdate
 from ..v_2.resources.problem.types.test_case_id import TestCaseId
 
-# this is used as the default value for optional parameters
-_ = typing.cast(typing.Any, ...)
-
 
 class AdminClient:
     def __init__(

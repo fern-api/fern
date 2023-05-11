@@ -20,3 +20,7 @@ class AbstractRequestBodyParameters:
     @abstractmethod
     def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
         ...
+
+    @abstractmethod
+    def is_default_body_parameter_used(self) -> bool:
+        ...

@@ -14,9 +14,6 @@ from ..commons.types.language import Language
 from .types.execution_session_response import ExecutionSessionResponse
 from .types.get_execution_session_state_response import GetExecutionSessionStateResponse
 
-# this is used as the default value for optional parameters
-_ = typing.cast(typing.Any, ...)
-
 
 class SubmissionClient:
     def __init__(

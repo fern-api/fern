@@ -17,7 +17,7 @@ from ..environment_generators import (
     MultipleBaseUrlsEnvironmentGenerator,
     SingleBaseUrlEnvironmentGenerator,
 )
-from .constants import DEFAULT_PARAMETER_VALUE
+from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
     FileUploadRequestBodyParameters,
@@ -72,12 +72,15 @@ class ClientGenerator:
         self._package = package
         self._class_name = class_name
         self._async_class_name = async_class_name
+        self._is_default_body_parameter_used = False
 
     def generate(self, source_file: SourceFile) -> None:
-        source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
 
+        class_declaration = self._create_class_declaration(is_async=False)
+        if self._is_default_body_parameter_used:
+            source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
         source_file.add_class_declaration(
-            declaration=self._create_class_declaration(is_async=False),
+            declaration=class_declaration,
             should_export=False,
         )
         source_file.add_class_declaration(
@@ -125,6 +128,10 @@ class ClientGenerator:
                     if endpoint.request_body is not None
                     else None
                 )
+
+                if not self._is_default_body_parameter_used and request_body_parameters is not None:
+                    self._is_default_body_parameter_used = request_body_parameters.is_default_body_parameter_used()
+
                 class_declaration.add_method(
                     AST.FunctionDeclaration(
                         name=endpoint.name.get_as_name().snake_case.unsafe_name,
@@ -818,7 +825,7 @@ class ClientGenerator:
 
     def _write_default_param(self, writer: AST.NodeWriter) -> None:
         writer.write_line("# this is used as the default value for optional parameters")
-        writer.write(f"{DEFAULT_PARAMETER_VALUE} = ")
+        writer.write(f"{DEFAULT_BODY_PARAMETER_VALUE} = ")
         writer.write_node(AST.TypeHint.cast(AST.TypeHint.any(), AST.Expression("...")))
         writer.write_newline_if_last_line_not()
 
