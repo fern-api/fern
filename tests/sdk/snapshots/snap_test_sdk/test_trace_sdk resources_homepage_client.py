@@ -13,6 +13,9 @@ from ...core.remove_none_from_headers import remove_none_from_headers
 from ...environment import FernIrEnvironment
 from ..commons.types.problem_id import ProblemId
 
+# this is used as the default value for optional parameters
+_ = typing.cast(typing.Any, ...)
+
 
 class HomepageClient:
     def __init__(

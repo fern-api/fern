@@ -14,6 +14,9 @@ from ......commons.types.problem_id import ProblemId
 from .types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
 from .types.problem_info_v_2 import ProblemInfoV2
 
+# this is used as the default value for optional parameters
+_ = typing.cast(typing.Any, ...)
+
 
 class ProblemClient:
     def __init__(

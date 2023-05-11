@@ -16,3 +16,7 @@ class AbstractRequestBodyParameters:
     @abstractmethod
     def get_files(self) -> Optional[AST.Expression]:
         ...
+
+    @abstractmethod
+    def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
+        ...

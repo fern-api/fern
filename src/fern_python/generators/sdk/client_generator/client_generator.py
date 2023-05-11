@@ -17,6 +17,7 @@ from ..environment_generators import (
     MultipleBaseUrlsEnvironmentGenerator,
     SingleBaseUrlEnvironmentGenerator,
 )
+from .constants import DEFAULT_PARAMETER_VALUE
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
     FileUploadRequestBodyParameters,
@@ -73,6 +74,8 @@ class ClientGenerator:
         self._async_class_name = async_class_name
 
     def generate(self, source_file: SourceFile) -> None:
+        source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
+
         source_file.add_class_declaration(
             declaration=self._create_class_declaration(is_async=False),
             should_export=False,
@@ -338,6 +341,12 @@ class ClientGenerator:
         is_async: bool,
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
+            request_pre_fetch_statements = (
+                request_body_parameters.get_pre_fetch_statements() if request_body_parameters is not None else None
+            )
+            if request_pre_fetch_statements is not None:
+                writer.write_node(AST.Expression(request_pre_fetch_statements))
+
             reference_to_request_body = (
                 request_body_parameters.get_reference_to_request_body() if request_body_parameters is not None else None
             )
@@ -806,6 +815,12 @@ class ClientGenerator:
             primitive=lambda primitive: primitive in expected,
             unknown=lambda: False,
         )
+
+    def _write_default_param(self, writer: AST.NodeWriter) -> None:
+        writer.write_line("# this is used as the default value for optional parameters")
+        writer.write(f"{DEFAULT_PARAMETER_VALUE} = ")
+        writer.write_node(AST.TypeHint.cast(AST.TypeHint.any(), AST.Expression("...")))
+        writer.write_newline_if_last_line_not()
 
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:

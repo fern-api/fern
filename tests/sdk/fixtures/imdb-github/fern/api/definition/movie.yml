@@ -39,6 +39,12 @@ service:
         movieId: MovieId
       errors:
         - MovieNotFoundError
+      request:
+        name: DeleteMovieRequest
+        body:
+          properties:
+            required_property: string
+            optional_property: optional<string>
 
 types:
   MovieId: string

@@ -14,6 +14,9 @@ from .resources.submission.client import AsyncSubmissionClient, SubmissionClient
 from .resources.sysprop.client import AsyncSyspropClient, SyspropClient
 from .resources.v_2.client import AsyncV2Client, V2Client
 
+# this is used as the default value for optional parameters
+_ = typing.cast(typing.Any, ...)
+
 
 class FernIr:
     def __init__(

@@ -17,6 +17,9 @@ from .errors.movie_not_found_error import MovieNotFoundError
 from .types.movie import Movie
 from .types.movie_id import MovieId
 
+# this is used as the default value for optional parameters
+_ = typing.cast(typing.Any, ...)
+
 
 class MovieClient:
     def __init__(self, *, environment: str):
@@ -83,9 +86,17 @@ class MovieClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_movie(self, movie_id: MovieId) -> None:
+    def delete_movie(
+        self, movie_id: MovieId, *, required_property: str, optional_property: typing.Optional[str] = _
+    ) -> None:
+        _request: typing.Dict[str, typing.Any] = {"required_property": required_property}
+        if optional_property is not _:
+            _request["optional_property"] = optional_property
         _response = httpx.request(
-            "DELETE", urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"), timeout=60
+            "DELETE",
+            urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
+            json=jsonable_encoder(_request),
+            timeout=60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -170,10 +181,18 @@ class AsyncMovieClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_movie(self, movie_id: MovieId) -> None:
+    async def delete_movie(
+        self, movie_id: MovieId, *, required_property: str, optional_property: typing.Optional[str] = _
+    ) -> None:
+        _request: typing.Dict[str, typing.Any] = {"required_property": required_property}
+        if optional_property is not _:
+            _request["optional_property"] = optional_property
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
-                "DELETE", urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"), timeout=60
+                "DELETE",
+                urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
+                json=jsonable_encoder(_request),
+                timeout=60,
             )
         if 200 <= _response.status_code < 300:
             return

@@ -10,6 +10,9 @@ from ...core.api_error import ApiError
 from ...core.jsonable_encoder import jsonable_encoder
 from .types.movie_id import MovieId
 
+# this is used as the default value for optional parameters
+_ = typing.cast(typing.Any, ...)
+
 
 class MovieClient:
     def __init__(self, *, environment: str):

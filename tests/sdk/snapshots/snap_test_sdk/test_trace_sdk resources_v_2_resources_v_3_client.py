@@ -7,6 +7,9 @@ from backports.cached_property import cached_property
 from .....environment import FernIrEnvironment
 from .resources.problem.client import AsyncProblemClient, ProblemClient
 
+# this is used as the default value for optional parameters
+_ = typing.cast(typing.Any, ...)
+
 
 class V3Client:
     def __init__(

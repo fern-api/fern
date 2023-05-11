@@ -77,3 +77,6 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))
+
+    def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
+        pass

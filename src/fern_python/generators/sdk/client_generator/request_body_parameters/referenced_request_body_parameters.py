@@ -39,3 +39,6 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
 
     def get_files(self) -> Optional[AST.Expression]:
         return None
+
+    def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
+        pass

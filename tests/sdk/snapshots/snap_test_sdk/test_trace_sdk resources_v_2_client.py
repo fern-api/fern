@@ -12,6 +12,9 @@ from ...environment import FernIrEnvironment
 from .resources.problem.client import AsyncProblemClient, ProblemClient
 from .resources.v_3.client import AsyncV3Client, V3Client
 
+# this is used as the default value for optional parameters
+_ = typing.cast(typing.Any, ...)
+
 
 class V2Client:
     def __init__(
