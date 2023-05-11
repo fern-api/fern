@@ -283,7 +283,6 @@ exec "$JAVACMD" "$@"
 basic[src/main/java/com/fern/basic/FernFernClient.java]=[
 package com.fern.basic;
 
-import com.fern.basic.core.Environment;
 import com.fern.basic.resources.auth.AuthClient;
 import com.fern.basic.resources.blog.BlogClient;
 import com.fern.basic.resources.dummyservice.DummyServiceClient;
@@ -298,20 +297,48 @@ public interface FernFernClient {
 
   RavenClient raven();
 
-  static Builder builder() {
-    return new FernFernClientImpl.Builder();
+  static FernFernClientBuilder builder() {
+    return new FernFernClientBuilder();
+  }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/FernFernClientBuilder.java]=[
+package com.fern.basic;
+
+import com.fern.basic.core.ClientOptions;
+import com.fern.basic.core.Environment;
+
+public final class FernFernClientBuilder {
+  ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
+
+  Environment environment = Environment.PROD;
+
+  public FernFernClientBuilder token(String token) {
+    this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
+    return this;
   }
 
-  interface Builder {
-    Builder token(String token);
+  public FernFernClientBuilder apiVersion(String apiVersion) {
+    this.clientOptionsBuilder.addHeader("API-VERSION", apiVersion);
+    return this;
+  }
 
-    Builder apiVersion(String apiVersion);
+  public FernFernClientBuilder environment(Environment environment) {
+    this.environment = environment;
+    return this;
+  }
 
-    Builder environment(Environment environment);
+  public FernFernClientBuilder url(String url) {
+    this.environment = Environment.custom(url);
+    return this;
+  }
 
-    Builder url(String url);
-
-    FernFernClient build();
+  public FernFernClient build() {
+    clientOptionsBuilder.environment(this.environment);
+    return new FernFernClientImpl(clientOptionsBuilder.build());
   }
 }
 
@@ -322,7 +349,6 @@ basic[src/main/java/com/fern/basic/FernFernClientImpl.java]=[
 package com.fern.basic;
 
 import com.fern.basic.core.ClientOptions;
-import com.fern.basic.core.Environment;
 import com.fern.basic.core.Suppliers;
 import com.fern.basic.resources.auth.AuthClient;
 import com.fern.basic.resources.auth.AuthClientImpl;
@@ -371,42 +397,6 @@ public final class FernFernClientImpl implements FernFernClient {
   @Override
   public RavenClient raven() {
     return this.ravenClient.get();
-  }
-
-  public static final class Builder implements FernFernClient.Builder {
-    ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
-
-    Environment environment = Environment.PROD;
-
-    @Override
-    public FernFernClient.Builder token(String token) {
-      this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
-      return this;
-    }
-
-    @Override
-    public FernFernClient.Builder apiVersion(String apiVersion) {
-      this.clientOptionsBuilder.addHeader("API-VERSION", apiVersion);
-      return this;
-    }
-
-    @Override
-    public FernFernClient.Builder environment(Environment environment) {
-      this.environment = environment;
-      return this;
-    }
-
-    @Override
-    public FernFernClient.Builder url(String url) {
-      this.environment = Environment.custom(url);
-      return this;
-    }
-
-    @Override
-    public FernFernClient build() {
-      clientOptionsBuilder.environment(this.environment);
-      return new FernFernClientImpl(clientOptionsBuilder.build());
-    }
   }
 }
 

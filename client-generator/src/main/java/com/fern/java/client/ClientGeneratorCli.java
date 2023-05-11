@@ -82,7 +82,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                 AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, generatorConfig.getOrganization()));
         ClientGeneratorContext context =
                 new ClientGeneratorContext(ir, generatorConfig, customConfig, clientPoetClassNameFactory);
-        GeneratedClient generatedClientWrapper = generateClient(context, ir);
+        GeneratedRootClient generatedClientWrapper = generateClient(context, ir);
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
         subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
@@ -102,7 +102,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
         generateClient(context, ir);
     }
 
-    public GeneratedClient generateClient(ClientGeneratorContext context, IntermediateRepresentation ir) {
+    public GeneratedRootClient generateClient(ClientGeneratorContext context, IntermediateRepresentation ir) {
 
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
@@ -156,9 +156,10 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                 generatedSuppliersFile,
                 generatedEnvironmentsClass,
                 generatedTypes.getInterfaces());
-        GeneratedClient generatedRootClient = rootClientGenerator.generateFile();
+        GeneratedRootClient generatedRootClient = rootClientGenerator.generateFile();
         this.addGeneratedFile(generatedRootClient);
         this.addGeneratedFile(generatedRootClient.clientImpl());
+        this.addGeneratedFile(generatedRootClient.builderClass());
         generatedRootClient.wrappedRequests().forEach(this::addGeneratedFile);
 
         return generatedRootClient;

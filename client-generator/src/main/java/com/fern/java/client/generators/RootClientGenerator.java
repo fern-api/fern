@@ -22,10 +22,10 @@ import com.fern.ir.v12.model.commons.TypeId;
 import com.fern.ir.v12.model.commons.WithDocs;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
-import com.fern.java.client.GeneratedClient;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
+import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.client.generators.ClientGeneratorUtils.Result;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -53,8 +53,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName interfaceClassName;
     private final ClassName implClassName;
-    private final ClassName builderInterfaceName;
-    private final ClassName builderImplName;
+    private final ClassName builderName;
 
     public RootClientGenerator(
             AbstractGeneratorContext<?> generatorContext,
@@ -76,12 +75,11 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         this.interfaceClassName = className;
         this.implClassName =
                 generatorContext.getPoetClassNameFactory().getRootClassName(getRootClientImplName(generatorContext));
-        this.builderInterfaceName = className.nestedClass("Builder");
-        this.builderImplName = implClassName.nestedClass("Builder");
+        this.builderName = ClassName.get(className.packageName(), className.simpleName() + "Builder");
     }
 
     @Override
-    public GeneratedClient generateFile() {
+    public GeneratedRootClient generateFile() {
         ClientGeneratorUtils clientGeneratorUtils = new ClientGeneratorUtils(
                 interfaceClassName,
                 implClassName,
@@ -94,19 +92,16 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 generatorContext.getIr().getRootPackage());
         Result result = clientGeneratorUtils.buildClients();
 
-        ClientBuilders clientBuilders = getClientBuilders();
+        TypeSpec builderTypeSpec = getClientBuilder();
 
         result.getClientInterface()
                 .addMethod(MethodSpec.methodBuilder("builder")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
-                        .returns(builderInterfaceName)
-                        .addStatement("return new $T()", builderImplName)
+                        .returns(builderName)
+                        .addStatement("return new $T()", builderName)
                         .build());
 
-        result.getClientInterface().addType(clientBuilders.interfaceTypeSpec);
-        result.getClientImpl().addType(clientBuilders.implTypeSpec);
-
-        return GeneratedClient.builder()
+        return GeneratedRootClient.builder()
                 .className(interfaceClassName)
                 .javaFile(JavaFile.builder(
                                 interfaceClassName.packageName(),
@@ -119,25 +114,28 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                                         result.getClientImpl().build())
                                 .build())
                         .build())
+                .builderClass(GeneratedJavaFile.builder()
+                        .className(builderName)
+                        .javaFile(JavaFile.builder(builderName.packageName(), builderTypeSpec)
+                                .build())
+                        .build())
                 .addAllWrappedRequests(result.getGeneratedWrappedRequests())
                 .build();
     }
 
-    private ClientBuilders getClientBuilders() {
-        TypeSpec.Builder interfaceBuilder =
-                TypeSpec.interfaceBuilder(builderInterfaceName).addModifiers(Modifier.PUBLIC, Modifier.STATIC);
-        TypeSpec.Builder implBuilder = TypeSpec.classBuilder(builderImplName)
-                .addSuperinterface(builderInterfaceName)
-                .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL);
+    private TypeSpec getClientBuilder() {
+        TypeSpec.Builder typeSpecBuilder =
+                TypeSpec.classBuilder(builderName).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
 
-        implBuilder.addField(FieldSpec.builder(generatedClientOptions.builderClassName(), CLIENT_OPTIONS_BUILDER_NAME)
-                .initializer("$T.builder()", generatedClientOptions.getClassName())
-                .build());
+        typeSpecBuilder.addField(
+                FieldSpec.builder(generatedClientOptions.builderClassName(), CLIENT_OPTIONS_BUILDER_NAME)
+                        .initializer("$T.builder()", generatedClientOptions.getClassName())
+                        .build());
 
         FieldSpec.Builder environmentFieldBuilder =
                 FieldSpec.builder(generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME);
 
-        AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(interfaceBuilder, implBuilder);
+        AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(typeSpecBuilder);
         generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
         generatorContext.getIr().getHeaders().forEach(httpHeader -> {
             authSchemeHandler.visitHeader(HeaderAuthScheme.builder()
@@ -158,20 +156,16 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             MethodSpec environmentMethod = MethodSpec.methodBuilder("environment")
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(generatedEnvironmentsClass.getClassName(), "environment")
-                    .returns(builderInterfaceName)
+                    .returns(builderName)
                     .build();
-            interfaceBuilder.addMethod(environmentMethod.toBuilder()
-                    .addModifiers(Modifier.ABSTRACT)
-                    .build());
-            implBuilder.addMethod(environmentMethod.toBuilder()
-                    .addAnnotation(Override.class)
+            typeSpecBuilder.addMethod(environmentMethod.toBuilder()
                     .addStatement("this.$L = $L", ENVIRONMENT_FIELD_NAME, "environment")
                     .addStatement("return this")
                     .build());
         }
 
         FieldSpec environmentField = environmentFieldBuilder.build();
-        implBuilder.addField(environmentField);
+        typeSpecBuilder.addField(environmentField);
 
         if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
             SingleUrlEnvironmentClass singleUrlEnvironmentClass =
@@ -179,12 +173,9 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             MethodSpec urlMethod = MethodSpec.methodBuilder("url")
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(String.class, "url")
-                    .returns(builderInterfaceName)
+                    .returns(builderName)
                     .build();
-            interfaceBuilder.addMethod(
-                    urlMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
-            implBuilder.addMethod(urlMethod.toBuilder()
-                    .addAnnotation(Override.class)
+            typeSpecBuilder.addMethod(urlMethod.toBuilder()
                     .addStatement(
                             "this.$L = $T.$N($L)",
                             ENVIRONMENT_FIELD_NAME,
@@ -199,10 +190,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .returns(interfaceClassName)
                 .build();
-        interfaceBuilder.addMethod(
-                buildMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
-        implBuilder.addMethod(buildMethod.toBuilder()
-                .addAnnotation(Override.class)
+        typeSpecBuilder.addMethod(buildMethod.toBuilder()
                 .addStatement(
                         "$L.$N(this.$N)",
                         CLIENT_OPTIONS_BUILDER_NAME,
@@ -211,7 +199,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 .addStatement("return new $T($L.build())", implClassName, CLIENT_OPTIONS_BUILDER_NAME)
                 .build());
 
-        return new ClientBuilders(interfaceBuilder.build(), implBuilder.build());
+        return typeSpecBuilder.build();
     }
 
     private static String getRootClientImplName(AbstractGeneratorContext<?> generatorContext) {
@@ -246,12 +234,10 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         private static final String BASIC_USERNAME_NAME = "username";
         private static final String BASIC_PASSWORD_NAME = "password";
 
-        private final TypeSpec.Builder builderInterface;
-        private final TypeSpec.Builder builderImpl;
+        private final TypeSpec.Builder builder;
 
-        private AuthSchemeHandler(TypeSpec.Builder builderInterface, TypeSpec.Builder builderImpl) {
-            this.builderInterface = builderInterface;
-            this.builderImpl = builderImpl;
+        private AuthSchemeHandler(TypeSpec.Builder builder) {
+            this.builder = builder;
         }
 
         @Override
@@ -259,12 +245,9 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             MethodSpec tokenMethod = MethodSpec.methodBuilder(BEARER_TOKEN_NAME)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(String.class, BEARER_TOKEN_NAME)
-                    .returns(builderInterfaceName)
+                    .returns(builderName)
                     .build();
-            builderInterface.addMethod(
-                    tokenMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
-            builderImpl.addMethod(tokenMethod.toBuilder()
-                    .addAnnotation(Override.class)
+            builder.addMethod(tokenMethod.toBuilder()
                     .addStatement(
                             "this.$L.addHeader($S, $S + $L)",
                             CLIENT_OPTIONS_BUILDER_NAME,
@@ -282,16 +265,13 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(String.class, BASIC_USERNAME_NAME)
                     .addParameter(String.class, BASIC_PASSWORD_NAME)
-                    .returns(builderInterfaceName)
+                    .returns(builderName)
                     .build();
-            builderInterface.addMethod(
-                    tokenMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
-            builderImpl.addMethod(tokenMethod.toBuilder()
-                    .addAnnotation(Override.class)
+            builder.addMethod(tokenMethod.toBuilder()
                     .addStatement("String unencodedToken = $L + \":\" + $L", BASIC_USERNAME_NAME, BASIC_PASSWORD_NAME)
                     .addStatement(
                             "String encodedToken = $T.getEncoder().encodeToString(unencodedToken.getBytes()))",
-                            builderImplName,
+                            builderName,
                             Base64.class)
                     .addStatement(
                             "this.$L.addHeader($S, $S + $L)",
@@ -310,13 +290,10 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             MethodSpec tokenMethod = MethodSpec.methodBuilder(headerCamelCase)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(String.class, headerCamelCase)
-                    .returns(builderInterfaceName)
+                    .returns(builderName)
                     .build();
-            builderInterface.addMethod(
-                    tokenMethod.toBuilder().addModifiers(Modifier.ABSTRACT).build());
             if (header.getPrefix().isPresent()) {
-                builderImpl.addMethod(tokenMethod.toBuilder()
-                        .addAnnotation(Override.class)
+                builder.addMethod(tokenMethod.toBuilder()
                         .addStatement(
                                 "this.$L.addHeader($S, $S + $L)",
                                 CLIENT_OPTIONS_BUILDER_NAME,
@@ -326,8 +303,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                         .addStatement("return this")
                         .build());
             } else {
-                builderImpl.addMethod(tokenMethod.toBuilder()
-                        .addAnnotation(Override.class)
+                builder.addMethod(tokenMethod.toBuilder()
                         .addStatement(
                                 "this.$L.addHeader($S, $L)",
                                 CLIENT_OPTIONS_BUILDER_NAME,
