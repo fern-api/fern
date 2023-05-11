@@ -2517,7 +2517,7 @@ sort order. If not set, then no prior elements exist.
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "optional<ErrorBadRequestType>",
+              "type": "ErrorBadRequestType",
             },
           },
         },
@@ -2599,7 +2599,7 @@ sort order. If not set, then no prior elements exist.
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "optional<ErrorForbiddenType>",
+              "type": "ErrorForbiddenType",
             },
           },
         },
@@ -2623,7 +2623,7 @@ inquiry.
             },
             "type": {
               "docs": undefined,
-              "type": "optional<ErrorInternalServerErrorType>",
+              "type": "ErrorInternalServerErrorType",
             },
           },
         },
@@ -2641,7 +2641,7 @@ inquiry.
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "optional<ErrorNotFoundType>",
+              "type": "ErrorNotFoundType",
             },
           },
         },
@@ -2659,7 +2659,7 @@ inquiry.
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "optional<ErrorServiceUnavailableType>",
+              "type": "ErrorServiceUnavailableType",
             },
           },
         },
@@ -2682,7 +2682,7 @@ inquiry.
             },
             "type": {
               "docs": undefined,
-              "type": "optional<ErrorTooManyRequestsType>",
+              "type": "ErrorTooManyRequestsType",
             },
           },
         },
@@ -2700,7 +2700,7 @@ inquiry.
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "optional<ErrorUnauthorizedType>",
+              "type": "ErrorUnauthorizedType",
             },
           },
         },
@@ -3025,11 +3025,11 @@ always be returned in the specified sort-by order.
             },
             "name": {
               "docs": "Name of the part.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "owned_by": {
               "docs": "The users that own the part.",
-              "type": "optional<list<UserSummary>>",
+              "type": "list<UserSummary>",
             },
             "tags": {
               "docs": "Tags associated with the object.",
@@ -3042,7 +3042,7 @@ always be returned in the specified sort-by order.
           "properties": {
             "name": {
               "docs": "Name of the part.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -3437,7 +3437,7 @@ on the tag's purpose and usage.
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -3449,7 +3449,7 @@ unique.
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -3921,15 +3921,15 @@ default visibility.
             },
             "secret": {
               "docs": "The secret to use for verifying webhook events.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "status": {
               "docs": undefined,
-              "type": "optional<WebhookStatus>",
+              "type": "WebhookStatus",
             },
             "url": {
               "docs": "The URL of the webhook endpoint.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -4258,7 +4258,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             "owned_by": {
               "docs": "The users that own the work.",
-              "type": "optional<list<UserSummary>>",
+              "type": "list<UserSummary>",
             },
             "reported_by": {
               "docs": "Users that reported the work.",
@@ -4278,7 +4278,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             "title": {
               "docs": "Title of the work object.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -6762,7 +6762,7 @@ exports[`open api converter hathora simple 1`] = `
           "properties": {
             "deployment": {
               "docs": undefined,
-              "type": "optional<Deployment>",
+              "type": "Deployment",
             },
           },
         },
@@ -6885,31 +6885,31 @@ exports[`open api converter hathora simple 1`] = `
           "properties": {
             "appId": {
               "docs": undefined,
-              "type": "optional<AppId>",
+              "type": "AppId",
             },
             "buildId": {
               "docs": undefined,
-              "type": "optional<BuildId>",
+              "type": "BuildId",
             },
             "createdAt": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "string",
             },
             "createdBy": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "string",
             },
             "deploymentId": {
               "docs": undefined,
-              "type": "optional<DeploymentId>",
+              "type": "DeploymentId",
             },
             "requestedCPU": {
               "docs": undefined,
-              "type": "optional<double>",
+              "type": "double",
             },
             "requestedMemoryMB": {
               "docs": undefined,
-              "type": "optional<double>",
+              "type": "double",
             },
           },
         },
@@ -7202,11 +7202,11 @@ exports[`open api converter hathora simple 1`] = `
           "properties": {
             "rooms": {
               "docs": undefined,
-              "type": "optional<list<RoomWithoutAllocations>>",
+              "type": "list<RoomWithoutAllocations>",
             },
             "totalRooms": {
               "docs": undefined,
-              "type": "optional<double>",
+              "type": "double",
             },
           },
         },
@@ -9930,7 +9930,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": {
             "status": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -9939,7 +9939,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": {
             "status": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -9948,7 +9948,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": {
             "status": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -9957,7 +9957,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": {
             "status": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -10157,23 +10157,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "apiKey": {
               "docs": "The API key to grant access to Squidex.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "appId": {
               "docs": "The application ID.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "delete": {
               "docs": "The condition when to delete the entry.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "document": {
               "docs": "The optional custom document.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "indexName": {
               "docs": "The name of the index.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -10212,15 +10212,15 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "canAccessApi": {
               "docs": "Indicates if the user can access the api.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "canAccessContent": {
               "docs": "Indicates if the user can access at least one content.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "created": {
               "docs": "The timestamp when the app has been created.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "description": {
               "docs": "The optional description of the app.",
@@ -10228,7 +10228,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "id": {
               "docs": "The ID of the app.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "label": {
               "docs": "The optional label of the app.",
@@ -10236,15 +10236,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "lastModified": {
               "docs": "The timestamp when the app has been modified last.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "name": {
               "docs": "The name of the app.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "permissions": {
               "docs": "The permission level of the user.",
-              "type": "optional<list<string>>",
+              "type": "list<string>",
             },
             "roleName": {
               "docs": "The role name of the user.",
@@ -10252,7 +10252,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "roleProperties": {
               "docs": "The properties from the role.",
-              "type": "optional<map<string, unknown>>",
+              "type": "map<string, unknown>",
             },
             "teamId": {
               "docs": "The ID of the team.",
@@ -10260,7 +10260,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "version": {
               "docs": "The version of the app.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -10269,23 +10269,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "englishName": {
               "docs": "The english name of the language.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "fallback": {
               "docs": "The fallback languages.",
-              "type": "optional<list<string>>",
+              "type": "list<string>",
             },
             "isMaster": {
               "docs": "Indicates if the language is the master language.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isOptional": {
               "docs": "Indicates if the language is optional.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "iso2Code": {
               "docs": "The iso code of the language.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -10294,7 +10294,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The languages.",
-              "type": "optional<list<AppLanguageDto>>",
+              "type": "list<AppLanguageDto>",
             },
           },
         },
@@ -10303,23 +10303,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "editors": {
               "docs": "The configured UI editors.",
-              "type": "optional<list<EditorDto>>",
+              "type": "list<EditorDto>",
             },
             "hideDateTimeModeButton": {
               "docs": "Hide the datetime mode button.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "hideScheduler": {
               "docs": "Hide the scheduler for content items.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "patterns": {
               "docs": "The configured app patterns.",
-              "type": "optional<list<PatternDto>>",
+              "type": "list<PatternDto>",
             },
             "version": {
               "docs": "The version of the app.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -10358,11 +10358,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "created": {
               "docs": "The date and time when the asset has been created.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "createdBy": {
               "docs": "The user that has created the schema.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "editToken": {
               "docs": "The UI token.",
@@ -10374,55 +10374,55 @@ exports[`open api converter squidex simple 1`] = `
             },
             "fileName": {
               "docs": "The file name.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "fileSize": {
               "docs": "The size of the file in bytes.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "fileType": {
               "docs": "The file type.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "fileVersion": {
               "docs": "The version of the file.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "id": {
               "docs": "The ID of the asset.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "isImage": {
               "docs": "Determines of the created file is an image.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isProtected": {
               "docs": "True, when the asset is not public.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "lastModified": {
               "docs": "The date and time when the asset has been modified last.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "lastModifiedBy": {
               "docs": "The user that has updated the asset.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "metadata": {
               "docs": "The asset metadata.",
-              "type": "optional<map<string, unknown>>",
+              "type": "map<string, unknown>",
             },
             "metadataText": {
               "docs": "The formatted text representation of the metadata.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "mimeType": {
               "docs": "The mime type.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "parentId": {
               "docs": "The ID of the parent folder. Empty for files without parent.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "pixelHeight": {
               "docs": "The height of the image in pixels if the asset is an image.",
@@ -10434,7 +10434,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "slug": {
               "docs": "The slug.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "tags": {
               "docs": "The asset tags.",
@@ -10442,11 +10442,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "type": {
               "docs": undefined,
-              "type": "optional<AssetType>",
+              "type": "AssetType",
             },
             "version": {
               "docs": "The version of the asset.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -10455,19 +10455,19 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "folderName": {
               "docs": "The folder name.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "id": {
               "docs": "The ID of the asset.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "parentId": {
               "docs": "The ID of the parent folder. Empty for files without parent.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "version": {
               "docs": "The version of the asset folder.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -10493,15 +10493,15 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The assets folders.",
-              "type": "optional<list<AssetFolderDto>>",
+              "type": "list<AssetFolderDto>",
             },
             "path": {
               "docs": "The path to the current folder.",
-              "type": "optional<list<AssetFolderDto>>",
+              "type": "list<AssetFolderDto>",
             },
             "total": {
               "docs": "The total number of assets.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -10564,7 +10564,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "version": {
               "docs": "The version of the app.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -10594,11 +10594,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The assets.",
-              "type": "optional<list<AssetDto>>",
+              "type": "list<AssetDto>",
             },
             "total": {
               "docs": "The total number of assets.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -10607,7 +10607,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "allowDuplicates": {
               "docs": "True, if duplicate values are allowed.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "allowedExtensions": {
               "docs": "The allowed file extensions.",
@@ -10671,7 +10671,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "mustBeImage": {
               "docs": "True to resolve first image in the content list.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "previewFormat": {
               "docs": "The preview format.",
@@ -10679,15 +10679,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "previewMode": {
               "docs": undefined,
-              "type": "optional<AssetPreviewMode>",
+              "type": "AssetPreviewMode",
             },
             "resolveFirst": {
               "docs": "True to resolve first asset in the content list.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "resolveImage": {
               "docs": "True to resolve first image in the content list.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
           },
         },
@@ -10713,15 +10713,15 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "connectionString": {
               "docs": "The connection string to the storage account.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "payload": {
               "docs": "Leave it empty to use the full event as body.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "queue": {
               "docs": "The name of the queue.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -10730,23 +10730,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "handledAssets": {
               "docs": "The number of handled assets.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "handledEvents": {
               "docs": "The number of handled events.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "id": {
               "docs": "The ID of the backup job.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "started": {
               "docs": "The time when the job has been started.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "status": {
               "docs": undefined,
-              "type": "optional<JobStatus>",
+              "type": "JobStatus",
             },
             "stopped": {
               "docs": "The time when the job has been stopped.",
@@ -10759,7 +10759,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The backups.",
-              "type": "optional<list<BackupJobDto>>",
+              "type": "list<BackupJobDto>",
             },
           },
         },
@@ -10789,11 +10789,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "editor": {
               "docs": undefined,
-              "type": "optional<BooleanFieldEditor>",
+              "type": "BooleanFieldEditor",
             },
             "inlineEditable": {
               "docs": "Indicates that the inline editor is enabled for this field.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
           },
         },
@@ -11038,23 +11038,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "allowAnonymous": {
               "docs": "True to allow anonymous access without an access token for this client.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "apiCallsLimit": {
               "docs": "The number of allowed api calls per month for this client.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "apiTrafficLimit": {
               "docs": "The number of allowed api traffic bytes per month for this client.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "id": {
               "docs": "The client id.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "name": {
               "docs": "The client name.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "role": {
               "docs": "The role of the client.",
@@ -11062,7 +11062,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "secret": {
               "docs": "The client secret.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -11071,7 +11071,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The clients.",
-              "type": "optional<list<ClientDto>>",
+              "type": "list<ClientDto>",
             },
           },
         },
@@ -11105,11 +11105,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "client": {
               "docs": "An optional client name.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "text": {
               "docs": "The comment text.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -11182,7 +11182,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "handleAll": {
               "docs": "Determines whether the trigger should handle all content changes events.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "referencedSchemas": {
               "docs": "The schema references.",
@@ -11203,11 +11203,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "created": {
               "docs": "The date and time when the content item has been created.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "createdBy": {
               "docs": "The user that has created the content item.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "data": "unknown",
             "editToken": {
@@ -11216,19 +11216,19 @@ exports[`open api converter squidex simple 1`] = `
             },
             "id": {
               "docs": "The if of the content item.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "isDeleted": {
               "docs": "Indicates whether the content is deleted.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "lastModified": {
               "docs": "The date and time when the content item has been modified last.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "lastModifiedBy": {
               "docs": "The user that has updated the content item.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "newStatus": {
               "docs": "The new status of the content.",
@@ -11256,7 +11256,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "schemaId": {
               "docs": "The ID of the schema.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "schemaName": {
               "docs": "The name of the schema.",
@@ -11264,15 +11264,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "status": {
               "docs": "The status of the content.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "statusColor": {
               "docs": "The color of the status.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "version": {
               "docs": "The version of the content.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -11285,15 +11285,15 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The content items.",
-              "type": "optional<list<ContentDto>>",
+              "type": "list<ContentDto>",
             },
             "statuses": {
               "docs": "The possible statuses.",
-              "type": "optional<list<StatusInfoDto>>",
+              "type": "list<StatusInfoDto>",
             },
             "total": {
               "docs": "The total number of content items.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -11302,15 +11302,15 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "contributorEmail": {
               "docs": "The email address.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "contributorId": {
               "docs": "The ID of the user that contributes to the app.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "contributorName": {
               "docs": "The display name.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "role": {
               "docs": "The role of the contributor.",
@@ -11327,11 +11327,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "items": {
               "docs": "The contributors.",
-              "type": "optional<list<ContributorDto>>",
+              "type": "list<ContributorDto>",
             },
             "maxContributors": {
               "docs": "The maximum number of allowed contributors.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -11349,19 +11349,19 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "client": {
               "docs": "An optional client name.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "data": {
               "docs": "The content data.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "publish": {
               "docs": "Publish the content.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "schema": {
               "docs": "The name of the schema.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -11434,7 +11434,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "editor": {
               "docs": undefined,
-              "type": "optional<DateTimeFieldEditor>",
+              "type": "DateTimeFieldEditor",
             },
             "format": {
               "docs": "The format pattern when displayed in the UI.",
@@ -11455,11 +11455,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "apiKey": {
               "docs": "The api key to authenticate to your discourse server.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "apiUsername": {
               "docs": "The api username to authenticate to your discourse server.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "category": {
               "docs": "The optional category id.",
@@ -11467,11 +11467,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "text": {
               "docs": "The text as markdown.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "title": {
               "docs": "The optional title when creating new topics.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "topic": {
               "docs": "The optional topic id.",
@@ -11479,7 +11479,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "url": {
               "docs": "The url to the discourse server.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -11501,27 +11501,27 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "delete": {
               "docs": "The condition when to delete the document.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "document": {
               "docs": "The optional custom document.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "host": {
               "docs": "The url to the instance or cluster.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "indexName": {
               "docs": "The name of the index.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "password": {
               "docs": "The optional password.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "username": {
               "docs": "The optional username.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -11530,35 +11530,35 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "messageBody": {
               "docs": "The message body.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "messageFrom": {
               "docs": "The email sending address.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "messageSubject": {
               "docs": "The subject line for this email message.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "messageTo": {
               "docs": "The email message will be sent to.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "serverHost": {
               "docs": "The IP address or host to the SMTP server.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "serverPassword": {
               "docs": "The password for the SMTP server.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "serverPort": {
               "docs": "The port to the SMTP server.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "serverUsername": {
               "docs": "The username for the SMTP server.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -11596,7 +11596,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "count": {
               "docs": "The number of handled events.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "error": {
               "docs": "The error details if the event consumer has been stopped after a failure.",
@@ -11604,15 +11604,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "isResetting": {
               "docs": "Indicates if the event consumer is resetting at the moment.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isStopped": {
               "docs": "Indicates if the event consumer has been started.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "name": {
               "docs": "The name of the event consumer.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "position": {
               "docs": "The position within the vent stream.",
@@ -11625,7 +11625,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The event consumers.",
-              "type": "optional<list<EventConsumerDto>>",
+              "type": "list<EventConsumerDto>",
             },
           },
         },
@@ -11638,11 +11638,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "apiKey": {
               "docs": "The API key to grant access to Squidex.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "serviceId": {
               "docs": "The ID of the fastly service.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -11677,23 +11677,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "fieldId": {
               "docs": "The ID of the field.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "isDisabled": {
               "docs": "Defines if the field is disabled.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isHidden": {
               "docs": "Defines if the field is hidden.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isLocked": {
               "docs": "Defines if the field is locked.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "name": {
               "docs": "The name of the field. Must be unique within the schema.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "nested": {
               "docs": "The nested fields.",
@@ -11701,11 +11701,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "partitioning": {
               "docs": "Defines the partitioning of the field.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "properties": {
               "docs": undefined,
-              "type": "optional<FieldPropertiesDto>",
+              "type": "FieldPropertiesDto",
             },
           },
         },
@@ -11848,7 +11848,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "editor": {
               "docs": undefined,
-              "type": "optional<GeolocationFieldEditor>",
+              "type": "GeolocationFieldEditor",
             },
           },
         },
@@ -12003,31 +12003,31 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "accessToken": {
               "docs": "The self issued access token.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "canonicalUrl": {
               "docs": "The original home of this content, if it was originally published elsewhere.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "content": {
               "docs": "The content, either html or markdown.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "isHtml": {
               "docs": "Indicates whether the content is markdown or html.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "publicationId": {
               "docs": "Optional publication id.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "tags": {
               "docs": "The optional comma separated list of tags.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "title": {
               "docs": "The title, used for the url.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -12036,27 +12036,27 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "fieldId": {
               "docs": "The ID of the field.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "isDisabled": {
               "docs": "Defines if the field is disabled.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isHidden": {
               "docs": "Defines if the field is hidden.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isLocked": {
               "docs": "Defines if the field is locked.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "name": {
               "docs": "The name of the field. Must be unique within the schema.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "properties": {
               "docs": undefined,
-              "type": "optional<FieldPropertiesDto>",
+              "type": "FieldPropertiesDto",
             },
           },
         },
@@ -12065,19 +12065,19 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "client": {
               "docs": "An optional client name.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "text": {
               "docs": "The text to send.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "url": {
               "docs": "The optional url to attach to the notification.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "user": {
               "docs": "The user id or email.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -12119,15 +12119,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "editor": {
               "docs": undefined,
-              "type": "optional<NumberFieldEditor>",
+              "type": "NumberFieldEditor",
             },
             "inlineEditable": {
               "docs": "Indicates that the inline editor is enabled for this field.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isUnique": {
               "docs": "Indicates if the field value must be unique. Ignored for nested fields and localized fields.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "maxValue": {
               "docs": "The maximum allowed value for the field value.",
@@ -12144,27 +12144,27 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "delete": {
               "docs": "The condition when to delete the document.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "document": {
               "docs": "The optional custom document.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "host": {
               "docs": "The url to the instance or cluster.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "indexName": {
               "docs": "The name of the index.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "password": {
               "docs": "The optional password.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "username": {
               "docs": "The optional username.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -12298,11 +12298,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "token": {
               "docs": "The prerender token from your account.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "url": {
               "docs": "The url to recache.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -12388,7 +12388,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "allowDuplicates": {
               "docs": "True, if duplicate values are allowed.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "defaultValue": {
               "docs": "The default value as a list of content ids.",
@@ -12400,7 +12400,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "editor": {
               "docs": undefined,
-              "type": "optional<ReferencesFieldEditor>",
+              "type": "ReferencesFieldEditor",
             },
             "maxItems": {
               "docs": "The maximum allowed items for the field value.",
@@ -12412,11 +12412,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "mustBePublished": {
               "docs": "True when all references must be published.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "resolveReference": {
               "docs": "True to resolve references in the content list.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "schemaIds": {
               "docs": "The ID of the referenced schemas.",
@@ -12543,27 +12543,27 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "isDefaultRole": {
               "docs": "Indicates if the role is an builtin default role.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "name": {
               "docs": "The role name.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "numClients": {
               "docs": "The number of clients with this role.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "numContributors": {
               "docs": "The number of contributors with this role.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "permissions": {
               "docs": "Associated list of permissions.",
-              "type": "optional<list<string>>",
+              "type": "list<string>",
             },
             "properties": {
               "docs": "Associated list of UI properties.",
-              "type": "optional<map<string, unknown>>",
+              "type": "map<string, unknown>",
             },
           },
         },
@@ -12572,7 +12572,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The roles.",
-              "type": "optional<list<RoleDto>>",
+              "type": "list<RoleDto>",
             },
           },
         },
@@ -12659,23 +12659,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "action": {
               "docs": undefined,
-              "type": "optional<RuleActionDto>",
+              "type": "RuleActionDto",
             },
             "created": {
               "docs": "The date and time when the rule has been created.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "createdBy": {
               "docs": "The user that has created the rule.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "id": {
               "docs": "The ID of the rule.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "isEnabled": {
               "docs": "Determines if the rule is enabled.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "lastExecuted": {
               "docs": "The date and time when the rule was executed the last time.",
@@ -12683,11 +12683,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "lastModified": {
               "docs": "The date and time when the rule has been modified last.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "lastModifiedBy": {
               "docs": "The user that has updated the rule.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "name": {
               "docs": "Optional rule name.",
@@ -12695,19 +12695,19 @@ exports[`open api converter squidex simple 1`] = `
             },
             "numFailed": {
               "docs": "The number of failed executions.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "numSucceeded": {
               "docs": "The number of completed executions.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "trigger": {
               "docs": undefined,
-              "type": "optional<RuleTriggerDto>",
+              "type": "RuleTriggerDto",
             },
             "version": {
               "docs": "The version of the rule.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -12782,23 +12782,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "created": {
               "docs": "The time when the event has been created.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "description": {
               "docs": "The description.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "eventName": {
               "docs": "The name of the event.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "id": {
               "docs": "The ID of the event.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "jobResult": {
               "docs": undefined,
-              "type": "optional<RuleJobResult>",
+              "type": "RuleJobResult",
             },
             "lastDump": {
               "docs": "The last dump.",
@@ -12810,11 +12810,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "numCalls": {
               "docs": "The number of calls.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "result": {
               "docs": undefined,
-              "type": "optional<RuleResult>",
+              "type": "RuleResult",
             },
           },
         },
@@ -12823,11 +12823,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The rule events.",
-              "type": "optional<list<RuleEventDto>>",
+              "type": "list<RuleEventDto>",
             },
             "total": {
               "docs": "The total number of rule events.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -12953,7 +12953,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The rules.",
-              "type": "optional<list<RuleDto>>",
+              "type": "list<RuleDto>",
             },
             "runningRuleId": {
               "docs": "The ID of the rule that is currently rerunning.",
@@ -13017,71 +13017,71 @@ exports[`open api converter squidex simple 1`] = `
             },
             "created": {
               "docs": "The date and time when the schema has been created.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "createdBy": {
               "docs": "The user that has created the schema.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "fieldRules": {
               "docs": "The field rules.",
-              "type": "optional<list<FieldRuleDto>>",
+              "type": "list<FieldRuleDto>",
             },
             "fields": {
               "docs": "The list of fields.",
-              "type": "optional<list<FieldDto>>",
+              "type": "list<FieldDto>",
             },
             "fieldsInLists": {
               "docs": "The name of fields that are used in content lists.",
-              "type": "optional<list<string>>",
+              "type": "list<string>",
             },
             "fieldsInReferences": {
               "docs": "The name of fields that are used in content references.",
-              "type": "optional<list<string>>",
+              "type": "list<string>",
             },
             "id": {
               "docs": "The ID of the schema.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "isPublished": {
               "docs": "Indicates if the schema is published.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isSingleton": {
               "docs": "Indicates if the schema is a singleton.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "lastModified": {
               "docs": "The date and time when the schema has been modified last.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "lastModifiedBy": {
               "docs": "The user that has updated the schema.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "name": {
               "docs": "The name of the schema. Unique within the app.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "previewUrls": {
               "docs": "The preview Urls.",
-              "type": "optional<map<string, optional<string>>>",
+              "type": "map<string, string>",
             },
             "properties": {
               "docs": undefined,
-              "type": "optional<SchemaPropertiesDto>",
+              "type": "SchemaPropertiesDto",
             },
             "scripts": {
               "docs": undefined,
-              "type": "optional<SchemaScriptsDto>",
+              "type": "SchemaScriptsDto",
             },
             "type": {
               "docs": undefined,
-              "type": "optional<SchemaType>",
+              "type": "SchemaType",
             },
             "version": {
               "docs": "The version of the schema.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -13169,7 +13169,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The schemas.",
-              "type": "optional<list<SchemaDto>>",
+              "type": "list<SchemaDto>",
             },
           },
         },
@@ -13178,7 +13178,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "script": {
               "docs": "The script to render.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -13191,11 +13191,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "name": {
               "docs": "The name of the search result.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "type": {
               "docs": undefined,
-              "type": "optional<SearchResultType>",
+              "type": "SearchResultType",
             },
           },
         },
@@ -13233,27 +13233,27 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "action": {
               "docs": undefined,
-              "type": "optional<ActionTypeEnum>",
+              "type": "ActionTypeEnum",
             },
             "connectionString": {
               "docs": "The connection string to the Azure SignalR.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "hubName": {
               "docs": "The name of the hub.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "methodName": {
               "docs": "Set the Name of the hub method received by the customer.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "payload": {
               "docs": "Leave it empty to use the full event as body.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "target": {
               "docs": "Define target users or groups by id or name. One item per line. Not needed for Broadcast action.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -13297,11 +13297,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The simulated rule events.",
-              "type": "optional<list<SimulatedRuleEventDto>>",
+              "type": "list<SimulatedRuleEventDto>",
             },
             "total": {
               "docs": "The total number of simulated rule events.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -13359,11 +13359,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "text": {
               "docs": "The text that is sent as message to slack.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "webhookUrl": {
               "docs": "The slack webhook url.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -13494,11 +13494,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "contentType": {
               "docs": undefined,
-              "type": "optional<StringContentType>",
+              "type": "StringContentType",
             },
             "createEnum": {
               "docs": "Indicates whether GraphQL Enum should be created.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "defaultValue": {
               "docs": "The default value for the field value.",
@@ -13510,7 +13510,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "editor": {
               "docs": undefined,
-              "type": "optional<StringFieldEditor>",
+              "type": "StringFieldEditor",
             },
             "folderId": {
               "docs": "The initial id to the folder when the control supports file uploads.",
@@ -13518,15 +13518,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "inlineEditable": {
               "docs": "Indicates that the inline editor is enabled for this field.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isEmbeddable": {
               "docs": "Indicates that other content items or references are embedded.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "isUnique": {
               "docs": "Indicates if the field value must be unique. Ignored for nested fields and localized fields.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "maxCharacters": {
               "docs": "The maximum allowed of normal characters for the field value.",
@@ -13592,7 +13592,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "createEnum": {
               "docs": "Indicates whether GraphQL Enum should be created.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "defaultValue": {
               "docs": "The default value.",
@@ -13604,7 +13604,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "editor": {
               "docs": undefined,
-              "type": "optional<TagsFieldEditor>",
+              "type": "TagsFieldEditor",
             },
             "maxItems": {
               "docs": "The maximum allowed items for the field value.",
@@ -13621,19 +13621,19 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "created": {
               "docs": "The timestamp when the team has been created.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "id": {
               "docs": "The ID of the team.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "lastModified": {
               "docs": "The timestamp when the team has been modified last.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "name": {
               "docs": "The name of the team.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "roleName": {
               "docs": "The role name of the user.",
@@ -13641,7 +13641,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "version": {
               "docs": "The version of the team.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -13650,7 +13650,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "details": {
               "docs": "The details of the template.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -13659,19 +13659,19 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "description": {
               "docs": "The description of the template.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "isStarter": {
               "docs": "True, if the template is a starter.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "name": {
               "docs": "The name of the template.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "title": {
               "docs": "The title of the template.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -13680,7 +13680,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The event consumers.",
-              "type": "optional<list<TemplateDto>>",
+              "type": "list<TemplateDto>",
             },
           },
         },
@@ -13731,15 +13731,15 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "accessSecret": {
               "docs": " The generated access secret.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "accessToken": {
               "docs": " The generated access token.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "text": {
               "docs": "The text that is sent as tweet to twitter.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -13748,23 +13748,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "apiKey": {
               "docs": "The api key.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "delete": {
               "docs": "The condition when to delete the document.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "document": {
               "docs": "The optional custom document.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "host": {
               "docs": "The url to the instance or cluster.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "indexName": {
               "docs": "The name of the index.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -13782,7 +13782,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "editor": {
               "docs": undefined,
-              "type": "optional<UiFieldEditor>",
+              "type": "UiFieldEditor",
             },
           },
         },
@@ -13931,7 +13931,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "limit": {
               "docs": "The number of monthly api calls.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
             "numDays": {
               "docs": "The number of days to check or null for the current month.",
@@ -13944,23 +13944,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "displayName": {
               "docs": "The display name (usually first name and last name) of the user.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "email": {
               "docs": "The email of the user. Unique value.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "id": {
               "docs": "The ID of the user.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "isLocked": {
               "docs": "Determines if the user is locked.",
-              "type": "optional<boolean>",
+              "type": "boolean",
             },
             "permissions": {
               "docs": "Additional permissions for the user.",
-              "type": "optional<list<string>>",
+              "type": "list<string>",
             },
           },
         },
@@ -13982,11 +13982,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "items": {
               "docs": "The users.",
-              "type": "optional<list<UserDto>>",
+              "type": "list<UserDto>",
             },
             "total": {
               "docs": "The total number of users.",
-              "type": "optional<integer>",
+              "type": "integer",
             },
           },
         },
@@ -14020,27 +14020,27 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "headers": {
               "docs": "The message headers in the format '[Key]=[Value]', one entry per line.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "method": {
               "docs": undefined,
-              "type": "optional<WebhookMethod>",
+              "type": "WebhookMethod",
             },
             "payload": {
               "docs": "Leave it empty to use the full event as body.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "payloadType": {
               "docs": "The mime type of the payload.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "sharedSecret": {
               "docs": "The shared secret that is used to calculate the payload signature.",
-              "type": "optional<string>",
+              "type": "string",
             },
             "url": {
               "docs": "The url to the webhook.",
-              "type": "optional<string>",
+              "type": "string",
             },
           },
         },
@@ -14116,11 +14116,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "errors": {
               "docs": "The errros that should be fixed.",
-              "type": "optional<list<string>>",
+              "type": "list<string>",
             },
             "items": {
               "docs": "The workflow.",
-              "type": "optional<list<WorkflowDto>>",
+              "type": "list<WorkflowDto>",
             },
           },
         },
@@ -18417,15 +18417,15 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "isSingleton": {
                     "docs": "Set to true to allow a single content item only.",
-                    "type": "optional<boolean>",
+                    "type": "boolean",
                   },
                   "name": {
                     "docs": "The name of the schema.",
-                    "type": "optional<string>",
+                    "type": "string",
                   },
                   "type": {
                     "docs": undefined,
-                    "type": "optional<root.SchemaType>",
+                    "type": "root.SchemaType",
                   },
                 },
               },
@@ -18797,11 +18797,11 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "noFieldDeletion": {
                     "docs": "True, when fields should not be deleted.",
-                    "type": "optional<boolean>",
+                    "type": "boolean",
                   },
                   "noFieldRecreation": {
                     "docs": "True, when fields with different types should not be recreated.",
-                    "type": "optional<boolean>",
+                    "type": "boolean",
                   },
                 },
               },
