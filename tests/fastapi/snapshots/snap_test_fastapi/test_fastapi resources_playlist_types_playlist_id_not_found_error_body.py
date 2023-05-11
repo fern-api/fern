@@ -33,9 +33,7 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
         if self.__root__.type == "playlistId":
             return playlist_id(self.__root__.value)
 
-    __root__: typing_extensions.Annotated[
-        typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId], pydantic.Field(discriminator="type")
-    ]
+    __root__: typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]
 
     class Validators:
         """

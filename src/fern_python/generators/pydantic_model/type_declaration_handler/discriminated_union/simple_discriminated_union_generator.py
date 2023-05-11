@@ -6,9 +6,9 @@ from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
-from ..context import PydanticGeneratorContext
-from ..custom_config import PydanticModelCustomConfig
-from .abstract_type_generator import AbstractTypeGenerator
+from ...context import PydanticGeneratorContext
+from ...custom_config import PydanticModelCustomConfig
+from ..abstract_type_generator import AbstractTypeGenerator
 
 
 class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):

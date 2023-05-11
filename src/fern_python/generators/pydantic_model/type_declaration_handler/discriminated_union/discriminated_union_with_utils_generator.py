@@ -7,11 +7,11 @@ from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
-from ..context import PydanticGeneratorContext
-from ..custom_config import PydanticModelCustomConfig
-from ..fern_aware_pydantic_model import FernAwarePydanticModel
-from .abstract_type_generator import AbstractTypeGenerator
-from .get_visit_method import VisitableItem, VisitorArgument, get_visit_method
+from ...context import PydanticGeneratorContext
+from ...custom_config import PydanticModelCustomConfig
+from ...fern_aware_pydantic_model import FernAwarePydanticModel
+from ..abstract_type_generator import AbstractTypeGenerator
+from ..get_visit_method import VisitableItem, VisitorArgument, get_visit_method
 
 VISITOR_RETURN_TYPE = AST.GenericTypeVar(name="T_Result")
 BUILDER_ARGUMENT_NAME = "value"
@@ -229,7 +229,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                             )
                         ],
                     )
-                ),
+                )
+                # can't use discriminator without single variant pydantic models
+                # https://github.com/pydantic/pydantic/pull/3639
+                if len(internal_single_union_types) != 1 else None,
             )
 
     def _create_body_writer(

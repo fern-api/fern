@@ -31,9 +31,7 @@ class CreateProblemError(pydantic.BaseModel):
         if self.__root__.error_type == "generic":
             return generic(GenericCreateProblemError(**self.__root__.dict(exclude_unset=True)))
 
-    __root__: typing_extensions.Annotated[
-        typing.Union[_CreateProblemError.Generic], pydantic.Field(discriminator="error_type")
-    ]
+    __root__: typing.Union[_CreateProblemError.Generic]
 
     class Validators:
         """

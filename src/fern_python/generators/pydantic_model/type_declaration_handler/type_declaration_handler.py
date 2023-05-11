@@ -4,13 +4,14 @@ from fern_python.codegen import SourceFile
 
 from ..context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
+from .abstract_type_generator import AbstractTypeGenerator
 from .alias_generator import AliasGenerator
-from .discriminated_union_with_utils_generator import (
+from .discriminated_union import (
     DiscriminatedUnionWithUtilsGenerator,
+    SimpleDiscriminatedUnionGenerator,
 )
 from .enum_generator import EnumGenerator
 from .object_generator import ObjectGenerator, ObjectProperty
-from .simple_discriminated_union_generator import SimpleDiscriminatedUnionGenerator
 from .undiscriminated_union_generator import UndiscriminatedUnionGenerator
 
 
@@ -62,25 +63,7 @@ class TypeDeclarationHandler:
                 source_file=self._source_file,
                 docs=self._declaration.docs,
             ),
-            union=lambda union: (
-                DiscriminatedUnionWithUtilsGenerator(
-                    name=self._declaration.name,
-                    union=union,
-                    context=self._context,
-                    custom_config=self._custom_config,
-                    source_file=self._source_file,
-                    docs=self._declaration.docs,
-                )
-                if self._custom_config.include_union_utils
-                else SimpleDiscriminatedUnionGenerator(
-                    name=self._declaration.name,
-                    union=union,
-                    context=self._context,
-                    custom_config=self._custom_config,
-                    source_file=self._source_file,
-                    docs=self._declaration.docs,
-                )
-            ),
+            union=self._get_union_generator,
             undiscriminated_union=lambda union: UndiscriminatedUnionGenerator(
                 name=self._declaration.name,
                 union=union,
@@ -91,3 +74,23 @@ class TypeDeclarationHandler:
             ),
         )
         generator.generate()
+
+    def _get_union_generator(self, union: ir_types.UnionTypeDeclaration) -> AbstractTypeGenerator:
+        if self._custom_config.include_union_utils:
+            return DiscriminatedUnionWithUtilsGenerator(
+                name=self._declaration.name,
+                union=union,
+                context=self._context,
+                custom_config=self._custom_config,
+                source_file=self._source_file,
+                docs=self._declaration.docs,
+            )
+        else:
+            return SimpleDiscriminatedUnionGenerator(
+                name=self._declaration.name,
+                union=union,
+                context=self._context,
+                custom_config=self._custom_config,
+                source_file=self._source_file,
+                docs=self._declaration.docs,
+            )
