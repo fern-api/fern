@@ -5575,15 +5575,11 @@ sort order. If not set, then no prior elements exist.
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "ErrorBadRequestType",
-                  "nameOverride": undefined,
-                  "schema": "error-bad-request-type",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "ErrorBadRequestType",
+                "nameOverride": undefined,
+                "schema": "error-bad-request-type",
+                "type": "reference",
               },
             },
           ],
@@ -5779,15 +5775,11 @@ sort order. If not set, then no prior elements exist.
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "ErrorForbiddenType",
-                  "nameOverride": undefined,
-                  "schema": "error-forbidden-type",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "ErrorForbiddenType",
+                "nameOverride": undefined,
+                "schema": "error-forbidden-type",
+                "type": "reference",
               },
             },
           ],
@@ -5851,15 +5843,11 @@ inquiry.
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "ErrorInternalServerErrorType",
-                  "nameOverride": undefined,
-                  "schema": "error-internal-server-error-type",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "ErrorInternalServerErrorType",
+                "nameOverride": undefined,
+                "schema": "error-internal-server-error-type",
+                "type": "reference",
               },
             },
           ],
@@ -5907,15 +5895,11 @@ inquiry.
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "ErrorNotFoundType",
-                  "nameOverride": undefined,
-                  "schema": "error-not-found-type",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "ErrorNotFoundType",
+                "nameOverride": undefined,
+                "schema": "error-not-found-type",
+                "type": "reference",
               },
             },
           ],
@@ -5963,15 +5947,11 @@ inquiry.
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "ErrorServiceUnavailableType",
-                  "nameOverride": undefined,
-                  "schema": "error-service-unavailable-type",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "ErrorServiceUnavailableType",
+                "nameOverride": undefined,
+                "schema": "error-service-unavailable-type",
+                "type": "reference",
               },
             },
           ],
@@ -6034,15 +6014,11 @@ inquiry.
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "ErrorTooManyRequestsType",
-                  "nameOverride": undefined,
-                  "schema": "error-too-many-requests-type",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "ErrorTooManyRequestsType",
+                "nameOverride": undefined,
+                "schema": "error-too-many-requests-type",
+                "type": "reference",
               },
             },
           ],
@@ -6090,15 +6066,11 @@ inquiry.
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "ErrorUnauthorizedType",
-                  "nameOverride": undefined,
-                  "schema": "error-unauthorized-type",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "ErrorUnauthorizedType",
+                "nameOverride": undefined,
+                "schema": "error-unauthorized-type",
+                "type": "reference",
               },
             },
           ],
@@ -6818,32 +6790,24 @@ always be returned in the specified sort-by order.
               "key": "name",
               "schema": {
                 "description": "Name of the part.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "owned_by",
               "schema": {
                 "description": "The users that own the part.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "PartBaseOwnedByItem",
-                    "nameOverride": undefined,
-                    "schema": "user-summary",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "PartBaseOwnedByItem",
+                  "nameOverride": undefined,
+                  "schema": "user-summary",
+                  "type": "reference",
                 },
               },
             },
@@ -6888,14 +6852,10 @@ always be returned in the specified sort-by order.
               "key": "name",
               "schema": {
                 "description": "Name of the part.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -8145,14 +8105,10 @@ on the tag's purpose and usage.
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -8180,14 +8136,10 @@ unique.
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -9532,43 +9484,31 @@ default visibility.
               "key": "secret",
               "schema": {
                 "description": "The secret to use for verifying webhook events.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "status",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "WebhookStatus",
-                  "nameOverride": undefined,
-                  "schema": "webhook-status",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "WebhookStatus",
+                "nameOverride": undefined,
+                "schema": "webhook-status",
+                "type": "reference",
               },
             },
             {
               "key": "url",
               "schema": {
                 "description": "The URL of the webhook endpoint.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -10534,18 +10474,14 @@ event types. Note this is mutually exclusive with 'add' and
               "key": "owned_by",
               "schema": {
                 "description": "The users that own the work.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "WorkBaseOwnedByItem",
-                    "nameOverride": undefined,
-                    "schema": "user-summary",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "WorkBaseOwnedByItem",
+                  "nameOverride": undefined,
+                  "schema": "user-summary",
+                  "type": "reference",
                 },
               },
             },
@@ -10620,14 +10556,10 @@ event types. Note this is mutually exclusive with 'add' and
               "key": "title",
               "schema": {
                 "description": "Title of the work object.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -15002,15 +14934,11 @@ exports[`open api parser hathora simple 1`] = `
               "key": "deployment",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "ApplicationWithDeploymentDeployment",
-                  "nameOverride": undefined,
-                  "schema": "Deployment",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "ApplicationWithDeploymentDeployment",
+                "nameOverride": undefined,
+                "schema": "Deployment",
+                "type": "reference",
               },
             },
           ],
@@ -15240,101 +15168,73 @@ exports[`open api parser hathora simple 1`] = `
               "key": "createdAt",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "createdBy",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "requestedMemoryMB",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "double",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "double",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "requestedCPU",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "double",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "double",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "deploymentId",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "DeploymentDeploymentId",
-                  "nameOverride": undefined,
-                  "schema": "DeploymentId",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "DeploymentDeploymentId",
+                "nameOverride": undefined,
+                "schema": "DeploymentId",
+                "type": "reference",
               },
             },
             {
               "key": "buildId",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "DeploymentBuildId",
-                  "nameOverride": undefined,
-                  "schema": "BuildId",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "DeploymentBuildId",
+                "nameOverride": undefined,
+                "schema": "BuildId",
+                "type": "reference",
               },
             },
             {
               "key": "appId",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "DeploymentAppId",
-                  "nameOverride": undefined,
-                  "schema": "AppId",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "DeploymentAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
               },
             },
           ],
@@ -15986,18 +15886,14 @@ exports[`open api parser hathora simple 1`] = `
               "key": "rooms",
               "schema": {
                 "description": undefined,
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "ProcessWithRoomsRoomsItem",
-                    "nameOverride": undefined,
-                    "schema": "RoomWithoutAllocations",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "ProcessWithRoomsRoomsItem",
+                  "nameOverride": undefined,
+                  "schema": "RoomWithoutAllocations",
+                  "type": "reference",
                 },
               },
             },
@@ -16005,14 +15901,10 @@ exports[`open api parser hathora simple 1`] = `
               "key": "totalRooms",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "double",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "double",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -19369,14 +19261,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "key": "status",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -19401,14 +19289,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "key": "status",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -19433,14 +19317,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "key": "status",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -19465,14 +19345,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "key": "status",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -32596,70 +32472,50 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "appId",
               "schema": {
                 "description": "The application ID.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "apiKey",
               "schema": {
                 "description": "The API key to grant access to Squidex.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "indexName",
               "schema": {
                 "description": "The name of the index.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "document",
               "schema": {
                 "description": "The optional custom document.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "delete",
               "schema": {
                 "description": "The condition when to delete the entry.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -32873,28 +32729,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The ID of the app.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "name",
               "schema": {
                 "description": "The name of the app.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -32929,42 +32777,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "version",
               "schema": {
                 "description": "The version of the app.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "created",
               "schema": {
                 "description": "The timestamp when the app has been created.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModified",
               "schema": {
                 "description": "The timestamp when the app has been modified last.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -32985,17 +32821,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "permissions",
               "schema": {
                 "description": "The permission level of the user.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "schema": {
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                  "schema": {
+                    "type": "string",
                   },
+                  "type": "primitive",
                 },
               },
             },
@@ -33003,28 +32835,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "canAccessApi",
               "schema": {
                 "description": "Indicates if the user can access the api.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "canAccessContent",
               "schema": {
                 "description": "Indicates if the user can access at least one content.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -33045,16 +32869,12 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "roleProperties",
               "schema": {
                 "description": "The properties from the role.",
-                "type": "optional",
+                "key": {
+                  "type": "string",
+                },
+                "type": "map",
                 "value": {
-                  "description": undefined,
-                  "key": {
-                    "type": "string",
-                  },
-                  "type": "map",
-                  "value": {
-                    "type": "unknown",
-                  },
+                  "type": "unknown",
                 },
               },
             },
@@ -33080,45 +32900,33 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "iso2Code",
               "schema": {
                 "description": "The iso code of the language.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "englishName",
               "schema": {
                 "description": "The english name of the language.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "fallback",
               "schema": {
                 "description": "The fallback languages.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "schema": {
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                  "schema": {
+                    "type": "string",
                   },
+                  "type": "primitive",
                 },
               },
             },
@@ -33126,28 +32934,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "isMaster",
               "schema": {
                 "description": "Indicates if the language is the master language.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isOptional",
               "schema": {
                 "description": "Indicates if the language is optional.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -33172,18 +32972,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The languages.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "AppLanguagesDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "AppLanguageDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "AppLanguagesDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "AppLanguageDto",
+                  "type": "reference",
                 },
               },
             },
@@ -33209,18 +33005,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "patterns",
               "schema": {
                 "description": "The configured app patterns.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "AppSettingsDtoPatternsItem",
-                    "nameOverride": undefined,
-                    "schema": "PatternDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "AppSettingsDtoPatternsItem",
+                  "nameOverride": undefined,
+                  "schema": "PatternDto",
+                  "type": "reference",
                 },
               },
             },
@@ -33228,18 +33020,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "editors",
               "schema": {
                 "description": "The configured UI editors.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "AppSettingsDtoEditorsItem",
-                    "nameOverride": undefined,
-                    "schema": "EditorDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "AppSettingsDtoEditorsItem",
+                  "nameOverride": undefined,
+                  "schema": "EditorDto",
+                  "type": "reference",
                 },
               },
             },
@@ -33247,42 +33035,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "hideScheduler",
               "schema": {
                 "description": "Hide the scheduler for content items.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "hideDateTimeModeButton",
               "schema": {
                 "description": "Hide the datetime mode button.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "version",
               "schema": {
                 "description": "The version of the app.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -33385,42 +33161,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The ID of the asset.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "parentId",
               "schema": {
                 "description": "The ID of the parent folder. Empty for files without parent.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "fileName",
               "schema": {
                 "description": "The file name.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -33441,70 +33205,50 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "isProtected",
               "schema": {
                 "description": "True, when the asset is not public.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "slug",
               "schema": {
                 "description": "The slug.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "mimeType",
               "schema": {
                 "description": "The mime type.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "fileType",
               "schema": {
                 "description": "The file type.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "metadataText",
               "schema": {
                 "description": "The formatted text representation of the metadata.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -33525,16 +33269,12 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "metadata",
               "schema": {
                 "description": "The asset metadata.",
-                "type": "optional",
+                "key": {
+                  "type": "string",
+                },
+                "type": "map",
                 "value": {
-                  "description": undefined,
-                  "key": {
-                    "type": "string",
-                  },
-                  "type": "map",
-                  "value": {
-                    "type": "unknown",
-                  },
+                  "type": "unknown",
                 },
               },
             },
@@ -33560,113 +33300,81 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "fileSize",
               "schema": {
                 "description": "The size of the file in bytes.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "fileVersion",
               "schema": {
                 "description": "The version of the file.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "AssetDtoType",
-                  "nameOverride": undefined,
-                  "schema": "AssetType",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "AssetDtoType",
+                "nameOverride": undefined,
+                "schema": "AssetType",
+                "type": "reference",
               },
             },
             {
               "key": "createdBy",
               "schema": {
                 "description": "The user that has created the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModifiedBy",
               "schema": {
                 "description": "The user that has updated the asset.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "created",
               "schema": {
                 "description": "The date and time when the asset has been created.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModified",
               "schema": {
                 "description": "The date and time when the asset has been modified last.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "version",
               "schema": {
                 "description": "The version of the asset.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -33688,14 +33396,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "isImage",
               "schema": {
                 "description": "Determines of the created file is an image.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -33748,56 +33452,40 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The ID of the asset.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "parentId",
               "schema": {
                 "description": "The ID of the parent folder. Empty for files without parent.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "folderName",
               "schema": {
                 "description": "The folder name.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "version",
               "schema": {
                 "description": "The version of the asset folder.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -33845,32 +33533,24 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "total",
               "schema": {
                 "description": "The total number of assets.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "items",
               "schema": {
                 "description": "The assets folders.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "AssetFoldersDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "AssetFolderDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "AssetFoldersDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "AssetFolderDto",
+                  "type": "reference",
                 },
               },
             },
@@ -33878,18 +33558,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "path",
               "schema": {
                 "description": "The path to the current folder.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "AssetFoldersDtoPathItem",
-                    "nameOverride": undefined,
-                    "schema": "AssetFolderDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "AssetFoldersDtoPathItem",
+                  "nameOverride": undefined,
+                  "schema": "AssetFolderDto",
+                  "type": "reference",
                 },
               },
             },
@@ -34055,14 +33731,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "version",
               "schema": {
                 "description": "The version of the app.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -34115,32 +33787,24 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "total",
               "schema": {
                 "description": "The total number of assets.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "items",
               "schema": {
                 "description": "The assets.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "AssetsDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "AssetDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "AssetsDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "AssetDto",
+                  "type": "reference",
                 },
               },
             },
@@ -34157,15 +33821,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "previewMode",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "AssetsFieldPropertiesDtoPreviewMode",
-                  "nameOverride": undefined,
-                  "schema": "AssetPreviewMode",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "AssetsFieldPropertiesDtoPreviewMode",
+                "nameOverride": undefined,
+                "schema": "AssetPreviewMode",
+                "type": "reference",
               },
             },
             {
@@ -34388,42 +34048,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "resolveFirst",
               "schema": {
                 "description": "True to resolve first asset in the content list.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "mustBeImage",
               "schema": {
                 "description": "True to resolve first image in the content list.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "resolveImage",
               "schema": {
                 "description": "True to resolve first image in the content list.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -34448,14 +34096,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "allowDuplicates",
               "schema": {
                 "description": "True, if duplicate values are allowed.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -34518,42 +34162,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "connectionString",
               "schema": {
                 "description": "The connection string to the storage account.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "queue",
               "schema": {
                 "description": "The name of the queue.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "payload",
               "schema": {
                 "description": "Leave it empty to use the full event as body.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -34578,28 +34210,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The ID of the backup job.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "started",
               "schema": {
                 "description": "The time when the job has been started.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -34620,43 +34244,31 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "handledEvents",
               "schema": {
                 "description": "The number of handled events.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "handledAssets",
               "schema": {
                 "description": "The number of handled assets.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "status",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "BackupJobDtoStatus",
-                  "nameOverride": undefined,
-                  "schema": "JobStatus",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "BackupJobDtoStatus",
+                "nameOverride": undefined,
+                "schema": "JobStatus",
+                "type": "reference",
               },
             },
           ],
@@ -34681,18 +34293,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The backups.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "BackupJobsDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "BackupJobDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "BackupJobsDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "BackupJobDto",
+                  "type": "reference",
                 },
               },
             },
@@ -34756,29 +34364,21 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "inlineEditable",
               "schema": {
                 "description": "Indicates that the inline editor is enabled for this field.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "editor",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "BooleanFieldPropertiesDtoEditor",
-                  "nameOverride": undefined,
-                  "schema": "BooleanFieldEditor",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "BooleanFieldPropertiesDtoEditor",
+                "nameOverride": undefined,
+                "schema": "BooleanFieldEditor",
+                "type": "reference",
               },
             },
           ],
@@ -35681,42 +35281,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The client id.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "secret",
               "schema": {
                 "description": "The client secret.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "name",
               "schema": {
                 "description": "The client name.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -35737,42 +35325,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "apiCallsLimit",
               "schema": {
                 "description": "The number of allowed api calls per month for this client.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "apiTrafficLimit",
               "schema": {
                 "description": "The number of allowed api traffic bytes per month for this client.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "allowAnonymous",
               "schema": {
                 "description": "True to allow anonymous access without an access token for this client.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -35797,18 +35373,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The clients.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "ClientsDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "ClientDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "ClientsDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "ClientDto",
+                  "type": "reference",
                 },
               },
             },
@@ -35888,28 +35460,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "text",
               "schema": {
                 "description": "The comment text.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "client",
               "schema": {
                 "description": "An optional client name.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -36248,14 +35812,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "handleAll",
               "schema": {
                 "description": "Determines whether the trigger should handle all content changes events.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -36295,42 +35855,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The if of the content item.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "createdBy",
               "schema": {
                 "description": "The user that has created the content item.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModifiedBy",
               "schema": {
                 "description": "The user that has updated the content item.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -36358,42 +35906,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "created",
               "schema": {
                 "description": "The date and time when the content item has been created.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModified",
               "schema": {
                 "description": "The date and time when the content item has been modified last.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "status",
               "schema": {
                 "description": "The status of the content.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -36414,14 +35950,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "statusColor",
               "schema": {
                 "description": "The color of the status.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -36471,14 +36003,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "schemaId",
               "schema": {
                 "description": "The ID of the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -36532,28 +36060,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "isDeleted",
               "schema": {
                 "description": "Indicates whether the content is deleted.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "version",
               "schema": {
                 "description": "The version of the content.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -36588,32 +36108,24 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "total",
               "schema": {
                 "description": "The total number of content items.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "items",
               "schema": {
                 "description": "The content items.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "ContentsDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "ContentDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "ContentsDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "ContentDto",
+                  "type": "reference",
                 },
               },
             },
@@ -36621,18 +36133,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "statuses",
               "schema": {
                 "description": "The possible statuses.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "ContentsDtoStatusesItem",
-                    "nameOverride": undefined,
-                    "schema": "StatusInfoDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "ContentsDtoStatusesItem",
+                  "nameOverride": undefined,
+                  "schema": "StatusInfoDto",
+                  "type": "reference",
                 },
               },
             },
@@ -36658,42 +36166,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "contributorId",
               "schema": {
                 "description": "The ID of the user that contributes to the app.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "contributorName",
               "schema": {
                 "description": "The display name.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "contributorEmail",
               "schema": {
                 "description": "The email address.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -36732,18 +36228,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The contributors.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "ContributorsDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "ContributorDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "ContributorsDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "ContributorDto",
+                  "type": "reference",
                 },
               },
             },
@@ -36751,14 +36243,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "maxContributors",
               "schema": {
                 "description": "The maximum number of allowed contributors.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -36893,56 +36381,40 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "data",
               "schema": {
                 "description": "The content data.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "schema",
               "schema": {
                 "description": "The name of the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "client",
               "schema": {
                 "description": "An optional client name.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "publish",
               "schema": {
                 "description": "Publish the content.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -36998,43 +36470,31 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "name",
               "schema": {
                 "description": "The name of the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "CreateSchemaDtoType",
-                  "nameOverride": undefined,
-                  "schema": "SchemaType",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "CreateSchemaDtoType",
+                "nameOverride": undefined,
+                "schema": "SchemaType",
+                "type": "reference",
               },
             },
             {
               "key": "isSingleton",
               "schema": {
                 "description": "Set to true to allow a single content item only.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -37258,15 +36718,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "editor",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "DateTimeFieldPropertiesDtoEditor",
-                  "nameOverride": undefined,
-                  "schema": "DateTimeFieldEditor",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "DateTimeFieldPropertiesDtoEditor",
+                "nameOverride": undefined,
+                "schema": "DateTimeFieldEditor",
+                "type": "reference",
               },
             },
             {
@@ -37297,70 +36753,50 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "url",
               "schema": {
                 "description": "The url to the discourse server.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "apiKey",
               "schema": {
                 "description": "The api key to authenticate to your discourse server.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "apiUsername",
               "schema": {
                 "description": "The api username to authenticate to your discourse server.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "text",
               "schema": {
                 "description": "The text as markdown.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "title",
               "schema": {
                 "description": "The optional title when creating new topics.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -37433,84 +36869,60 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "host",
               "schema": {
                 "description": "The url to the instance or cluster.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "indexName",
               "schema": {
                 "description": "The name of the index.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "username",
               "schema": {
                 "description": "The optional username.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "password",
               "schema": {
                 "description": "The optional password.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "document",
               "schema": {
                 "description": "The optional custom document.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "delete",
               "schema": {
                 "description": "The condition when to delete the document.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -37526,112 +36938,80 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "serverHost",
               "schema": {
                 "description": "The IP address or host to the SMTP server.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "serverPort",
               "schema": {
                 "description": "The port to the SMTP server.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "serverUsername",
               "schema": {
                 "description": "The username for the SMTP server.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "serverPassword",
               "schema": {
                 "description": "The password for the SMTP server.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "messageFrom",
               "schema": {
                 "description": "The email sending address.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "messageTo",
               "schema": {
                 "description": "The email message will be sent to.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "messageSubject",
               "schema": {
                 "description": "The subject line for this email message.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "messageBody",
               "schema": {
                 "description": "The message body.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -37745,56 +37125,40 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "isStopped",
               "schema": {
                 "description": "Indicates if the event consumer has been started.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isResetting",
               "schema": {
                 "description": "Indicates if the event consumer is resetting at the moment.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "count",
               "schema": {
                 "description": "The number of handled events.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "name",
               "schema": {
                 "description": "The name of the event consumer.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -37847,18 +37211,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The event consumers.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "EventConsumersDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "EventConsumerDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "EventConsumersDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "EventConsumerDto",
+                  "type": "reference",
                 },
               },
             },
@@ -37889,28 +37249,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "apiKey",
               "schema": {
                 "description": "The API key to grant access to Squidex.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "serviceId",
               "schema": {
                 "description": "The ID of the fastly service.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -37998,99 +37350,71 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "fieldId",
               "schema": {
                 "description": "The ID of the field.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "name",
               "schema": {
                 "description": "The name of the field. Must be unique within the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isHidden",
               "schema": {
                 "description": "Defines if the field is hidden.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isLocked",
               "schema": {
                 "description": "Defines if the field is locked.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isDisabled",
               "schema": {
                 "description": "Defines if the field is disabled.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "partitioning",
               "schema": {
                 "description": "Defines the partitioning of the field.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "properties",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "FieldDtoProperties",
-                  "nameOverride": undefined,
-                  "schema": "FieldPropertiesDto",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "FieldDtoProperties",
+                "nameOverride": undefined,
+                "schema": "FieldPropertiesDto",
+                "type": "reference",
               },
             },
             {
@@ -38427,15 +37751,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "editor",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "GeolocationFieldPropertiesDtoEditor",
-                  "nameOverride": undefined,
-                  "schema": "GeolocationFieldEditor",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "GeolocationFieldPropertiesDtoEditor",
+                "nameOverride": undefined,
+                "schema": "GeolocationFieldEditor",
+                "type": "reference",
               },
             },
           ],
@@ -38841,98 +38161,70 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "accessToken",
               "schema": {
                 "description": "The self issued access token.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "title",
               "schema": {
                 "description": "The title, used for the url.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "content",
               "schema": {
                 "description": "The content, either html or markdown.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "canonicalUrl",
               "schema": {
                 "description": "The original home of this content, if it was originally published elsewhere.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "tags",
               "schema": {
                 "description": "The optional comma separated list of tags.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "publicationId",
               "schema": {
                 "description": "Optional publication id.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isHtml",
               "schema": {
                 "description": "Indicates whether the content is markdown or html.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -39003,85 +38295,61 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "fieldId",
               "schema": {
                 "description": "The ID of the field.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "name",
               "schema": {
                 "description": "The name of the field. Must be unique within the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isHidden",
               "schema": {
                 "description": "Defines if the field is hidden.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isLocked",
               "schema": {
                 "description": "Defines if the field is locked.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isDisabled",
               "schema": {
                 "description": "Defines if the field is disabled.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "properties",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "NestedFieldDtoProperties",
-                  "nameOverride": undefined,
-                  "schema": "FieldPropertiesDto",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "NestedFieldDtoProperties",
+                "nameOverride": undefined,
+                "schema": "FieldPropertiesDto",
+                "type": "reference",
               },
             },
           ],
@@ -39097,56 +38365,40 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "user",
               "schema": {
                 "description": "The user id or email.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "text",
               "schema": {
                 "description": "The text to send.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "url",
               "schema": {
                 "description": "The optional url to attach to the notification.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "client",
               "schema": {
                 "description": "An optional client name.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -39265,43 +38517,31 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "isUnique",
               "schema": {
                 "description": "Indicates if the field value must be unique. Ignored for nested fields and localized fields.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "inlineEditable",
               "schema": {
                 "description": "Indicates that the inline editor is enabled for this field.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "editor",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "NumberFieldPropertiesDtoEditor",
-                  "nameOverride": undefined,
-                  "schema": "NumberFieldEditor",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "NumberFieldPropertiesDtoEditor",
+                "nameOverride": undefined,
+                "schema": "NumberFieldEditor",
+                "type": "reference",
               },
             },
           ],
@@ -39317,84 +38557,60 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "host",
               "schema": {
                 "description": "The url to the instance or cluster.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "indexName",
               "schema": {
                 "description": "The name of the index.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "username",
               "schema": {
                 "description": "The optional username.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "password",
               "schema": {
                 "description": "The optional password.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "document",
               "schema": {
                 "description": "The optional custom document.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "delete",
               "schema": {
                 "description": "The condition when to delete the document.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -39731,28 +38947,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "token",
               "schema": {
                 "description": "The prerender token from your account.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "url",
               "schema": {
                 "description": "The url to recache.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -40022,57 +39230,41 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "allowDuplicates",
               "schema": {
                 "description": "True, if duplicate values are allowed.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "resolveReference",
               "schema": {
                 "description": "True to resolve references in the content list.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "mustBePublished",
               "schema": {
                 "description": "True when all references must be published.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "editor",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "ReferencesFieldPropertiesDtoEditor",
-                  "nameOverride": undefined,
-                  "schema": "ReferencesFieldEditor",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "ReferencesFieldPropertiesDtoEditor",
+                "nameOverride": undefined,
+                "schema": "ReferencesFieldEditor",
+                "type": "reference",
               },
             },
             {
@@ -40446,73 +39638,53 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "name",
               "schema": {
                 "description": "The role name.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "numClients",
               "schema": {
                 "description": "The number of clients with this role.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "numContributors",
               "schema": {
                 "description": "The number of contributors with this role.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isDefaultRole",
               "schema": {
                 "description": "Indicates if the role is an builtin default role.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "permissions",
               "schema": {
                 "description": "Associated list of permissions.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "schema": {
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                  "schema": {
+                    "type": "string",
                   },
+                  "type": "primitive",
                 },
               },
             },
@@ -40520,16 +39692,12 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "properties",
               "schema": {
                 "description": "Associated list of UI properties.",
-                "type": "optional",
+                "key": {
+                  "type": "string",
+                },
+                "type": "map",
                 "value": {
-                  "description": undefined,
-                  "key": {
-                    "type": "string",
-                  },
-                  "type": "map",
-                  "value": {
-                    "type": "unknown",
-                  },
+                  "type": "unknown",
                 },
               },
             },
@@ -40555,18 +39723,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The roles.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "RolesDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "RoleDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "RolesDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "RoleDto",
+                  "type": "reference",
                 },
               },
             },
@@ -40749,98 +39913,70 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The ID of the rule.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "createdBy",
               "schema": {
                 "description": "The user that has created the rule.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModifiedBy",
               "schema": {
                 "description": "The user that has updated the rule.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "created",
               "schema": {
                 "description": "The date and time when the rule has been created.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModified",
               "schema": {
                 "description": "The date and time when the rule has been modified last.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "version",
               "schema": {
                 "description": "The version of the rule.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isEnabled",
               "schema": {
                 "description": "Determines if the rule is enabled.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -40861,58 +39997,42 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "trigger",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "RuleDtoTrigger",
-                  "nameOverride": undefined,
-                  "schema": "RuleTriggerDto",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "RuleDtoTrigger",
+                "nameOverride": undefined,
+                "schema": "RuleTriggerDto",
+                "type": "reference",
               },
             },
             {
               "key": "action",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "RuleDtoAction",
-                  "nameOverride": undefined,
-                  "schema": "RuleActionDto",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "RuleDtoAction",
+                "nameOverride": undefined,
+                "schema": "RuleActionDto",
+                "type": "reference",
               },
             },
             {
               "key": "numSucceeded",
               "schema": {
                 "description": "The number of completed executions.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "numFailed",
               "schema": {
                 "description": "The number of failed executions.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -41143,56 +40263,40 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The ID of the event.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "created",
               "schema": {
                 "description": "The time when the event has been created.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "description",
               "schema": {
                 "description": "The description.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "eventName",
               "schema": {
                 "description": "The name of the event.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -41213,14 +40317,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "numCalls",
               "schema": {
                 "description": "The number of calls.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -41241,30 +40341,22 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "result",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "RuleEventDtoResult",
-                  "nameOverride": undefined,
-                  "schema": "RuleResult",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "RuleEventDtoResult",
+                "nameOverride": undefined,
+                "schema": "RuleResult",
+                "type": "reference",
               },
             },
             {
               "key": "jobResult",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "RuleEventDtoJobResult",
-                  "nameOverride": undefined,
-                  "schema": "RuleJobResult",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "RuleEventDtoJobResult",
+                "nameOverride": undefined,
+                "schema": "RuleJobResult",
+                "type": "reference",
               },
             },
           ],
@@ -41289,32 +40381,24 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "total",
               "schema": {
                 "description": "The total number of rule events.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "items",
               "schema": {
                 "description": "The rule events.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "RuleEventsDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "RuleEventDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "RuleEventsDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "RuleEventDto",
+                  "type": "reference",
                 },
               },
             },
@@ -41515,18 +40599,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The rules.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "RulesDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "RuleDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "RulesDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "RuleDto",
+                  "type": "reference",
                 },
               },
             },
@@ -41681,71 +40761,51 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The ID of the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "createdBy",
               "schema": {
                 "description": "The user that has created the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModifiedBy",
               "schema": {
                 "description": "The user that has updated the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "name",
               "schema": {
                 "description": "The name of the schema. Unique within the app.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "SchemaDtoType",
-                  "nameOverride": undefined,
-                  "schema": "SchemaType",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "SchemaDtoType",
+                "nameOverride": undefined,
+                "schema": "SchemaType",
+                "type": "reference",
               },
             },
             {
@@ -41766,124 +40826,88 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "properties",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "SchemaDtoProperties",
-                  "nameOverride": undefined,
-                  "schema": "SchemaPropertiesDto",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "SchemaDtoProperties",
+                "nameOverride": undefined,
+                "schema": "SchemaPropertiesDto",
+                "type": "reference",
               },
             },
             {
               "key": "isSingleton",
               "schema": {
                 "description": "Indicates if the schema is a singleton.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isPublished",
               "schema": {
                 "description": "Indicates if the schema is published.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "created",
               "schema": {
                 "description": "The date and time when the schema has been created.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModified",
               "schema": {
                 "description": "The date and time when the schema has been modified last.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "version",
               "schema": {
                 "description": "The version of the schema.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "scripts",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "SchemaDtoScripts",
-                  "nameOverride": undefined,
-                  "schema": "SchemaScriptsDto",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "SchemaDtoScripts",
+                "nameOverride": undefined,
+                "schema": "SchemaScriptsDto",
+                "type": "reference",
               },
             },
             {
               "key": "previewUrls",
               "schema": {
                 "description": "The preview Urls.",
-                "type": "optional",
+                "key": {
+                  "type": "string",
+                },
+                "type": "map",
                 "value": {
                   "description": undefined,
-                  "key": {
+                  "schema": {
                     "type": "string",
                   },
-                  "type": "map",
-                  "value": {
-                    "description": undefined,
-                    "type": "optional",
-                    "value": {
-                      "description": undefined,
-                      "schema": {
-                        "type": "string",
-                      },
-                      "type": "primitive",
-                    },
-                  },
+                  "type": "primitive",
                 },
               },
             },
@@ -41891,17 +40915,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "fieldsInLists",
               "schema": {
                 "description": "The name of fields that are used in content lists.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "schema": {
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                  "schema": {
+                    "type": "string",
                   },
+                  "type": "primitive",
                 },
               },
             },
@@ -41909,17 +40929,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "fieldsInReferences",
               "schema": {
                 "description": "The name of fields that are used in content references.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "schema": {
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                  "schema": {
+                    "type": "string",
                   },
+                  "type": "primitive",
                 },
               },
             },
@@ -41927,18 +40943,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "fieldRules",
               "schema": {
                 "description": "The field rules.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "SchemaDtoFieldRulesItem",
-                    "nameOverride": undefined,
-                    "schema": "FieldRuleDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "SchemaDtoFieldRulesItem",
+                  "nameOverride": undefined,
+                  "schema": "FieldRuleDto",
+                  "type": "reference",
                 },
               },
             },
@@ -41946,18 +40958,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "fields",
               "schema": {
                 "description": "The list of fields.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "SchemaDtoFieldsItem",
-                    "nameOverride": undefined,
-                    "schema": "FieldDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "SchemaDtoFieldsItem",
+                  "nameOverride": undefined,
+                  "schema": "FieldDto",
+                  "type": "reference",
                 },
               },
             },
@@ -42206,18 +41214,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The schemas.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "SchemasDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "SchemaDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "SchemasDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "SchemaDto",
+                  "type": "reference",
                 },
               },
             },
@@ -42234,14 +41238,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "script",
               "schema": {
                 "description": "The script to render.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -42266,29 +41266,21 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "name",
               "schema": {
                 "description": "The name of the search result.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "type",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "SearchResultDtoType",
-                  "nameOverride": undefined,
-                  "schema": "SearchResultType",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "SearchResultDtoType",
+                "nameOverride": undefined,
+                "schema": "SearchResultType",
+                "type": "reference",
               },
             },
             {
@@ -42356,85 +41348,61 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "connectionString",
               "schema": {
                 "description": "The connection string to the Azure SignalR.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "hubName",
               "schema": {
                 "description": "The name of the hub.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "action",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "SignalRRuleActionDtoAction",
-                  "nameOverride": undefined,
-                  "schema": "ActionTypeEnum",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "SignalRRuleActionDtoAction",
+                "nameOverride": undefined,
+                "schema": "ActionTypeEnum",
+                "type": "reference",
               },
             },
             {
               "key": "methodName",
               "schema": {
                 "description": "Set the Name of the hub method received by the customer.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "target",
               "schema": {
                 "description": "Define target users or groups by id or name. One item per line. Not needed for Broadcast action.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "payload",
               "schema": {
                 "description": "Leave it empty to use the full event as body.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -42567,32 +41535,24 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "total",
               "schema": {
                 "description": "The total number of simulated rule events.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "items",
               "schema": {
                 "description": "The simulated rule events.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "SimulatedRuleEventsDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "SimulatedRuleEventDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "SimulatedRuleEventsDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "SimulatedRuleEventDto",
+                  "type": "reference",
                 },
               },
             },
@@ -42672,28 +41632,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "webhookUrl",
               "schema": {
                 "description": "The slack webhook url.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "text",
               "schema": {
                 "description": "The text that is sent as message to slack.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -43098,86 +42050,62 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "isUnique",
               "schema": {
                 "description": "Indicates if the field value must be unique. Ignored for nested fields and localized fields.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isEmbeddable",
               "schema": {
                 "description": "Indicates that other content items or references are embedded.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "inlineEditable",
               "schema": {
                 "description": "Indicates that the inline editor is enabled for this field.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "createEnum",
               "schema": {
                 "description": "Indicates whether GraphQL Enum should be created.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "contentType",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "StringFieldPropertiesDtoContentType",
-                  "nameOverride": undefined,
-                  "schema": "StringContentType",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "StringFieldPropertiesDtoContentType",
+                "nameOverride": undefined,
+                "schema": "StringContentType",
+                "type": "reference",
               },
             },
             {
               "key": "editor",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "StringFieldPropertiesDtoEditor",
-                  "nameOverride": undefined,
-                  "schema": "StringFieldEditor",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "StringFieldPropertiesDtoEditor",
+                "nameOverride": undefined,
+                "schema": "StringFieldEditor",
+                "type": "reference",
               },
             },
           ],
@@ -43202,28 +42130,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "noFieldDeletion",
               "schema": {
                 "description": "True, when fields should not be deleted.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "noFieldRecreation",
               "schema": {
                 "description": "True, when fields with different types should not be recreated.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -43341,29 +42261,21 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "createEnum",
               "schema": {
                 "description": "Indicates whether GraphQL Enum should be created.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "editor",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "TagsFieldPropertiesDtoEditor",
-                  "nameOverride": undefined,
-                  "schema": "TagsFieldEditor",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "TagsFieldPropertiesDtoEditor",
+                "nameOverride": undefined,
+                "schema": "TagsFieldEditor",
+                "type": "reference",
               },
             },
           ],
@@ -43388,70 +42300,50 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The ID of the team.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "name",
               "schema": {
                 "description": "The name of the team.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "version",
               "schema": {
                 "description": "The version of the team.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "created",
               "schema": {
                 "description": "The timestamp when the team has been created.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "lastModified",
               "schema": {
                 "description": "The timestamp when the team has been modified last.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -43490,14 +42382,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "details",
               "schema": {
                 "description": "The details of the template.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -43522,56 +42410,40 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "name",
               "schema": {
                 "description": "The name of the template.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "title",
               "schema": {
                 "description": "The title of the template.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "description",
               "schema": {
                 "description": "The description of the template.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isStarter",
               "schema": {
                 "description": "True, if the template is a starter.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -43596,18 +42468,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The event consumers.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "TemplatesDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "TemplateDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "TemplatesDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "TemplateDto",
+                  "type": "reference",
                 },
               },
             },
@@ -43762,42 +42630,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "accessToken",
               "schema": {
                 "description": " The generated access token.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "accessSecret",
               "schema": {
                 "description": " The generated access secret.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "text",
               "schema": {
                 "description": "The text that is sent as tweet to twitter.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -43813,70 +42669,50 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "host",
               "schema": {
                 "description": "The url to the instance or cluster.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "indexName",
               "schema": {
                 "description": "The name of the index.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "apiKey",
               "schema": {
                 "description": "The api key.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "document",
               "schema": {
                 "description": "The optional custom document.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "delete",
               "schema": {
                 "description": "The condition when to delete the document.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -43905,15 +42741,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "editor",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "UiFieldPropertiesDtoEditor",
-                  "nameOverride": undefined,
-                  "schema": "UIFieldEditor",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "UiFieldPropertiesDtoEditor",
+                "nameOverride": undefined,
+                "schema": "UIFieldEditor",
+                "type": "reference",
               },
             },
           ],
@@ -45045,14 +43877,10 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "limit",
               "schema": {
                 "description": "The number of monthly api calls.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
@@ -45091,73 +43919,53 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "id",
               "schema": {
                 "description": "The ID of the user.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "email",
               "schema": {
                 "description": "The email of the user. Unique value.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "displayName",
               "schema": {
                 "description": "The display name (usually first name and last name) of the user.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "isLocked",
               "schema": {
                 "description": "Determines if the user is locked.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "boolean",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "boolean",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "permissions",
               "schema": {
                 "description": "Additional permissions for the user.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "schema": {
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                  "schema": {
+                    "type": "string",
                   },
+                  "type": "primitive",
                 },
               },
             },
@@ -45212,32 +44020,24 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "total",
               "schema": {
                 "description": "The total number of users.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "int",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "int",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "items",
               "schema": {
                 "description": "The users.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "UsersDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "UserDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "UsersDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "UserDto",
+                  "type": "reference",
                 },
               },
             },
@@ -45287,85 +44087,61 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "url",
               "schema": {
                 "description": "The url to the webhook.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "method",
               "schema": {
                 "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "WebhookRuleActionDtoMethod",
-                  "nameOverride": undefined,
-                  "schema": "WebhookMethod",
-                  "type": "reference",
-                },
+                "file": undefined,
+                "generatedName": "WebhookRuleActionDtoMethod",
+                "nameOverride": undefined,
+                "schema": "WebhookMethod",
+                "type": "reference",
               },
             },
             {
               "key": "payload",
               "schema": {
                 "description": "Leave it empty to use the full event as body.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "payloadType",
               "schema": {
                 "description": "The mime type of the payload.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "headers",
               "schema": {
                 "description": "The message headers in the format '[Key]=[Value]', one entry per line.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
             {
               "key": "sharedSecret",
               "schema": {
                 "description": "The shared secret that is used to calculate the payload signature.",
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                "schema": {
+                  "type": "string",
                 },
+                "type": "primitive",
               },
             },
           ],
@@ -45644,18 +44420,14 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "items",
               "schema": {
                 "description": "The workflow.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "WorkflowsDtoItemsItem",
-                    "nameOverride": undefined,
-                    "schema": "WorkflowDto",
-                    "type": "reference",
-                  },
+                  "file": undefined,
+                  "generatedName": "WorkflowsDtoItemsItem",
+                  "nameOverride": undefined,
+                  "schema": "WorkflowDto",
+                  "type": "reference",
                 },
               },
             },
@@ -45663,17 +44435,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "key": "errors",
               "schema": {
                 "description": "The errros that should be fixed.",
-                "type": "optional",
+                "type": "array",
                 "value": {
                   "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "schema": {
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                  "schema": {
+                    "type": "string",
                   },
+                  "type": "primitive",
                 },
               },
             },

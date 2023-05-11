@@ -25,6 +25,7 @@ export function convertObject({
     allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
     context: OpenAPIV3ParserContext;
 }): Schema {
+    let allRequired = [...(required ?? [])];
     let propertiesToConvert = { ...properties };
     const referencedAllOf: ReferencedSchema[] = [];
     for (const allOfElement of allOf) {
@@ -37,13 +38,14 @@ export function convertObject({
             referencedAllOf.push(convertToReferencedSchema(allOfElement, [getSchemaIdFromReference(allOfElement)]));
         } else {
             if (allOfElement.properties != null) {
+                allRequired = [...allRequired, ...(allOfElement.required ?? [])];
                 propertiesToConvert = { ...allOfElement.properties, ...propertiesToConvert };
             }
         }
     }
 
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
-        const isRequired = required != null && required.includes(propertyName);
+        const isRequired = allRequired.includes(propertyName);
         const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
         return {
             key: propertyName,
