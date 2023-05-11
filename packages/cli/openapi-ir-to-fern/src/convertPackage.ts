@@ -5,7 +5,7 @@ import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
 import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
 import { ConvertedServices, convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
-import { convertToTypeReference } from "./converters/convertToTypeReference";
+import { convertPrimitiveToTypeReference, convertToTypeReference } from "./converters/convertToTypeReference";
 import { getTypeFromTypeReference } from "./converters/utils/getTypeFromTypeReference";
 import { Environment, getEnvironments } from "./getEnvironment";
 import { getGlobalHeaders } from "./getGlobalHeaders";
@@ -80,6 +80,21 @@ function getRootApiFile(openApiFile: OpenAPIFile, environment: Environment | und
     if (environment?.type === "single") {
         rootApiFile["default-environment"] = Object.keys(environment.environmentToUrl)[0] ?? null;
         rootApiFile.environments = environment.environmentToUrl;
+    }
+
+    if (Object.keys(openApiFile.variables).length > 0) {
+        rootApiFile.variables = Object.fromEntries(
+            Object.entries(openApiFile.variables).map(([variableName, variableSchema]) => {
+                const convertedSchema = convertPrimitiveToTypeReference(variableSchema);
+                return [
+                    variableName,
+                    {
+                        type: getTypeFromTypeReference(convertedSchema.typeReference),
+                        docs: variableSchema.description ?? undefined,
+                    },
+                ];
+            })
+        );
     }
 
     return rootApiFile;

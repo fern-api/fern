@@ -27,6 +27,7 @@ export function convertPathParameter({
         value: {
             docs: pathParameter.description ?? undefined,
             type: getTypeFromTypeReference(typeReference.typeReference),
+            variable: pathParameter.variableReference != null ? `$${pathParameter.variableReference}` : undefined,
         },
         additionalTypeDeclarations: typeReference.additionalTypeDeclarations,
     };

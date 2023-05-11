@@ -1,6 +1,6 @@
 import { Endpoint, EndpointSdkName, HttpMethod, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { X_FERN_ASYNC_CONFIG } from "../extensions";
+import { X_FERN_ASYNC_CONFIG } from "../extensions/extensions";
 import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";

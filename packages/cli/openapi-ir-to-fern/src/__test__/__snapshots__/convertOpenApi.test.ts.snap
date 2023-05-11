@@ -562,6 +562,7 @@ exports[`open api converter axle simple 1`] = `
               "id": {
                 "docs": "The unique ID for the requested account. Returned as part of the Token Exchange flow in exchangeToken.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -600,6 +601,7 @@ exports[`open api converter axle simple 1`] = `
               "id": {
                 "docs": "The unique ID for the requested carrier. Returned in Account and Policy objects as \`carrier\`.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -686,6 +688,7 @@ exports[`open api converter axle simple 1`] = `
               "id": {
                 "docs": "The unique ID for the requested policy. Returned by Get Account for each Policy associated with the Account.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -1564,6 +1567,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "id": {
                 "docs": "A unique integer value identifying this account.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -1581,6 +1585,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "id": {
                 "docs": "A unique integer value identifying this group.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -1623,6 +1628,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "id": {
                 "docs": "A unique integer value identifying this group.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -1655,6 +1661,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "id": {
                 "docs": "A unique integer value identifying this location.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -1672,6 +1679,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "photo_id": {
                 "docs": "",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -1689,6 +1697,7 @@ exports[`open api converter buzzshot simple 1`] = `
               "id": {
                 "docs": "A unique integer value identifying this player.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -7445,6 +7454,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
           },
@@ -7460,6 +7470,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -7491,6 +7502,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -7527,6 +7539,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -7547,6 +7560,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -7579,6 +7593,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -7624,6 +7639,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -7645,10 +7661,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "buildId": {
                 "docs": undefined,
                 "type": "root.BuildId",
+                "variable": undefined,
               },
             },
           },
@@ -7664,10 +7682,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "buildId": {
                 "docs": undefined,
                 "type": "root.BuildId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -7687,6 +7707,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -7704,10 +7725,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "buildId": {
                 "docs": undefined,
                 "type": "root.BuildId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -7750,10 +7773,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "buildId": {
                 "docs": undefined,
                 "type": "root.BuildId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -7802,10 +7827,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "deploymentId": {
                 "docs": undefined,
                 "type": "root.DeploymentId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -7825,6 +7852,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -7881,6 +7909,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -7926,6 +7955,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -7968,6 +7998,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8024,6 +8055,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8080,6 +8112,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8132,6 +8165,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8184,6 +8218,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8232,10 +8267,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "roomId": {
                 "docs": undefined,
                 "type": "root.RoomId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -8253,6 +8290,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8283,10 +8321,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "roomId": {
                 "docs": undefined,
                 "type": "root.RoomId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8328,6 +8368,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8365,10 +8406,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "deploymentId": {
                 "docs": undefined,
                 "type": "root.DeploymentId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8401,10 +8444,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "processId": {
                 "docs": undefined,
                 "type": "root.ProcessId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8451,10 +8496,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "processId": {
                 "docs": undefined,
                 "type": "root.ProcessId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8510,10 +8557,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "processId": {
                 "docs": undefined,
                 "type": "root.ProcessId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -8533,6 +8582,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8562,6 +8612,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8603,6 +8654,7 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
             },
             "request": {
@@ -8636,10 +8688,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "roomId": {
                 "docs": undefined,
                 "type": "root.RoomId",
+                "variable": undefined,
               },
             },
           },
@@ -8655,10 +8709,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "processId": {
                 "docs": undefined,
                 "type": "root.ProcessId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -8680,10 +8736,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "roomId": {
                 "docs": undefined,
                 "type": "root.RoomId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -8703,10 +8761,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "processId": {
                 "docs": undefined,
                 "type": "root.ProcessId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -8726,10 +8786,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "roomId": {
                 "docs": undefined,
                 "type": "root.RoomId",
+                "variable": undefined,
               },
             },
             "response": {
@@ -8750,10 +8812,12 @@ exports[`open api converter hathora simple 1`] = `
               "appId": {
                 "docs": undefined,
                 "type": "root.AppId",
+                "variable": undefined,
               },
               "roomId": {
                 "docs": undefined,
                 "type": "root.RoomId",
+                "variable": undefined,
               },
             },
           },
@@ -8846,6 +8910,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "id": {
                 "docs": undefined,
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -8863,6 +8928,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "id": {
                 "docs": undefined,
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -8880,6 +8946,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "id": {
                 "docs": undefined,
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -10672,6 +10739,10 @@ exports[`open api converter squidex simple 1`] = `
             "mustBeImage": {
               "docs": "True to resolve first image in the content list.",
               "type": "optional<boolean>",
+            },
+            "previewFormat": {
+              "docs": "The preview format.",
+              "type": "optional<string>",
             },
             "previewMode": {
               "docs": undefined,
@@ -14144,6 +14215,7 @@ exports[`open api converter squidex simple 1`] = `
               "app": {
                 "docs": "The name of the app to delete.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
           },
@@ -14161,10 +14233,12 @@ exports[`open api converter squidex simple 1`] = `
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the client that must be deleted.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -14186,10 +14260,12 @@ exports[`open api converter squidex simple 1`] = `
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the contributor.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -14211,6 +14287,7 @@ exports[`open api converter squidex simple 1`] = `
               "app": {
                 "docs": "The name of the app to update.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14232,10 +14309,12 @@ exports[`open api converter squidex simple 1`] = `
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "language": {
                 "docs": "The language to delete from the app.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -14257,6 +14336,7 @@ exports[`open api converter squidex simple 1`] = `
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14278,10 +14358,12 @@ exports[`open api converter squidex simple 1`] = `
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "roleName": {
                 "docs": "The name of the role.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -14303,10 +14385,12 @@ exports[`open api converter squidex simple 1`] = `
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the workflow to update.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -14327,6 +14411,7 @@ exports[`open api converter squidex simple 1`] = `
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14361,6 +14446,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "app": {
                 "docs": "The name of the app to get the asset scripts for.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14381,6 +14467,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14401,6 +14488,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14418,6 +14506,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14438,6 +14527,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14458,6 +14548,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14478,6 +14569,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14498,6 +14590,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "app": {
                 "docs": "The name of the app to get the settings for.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14518,6 +14611,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "team": {
                 "docs": "The ID of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -14538,6 +14632,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -14593,6 +14688,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -14627,6 +14723,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -14654,6 +14751,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -14688,6 +14786,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -14722,6 +14821,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -14756,6 +14856,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app to update.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -14794,6 +14895,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app to update.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -14828,6 +14930,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app to update.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -14886,10 +14989,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the client that must be updated.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -14940,10 +15045,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "language": {
                 "docs": "The language to update.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -14986,10 +15093,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "roleName": {
                 "docs": "The name of the role to be updated.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -15028,6 +15137,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app to update.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -15074,10 +15184,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the workflow to update.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -15124,6 +15236,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app to update.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -15166,6 +15279,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -15212,21 +15326,23 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the asset to delete.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
               "name": "AssetsDeleteAssetRequest",
               "query-parameters": {
-                "CheckReferrers": {
+                "checkReferrers": {
                   "allow-multiple": undefined,
                   "docs": "True to check referrers of this asset.",
                   "type": "optional<boolean>",
                 },
-                "Permanent": {
+                "permanent": {
                   "allow-multiple": undefined,
                   "docs": "True to delete the asset permanently.",
                   "type": "optional<boolean>",
@@ -15248,10 +15364,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the asset folder to delete.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -15268,10 +15386,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the asset to retrieve.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -15289,6 +15409,7 @@ The client secret is auto generated on the server and returned. The client does 
               "id": {
                 "docs": "The ID of the asset.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -15381,14 +15502,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "idOrSlug": {
                 "docs": "The id or slug of the asset.",
                 "type": "string",
+                "variable": undefined,
               },
               "more": {
                 "docs": "Optional suffix that can be used to seo-optimize the link to the image Has not effect.",
                 "type": "optional<string>",
+                "variable": undefined,
               },
             },
             "request": {
@@ -15484,6 +15608,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -15519,6 +15644,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -15580,6 +15706,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -15606,6 +15733,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -15628,28 +15756,29 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
               "body": {
                 "properties": {
-                  "File": "file",
+                  "file": "file",
                 },
               },
               "headers": undefined,
               "name": "AssetsPostAssetRequest",
               "query-parameters": {
-                "Duplicate": {
+                "duplicate": {
                   "allow-multiple": undefined,
                   "docs": "True to duplicate the asset, event if the file has been uploaded.",
                   "type": "optional<boolean>",
                 },
-                "Id": {
+                "id": {
                   "allow-multiple": undefined,
                   "docs": "The optional custom asset id.",
                   "type": "optional<string>",
                 },
-                "ParentId": {
+                "parentId": {
                   "allow-multiple": undefined,
                   "docs": "The optional parent folder id.",
                   "type": "optional<string>",
@@ -15675,6 +15804,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -15714,27 +15844,29 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The optional custom asset id.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
               "body": {
                 "properties": {
-                  "File": "file",
+                  "file": "file",
                 },
               },
               "headers": undefined,
               "name": "AssetsPostUpsertAssetRequest",
               "query-parameters": {
-                "Duplicate": {
+                "duplicate": {
                   "allow-multiple": undefined,
                   "docs": "True to duplicate the asset, event if the file has been uploaded.",
                   "type": "optional<boolean>",
                 },
-                "ParentId": {
+                "parentId": {
                   "allow-multiple": undefined,
                   "docs": "The optional parent folder id.",
                   "type": "optional<string>",
@@ -15760,10 +15892,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the asset.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -15815,10 +15949,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the asset.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -15850,10 +15986,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the asset folder.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -15888,10 +16026,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the asset folder.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -15926,10 +16066,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the asset.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -15964,10 +16106,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "name": {
                 "docs": "The tag to return.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16013,10 +16157,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the backup to delete.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -16030,10 +16176,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the backup.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -16051,6 +16199,7 @@ The client secret is auto generated on the server and returned. The client does 
               "id": {
                 "docs": "The ID of the backup.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16086,6 +16235,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -16120,6 +16270,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
           },
@@ -16175,14 +16326,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "commentId": {
                 "docs": "The ID of the comment.",
                 "type": "string",
+                "variable": undefined,
               },
               "commentsId": {
                 "docs": "The ID of the comments.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -16199,10 +16353,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "commentsId": {
                 "docs": "The ID of the comments.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16233,10 +16389,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "resource": {
                 "docs": "The path to the resource.",
                 "type": "optional<string>",
+                "variable": undefined,
               },
             },
             "response": {
@@ -16258,10 +16416,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "commentsId": {
                 "docs": "The ID of the comments.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16289,14 +16449,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "commentId": {
                 "docs": "The ID of the comment.",
                 "type": "string",
+                "variable": undefined,
               },
               "commentsId": {
                 "docs": "The ID of the comments.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16331,10 +16494,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16393,14 +16558,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content item to create the draft for.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -16422,25 +16590,28 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content item to delete.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
               "name": "ContentsDeleteContentRequest",
               "query-parameters": {
-                "CheckReferrers": {
+                "checkReferrers": {
                   "allow-multiple": undefined,
                   "docs": "True to check referrers of this content.",
                   "type": "optional<boolean>",
                 },
-                "Permanent": {
+                "permanent": {
                   "allow-multiple": undefined,
                   "docs": "True to delete the content permanently.",
                   "type": "optional<boolean>",
@@ -16462,14 +16633,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content item to cancel.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -16491,14 +16665,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content item to delete the draft from.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -16519,14 +16696,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content to fetch.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16558,14 +16738,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content to fetch.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -16579,18 +16762,22 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content to fetch.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
               "version": {
                 "docs": "The version fo the content to fetch.",
                 "type": "integer",
+                "variable": undefined,
               },
             },
             "response": {
@@ -16611,10 +16798,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16651,10 +16840,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16681,14 +16872,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content to fetch.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16719,14 +16913,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content to fetch.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16758,14 +16955,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content item to patch.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16793,10 +16993,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16806,17 +17008,17 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "name": "ContentsPostContentRequest",
               "query-parameters": {
-                "Id": {
+                "id": {
                   "allow-multiple": undefined,
                   "docs": "The optional custom content id.",
                   "type": "optional<string>",
                 },
-                "Publish": {
+                "publish": {
                   "allow-multiple": undefined,
                   "docs": "True to automatically publish the content.",
                   "type": "optional<boolean>",
                 },
-                "Status": {
+                "status": {
                   "allow-multiple": undefined,
                   "docs": "The initial status.",
                   "type": "optional<string>",
@@ -16842,10 +17044,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16892,14 +17096,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content item to update.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16909,17 +17116,17 @@ The client secret is auto generated on the server and returned. The client does 
               },
               "name": "ContentsPostUpsertContentRequest",
               "query-parameters": {
-                "Patch": {
+                "patch": {
                   "allow-multiple": undefined,
                   "docs": "Makes the update as patch.",
                   "type": "optional<boolean>",
                 },
-                "Publish": {
+                "publish": {
                   "allow-multiple": undefined,
                   "docs": "True to automatically publish the content.",
                   "type": "optional<boolean>",
                 },
-                "Status": {
+                "status": {
                   "allow-multiple": undefined,
                   "docs": "The initial status.",
                   "type": "optional<string>",
@@ -16945,14 +17152,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content item to update.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -16980,14 +17190,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the content item to change.",
                 "type": "string",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -17085,6 +17298,7 @@ The client secret is auto generated on the server and returned. The client does 
               "consumerName": {
                 "docs": "The name of the event consumer.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -17106,6 +17320,7 @@ The client secret is auto generated on the server and returned. The client does 
               "consumerName": {
                 "docs": "The name of the event consumer.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -17127,6 +17342,7 @@ The client secret is auto generated on the server and returned. The client does 
               "consumerName": {
                 "docs": "The name of the event consumer.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -17158,6 +17374,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -17188,6 +17405,7 @@ The client secret is auto generated on the server and returned. The client does 
               "team": {
                 "docs": "The ID of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -17288,10 +17506,12 @@ The client secret is auto generated on the server and returned. The client does 
               "commentId": {
                 "docs": "The ID of the comment.",
                 "type": "string",
+                "variable": undefined,
               },
               "userId": {
                 "docs": "The user id.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -17307,6 +17527,7 @@ The client secret is auto generated on the server and returned. The client does 
               "userId": {
                 "docs": "The user id.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -17347,6 +17568,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
           },
@@ -17396,6 +17618,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -17416,6 +17639,7 @@ The client secret is auto generated on the server and returned. The client does 
               "team": {
                 "docs": "The name of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -17437,6 +17661,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -17464,6 +17689,7 @@ The client secret is auto generated on the server and returned. The client does 
               "team": {
                 "docs": "The name of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -17502,10 +17728,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The event to enqueue.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -17522,6 +17750,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
           },
@@ -17539,10 +17768,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the rule to delete.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -17559,10 +17790,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the rule to cancel.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -17579,6 +17812,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
           },
@@ -17596,10 +17830,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the rule to disable.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -17621,10 +17857,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the rule to enable.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -17658,6 +17896,7 @@ The client secret is auto generated on the server and returned. The client does 
               "type": {
                 "docs": "The type name of the event.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -17691,6 +17930,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -17731,6 +17971,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -17752,6 +17993,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -17779,10 +18021,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The event to enqueue.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -17800,10 +18044,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the rule to update.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -17849,10 +18095,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the rule to run.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -17879,10 +18127,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the rule to simulate.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -17904,6 +18154,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -17931,10 +18182,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the rule to disable.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -17963,14 +18216,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to disable.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -17992,18 +18248,22 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to disable.",
                 "type": "integer",
+                "variable": undefined,
               },
               "parentId": {
                 "docs": "The parent field id.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18025,10 +18285,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema to delete.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -18046,14 +18308,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to disable.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18075,18 +18340,22 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to disable.",
                 "type": "integer",
+                "variable": undefined,
               },
               "parentId": {
                 "docs": "The parent field id.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18108,14 +18377,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to enable.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18137,18 +18409,22 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to enable.",
                 "type": "integer",
+                "variable": undefined,
               },
               "parentId": {
                 "docs": "The parent field id.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18169,10 +18445,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema to retrieve.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18193,6 +18471,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -18214,14 +18493,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to hide.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18243,18 +18525,22 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to hide.",
                 "type": "integer",
+                "variable": undefined,
               },
               "parentId": {
                 "docs": "The parent field id.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18276,14 +18562,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to lock.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18305,18 +18594,22 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to lock.",
                 "type": "integer",
+                "variable": undefined,
               },
               "parentId": {
                 "docs": "The parent field id.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18339,10 +18632,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18371,14 +18666,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "parentId": {
                 "docs": "The parent field id.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18406,6 +18704,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -18448,10 +18747,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema to publish.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18473,10 +18774,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18511,14 +18814,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to update.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18546,18 +18852,22 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to update.",
                 "type": "integer",
+                "variable": undefined,
               },
               "parentId": {
                 "docs": "The parent field id.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18585,14 +18895,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "parentId": {
                 "docs": "The parent field id.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18620,10 +18933,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18651,10 +18966,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18689,10 +19006,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18751,10 +19070,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18782,10 +19103,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18824,10 +19147,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18866,10 +19191,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -18897,14 +19224,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to show.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18926,18 +19256,22 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "id": {
                 "docs": "The ID of the field to show.",
                 "type": "integer",
+                "variable": undefined,
               },
               "parentId": {
                 "docs": "The parent field id.",
                 "type": "integer",
+                "variable": undefined,
               },
               "schema": {
                 "docs": "The name of the schema.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18959,10 +19293,12 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "schema": {
                 "docs": "The name of the schema to unpublish.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -18994,6 +19330,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -19035,6 +19372,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -19055,6 +19393,7 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "response": {
@@ -19075,14 +19414,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "fromDate": {
                 "docs": "The from date.",
                 "type": "string",
+                "variable": undefined,
               },
               "toDate": {
                 "docs": "The to date.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19103,14 +19445,17 @@ The client secret is auto generated on the server and returned. The client does 
               "fromDate": {
                 "docs": "The from date.",
                 "type": "string",
+                "variable": undefined,
               },
               "team": {
                 "docs": "The ID of the team.",
                 "type": "string",
+                "variable": undefined,
               },
               "toDate": {
                 "docs": "The to date.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19131,6 +19476,7 @@ The client secret is auto generated on the server and returned. The client does 
               "team": {
                 "docs": "The ID of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19151,14 +19497,17 @@ The client secret is auto generated on the server and returned. The client does 
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
               "fromDate": {
                 "docs": "The from date.",
                 "type": "string",
+                "variable": undefined,
               },
               "toDate": {
                 "docs": "The to date.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19179,14 +19528,17 @@ The client secret is auto generated on the server and returned. The client does 
               "fromDate": {
                 "docs": "The from date.",
                 "type": "string",
+                "variable": undefined,
               },
               "team": {
                 "docs": "The name of the team.",
                 "type": "string",
+                "variable": undefined,
               },
               "toDate": {
                 "docs": "The to date.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19219,10 +19571,12 @@ The client secret is auto generated on the server and returned. The client does 
               "id": {
                 "docs": "The ID of the contributor.",
                 "type": "string",
+                "variable": undefined,
               },
               "team": {
                 "docs": "The ID of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19244,6 +19598,7 @@ The client secret is auto generated on the server and returned. The client does 
               "team": {
                 "docs": "The ID of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19264,6 +19619,7 @@ The client secret is auto generated on the server and returned. The client does 
               "team": {
                 "docs": "The ID of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19284,6 +19640,7 @@ The client secret is auto generated on the server and returned. The client does 
               "team": {
                 "docs": "The name of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19319,6 +19676,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
               "team": {
                 "docs": "The ID of the team.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -19375,6 +19733,7 @@ You will be assigned as owner of the new team automatically.",
               "team": {
                 "docs": "The name of the team to update.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -19419,6 +19778,7 @@ You will be assigned as owner of the new team automatically.",
               "name": {
                 "docs": "The name of the template.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19463,6 +19823,7 @@ You will be assigned as owner of the new team automatically.",
               "app": {
                 "docs": "The name of the app.",
                 "type": "string",
+                "variable": "$appName",
               },
             },
             "request": {
@@ -19517,6 +19878,7 @@ You will be assigned as owner of the new team automatically.",
               "id": {
                 "docs": "The ID of the user to delete.",
                 "type": "string",
+                "variable": undefined,
               },
             },
           },
@@ -19533,6 +19895,7 @@ You will be assigned as owner of the new team automatically.",
               "id": {
                 "docs": "The ID of the user.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19588,6 +19951,7 @@ You will be assigned as owner of the new team automatically.",
               "id": {
                 "docs": "The ID of the user to lock.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19648,6 +20012,7 @@ You will be assigned as owner of the new team automatically.",
               "id": {
                 "docs": "The ID of the user.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -19695,6 +20060,7 @@ You will be assigned as owner of the new team automatically.",
               "id": {
                 "docs": "The ID of the user to unlock.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19726,6 +20092,7 @@ You will be assigned as owner of the new team automatically.",
               "id": {
                 "docs": "The ID of the user (GUID).",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19743,6 +20110,7 @@ You will be assigned as owner of the new team automatically.",
               "id": {
                 "docs": "The ID of the user (GUID).",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -19801,6 +20169,12 @@ You will be assigned as owner of the new team automatically.",
       "strategy": "status-code",
     },
     "name": "api",
+    "variables": {
+      "appName": {
+        "docs": undefined,
+        "type": "string",
+      },
+    },
   },
 }
 `;
@@ -26210,10 +26584,12 @@ the same customer, dimension, and time, but a different quantity.",
               "buyerId": {
                 "docs": "Buyer ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26233,6 +26609,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26252,10 +26629,12 @@ the same customer, dimension, and time, but a different quantity.",
               "buyerId": {
                 "docs": "Buyer ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -26312,10 +26691,12 @@ the same customer, dimension, and time, but a different quantity.",
               "entitlementId": {
                 "docs": "Entitlement ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -26356,10 +26737,12 @@ the same customer, dimension, and time, but a different quantity.",
               "entitlementId": {
                 "docs": "Entitlement ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26379,6 +26762,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26398,10 +26782,12 @@ the same customer, dimension, and time, but a different quantity.",
               "buyerId": {
                 "docs": "Buyer ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26421,10 +26807,12 @@ the same customer, dimension, and time, but a different quantity.",
               "offerId": {
                 "docs": "Offer ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26444,10 +26832,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "partner": {
                 "docs": "Cloud Partner",
                 "type": "root.ListEntitlementsByPartnerRequestPartner",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26467,10 +26857,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "productId": {
                 "docs": "Product ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26490,10 +26882,12 @@ the same customer, dimension, and time, but a different quantity.",
               "entitlementId": {
                 "docs": "Entitlement ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -26545,14 +26939,17 @@ the same customer, dimension, and time, but a different quantity.",
               "entitlementId": {
                 "docs": "Entitlement ID",
                 "type": "string",
+                "variable": undefined,
               },
               "entitlementTermId": {
                 "docs": "Entitlement Term ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26572,10 +26969,12 @@ the same customer, dimension, and time, but a different quantity.",
               "entitlementId": {
                 "docs": "Entitlement ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26607,6 +27006,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -26655,14 +27055,17 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "partner": {
                 "docs": "Cloud Partner",
                 "type": "root.DeleteIntegrationRequestPartner",
+                "variable": undefined,
               },
               "service": {
                 "docs": "Partner Service",
                 "type": "root.DeleteIntegrationRequestService",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26683,14 +27086,17 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "partner": {
                 "docs": "Cloud Partner",
                 "type": "root.GetIntegrationRequestPartner",
+                "variable": undefined,
               },
               "service": {
                 "docs": "Partner Service",
                 "type": "root.GetIntegrationRequestService",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26710,6 +27116,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26730,14 +27137,17 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "partner": {
                 "docs": "Cloud Partner",
                 "type": "root.UpdateIntegrationRequestPartner",
+                "variable": undefined,
               },
               "service": {
                 "docs": "Partner Service",
                 "type": "root.UpdateIntegrationRequestService",
+                "variable": undefined,
               },
             },
             "request": {
@@ -26782,14 +27192,17 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "partner": {
                 "docs": "Cloud Partner",
                 "type": "root.VerifyIntegrationRequestPartner",
+                "variable": undefined,
               },
               "service": {
                 "docs": "Partner Service",
                 "type": "root.VerifyIntegrationRequestService",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26820,10 +27233,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "usageRecordGroupId": {
                 "docs": "UsageRecordGroup ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26843,10 +27258,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "usageRecordReportId": {
                 "docs": "UsageRecordReport ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -26867,10 +27284,12 @@ the same customer, dimension, and time, but a different quantity.",
               "entitlementId": {
                 "docs": "Entitlement ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -26916,6 +27335,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -26961,10 +27381,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "productId": {
                 "docs": "Product ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27010,10 +27432,12 @@ the same customer, dimension, and time, but a different quantity.",
               "entitlementId": {
                 "docs": "Entitlement ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27064,6 +27488,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27109,10 +27534,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "productId": {
                 "docs": "Product ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27159,10 +27586,12 @@ the same customer, dimension, and time, but a different quantity.",
               "entitlementId": {
                 "docs": "Entitlement ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27223,10 +27652,12 @@ the same customer, dimension, and time, but a different quantity.",
               "offerId": {
                 "docs": "Offer ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27247,6 +27678,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27273,6 +27705,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27298,10 +27731,12 @@ the same customer, dimension, and time, but a different quantity.",
               "offerId": {
                 "docs": "Offer ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27321,10 +27756,12 @@ the same customer, dimension, and time, but a different quantity.",
               "offerId": {
                 "docs": "Offer ID",
                 "type": "string",
+                "variable": undefined,
               },
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27344,6 +27781,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27363,10 +27801,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "partner": {
                 "docs": "Cloud Partner",
                 "type": "root.ListOffersByPartnerRequestPartner",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27396,10 +27836,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "productId": {
                 "docs": "Product ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27430,6 +27872,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27485,10 +27928,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "productId": {
                 "docs": "Product ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27508,10 +27953,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "productId": {
                 "docs": "Product ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27531,10 +27978,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "productId": {
                 "docs": "Product ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27554,6 +28003,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27573,10 +28023,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "partner": {
                 "docs": "Cloud Partner",
                 "type": "root.ListProductsByPartnerRequestPartner",
+                "variable": undefined,
               },
             },
             "response": {
@@ -27596,10 +28048,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "productId": {
                 "docs": "Product ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27652,6 +28106,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27709,6 +28164,7 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27746,10 +28202,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "partner": {
                 "docs": "Cloud Partner",
                 "type": "root.ListRevenueRecordDetailsRequestPartner",
+                "variable": undefined,
               },
             },
             "request": {
@@ -27810,10 +28268,12 @@ the same customer, dimension, and time, but a different quantity.",
               "orgId": {
                 "docs": "Organization ID",
                 "type": "string",
+                "variable": undefined,
               },
               "partner": {
                 "docs": "Cloud Partner",
                 "type": "root.ListRevenueRecordsRequestPartner",
+                "variable": undefined,
               },
             },
             "request": {
@@ -28762,6 +29222,7 @@ Used to retrieve a model version given its ID.
               "id": {
                 "docs": "A UUID string identifying this model version.",
                 "type": "string",
+                "variable": undefined,
               },
             },
             "response": {

@@ -1,5 +1,6 @@
 import { Header, PathParameter, PrimitiveSchemaValue, QueryParameter, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
+import { getVariableReference } from "../../extensions/getVariableReference";
 import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
@@ -50,7 +51,10 @@ export function convertParameters(
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);
         } else if (resolvedParameter.in === "path") {
-            convertedParameters.pathParameters.push(convertedParameter);
+            convertedParameters.pathParameters.push({
+                ...convertedParameter,
+                variableReference: getVariableReference(resolvedParameter),
+            });
         } else if (resolvedParameter.in === "header") {
             convertedParameters.headers.push(convertedParameter);
         } else {

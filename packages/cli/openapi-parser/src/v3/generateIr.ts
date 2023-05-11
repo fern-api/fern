@@ -5,10 +5,12 @@ import { convertPathItem } from "./converters/convertPathItem";
 import { convertSchema } from "./converters/convertSchemas";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
+import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIFile {
     const context = new OpenAPIV3ParserContext({ document: openApi, taskContext });
+    const variables = getVariableDefinitions(openApi);
     return {
         title: openApi.info.title,
         description: openApi.info.description,
@@ -40,5 +42,6 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         errors: context.getErrors(),
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
         dependencies: [],
+        variables,
     };
 }
