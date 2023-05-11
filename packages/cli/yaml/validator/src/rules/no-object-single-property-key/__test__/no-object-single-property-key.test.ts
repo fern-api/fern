@@ -16,12 +16,6 @@ describe("valid-field-names", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                message: 'Union variant a is missing a "key", which is required for non-objects.',
-                nodePath: ["types", "MyUnion"],
-                relativeFilepath: RelativeFilePath.of("posts.yml"),
-                severity: "error",
-            },
-            {
                 message: 'Union variant e has no type, so "key" cannot be defined',
                 nodePath: ["types", "MyUnion"],
                 relativeFilepath: RelativeFilePath.of("posts.yml"),

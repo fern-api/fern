@@ -1,5 +1,5 @@
 import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
-import { isRawDiscriminatedUnionDefinition, isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { isRawDiscriminatedUnionDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -52,15 +52,6 @@ export const NoObjectSinglePropertyKeyRule: Rule = {
                         if (resolvedType == null) {
                             // type doesn't exist. this will be caught by another rule
                             return [];
-                        }
-
-                        if (resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
-                            return [
-                                {
-                                    severity: "error",
-                                    message: `Union variant ${discriminantValue} is missing a "key", which is required for non-objects.`,
-                                },
-                            ];
                         }
 
                         return [];
