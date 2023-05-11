@@ -31,6 +31,7 @@ types:
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>
       errors: map<StatusCode, HttpError>
+      variables: map<string, PrimitiveSchema>
       nonRequestReferencedSchemas:
         type: set<SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
@@ -166,6 +167,7 @@ types:
     properties:
       name: string
       schema: Schema
+      variableReference: optional<string>
 
   QueryParameter:
     extends: WithDescription

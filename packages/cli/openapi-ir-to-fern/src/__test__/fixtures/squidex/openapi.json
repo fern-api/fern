@@ -669,7 +669,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -1313,7 +1314,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -1364,7 +1366,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "fromDate",
@@ -1510,7 +1513,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -1612,7 +1616,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "fromDate",
@@ -1764,7 +1769,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "query",
@@ -1828,7 +1834,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -1922,7 +1929,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2027,7 +2035,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2111,7 +2120,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2195,7 +2205,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2290,7 +2301,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2383,7 +2395,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2465,7 +2478,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2569,7 +2583,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2663,7 +2678,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2746,7 +2762,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2840,7 +2857,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -2923,7 +2941,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3017,7 +3036,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3100,7 +3120,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3194,7 +3215,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3277,7 +3299,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3371,7 +3394,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3454,7 +3478,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3547,7 +3572,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -3596,7 +3622,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -3677,7 +3704,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3736,7 +3764,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3818,7 +3847,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3882,7 +3912,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -3966,7 +3997,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -4050,7 +4082,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -4134,7 +4167,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -4218,7 +4252,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -4302,7 +4337,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -4373,7 +4409,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -4483,7 +4520,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -4532,7 +4570,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -4606,7 +4645,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -4657,7 +4697,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -4739,7 +4780,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -4803,7 +4845,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -4874,7 +4917,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -4945,7 +4989,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -5009,7 +5054,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -5080,7 +5126,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -5141,7 +5188,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -5215,7 +5263,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -5276,7 +5325,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "ruleId",
@@ -5357,7 +5407,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -5408,7 +5459,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -5470,7 +5522,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -5612,7 +5665,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -5663,7 +5717,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -5919,7 +5974,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -6049,7 +6105,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "channel",
@@ -6473,7 +6530,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -6553,7 +6611,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -6566,7 +6625,7 @@
             "x-position": 2
           },
           {
-            "name": "Status",
+            "name": "status",
             "in": "query",
             "description": "The initial status.",
             "schema": {
@@ -6576,7 +6635,7 @@
             "x-position": 4
           },
           {
-            "name": "Id",
+            "name": "id",
             "in": "query",
             "description": "The optional custom content id.",
             "schema": {
@@ -6586,7 +6645,7 @@
             "x-position": 5
           },
           {
-            "name": "Publish",
+            "name": "publish",
             "in": "query",
             "description": "True to automatically publish the content.",
             "schema": {
@@ -6667,7 +6726,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -6752,7 +6812,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -6833,7 +6894,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -6856,7 +6918,7 @@
             "x-position": 3
           },
           {
-            "name": "Status",
+            "name": "status",
             "in": "query",
             "description": "The initial status.",
             "schema": {
@@ -6866,7 +6928,7 @@
             "x-position": 5
           },
           {
-            "name": "Patch",
+            "name": "patch",
             "in": "query",
             "description": "Makes the update as patch.",
             "schema": {
@@ -6875,7 +6937,7 @@
             "x-position": 6
           },
           {
-            "name": "Publish",
+            "name": "publish",
             "in": "query",
             "description": "True to automatically publish the content.",
             "schema": {
@@ -6954,7 +7016,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7047,7 +7110,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7140,7 +7204,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7163,7 +7228,7 @@
             "x-position": 3
           },
           {
-            "name": "CheckReferrers",
+            "name": "checkReferrers",
             "in": "query",
             "description": "True to check referrers of this content.",
             "schema": {
@@ -7172,7 +7237,7 @@
             "x-position": 4
           },
           {
-            "name": "Permanent",
+            "name": "permanent",
             "in": "query",
             "description": "True to delete the content permanently.",
             "schema": {
@@ -7233,7 +7298,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7308,7 +7374,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7390,7 +7457,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7472,7 +7540,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7557,7 +7626,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7646,7 +7716,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7734,7 +7805,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7827,7 +7899,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7909,7 +7982,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -7989,7 +8063,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "schema",
@@ -8070,7 +8145,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "resource",
@@ -8136,7 +8212,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "commentsId",
@@ -8206,7 +8283,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "commentsId",
@@ -8290,7 +8368,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "commentsId",
@@ -8375,7 +8454,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "commentsId",
@@ -8573,7 +8653,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -8628,7 +8709,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -8758,7 +8840,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -8807,7 +8890,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -8947,7 +9031,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "idOrSlug",
@@ -9356,7 +9441,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "parentId",
@@ -9425,7 +9511,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -9499,7 +9586,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -9581,7 +9669,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -9645,7 +9734,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -9730,7 +9820,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -9785,7 +9876,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "name",
@@ -9874,7 +9966,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "parentId",
@@ -9986,10 +10079,11 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
-            "name": "ParentId",
+            "name": "parentId",
             "in": "query",
             "description": "The optional parent folder id.",
             "schema": {
@@ -9998,7 +10092,7 @@
             "x-position": 2
           },
           {
-            "name": "Id",
+            "name": "id",
             "in": "query",
             "description": "The optional custom asset id.",
             "schema": {
@@ -10008,7 +10102,7 @@
             "x-position": 3
           },
           {
-            "name": "Duplicate",
+            "name": "duplicate",
             "in": "query",
             "description": "True to duplicate the asset, event if the file has been uploaded.",
             "schema": {
@@ -10023,7 +10117,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "File": {
+                  "file": {
                     "type": "string",
                     "format": "binary"
                   }
@@ -10101,7 +10195,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -10175,7 +10270,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -10235,7 +10331,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -10248,7 +10345,7 @@
             "x-position": 2
           },
           {
-            "name": "ParentId",
+            "name": "parentId",
             "in": "query",
             "description": "The optional parent folder id.",
             "schema": {
@@ -10257,7 +10354,7 @@
             "x-position": 3
           },
           {
-            "name": "Duplicate",
+            "name": "duplicate",
             "in": "query",
             "description": "True to duplicate the asset, event if the file has been uploaded.",
             "schema": {
@@ -10272,7 +10369,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "File": {
+                  "file": {
                     "type": "string",
                     "format": "binary"
                   }
@@ -10347,7 +10444,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -10429,7 +10527,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -10442,7 +10541,7 @@
             "x-position": 2
           },
           {
-            "name": "CheckReferrers",
+            "name": "checkReferrers",
             "in": "query",
             "description": "True to check referrers of this asset.",
             "schema": {
@@ -10451,7 +10550,7 @@
             "x-position": 3
           },
           {
-            "name": "Permanent",
+            "name": "permanent",
             "in": "query",
             "description": "True to delete the asset permanently.",
             "schema": {
@@ -10511,7 +10610,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -10589,7 +10689,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -10685,7 +10786,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -10769,7 +10871,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -10818,7 +10921,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -10893,7 +10997,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -10943,7 +11048,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -11018,7 +11124,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -11101,7 +11208,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -11172,7 +11280,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -11221,7 +11330,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -11295,7 +11405,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -11356,7 +11467,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -11427,7 +11539,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -11472,7 +11585,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -11546,7 +11660,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -11607,7 +11722,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -11656,7 +11772,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -11730,7 +11847,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "language",
@@ -11812,7 +11930,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "language",
@@ -11883,7 +12002,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -11932,7 +12052,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -12006,7 +12127,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -12060,7 +12182,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "roleName",
@@ -12142,7 +12265,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "roleName",
@@ -12373,7 +12497,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -12422,7 +12547,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -12494,7 +12620,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -12548,7 +12675,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -12622,7 +12750,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -12671,7 +12800,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -12745,7 +12875,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "responses": {
@@ -12794,7 +12925,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           }
         ],
         "requestBody": {
@@ -12868,7 +13000,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -12950,7 +13083,8 @@
             "schema": {
               "type": "string"
             },
-            "x-position": 1
+            "x-position": 1,
+            "x-fern-sdk-variable": "appName"
           },
           {
             "name": "id",
@@ -13469,6 +13603,11 @@
               "folderId": {
                 "type": "string",
                 "description": "The initial id to the folder.",
+                "nullable": true
+              },
+              "previewFormat": {
+                "type": "string",
+                "description": "The preview format.",
                 "nullable": true
               },
               "minItems": {
@@ -18956,5 +19095,10 @@
   ],
   "externalDocs": {
     "url": "https://docs.squidex.io"
+  },
+  "x-fern-sdk-variables": {
+    "appName": {
+      "type": "string"
+    }
   }
 }

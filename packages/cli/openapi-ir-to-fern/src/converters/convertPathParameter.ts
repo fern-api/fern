@@ -23,11 +23,18 @@ export function convertPathParameter({
         schemas,
         prefix: isPackageYml ? undefined : ROOT_PREFIX,
     });
+    const value: RawSchemas.HttpPathParameterSchema =
+        pathParameter.variableReference != null
+            ? {
+                  docs: pathParameter.description ?? undefined,
+                  variable: `$${pathParameter.variableReference}`,
+              }
+            : {
+                  docs: pathParameter.description ?? undefined,
+                  type: getTypeFromTypeReference(typeReference.typeReference),
+              };
     return {
-        value: {
-            docs: pathParameter.description ?? undefined,
-            type: getTypeFromTypeReference(typeReference.typeReference),
-        },
+        value,
         additionalTypeDeclarations: typeReference.additionalTypeDeclarations,
     };
 }
