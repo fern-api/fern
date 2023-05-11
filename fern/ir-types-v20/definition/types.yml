@@ -141,7 +141,9 @@ types:
       set:
         type: TypeReference
         key: set
-      literal: Literal
+      literal:
+        type: Literal
+        key: literal
   MapType:
     properties:
       keyType: TypeReference
@@ -160,7 +162,9 @@ types:
       - BASE_64
   Literal:
     union:
-      string: string
+      string:
+        type: string
+        key: value
 
   # examples
 

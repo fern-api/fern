@@ -17,6 +17,3 @@ types:
         key: hello
       e:
         key: yoyo
-      f:
-        key: yoyo
-        type: void

@@ -1,1 +1,1 @@
-export { NoObjectSinglePropertyKeyRule } from "./no-object-single-property-key";
+export { NoObjectSinglePropertyKeyRule } from "./no-missing-union-variant-key";

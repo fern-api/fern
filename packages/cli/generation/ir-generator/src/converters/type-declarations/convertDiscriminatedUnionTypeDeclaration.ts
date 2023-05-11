@@ -7,8 +7,6 @@ import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { getExtensionsAsList, getPropertyName } from "./convertObjectTypeDeclaration";
 
-const DEFAULT_UNION_VALUE_PROPERTY_VALUE = "value";
-
 export function convertDiscriminatedUnionTypeDeclaration({
     union,
     file,
@@ -138,42 +136,33 @@ export function getSingleUnionTypeProperties({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): SingleUnionTypeProperties.SamePropertiesAsObject | SingleUnionTypeProperties.SingleProperty {
-    const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
-
-    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
-    } else {
-        const singlePropertyKey = typeof rawSingleUnionType !== "string" ? rawSingleUnionType.key : undefined;
+    if (typeof rawSingleUnionType !== "string" && rawSingleUnionType.key != null) {
         return SingleUnionTypeProperties.singleProperty({
             name: file.casingsGenerator.generateNameAndWireValue({
-                wireValue: getSinglePropertyKeyValue(singlePropertyKey),
-                name: getSinglePropertyKeyName(singlePropertyKey),
+                wireValue: getSinglePropertyKeyValue(rawSingleUnionType.key),
+                name: getSinglePropertyKeyName(rawSingleUnionType.key),
             }),
             type: parsedValueType,
         });
+    } else {
+        const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
+        if (resolvedType._type !== "named" || !isRawObjectDefinition(resolvedType.declaration)) {
+            throw new Error("Non-object union variant is missing a key: " + rawValueType);
+        }
+        return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
     }
 }
 
-function getSinglePropertyKeyName(
-    rawSingleUnionType: string | RawSchemas.SingleUnionTypeKeySchema | undefined
-): string {
-    if (rawSingleUnionType != null) {
-        if (typeof rawSingleUnionType === "string") {
-            return rawSingleUnionType;
-        }
-        return rawSingleUnionType.name ?? rawSingleUnionType.value;
+function getSinglePropertyKeyName(rawSingleUnionType: string | RawSchemas.SingleUnionTypeKeySchema): string {
+    if (typeof rawSingleUnionType === "string") {
+        return rawSingleUnionType;
     }
-    return DEFAULT_UNION_VALUE_PROPERTY_VALUE;
+    return rawSingleUnionType.name ?? rawSingleUnionType.value;
 }
 
-function getSinglePropertyKeyValue(
-    rawSingleUnionType: string | RawSchemas.SingleUnionTypeKeySchema | undefined
-): string {
-    if (rawSingleUnionType != null) {
-        if (typeof rawSingleUnionType === "string") {
-            return rawSingleUnionType;
-        }
-        return rawSingleUnionType.value;
+function getSinglePropertyKeyValue(rawSingleUnionType: string | RawSchemas.SingleUnionTypeKeySchema): string {
+    if (typeof rawSingleUnionType === "string") {
+        return rawSingleUnionType;
     }
-    return DEFAULT_UNION_VALUE_PROPERTY_VALUE;
+    return rawSingleUnionType.value;
 }
