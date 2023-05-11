@@ -18,7 +18,7 @@ from .types.movie import Movie
 from .types.movie_id import MovieId
 
 # this is used as the default value for optional parameters
-_ = typing.cast(typing.Any, ...)
+OMIT = typing.cast(typing.Any, ...)
 
 
 class MovieClient:
@@ -87,10 +87,10 @@ class MovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_movie(
-        self, movie_id: MovieId, *, required_property: str, optional_property: typing.Optional[str] = _
+        self, movie_id: MovieId, *, required_property: str, optional_property: typing.Optional[str] = OMIT
     ) -> None:
         _request: typing.Dict[str, typing.Any] = {"required_property": required_property}
-        if optional_property is not _:
+        if optional_property is not OMIT:
             _request["optional_property"] = optional_property
         _response = httpx.request(
             "DELETE",
@@ -182,10 +182,10 @@ class AsyncMovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_movie(
-        self, movie_id: MovieId, *, required_property: str, optional_property: typing.Optional[str] = _
+        self, movie_id: MovieId, *, required_property: str, optional_property: typing.Optional[str] = OMIT
     ) -> None:
         _request: typing.Dict[str, typing.Any] = {"required_property": required_property}
-        if optional_property is not _:
+        if optional_property is not OMIT:
             _request["optional_property"] = optional_property
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
