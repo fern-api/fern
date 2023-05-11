@@ -29,6 +29,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 import okhttp3.OkHttpClient;
 
@@ -39,6 +40,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private static final FieldSpec HEADERS_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(Map.class, String.class, String.class),
                     "headers",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final FieldSpec HEADER_SUPPLIERS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(
+                            ClassName.get(Map.class),
+                            ClassName.get(String.class),
+                            ParameterizedTypeName.get(Supplier.class, String.class)),
+                    "headerSuppliers",
                     Modifier.PRIVATE,
                     Modifier.FINAL)
             .build();
@@ -62,12 +73,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedClientOptions generateFile() {
         MethodSpec environmentGetter = createGetter(environmentField);
-        MethodSpec headersGetter = createGetter(HEADERS_FIELD);
+        MethodSpec headersGetter = getHeadersGetter();
         MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
         TypeSpec clientOptionsTypeSpec = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(environmentField)
                 .addField(HEADERS_FIELD)
+                .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
@@ -75,10 +87,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 .build())
                         .addParameter(ParameterSpec.builder(HEADERS_FIELD.type, HEADERS_FIELD.name)
                                 .build())
+                        .addParameter(ParameterSpec.builder(HEADER_SUPPLIERS_FIELD.type, HEADER_SUPPLIERS_FIELD.name)
+                                .build())
                         .addParameter(ParameterSpec.builder(OKHTTP_CLIENT_FIELD.type, OKHTTP_CLIENT_FIELD.name)
                                 .build())
                         .addStatement("this.$L = $L", environmentField.name, environmentField.name)
                         .addStatement("this.$L = $L", HEADERS_FIELD.name, HEADERS_FIELD.name)
+                        .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                         .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .build())
                 .addMethod(environmentGetter)
@@ -103,6 +118,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    private MethodSpec getHeadersGetter() {
+        return MethodSpec.methodBuilder(HEADERS_FIELD.name)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(HEADERS_FIELD.type)
+                .addStatement("$T values = new $T<>(this.$L)", HEADERS_FIELD.type, HashMap.class, HEADERS_FIELD.name)
+                .beginControlFlow("$L.forEach((key, supplier) -> ", HEADER_SUPPLIERS_FIELD.name)
+                .addStatement("values.put(key, supplier.get())")
+                .endControlFlow(")")
+                .addStatement("return values")
+                .build();
+    }
+
     private TypeSpec createBuilder() {
         return TypeSpec.classBuilder(builderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
@@ -112,8 +139,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADERS_FIELD.toBuilder()
                         .initializer("new $T<>()", HashMap.class)
                         .build())
+                .addField(HEADER_SUPPLIERS_FIELD.toBuilder()
+                        .initializer("new $T<>()", HashMap.class)
+                        .build())
                 .addMethod(getEnvironmentBuilder())
                 .addMethod(getHeaderBuilder())
+                .addMethod(getHeaderSupplierBuilder())
                 .addMethod(getBuildMethod())
                 .build();
     }
@@ -139,15 +170,27 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
+    private MethodSpec getHeaderSupplierBuilder() {
+        return MethodSpec.methodBuilder("addHeader")
+                .addModifiers(Modifier.PUBLIC)
+                .returns(builderClassName)
+                .addParameter(String.class, "key")
+                .addParameter(ParameterizedTypeName.get(Supplier.class, String.class), "value")
+                .addStatement("this.$L.put($L, $L)", HEADER_SUPPLIERS_FIELD.name, "key", "value")
+                .addStatement("return this")
+                .build();
+    }
+
     private MethodSpec getBuildMethod() {
         return MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(className)
                 .addStatement(
-                        "return new $T($L, $L, new $T())",
+                        "return new $T($L, $L, $L, new $T())",
                         className,
                         environmentField.name,
                         HEADERS_FIELD.name,
+                        HEADER_SUPPLIERS_FIELD.name,
                         OkHttpClient.class)
                 .build();
     }
