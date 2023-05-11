@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getViolationsForRule } from "../../../testing-utils/getViolationsForRule";
 import { ValidationViolation } from "../../../ValidationViolation";
-import { NoObjectSinglePropertyKeyRule } from "../no-object-single-property-key";
+import { NoObjectSinglePropertyKeyRule } from "../no-missing-union-variant-key";
 
 describe("valid-field-names", () => {
     it("simple", async () => {
@@ -16,19 +16,7 @@ describe("valid-field-names", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                message: "Union subtype d extends an object, so key cannot be defined",
-                nodePath: ["types", "MyUnion"],
-                relativeFilepath: RelativeFilePath.of("posts.yml"),
-                severity: "error",
-            },
-            {
-                message: "Union subtype e has no body, so key cannot be defined",
-                nodePath: ["types", "MyUnion"],
-                relativeFilepath: RelativeFilePath.of("posts.yml"),
-                severity: "error",
-            },
-            {
-                message: "Union subtype f has no body, so key cannot be defined",
+                message: 'Union variant e has no type, so "key" cannot be defined',
                 nodePath: ["types", "MyUnion"],
                 relativeFilepath: RelativeFilePath.of("posts.yml"),
                 severity: "error",

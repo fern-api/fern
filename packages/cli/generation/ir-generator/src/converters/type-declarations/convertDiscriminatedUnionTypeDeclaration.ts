@@ -138,20 +138,23 @@ export function getSingleUnionTypeProperties({
     file: FernFileContext;
     typeResolver: TypeResolver;
 }): SingleUnionTypeProperties.SamePropertiesAsObject | SingleUnionTypeProperties.SingleProperty {
-    const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
+    const singlePropertyKey = typeof rawSingleUnionType !== "string" ? rawSingleUnionType.key : undefined;
 
-    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
+    const resolvedType = typeResolver.resolveTypeOrThrow({ type: rawValueType, file });
+    if (
+        resolvedType._type === "named" &&
+        isRawObjectDefinition(resolvedType.declaration) &&
+        singlePropertyKey == null
+    ) {
         return SingleUnionTypeProperties.samePropertiesAsObject(resolvedType.name);
-    } else {
-        const singlePropertyKey = typeof rawSingleUnionType !== "string" ? rawSingleUnionType.key : undefined;
-        return SingleUnionTypeProperties.singleProperty({
-            name: file.casingsGenerator.generateNameAndWireValue({
-                wireValue: getSinglePropertyKeyValue(singlePropertyKey),
-                name: getSinglePropertyKeyName(singlePropertyKey),
-            }),
-            type: parsedValueType,
-        });
     }
+    return SingleUnionTypeProperties.singleProperty({
+        name: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: getSinglePropertyKeyValue(singlePropertyKey),
+            name: getSinglePropertyKeyName(singlePropertyKey),
+        }),
+        type: parsedValueType,
+    });
 }
 
 function getSinglePropertyKeyName(
