@@ -11,7 +11,7 @@ export interface Auth {
     BasicAuth: {
         _getReferenceToType: () => ts.TypeNode;
 
-        toAuthorizationHeader: (basicAuth: ts.Expression) => ts.Expression;
+        toAuthorizationHeader: (username: ts.Expression, password: ts.Expression) => ts.Expression;
         fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
     };
 }

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern/fern/main/fern.schema.json
+
+service:
+  auth: true
+  base-path: /test
+  endpoints:
+    foo:
+      path: ""
+      method: POST

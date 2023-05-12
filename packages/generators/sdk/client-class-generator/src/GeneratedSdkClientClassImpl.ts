@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
+import { AuthScheme, BasicAuthScheme, BearerAuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
 import {
     HttpEndpoint,
     HttpHeader,
@@ -47,15 +47,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "options";
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
-    private static BASIC_AUTH_OPTION_PROPERTY_NAME = "credentials";
     private static BEARER_OPTION_PROPERTY_NAME = "token";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
     private static CUSTOM_STREAMING_FETCHER_PROPERTY_NAME = "streamingFetcher";
     private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
 
     private intermediateRepresentation: IntermediateRepresentation;
-    private hasBearerAuth: boolean;
-    private hasBasicAuth: boolean;
+    private bearerAuthScheme: BearerAuthScheme | undefined;
+    private basicAuthScheme: BasicAuthScheme | undefined;
     private authHeaders: HeaderAuthScheme[];
     private serviceClassName: string;
     private package_: Package;
@@ -200,28 +199,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             []
         );
 
-        let hasBearerAuth = false;
-        let hasBasicAuth = false;
-        const authHeaders: HeaderAuthScheme[] = [];
+        this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
             AuthScheme._visit(authScheme, {
-                basic: () => {
-                    hasBasicAuth = true;
+                basic: (basicAuthScheme) => {
+                    this.basicAuthScheme = basicAuthScheme;
                 },
-                bearer: () => {
-                    hasBearerAuth = true;
+                bearer: (bearerAuthScheme) => {
+                    this.bearerAuthScheme = bearerAuthScheme;
                 },
                 header: (header) => {
-                    authHeaders.push(header);
+                    this.authHeaders.push(header);
                 },
                 _unknown: () => {
                     throw new Error("Unknown auth scheme: " + authScheme._type);
                 },
             });
         }
-        this.hasBearerAuth = hasBearerAuth;
-        this.hasBasicAuth = hasBasicAuth;
-        this.authHeaders = authHeaders;
     }
 
     public instantiate({
@@ -313,7 +307,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (this.generatedEndpointImplementations.length === 0) {
             return false;
         }
-        return this.hasBearerAuth || this.hasBasicAuth || this.getCustomAuthorizationHeaders().length > 0;
+        return (
+            this.bearerAuthScheme != null ||
+            this.basicAuthScheme != null ||
+            this.getCustomAuthorizationHeaders().length > 0
+        );
     }
 
     public getEnvironment(endpoint: HttpEndpoint, context: SdkClientClassContext): ts.Expression {
@@ -440,7 +438,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (this.hasBearerAuth) {
+        if (this.bearerAuthScheme != null) {
             properties.push({
                 name: GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME,
                 type: getTextOfTsNode(
@@ -457,16 +455,37 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (this.hasBasicAuth) {
-            properties.push({
-                name: GeneratedSdkClientClassImpl.BASIC_AUTH_OPTION_PROPERTY_NAME,
-                type: getTextOfTsNode(
-                    context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        context.base.coreUtilities.auth.BasicAuth._getReferenceToType()
-                    )
-                ),
-                hasQuestionToken: !this.intermediateRepresentation.sdkConfig.isAuthMandatory,
-            });
+        if (this.basicAuthScheme != null) {
+            properties.push(
+                {
+                    name: this.getBasicAuthUsernameOptionKey(this.basicAuthScheme),
+                    type: getTextOfTsNode(
+                        context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
+                            this.intermediateRepresentation.sdkConfig.isAuthMandatory
+                                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                : ts.factory.createUnionTypeNode([
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                                  ])
+                        )
+                    ),
+                    hasQuestionToken: !this.intermediateRepresentation.sdkConfig.isAuthMandatory,
+                },
+                {
+                    name: this.getBasicAuthPasswordOptionKey(this.basicAuthScheme),
+                    type: getTextOfTsNode(
+                        context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
+                            this.intermediateRepresentation.sdkConfig.isAuthMandatory
+                                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                : ts.factory.createUnionTypeNode([
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                                  ])
+                        )
+                    ),
+                    hasQuestionToken: !this.intermediateRepresentation.sdkConfig.isAuthMandatory,
+                }
+            );
         }
 
         for (const header of this.authHeaders) {
@@ -525,6 +544,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         };
     }
 
+    private getBasicAuthUsernameOptionKey(basicAuthScheme: BasicAuthScheme): string {
+        return basicAuthScheme.username.camelCase.unsafeName;
+    }
+
+    private getBasicAuthPasswordOptionKey(basicAuthScheme: BasicAuthScheme): string {
+        return basicAuthScheme.password.camelCase.unsafeName;
+    }
+
     private getReferenceToEnvironment(): ts.Expression {
         return this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME);
     }
@@ -575,89 +602,153 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private getAuthorizationHeaderStatements(context: SdkClientClassContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
-        if (this.hasBearerAuth) {
-            const BEARER_TOKEN_VARIABLE_NAME = "bearer";
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                                undefined,
-                                undefined,
+        if (this.bearerAuthScheme != null) {
+            if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
+                statements.push(
+                    ts.factory.createReturnStatement(
+                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
+                            ts.factory.createTemplateSpan(
                                 context.base.coreUtilities.fetcher.Supplier.get(
                                     this.getReferenceToOption(GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME)
-                                )
+                                ),
+                                ts.factory.createTemplateTail("", "")
                             ),
-                        ],
-                        ts.NodeFlags.Const
+                        ])
                     )
-                ),
-                ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createBlock(
-                        [
-                            ts.factory.createReturnStatement(
-                                ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
-                                    ts.factory.createTemplateSpan(
-                                        ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                                        ts.factory.createTemplateTail("", "")
-                                    ),
-                                ])
-                            ),
-                        ],
-                        true
+                );
+            } else {
+                const BEARER_TOKEN_VARIABLE_NAME = "bearer";
+                statements.push(
+                    ts.factory.createVariableStatement(
+                        undefined,
+                        ts.factory.createVariableDeclarationList(
+                            [
+                                ts.factory.createVariableDeclaration(
+                                    ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                                    undefined,
+                                    undefined,
+                                    context.base.coreUtilities.fetcher.Supplier.get(
+                                        this.getReferenceToOption(
+                                            GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME
+                                        )
+                                    )
+                                ),
+                            ],
+                            ts.NodeFlags.Const
+                        )
                     )
-                )
-            );
+                );
+
+                statements.push(
+                    ts.factory.createIfStatement(
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        ts.factory.createBlock(
+                            [
+                                ts.factory.createReturnStatement(
+                                    ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
+                                        ts.factory.createTemplateSpan(
+                                            ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
+                                            ts.factory.createTemplateTail("", "")
+                                        ),
+                                    ])
+                                ),
+                            ],
+                            true
+                        )
+                    )
+                );
+            }
         }
 
-        if (this.hasBasicAuth) {
-            const CREDENTIALS_VARIABLE_NAME = "credentials";
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                CREDENTIALS_VARIABLE_NAME,
-                                undefined,
-                                undefined,
-                                context.base.coreUtilities.fetcher.Supplier.get(
-                                    this.getReferenceToOption(
-                                        GeneratedSdkClientClassImpl.BASIC_AUTH_OPTION_PROPERTY_NAME
-                                    )
-                                )
+        if (this.basicAuthScheme != null) {
+            if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
+                statements.push(
+                    ts.factory.createReturnStatement(
+                        context.base.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                            context.base.coreUtilities.fetcher.Supplier.get(
+                                this.getReferenceToOption(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme))
                             ),
-                        ],
-                        ts.NodeFlags.Const
+                            context.base.coreUtilities.fetcher.Supplier.get(
+                                this.getReferenceToOption(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme))
+                            )
+                        )
                     )
-                ),
-                ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        ts.factory.createIdentifier(CREDENTIALS_VARIABLE_NAME),
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createBlock(
-                        [
-                            ts.factory.createReturnStatement(
-                                context.base.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                );
+            } else {
+                const USERNAME_VARIABLE_NAME = this.basicAuthScheme.username.camelCase.unsafeName;
+                const PASSWORD_VARIABLE_NAME = this.basicAuthScheme.password.camelCase.unsafeName;
+                statements.push(
+                    ts.factory.createVariableStatement(
+                        undefined,
+                        ts.factory.createVariableDeclarationList(
+                            [
+                                ts.factory.createVariableDeclaration(
+                                    USERNAME_VARIABLE_NAME,
+                                    undefined,
+                                    undefined,
                                     context.base.coreUtilities.fetcher.Supplier.get(
-                                        ts.factory.createIdentifier(CREDENTIALS_VARIABLE_NAME)
+                                        this.getReferenceToOption(
+                                            this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)
+                                        )
                                     )
-                                )
-                            ),
-                        ],
-                        true
+                                ),
+                            ],
+                            ts.NodeFlags.Const
+                        )
+                    ),
+                    ts.factory.createVariableStatement(
+                        undefined,
+                        ts.factory.createVariableDeclarationList(
+                            [
+                                ts.factory.createVariableDeclaration(
+                                    PASSWORD_VARIABLE_NAME,
+                                    undefined,
+                                    undefined,
+                                    context.base.coreUtilities.fetcher.Supplier.get(
+                                        this.getReferenceToOption(
+                                            this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)
+                                        )
+                                    )
+                                ),
+                            ],
+                            ts.NodeFlags.Const
+                        )
                     )
-                )
-            );
+                );
+
+                statements.push(
+                    ts.factory.createIfStatement(
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                ts.factory.createNull()
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+                            ts.factory.createBinaryExpression(
+                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME),
+                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                                ts.factory.createNull()
+                            )
+                        ),
+                        ts.factory.createBlock(
+                            [
+                                ts.factory.createReturnStatement(
+                                    context.base.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                                        ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
+                                        ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME)
+                                    )
+                                ),
+                            ],
+                            true
+                        )
+                    )
+                );
+            }
         }
 
         const HEADER_VARIABLE_NAME = "value";
@@ -678,36 +769,42 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         ],
                         ts.NodeFlags.Const
                     )
-                ),
-                ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        ts.factory.createIdentifier(HEADER_VARIABLE_NAME),
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createBlock(
-                        [
-                            ts.factory.createReturnStatement(
-                                header.type === "authScheme" && header.header.prefix != null
-                                    ? ts.factory.createTemplateExpression(
-                                          ts.factory.createTemplateHead(`${header.header.prefix.trim()} `),
-                                          [
-                                              ts.factory.createTemplateSpan(
-                                                  ts.factory.createIdentifier(HEADER_VARIABLE_NAME),
-                                                  ts.factory.createTemplateTail("", "")
-                                              ),
-                                          ]
-                                      )
-                                    : ts.factory.createIdentifier(HEADER_VARIABLE_NAME)
-                            ),
-                        ],
-                        true
-                    )
                 )
             );
+
+            const toAuthHeaderStatement = ts.factory.createReturnStatement(
+                header.type === "authScheme" && header.header.prefix != null
+                    ? ts.factory.createTemplateExpression(
+                          ts.factory.createTemplateHead(`${header.header.prefix.trim()} `),
+                          [
+                              ts.factory.createTemplateSpan(
+                                  ts.factory.createIdentifier(HEADER_VARIABLE_NAME),
+                                  ts.factory.createTemplateTail("", "")
+                              ),
+                          ]
+                      )
+                    : ts.factory.createIdentifier(HEADER_VARIABLE_NAME)
+            );
+
+            if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
+                statements.push(toAuthHeaderStatement);
+            } else {
+                statements.push(
+                    ts.factory.createIfStatement(
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createIdentifier(HEADER_VARIABLE_NAME),
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        ts.factory.createBlock([toAuthHeaderStatement], true)
+                    )
+                );
+            }
         }
 
-        statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")));
+        if (!this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
+            statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")));
+        }
 
         return statements;
     }

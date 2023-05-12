@@ -55,14 +55,28 @@ export class AuthImpl extends CoreUtility implements Auth {
         toAuthorizationHeader: this.withExportedName(
             "BasicAuth",
             (BasicAuth) =>
-                (credentials: ts.Expression): ts.Expression => {
+                (username: ts.Expression, password: ts.Expression): ts.Expression => {
                     return ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
                             BasicAuth.getExpression(),
                             ts.factory.createIdentifier("toAuthorizationHeader")
                         ),
                         undefined,
-                        [credentials]
+                        [
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("username"),
+                                        username
+                                    ),
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("password"),
+                                        password
+                                    ),
+                                ],
+                                true
+                            ),
+                        ]
                     );
                 }
         ),
