@@ -15,6 +15,11 @@ service:
     getAllMovies:
       method: GET
       path: /all-movies
+      request:
+        name: GetAllMoviesRequest
+        headers:
+          literal_header: literal<"hello world">
+          string_header: string
       response: list<Movie>
     createMovie:
       method: POST

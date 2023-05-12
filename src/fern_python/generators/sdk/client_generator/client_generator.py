@@ -306,14 +306,15 @@ class ClientGenerator:
             parameters.extend(request_body_parameters.get_parameters())
 
         for header in service.headers + endpoint.headers:
-            parameters.append(
-                AST.NamedFunctionParameter(
-                    name=self._get_header_parameter_name(header),
-                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        header.value_type
+            if not self._is_header_literal(header):
+                parameters.append(
+                    AST.NamedFunctionParameter(
+                        name=self._get_header_parameter_name(header),
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            header.value_type
+                        ),
                     ),
-                ),
-            )
+                )
 
         return parameters
 
@@ -658,10 +659,15 @@ class ClientGenerator:
             )
 
         for header in service.headers + endpoint.headers:
+            literal_header_value = self._get_literal_header_value(header)
             headers.append(
                 (
                     header.name.wire_value,
-                    AST.Expression(self._get_header_parameter_name(header)),
+                    AST.Expression(
+                        f'"{literal_header_value}"'
+                        if literal_header_value is not None
+                        else self._get_header_parameter_name(header)
+                    ),
                 ),
             )
 
@@ -831,6 +837,25 @@ class ClientGenerator:
                 json_response.response_body_type
             ),
         )
+
+    def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
+        return self._get_literal_header_value(header) is not None
+
+    def _get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
+        type = header.value_type.get_as_union()
+        if type.type == "named":
+            shape = self._context.pydantic_generator_context.get_declaration_for_type_name(type).shape.get_as_union()
+            if shape.type == "alias":
+                resolved_type = shape.resolved_type.get_as_union()
+                if resolved_type.type == "container":
+                    resolved_container_type = resolved_type.container.get_as_union()
+                    if resolved_container_type.type == "literal":
+                        return resolved_container_type.literal.get_as_union().string
+        if type.type == "container":
+            container_type = type.container.get_as_union()
+            if container_type.type == "literal":
+                return container_type.literal.get_as_union().string
+        return None
 
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:

@@ -11,6 +11,7 @@ import pydantic
 from ...core.api_error import ApiError
 from ...core.datetime_utils import serialize_datetime
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.remove_none_from_headers import remove_none_from_headers
 from .errors.invalid_movie_error import InvalidMovieError
 from .errors.movie_already_exists_error import MovieAlreadyExistsError
 from .errors.movie_not_found_error import MovieNotFoundError
@@ -39,8 +40,13 @@ class MovieClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_all_movies(self) -> typing.List[Movie]:
-        _response = httpx.request("GET", urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"), timeout=60)
+    def get_all_movies(self, *, string_header: str) -> typing.List[Movie]:
+        _response = httpx.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
+            headers=remove_none_from_headers({"literal_header": "hello world", "string_header": string_header}),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
         try:
@@ -128,10 +134,13 @@ class AsyncMovieClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_all_movies(self) -> typing.List[Movie]:
+    async def get_all_movies(self, *, string_header: str) -> typing.List[Movie]:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
-                "GET", urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"), timeout=60
+                "GET",
+                urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
+                headers=remove_none_from_headers({"literal_header": "hello world", "string_header": string_header}),
+                timeout=60,
             )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
