@@ -1,5 +1,6 @@
 import { SecurityScheme } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
+import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
 import { isReferenceObject } from "../utils/isReferenceObject";
 
 export function convertSecurityScheme(
@@ -19,7 +20,11 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
     } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
         return SecurityScheme.bearer();
     } else if (securityScheme.type === "http" && securityScheme.scheme === "basic") {
-        return SecurityScheme.basic();
+        const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
+        return SecurityScheme.basic({
+            usernameVariableName: basicSecuritySchemeNaming.usernameVariable ?? undefined,
+            passwordVariableName: basicSecuritySchemeNaming.passwordVariable ?? undefined,
+        });
     } else if (securityScheme.type === "openIdConnect") {
         return SecurityScheme.bearer();
     } else if (securityScheme.type === "oauth2") {
