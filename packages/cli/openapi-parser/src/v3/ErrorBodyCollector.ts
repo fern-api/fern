@@ -1,7 +1,7 @@
 import { Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
+import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertSchema } from "./converters/convertSchemas";
-import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaEqual } from "./utils/isSchemaEqual";
 
@@ -9,9 +9,9 @@ export class ErrorBodyCollector {
     private references: Set<string> = new Set();
     private schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[] = [];
     private convertedSchemas: Schema[] = [];
-    private context: OpenAPIV3ParserContext;
+    private context: AbstractOpenAPIV3ParserContext;
 
-    constructor(context: OpenAPIV3ParserContext) {
+    constructor(context: AbstractOpenAPIV3ParserContext) {
         this.context = context;
     }
 

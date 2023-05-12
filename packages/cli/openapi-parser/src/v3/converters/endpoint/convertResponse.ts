@@ -1,6 +1,6 @@
 import { Response, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 
@@ -26,7 +26,7 @@ export function convertResponse({
     responseStatusCode,
 }: {
     responses: OpenAPIV3.ResponsesObject;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
     responseStatusCode?: number;
 }): ConvertedResponse {
@@ -62,7 +62,7 @@ function convertResolvedResponse({
     responseBreadcrumbs,
 }: {
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
 }): Response | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
@@ -95,7 +95,7 @@ function markErrorSchemas({
     context,
 }: {
     responses: OpenAPIV3.ResponsesObject;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
 }): StatusCode[] {
     const errorStatusCodes: StatusCode[] = [];
     for (const [statusCode, response] of Object.entries(responses)) {

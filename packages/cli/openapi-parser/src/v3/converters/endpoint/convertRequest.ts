@@ -1,6 +1,6 @@
 import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
@@ -16,7 +16,7 @@ export function convertRequest({
 }: {
     requestBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
     document: OpenAPIV3.Document;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];
 }): Request | undefined {
     if (isReferenceObject(requestBody)) {

@@ -1,7 +1,8 @@
 import { Endpoint, EndpointSdkName, HttpMethod, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
+import { DummyOpenAPIV3ParserContext } from "../DummyOpenAPIV3ParserContext";
 import { X_FERN_ASYNC_CONFIG } from "../extensions/extensions";
-import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertServer } from "./convertServer";
@@ -13,7 +14,7 @@ export function convertPathItem(
     path: string,
     pathItemObject: OpenAPIV3.PathItemObject,
     document: OpenAPIV3.Document,
-    context: OpenAPIV3ParserContext
+    context: AbstractOpenAPIV3ParserContext
 ): Endpoint[] {
     const endpoints: Endpoint[] = [];
 
@@ -98,7 +99,7 @@ function convertSyncAndAsyncEndpoints({
     operation: OpenAPIV3.OperationObject;
     pathItemParameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[] | undefined;
     document: OpenAPIV3.Document;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
 }): Endpoint[] {
     const endpoints: Endpoint[] = [];
     const sdkName = getSdkName({ operation });
@@ -216,7 +217,7 @@ function convertToEndpoint({
     operation: OpenAPIV3.OperationObject;
     parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[];
     document: OpenAPIV3.Document;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
     responseStatusCode?: number;
     suffix?: string;
 }): Omit<Endpoint, "path" | "method"> {
@@ -248,7 +249,10 @@ function convertToEndpoint({
             ? convertRequest({
                   requestBody: operation.requestBody,
                   document,
-                  context,
+                  context: new DummyOpenAPIV3ParserContext({
+                      document: context.document,
+                      taskContext: context.taskContext,
+                  }),
                   requestBreadcrumbs,
               })
             : undefined;
@@ -266,6 +270,13 @@ function convertToEndpoint({
             document,
             context,
             requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
+        });
+    } else if (operation.requestBody != null) {
+        convertedRequest = convertRequest({
+            requestBody: operation.requestBody,
+            document,
+            context,
+            requestBreadcrumbs: [...requestBreadcrumbs],
         });
     }
 

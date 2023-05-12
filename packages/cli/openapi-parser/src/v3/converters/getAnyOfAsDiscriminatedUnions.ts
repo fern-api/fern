@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../utils/isReferenceObject";
 
 export interface CandidateDiscriminant {
@@ -9,7 +9,7 @@ export interface CandidateDiscriminant {
 
 export function getCandidateDiscriminant(
     schemas: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[],
-    context: OpenAPIV3ParserContext
+    context: AbstractOpenAPIV3ParserContext
 ): CandidateDiscriminant | undefined {
     let init = false;
     let candidateDiscriminants: Record<string, string[]> = {};
