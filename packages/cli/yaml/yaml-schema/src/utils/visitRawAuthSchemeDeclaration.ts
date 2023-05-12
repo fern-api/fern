@@ -1,8 +1,15 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AuthSchemeDeclarationSchema, HeaderAuthSchemeSchema } from "../schemas";
+import {
+    AuthSchemeDeclarationSchema,
+    BasicAuthSchemeSchema,
+    BearerAuthSchemeSchema,
+    HeaderAuthSchemeSchema,
+} from "../schemas";
 
 export interface AuthSchemeDeclarationVisitor<R> {
     header: (authScheme: HeaderAuthSchemeSchema) => R;
+    basic: (authScheme: BasicAuthSchemeSchema) => R;
+    bearer: (authScheme: BearerAuthSchemeSchema) => R;
 }
 
 export function visitRawAuthSchemeDeclaration<R>(
@@ -12,7 +19,14 @@ export function visitRawAuthSchemeDeclaration<R>(
     if (isHeaderAuthScheme(authScheme)) {
         return visitor.header(authScheme);
     }
-    assertNever(authScheme);
+    switch (authScheme.scheme) {
+        case "basic":
+            return visitor.basic(authScheme);
+        case "bearer":
+            return visitor.bearer(authScheme);
+        default:
+            assertNever(authScheme);
+    }
 }
 
 export function isHeaderAuthScheme(authScheme: AuthSchemeDeclarationSchema): authScheme is HeaderAuthSchemeSchema {

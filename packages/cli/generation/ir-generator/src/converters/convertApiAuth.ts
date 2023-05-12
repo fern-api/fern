@@ -58,37 +58,76 @@ function convertSchemeReference({
         if (declaration == null) {
             throw new Error("Unknown auth scheme: " + reference);
         }
-        return visitRawAuthSchemeDeclaration(declaration, {
+        return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
                 AuthScheme.header({
                     docs,
                     name: file.casingsGenerator.generateNameAndWireValue({
-                        name: declaration.name ?? reference,
-                        wireValue: declaration.header,
+                        name: rawHeader.name ?? reference,
+                        wireValue: rawHeader.header,
                     }),
                     valueType: file.parseTypeReference(rawHeader.type ?? "string"),
                     prefix: rawHeader.prefix,
                 }),
+            basic: (rawScheme) =>
+                generateBasicAuth({
+                    file,
+                    docs,
+                    rawScheme,
+                }),
+            bearer: (rawScheme) =>
+                generateBearerAuth({
+                    file,
+                    docs,
+                    rawScheme,
+                }),
         });
     };
 
-    if (typeof reference === "string") {
-        switch (reference) {
-            case "bearer":
-                return AuthScheme.bearer({ docs: undefined });
-            case "basic":
-                return AuthScheme.basic({ docs: undefined });
-            default:
-                return convertNamedAuthSchemeReference(reference, undefined);
-        }
-    }
+    const scheme = typeof reference === "string" ? reference : reference.scheme;
 
-    switch (reference.scheme) {
+    switch (scheme) {
         case "bearer":
-            return AuthScheme.bearer({ docs: reference.docs });
+            return generateBearerAuth({
+                file,
+                docs: undefined,
+                rawScheme: undefined,
+            });
         case "basic":
-            return AuthScheme.basic({ docs: reference.docs });
+            return generateBasicAuth({
+                file,
+                docs: undefined,
+                rawScheme: undefined,
+            });
         default:
-            return convertNamedAuthSchemeReference(reference.scheme, reference.docs);
+            return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
     }
+}
+
+function generateBearerAuth({
+    docs,
+    rawScheme,
+    file,
+}: {
+    docs: string | undefined;
+    rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined;
+    file: FernFileContext;
+}): AuthScheme.Bearer {
+    return AuthScheme.bearer({ docs, token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token") });
+}
+
+function generateBasicAuth({
+    docs,
+    rawScheme,
+    file,
+}: {
+    docs: string | undefined;
+    rawScheme: RawSchemas.BasicAuthSchemeSchema | undefined;
+    file: FernFileContext;
+}): AuthScheme.Basic {
+    return AuthScheme.basic({
+        docs,
+        username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
+        password: file.casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
+    });
 }

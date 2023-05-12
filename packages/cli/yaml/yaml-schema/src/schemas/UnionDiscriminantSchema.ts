@@ -1,7 +1,7 @@
 import { z } from "zod";
+import { WithNameSchema } from "./WithNameSchema";
 
-export const UnionDiscriminantSchema = z.strictObject({
-    name: z.optional(z.string()),
+export const UnionDiscriminantSchema = WithNameSchema.extend({
     value: z.string(),
 });
 

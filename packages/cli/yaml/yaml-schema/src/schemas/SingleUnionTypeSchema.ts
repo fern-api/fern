@@ -1,11 +1,10 @@
 import { z } from "zod";
 import { SingleUnionTypeKeySchema } from "./SingleUnionTypeKeySchema";
-import { WithDocsSchema } from "./WithDocsSchema";
+import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 
 export const SingleUnionTypeSchema = z.union([
     z.string(),
-    WithDocsSchema.extend({
-        name: z.optional(z.string()),
+    WithNameAndDocsSchema.extend({
         type: z.optional(
             z.union([
                 z.string(),

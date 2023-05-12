@@ -1,8 +1,7 @@
 import { z } from "zod";
-import { WithDocsSchema } from "./WithDocsSchema";
+import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 
-export const EnumValueSchema = WithDocsSchema.extend({
-    name: z.optional(z.string()),
+export const EnumValueSchema = WithNameAndDocsSchema.extend({
     value: z.string(),
 });
 

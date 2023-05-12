@@ -138,6 +138,25 @@ exports[`ir {"name":"extended-examples"} 1`] = `
         "requirement": "ALL",
         "schemes": [
             {
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
                 "_type": "bearer"
             }
         ]
@@ -8376,7 +8395,45 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
         "requirement": "ALL",
         "schemes": [
             {
-                "_type": "bearer"
+                "username": {
+                    "originalName": "clientId",
+                    "camelCase": {
+                        "unsafeName": "clientId",
+                        "safeName": "clientId"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "client_id",
+                        "safeName": "client_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CLIENT_ID",
+                        "safeName": "CLIENT_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ClientId",
+                        "safeName": "ClientId"
+                    }
+                },
+                "password": {
+                    "originalName": "clientSecret",
+                    "camelCase": {
+                        "unsafeName": "clientSecret",
+                        "safeName": "clientSecret"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "client_secret",
+                        "safeName": "client_secret"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CLIENT_SECRET",
+                        "safeName": "CLIENT_SECRET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ClientSecret",
+                        "safeName": "ClientSecret"
+                    }
+                },
+                "_type": "basic"
             }
         ]
     },

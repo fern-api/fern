@@ -1,2 +1,10 @@
 name: api
-auth: bearer
+auth: MyBasicAuth
+
+auth-schemes:
+  MyBasicAuth:
+    scheme: basic
+    username:
+      name: clientId
+    password:
+      name: clientSecret
