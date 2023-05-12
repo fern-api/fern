@@ -771,6 +771,7 @@ class ClientGenerator:
             type_reference,
             expected=set([ir_types.PrimitiveType.DATE_TIME]),
             allow_optional=allow_optional,
+            allow_enum=False,
         )
 
     def _is_date(
@@ -780,14 +781,12 @@ class ClientGenerator:
         allow_optional: bool,
     ) -> bool:
         return self._does_type_reference_match_primitives(
-            type_reference,
-            expected=set([ir_types.PrimitiveType.DATE]),
-            allow_optional=allow_optional,
+            type_reference, expected=set([ir_types.PrimitiveType.DATE]), allow_optional=allow_optional, allow_enum=False
         )
 
     def _is_httpx_primitive_data(self, type_reference: ir_types.TypeReference, *, allow_optional: bool) -> bool:
         return self._does_type_reference_match_primitives(
-            type_reference, expected=HTTPX_PRIMITIVE_DATA_TYPES, allow_optional=allow_optional
+            type_reference, expected=HTTPX_PRIMITIVE_DATA_TYPES, allow_optional=allow_optional, allow_enum=True
         )
 
     def _does_type_reference_match_primitives(
@@ -796,19 +795,26 @@ class ClientGenerator:
         *,
         expected: Set[ir_types.PrimitiveType],
         allow_optional: bool,
+        allow_enum: bool,
     ) -> bool:
         def visit_named_type(type_name: ir_types.DeclaredTypeName) -> bool:
             type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_name(type_name)
             return type_declaration.shape.visit(
                 alias=lambda alias: self._does_type_reference_match_primitives(
-                    alias.alias_of, expected=expected, allow_optional=allow_optional
+                    alias.alias_of,
+                    expected=expected,
+                    allow_optional=allow_optional,
+                    allow_enum=allow_enum,
                 ),
-                enum=lambda x: True,
+                enum=lambda x: allow_enum,
                 object=lambda x: False,
                 union=lambda x: False,
                 undiscriminated_union=lambda union: all(
                     self._does_type_reference_match_primitives(
-                        member.type, expected=expected, allow_optional=allow_optional
+                        member.type,
+                        expected=expected,
+                        allow_optional=allow_optional,
+                        allow_enum=allow_enum,
                     )
                     for member in union.members
                 ),
@@ -819,7 +825,12 @@ class ClientGenerator:
                 list=lambda x: False,
                 set=lambda x: False,
                 optional=lambda item_type: allow_optional
-                and self._does_type_reference_match_primitives(item_type, expected=expected, allow_optional=True),
+                and self._does_type_reference_match_primitives(
+                    item_type,
+                    expected=expected,
+                    allow_optional=True,
+                    allow_enum=allow_enum,
+                ),
                 map=lambda x: False,
                 literal=lambda literal: literal.visit(string=lambda x: ir_types.PrimitiveType.STRING in expected),
             ),
