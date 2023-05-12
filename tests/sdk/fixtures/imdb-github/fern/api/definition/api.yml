@@ -1,3 +1,13 @@
 name: api
 error-discrimination:
   strategy: status-code
+
+auth: BasicAuth
+
+auth-schemes:
+  BasicAuth:
+    scheme: basic
+    username:
+      name: apiKey
+    password:
+      name: apiSecret

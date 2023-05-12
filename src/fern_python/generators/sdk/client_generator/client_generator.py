@@ -55,12 +55,6 @@ class ClientGenerator:
     TOKEN_CONSTRUCTOR_PARAMETER_NAME = "token"
     TOKEN_MEMBER_NAME = "_token"
 
-    USERNAME_CONSTRUCTOR_PARAMETER_NAME = "username"
-    USERNAME_MEMBER_NAME = "_username"
-
-    PASSWORD_CONSTRUCTOR_PARAMETER_NAME = "password"
-    PASSWORD_MEMBER_NAME = "_password"
-
     def __init__(
         self,
         *,
@@ -248,15 +242,15 @@ class ClientGenerator:
             parameters.extend(
                 [
                     ConstructorParameter(
-                        constructor_parameter_name=ClientGenerator.USERNAME_CONSTRUCTOR_PARAMETER_NAME,
-                        private_member_name=ClientGenerator.USERNAME_MEMBER_NAME,
+                        constructor_parameter_name=self._get_username_constructor_parameter_name(),
+                        private_member_name=self._get_username_member_name(),
                         type_hint=AST.TypeHint.str_()
                         if self._context.ir.sdk_config.is_auth_mandatory
                         else AST.TypeHint.optional(AST.TypeHint.str_()),
                     ),
                     ConstructorParameter(
-                        constructor_parameter_name=ClientGenerator.PASSWORD_CONSTRUCTOR_PARAMETER_NAME,
-                        private_member_name=ClientGenerator.PASSWORD_MEMBER_NAME,
+                        constructor_parameter_name=self._get_password_constructor_parameter_name(),
+                        private_member_name=self._get_password_member_name(),
                         type_hint=AST.TypeHint.str_()
                         if self._context.ir.sdk_config.is_auth_mandatory
                         else AST.TypeHint.optional(AST.TypeHint.str_()),
@@ -719,10 +713,20 @@ class ClientGenerator:
         return False
 
     def _has_basic_auth(self) -> bool:
+        return self._get_basic_auth_scheme() is not None
+
+    def _get_basic_auth_scheme(self) -> Optional[ir_types.BasicAuthScheme]:
         for scheme in self._context.ir.auth.schemes:
-            if scheme.get_as_union().type == "basic":
-                return True
-        return False
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "basic":
+                return scheme_as_union
+        return None
+
+    def _get_basic_auth_scheme_or_raise(self) -> ir_types.BasicAuthScheme:
+        scheme = self._get_basic_auth_scheme()
+        if scheme is None:
+            raise RuntimeError("No basic auth scheme exists")
+        return scheme
 
     def _get_header_auth_schemes(self) -> List[ir_types.HeaderAuthScheme]:
         header_auth_schemes: List[ir_types.HeaderAuthScheme] = []
@@ -736,7 +740,7 @@ class ClientGenerator:
         if not self._has_basic_auth():
             return None
         return AST.Expression(
-            f"(self.{ClientGenerator.USERNAME_MEMBER_NAME}, self.{ClientGenerator.PASSWORD_MEMBER_NAME})"
+            f"(self.{self._get_username_member_name()}, self.{self._get_password_member_name()}) if self.{self._get_username_member_name()} is not None and self.{self._get_password_member_name()} is not None else None"
         )
 
     def _write_subpackage_getter(self, subpackage_id: ir_types.SubpackageId, *, is_async: bool) -> AST.CodeWriter:
@@ -856,6 +860,18 @@ class ClientGenerator:
             if container_type.type == "literal":
                 return container_type.literal.get_as_union().string
         return None
+
+    def _get_username_constructor_parameter_name(self) -> str:
+        return self._get_basic_auth_scheme_or_raise().username.snake_case.unsafe_name
+
+    def _get_username_member_name(self) -> str:
+        return f"_{self._get_username_constructor_parameter_name()}"
+
+    def _get_password_constructor_parameter_name(self) -> str:
+        return self._get_basic_auth_scheme_or_raise().password.snake_case.unsafe_name
+
+    def _get_password_member_name(self) -> str:
+        return f"_{self._get_password_constructor_parameter_name()}"
 
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
