@@ -28,3 +28,14 @@ export const X_FERN_ASYNC_CONFIG = "x-fern-async-config";
  */
 export const X_FERN_SDK_VARIABLES = "x-fern-sdk-variables";
 export const X_FERN_SDK_VARIABLE = "x-fern-sdk-variable";
+
+/**
+ * securitySchemes:
+ *   Basic:
+ *     scheme: http
+ *     type: basic
+ *     x-fern-username-variable-name: clientId
+ *     x-fern-password-variable-name: clientSecret
+ */
+export const X_FERN_USERNAME_VARIABLE_NAME = "x-fern-username-variable-name";
+export const X_FERN_PASSWORD_VARIABLE_NAME = "x-fern-password-variable-name";

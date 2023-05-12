@@ -94,12 +94,17 @@ types:
 
   SecurityScheme:
     union:
-      basic: {}
+      basic: BasicSecurityScheme
       bearer: {}
       header: HeaderSecurityScheme
       query:
         type: QuerySecurityScheme
         docs: parameter sent as a security scheme
+
+  BasicSecurityScheme:
+    properties:
+      usernameVariableName: optional<string>
+      passwordVariableName: optional<string>
 
   HeaderSecurityScheme:
     properties:
