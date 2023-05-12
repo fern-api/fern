@@ -40,10 +40,10 @@
                         "items": {
                           "type": "object",
                           "properties": {
+                            "name": { "type": "string" },
                             "docs": {
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
-                            "name": { "type": "string" },
                             "value": {}
                           },
                           "additionalProperties": false
@@ -71,7 +71,9 @@
                                 "audiences": {
                                   "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                                 },
-                                "name": { "type": "string" }
+                                "name": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                }
                               },
                               "required": ["type"],
                               "additionalProperties": false
@@ -138,10 +140,12 @@
                         {
                           "type": "object",
                           "properties": {
+                            "name": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                            },
                             "docs": {
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
-                            "name": { "type": "string" },
                             "type": {
                               "anyOf": [
                                 { "type": "string" },
@@ -153,7 +157,12 @@
                                 { "type": "string" },
                                 {
                                   "type": "object",
-                                  "properties": { "name": { "type": "string" }, "value": { "type": "string" } },
+                                  "properties": {
+                                    "name": {
+                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                    },
+                                    "value": { "type": "string" }
+                                  },
                                   "required": ["value"],
                                   "additionalProperties": false
                                 }
@@ -170,7 +179,12 @@
                       { "type": "string" },
                       {
                         "type": "object",
-                        "properties": { "name": { "type": "string" }, "value": { "type": "string" } },
+                        "properties": {
+                          "name": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                          },
+                          "value": { "type": "string" }
+                        },
                         "required": ["value"],
                         "additionalProperties": false
                       }
@@ -215,10 +229,12 @@
                         {
                           "type": "object",
                           "properties": {
+                            "name": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                            },
                             "docs": {
                               "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
-                            "name": { "type": "string" },
                             "value": { "type": "string" }
                           },
                           "required": ["value"],
@@ -346,7 +362,9 @@
                       {
                         "type": "object",
                         "properties": {
-                          "name": { "type": "string" },
+                          "name": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                          },
                           "query-parameters": {
                             "type": "object",
                             "additionalProperties": {
@@ -366,7 +384,7 @@
                                       "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                                     },
                                     "name": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/name"
+                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                                     },
                                     "allow-multiple": { "type": "boolean" }
                                   },
@@ -489,8 +507,10 @@
                     "items": {
                       "type": "object",
                       "properties": {
+                        "name": {
+                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                        },
                         "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-                        "name": { "type": "string" },
                         "path-parameters": { "type": "object", "additionalProperties": {} },
                         "query-parameters": {
                           "type": "object",
