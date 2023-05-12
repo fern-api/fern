@@ -1,9 +1,8 @@
 import { z } from "zod";
 import { ExampleTypeValueSchema } from "./ExampleTypeValueSchema";
-import { WithDocsSchema } from "./WithDocsSchema";
+import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 
-export const ExampleTypeSchema = WithDocsSchema.extend({
-    name: z.optional(z.string()),
+export const ExampleTypeSchema = WithNameAndDocsSchema.extend({
     value: ExampleTypeValueSchema,
 });
 

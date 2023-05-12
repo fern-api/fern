@@ -1,10 +1,9 @@
 import { z } from "zod";
 import { ExampleResponseSchema } from "./ExampleResponseSchema";
 import { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
-import { WithDocsSchema } from "./WithDocsSchema";
+import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 
-export const ExampleEndpointCallSchema = WithDocsSchema.extend({
-    name: z.optional(z.string()),
+export const ExampleEndpointCallSchema = WithNameAndDocsSchema.extend({
     "path-parameters": z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),
     "query-parameters": z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),
     headers: z.optional(z.record(z.string(), ExampleTypeReferenceSchema)),

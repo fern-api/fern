@@ -18,9 +18,18 @@ types:
       value: _type
       name: type
     union:
-      bearer: commons.WithDocs
-      basic: commons.WithDocs
+      bearer: BearerAuthScheme
+      basic: BasicAuthScheme
       header: HeaderAuthScheme
+  BearerAuthScheme:
+    extends: commons.WithDocs
+    properties:
+      token: commons.Name
+  BasicAuthScheme:
+    extends: commons.WithDocs
+    properties:
+      username: commons.Name
+      password: commons.Name
   HeaderAuthScheme:
     extends: commons.WithDocs
     properties:

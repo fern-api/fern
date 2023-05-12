@@ -1,7 +1,7 @@
 import { z } from "zod";
+import { WithNameSchema } from "./WithNameSchema";
 
-export const SingleUnionTypeKeySchema = z.strictObject({
-    name: z.optional(z.string()),
+export const SingleUnionTypeKeySchema = WithNameSchema.extend({
     value: z.string(),
 });
 

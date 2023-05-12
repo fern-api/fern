@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-fern/ir-model": "0.0.1744",
+    "@fern-fern/ir-model": "0.0.1839",
     "zod": "^3.14.3"
   },
   "devDependencies": {
