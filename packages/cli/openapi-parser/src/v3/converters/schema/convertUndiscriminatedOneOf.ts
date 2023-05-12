@@ -1,6 +1,6 @@
 import { Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { convertSchema } from "../convertSchemas";
 
 export function convertUndiscriminatedOneOf({
@@ -17,7 +17,7 @@ export function convertUndiscriminatedOneOf({
     breadcrumbs: string[];
     description: string | undefined;
     wrapAsOptional: boolean;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
 }): Schema {
     const convertedSubtypes = subtypes.map((schema) => {

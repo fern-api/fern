@@ -1,6 +1,6 @@
 import { PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 
@@ -15,7 +15,7 @@ export function convertAdditionalProperties({
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
     wrapAsOptional: boolean;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
 }): Schema {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesEmptyDictionary(additionalProperties)) {
         return wrapMap({

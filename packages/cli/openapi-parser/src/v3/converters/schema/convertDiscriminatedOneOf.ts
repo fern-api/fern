@@ -1,6 +1,6 @@
 import { ObjectProperty, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { convertReferenceObject, convertSchema } from "../convertSchemas";
 
 export function convertDiscriminatedOneOf({
@@ -22,7 +22,7 @@ export function convertDiscriminatedOneOf({
     required: string[] | undefined;
     wrapAsOptional: boolean;
     discriminator: OpenAPIV3.DiscriminatorObject;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
 }): Schema {
     const discriminant = discriminator.propertyName;
     const unionSubTypes = Object.fromEntries(

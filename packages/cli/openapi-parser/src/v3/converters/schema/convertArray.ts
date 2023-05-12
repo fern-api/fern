@@ -1,6 +1,6 @@
 import { Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { convertSchema } from "../convertSchemas";
 
 export function convertArray({
@@ -14,7 +14,7 @@ export function convertArray({
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     description: string | undefined;
     wrapAsOptional: boolean;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
 }): Schema {
     const itemSchema = item == null ? Schema.unknown() : convertSchema(item, false, context, [...breadcrumbs, "Item"]);
     return wrapArray({

@@ -1,6 +1,6 @@
 import { HttpError, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { ErrorBodyCollector } from "../ErrorBodyCollector";
-import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
 import { convertSchema } from "./convertSchemas";
 
 const ERROR_NAMES_BY_STATUS_CODE: Record<number, string> = {
@@ -26,7 +26,7 @@ export function convertToError({
 }: {
     statusCode: number;
     errorBodyCollector: ErrorBodyCollector;
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
 }): HttpError | undefined {
     const errorName = ERROR_NAMES_BY_STATUS_CODE[statusCode];
     if (errorName == null) {

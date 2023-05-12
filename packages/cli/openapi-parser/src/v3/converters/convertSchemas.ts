@@ -1,7 +1,7 @@
 import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "../OpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
@@ -17,7 +17,7 @@ export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
     wrapAsOptional: boolean,
-    context: OpenAPIV3ParserContext,
+    context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[],
     referencedAsRequest = false
 ): Schema {
@@ -52,7 +52,7 @@ export function convertReferenceObject(
 function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject,
     wrapAsOptionalParam: boolean,
-    context: OpenAPIV3ParserContext,
+    context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[]
 ): Schema {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

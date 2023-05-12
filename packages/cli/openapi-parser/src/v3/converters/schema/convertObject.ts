@@ -1,6 +1,6 @@
 import { ObjectProperty, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "../convertSchemas";
 
@@ -23,7 +23,7 @@ export function convertObject({
     required: string[] | undefined;
     wrapAsOptional: boolean;
     allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
-    context: OpenAPIV3ParserContext;
+    context: AbstractOpenAPIV3ParserContext;
 }): Schema {
     let allRequired = [...(required ?? [])];
     let propertiesToConvert = { ...properties };
