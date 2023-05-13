@@ -2,8 +2,6 @@
 
 import typing
 
-from backports.cached_property import cached_property
-
 from .environment import FernIrEnvironment
 from .resources.admin.client import AdminClient, AsyncAdminClient
 from .resources.homepage.client import AsyncHomepageClient, HomepageClient
@@ -26,38 +24,26 @@ class FernIr:
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
-
-    @cached_property
-    def v_2(self) -> V2Client:
-        return V2Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def admin(self) -> AdminClient:
-        return AdminClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def homepage(self) -> HomepageClient:
-        return HomepageClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def migration(self) -> MigrationClient:
-        return MigrationClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def playlist(self) -> PlaylistClient:
-        return PlaylistClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def problem(self) -> ProblemClient:
-        return ProblemClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def submission(self) -> SubmissionClient:
-        return SubmissionClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def sysprop(self) -> SyspropClient:
-        return SyspropClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
+        self.v_2 = V2Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
+        self.admin = AdminClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
+        self.homepage = HomepageClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
+        self.migration = MigrationClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
+        self.playlist = PlaylistClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
+        self.problem = ProblemClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
+        self.submission = SubmissionClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
+        self.sysprop = SyspropClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
 
 
 class AsyncFernIr:
@@ -71,47 +57,25 @@ class AsyncFernIr:
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
-
-    @cached_property
-    def v_2(self) -> AsyncV2Client:
-        return AsyncV2Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def admin(self) -> AsyncAdminClient:
-        return AsyncAdminClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def homepage(self) -> AsyncHomepageClient:
-        return AsyncHomepageClient(
+        self.v_2 = AsyncV2Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
+        self.admin = AsyncAdminClient(
             environment=self._environment, x_random_header=self.x_random_header, token=self._token
         )
-
-    @cached_property
-    def migration(self) -> AsyncMigrationClient:
-        return AsyncMigrationClient(
+        self.homepage = AsyncHomepageClient(
             environment=self._environment, x_random_header=self.x_random_header, token=self._token
         )
-
-    @cached_property
-    def playlist(self) -> AsyncPlaylistClient:
-        return AsyncPlaylistClient(
+        self.migration = AsyncMigrationClient(
             environment=self._environment, x_random_header=self.x_random_header, token=self._token
         )
-
-    @cached_property
-    def problem(self) -> AsyncProblemClient:
-        return AsyncProblemClient(
+        self.playlist = AsyncPlaylistClient(
             environment=self._environment, x_random_header=self.x_random_header, token=self._token
         )
-
-    @cached_property
-    def submission(self) -> AsyncSubmissionClient:
-        return AsyncSubmissionClient(
+        self.problem = AsyncProblemClient(
             environment=self._environment, x_random_header=self.x_random_header, token=self._token
         )
-
-    @cached_property
-    def sysprop(self) -> AsyncSyspropClient:
-        return AsyncSyspropClient(
+        self.submission = AsyncSubmissionClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
+        self.sysprop = AsyncSyspropClient(
             environment=self._environment, x_random_header=self.x_random_header, token=self._token
         )

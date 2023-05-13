@@ -4,7 +4,6 @@ import typing
 from json.decoder import JSONDecodeError
 
 import httpx
-from backports.cached_property import cached_property
 
 from ...core.api_error import ApiError
 from ...core.remove_none_from_headers import remove_none_from_headers
@@ -24,6 +23,10 @@ class V2Client:
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
+        self.problem = ProblemClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
+        self.v_3 = V3Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
 
     def test(self) -> None:
         _response = httpx.request(
@@ -45,14 +48,6 @@ class V2Client:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    @cached_property
-    def problem(self) -> ProblemClient:
-        return ProblemClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
-    @cached_property
-    def v_3(self) -> V3Client:
-        return V3Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-
 
 class AsyncV2Client:
     def __init__(
@@ -65,6 +60,10 @@ class AsyncV2Client:
         self._environment = environment
         self.x_random_header = x_random_header
         self._token = token
+        self.problem = AsyncProblemClient(
+            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+        )
+        self.v_3 = AsyncV3Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
 
     async def test(self) -> None:
         async with httpx.AsyncClient() as _client:
@@ -86,13 +85,3 @@ class AsyncV2Client:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    @cached_property
-    def problem(self) -> AsyncProblemClient:
-        return AsyncProblemClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
-        )
-
-    @cached_property
-    def v_3(self) -> AsyncV3Client:
-        return AsyncV3Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)

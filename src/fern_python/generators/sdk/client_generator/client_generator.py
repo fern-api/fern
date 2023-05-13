@@ -5,13 +5,8 @@ import fern.ir.resources as ir_types
 from typing_extensions import Never
 
 from fern_python.codegen import AST, SourceFile
-from fern_python.external_dependencies import (
-    Backports,
-    HttpX,
-    Json,
-    Pydantic,
-    UrlLibParse,
-)
+from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.external_dependencies import HttpX, Json, Pydantic, UrlLibParse
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import (
@@ -97,7 +92,7 @@ class ClientGenerator:
                         for param in self._get_constructor_parameters()
                     ],
                 ),
-                body=AST.CodeWriter(self._write_constructor_body),
+                body=AST.CodeWriter(self._get_write_constructor_body(is_async=is_async)),
             ),
         )
 
@@ -156,24 +151,6 @@ class ClientGenerator:
                             request_body_parameters=request_body_parameters,
                             is_async=is_async,
                         ),
-                    )
-                )
-
-        for subpackage_id in self._package.subpackages:
-            subpackage = self._context.ir.subpackages[subpackage_id]
-            if subpackage.has_endpoints_in_tree:
-                class_declaration.add_method(
-                    AST.FunctionDeclaration(
-                        name=subpackage.name.snake_case.unsafe_name,
-                        signature=AST.FunctionSignature(
-                            return_type=AST.TypeHint(
-                                self._context.get_reference_to_async_subpackage_service(subpackage_id)
-                                if is_async
-                                else self._context.get_reference_to_subpackage_service(subpackage_id)
-                            )
-                        ),
-                        body=self._write_subpackage_getter(subpackage_id, is_async=is_async),
-                        decorators=[Backports.cached_property()],
                     )
                 )
 
@@ -263,9 +240,28 @@ class ClientGenerator:
     def _environment_is_enum(self) -> bool:
         return self._context.ir.environments is not None
 
-    def _write_constructor_body(self, writer: AST.NodeWriter) -> None:
-        for param in self._get_constructor_parameters():
-            writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+    def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
+        def _write_constructor_body(writer: AST.NodeWriter) -> None:
+            for param in self._get_constructor_parameters():
+                writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+            for subpackage_id in self._package.subpackages:
+                subpackage = self._context.ir.subpackages[subpackage_id]
+                if subpackage.has_endpoints_in_tree:
+                    writer.write_node(AST.Expression(f"self.{subpackage.name.snake_case.safe_name} = "))
+                    writer.write_node(
+                        AST.ClassInstantiation(
+                            class_=self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                            if is_async
+                            else self._context.get_reference_to_subpackage_service(subpackage_id),
+                            kwargs=[
+                                (param.constructor_parameter_name, AST.Expression(f"self.{param.private_member_name}"))
+                                for param in self._get_constructor_parameters()
+                            ],
+                        )
+                    )
+                    writer.write_line()
+
+        return _write_constructor_body
 
     def _get_endpoint_named_parameters(
         self,
@@ -742,24 +738,6 @@ class ClientGenerator:
         return AST.Expression(
             f"(self.{self._get_username_member_name()}, self.{self._get_password_member_name()}) if self.{self._get_username_member_name()} is not None and self.{self._get_password_member_name()} is not None else None"
         )
-
-    def _write_subpackage_getter(self, subpackage_id: ir_types.SubpackageId, *, is_async: bool) -> AST.CodeWriter:
-        def write(writer: AST.NodeWriter) -> None:
-            writer.write("return ")
-            writer.write_node(
-                AST.ClassInstantiation(
-                    class_=self._context.get_reference_to_async_subpackage_service(subpackage_id)
-                    if is_async
-                    else self._context.get_reference_to_subpackage_service(subpackage_id),
-                    kwargs=[
-                        (param.constructor_parameter_name, AST.Expression(f"self.{param.private_member_name}"))
-                        for param in self._get_constructor_parameters()
-                    ],
-                )
-            )
-            writer.write_line()
-
-        return AST.CodeWriter(write)
 
     def _is_datetime(
         self,

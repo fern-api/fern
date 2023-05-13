@@ -2,8 +2,6 @@
 
 import typing
 
-from backports.cached_property import cached_property
-
 from .resources.movie.client import AsyncMovieClient, MovieClient
 
 
@@ -14,10 +12,7 @@ class FernIr:
         self._environment = environment
         self._api_key = api_key
         self._api_secret = api_secret
-
-    @cached_property
-    def movie(self) -> MovieClient:
-        return MovieClient(environment=self._environment, api_key=self._api_key, api_secret=self._api_secret)
+        self.movie = MovieClient(environment=self._environment, api_key=self._api_key, api_secret=self._api_secret)
 
 
 class AsyncFernIr:
@@ -27,7 +22,4 @@ class AsyncFernIr:
         self._environment = environment
         self._api_key = api_key
         self._api_secret = api_secret
-
-    @cached_property
-    def movie(self) -> AsyncMovieClient:
-        return AsyncMovieClient(environment=self._environment, api_key=self._api_key, api_secret=self._api_secret)
+        self.movie = AsyncMovieClient(environment=self._environment, api_key=self._api_key, api_secret=self._api_secret)
