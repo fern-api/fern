@@ -90,11 +90,7 @@ export function convertObjectToTypeDeclaration({
     }
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        typeDeclaration: {
-            docs: schema.description ?? undefined,
-            extends: extendedSchemas,
-            properties,
-        },
+        typeDeclaration: objectTypeDeclaration,
         additionalTypeDeclarations,
     };
 }
