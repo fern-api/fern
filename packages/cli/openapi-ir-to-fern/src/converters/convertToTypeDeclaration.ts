@@ -81,11 +81,18 @@ export function convertObjectToTypeDeclaration({
             ...allOfTypeReference.additionalTypeDeclarations,
         };
     }
+    const objectTypeDeclaration: RawSchemas.ObjectSchema = {
+        docs: schema.description ?? undefined,
+        properties,
+    };
+    if (extendedSchemas.length > 0) {
+        objectTypeDeclaration.extends = extendedSchemas;
+    }
     return {
         name: schema.nameOverride ?? schema.generatedName,
         typeDeclaration: {
             docs: schema.description ?? undefined,
-            extends: extendedSchemas.length > 0 ? extendedSchemas : undefined,
+            extends: extendedSchemas,
             properties,
         },
         additionalTypeDeclarations,
