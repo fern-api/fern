@@ -241,6 +241,7 @@ export function convertOneOfToTypeDeclaration({
         return {
             name: schema.nameOverride ?? schema.generatedName,
             typeDeclaration: {
+                discriminant: schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
                 union,
