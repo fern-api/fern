@@ -263,15 +263,27 @@ function getRequest({
                 return [property.key, propertyTypeReference.typeReference];
             })
         );
+        const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
+            const allOfTypeReference = convertToTypeReference({ schema: Schema.reference(referencedSchema), schemas });
+            additionalTypeDeclarations = {
+                ...additionalTypeDeclarations,
+                ...allOfTypeReference.additionalTypeDeclarations,
+            };
+            return getTypeFromTypeReference(allOfTypeReference.typeReference);
+        });
+        const requestBodySchema: RawSchemas.HttpRequestBodySchema = {
+            properties,
+        };
+        if (extendedSchemas.length > 0) {
+            requestBodySchema.extends = extendedSchemas;
+        }
         return {
             schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
             value: {
                 name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
                 "query-parameters": queryParameters,
                 headers,
-                body: {
-                    properties,
-                },
+                body: requestBodySchema,
             },
             additionalTypeDeclarations,
         };

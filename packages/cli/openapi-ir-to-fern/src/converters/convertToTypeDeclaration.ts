@@ -21,6 +21,7 @@ import {
     convertToTypeReference,
     convertUnknownToTypeReference,
 } from "./convertToTypeReference";
+import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface TypeDeclarations {
     name?: string | undefined;
@@ -71,12 +72,25 @@ export function convertObjectToTypeDeclaration({
             ...propertyTypeReference.additionalTypeDeclarations,
         };
     }
+    const extendedSchemas: string[] = [];
+    for (const allOf of schema.allOf) {
+        const allOfTypeReference = convertToTypeReference({ schema: Schema.reference(allOf), schemas });
+        extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference.typeReference));
+        additionalTypeDeclarations = {
+            ...additionalTypeDeclarations,
+            ...allOfTypeReference.additionalTypeDeclarations,
+        };
+    }
+    const objectTypeDeclaration: RawSchemas.ObjectSchema = {
+        docs: schema.description ?? undefined,
+        properties,
+    };
+    if (extendedSchemas.length > 0) {
+        objectTypeDeclaration.extends = extendedSchemas;
+    }
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        typeDeclaration: {
-            docs: schema.description ?? undefined,
-            properties,
-        },
+        typeDeclaration: objectTypeDeclaration,
         additionalTypeDeclarations,
     };
 }

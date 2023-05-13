@@ -18859,6 +18859,9 @@ for each authentication connection will depend on the type value.
         },
         "AuthToken": {
           "docs": undefined,
+          "extends": [
+            "AtomBase",
+          ],
           "properties": {
             "client_id": {
               "docs": "An identifier that represents the application that requested the
@@ -19315,6 +19318,9 @@ connection.
         },
         "DevUser": {
           "docs": undefined,
+          "extends": [
+            "UserBase",
+          ],
           "properties": {
             "external_identities": {
               "docs": "IDs of the Dev User outside the DevRev SOR.",
@@ -19359,6 +19365,9 @@ sort order. If not set, then no prior elements exist.
         },
         "Enhancement": {
           "docs": undefined,
+          "extends": [
+            "PartBase",
+          ],
           "properties": {
             "target_close_date": {
               "docs": "Timestamp when the enhancement is expected to be closed.",
@@ -19372,6 +19381,9 @@ sort order. If not set, then no prior elements exist.
         },
         "ErrorBadRequest": {
           "docs": undefined,
+          "extends": [
+            "ErrorBase",
+          ],
           "properties": {
             "type": {
               "docs": undefined,
@@ -19454,6 +19466,9 @@ sort order. If not set, then no prior elements exist.
         },
         "ErrorForbidden": {
           "docs": undefined,
+          "extends": [
+            "ErrorBase",
+          ],
           "properties": {
             "type": {
               "docs": undefined,
@@ -19472,6 +19487,9 @@ sort order. If not set, then no prior elements exist.
         },
         "ErrorInternalServerError": {
           "docs": undefined,
+          "extends": [
+            "ErrorBase",
+          ],
           "properties": {
             "reference_id": {
               "docs": "A unique ID that's generated for the error that can be used for
@@ -19496,6 +19514,9 @@ inquiry.
         },
         "ErrorNotFound": {
           "docs": undefined,
+          "extends": [
+            "ErrorBase",
+          ],
           "properties": {
             "type": {
               "docs": undefined,
@@ -19514,6 +19535,9 @@ inquiry.
         },
         "ErrorServiceUnavailable": {
           "docs": undefined,
+          "extends": [
+            "ErrorBase",
+          ],
           "properties": {
             "type": {
               "docs": undefined,
@@ -19532,6 +19556,9 @@ inquiry.
         },
         "ErrorTooManyRequests": {
           "docs": undefined,
+          "extends": [
+            "ErrorBase",
+          ],
           "properties": {
             "retry_after": {
               "docs": "The number of seconds after which the client should retry.
@@ -19555,6 +19582,9 @@ inquiry.
         },
         "ErrorUnauthorized": {
           "docs": undefined,
+          "extends": [
+            "ErrorBase",
+          ],
           "properties": {
             "type": {
               "docs": undefined,
@@ -19747,6 +19777,9 @@ inquiry.
         },
         "Issue": {
           "docs": undefined,
+          "extends": [
+            "WorkBase",
+          ],
           "properties": {
             "priority": {
               "docs": undefined,
@@ -19795,6 +19828,9 @@ always be returned in the specified sort-by order.
         },
         "OrgBase": {
           "docs": undefined,
+          "extends": [
+            "AtomBase",
+          ],
           "properties": {
             "display_name": {
               "docs": "Name of the Organization.",
@@ -19804,6 +19840,9 @@ always be returned in the specified sort-by order.
         },
         "OrgBaseSummary": {
           "docs": undefined,
+          "extends": [
+            "AtomBaseSummary",
+          ],
           "properties": {
             "display_name": {
               "docs": "Name of the Organization.",
@@ -19872,6 +19911,9 @@ always be returned in the specified sort-by order.
         },
         "PartBase": {
           "docs": undefined,
+          "extends": [
+            "AtomBase",
+          ],
           "properties": {
             "artifacts": {
               "docs": "The attached artifacts.",
@@ -19897,6 +19939,9 @@ always be returned in the specified sort-by order.
         },
         "PartBaseSummary": {
           "docs": undefined,
+          "extends": [
+            "AtomBaseSummary",
+          ],
           "properties": {
             "name": {
               "docs": "Name of the part.",
@@ -20136,6 +20181,9 @@ empty.
         },
         "RevOrg": {
           "docs": undefined,
+          "extends": [
+            "OrgBase",
+          ],
           "properties": {
             "description": {
               "docs": "Description of the Rev organization.",
@@ -20211,6 +20259,9 @@ sort order. If not set, then no prior elements exist.
         },
         "RevUserSummary": {
           "docs": undefined,
+          "extends": [
+            "UserBaseSummary",
+          ],
           "properties": {
             "external_ref": {
               "docs": "External ref is a mutable unique identifier for a user within the
@@ -20276,6 +20327,9 @@ the value must be one that's specified in the tag's allowed values.
         },
         "Tag": {
           "docs": undefined,
+          "extends": [
+            "AtomBase",
+          ],
           "properties": {
             "allowed_values": {
               "docs": "The allowed values for the tag, where a value is provided when a
@@ -20301,6 +20355,9 @@ unique.
         },
         "TagSummary": {
           "docs": undefined,
+          "extends": [
+            "AtomBaseSummary",
+          ],
           "properties": {
             "name": {
               "docs": "The name of the tag, which denotes the logical concept by which all
@@ -20383,6 +20440,9 @@ sort order. If not set, then no prior elements exist.
         },
         "Ticket": {
           "docs": undefined,
+          "extends": [
+            "WorkBase",
+          ],
           "properties": {
             "group": {
               "docs": undefined,
@@ -20421,6 +20481,9 @@ sort order. If not set, then no prior elements exist.
         },
         "TimelineComment": {
           "docs": undefined,
+          "extends": [
+            "TimelineEntryBase",
+          ],
           "properties": {
             "artifacts": {
               "docs": "The artifacts for the comment.",
@@ -20656,6 +20719,9 @@ default visibility.
         },
         "UserBase": {
           "docs": undefined,
+          "extends": [
+            "AtomBase",
+          ],
           "properties": {
             "display_name": {
               "docs": "The user's display name. The name is non-unique and mutable.
@@ -20686,6 +20752,9 @@ default visibility.
         },
         "UserBaseSummary": {
           "docs": undefined,
+          "extends": [
+            "AtomBaseSummary",
+          ],
           "properties": {
             "display_name": {
               "docs": "The user's display name. The name is non-unique and mutable.
@@ -20772,6 +20841,9 @@ default visibility.
         },
         "Webhook": {
           "docs": undefined,
+          "extends": [
+            "AtomBase",
+          ],
           "properties": {
             "event_types": {
               "docs": "The event types that the webhook will receive.",
@@ -21101,6 +21173,9 @@ event types. Note this is mutually exclusive with 'add' and
         },
         "WorkBase": {
           "docs": undefined,
+          "extends": [
+            "AtomBase",
+          ],
           "properties": {
             "applies_to_part": {
               "docs": undefined,
@@ -23617,6 +23692,9 @@ exports[`open api converter hathora simple 1`] = `
         },
         "ApplicationWithDeployment": {
           "docs": undefined,
+          "extends": [
+            "Application",
+          ],
           "properties": {
             "deployment": {
               "docs": undefined,
@@ -23740,6 +23818,9 @@ exports[`open api converter hathora simple 1`] = `
         },
         "Deployment": {
           "docs": undefined,
+          "extends": [
+            "DeploymentConfig",
+          ],
           "properties": {
             "appId": {
               "docs": undefined,
@@ -24057,6 +24138,9 @@ exports[`open api converter hathora simple 1`] = `
         },
         "ProcessWithRooms": {
           "docs": undefined,
+          "extends": [
+            "Process",
+          ],
           "properties": {
             "rooms": {
               "docs": undefined,
@@ -26785,6 +26869,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "StateCompleted": {
           "docs": undefined,
+          "extends": [
+            "Completed",
+          ],
           "properties": {
             "status": {
               "docs": undefined,
@@ -26794,6 +26881,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "StateFailed": {
           "docs": undefined,
+          "extends": [
+            "Failed",
+          ],
           "properties": {
             "status": {
               "docs": undefined,
@@ -26803,6 +26893,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "StateInProgress": {
           "docs": undefined,
+          "extends": [
+            "InProgress",
+          ],
           "properties": {
             "status": {
               "docs": undefined,
@@ -26812,6 +26905,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "StateQueued": {
           "docs": undefined,
+          "extends": [
+            "Queued",
+          ],
           "properties": {
             "status": {
               "docs": undefined,
@@ -27067,6 +27163,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AppDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "canAccessApi": {
               "docs": "Indicates if the user can access the api.",
@@ -27124,6 +27223,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AppLanguageDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "englishName": {
               "docs": "The english name of the language.",
@@ -27149,6 +27251,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AppLanguagesDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The languages.",
@@ -27158,6 +27263,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AppSettingsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "editors": {
               "docs": "The configured UI editors.",
@@ -27209,6 +27317,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AssetDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "_meta": {
               "docs": undefined,
@@ -27310,6 +27421,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AssetFolderDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "folderName": {
               "docs": "The folder name.",
@@ -27348,6 +27462,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AssetFoldersDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The assets folders.",
@@ -27391,6 +27508,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AssetScriptsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "annotate": {
               "docs": "The script that is executed when annotating a content.",
@@ -27449,6 +27569,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "AssetsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The assets.",
@@ -27585,6 +27708,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "BackupJobDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "handledAssets": {
               "docs": "The number of handled assets.",
@@ -27614,6 +27740,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "BackupJobsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The backups.",
@@ -27893,6 +28022,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ClientDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "allowAnonymous": {
               "docs": "True to allow anonymous access without an access token for this client.",
@@ -27926,6 +28058,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ClientsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The clients.",
@@ -28058,6 +28193,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ContentDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "created": {
               "docs": "The date and time when the content item has been created.",
@@ -28140,6 +28278,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ContentsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The content items.",
@@ -28157,6 +28298,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ContributorDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "contributorEmail": {
               "docs": "The email address.",
@@ -28178,6 +28322,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ContributorsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "_meta": {
               "docs": undefined,
@@ -28451,6 +28598,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "EventConsumerDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "count": {
               "docs": "The number of handled events.",
@@ -28480,6 +28630,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "EventConsumersDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The event consumers.",
@@ -28532,6 +28685,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "FieldDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "fieldId": {
               "docs": "The ID of the field.",
@@ -28891,6 +29047,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "NestedFieldDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "fieldId": {
               "docs": "The ID of the field.",
@@ -29369,6 +29528,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "ResourcesDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {},
         },
         "RestoreJobDto": {
@@ -29398,6 +29560,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RoleDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "isDefaultRole": {
               "docs": "Indicates if the role is an builtin default role.",
@@ -29427,6 +29592,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RolesDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The roles.",
@@ -29514,6 +29682,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RuleDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "action": {
               "docs": undefined,
@@ -29637,6 +29808,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RuleEventDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "created": {
               "docs": "The time when the event has been created.",
@@ -29678,6 +29852,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RuleEventsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The rule events.",
@@ -29808,6 +29985,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RulesDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The rules.",
@@ -29868,6 +30048,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "SchemaDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "category": {
               "docs": "The name of the category.",
@@ -30024,6 +30207,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "SchemasDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The schemas.",
@@ -30042,6 +30228,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "SearchResultDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "label": {
               "docs": "An optional label.",
@@ -30152,6 +30341,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "SimulatedRuleEventsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The simulated rule events.",
@@ -30476,6 +30668,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "TeamDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "created": {
               "docs": "The timestamp when the team has been created.",
@@ -30505,6 +30700,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "TemplateDetailsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "details": {
               "docs": "The details of the template.",
@@ -30514,6 +30712,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "TemplateDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "description": {
               "docs": "The description of the template.",
@@ -30535,6 +30736,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "TemplatesDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The event consumers.",
@@ -30799,6 +31003,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "UserDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "displayName": {
               "docs": "The display name (usually first name and last name) of the user.",
@@ -30837,6 +31044,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "UsersDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "items": {
               "docs": "The users.",
@@ -30904,6 +31114,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "WorkflowDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "id": {
               "docs": "The workflow id.",
@@ -30971,6 +31184,9 @@ exports[`open api converter squidex simple 1`] = `
         },
         "WorkflowsDto": {
           "docs": undefined,
+          "extends": [
+            "Resource",
+          ],
           "properties": {
             "errors": {
               "docs": "The errros that should be fixed.",
@@ -35272,6 +35488,9 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": {
+                "extends": [
+                  "UpsertSchemaDto",
+                ],
                 "properties": {
                   "isSingleton": {
                     "docs": "Set to true to allow a single content item only.",
@@ -35652,6 +35871,9 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "request": {
               "body": {
+                "extends": [
+                  "UpsertSchemaDto",
+                ],
                 "properties": {
                   "noFieldDeletion": {
                     "docs": "True, when fields should not be deleted.",
