@@ -18716,6 +18716,7 @@ login screen as a login option.
               "type": "string",
             },
           },
+          "discriminant": "type",
           "docs": "Connection object that specifies the configuration for an
 authentication connection that is set up for a Dev organization.
 ",
@@ -19156,6 +19157,7 @@ it would appear on the login button as 'Log in to abclogin'.
               "type": "optional<string>",
             },
           },
+          "discriminant": "type",
           "docs": "Request to create a new enterprise authentication connection.
 ",
           "union": {
@@ -19251,6 +19253,7 @@ it would appear on the login button as 'Log in to abclogin'.
               "type": "string",
             },
           },
+          "discriminant": "type",
           "docs": "Request to update an enterprise authentication connection for a Dev
 organization.
 ",
@@ -19870,6 +19873,7 @@ always be returned in the specified sort-by order.
         },
         "OrgSummary": {
           "base-properties": {},
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "rev_org": {
@@ -19889,6 +19893,7 @@ always be returned in the specified sort-by order.
         },
         "Part": {
           "base-properties": {},
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "capability": {
@@ -19951,6 +19956,7 @@ always be returned in the specified sort-by order.
         },
         "PartSummary": {
           "base-properties": {},
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "capability": {
@@ -20007,6 +20013,7 @@ always be returned in the specified sort-by order.
               "type": "list<string>",
             },
           },
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "capability": {
@@ -20118,6 +20125,7 @@ sort order. If not set, then no prior elements exist.
               "type": "optional<PartsUpdateRequestOwnedBy>",
             },
           },
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "capability": {
@@ -20529,6 +20537,7 @@ will appear in the response.
               "type": "optional<TimelineEntryVisibility>",
             },
           },
+          "discriminant": "type",
           "docs": "The request to create a timeline entry for an object.",
           "union": {
             "timeline_comment": {
@@ -20613,6 +20622,7 @@ sort order. If not set, then no prior elements exist.
               "type": "string",
             },
           },
+          "discriminant": "type",
           "docs": "The request to update a timeline entry.",
           "union": {
             "timeline_comment": {
@@ -20684,6 +20694,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "TimelineEntry": {
           "base-properties": {},
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "timeline_comment": {
@@ -20806,6 +20817,7 @@ default visibility.
         },
         "UserSummary": {
           "base-properties": {},
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "dev_user": {
@@ -21159,6 +21171,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         "Work": {
           "base-properties": {},
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "issue": {
@@ -21271,6 +21284,7 @@ issues.
               "type": "string",
             },
           },
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "issue": {
@@ -21407,6 +21421,7 @@ sort order. If not set, then no prior elements exist.
               "type": "optional<string>",
             },
           },
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "issue": {
@@ -26808,6 +26823,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Source": {
           "base-properties": {},
+          "discriminant": "type",
           "docs": undefined,
           "union": {
             "file": {
@@ -26847,6 +26863,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "State": {
           "base-properties": {},
+          "discriminant": "status",
           "docs": undefined,
           "union": {
             "COMPLETED": {
@@ -28758,6 +28775,7 @@ exports[`open api converter squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
           },
+          "discriminant": "fieldType",
           "docs": undefined,
           "union": {
             "Array": {
@@ -29604,6 +29622,7 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RuleActionDto": {
           "base-properties": {},
+          "discriminant": "actionType",
           "docs": undefined,
           "union": {
             "Algolia": {
@@ -29955,6 +29974,7 @@ exports[`open api converter squidex simple 1`] = `
         },
         "RuleTriggerDto": {
           "base-properties": {},
+          "discriminant": "triggerType",
           "docs": undefined,
           "union": {
             "AssetChanged": {
