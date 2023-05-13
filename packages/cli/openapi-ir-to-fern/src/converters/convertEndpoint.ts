@@ -264,7 +264,11 @@ function getRequest({
             })
         );
         const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {
-            const allOfTypeReference = convertToTypeReference({ schema: Schema.reference(referencedSchema), schemas });
+            const allOfTypeReference = convertToTypeReference({
+                schema: Schema.reference(referencedSchema),
+                prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                schemas,
+            });
             additionalTypeDeclarations = {
                 ...additionalTypeDeclarations,
                 ...allOfTypeReference.additionalTypeDeclarations,
