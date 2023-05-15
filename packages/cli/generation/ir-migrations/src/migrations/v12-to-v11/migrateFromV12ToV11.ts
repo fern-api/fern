@@ -25,6 +25,7 @@ export const V12_TO_V11_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI]: "0.0.22-1-g1c86b58",
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: undefined,
+        [GeneratorName.GO]: AlwaysRunMigration,
     },
     migrateBackwards: (v12, { taskContext, targetGenerator }): IrVersions.V11.ir.IntermediateRepresentation => {
         const v11Types: Record<string, IrVersions.V11.types.TypeDeclaration> = mapValues(

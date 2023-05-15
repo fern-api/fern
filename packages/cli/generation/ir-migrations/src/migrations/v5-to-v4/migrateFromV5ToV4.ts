@@ -32,6 +32,7 @@ export const V5_TO_V4_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: undefined,
         [GeneratorName.STOPLIGHT]: undefined,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
+        [GeneratorName.GO]: AlwaysRunMigration,
     },
     migrateBackwards: (v5): IrVersions.V4.ir.IntermediateRepresentation => {
         const typeReferenceResolver = new TypeReferenceResolverImpl(v5);

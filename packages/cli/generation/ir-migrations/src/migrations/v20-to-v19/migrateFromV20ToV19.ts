@@ -25,6 +25,7 @@ export const V20_TO_V19_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: "0.3.6-rc1-2-g6050f7f8",
+        [GeneratorName.GO]: AlwaysRunMigration,
     },
     migrateBackwards: (v20, context): IrVersions.V19.ir.IntermediateRepresentation => {
         return {

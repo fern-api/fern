@@ -35,6 +35,9 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
     [GeneratorName.PYTHON_SDK]: {
         version: "0.1.0",
     },
+    [GeneratorName.GO]: {
+        version: "0.0.1",
+    },
     [GeneratorName.OPENAPI]: {
         version: "0.0.11",
         config: {
