@@ -1,5 +1,11 @@
 package generator
 
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+)
+
 // Config represents the Fern generator configuration.
 type Config struct {
 	DryRun       bool          `json:"dryRun,omitempty"`
@@ -8,6 +14,19 @@ type Config struct {
 	Workspace    string        `json:"workspaceName,omitempty"`
 	Organization string        `json:"organization,omitempty"`
 	Environment  Environment   `json:"environment,omitempty"`
+}
+
+// ReadConfig returns a new *Config from the given filename.
+func ReadConfig(configFilename string) (*Config, error) {
+	bytes, err := os.ReadFile(configFilename)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read generator configuration: %v", err)
+	}
+	config := new(Config)
+	if err := json.Unmarshal(bytes, config); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal generator configuration: %v", err)
+	}
+	return config, nil
 }
 
 // OutputConfig represents the target output (i.e. where

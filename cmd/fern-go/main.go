@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/fern-api/fern-go"
+	"github.com/fern-api/fern-go/internal/generator"
 )
 
 const usage = `Generate Go models from your Fern API definition.
@@ -36,5 +37,10 @@ func main() {
 }
 
 func run(configFilename string) error {
-	return nil
+	config, err := generator.ReadConfig(configFilename)
+	if err != nil {
+		return err
+	}
+	generator := generator.New(config)
+	return generator.Run()
 }
