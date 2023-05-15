@@ -64,7 +64,8 @@ function getValueExpressionForHeader({
     } else {
         return context.type.stringify(
             requestParameter.getReferenceToNonLiteralHeader(header, context),
-            header.valueType
+            header.valueType,
+            { includeNullCheckIfOptional: true }
         );
     }
 }

@@ -110,7 +110,9 @@ export function appendPropertyToFormData({
                 statement = context.base.externalDependencies.formData.append({
                     referencetoFormData: referenceToFormData,
                     key: property.name.wireValue,
-                    value: context.type.stringify(referenceToBodyProperty, property.valueType),
+                    value: context.type.stringify(referenceToBodyProperty, property.valueType, {
+                        includeNullCheckIfOptional: false,
+                    }),
                 });
             }
 
@@ -175,8 +177,8 @@ function stringifyIterableItemType(
     return TypeReference._visit(iterable, {
         container: (container) =>
             ContainerType._visit(container, {
-                list: (itemType) => context.type.stringify(value, itemType),
-                set: (itemType) => context.type.stringify(value, itemType),
+                list: (itemType) => context.type.stringify(value, itemType, { includeNullCheckIfOptional: false }),
+                set: (itemType) => context.type.stringify(value, itemType, { includeNullCheckIfOptional: false }),
                 map: () => {
                     throw new Error("Map is not iterable.");
                 },
@@ -201,7 +203,8 @@ function stringifyIterableItemType(
                     throw new Error("Union is not iterable.");
                 },
                 alias: ({ aliasOf }) => stringifyIterableItemType(value, aliasOf, context),
-                undiscriminatedUnion: () => context.type.stringify(value, TypeReference.unknown()),
+                undiscriminatedUnion: () =>
+                    context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
                 _unknown: () => {
                     throw new Error("Unknown Type: " + typeDeclaration.shape._type);
                 },
@@ -210,7 +213,7 @@ function stringifyIterableItemType(
         primitive: () => {
             throw new Error("Primitive is not iterable.");
         },
-        unknown: () => context.type.stringify(value, TypeReference.unknown()),
+        unknown: () => context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
         _unknown: () => {
             throw new Error("Unknown TypeReference: " + iterable._type);
         },

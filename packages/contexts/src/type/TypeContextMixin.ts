@@ -12,7 +12,11 @@ import { GeneratedType } from "./GeneratedType";
 
 export interface TypeContextMixin {
     getReferenceToType: (typeReference: TypeReference) => TypeReferenceNode;
-    stringify: (valueToStringify: ts.Expression, valueType: TypeReference) => ts.Expression;
+    stringify: (
+        valueToStringify: ts.Expression,
+        valueType: TypeReference,
+        opts: { includeNullCheckIfOptional: boolean }
+    ) => ts.Expression;
     getReferenceToNamedType: (typeName: DeclaredTypeName) => Reference;
     resolveTypeReference: (typeReference: TypeReference) => ResolvedTypeReference;
     resolveTypeName: (typeName: DeclaredTypeName) => ResolvedTypeReference;

@@ -2,7 +2,8 @@ service:
   auth: false
   base-path: /with-non-literal-headers
   headers:
-    nonLiteralServiceHeader: integer
+    integer: integer
+    maybeInteger: optional<integer>
     literalServiceHeader: literal<"service header">
   endpoints:
     get:

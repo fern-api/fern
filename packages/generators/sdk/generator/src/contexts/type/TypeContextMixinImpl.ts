@@ -99,8 +99,18 @@ export class TypeContextMixinImpl implements TypeContextMixin {
         });
     }
 
-    public stringify(valueToStringify: ts.Expression, valueType: TypeReference): ts.Expression {
-        return this.typeReferenceToStringExpressionConverter.convert(valueType)(valueToStringify).expression;
+    public stringify(
+        valueToStringify: ts.Expression,
+        valueType: TypeReference,
+        { includeNullCheckIfOptional }: { includeNullCheckIfOptional: boolean }
+    ): ts.Expression {
+        if (includeNullCheckIfOptional) {
+            return this.typeReferenceToStringExpressionConverter.convertWithNullCheckIfOptional(valueType)(
+                valueToStringify
+            );
+        } else {
+            return this.typeReferenceToStringExpressionConverter.convert(valueType)(valueToStringify);
+        }
     }
 
     public getGeneratedExample(example: ExampleTypeReference): GeneratedTypeReferenceExample {

@@ -375,7 +375,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                       context.base.coreUtilities.fetcher.Supplier.get(
                                           this.getReferenceToOption(this.getOptionKeyForNonLiteralGlobalHeader(header))
                                       ),
-                                      header.valueType
+                                      header.valueType,
+                                      { includeNullCheckIfOptional: true }
                                   ),
                     };
                 }),

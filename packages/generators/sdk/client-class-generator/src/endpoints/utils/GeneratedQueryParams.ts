@@ -51,7 +51,8 @@ export class GeneratedQueryParams {
                                             key: ts.factory.createStringLiteral(queryParameter.name.wireValue),
                                             value: context.type.stringify(
                                                 referenceToQueryParameter,
-                                                queryParameter.valueType
+                                                queryParameter.valueType,
+                                                { includeNullCheckIfOptional: false }
                                             ),
                                             referenceToUrlSearchParams: ts.factory.createIdentifier(
                                                 GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME
