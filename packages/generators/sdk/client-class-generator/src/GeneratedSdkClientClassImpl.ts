@@ -371,8 +371,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         value:
                             literalValue != null
                                 ? ts.factory.createStringLiteral(literalValue)
-                                : context.base.coreUtilities.fetcher.Supplier.get(
-                                      this.getReferenceToOption(this.getOptionKeyForNonLiteralGlobalHeader(header))
+                                : context.type.stringify(
+                                      context.base.coreUtilities.fetcher.Supplier.get(
+                                          this.getReferenceToOption(this.getOptionKeyForNonLiteralGlobalHeader(header))
+                                      ),
+                                      header.valueType
                                   ),
                     };
                 }),

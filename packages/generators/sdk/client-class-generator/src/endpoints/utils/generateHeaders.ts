@@ -62,6 +62,9 @@ function getValueExpressionForHeader({
     } else if (requestParameter == null) {
         throw new Error(`Cannot reference header ${header.name.wireValue} because request parameter is not defined.`);
     } else {
-        return requestParameter.getReferenceToNonLiteralHeader(header, context);
+        return context.type.stringify(
+            requestParameter.getReferenceToNonLiteralHeader(header, context),
+            header.valueType
+        );
     }
 }
