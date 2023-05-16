@@ -1,7 +1,7 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
 import { IrMigrationContext } from "../../IrMigrationContext";
-import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "../../types/IrMigration";
 
 export const V11_TO_V10_MIGRATION: IrMigration<
     IrVersions.V11.ir.IntermediateRepresentation,
@@ -20,11 +20,11 @@ export const V11_TO_V10_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
-        [GeneratorName.STOPLIGHT]: undefined,
+        [GeneratorName.STOPLIGHT]: GeneratorDoesNotExistForEitherIrVersion,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: "0.0.40-1-g9aa2117",
-        [GeneratorName.PYTHON_SDK]: undefined,
-        [GeneratorName.GO_MODEL]: undefined,
+        [GeneratorName.PYTHON_SDK]: GeneratorDoesNotExistForEitherIrVersion,
+        [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
     },
     migrateBackwards: (v11, context): IrVersions.V10.ir.IntermediateRepresentation => {
         return {

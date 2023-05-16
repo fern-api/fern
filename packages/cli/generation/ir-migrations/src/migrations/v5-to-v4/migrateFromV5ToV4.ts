@@ -1,6 +1,6 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
-import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "../../types/IrMigration";
 import { convertAuth } from "./convertAuth";
 import { convertEnvironment } from "./convertEnvironment";
 import { convertErrorDeclaration } from "./convertErrorDeclaration";
@@ -29,10 +29,10 @@ export const V5_TO_V4_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_PYDANTIC]: "0.0.33-9-gf683b5e",
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_SDK]: undefined,
-        [GeneratorName.STOPLIGHT]: undefined,
-        [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
-        [GeneratorName.GO_MODEL]: undefined,
+        [GeneratorName.PYTHON_SDK]: GeneratorDoesNotExistForEitherIrVersion,
+        [GeneratorName.STOPLIGHT]: GeneratorDoesNotExistForEitherIrVersion,
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorDoesNotExistForEitherIrVersion,
+        [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
     },
     migrateBackwards: (v5): IrVersions.V4.ir.IntermediateRepresentation => {
         const typeReferenceResolver = new TypeReferenceResolverImpl(v5);

@@ -6,7 +6,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentationForGenerator } from "../migrateIntermediateRepresentationForGenerator";
-import { AlwaysRunMigration, GeneratorVersion } from "../types/IrMigration";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, GeneratorVersion } from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 
 describe("migrateIntermediateRepresentation", () => {
@@ -15,25 +15,25 @@ describe("migrateIntermediateRepresentation", () => {
         for (const generatorName of Object.values(GeneratorName)) {
             // eslint-disable-next-line jest/valid-title
             it(generatorName, () => {
-                const versions = migrations
+                const versions: Exclude<GeneratorVersion, AlwaysRunMigration>[] = migrations
                     .map((migration) => migration.minGeneratorVersionsToExclude[generatorName])
-                    // filter out AlwaysRunMigration's, since these can appear wherever
                     .filter(
-                        (version): version is Exclude<GeneratorVersion | undefined, AlwaysRunMigration> =>
+                        (version): version is Exclude<typeof version, AlwaysRunMigration> =>
                             version !== AlwaysRunMigration
                     );
                 const expectedVersions = [...versions].sort((a, b) => {
-                    // a null version signifies this migration should never be
-                    // run for this generator, so it should be at the end (i.e.
-                    // for the earliest IR versions)
-                    if (a == null) {
+                    if (a === b) {
+                        return 0;
+                    }
+
+                    // GeneratorDoesNotExistForEitherIrVersion's should be last
+                    if (a === GeneratorDoesNotExistForEitherIrVersion) {
                         return 1;
                     }
-                    if (b == null) {
+                    if (b === GeneratorDoesNotExistForEitherIrVersion) {
                         return -1;
                     }
 
-                    // versions should be sorted from latest to earliest
                     return isVersionAhead(a, b) ? -1 : 1;
                 });
 
