@@ -11,4 +11,4 @@ COPY version.go /workspace/version.go
 
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go ./cmd/fern-go
 
-CMD ["/fern-go"]
+ENTRYPOINT ["/fern-go"]
