@@ -3,10 +3,10 @@ import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { isString } from "lodash-es";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentationForGenerator } from "../migrateIntermediateRepresentationForGenerator";
-import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, GeneratorVersion } from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 
 describe("migrateIntermediateRepresentation", () => {
@@ -17,15 +17,8 @@ describe("migrateIntermediateRepresentation", () => {
             it(generatorName, () => {
                 const versions = migrations
                     .map((migration) => migration.minGeneratorVersionsToExclude[generatorName])
-                    // filter out AlwaysRunMigration's, since these can appear wherever
-                    .filter(
-                        (
-                            version
-                        ): version is Exclude<
-                            GeneratorVersion,
-                            AlwaysRunMigration | GeneratorDoesNotExistForEitherIrVersion
-                        > => version !== AlwaysRunMigration
-                    );
+                    // filter out symbols
+                    .filter(isString);
                 const expectedVersions = [...versions].sort((a, b) => (isVersionAhead(a, b) ? -1 : 1));
 
                 expect(versions).toEqual(expectedVersions);
