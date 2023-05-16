@@ -10,13 +10,13 @@ import (
 // This is generated from the Fern compiler and fed into each of the
 // configured generators during the code generation process.
 type IntermediateRepresentation struct {
-	APIName        *Name    `json:"apiName,omitempty"`
-	APIDisplayName string   `json:"apiDisplayName,omitempty"`
-	APIDocs        string   `json:"apiDocs,omitempty"`
-	Auth           *APIAuth `json:"auth,omitempty"`
+	APIName        *Name                       `json:"apiName,omitempty"`
+	APIDisplayName string                      `json:"apiDisplayName,omitempty"`
+	APIDocs        string                      `json:"apiDocs,omitempty"`
+	Auth           *APIAuth                    `json:"auth,omitempty"`
+	Types          map[TypeID]*TypeDeclaration `json:"types,omitempty"`
 
 	// Headers []string `json:"headers,omitempty"`
-	// Types map[string]string `json:"types,omitempty"`
 	// Services map[string]string `json:"services,omitempty"`
 	// Errors map[string]string `json:"errors,omitempty"`
 	// Subpackages map[string]string `json:"subpackages,omitempty"`

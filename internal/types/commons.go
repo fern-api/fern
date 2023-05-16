@@ -1,5 +1,72 @@
 package types
 
+import (
+	"encoding/json"
+	"strconv"
+)
+
+// TypeID uniquely identifies a type.
+type TypeID string
+
+// Availability defines an a status and a message.
+type Availability struct {
+	Status  *AvailabilityStatus `json:"status,omitempty"`
+	Message string              `json:"message,omitempty"`
+}
+
+// AvailabilityStatus represents an availability status.
+type AvailabilityStatus uint8
+
+// All of the supported auth requirements.
+const (
+	AvailabilityStatusInDevelopment AvailabilityStatus = iota + 1
+	AvailabilityStatusPreRelease
+	AvailabilityStatusGeneralAvailability
+	AvailabilityStatusDeprecated
+)
+
+// String implements fmt.Stringer.
+func (a *AvailabilityStatus) String() string {
+	if a == nil {
+		return ""
+	}
+	switch *a {
+	case AvailabilityStatusInDevelopment:
+		return "IN_DEVELOPMENT"
+	case AvailabilityStatusPreRelease:
+		return "PRE_RELEASE"
+	case AvailabilityStatusGeneralAvailability:
+		return "GENERAL_AVAILABILITY"
+	case AvailabilityStatusDeprecated:
+		return "DEPRECATED"
+	default:
+		return strconv.Itoa(int(*a))
+	}
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (a *AvailabilityStatus) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "IN_DEVELOPMENT":
+		value := AvailabilityStatusInDevelopment
+		a = &value
+	case "PRE_RELEASE":
+		value := AvailabilityStatusPreRelease
+		a = &value
+	case "GENERAL_AVAILABILITY":
+		value := AvailabilityStatusGeneralAvailability
+		a = &value
+	case "DEPRECATED":
+		value := AvailabilityStatusDeprecated
+		a = &value
+	}
+	return nil
+}
+
 // Name contains a variety of different naming conventions for
 // a given identifier.
 type Name struct {
@@ -22,4 +89,11 @@ type SafeUnsafeName struct {
 type NameAndWireValue struct {
 	Name      *Name  `json:"name,omitempty"`
 	WireValue string `json:"wireValue,omitempty"`
+}
+
+// FernFilepath identifies the location of a particular type.
+type FernFilepath struct {
+	AllParts    []*Name `json:"allParts,omitempty"`
+	PackagePath []*Name `json:"packagePath,omitempty"`
+	File        *Name   `json:"file,omitempty"`
 }

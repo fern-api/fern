@@ -8,7 +8,7 @@ import (
 // AuthRequirement defines an auth requirement.
 type AuthRequirement uint8
 
-// All of the support auth requirements.
+// All of the supported auth requirements.
 const (
 	AuthRequirementAll AuthRequirement = iota + 1
 	AuthRequirementAny
