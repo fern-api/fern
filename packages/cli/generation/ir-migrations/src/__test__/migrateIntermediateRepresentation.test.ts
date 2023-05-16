@@ -3,10 +3,10 @@ import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { isString } from "lodash-es";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentationForGenerator } from "../migrateIntermediateRepresentationForGenerator";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, GeneratorVersion } from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 
 describe("migrateIntermediateRepresentation", () => {
@@ -15,11 +15,27 @@ describe("migrateIntermediateRepresentation", () => {
         for (const generatorName of Object.values(GeneratorName)) {
             // eslint-disable-next-line jest/valid-title
             it(generatorName, () => {
-                const versions = migrations
+                const versions: Exclude<GeneratorVersion, AlwaysRunMigration>[] = migrations
                     .map((migration) => migration.minGeneratorVersionsToExclude[generatorName])
-                    // filter out symbols
-                    .filter(isString);
-                const expectedVersions = [...versions].sort((a, b) => (isVersionAhead(a, b) ? -1 : 1));
+                    .filter(
+                        (version): version is Exclude<typeof version, AlwaysRunMigration> =>
+                            version !== AlwaysRunMigration
+                    );
+                const expectedVersions = [...versions].sort((a, b) => {
+                    if (a === b) {
+                        return 0;
+                    }
+
+                    // GeneratorDoesNotExistForEitherIrVersion's should be last
+                    if (a === GeneratorDoesNotExistForEitherIrVersion) {
+                        return 1;
+                    }
+                    if (b === GeneratorDoesNotExistForEitherIrVersion) {
+                        return -1;
+                    }
+
+                    return isVersionAhead(a, b) ? -1 : 1;
+                });
 
                 expect(versions).toEqual(expectedVersions);
             });

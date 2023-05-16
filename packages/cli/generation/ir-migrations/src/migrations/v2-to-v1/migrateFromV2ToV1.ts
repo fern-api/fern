@@ -22,7 +22,7 @@ export const V2_TO_V1_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: GeneratorDoesNotExistForEitherIrVersion,
         [GeneratorName.STOPLIGHT]: GeneratorDoesNotExistForEitherIrVersion,
-        [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorDoesNotExistForEitherIrVersion,
         [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
     },
     migrateBackwards: (v2): IrVersions.V1.ir.IntermediateRepresentation => {
