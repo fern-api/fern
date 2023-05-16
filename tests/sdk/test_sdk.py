@@ -118,6 +118,9 @@ def test_github_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
                 ),
             ),
         ),
+        custom_config={
+            "client_filename": "my_client.py",
+        },
     )
 
 

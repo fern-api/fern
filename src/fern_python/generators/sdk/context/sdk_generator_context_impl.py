@@ -36,6 +36,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer()
         self._root_client_declaration_referencer = RootClientDeclarationReferencer(
             root_class_name=client_class_name,
+            root_client_filename=custom_config.client_filename,
         )
         self._custom_config = custom_config
 

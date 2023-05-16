@@ -59,6 +59,10 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
+
+        if not custom_config.client_filename.endswith(".py"):
+            raise RuntimeError("client_filename must end in .py")
+
         self._pydantic_model_custom_config = PydanticModelCustomConfig(
             wrapped_aliases=custom_config.wrapped_aliases,
             skip_formatting=custom_config.skip_formatting,
