@@ -24,7 +24,7 @@ export const V10_TO_V9_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: undefined,
-        [GeneratorName.GO_MODEL]: AlwaysRunMigration,
+        [GeneratorName.GO_MODEL]: undefined,
     },
     migrateBackwards: (v10): IrVersions.V9.ir.IntermediateRepresentation => {
         const v9Services: Record<IrVersions.V9.commons.ServiceId, IrVersions.V9.http.HttpService> = mapValues(

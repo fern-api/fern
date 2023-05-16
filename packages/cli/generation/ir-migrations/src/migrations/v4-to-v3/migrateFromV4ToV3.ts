@@ -23,7 +23,7 @@ export const V4_TO_V3_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: undefined,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: undefined,
-        [GeneratorName.GO_MODEL]: AlwaysRunMigration,
+        [GeneratorName.GO_MODEL]: undefined,
     },
     migrateBackwards: (v4): IrVersions.V3.ir.IntermediateRepresentation => {
         return {
