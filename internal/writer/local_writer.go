@@ -1,7 +1,8 @@
 package writer
 
 import (
-	"errors"
+	"os"
+	"path/filepath"
 
 	"github.com/fern-api/fern-go/internal/generator"
 )
@@ -31,5 +32,17 @@ func newLocalWriter(config *LocalConfig) (*localWriter, error) {
 }
 
 func (l *localWriter) WriteFiles(files []*generator.File) error {
-	return errors.New("unimplemented")
+	if len(files) == 0 {
+		return nil
+	}
+	if err := os.MkdirAll(l.config.Path, 0755); err != nil {
+		return err
+	}
+	for _, file := range files {
+		filename := filepath.Join(l.config.Path, file.Path)
+		if err := os.WriteFile(filename, file.Content, 0644); err != nil {
+			return err
+		}
+	}
+	return nil
 }
