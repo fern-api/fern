@@ -110,6 +110,8 @@ func (o *OutputConfig) UnmarshalJSON(data []byte) error {
 		switch mode.Type {
 		case "github":
 			o.Mode = new(OutputModeGithub)
+		case "downloadFiles":
+			o.Mode = new(OutputModeDownloadFiles)
 		default:
 			return fmt.Errorf("unrecognized %T type: %v", o.Mode, mode.Type)
 		}
@@ -136,6 +138,13 @@ type OutputModeGithub struct {
 }
 
 func (p *OutputModeGithub) isOutputMode() {}
+
+// OutputModeDownloadFiles is the download files OutputMode.
+type OutputModeDownloadFiles struct {
+	Type string `json:"type,omitempty"`
+}
+
+func (p *OutputModeDownloadFiles) isOutputMode() {}
 
 // PublishInfoGithub represents the publish information specific to GitHub.
 type PublishInfoGithub interface {
