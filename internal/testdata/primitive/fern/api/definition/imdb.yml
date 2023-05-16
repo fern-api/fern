@@ -1,0 +1,6 @@
+# Simple test for generating a type with primitive properties.
+types:
+  Movie:
+    properties:
+      id: string
+      title: string
