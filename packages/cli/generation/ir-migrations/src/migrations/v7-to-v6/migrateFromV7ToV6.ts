@@ -24,6 +24,7 @@ export const V7_TO_V6_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: undefined,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
+        [GeneratorName.GO_MODEL]: undefined,
     },
     migrateBackwards: (v7): IrVersions.V6.ir.IntermediateRepresentation => {
         return {

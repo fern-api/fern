@@ -24,6 +24,7 @@ export const V9_TO_V8_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: undefined,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: undefined,
+        [GeneratorName.GO_MODEL]: undefined,
     },
     migrateBackwards: (v9, { taskContext, targetGenerator }): IrVersions.V8.ir.IntermediateRepresentation => {
         for (const [_, type] of Object.entries(v9.types)) {
