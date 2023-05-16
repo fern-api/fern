@@ -338,13 +338,13 @@ examples:
   - path-parameters:
       userId: missing-user-id
     response:
-      error: UserNotFoundError # <--
-      body: "User with id `missing-user-id` was not found"
+      error: UserNotFoundError
+      body: "User with id `missing-user-id` was not found"  # <--
 
 errors: 
   UserNotFoundError
     status-code: 404
-    type: string
+    type: string  # <--
 ```
 
 ### Referencing examples from types
