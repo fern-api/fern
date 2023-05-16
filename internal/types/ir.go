@@ -17,15 +17,35 @@ const (
 )
 
 // String implements fmt.Stringer.
-func (a AuthRequirement) String() string {
-	switch a {
+func (a *AuthRequirement) String() string {
+	if a == nil {
+		return ""
+	}
+	switch *a {
 	case AuthRequirementAll:
 		return "ALL"
 	case AuthRequirementAny:
 		return "ANY"
 	default:
-		return strconv.Itoa(int(a))
+		return strconv.Itoa(int(*a))
 	}
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (a *AuthRequirement) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "ALL":
+		value := AuthRequirementAll
+		a = &value
+	case "ANY":
+		value := AuthRequirementAny
+		a = &value
+	}
+	return nil
 }
 
 // APIAuth represents the API auth configuration.
@@ -80,11 +100,11 @@ type TypeReference interface {
 
 // TypeReferencePrimitive is the primitive TypeReference.
 type TypeReferencePrimitive struct {
-	Type      string        `json:"_type,omitempty"`
-	Primitive PrimitiveType `json:"primitive,omitempty"`
+	Type      string         `json:"_type,omitempty"`
+	Primitive *PrimitiveType `json:"primitive,omitempty"`
 }
 
-// AuthRequirement defines a primitive type.
+// PrimitiveType defines a primitive type.
 type PrimitiveType uint8
 
 // All of the support auth requirements.
@@ -101,8 +121,11 @@ const (
 )
 
 // String implements fmt.Stringer.
-func (p PrimitiveType) String() string {
-	switch p {
+func (p *PrimitiveType) String() string {
+	if p == nil {
+		return ""
+	}
+	switch *p {
 	case PrimitiveTypeInteger:
 		return "INTEGER"
 	case PrimitiveTypeDouble:
@@ -122,8 +145,46 @@ func (p PrimitiveType) String() string {
 	case PrimitiveTypeBase64:
 		return "BASE_64"
 	default:
-		return strconv.Itoa(int(p))
+		return strconv.Itoa(int(*p))
 	}
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (p *PrimitiveType) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "INTEGER":
+		value := PrimitiveTypeInteger
+		p = &value
+	case "DOUBLE":
+		value := PrimitiveTypeDouble
+		p = &value
+	case "STRING":
+		value := PrimitiveTypeString
+		p = &value
+	case "BOOLEAN":
+		value := PrimitiveTypeBoolean
+		p = &value
+	case "LONG":
+		value := PrimitiveTypeLong
+		p = &value
+	case "DATE_TIME":
+		value := PrimitiveTypeDateTime
+		p = &value
+	case "DATE":
+		value := PrimitiveTypeDate
+		p = &value
+	case "UUID":
+		value := PrimitiveTypeUUID
+		p = &value
+	case "BASE_64":
+		value := PrimitiveTypeBase64
+		p = &value
+	}
+	return nil
 }
 
 // Name contains a variety of different naming conventions for

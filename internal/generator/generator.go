@@ -30,5 +30,11 @@ func (g *Generator) Generate() ([]*File, error) {
 }
 
 func (g *Generator) generate(ir *types.IntermediateRepresentation) ([]*File, error) {
-	return nil, nil
+	// TODO: This is just a placeholder for now.
+	return []*File{
+		{
+			Path:    "example.go",
+			Content: []byte("package example"),
+		},
+	}, nil
 }
