@@ -90,7 +90,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         const compilerOptions: CompilerOptions = {
             extendedDiagnostics: true,
             strict: true,
-            target: "esnext" as unknown as ScriptTarget,
+            target: "ES6" as unknown as ScriptTarget,
             module: (this.outputEsm ? "esnext" : "CommonJS") as unknown as ModuleKind,
             moduleResolution: "node" as unknown as ModuleResolutionKind,
             esModuleInterop: true,

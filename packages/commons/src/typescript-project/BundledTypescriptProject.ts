@@ -176,7 +176,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         const compilerOptions: CompilerOptions = {
             extendedDiagnostics: true,
             strict: true,
-            target: "esnext" as unknown as ScriptTarget,
+            target: "ES6" as unknown as ScriptTarget,
             module: "esnext" as unknown as ModuleKind,
             moduleResolution: "node" as unknown as ModuleResolutionKind,
             esModuleInterop: true,
