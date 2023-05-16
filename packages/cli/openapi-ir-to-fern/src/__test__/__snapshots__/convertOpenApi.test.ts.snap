@@ -10464,27 +10464,267 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxReturnBusiness": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "cifras_cierre_ejercicio": {
+              "docs": "Details regarding key numbers at the end of the fiscal exercise.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "collected_at": {
+              "docs": "The ISO-8601 timestamp when the data point was collected.",
+              "type": "optional<string>",
+            },
+            "conciliacion_entre_resultado_contable_fiscal": {
+              "docs": "Details regarding the accounting reconciliation.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "created_at": {
+              "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
+              "type": "optional<string>",
+            },
+            "datos_adicionales": {
+              "docs": "Additional data regarding the tax return.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "deducciones_autorizadas": {
+              "docs": "Details regarding the legal entity's deductions.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "detalle_pago_r1_isr_personas_morales": {
+              "docs": "Details of the tax payment.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "determinacion_del_impuesto_sobre_la_renta": {
+              "docs": "Details regarding the final tax return.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "dividendos_o_utilidades_distribuidos": {
+              "docs": "Details regarding distributed dividends.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "estado_posicion_financiera_balance": {
+              "docs": "Details regarding balance sheet of the legal entity.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "estado_resultados": {
+              "docs": "Detailed information about the legal entity's yearly profit and loss.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "id": {
+              "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
+              "type": "optional<string>",
+            },
+            "informacion_general": {
+              "docs": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
+              "type": "optional<map<string, unknown>>",
+            },
+            "pdf": {
+              "docs": "Tax return PDF as a binary.",
+              "type": "optional<string>",
+            },
+            "receipt_pdf": {
+              "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
+              "type": "optional<string>",
+            },
+          },
         },
         "TaxReturnBusinessMonthly": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "collected_at": {
+              "docs": "The ISO-8601 timestamp when the data point was collected.",
+              "type": "optional<string>",
+            },
+            "created_at": {
+              "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
+              "type": "optional<string>",
+            },
+            "detalle_pago_isr": {
+              "docs": "Information on the monthly provisional payments for the income tax.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "detalle_pago_iva": {
+              "docs": "Information on the monthly provisional payments for the VAT tax.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "determinacion_isr": {
+              "docs": "Information used to calculate the provisional income tax for the period.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "determinacion_iva": {
+              "docs": "Information used to calculate the provisional VAT tax for the period.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "id": {
+              "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
+              "type": "optional<string>",
+            },
+            "informacion_general": {
+              "docs": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
+              "type": "optional<map<string, unknown>>",
+            },
+            "pdf": {
+              "docs": "Tax return PDF as a binary.",
+              "type": "optional<string>",
+            },
+            "receipt_pdf": {
+              "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
+              "type": "optional<string>",
+            },
+            "type": {
+              "docs": "The type of tax return. Can be either monthly or annual.",
+              "type": "optional<string>",
+            },
+          },
         },
         "TaxReturnPersonal": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "collected_at": {
+              "docs": "The ISO-8601 timestamp when the data point was collected.",
+              "type": "optional<string>",
+            },
+            "created_at": {
+              "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
+              "type": "optional<string>",
+            },
+            "datos_informativos": {
+              "docs": "Extra informative data on the tax return.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "deducciones_personales": {
+              "docs": "List of all personal tax deductions.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "determinacion_impuesto": {
+              "docs": "Details regarding the final tax return.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "dividendos": {
+              "docs": "Details regarding dividends.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "id": {
+              "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
+              "type": "optional<string>",
+            },
+            "informacion_general": {
+              "docs": "General information on the tax return (year, RFC, return type, person/company name, and so on).",
+              "type": "optional<map<string, unknown>>",
+            },
+            "link": {
+              "docs": "The \`link.id\` the statement belongs to",
+              "type": "optional<string>",
+            },
+            "pdf": {
+              "docs": "Tax return PDF as a binary.",
+              "type": "optional<string>",
+            },
+            "receipt_pdf": {
+              "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
+              "type": "optional<string>",
+            },
+            "retenciones": {
+              "docs": "Details on the already withheld taxes.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "servicios_profesionales": {
+              "docs": "Details regarding the income and tax information from professional services provided.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "sueldos_salarios": {
+              "docs": "Details regarding the income information together combined with withheld taxes.",
+              "type": "optional<map<string, unknown>>",
+            },
+          },
         },
         "TaxReturnPersonalMonthly": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "collected_at": {
+              "docs": "The ISO-8601 timestamp when the data point was collected.",
+              "type": "optional<string>",
+            },
+            "created_at": {
+              "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
+              "type": "optional<string>",
+            },
+            "informacion_general": {
+              "docs": "General information regarding the tax return (year, RFC, return type, person/company name, and so on).",
+              "type": "optional<map<string, unknown>>",
+            },
+            "isr": {
+              "docs": "Information used to calculate the monthly provisional payments of the income tax.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "iva": {
+              "docs": "Information used to calculate the monthly provisional payments of the VAT tax.",
+              "type": "optional<map<string, unknown>>",
+            },
+            "pdf": {
+              "docs": "Tax return PDF as a binary.",
+              "type": "optional<string>",
+            },
+            "receipt_pdf": {
+              "docs": "The acknowledgement receipt from the fiscal institution confirming that they received the tax return.",
+              "type": "optional<string>",
+            },
+            "type": {
+              "docs": "The type of tax return. Can be either monthly or annual.",
+              "type": "string",
+            },
+          },
         },
         "TaxReturnsBusinessMonthlyPaginated": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "count": {
+              "docs": "The total number of results in your Belvo account.",
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": "Array of Monthly Business Tax Return objects.",
+              "type": "optional<list<TaxReturnBusinessMonthly>>",
+            },
+          },
         },
         "TaxReturnsBusinessPaginated": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "count": {
+              "docs": "The total number of results in your Belvo account.",
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": "Array of Business Tax Return objects.",
+              "type": "optional<list<TaxReturnBusiness>>",
+            },
+          },
         },
         "TaxReturnsMonthlyRequest": {
           "docs": "Request body for monthly tax returns",
@@ -10523,11 +10763,51 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxReturnsPersonalMonthlyPaginated": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "count": {
+              "docs": "The total number of results in your Belvo account.",
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": "Array of Monthly Personal Tax Return objects.",
+              "type": "optional<list<TaxReturnPersonalMonthly>>",
+            },
+          },
         },
         "TaxReturnsPersonalPaginated": {
           "docs": undefined,
-          "type": "map<string, unknown>",
+          "properties": {
+            "count": {
+              "docs": "The total number of results in your Belvo account.",
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": "The URL to next page of results. Each page consists of up to 100 items. If there are not enough results for an additional page, the value is \`null\`.
+
+In our documentation example, we use \`{endpoint}\` as a placeholder value. In production, this value will be replaced by the actual endpoint you are currently using (for example, \`accounts\` or \`owners\`).
+",
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": "The URL to the previous page of results. If there is no previous page, the value is \`null\`.",
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": "Array of Personal Tax Return objects.",
+              "type": "optional<list<TaxReturnPersonal>>",
+            },
+          },
         },
         "TaxReturnsYearlyRequest": {
           "docs": "Request body for yearly tax returns",

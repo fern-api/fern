@@ -119,7 +119,7 @@ function convertSchemaObject(
     }
 
     // maps
-    if (schema.additionalProperties != null && schema.additionalProperties !== false) {
+    if (schema.additionalProperties != null && schema.additionalProperties !== false && hasNoProperties(schema)) {
         return convertAdditionalProperties({
             breadcrumbs,
             additionalProperties: schema.additionalProperties,
