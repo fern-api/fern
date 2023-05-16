@@ -6,7 +6,7 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentationForGenerator } from "../migrateIntermediateRepresentationForGenerator";
-import { AlwaysRunMigration, GeneratorVersion } from "../types/IrMigration";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, GeneratorVersion } from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 
 describe("migrateIntermediateRepresentation", () => {
@@ -19,23 +19,14 @@ describe("migrateIntermediateRepresentation", () => {
                     .map((migration) => migration.minGeneratorVersionsToExclude[generatorName])
                     // filter out AlwaysRunMigration's, since these can appear wherever
                     .filter(
-                        (version): version is Exclude<GeneratorVersion | undefined, AlwaysRunMigration> =>
-                            version !== AlwaysRunMigration
+                        (
+                            version
+                        ): version is Exclude<
+                            GeneratorVersion,
+                            AlwaysRunMigration | GeneratorDoesNotExistForEitherIrVersion
+                        > => version !== AlwaysRunMigration
                     );
-                const expectedVersions = [...versions].sort((a, b) => {
-                    // a null version signifies this migration should never be
-                    // run for this generator, so it should be at the end (i.e.
-                    // for the earliest IR versions)
-                    if (a == null) {
-                        return 1;
-                    }
-                    if (b == null) {
-                        return -1;
-                    }
-
-                    // versions should be sorted from latest to earliest
-                    return isVersionAhead(a, b) ? -1 : 1;
-                });
+                const expectedVersions = [...versions].sort((a, b) => (isVersionAhead(a, b) ? -1 : 1));
 
                 expect(versions).toEqual(expectedVersions);
             });
