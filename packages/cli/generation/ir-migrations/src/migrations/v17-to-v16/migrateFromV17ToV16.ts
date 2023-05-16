@@ -23,7 +23,7 @@ export const V17_TO_V16_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: AlwaysRunMigration,
-        [GeneratorName.GO]: AlwaysRunMigration,
+        [GeneratorName.GO_MODEL]: AlwaysRunMigration,
     },
     migrateBackwards: (v17, { taskContext, targetGenerator }): IrVersions.V16.ir.IntermediateRepresentation => {
         for (const [typeName, typeDeclaration] of Object.entries(v17.types)) {

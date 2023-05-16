@@ -23,7 +23,7 @@ export const V8_TO_V7_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: undefined,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: undefined,
-        [GeneratorName.GO]: AlwaysRunMigration,
+        [GeneratorName.GO_MODEL]: AlwaysRunMigration,
     },
     migrateBackwards: (v8): IrVersions.V7.ir.IntermediateRepresentation => {
         return {

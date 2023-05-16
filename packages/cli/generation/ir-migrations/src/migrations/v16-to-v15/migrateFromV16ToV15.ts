@@ -24,7 +24,7 @@ export const V16_TO_V15_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: AlwaysRunMigration,
-        [GeneratorName.GO]: AlwaysRunMigration,
+        [GeneratorName.GO_MODEL]: AlwaysRunMigration,
     },
     migrateBackwards: (v16, { taskContext, targetGenerator }): IrVersions.V15.ir.IntermediateRepresentation => {
         if (v16.basePath != null) {

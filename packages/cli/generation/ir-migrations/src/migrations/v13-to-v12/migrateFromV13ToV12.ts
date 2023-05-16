@@ -24,7 +24,7 @@ export const V13_TO_V12_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
         [GeneratorName.PYTHON_SDK]: undefined,
-        [GeneratorName.GO]: AlwaysRunMigration,
+        [GeneratorName.GO_MODEL]: AlwaysRunMigration,
     },
     migrateBackwards: (v13): IrVersions.V12.ir.IntermediateRepresentation => {
         return {
