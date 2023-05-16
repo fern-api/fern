@@ -1,7 +1,7 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { upperFirst } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
-import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "../../types/IrMigration";
 
 export const V7_TO_V6_MIGRATION: IrMigration<
     IrVersions.V7.ir.IntermediateRepresentation,
@@ -20,11 +20,11 @@ export const V7_TO_V6_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
-        [GeneratorName.STOPLIGHT]: undefined,
+        [GeneratorName.STOPLIGHT]: GeneratorDoesNotExistForEitherIrVersion,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_SDK]: undefined,
+        [GeneratorName.PYTHON_SDK]: GeneratorDoesNotExistForEitherIrVersion,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
-        [GeneratorName.GO_MODEL]: undefined,
+        [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
     },
     migrateBackwards: (v7): IrVersions.V6.ir.IntermediateRepresentation => {
         return {

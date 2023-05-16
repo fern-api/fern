@@ -22,7 +22,7 @@ import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
 import { V7_TO_V6_MIGRATION } from "./migrations/v7-to-v6/migrateFromV7ToV6";
 import { V8_TO_V7_MIGRATION } from "./migrations/v8-to-v7/migrateFromV8ToV7";
 import { V9_TO_V8_MIGRATION } from "./migrations/v9-to-v8/migrateFromV9ToV8";
-import { AlwaysRunMigration, IrMigration } from "./types/IrMigration";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "./types/IrMigration";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {
     return INTERMEDIATE_REPRESENTATION_MIGRATOR;
@@ -191,19 +191,24 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         migration: IrMigration<any, any>;
         targetGenerator: GeneratorNameAndVersion;
     }): boolean {
-        if (!(targetGenerator.name in migration.minGeneratorVersionsToExclude)) {
+        const minVersionToExclude = migration.minGeneratorVersionsToExclude[targetGenerator.name as GeneratorName];
+
+        if (minVersionToExclude == null) {
             throw new Error(
                 `Cannot migrate intermediate representation. Unrecognized generator: ${targetGenerator.name}.`
             );
         }
-        const minVersionToExclude = migration.minGeneratorVersionsToExclude[targetGenerator.name as GeneratorName];
-        if (!minVersionToExclude) {
-            return false;
+
+        switch (minVersionToExclude) {
+            case AlwaysRunMigration:
+                return true;
+            case GeneratorDoesNotExistForEitherIrVersion:
+                throw new Error(
+                    `Cannot migrate intermediate representation. Generator was created after intermediate representation ${migration.laterVersion}.`
+                );
         }
 
-        return (
-            minVersionToExclude === AlwaysRunMigration || isVersionAhead(minVersionToExclude, targetGenerator.version)
-        );
+        return isVersionAhead(minVersionToExclude, targetGenerator.version);
     }
 }
 

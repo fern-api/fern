@@ -1,7 +1,7 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { TaskResult } from "@fern-api/task-context";
 import { IrVersions } from "../../ir-versions";
-import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "../../types/IrMigration";
 
 export const V9_TO_V8_MIGRATION: IrMigration<
     IrVersions.V9.ir.IntermediateRepresentation,
@@ -21,10 +21,10 @@ export const V9_TO_V8_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_PYDANTIC]: "0.0.51-1-g977dd1f",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
-        [GeneratorName.STOPLIGHT]: undefined,
+        [GeneratorName.STOPLIGHT]: GeneratorDoesNotExistForEitherIrVersion,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_SDK]: undefined,
-        [GeneratorName.GO_MODEL]: undefined,
+        [GeneratorName.PYTHON_SDK]: GeneratorDoesNotExistForEitherIrVersion,
+        [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
     },
     migrateBackwards: (v9, { taskContext, targetGenerator }): IrVersions.V8.ir.IntermediateRepresentation => {
         for (const [_, type] of Object.entries(v9.types)) {

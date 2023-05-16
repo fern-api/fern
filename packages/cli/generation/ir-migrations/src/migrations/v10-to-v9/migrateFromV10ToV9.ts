@@ -1,7 +1,7 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
-import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "../../types/IrMigration";
 
 export const V10_TO_V9_MIGRATION: IrMigration<
     IrVersions.V10.ir.IntermediateRepresentation,
@@ -20,11 +20,11 @@ export const V10_TO_V9_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
         [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
-        [GeneratorName.STOPLIGHT]: undefined,
+        [GeneratorName.STOPLIGHT]: GeneratorDoesNotExistForEitherIrVersion,
         [GeneratorName.OPENAPI]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_SDK]: undefined,
-        [GeneratorName.GO_MODEL]: undefined,
+        [GeneratorName.PYTHON_SDK]: GeneratorDoesNotExistForEitherIrVersion,
+        [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
     },
     migrateBackwards: (v10): IrVersions.V9.ir.IntermediateRepresentation => {
         const v9Services: Record<IrVersions.V9.commons.ServiceId, IrVersions.V9.http.HttpService> = mapValues(

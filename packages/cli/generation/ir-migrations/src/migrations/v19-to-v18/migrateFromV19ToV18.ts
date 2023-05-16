@@ -2,7 +2,7 @@ import { GeneratorName } from "@fern-api/generators-configuration";
 import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
 import { IrMigrationContext } from "../../IrMigrationContext";
-import { AlwaysRunMigration, IrMigration } from "../../types/IrMigration";
+import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "../../types/IrMigration";
 
 export const V19_TO_V18_MIGRATION: IrMigration<
     IrVersions.V19.ir.IntermediateRepresentation,
@@ -25,7 +25,7 @@ export const V19_TO_V18_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
         [GeneratorName.POSTMAN]: "0.0.44-1-gbf4b0f3",
         [GeneratorName.PYTHON_SDK]: "0.3.4-rc0-9-ge815162f",
-        [GeneratorName.GO_MODEL]: undefined,
+        [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
     },
     migrateBackwards: (v19, context): IrVersions.V18.ir.IntermediateRepresentation => {
         return {
