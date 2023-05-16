@@ -193,6 +193,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     }): boolean {
         const minVersionToExclude = migration.minGeneratorVersionsToExclude[targetGenerator.name as GeneratorName];
 
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (minVersionToExclude == null) {
             throw new Error(
                 `Cannot migrate intermediate representation. Unrecognized generator: ${targetGenerator.name}.`
