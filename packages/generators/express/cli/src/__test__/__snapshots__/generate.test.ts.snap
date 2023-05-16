@@ -753,7 +753,8 @@ __exportStar(require(\\"./union\\"), exports);
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "export { lazy, type SchemaGetter } from \\"./lazy\\";
+                    "contents": "export { lazy } from \\"./lazy\\";
+export type { SchemaGetter } from \\"./lazy\\";
 export { lazyObject } from \\"./lazyObject\\";
 ",
                     "name": "index.d.ts",
@@ -1011,8 +1012,9 @@ exports.stringLiteral = stringLiteral;
                 "contents": Array [
                   Object {
                     "contents": "export { getObjectUtils, object } from \\"./object\\";
-export { isProperty, property, type Property } from \\"./property\\";
-export { type BaseObjectSchema, type inferObjectSchemaFromPropertySchemas, type inferParsedObject, type inferParsedObjectFromPropertySchemas, type inferParsedPropertySchema, type inferRawKey, type inferRawObject, type inferRawObjectFromPropertySchemas, type inferRawPropertySchema, type ObjectSchema, type ObjectUtils, type PropertySchemas, } from \\"./types\\";
+export { isProperty, property } from \\"./property\\";
+export type { Property } from \\"./property\\";
+export type { BaseObjectSchema, inferObjectSchemaFromPropertySchemas, inferParsedObject, inferParsedObjectFromPropertySchemas, inferParsedPropertySchema, inferRawKey, inferRawObject, inferRawObjectFromPropertySchemas, inferRawPropertySchema, ObjectSchema, ObjectUtils, PropertySchemas, } from \\"./types\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -1456,7 +1458,7 @@ exports.withParsedProperties = withParsedProperties;
                   },
                   Object {
                     "contents": "export { getObjectLikeUtils, withParsedProperties } from \\"./getObjectLikeUtils\\";
-export { type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
+export type { ObjectLikeSchema, ObjectLikeUtils } from \\"./types\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -1675,7 +1677,7 @@ exports.unknown = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)
                 "contents": Array [
                   Object {
                     "contents": "export { record } from \\"./record\\";
-export { type BaseRecordSchema, type RecordSchema } from \\"./types\\";
+export type { BaseRecordSchema, RecordSchema } from \\"./types\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -1992,7 +1994,8 @@ exports.transform = transform;
                     "type": "file",
                   },
                   Object {
-                    "contents": "export { getSchemaUtils, optional, transform, type SchemaUtils } from \\"./getSchemaUtils\\";
+                    "contents": "export { getSchemaUtils, optional, transform } from \\"./getSchemaUtils\\";
+export type { SchemaUtils } from \\"./getSchemaUtils\\";
 export { JsonError } from \\"./JsonError\\";
 export { ParseError } from \\"./ParseError\\";
 ",
@@ -2124,7 +2127,7 @@ exports.set = set;
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "export { type inferParsedUnidiscriminatedUnionSchema, type inferRawUnidiscriminatedUnionSchema, type UndiscriminatedUnionSchema, } from \\"./types\\";
+                    "contents": "export type { inferParsedUnidiscriminatedUnionSchema, inferRawUnidiscriminatedUnionSchema, UndiscriminatedUnionSchema, } from \\"./types\\";
 export { undiscriminatedUnion } from \\"./undiscriminatedUnion\\";
 ",
                     "name": "index.d.ts",
@@ -2244,8 +2247,9 @@ exports.discriminant = discriminant;
                     "type": "file",
                   },
                   Object {
-                    "contents": "export { discriminant, type Discriminant } from \\"./discriminant\\";
-export { type inferParsedDiscriminant, type inferParsedUnion, type inferRawDiscriminant, type inferRawUnion, type UnionSubtypes, } from \\"./types\\";
+                    "contents": "export { discriminant } from \\"./discriminant\\";
+export type { Discriminant } from \\"./discriminant\\";
+export type { inferParsedDiscriminant, inferParsedUnion, inferRawDiscriminant, inferRawUnion, UnionSubtypes, } from \\"./types\\";
 export { union } from \\"./union\\";
 ",
                     "name": "index.d.ts",
@@ -2435,7 +2439,7 @@ async function transformAndValidateUnion({ value, discriminant, transformedDiscr
           },
           Object {
             "contents": "export * from \\"./builders\\";
-export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from \\"./Schema\\";
+export type { inferParsed, inferRaw, Schema, SchemaOptions } from \\"./Schema\\";
 ",
             "name": "index.d.ts",
             "type": "file",
@@ -16527,7 +16531,8 @@ __exportStar(require(\\"./union\\"), exports);
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "export { lazy, type SchemaGetter } from \\"./lazy\\";
+                    "contents": "export { lazy } from \\"./lazy\\";
+export type { SchemaGetter } from \\"./lazy\\";
 export { lazyObject } from \\"./lazyObject\\";
 ",
                     "name": "index.d.ts",
@@ -16785,8 +16790,9 @@ exports.stringLiteral = stringLiteral;
                 "contents": Array [
                   Object {
                     "contents": "export { getObjectUtils, object } from \\"./object\\";
-export { isProperty, property, type Property } from \\"./property\\";
-export { type BaseObjectSchema, type inferObjectSchemaFromPropertySchemas, type inferParsedObject, type inferParsedObjectFromPropertySchemas, type inferParsedPropertySchema, type inferRawKey, type inferRawObject, type inferRawObjectFromPropertySchemas, type inferRawPropertySchema, type ObjectSchema, type ObjectUtils, type PropertySchemas, } from \\"./types\\";
+export { isProperty, property } from \\"./property\\";
+export type { Property } from \\"./property\\";
+export type { BaseObjectSchema, inferObjectSchemaFromPropertySchemas, inferParsedObject, inferParsedObjectFromPropertySchemas, inferParsedPropertySchema, inferRawKey, inferRawObject, inferRawObjectFromPropertySchemas, inferRawPropertySchema, ObjectSchema, ObjectUtils, PropertySchemas, } from \\"./types\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -17230,7 +17236,7 @@ exports.withParsedProperties = withParsedProperties;
                   },
                   Object {
                     "contents": "export { getObjectLikeUtils, withParsedProperties } from \\"./getObjectLikeUtils\\";
-export { type ObjectLikeSchema, type ObjectLikeUtils } from \\"./types\\";
+export type { ObjectLikeSchema, ObjectLikeUtils } from \\"./types\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -17449,7 +17455,7 @@ exports.unknown = (0, createIdentitySchemaCreator_1.createIdentitySchemaCreator)
                 "contents": Array [
                   Object {
                     "contents": "export { record } from \\"./record\\";
-export { type BaseRecordSchema, type RecordSchema } from \\"./types\\";
+export type { BaseRecordSchema, RecordSchema } from \\"./types\\";
 ",
                     "name": "index.d.ts",
                     "type": "file",
@@ -17766,7 +17772,8 @@ exports.transform = transform;
                     "type": "file",
                   },
                   Object {
-                    "contents": "export { getSchemaUtils, optional, transform, type SchemaUtils } from \\"./getSchemaUtils\\";
+                    "contents": "export { getSchemaUtils, optional, transform } from \\"./getSchemaUtils\\";
+export type { SchemaUtils } from \\"./getSchemaUtils\\";
 export { JsonError } from \\"./JsonError\\";
 export { ParseError } from \\"./ParseError\\";
 ",
@@ -17898,7 +17905,7 @@ exports.set = set;
               Object {
                 "contents": Array [
                   Object {
-                    "contents": "export { type inferParsedUnidiscriminatedUnionSchema, type inferRawUnidiscriminatedUnionSchema, type UndiscriminatedUnionSchema, } from \\"./types\\";
+                    "contents": "export type { inferParsedUnidiscriminatedUnionSchema, inferRawUnidiscriminatedUnionSchema, UndiscriminatedUnionSchema, } from \\"./types\\";
 export { undiscriminatedUnion } from \\"./undiscriminatedUnion\\";
 ",
                     "name": "index.d.ts",
@@ -18018,8 +18025,9 @@ exports.discriminant = discriminant;
                     "type": "file",
                   },
                   Object {
-                    "contents": "export { discriminant, type Discriminant } from \\"./discriminant\\";
-export { type inferParsedDiscriminant, type inferParsedUnion, type inferRawDiscriminant, type inferRawUnion, type UnionSubtypes, } from \\"./types\\";
+                    "contents": "export { discriminant } from \\"./discriminant\\";
+export type { Discriminant } from \\"./discriminant\\";
+export type { inferParsedDiscriminant, inferParsedUnion, inferRawDiscriminant, inferRawUnion, UnionSubtypes, } from \\"./types\\";
 export { union } from \\"./union\\";
 ",
                     "name": "index.d.ts",
@@ -18209,7 +18217,7 @@ async function transformAndValidateUnion({ value, discriminant, transformedDiscr
           },
           Object {
             "contents": "export * from \\"./builders\\";
-export { type inferParsed, type inferRaw, type Schema, type SchemaOptions } from \\"./Schema\\";
+export type { inferParsed, inferRaw, Schema, SchemaOptions } from \\"./Schema\\";
 ",
             "name": "index.d.ts",
             "type": "file",

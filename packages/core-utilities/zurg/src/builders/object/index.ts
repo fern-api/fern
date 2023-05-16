@@ -1,16 +1,17 @@
 export { getObjectUtils, object } from "./object";
-export { isProperty, property, type Property } from "./property";
-export {
-    type BaseObjectSchema,
-    type inferObjectSchemaFromPropertySchemas,
-    type inferParsedObject,
-    type inferParsedObjectFromPropertySchemas,
-    type inferParsedPropertySchema,
-    type inferRawKey,
-    type inferRawObject,
-    type inferRawObjectFromPropertySchemas,
-    type inferRawPropertySchema,
-    type ObjectSchema,
-    type ObjectUtils,
-    type PropertySchemas,
+export { isProperty, property } from "./property";
+export type { Property } from "./property";
+export type {
+    BaseObjectSchema,
+    inferObjectSchemaFromPropertySchemas,
+    inferParsedObject,
+    inferParsedObjectFromPropertySchemas,
+    inferParsedPropertySchema,
+    inferRawKey,
+    inferRawObject,
+    inferRawObjectFromPropertySchemas,
+    inferRawPropertySchema,
+    ObjectSchema,
+    ObjectUtils,
+    PropertySchemas,
 } from "./types";
