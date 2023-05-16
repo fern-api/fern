@@ -203,7 +203,17 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitLiteral(Literal literal) {
-            throw new RuntimeException("Literal is unsupported.");
+            return literal.visit(new Literal.Visitor<>() {
+                @Override
+                public TypeName visitString(String string) {
+                    return ClassName.get(String.class);
+                }
+
+                @Override
+                public TypeName _visitUnknown(Object unknownType) {
+                    throw new RuntimeException("Unsupported literal type: " + unknownType);
+                }
+            });
         }
 
         @Override
