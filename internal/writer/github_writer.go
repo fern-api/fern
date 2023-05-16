@@ -16,6 +16,14 @@ type GithubConfig struct {
 
 func (g *GithubConfig) isOutputMode() {}
 
+// NewGithubConfig returns a new github writer configuration.
+func NewGithubConfig(version string, repoURL string) (*GithubConfig, error) {
+	return &GithubConfig{
+		Version: version,
+		RepoURL: repoURL,
+	}, nil
+}
+
 type githubWriter struct {
 	config *GithubConfig
 }

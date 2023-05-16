@@ -6,17 +6,6 @@ import (
 	"github.com/fern-api/fern-go/internal/generator"
 )
 
-// Config is the configuration required for writing files.
-type Config struct {
-	Mode OutputMode
-}
-
-// OutputMode is the output mode that describes where
-// the Writer should write files.
-type OutputMode interface {
-	isOutputMode()
-}
-
 // Writer writes files to their configured location.
 type Writer interface {
 	WriteFiles([]*generator.File) error

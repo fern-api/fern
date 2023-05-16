@@ -1,6 +1,11 @@
 package types
 
-import "strconv"
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"strconv"
+)
 
 // AuthRequirement defines an auth requirement.
 type AuthRequirement uint8
@@ -167,4 +172,17 @@ type IntermediateRepresentation struct {
 	// ErrorDiscriminationStrategy string `json:"errorDiscriminationStrategy,omitempty"`
 	// SDKConfig string `json:"sdkConfig,omitempty"`
 	// Variables string `json:"variables,omitempty"`
+}
+
+// ReadIR reads the *InermediateRepresentation from the given filename.
+func ReadIR(irFilename string) (*IntermediateRepresentation, error) {
+	bytes, err := os.ReadFile(irFilename)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read intermediate representation: %v", err)
+	}
+	ir := new(IntermediateRepresentation)
+	if err := json.Unmarshal(bytes, ir); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal intermediate representation: %v", err)
+	}
+	return ir, nil
 }

@@ -13,6 +13,13 @@ type LocalConfig struct {
 
 func (l *LocalConfig) isOutputMode() {}
 
+// NewLocalConfig returns a new local writer configuration.
+func NewLocalConfig(path string) (*LocalConfig, error) {
+	return &LocalConfig{
+		Path: path,
+	}, nil
+}
+
 type localWriter struct {
 	config *LocalConfig
 }

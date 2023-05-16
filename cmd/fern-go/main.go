@@ -5,7 +5,9 @@ import (
 	"os"
 
 	"github.com/fern-api/fern-go"
+	"github.com/fern-api/fern-go/internal/config"
 	"github.com/fern-api/fern-go/internal/generator"
+	"github.com/fern-api/fern-go/internal/writer"
 )
 
 const usage = `Generate Go models from your Fern API definition.
@@ -37,10 +39,44 @@ func main() {
 }
 
 func run(configFilename string) error {
-	config, err := generator.ReadConfig(configFilename)
+	config, err := config.ReadConfig(configFilename)
 	if err != nil {
 		return err
 	}
-	generator := generator.New(config)
-	return generator.Run()
+	outputMode, err := outputModeFromConfig(config)
+	if err != nil {
+		return err
+	}
+	writerConfig, err := writer.NewConfig(outputMode)
+	if err != nil {
+		return err
+	}
+	generatorConfig, err := generator.NewConfig(config.DryRun, config.IRFilepath)
+	if err != nil {
+		return err
+	}
+	generator, err := generator.New(generatorConfig)
+	if err != nil {
+		return err
+	}
+	files, err := generator.Generate()
+	if err != nil {
+		return err
+	}
+	writer, err := writer.New(writerConfig)
+	if err != nil {
+		return err
+	}
+	return writer.WriteFiles(files)
+}
+
+func outputModeFromConfig(c *config.Config) (writer.OutputMode, error) {
+	switch outputConfigMode := c.Output.Mode.(type) {
+	case *config.OutputModeGithub:
+		return writer.NewGithubConfig(outputConfigMode.Version, outputConfigMode.RepoURL)
+	case *config.OutputModeDownloadFiles:
+		return writer.NewLocalConfig(c.Output.Path)
+	default:
+		return nil, fmt.Errorf("unrecognized output configuration mode: %T", outputConfigMode)
+	}
 }
