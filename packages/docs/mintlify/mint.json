@@ -59,7 +59,7 @@
       ]
     },
     {
-      "group": "Import an existing API",
+      "group": "Using OpenAPI",
       "pages": ["spec/openapi"]
     },
     {
