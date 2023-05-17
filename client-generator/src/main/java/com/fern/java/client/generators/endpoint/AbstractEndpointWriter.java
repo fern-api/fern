@@ -17,11 +17,11 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fern.ir.v12.model.environment.EnvironmentBaseUrlId;
-import com.fern.ir.v12.model.http.HttpEndpoint;
-import com.fern.ir.v12.model.http.HttpPathPart;
-import com.fern.ir.v12.model.http.HttpService;
-import com.fern.ir.v12.model.http.PathParameter;
+import com.fern.irV12.model.environment.EnvironmentBaseUrlId;
+import com.fern.irV12.model.http.HttpEndpoint;
+import com.fern.irV12.model.http.HttpPathPart;
+import com.fern.irV12.model.http.HttpService;
+import com.fern.irV12.model.http.PathParameter;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;

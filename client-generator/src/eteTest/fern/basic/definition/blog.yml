@@ -11,6 +11,7 @@ types:
         docs: The title of the blog post.
       author: Author
       content: string
+      lit: literal<"hello">
   PostType:
     enum:
       - LONG

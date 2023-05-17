@@ -16,7 +16,7 @@
 
 package com.fern.java.model;
 
-import com.fern.ir.v12.model.ir.IntermediateRepresentation;
+import com.fern.irV12.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractModelPoetClassNameFactory;
 import com.fern.java.AbstractPoetClassNameFactory;
 

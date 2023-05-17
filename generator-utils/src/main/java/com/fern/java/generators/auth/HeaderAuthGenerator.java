@@ -16,10 +16,10 @@
 
 package com.fern.java.generators.auth;
 
-import com.fern.ir.v12.model.auth.HeaderAuthScheme;
-import com.fern.ir.v12.model.types.AliasTypeDeclaration;
-import com.fern.ir.v12.model.types.PrimitiveType;
-import com.fern.ir.v12.model.types.ResolvedTypeReference;
+import com.fern.irV12.model.auth.HeaderAuthScheme;
+import com.fern.irV12.model.types.AliasTypeDeclaration;
+import com.fern.irV12.model.types.PrimitiveType;
+import com.fern.irV12.model.types.ResolvedTypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.AliasGenerator;

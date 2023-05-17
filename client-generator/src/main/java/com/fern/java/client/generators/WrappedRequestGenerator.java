@@ -16,21 +16,21 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.v12.model.commons.Availability;
-import com.fern.ir.v12.model.commons.AvailabilityStatus;
-import com.fern.ir.v12.model.commons.Name;
-import com.fern.ir.v12.model.commons.NameAndWireValue;
-import com.fern.ir.v12.model.commons.TypeId;
-import com.fern.ir.v12.model.http.FileUploadRequest;
-import com.fern.ir.v12.model.http.HttpEndpoint;
-import com.fern.ir.v12.model.http.HttpRequestBody;
-import com.fern.ir.v12.model.http.HttpRequestBodyReference;
-import com.fern.ir.v12.model.http.HttpService;
-import com.fern.ir.v12.model.http.InlinedRequestBody;
-import com.fern.ir.v12.model.http.SdkRequestWrapper;
-import com.fern.ir.v12.model.types.DeclaredTypeName;
-import com.fern.ir.v12.model.types.ObjectProperty;
-import com.fern.ir.v12.model.types.ObjectTypeDeclaration;
+import com.fern.irV12.model.commons.Availability;
+import com.fern.irV12.model.commons.AvailabilityStatus;
+import com.fern.irV12.model.commons.Name;
+import com.fern.irV12.model.commons.NameAndWireValue;
+import com.fern.irV12.model.commons.TypeId;
+import com.fern.irV12.model.http.FileUploadRequest;
+import com.fern.irV12.model.http.HttpEndpoint;
+import com.fern.irV12.model.http.HttpRequestBody;
+import com.fern.irV12.model.http.HttpRequestBodyReference;
+import com.fern.irV12.model.http.HttpService;
+import com.fern.irV12.model.http.InlinedRequestBody;
+import com.fern.irV12.model.http.SdkRequestWrapper;
+import com.fern.irV12.model.types.DeclaredTypeName;
+import com.fern.irV12.model.types.ObjectProperty;
+import com.fern.irV12.model.types.ObjectTypeDeclaration;
 import com.fern.java.InlinedRequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedWrappedRequest;

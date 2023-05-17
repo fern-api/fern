@@ -15,16 +15,16 @@
  */
 package com.fern.java.spring.generators;
 
-import com.fern.ir.v12.model.commons.ErrorId;
-import com.fern.ir.v12.model.commons.TypeId;
-import com.fern.ir.v12.model.http.EndpointName;
-import com.fern.ir.v12.model.http.FileUploadRequest;
-import com.fern.ir.v12.model.http.HttpEndpoint;
-import com.fern.ir.v12.model.http.HttpRequestBody;
-import com.fern.ir.v12.model.http.HttpRequestBodyReference;
-import com.fern.ir.v12.model.http.HttpService;
-import com.fern.ir.v12.model.http.InlinedRequestBody;
-import com.fern.ir.v12.model.http.NonStreamingResponse;
+import com.fern.irV12.model.commons.ErrorId;
+import com.fern.irV12.model.commons.TypeId;
+import com.fern.irV12.model.http.EndpointName;
+import com.fern.irV12.model.http.FileUploadRequest;
+import com.fern.irV12.model.http.HttpEndpoint;
+import com.fern.irV12.model.http.HttpRequestBody;
+import com.fern.irV12.model.http.HttpRequestBodyReference;
+import com.fern.irV12.model.http.HttpService;
+import com.fern.irV12.model.http.InlinedRequestBody;
+import com.fern.irV12.model.http.NonStreamingResponse;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;

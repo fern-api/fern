@@ -16,10 +16,10 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.ir.v12.model.auth.AuthScheme;
-import com.fern.ir.v12.model.auth.HeaderAuthScheme;
-import com.fern.ir.v12.model.commons.TypeId;
-import com.fern.ir.v12.model.commons.WithDocs;
+import com.fern.irV12.model.auth.AuthScheme;
+import com.fern.irV12.model.auth.HeaderAuthScheme;
+import com.fern.irV12.model.commons.TypeId;
+import com.fern.irV12.model.commons.WithDocs;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;

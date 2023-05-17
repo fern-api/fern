@@ -16,7 +16,7 @@
 
 package com.fern.java.client;
 
-import com.fern.ir.v12.model.environment.EnvironmentBaseUrlId;
+import com.fern.irV12.model.environment.EnvironmentBaseUrlId;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.squareup.javapoet.MethodSpec;
