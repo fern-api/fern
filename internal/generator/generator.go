@@ -79,7 +79,7 @@ func (f *fileWriter) WritePackage(apiName *types.Name) error {
 }
 
 func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
-	f.P("type ", typeDeclaration.Name.PascalCase.SafeName, " struct {")
+	f.P("type ", typeDeclaration.Name.Name.PascalCase.SafeName, " struct {")
 	switch shape := typeDeclaration.Shape.(type) {
 	case *types.ObjectTypeDeclaration:
 		for _, property := range shape.Properties {

@@ -87,7 +87,7 @@ func (t *TypeDeclaration) UnmarshalJSON(data []byte) error {
 	var raw struct {
 		Docs            string              `json:"docs,omitempty"`
 		Availability    *Availability       `json:"availability,omitempty"`
-		Name            *Name               `json:"name,omitempty"`
+		Name            *DeclaredTypeName   `json:"name,omitempty"`
 		Shape           json.RawMessage     `json:"shape,omitempty"`
 		Examples        []*ExampleType      `json:"examples,omitempty"`
 		ReferencedTypes []*DeclaredTypeName `json:"referenceTypes,omitempty"`
