@@ -1,6 +1,13 @@
-# Simple test for generating a type with primitive properties.
+# Simple test for generating a type with all of the primitive properties.
 types:
-  Movie:
+  Type:
     properties:
-      id: string
-      title: string
+      one: integer
+      two: double
+      three: string
+      four: boolean
+      five: long
+      six: datetime
+      seven: date
+      eight: uuid
+      nine: base64
