@@ -4,16 +4,20 @@ import (
 	"bytes"
 	"fmt"
 	"go/format"
+	"go/parser"
+	"go/token"
+	"strconv"
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/types"
+	"golang.org/x/tools/go/ast/astutil"
 )
 
 // fileWriter wries and formats Go files.
 type fileWriter struct {
 	filename    string
 	packageName string
-	imports     map[string]struct{}
+	imports     imports
 	buffer      *bytes.Buffer
 
 	// TODO: Do we need some sort of type registry so that we can consult other types
@@ -21,15 +25,17 @@ type fileWriter struct {
 }
 
 func newFileWriter(filename string) *fileWriter {
+	// The default set of imports used in the generated output.
+	// These imports are removed from the generated output if
+	// they aren't used.
+	imports := make(imports)
+	imports.Add("time")
+	imports.Add("github.com/gofrs/uuid")
+
 	return &fileWriter{
 		filename: filename,
 		buffer:   new(bytes.Buffer),
-
-		// The default set of imports used in the generated output.
-		imports: map[string]struct{}{
-			"time":                  struct{}{},
-			"github.com/gofrs/uuid": struct{}{},
-		},
+		imports:  imports,
 	}
 }
 
@@ -51,12 +57,12 @@ func (f *fileWriter) File() (*File, error) {
 	header := newFileWriter(f.filename)
 	header.P("package ", f.packageName)
 	header.P("import (")
-	for _, importDecl := range f.imports {
-		header.P(fmt.Sprintf("%q", importDecl))
+	for importDecl, importAlias := range f.imports {
+		header.P(fmt.Sprintf("%s %q", importAlias, importDecl))
 	}
 	header.P(")")
 
-	formatted, err := format.Source(append(header.buffer.Bytes(), f.buffer.Bytes()...))
+	formatted, err := removeUnusedImports(f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
 	if err != nil {
 		return nil, err
 	}
@@ -118,4 +124,39 @@ func primitiveToGoType(p *types.TypeReferencePrimitive) string {
 	default:
 		return "unknown"
 	}
+}
+
+// removeUnusedImports parses the buffer, interpreting it as Go code,
+// and removes all unused imports. If successful, the result is then
+// formatted.
+func removeUnusedImports(filename string, buf []byte) ([]byte, error) {
+	fset := token.NewFileSet()
+	f, err := parser.ParseFile(fset, filename, buf, parser.ParseComments)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse Go code: %v", err)
+	}
+
+	imports := make(map[string]string)
+	for _, route := range f.Imports {
+		importPath, err := strconv.Unquote(route.Path.Value)
+		if err != nil {
+			// Unreachable. If the file parsed successfully,
+			// the unquote will never fail.
+			return nil, err
+		}
+		imports[route.Name.Name] = importPath
+	}
+
+	for name, path := range imports {
+		if !astutil.UsesImport(f, path) {
+			astutil.DeleteNamedImport(fset, f, name, path)
+		}
+	}
+
+	var buffer bytes.Buffer
+	if err := format.Node(&buffer, fset, f); err != nil {
+		return nil, fmt.Errorf("failed to format Go code: %v", err)
+	}
+
+	return buffer.Bytes(), nil
 }
