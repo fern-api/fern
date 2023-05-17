@@ -138,7 +138,9 @@ types:
       set:
         type: TypeReference
         key: set
-      literal: Literal
+      literal:
+        type: Literal
+        key: literal
   MapType:
     properties:
       keyType: TypeReference
@@ -155,7 +157,9 @@ types:
       - UUID
   Literal:
     union:
-      string: string
+      string:
+        type: string
+        key: string
 
   # examples
 
