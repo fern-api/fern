@@ -45,18 +45,15 @@ func Run(foo *Foo) {
 
 ## Enums
 
-Right now, enums are represented with pointer values so that we
-can customize how they're unmarshaled via `json.Unmarshaler`. This
-is necessary so that the enum can be represented as a string on the
-wire, but represented idiomatically in Go (as a `uint`).
-
-Ideally, we'd be able to represent the enum as a non-pointer value,
-so there might be something better we can do here.
+Enums implement `json.Unmarshaler` with a pointer receiver (unlike
+their other methods, e.g. `fmt.Stringer`). This is necessary so that
+the enum can be represented as a string on the wire, but represented
+idiomatically in Go (as a `uint`).
 
 For example,
 
 ```go
-// Enum defines an enum
+// Enum defines an enum.
 type Enum uint8
 
 // All of the supported Enum values.
@@ -66,17 +63,14 @@ const (
 )
 
 // String implements fmt.Stringer.
-func (e *Enum) String() string {
-	if e == nil {
-		return ""
-	}
-	switch *e {
+func (e Enum) String() string {
+	switch e {
 	case EnumOne:
 		return "ONE"
 	case EnumTwo:
 		return "TWO"
 	default:
-		return strconv.Itoa(int(*e))
+		return strconv.Itoa(int(e))
 	}
 }
 
@@ -89,10 +83,10 @@ func (e *Enum) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "ONE":
 		value := EnumOne
-		e = &value
+		*e = value
 	case "TWO":
 		value := EnumTwo
-		e = &value
+		*e = value
 	}
 	return nil
 }
