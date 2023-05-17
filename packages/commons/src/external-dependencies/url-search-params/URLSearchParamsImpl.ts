@@ -6,10 +6,13 @@ export class URLSearchParamsImpl extends ExternalDependency implements URLSearch
     protected override PACKAGE = { name: "@ungap/url-search-params", version: "0.2.2" };
     protected override TYPES_PACKAGE = undefined;
 
-    public readonly instantiate = this.withDefaultImport("URLSearchParams", (withImport, URLSearchParams) =>
-        withImport(() => {
-            return ts.factory.createNewExpression(ts.factory.createIdentifier(URLSearchParams), undefined, []);
-        })
+    public readonly instantiate = this.withDefaultImport(
+        "URLSearchParams",
+        (withImport, URLSearchParams) =>
+            withImport(() => {
+                return ts.factory.createNewExpression(ts.factory.createIdentifier(URLSearchParams), undefined, []);
+            }),
+        { isSynthetic: true }
     );
 
     public append = ({

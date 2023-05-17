@@ -42,9 +42,20 @@ export abstract class ExternalDependency {
 
     protected withDefaultImport<T>(
         defaultImport: string,
-        run: (withImport: <F extends Function>(f: F) => F, defaultImport: string) => T
+        run: (withImport: <F extends Function>(f: F) => F, defaultImport: string) => T,
+        { isSynthetic = false }: { isSynthetic?: boolean } = {}
     ): T {
-        return this.withImport(defaultImport, { defaultImport }, run);
+        if (isSynthetic) {
+            return this.withImport(
+                defaultImport,
+                {
+                    namedImports: [{ name: "default", alias: defaultImport }],
+                },
+                run
+            );
+        } else {
+            return this.withImport(defaultImport, { defaultImport }, run);
+        }
     }
 
     private withImport<T>(

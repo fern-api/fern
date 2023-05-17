@@ -6,10 +6,13 @@ export class FormDataImpl extends ExternalDependency implements FormData {
     protected override PACKAGE = { name: "form-data", version: "4.0.0" };
     protected override TYPES_PACKAGE = undefined;
 
-    public readonly _instantiate = this.withDefaultImport("FormData", (withImport, FormData) =>
-        withImport(() => {
-            return ts.factory.createNewExpression(ts.factory.createIdentifier(FormData), undefined, undefined);
-        })
+    public readonly _instantiate = this.withDefaultImport(
+        "FormData",
+        (withImport, FormData) =>
+            withImport(() => {
+                return ts.factory.createNewExpression(ts.factory.createIdentifier(FormData), undefined, undefined);
+            }),
+        { isSynthetic: true }
     );
 
     public readonly append = ({

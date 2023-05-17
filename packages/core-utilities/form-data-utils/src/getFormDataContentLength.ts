@@ -1,4 +1,4 @@
-import FormData from "form-data";
+import { default as FormData } from "form-data";
 
 export async function getFormDataContentLength(formData: FormData): Promise<number> {
     return new Promise((resolve, reject) => {
