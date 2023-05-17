@@ -607,17 +607,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:338999755dfcf299e58f73a7c07a06a78b1897bbb7e566ded1491f47780681c893b20cfec4156c35a2ce0556ee71e0807297e907073834ba26d51458e515f3da#npm:10.1.0", {\
-          "packageLocation": "./.yarn/__virtual__/@apidevtools-swagger-parser-virtual-fa022df861/0/cache/@apidevtools-swagger-parser-npm-10.1.0-97318b3580-c7c923755b.zip/node_modules/@apidevtools/swagger-parser/",\
+        ["virtual:0723d5426c36615503b1e0c9bbcbd0b420921e1bb4d10ec5914c46fdebcd14987437e829fd6e0efc13868cf2174843e481e3a9f35379fdc05ab12949705a5457#npm:10.1.0", {\
+          "packageLocation": "./.yarn/__virtual__/@apidevtools-swagger-parser-virtual-a01a7aca61/0/cache/@apidevtools-swagger-parser-npm-10.1.0-97318b3580-c7c923755b.zip/node_modules/@apidevtools/swagger-parser/",\
           "packageDependencies": [\
-            ["@apidevtools/swagger-parser", "virtual:338999755dfcf299e58f73a7c07a06a78b1897bbb7e566ded1491f47780681c893b20cfec4156c35a2ce0556ee71e0807297e907073834ba26d51458e515f3da#npm:10.1.0"],\
+            ["@apidevtools/swagger-parser", "virtual:0723d5426c36615503b1e0c9bbcbd0b420921e1bb4d10ec5914c46fdebcd14987437e829fd6e0efc13868cf2174843e481e3a9f35379fdc05ab12949705a5457#npm:10.1.0"],\
             ["@apidevtools/json-schema-ref-parser", "npm:9.0.6"],\
             ["@apidevtools/openapi-schemas", "npm:2.1.0"],\
             ["@apidevtools/swagger-methods", "npm:3.0.2"],\
             ["@jsdevtools/ono", "npm:7.1.3"],\
             ["@types/openapi-types", null],\
             ["ajv", "npm:8.12.0"],\
-            ["ajv-draft-04", "virtual:fa022df8614bec51d8f43e6f3fd5ee80b2a4e83406af69cba4440e0cd1fd84fcca939926fa5082e2fc1b5da20ef835dee46d0bb58e115f0b422aaa5b4e36170d#npm:1.0.0"],\
+            ["ajv-draft-04", "virtual:a01a7aca611211ff82a03c5bee6185e53f837adbba8875721424e2edcb5609b9ee50acd4e9db9547f36dcfc4f7dbcea4b832ef88083a005e328ccdbc9d1cfbec#npm:1.0.0"],\
             ["call-me-maybe", "npm:1.0.2"],\
             ["openapi-types", "npm:12.1.0"]\
           ],\
@@ -8883,11 +8883,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
-            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
-            ["@fern-api/openapi-migrator", "workspace:packages/cli/openapi-migrator"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
@@ -9208,7 +9206,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/openapi-migrator/",\
           "packageDependencies": [\
             ["@fern-api/openapi-migrator", "workspace:packages/cli/openapi-migrator"],\
-            ["@apidevtools/swagger-parser", "virtual:338999755dfcf299e58f73a7c07a06a78b1897bbb7e566ded1491f47780681c893b20cfec4156c35a2ce0556ee71e0807297e907073834ba26d51458e515f3da#npm:10.1.0"],\
+            ["@apidevtools/swagger-parser", "virtual:0723d5426c36615503b1e0c9bbcbd0b420921e1bb4d10ec5914c46fdebcd14987437e829fd6e0efc13868cf2174843e481e3a9f35379fdc05ab12949705a5457#npm:10.1.0"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
@@ -9236,7 +9234,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/openapi-parser/",\
           "packageDependencies": [\
             ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
-            ["@apidevtools/swagger-parser", "virtual:338999755dfcf299e58f73a7c07a06a78b1897bbb7e566ded1491f47780681c893b20cfec4156c35a2ce0556ee71e0807297e907073834ba26d51458e515f3da#npm:10.1.0"],\
+            ["@apidevtools/swagger-parser", "virtual:0723d5426c36615503b1e0c9bbcbd0b420921e1bb4d10ec5914c46fdebcd14987437e829fd6e0efc13868cf2174843e481e3a9f35379fdc05ab12949705a5457#npm:10.1.0"],\
             ["@babel/core", "npm:7.19.1"],\
             ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
@@ -13819,10 +13817,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:fa022df8614bec51d8f43e6f3fd5ee80b2a4e83406af69cba4440e0cd1fd84fcca939926fa5082e2fc1b5da20ef835dee46d0bb58e115f0b422aaa5b4e36170d#npm:1.0.0", {\
-          "packageLocation": "./.yarn/__virtual__/ajv-draft-04-virtual-e52ef9386e/0/cache/ajv-draft-04-npm-1.0.0-6fc962dbab-3f11fa0e7f.zip/node_modules/ajv-draft-04/",\
+        ["virtual:a01a7aca611211ff82a03c5bee6185e53f837adbba8875721424e2edcb5609b9ee50acd4e9db9547f36dcfc4f7dbcea4b832ef88083a005e328ccdbc9d1cfbec#npm:1.0.0", {\
+          "packageLocation": "./.yarn/__virtual__/ajv-draft-04-virtual-e3163d7bf2/0/cache/ajv-draft-04-npm-1.0.0-6fc962dbab-3f11fa0e7f.zip/node_modules/ajv-draft-04/",\
           "packageDependencies": [\
-            ["ajv-draft-04", "virtual:fa022df8614bec51d8f43e6f3fd5ee80b2a4e83406af69cba4440e0cd1fd84fcca939926fa5082e2fc1b5da20ef835dee46d0bb58e115f0b422aaa5b4e36170d#npm:1.0.0"],\
+            ["ajv-draft-04", "virtual:a01a7aca611211ff82a03c5bee6185e53f837adbba8875721424e2edcb5609b9ee50acd4e9db9547f36dcfc4f7dbcea4b832ef88083a005e328ccdbc9d1cfbec#npm:1.0.0"],\
             ["@types/ajv", null],\
             ["ajv", "npm:8.12.0"]\
           ],\
