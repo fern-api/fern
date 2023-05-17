@@ -197,6 +197,51 @@ type TypeReferenceContainer struct {
 
 func (t *TypeReferenceContainer) isTypeReference() {}
 
+// UnmarshalJSON implements json.Unmarshaler.
+func (t *TypeReferenceContainer) UnmarshalJSON(data []byte) error {
+	var raw struct {
+		Type      string          `json:"_type,omitempty"`
+		Container json.RawMessage `json:"container,omitempty"`
+	}
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+
+	// Set all of the simple, non-union fields.
+	t.Type = raw.Type
+
+	// Then unmarshal each union based on its type.
+	// This needs to take the discriminant into
+	// consideration.
+	var container struct {
+		Type string `json:"_type,omitempty"`
+	}
+	if err := json.Unmarshal(raw.Container, &container); err != nil {
+		return err
+	}
+	if container.Type != "" {
+		switch container.Type {
+		case "list":
+			t.Container = new(ContainerTypeList)
+		case "map":
+			t.Container = new(ContainerTypeMap)
+		case "optional":
+			t.Container = new(ContainerTypeOptional)
+		case "set":
+			t.Container = new(ContainerTypeSet)
+		case "literal":
+			t.Container = new(ContainerTypeLiteral)
+		default:
+			return fmt.Errorf("unrecognized %T type: %v", t.Container, container.Type)
+		}
+		if err := json.Unmarshal(raw.Container, t.Container); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContainerType is a union of container types (e.g. list, map etc).
 type ContainerType interface {
 	isContainerType()

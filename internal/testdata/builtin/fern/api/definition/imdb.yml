@@ -16,4 +16,3 @@ types:
       twelve: map<string, boolean>
       thirteen: optional<long>
       fourteen: unknown
-      fifteen: "literal"
