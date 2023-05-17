@@ -478,6 +478,19 @@ func (c *ContainerTypeLiteral) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Literal is a literal value.
+type Literal interface {
+	isLiteral()
+}
+
+// LiteralString is a string literal.
+type LiteralString struct {
+	Type   string `json:"type,omitempty"`
+	String string `json:"string,omitempty"`
+}
+
+func (l *LiteralString) isLiteral() {}
+
 // TypeReferencePrimitive is the primitive TypeReference.
 type TypeReferencePrimitive struct {
 	Type      string        `json:"_type,omitempty"`
