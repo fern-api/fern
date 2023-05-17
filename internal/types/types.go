@@ -107,7 +107,7 @@ func (t *TypeDeclaration) UnmarshalJSON(data []byte) error {
 	// This needs to take the discriminant into
 	// consideration.
 	var shape struct {
-		Type string `json:"type,omitempty"`
+		Type string `json:"_type,omitempty"`
 	}
 	if err := json.Unmarshal(raw.Shape, &shape); err != nil {
 		return err
