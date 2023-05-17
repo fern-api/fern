@@ -70,11 +70,11 @@ func (o *ObjectProperty) UnmarshalJSON(data []byte) error {
 
 // TypeDeclaration declares a generic type.
 type TypeDeclaration struct {
-	Docs         string         `json:"docs,omitempty"`
-	Availability *Availability  `json:"availability,omitempty"`
-	Name         *Name          `json:"name,omitempty"`
-	Shape        Type           `json:"shape,omitempty"`
-	Examples     []*ExampleType `json:"examples,omitempty"`
+	Docs         string            `json:"docs,omitempty"`
+	Availability *Availability     `json:"availability,omitempty"`
+	Name         *DeclaredTypeName `json:"name,omitempty"`
+	Shape        Type              `json:"shape,omitempty"`
+	Examples     []*ExampleType    `json:"examples,omitempty"`
 
 	// TODO: This is actually represented as a Fern set, but this is problematic
 	// w.r.t. a complex struct as a map key. Verify the wire representation to
