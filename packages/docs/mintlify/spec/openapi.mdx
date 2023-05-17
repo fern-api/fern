@@ -3,7 +3,14 @@ title: "OpenAPI"
 description: "Already have an OpenAPI? No problem."
 ---
 
-To use an OpenAPI spec with Fern, add it to a nested `openapi/` folder.
+To use an OpenAPI spec, run the command below.
+
+```bash
+npm install -g fern-api
+fern init --openapi <path to openapi>
+```
+
+Fern will generate the following directory with your OpenAPI spec inside of it.
 
 ```bash
 fern/
@@ -11,18 +18,9 @@ fern/
 └─ api/
   ├─ generators.yml
   └─ openapi/
-    └─ openapi.json # <--- also supports openapi.yml
+    └─ openapi.json # <--- your openapi file
 ```
 
 Run `fern check` to validate the OpenAPI spec.
 
 If there are no errors, you can run [fern generate](../compiler/generate).
-
-## Convert OpenAPI to a Fern Definition
-
-If you'd rather maintain a Fern Definition instead of OpenAPI, then you can run a one-time conversion.
-
-```bash
-npm install -g fern-api
-fern init --openapi <path to openapi>
-```
