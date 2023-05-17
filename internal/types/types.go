@@ -178,8 +178,8 @@ type TypeReference interface {
 
 // TypeReferencePrimitive is the primitive TypeReference.
 type TypeReferencePrimitive struct {
-	Type      string         `json:"_type,omitempty"`
-	Primitive *PrimitiveType `json:"primitive,omitempty"`
+	Type      string        `json:"_type,omitempty"`
+	Primitive PrimitiveType `json:"primitive,omitempty"`
 }
 
 func (t *TypeReferencePrimitive) isTypeReference() {}
@@ -201,11 +201,8 @@ const (
 )
 
 // String implements fmt.Stringer.
-func (p *PrimitiveType) String() string {
-	if p == nil {
-		return ""
-	}
-	switch *p {
+func (p PrimitiveType) String() string {
+	switch p {
 	case PrimitiveTypeInteger:
 		return "INTEGER"
 	case PrimitiveTypeDouble:
@@ -225,8 +222,13 @@ func (p *PrimitiveType) String() string {
 	case PrimitiveTypeBase64:
 		return "BASE_64"
 	default:
-		return strconv.Itoa(int(*p))
+		return strconv.Itoa(int(p))
 	}
+}
+
+// MarshalJSON implements json.Marshaler.
+func (p PrimitiveType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", p.String())), nil
 }
 
 // UnmarshalJSON implements json.Unmarshaler.
@@ -238,31 +240,31 @@ func (p *PrimitiveType) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "INTEGER":
 		value := PrimitiveTypeInteger
-		p = &value
+		*p = value
 	case "DOUBLE":
 		value := PrimitiveTypeDouble
-		p = &value
+		*p = value
 	case "STRING":
 		value := PrimitiveTypeString
-		p = &value
+		*p = value
 	case "BOOLEAN":
 		value := PrimitiveTypeBoolean
-		p = &value
+		*p = value
 	case "LONG":
 		value := PrimitiveTypeLong
-		p = &value
+		*p = value
 	case "DATE_TIME":
 		value := PrimitiveTypeDateTime
-		p = &value
+		*p = value
 	case "DATE":
 		value := PrimitiveTypeDate
-		p = &value
+		*p = value
 	case "UUID":
 		value := PrimitiveTypeUUID
-		p = &value
+		*p = value
 	case "BASE_64":
 		value := PrimitiveTypeBase64
-		p = &value
+		*p = value
 	}
 	return nil
 }

@@ -2,6 +2,7 @@ package types
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 )
 
@@ -10,8 +11,8 @@ type TypeID string
 
 // Availability defines an a status and a message.
 type Availability struct {
-	Status  *AvailabilityStatus `json:"status,omitempty"`
-	Message string              `json:"message,omitempty"`
+	Status  AvailabilityStatus `json:"status,omitempty"`
+	Message string             `json:"message,omitempty"`
 }
 
 // AvailabilityStatus represents an availability status.
@@ -26,11 +27,8 @@ const (
 )
 
 // String implements fmt.Stringer.
-func (a *AvailabilityStatus) String() string {
-	if a == nil {
-		return ""
-	}
-	switch *a {
+func (a AvailabilityStatus) String() string {
+	switch a {
 	case AvailabilityStatusInDevelopment:
 		return "IN_DEVELOPMENT"
 	case AvailabilityStatusPreRelease:
@@ -40,8 +38,13 @@ func (a *AvailabilityStatus) String() string {
 	case AvailabilityStatusDeprecated:
 		return "DEPRECATED"
 	default:
-		return strconv.Itoa(int(*a))
+		return strconv.Itoa(int(a))
 	}
+}
+
+// MarshalJSON implements json.Marshaler.
+func (a AvailabilityStatus) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", a.String())), nil
 }
 
 // UnmarshalJSON implements json.Unmarshaler.
@@ -53,16 +56,16 @@ func (a *AvailabilityStatus) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "IN_DEVELOPMENT":
 		value := AvailabilityStatusInDevelopment
-		a = &value
+		*a = value
 	case "PRE_RELEASE":
 		value := AvailabilityStatusPreRelease
-		a = &value
+		*a = value
 	case "GENERAL_AVAILABILITY":
 		value := AvailabilityStatusGeneralAvailability
-		a = &value
+		*a = value
 	case "DEPRECATED":
 		value := AvailabilityStatusDeprecated
-		a = &value
+		*a = value
 	}
 	return nil
 }

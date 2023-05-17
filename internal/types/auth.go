@@ -2,6 +2,7 @@ package types
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 )
 
@@ -15,18 +16,20 @@ const (
 )
 
 // String implements fmt.Stringer.
-func (a *AuthRequirement) String() string {
-	if a == nil {
-		return ""
-	}
-	switch *a {
+func (a AuthRequirement) String() string {
+	switch a {
 	case AuthRequirementAll:
 		return "ALL"
 	case AuthRequirementAny:
 		return "ANY"
 	default:
-		return strconv.Itoa(int(*a))
+		return strconv.Itoa(int(a))
 	}
+}
+
+// MarshalJSON implements json.Marshaler.
+func (a AuthRequirement) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", a.String())), nil
 }
 
 // UnmarshalJSON implements json.Unmarshaler.
@@ -38,19 +41,19 @@ func (a *AuthRequirement) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "ALL":
 		value := AuthRequirementAll
-		a = &value
+		*a = value
 	case "ANY":
 		value := AuthRequirementAny
-		a = &value
+		*a = value
 	}
 	return nil
 }
 
 // APIAuth represents the API auth configuration.
 type APIAuth struct {
-	Docs        string           `json:"docs,omitempty"`
-	Requirement *AuthRequirement `json:"requirement,omitempty"`
-	Schemes     []AuthScheme     `json:"schemes,omitempty"`
+	Docs        string          `json:"docs,omitempty"`
+	Requirement AuthRequirement `json:"requirement,omitempty"`
+	Schemes     []AuthScheme    `json:"schemes,omitempty"`
 }
 
 // AuthScheme represents a union of auth schemes.
