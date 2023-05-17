@@ -37,7 +37,7 @@ func (g *Generator) Generate() ([]*File, error) {
 }
 
 func (g *Generator) generate(ir *types.IntermediateRepresentation) ([]*File, error) {
-	writer := newFileWriter(fmt.Sprintf("%s.go", ir.APIName.SnakeCase))
+	writer := newFileWriter(fmt.Sprintf("%s.go", ir.APIName.SnakeCase.UnsafeName))
 	if err := writer.WritePackage(ir.APIName); err != nil {
 		return nil, err
 	}
@@ -79,7 +79,7 @@ func (f *fileWriter) WritePackage(apiName *types.Name) error {
 }
 
 func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
-	f.P("type ", typeDeclaration.Name.Name.PascalCase.SafeName, " struct {")
+	f.P("type ", typeDeclaration.Name.Name.PascalCase.UnsafeName, " struct {")
 	switch shape := typeDeclaration.Shape.(type) {
 	case *types.ObjectTypeDeclaration:
 		for _, property := range shape.Properties {
@@ -89,7 +89,7 @@ func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
 				// TODO: This is a hack as-is; it only works for a couple of the primitive types.
 				typeIdentifier = strings.ToLower(valueType.Primitive.String())
 			}
-			f.P(property.Name.Name.PascalCase.SafeName, " ", typeIdentifier)
+			f.P(property.Name.Name.PascalCase.UnsafeName, " ", typeIdentifier)
 		}
 	}
 	f.P("}")
