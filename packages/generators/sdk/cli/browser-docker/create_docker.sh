@@ -3,7 +3,7 @@
 set -e
 
 TAG="$1"
-DOCKER_NAME=fernapi/fern-typescript-sdk:"$TAG"
+DOCKER_NAME=fernapi/fern-typescript-browser-sdk:"$TAG"
 
 DOCKER_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; )";
 ROOT_DIR="$DOCKER_DIR/../../../../.."
