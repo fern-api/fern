@@ -5,7 +5,7 @@ export function getMinimumVersionForGenerator({ generatorName }: { generatorName
     const { migrations } = getIntermediateRepresentationMigrator();
 
     for (const migration of migrations) {
-        const version = migration.minGeneratorVersionsToExclude[generatorName as GeneratorName];
+        const version = migration.firstGeneratorVersionToConsumeNewIR[generatorName as GeneratorName];
         if (typeof version === "string") {
             return version;
         }

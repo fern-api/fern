@@ -64,7 +64,7 @@ groups:
   # on every commit into the main branch, we generate SDKs for internal use
   internal:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: 0.0.249
         output:
           location: npm
@@ -80,7 +80,7 @@ groups:
   # when we release, we publish our external-facing SDKs
   external:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: 0.0.249
         github:
           repository: my-org/node-sdk
@@ -114,13 +114,13 @@ generator.
 
 ## Name
 
-Each generator has a unique name, e.g. `fernapi/fern-typescript-sdk`.
+Each generator has a unique name, e.g. `fernapi/fern-typescript-node-sdk`.
 
 ```yaml generators.yml
 groups:
   external:
     generators:
-      - name: fernapi/fern-typescript-sdk # <---
+      - name: fernapi/fern-typescript-node-sdk # <---
 ```
 
 ## Version
@@ -132,7 +132,7 @@ ensure consistent builds.
 groups:
   external:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: 0.0.249 # <---
 ```
 
@@ -170,7 +170,7 @@ generated code directly to npm.
 groups:
   external:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: 0.0.249
         output: # <---
           location: npm
@@ -185,7 +185,7 @@ override the registry using the `url` key.
  groups:
    external:
      generators:
-       - name: fernapi/fern-typescript-sdk
+       - name: fernapi/fern-typescript-node-sdk
          version: 0.0.249
          output:
            location: npm
@@ -314,7 +314,7 @@ repo and push to the `main` branch.
 groups:
   external:
     generators:
-      - name: fernapi/fern-typescript-sdk
+      - name: fernapi/fern-typescript-node-sdk
         version: 0.0.249
         github: # <---
           repository: my-org/node-sdk
@@ -332,7 +332,7 @@ For an example, check out [Flipt's GitHub workflow](https://github.com/flipt-io/
  groups:
    external:
      generators:
-       - name: fernapi/fern-typescript-sdk
+       - name: fernapi/fern-typescript-node-sdk
          version: 0.0.249
 +        output:
 +          location: npm
