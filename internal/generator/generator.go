@@ -1,10 +1,7 @@
 package generator
 
 import (
-	"bytes"
 	"fmt"
-	"go/format"
-	"strings"
 
 	"github.com/fern-api/fern-go/internal/types"
 )
@@ -38,7 +35,7 @@ func (g *Generator) Generate() ([]*File, error) {
 
 func (g *Generator) generate(ir *types.IntermediateRepresentation) ([]*File, error) {
 	writer := newFileWriter(fmt.Sprintf("%s.go", ir.APIName.SnakeCase.UnsafeName))
-	if err := writer.WritePackage(ir.APIName); err != nil {
+	if err := writer.AddPackage(ir.APIName); err != nil {
 		return nil, err
 	}
 	for _, irType := range ir.Types {
@@ -54,64 +51,4 @@ func (g *Generator) generate(ir *types.IntermediateRepresentation) ([]*File, err
 		return nil, err
 	}
 	return []*File{file}, nil
-}
-
-func newFileWriter(filename string) *fileWriter {
-	return &fileWriter{
-		filename: filename,
-		buffer:   new(bytes.Buffer),
-		imports:  make(map[string]struct{}),
-	}
-}
-
-// fileWriter wries and formats Go files.
-type fileWriter struct {
-	filename string
-	buffer   *bytes.Buffer
-
-	// TODO: Placeholder for now - we'll want to use something a little more sophisticated.
-	imports map[string]struct{}
-}
-
-func (f *fileWriter) WritePackage(apiName *types.Name) error {
-	f.P("package ", strings.ToLower(apiName.CamelCase.SafeName))
-	return nil
-}
-
-func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
-	f.P("type ", typeDeclaration.Name.Name.PascalCase.UnsafeName, " struct {")
-	switch shape := typeDeclaration.Shape.(type) {
-	case *types.ObjectTypeDeclaration:
-		for _, property := range shape.Properties {
-			var typeIdentifier string
-			switch valueType := property.ValueType.(type) {
-			case *types.TypeReferencePrimitive:
-				// TODO: This is a hack as-is; it only works for a couple of the primitive types.
-				typeIdentifier = strings.ToLower(valueType.Primitive.String())
-			}
-			f.P(property.Name.Name.PascalCase.UnsafeName, " ", typeIdentifier)
-		}
-	}
-	f.P("}")
-	return nil
-}
-
-// P writes the given element into a single line, concluding with a newline.
-func (f *fileWriter) P(elements ...any) {
-	for _, element := range elements {
-		fmt.Fprint(f.buffer, element)
-	}
-	fmt.Fprintln(f.buffer)
-}
-
-// Finish formats and writes the content stored in the writer's buffer into a *File.
-func (f *fileWriter) File() (*File, error) {
-	formatted, err := format.Source(f.buffer.Bytes())
-	if err != nil {
-		return nil, err
-	}
-	return &File{
-		Path:    f.filename,
-		Content: formatted,
-	}, nil
 }
