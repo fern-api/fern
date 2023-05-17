@@ -84,19 +84,83 @@ func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
 	switch shape := typeDeclaration.Shape.(type) {
 	case *types.ObjectTypeDeclaration:
 		for _, property := range shape.Properties {
-			f.writeProperty(property)
+			f.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
 		}
 	}
 	f.P("}")
 	return nil
 }
 
-func (f *fileWriter) writeProperty(property *types.ObjectProperty) error {
-	switch valueType := property.ValueType.(type) {
+// typeReferenceToGoType maps the given type reference into its Go-equivalent.
+// TODO: Handle the case where this type is defined in another package.
+func typeReferenceToGoType(typeReference types.TypeReference) string {
+	switch value := typeReference.(type) {
+	case *types.TypeReferenceContainer:
+		return containerTypeToGoType(value.Container)
+	case *types.TypeReferenceNamed:
+		return value.Named.Name.PascalCase.UnsafeName
 	case *types.TypeReferencePrimitive:
-		f.P(property.Name.Name.PascalCase.UnsafeName, " ", primitiveToGoType(valueType), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
+		return primitiveToGoType(value)
+	case *types.TypeReferenceUnknown:
+		return unknownToGoType(value)
 	}
-	return nil
+	return ""
+}
+
+// containerTypeToGoType maps the given container type into its Go-equivalent.
+func containerTypeToGoType(containerType types.ContainerType) string {
+	switch value := containerType.(type) {
+	case *types.ContainerTypeList:
+		return containerTypeListToGoType(value)
+	case *types.ContainerTypeMap:
+		return containerTypeMapToGoType(value)
+	case *types.ContainerTypeOptional:
+		return containerTypeOptionalToGoType(value)
+	case *types.ContainerTypeSet:
+		return containerTypeSetToGoType(value)
+	case *types.ContainerTypeLiteral:
+		return containerTypeLiteralToGoType(value)
+	}
+	return ""
+}
+
+// containerTypeListToGoType maps the given list into its Go-equivalent.
+func containerTypeListToGoType(containerTypeList *types.ContainerTypeList) string {
+	return fmt.Sprintf("[]%s", typeReferenceToGoType(containerTypeList.List))
+}
+
+// containerTypeMapToGoType maps the given map into its Go-equivalent.
+func containerTypeMapToGoType(containerTypeMap *types.ContainerTypeMap) string {
+	return fmt.Sprintf("map[%s]%s", typeReferenceToGoType(containerTypeMap.KeyType), typeReferenceToGoType(containerTypeMap.ValueType))
+}
+
+// containerTypeOptionalToGoType maps the given optional into its Go-equivalent.
+func containerTypeOptionalToGoType(containerTypeMap *types.ContainerTypeOptional) string {
+	return fmt.Sprintf("*%s", typeReferenceToGoType(containerTypeMap.Optional))
+}
+
+// containerTypeSetToGoType maps the given set into its Go-equivalent.
+func containerTypeSetToGoType(containerTypeSet *types.ContainerTypeSet) string {
+	return fmt.Sprintf("[]%s", typeReferenceToGoType(containerTypeSet.Set))
+}
+
+// containerTypeLiteralToGoType maps the given literal into its Go-equivalent.
+func containerTypeLiteralToGoType(containerTypeLiteral *types.ContainerTypeLiteral) string {
+	return literalToGoType(containerTypeLiteral.Literal)
+}
+
+// literalToGoType maps the given literal into its Go-equivalent.
+func literalToGoType(literal types.Literal) string {
+	switch value := literal.(type) {
+	case *types.LiteralString:
+		return value.String
+	}
+	return ""
+}
+
+// unknownToGoType maps the given unknown into its Go-equivalent.
+func unknownToGoType(_ *types.TypeReferenceUnknown) string {
+	return "any"
 }
 
 // primitiveToGoType maps Fern's primitive types to their Go-equivalent.

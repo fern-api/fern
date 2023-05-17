@@ -300,27 +300,26 @@ func (c *ContainerTypeList) UnmarshalJSON(data []byte) error {
 
 // ContainerTypeMap implements the map ContainerType.
 type ContainerTypeMap struct {
-	Type string   `json:"_type,omitempty"`
-	Map  *MapType `json:"map,omitempty"`
-}
-
-func (c *ContainerTypeMap) isContainerType() {}
-
-// MapType is a type with key, value pairs.
-type MapType struct {
+	Type      string        `json:"_type,omitempty"`
 	KeyType   TypeReference `json:"keyType,omitempty"`
 	ValueType TypeReference `json:"valueType,omitempty"`
 }
 
+func (c *ContainerTypeMap) isContainerType() {}
+
 // UnmarshalJSON implements json.Unmarshaler.
-func (m *MapType) UnmarshalJSON(data []byte) error {
+func (c *ContainerTypeMap) UnmarshalJSON(data []byte) error {
 	var raw struct {
+		Type      string          `json:"_type,omitempty"`
 		KeyType   json.RawMessage `json:"keyType,omitempty"`
 		ValueType json.RawMessage `json:"valueType,omitempty"`
 	}
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
 	}
+
+	// Set all of the simple, non-union fields.
+	c.Type = raw.Type
 
 	// Then unmarshal each union based on its type.
 	// This needs to take the discriminant into
@@ -334,17 +333,17 @@ func (m *MapType) UnmarshalJSON(data []byte) error {
 	if keyType.Type != "" {
 		switch keyType.Type {
 		case "container":
-			m.KeyType = new(TypeReferenceContainer)
+			c.KeyType = new(TypeReferenceContainer)
 		case "named":
-			m.KeyType = new(TypeReferenceNamed)
+			c.KeyType = new(TypeReferenceNamed)
 		case "primitive":
-			m.KeyType = new(TypeReferencePrimitive)
+			c.KeyType = new(TypeReferencePrimitive)
 		case "unknown":
-			m.KeyType = new(TypeReferenceUnknown)
+			c.KeyType = new(TypeReferenceUnknown)
 		default:
-			return fmt.Errorf("unrecognized %T type: %v", m.KeyType, keyType.Type)
+			return fmt.Errorf("unrecognized %T type: %v", c.KeyType, keyType.Type)
 		}
-		if err := json.Unmarshal(raw.KeyType, m.KeyType); err != nil {
+		if err := json.Unmarshal(raw.KeyType, c.KeyType); err != nil {
 			return err
 		}
 	}
@@ -358,17 +357,17 @@ func (m *MapType) UnmarshalJSON(data []byte) error {
 	if valueType.Type != "" {
 		switch valueType.Type {
 		case "container":
-			m.ValueType = new(TypeReferenceContainer)
+			c.ValueType = new(TypeReferenceContainer)
 		case "named":
-			m.ValueType = new(TypeReferenceNamed)
+			c.ValueType = new(TypeReferenceNamed)
 		case "primitive":
-			m.ValueType = new(TypeReferencePrimitive)
+			c.ValueType = new(TypeReferencePrimitive)
 		case "unknown":
-			m.ValueType = new(TypeReferenceUnknown)
+			c.ValueType = new(TypeReferenceUnknown)
 		default:
-			return fmt.Errorf("unrecognized %T type: %v", m.ValueType, valueType.Type)
+			return fmt.Errorf("unrecognized %T type: %v", c.ValueType, valueType.Type)
 		}
-		if err := json.Unmarshal(raw.ValueType, m.ValueType); err != nil {
+		if err := json.Unmarshal(raw.ValueType, c.ValueType); err != nil {
 			return err
 		}
 	}
