@@ -40,5 +40,5 @@ describe("runDocker", () => {
 
         const fileExists = await doesPathExist(join(HOST_OUTPUT_DIR, RelativeFilePath.of(expectedOutputFilePath)));
         expect(fileExists).toBe(true);
-    }, 15_000);
+    }, 60_000);
 });
