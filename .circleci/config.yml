@@ -112,14 +112,14 @@ jobs:
           name: Publish fern-typescript-node-sdk Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
-            yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion "$projectVersion"
+            yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion:node "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker push fernapi/fern-typescript-node-sdk:"$projectVersion"
       - run:
           name: Publish fern-typescript-browser-sdk Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
-            yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion "$projectVersion"
+            yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker push fernapi/fern-typescript-browser-sdk:"$projectVersion"
       - run:
