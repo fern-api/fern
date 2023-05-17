@@ -5,6 +5,7 @@
     "@babel/core",
     "@babel/preset-env",
     "@babel/preset-typescript",
+    "webpack",
     "webpack-cli",
     "umd-compat-loader",
     "@ts-morph/common",

@@ -83,7 +83,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         if (nonBodyKeys.length === 0) {
             return referenceToRequestWrapper;
         } else {
-            return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Omit"), [
+            return ts.factory.createTypeReferenceNode("Omit", [
                 referenceToRequestWrapper,
                 ts.factory.createUnionTypeNode(
                     nonBodyKeys.map((nonBodyKey) =>

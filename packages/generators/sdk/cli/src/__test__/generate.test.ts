@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
+import { JavaScriptRuntime } from "@fern-typescript/commons";
 import decompress from "decompress";
 import execa from "execa";
 import { lstat, rm, symlink, writeFile } from "fs/promises";
@@ -16,6 +17,7 @@ interface FixtureInfo {
     orgName: string;
     outputMode: "github" | "publish" | "local";
     apiName: string;
+    targetRuntime: JavaScriptRuntime;
     customConfig?: SdkCustomConfigSchema;
     only?: boolean;
 }
@@ -26,6 +28,7 @@ const FIXTURES: FixtureInfo[] = [
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "streaming",
@@ -37,6 +40,7 @@ const FIXTURES: FixtureInfo[] = [
             allowCustomFetcher: true,
             timeoutInSeconds: 2,
         },
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "trace",
@@ -51,6 +55,7 @@ const FIXTURES: FixtureInfo[] = [
             includeOtherInUnionTypes: true,
             timeoutInSeconds: "infinity",
         },
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "reserved-keywords",
@@ -62,6 +67,7 @@ const FIXTURES: FixtureInfo[] = [
             includeUtilsOnUnionMembers: true,
             includeOtherInUnionTypes: true,
         },
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "nursery-status-code",
@@ -72,6 +78,7 @@ const FIXTURES: FixtureInfo[] = [
             private: true,
             allowCustomFetcher: true,
         },
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "nursery-property-discriminant",
@@ -83,6 +90,7 @@ const FIXTURES: FixtureInfo[] = [
             includeUtilsOnUnionMembers: true,
             includeOtherInUnionTypes: true,
         },
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "fiddle",
@@ -97,6 +105,7 @@ const FIXTURES: FixtureInfo[] = [
             includeUtilsOnUnionMembers: true,
             includeOtherInUnionTypes: true,
         },
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "undiscriminated-unions",
@@ -106,42 +115,63 @@ const FIXTURES: FixtureInfo[] = [
         customConfig: {
             skipResponseValidation: true,
         },
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "file-upload",
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
+    },
+    {
+        path: "file-upload-browser",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+        targetRuntime: JavaScriptRuntime.BROWSER,
     },
     {
         path: "root-base-path",
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "variables",
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "literal-headers",
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
     },
     {
         path: "file-download",
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
+    },
+    {
+        path: "file-download-browser",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+        targetRuntime: JavaScriptRuntime.BROWSER,
     },
     {
         path: "basic-auth",
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
     },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
@@ -183,7 +213,7 @@ describe("runGenerator", () => {
                     cwd: FIXTURES_PATH,
                 });
 
-                await new SdkGeneratorCli().run(configJsonPath);
+                await new SdkGeneratorCli({ targetRuntime: fixture.targetRuntime }).run(configJsonPath);
 
                 const unzippedDirectory = await getDirectoryForSnapshot(AbsoluteFilePath.of(outputPath));
 

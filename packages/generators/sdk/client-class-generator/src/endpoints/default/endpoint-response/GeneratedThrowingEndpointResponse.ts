@@ -1,16 +1,17 @@
-import { HttpEndpoint, JsonResponse, ResponseError } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, ResponseError, SdkResponse } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { GeneratedEndpointResponse } from "./GeneratedEndpointResponse";
+import { getSuccessReturnType } from "./getSuccessReturnType";
 
 export declare namespace GeneratedThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
         endpoint: HttpEndpoint;
-        response: JsonResponse | undefined;
+        response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
     }
@@ -21,7 +22,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
-    private response: JsonResponse | undefined;
+    private response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
 
@@ -50,9 +51,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     }
 
     public getReturnType(context: SdkClientClassContext): ts.TypeNode {
-        return this.response != null
-            ? context.type.getReferenceToType(this.response.responseBodyType).typeNode
-            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
+        return getSuccessReturnType(this.response, context);
     }
 
     public getReturnResponseStatements(context: SdkClientClassContext): ts.Statement[] {

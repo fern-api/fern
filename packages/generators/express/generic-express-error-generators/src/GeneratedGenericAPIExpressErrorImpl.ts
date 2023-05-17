@@ -63,7 +63,7 @@ export class GeneratedGenericAPIExpressErrorImpl
                 },
             ],
             returnType: getTextOfTsNode(
-                ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                ts.factory.createTypeReferenceNode("Promise", [
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
                 ])
             ),

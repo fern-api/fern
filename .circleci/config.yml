@@ -91,15 +91,14 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Build fern-typescript-sdk Docker
-          command: |
-            projectVersion=$(./scripts/git-version.sh)
-            yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion "$projectVersion"
+          name: Build fern-typescript-node-sdk Docker
+          command: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
+      - run:
+          name: Build fern-typescript-browser-sdk Docker
+          command: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:browser
       - run:
           name: Build fern-typescript-express Docker
-          command: |
-            projectVersion=$(./scripts/git-version.sh)
-            yarn workspace @fern-typescript/express-generator-cli dockerTagVersion "$projectVersion"
+          command: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
 
   publish-dockers:
     machine:
@@ -110,12 +109,19 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Publish fern-typescript-sdk Docker
+          name: Publish fern-typescript-node-sdk Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
             yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion "$projectVersion"
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker push fernapi/fern-typescript-sdk:"$projectVersion"
+            docker push fernapi/fern-typescript-node-sdk:"$projectVersion"
+      - run:
+          name: Publish fern-typescript-browser-sdk Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion "$projectVersion"
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker push fernapi/fern-typescript-browser-sdk:"$projectVersion"
       - run:
           name: Publish fern-typescript-express Docker
           command: |

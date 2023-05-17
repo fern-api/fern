@@ -1,25 +1,28 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AuthScheme, BasicAuthScheme, BearerAuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
-import {
-    HttpEndpoint,
-    HttpHeader,
-    JsonResponse,
-    PathParameter,
-    SdkResponse,
-    StreamingResponse,
-} from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpHeader, PathParameter, SdkResponse, StreamingResponse } from "@fern-fern/ir-model/http";
 import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
 import { VariableDeclaration, VariableId } from "@fern-fern/ir-model/variables";
-import { getTextOfTsNode, maybeAddDocs, NpmPackage, PackageId } from "@fern-typescript/commons";
+import {
+    getTextOfTsNode,
+    JavaScriptRuntime,
+    maybeAddDocs,
+    NpmPackage,
+    PackageId,
+    visitJavaScriptRuntime,
+} from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
+import { GeneratedNonThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse";
+import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse";
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
+import { GeneratedBlobDownloadEndpointImplementation } from "./endpoints/GeneratedBlobDownloadEndpointImplementation";
 import { GeneratedEndpointImplementation } from "./endpoints/GeneratedEndpointImplementation";
-import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedMaybeStreamingEndpointImplementation } from "./endpoints/GeneratedMaybeStreamingEndpointImplementation";
+import { GeneratedReadableDownloadEndpointImplementation } from "./endpoints/GeneratedReadableDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
 import { getNonVariablePathParameters } from "./endpoints/utils/getNonVariablePathParameters";
 import { getParameterNameForPathParameter } from "./endpoints/utils/getParameterNameForPathParameter";
@@ -40,6 +43,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         requireDefaultEnvironment: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
+        targetRuntime: JavaScriptRuntime;
     }
 }
 
@@ -64,6 +68,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private packageResolver: PackageResolver;
     private requireDefaultEnvironment: boolean;
     private npmPackage: NpmPackage | undefined;
+    private targetRuntime: JavaScriptRuntime;
 
     constructor({
         intermediateRepresentation,
@@ -77,6 +82,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         requireDefaultEnvironment,
         timeoutInSeconds,
         npmPackage,
+        targetRuntime,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -84,6 +90,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.packageResolver = packageResolver;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.npmPackage = npmPackage;
+        this.targetRuntime = targetRuntime;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -104,6 +111,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
+                            targetRuntime: this.targetRuntime,
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
@@ -117,18 +125,42 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     }
                 };
 
-                const getDefaultEndpointImplementation = ({ response }: { response: JsonResponse | undefined }) => {
+                const getGeneratedEndpointResponse = ({
+                    response,
+                }: {
+                    response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
+                }) => {
+                    if (neverThrowErrors) {
+                        return new GeneratedNonThrowingEndpointResponse({
+                            packageId,
+                            endpoint,
+                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
+                            errorResolver,
+                            response,
+                        });
+                    } else {
+                        return new GeneratedThrowingEndpointResponse({
+                            packageId,
+                            endpoint,
+                            errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
+                            errorResolver,
+                            response,
+                        });
+                    }
+                };
+
+                const getDefaultEndpointImplementation = ({
+                    response,
+                }: {
+                    response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
+                }) => {
                     return new GeneratedDefaultEndpointImplementation({
-                        packageId,
                         endpoint,
-                        response,
+                        request: getGeneratedEndpointRequest(),
+                        response: getGeneratedEndpointResponse({ response }),
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
                         timeoutInSeconds,
-                        neverThrowErrors,
-                        errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
-                        errorResolver,
-                        request: getGeneratedEndpointRequest(),
                     });
                 };
 
@@ -149,16 +181,32 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
 
                 return SdkResponse._visit<GeneratedEndpointImplementation>(endpoint.sdkResponse, {
-                    fileDownload: () => {
-                        return new GeneratedFileDownloadEndpointImplementation({
-                            endpoint,
-                            generatedSdkClientClass: this,
-                            includeCredentialsOnCrossOriginRequests,
-                            timeoutInSeconds,
-                            request: getGeneratedEndpointRequest(),
-                        });
-                    },
-                    json: (jsonResponse) => getDefaultEndpointImplementation({ response: jsonResponse }),
+                    fileDownload: (fileDownload) =>
+                        visitJavaScriptRuntime<GeneratedEndpointImplementation>(targetRuntime, {
+                            node: () =>
+                                new GeneratedReadableDownloadEndpointImplementation({
+                                    endpoint,
+                                    generatedSdkClientClass: this,
+                                    includeCredentialsOnCrossOriginRequests,
+                                    timeoutInSeconds,
+                                    request: getGeneratedEndpointRequest(),
+                                }),
+                            browser: () =>
+                                new GeneratedBlobDownloadEndpointImplementation({
+                                    endpoint,
+                                    generatedSdkClientClass: this,
+                                    includeCredentialsOnCrossOriginRequests,
+                                    timeoutInSeconds,
+                                    request: getGeneratedEndpointRequest(),
+                                    response: getGeneratedEndpointResponse({
+                                        response: SdkResponse.fileDownload(fileDownload),
+                                    }),
+                                }),
+                        }),
+                    json: (jsonResponse) =>
+                        getDefaultEndpointImplementation({
+                            response: SdkResponse.json(jsonResponse),
+                        }),
                     streaming: getStreamingEndpointImplementation,
                     maybeStreaming: (maybeStreamingResponse) => {
                         if (maybeStreamingResponse.nonStreaming.type === "fileDownload") {

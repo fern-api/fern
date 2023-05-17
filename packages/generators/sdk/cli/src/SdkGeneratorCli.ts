@@ -1,14 +1,27 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { camelCase, upperFirst } from "lodash-es";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
 import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 
+export declare namespace SdkGeneratorCli {
+    export interface Init {
+        targetRuntime: JavaScriptRuntime;
+    }
+}
+
 export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
+    private targetRuntime: JavaScriptRuntime;
+
+    constructor({ targetRuntime }: SdkGeneratorCli.Init) {
+        super();
+        this.targetRuntime = targetRuntime;
+    }
+
     protected parseCustomConfig(customConfig: unknown): SdkCustomConfig {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
         return {
@@ -63,6 +76,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 requireDefaultEnvironment: customConfig.requireDefaultEnvironment,
                 timeoutInSeconds: customConfig.timeoutInSeconds,
                 skipResponseValidation: customConfig.skipResponseValidation,
+                targetRuntime: this.targetRuntime,
             },
         });
 

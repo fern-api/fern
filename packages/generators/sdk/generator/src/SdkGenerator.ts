@@ -10,6 +10,7 @@ import {
     ExportedFilePath,
     ExportsManager,
     ImportsManager,
+    JavaScriptRuntime,
     NpmPackage,
     PackageId,
     SimpleTypescriptProject,
@@ -79,6 +80,7 @@ export declare namespace SdkGenerator {
         requireDefaultEnvironment: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
         skipResponseValidation: boolean;
+        targetRuntime: JavaScriptRuntime;
     }
 }
 
@@ -246,6 +248,7 @@ export class SdkGenerator {
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             timeoutInSeconds: config.timeoutInSeconds,
             npmPackage,
+            targetRuntime: config.targetRuntime,
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();

@@ -46,7 +46,7 @@ export class GeneratedEnumTypeImpl<Context extends WithBaseContextMixin>
                                 ),
                                 true
                             ),
-                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("const"))
+                            ts.factory.createTypeReferenceNode("const")
                         )
                     ),
                 },

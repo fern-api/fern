@@ -139,7 +139,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         }
 
         if (this.endpoint.response.type === "fileDownload") {
-            throw new Error("Cannot deserialize file");
+            throw new Error("Cannot serialize file");
         }
 
         switch (this.endpoint.response.responseBodyType._type) {

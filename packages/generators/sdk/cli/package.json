@@ -23,8 +23,10 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "depcheck": "depcheck",
-    "dockerTagLocal": "./docker/create_docker.sh local",
-    "dockerTagVersion": "./docker/create_docker.sh"
+    "dockerTagLocal:node": "./node-docker/create_docker.sh local",
+    "dockerTagVersion:node": "./node-docker/create_docker.sh",
+    "dockerTagLocal:browser": "./browser-docker/create_docker.sh local",
+    "dockerTagVersion:browser": "./browser-docker/create_docker.sh"
   },
   "dependencies": {
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",

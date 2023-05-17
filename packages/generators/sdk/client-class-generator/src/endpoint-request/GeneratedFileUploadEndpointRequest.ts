@@ -1,5 +1,12 @@
+import { noop } from "@fern-api/core-utils";
 import { FileProperty, HttpEndpoint, HttpRequestBody, HttpService } from "@fern-fern/ir-model/http";
-import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import {
+    Fetcher,
+    getTextOfTsNode,
+    JavaScriptRuntime,
+    PackageId,
+    visitJavaScriptRuntime,
+} from "@fern-typescript/commons";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData";
@@ -19,6 +26,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         endpoint: HttpEndpoint;
         requestBody: HttpRequestBody.FileUpload;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
+        targetRuntime: JavaScriptRuntime;
     }
 }
 
@@ -33,6 +41,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private endpoint: HttpEndpoint;
     private requestBody: HttpRequestBody.FileUpload;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private targetRuntime: JavaScriptRuntime;
 
     constructor({
         packageId,
@@ -40,11 +49,13 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         endpoint,
         requestBody,
         generatedSdkClientClass,
+        targetRuntime,
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.service = service;
         this.endpoint = endpoint;
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
+        this.targetRuntime = targetRuntime;
 
         if (requestBody.properties.some((property) => property.type === "bodyProperty")) {
             if (this.endpoint.sdkRequest == null) {
@@ -87,45 +98,57 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             parameters.push(this.requestParameter.getParameterDeclaration(context));
         }
 
-        parameters.push({
-            name: GeneratedFileUploadEndpointRequest.OPTS_PARAMETER_NAME,
-            type: getTextOfTsNode(
-                ts.factory.createTypeLiteralNode([
-                    ts.factory.createPropertySignature(
-                        undefined,
-                        GeneratedFileUploadEndpointRequest.ON_UPLOAD_PROGRESS_OPT_NAME,
-                        undefined,
-                        ts.factory.createFunctionTypeNode(
-                            undefined,
-                            [
-                                ts.factory.createParameterDeclaration(
+        visitJavaScriptRuntime(this.targetRuntime, {
+            node: noop,
+            browser: () => {
+                parameters.push({
+                    name: GeneratedFileUploadEndpointRequest.OPTS_PARAMETER_NAME,
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeLiteralNode([
+                            ts.factory.createPropertySignature(
+                                undefined,
+                                GeneratedFileUploadEndpointRequest.ON_UPLOAD_PROGRESS_OPT_NAME,
+                                undefined,
+                                ts.factory.createFunctionTypeNode(
                                     undefined,
-                                    undefined,
-                                    undefined,
-                                    ts.factory.createIdentifier("event"),
-                                    undefined,
-                                    ts.factory.createTypeReferenceNode(
-                                        ts.factory.createIdentifier("ProgressEvent"),
-                                        undefined
-                                    )
-                                ),
-                            ],
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
-                        )
+                                    [
+                                        ts.factory.createParameterDeclaration(
+                                            undefined,
+                                            undefined,
+                                            undefined,
+                                            ts.factory.createIdentifier("event"),
+                                            undefined,
+                                            ts.factory.createTypeReferenceNode(
+                                                ts.factory.createIdentifier("ProgressEvent"),
+                                                undefined
+                                            )
+                                        ),
+                                    ],
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
+                                )
+                            ),
+                        ])
                     ),
-                ])
-            ),
-            hasQuestionToken: true,
+                    hasQuestionToken: true,
+                });
+            },
         });
 
         return parameters;
     }
 
     private getFileParameterType(property: FileProperty, context: SdkClientClassContext): ts.TypeNode {
-        const types = [
-            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("File")),
-            context.base.externalDependencies.fs.ReadStream._getReferenceToType(),
-        ];
+        const types: ts.TypeNode[] = [ts.factory.createTypeReferenceNode("File")];
+
+        visitJavaScriptRuntime(this.targetRuntime, {
+            node: () => {
+                types.push(context.base.externalDependencies.fs.ReadStream._getReferenceToType());
+            },
+            browser: () => {
+                types.push(ts.factory.createTypeReferenceNode("Blob"));
+            },
+        });
+
         if (property.isOptional) {
             types.push(ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword));
         }
@@ -191,11 +214,15 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                     ),
                 })
             ),
-            onUploadProgress: ts.factory.createPropertyAccessChain(
-                ts.factory.createIdentifier(GeneratedFileUploadEndpointRequest.OPTS_PARAMETER_NAME),
-                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                GeneratedFileUploadEndpointRequest.ON_UPLOAD_PROGRESS_OPT_NAME
-            ),
+            onUploadProgress: visitJavaScriptRuntime(this.targetRuntime, {
+                node: () => undefined,
+                browser: () =>
+                    ts.factory.createPropertyAccessChain(
+                        ts.factory.createIdentifier(GeneratedFileUploadEndpointRequest.OPTS_PARAMETER_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                        GeneratedFileUploadEndpointRequest.ON_UPLOAD_PROGRESS_OPT_NAME
+                    ),
+            }),
         };
     }
 

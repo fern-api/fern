@@ -2,7 +2,10 @@ import URLSearchParams from "@ungap/url-search-params";
 import axios, { AxiosAdapter, AxiosError } from "axios";
 import { APIResponse } from "./APIResponse";
 
-export type FetchFunction = (args: Fetcher.Args) => Promise<APIResponse<unknown, Fetcher.Error>>;
+export interface FetchFunction {
+    (args: Fetcher.Args & { responseType?: "json" }): Promise<APIResponse<unknown, Fetcher.Error>>;
+    (args: Fetcher.Args & { responseType: "blob" }): Promise<APIResponse<Blob, Fetcher.Error>>;
+}
 
 export declare namespace Fetcher {
     export interface Args {
@@ -14,6 +17,7 @@ export declare namespace Fetcher {
         body?: unknown;
         timeoutMs?: number;
         withCredentials?: boolean;
+        responseType?: "json" | "blob";
         adapter?: AxiosAdapter;
         onUploadProgress?: (event: ProgressEvent) => void;
     }
@@ -42,7 +46,9 @@ export declare namespace Fetcher {
     }
 }
 
-export const fetcher: FetchFunction = async (args) => {
+function fetcherImpl(args: Fetcher.Args & { responseType?: "json" }): Promise<APIResponse<unknown, Fetcher.Error>>;
+function fetcherImpl(args: Fetcher.Args & { responseType: "blob" }): Promise<APIResponse<Blob, Fetcher.Error>>;
+async function fetcherImpl(args: Fetcher.Args): Promise<APIResponse<unknown, Fetcher.Error>> {
     const headers: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
         headers["Content-Type"] = args.contentType;
@@ -74,6 +80,7 @@ export const fetcher: FetchFunction = async (args) => {
             onUploadProgress: args.onUploadProgress,
             maxBodyLength: Infinity,
             maxContentLength: Infinity,
+            responseType: args.responseType ?? "json",
         });
 
         let body: unknown;
@@ -125,4 +132,6 @@ export const fetcher: FetchFunction = async (args) => {
             },
         };
     }
-};
+}
+
+export const fetcher: FetchFunction = fetcherImpl;

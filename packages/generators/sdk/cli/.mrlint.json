@@ -4,12 +4,15 @@
   "rules": {
     "package-json": {
       "scripts": {
-        "dockerTagLocal": "./docker/create_docker.sh local",
-        "dockerTagVersion": "./docker/create_docker.sh"
+        "dockerTagLocal:node": "./node-docker/create_docker.sh local",
+        "dockerTagVersion:node": "./node-docker/create_docker.sh",
+        "dockerTagLocal:browser": "./browser-docker/create_docker.sh local",
+        "dockerTagVersion:browser": "./browser-docker/create_docker.sh"
       }
     },
     "depcheck": {
       "ignores": [
+        "webpack",
         "webpack-cli",
         "umd-compat-loader",
         "@ts-morph/common",

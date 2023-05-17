@@ -108,7 +108,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
 
     protected override mapWithNonEnumKeys(map: MapType): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+            ts.factory.createTypeReferenceNode("Record", [
                 this.convert(map.keyType).typeNode,
                 this.convert(map.valueType).typeNode,
             ])
@@ -118,7 +118,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
     protected mapWithOptionalValues(map: MapType): TypeReferenceNode {
         const valueType = this.convert(map.valueType);
         return this.generateNonOptionalTypeReferenceNode(
-            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+            ts.factory.createTypeReferenceNode("Record", [
                 this.convert(map.keyType).typeNode,
                 (valueType.isOptional ? valueType : this.optional(map.valueType)).typeNode,
             ])

@@ -1,29 +1,21 @@
-import { HttpEndpoint, JsonResponse } from "@fern-fern/ir-model/http";
-import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { Fetcher, PackageId } from "@fern-typescript/commons";
+import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { Fetcher } from "@fern-typescript/commons";
 import { SdkClientClassContext } from "@fern-typescript/contexts";
-import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { EndpointSignature, GeneratedEndpointImplementation } from "../GeneratedEndpointImplementation";
 import { buildUrl } from "../utils/buildUrl";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
-import { GeneratedNonThrowingEndpointResponse } from "./endpoint-response/GeneratedNonThrowingEndpointResponse";
-import { GeneratedThrowingEndpointResponse } from "./endpoint-response/GeneratedThrowingEndpointResponse";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
-        packageId: PackageId;
         endpoint: HttpEndpoint;
-        response: JsonResponse | undefined;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
-        neverThrowErrors: boolean;
-        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
-        errorResolver: ErrorResolver;
+        response: GeneratedEndpointResponse;
     }
 }
 
@@ -36,37 +28,19 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private response: GeneratedEndpointResponse;
 
     constructor({
-        packageId,
         endpoint,
         response,
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
         timeoutInSeconds,
         request,
-        neverThrowErrors,
-        errorDiscriminationStrategy,
-        errorResolver,
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.timeoutInSeconds = timeoutInSeconds;
         this.request = request;
-        this.response = neverThrowErrors
-            ? new GeneratedNonThrowingEndpointResponse({
-                  packageId,
-                  endpoint,
-                  response,
-                  errorDiscriminationStrategy,
-                  errorResolver,
-              })
-            : new GeneratedThrowingEndpointResponse({
-                  packageId,
-                  endpoint,
-                  response,
-                  errorDiscriminationStrategy,
-                  errorResolver,
-              });
+        this.response = response;
     }
 
     public getOverloads(): EndpointSignature[] {

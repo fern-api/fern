@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { NpmPackage, PackageId } from "@fern-typescript/commons";
+import { JavaScriptRuntime, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
@@ -15,6 +15,7 @@ export declare namespace SdkClientClassGenerator {
         requireDefaultEnvironment: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
+        targetRuntime: JavaScriptRuntime;
     }
 
     export namespace generateService {
@@ -35,6 +36,7 @@ export class SdkClientClassGenerator {
     private requireDefaultEnvironment: boolean;
     private timeoutInSeconds: number | "infinity" | undefined;
     private npmPackage: NpmPackage | undefined;
+    private targetRuntime: JavaScriptRuntime;
 
     constructor({
         intermediateRepresentation,
@@ -46,6 +48,7 @@ export class SdkClientClassGenerator {
         requireDefaultEnvironment,
         timeoutInSeconds,
         npmPackage,
+        targetRuntime,
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -56,6 +59,7 @@ export class SdkClientClassGenerator {
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.timeoutInSeconds = timeoutInSeconds;
         this.npmPackage = npmPackage;
+        this.targetRuntime = targetRuntime;
     }
 
     public generateService({
@@ -74,6 +78,7 @@ export class SdkClientClassGenerator {
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             timeoutInSeconds: this.timeoutInSeconds,
             npmPackage: this.npmPackage,
+            targetRuntime: this.targetRuntime,
         });
     }
 }

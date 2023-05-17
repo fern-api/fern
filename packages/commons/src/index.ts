@@ -10,6 +10,7 @@ export * from "./express";
 export { type ExpressionReferenceNode } from "./ExpressionReferenceNode";
 export * from "./external-dependencies";
 export * from "./imports-manager";
+export { JavaScriptRuntime, visitJavaScriptRuntime, type JavaScriptRuntimeVisitor } from "./JavaScriptRuntime";
 export { type NpmPackage, type PublishInfo } from "./NpmPackage";
 export { type PackageId } from "./PackageId";
 export * from "./referencing";

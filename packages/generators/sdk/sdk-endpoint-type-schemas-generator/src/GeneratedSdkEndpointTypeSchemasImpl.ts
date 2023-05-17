@@ -237,7 +237,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         }
 
         if (this.endpoint.response.type === "fileDownload") {
-            throw new Error("Cannot deserialize file");
+            return referenceToRawResponse;
         }
 
         switch (this.endpoint.response.responseBodyType._type) {

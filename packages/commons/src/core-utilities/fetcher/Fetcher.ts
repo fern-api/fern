@@ -81,5 +81,6 @@ export declare namespace Fetcher {
         withCredentials: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
         onUploadProgress: ts.Expression | undefined;
+        responseType?: "json" | "blob";
     }
 }

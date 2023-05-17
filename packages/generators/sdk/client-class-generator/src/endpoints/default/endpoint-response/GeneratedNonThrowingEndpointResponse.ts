@@ -1,4 +1,4 @@
-import { HttpEndpoint, JsonResponse } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, SdkResponse } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { PackageId } from "@fern-typescript/commons";
 import {
@@ -9,12 +9,13 @@ import {
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { GeneratedEndpointResponse } from "./GeneratedEndpointResponse";
+import { getSuccessReturnType } from "./getSuccessReturnType";
 
 export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
         endpoint: HttpEndpoint;
-        response: JsonResponse | undefined;
+        response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
     }
@@ -25,7 +26,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
-    private response: JsonResponse | undefined;
+    private response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
 
@@ -53,9 +54,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     public getReturnType(context: SdkClientClassContext): ts.TypeNode {
         return context.base.coreUtilities.fetcher.APIResponse._getReferenceToType(
-            this.response != null
-                ? context.type.getReferenceToType(this.response.responseBodyType).typeNode
-                : ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
+            getSuccessReturnType(this.response, context),
             context.endpointErrorUnion
                 .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
                 .getErrorUnion()

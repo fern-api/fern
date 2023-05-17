@@ -64,7 +64,7 @@ export abstract class AbstractErrorClassGenerator<Context extends WithBaseContex
     }
 
     protected getBaseClass(_context: Context): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Error"));
+        return ts.factory.createTypeReferenceNode("Error");
     }
 
     protected abstract getClassProperties(context: Context): OptionalKind<PropertyDeclarationStructure>[];
