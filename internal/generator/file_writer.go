@@ -94,7 +94,7 @@ func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
 func (f *fileWriter) writeProperty(property *types.ObjectProperty) error {
 	switch valueType := property.ValueType.(type) {
 	case *types.TypeReferencePrimitive:
-		f.P(property.Name.Name.PascalCase.UnsafeName, " ", primitiveToGoType(valueType))
+		f.P(property.Name.Name.PascalCase.UnsafeName, " ", primitiveToGoType(valueType), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
 	}
 	return nil
 }
