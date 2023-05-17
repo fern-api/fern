@@ -23,6 +23,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fern.irV12.model.commons.TypeId;
+import com.fern.irV12.model.types.TypeDeclaration;
 import com.fern.irV12.model.types.UndiscriminatedUnionMember;
 import com.fern.irV12.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
@@ -224,7 +226,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
                                 "return $L(($T) $L)", STATIC_FACTORY_METHOD_NAME, typeName.box(), VALUE_FIELD_SPEC.name)
                         .endControlFlow();
             } else {
-                if (member.getType().isContainer()) {
+                if (shouldDeserializeWithTypeReference(member)) {
                     deserializeMethod
                             .beginControlFlow("try")
                             .addStatement(
@@ -253,5 +255,27 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
         }
         deserializeMethod.addStatement("throw new $T(p, $S)", JsonParseException.class, "Failed to deserialize");
         return deserializerBuilder.addMethod(deserializeMethod.build()).build();
+    }
+
+    private boolean shouldDeserializeWithTypeReference(UndiscriminatedUnionMember member) {
+        if (member.getType().isContainer()) {
+            return true;
+        }
+        if (!generatorContext.getCustomConfig().wrappedAliases()
+                && member.getType().isNamed()) {
+            TypeId typeId = member.getType().getNamed().get().getTypeId();
+            TypeDeclaration typeDeclaration =
+                    generatorContext.getTypeDeclarations().get(typeId);
+            if (typeDeclaration.getShape().isAlias()
+                    && typeDeclaration
+                            .getShape()
+                            .getAlias()
+                            .get()
+                            .getResolvedType()
+                            .isContainer()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

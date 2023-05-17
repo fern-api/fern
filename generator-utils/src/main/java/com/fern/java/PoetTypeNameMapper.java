@@ -101,9 +101,6 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitUnknown() {
-            if (customConfig.unknownAsOptional()) {
-                return ParameterizedTypeName.get(Optional.class, Object.class);
-            }
             return ClassName.get(Object.class);
         }
 

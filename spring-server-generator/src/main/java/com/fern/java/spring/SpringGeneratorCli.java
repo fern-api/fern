@@ -64,7 +64,6 @@ public final class SpringGeneratorCli
                 ir,
                 generatorConfig,
                 SpringCustomConfig.builder()
-                        .unknownAsOptional(customConfig.unknownAsOptional())
                         .wrappedAliases(customConfig.wrappedAliases())
                         .build(),
                 customConfig);

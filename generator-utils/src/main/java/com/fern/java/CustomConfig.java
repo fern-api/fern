@@ -27,12 +27,6 @@ import org.immutables.value.Value;
 public interface CustomConfig {
 
     @Value.Default
-    @JsonProperty("unknown-as-optional")
-    default Boolean unknownAsOptional() {
-        return false;
-    }
-
-    @Value.Default
     @JsonProperty("wrapped-aliases")
     default Boolean wrappedAliases() {
         return false;

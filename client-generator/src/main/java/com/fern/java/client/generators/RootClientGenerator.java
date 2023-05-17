@@ -272,15 +272,14 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             builder.addMethod(tokenMethod.toBuilder()
                     .addStatement("String unencodedToken = $L + \":\" + $L", BASIC_USERNAME_NAME, BASIC_PASSWORD_NAME)
                     .addStatement(
-                            "String encodedToken = $T.getEncoder().encodeToString(unencodedToken.getBytes()))",
-                            builderName,
+                            "String encodedToken = $T.getEncoder().encodeToString(unencodedToken.getBytes())",
                             Base64.class)
                     .addStatement(
                             "this.$L.addHeader($S, $S + $L)",
                             CLIENT_OPTIONS_BUILDER_NAME,
                             "Authorization",
                             "Basic ",
-                            "unencodedToken")
+                            "encodedToken")
                     .addStatement("return this")
                     .build());
             return null;

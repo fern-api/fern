@@ -149,7 +149,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                         .requestBodyGetter()
                                         .get())
                                 .requestBodyGetter()
-                                .name;
+                                .name
+                        + "()";
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof InlinedRequestBodyGetters) {
                 requestInitializerBuilder.addStatement(
                         "$T $L = new $T<>()",

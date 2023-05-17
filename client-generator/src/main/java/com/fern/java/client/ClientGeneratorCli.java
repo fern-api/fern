@@ -64,7 +64,6 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                 ir,
                 generatorConfig,
                 CustomConfig.builder()
-                        .unknownAsOptional(customConfig.unknownAsOptional())
                         .wrappedAliases(customConfig.wrappedAliases())
                         .build(),
                 clientPoetClassNameFactory);

@@ -3157,7 +3157,7 @@ public final class SendEventRequest {
 
   private final String event;
 
-  private final Map<String, Optional<Object>> data;
+  private final Map<String, Object> data;
 
   private final Optional<User> user;
 
@@ -3170,7 +3170,7 @@ public final class SendEventRequest {
   SendEventRequest(
       Optional<String> idempotencyKey,
       String event,
-      Map<String, Optional<Object>> data,
+      Map<String, Object> data,
       Optional<User> user,
       Optional<Long> scheduleAt,
       Optional<EventOverride> override) {
@@ -3211,7 +3211,7 @@ public final class SendEventRequest {
    *     &quot;&lt;value2&gt;&quot;, &quot;param3&quot; : object/array&quot; }
    */
   @JsonProperty("data")
-  public Map<String, Optional<Object>> getData() {
+  public Map<String, Object> getData() {
     return data;
   }
 
@@ -3299,11 +3299,11 @@ public final class SendEventRequest {
 
     _FinalStage idempotencyKey(String idempotencyKey);
 
-    _FinalStage data(Map<String, Optional<Object>> data);
+    _FinalStage data(Map<String, Object> data);
 
-    _FinalStage putAllData(Map<String, Optional<Object>> data);
+    _FinalStage putAllData(Map<String, Object> data);
 
-    _FinalStage data(String key, Optional<Object> value);
+    _FinalStage data(String key, Object value);
 
     _FinalStage user(Optional<User> user);
 
@@ -3328,7 +3328,7 @@ public final class SendEventRequest {
 
     private Optional<User> user = Optional.empty();
 
-    private Map<String, Optional<Object>> data = new LinkedHashMap<>();
+    private Map<String, Object> data = new LinkedHashMap<>();
 
     private Optional<String> idempotencyKey = Optional.empty();
 
@@ -3409,7 +3409,7 @@ public final class SendEventRequest {
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @Override
-    public _FinalStage data(String key, Optional<Object> value) {
+    public _FinalStage data(String key, Object value) {
       this.data.put(key, value);
       return this;
     }
@@ -3421,14 +3421,14 @@ public final class SendEventRequest {
      * @return Reference to {@code this} so that method calls can be chained together.
      */
     @Override
-    public _FinalStage putAllData(Map<String, Optional<Object>> data) {
+    public _FinalStage putAllData(Map<String, Object> data) {
       this.data.putAll(data);
       return this;
     }
 
     @Override
     @JsonSetter(value = "data", nulls = Nulls.SKIP)
-    public _FinalStage data(Map<String, Optional<Object>> data) {
+    public _FinalStage data(Map<String, Object> data) {
       this.data.clear();
       this.data.putAll(data);
       return this;
@@ -3627,7 +3627,7 @@ import java.util.Optional;
 
 @JsonDeserialize(builder = BatchEvent.Builder.class)
 public final class BatchEvent {
-  private final Map<String, Optional<Object>> data;
+  private final Map<String, Object> data;
 
   private final Optional<User> user;
 
@@ -3635,8 +3635,7 @@ public final class BatchEvent {
 
   private int _cachedHashCode;
 
-  BatchEvent(
-      Map<String, Optional<Object>> data, Optional<User> user, Optional<EventOverride> override) {
+  BatchEvent(Map<String, Object> data, Optional<User> user, Optional<EventOverride> override) {
     this.data = data;
     this.user = user;
     this.override = override;
@@ -3647,7 +3646,7 @@ public final class BatchEvent {
    *     &quot;&lt;value2&gt;&quot;, &quot;param3&quot; : object/array&quot; }
    */
   @JsonProperty("data")
-  public Map<String, Optional<Object>> getData() {
+  public Map<String, Object> getData() {
     return data;
   }
 
@@ -3690,7 +3689,7 @@ public final class BatchEvent {
 
   @JsonIgnoreProperties(ignoreUnknown = true)
   public static final class Builder {
-    private Map<String, Optional<Object>> data = new LinkedHashMap<>();
+    private Map<String, Object> data = new LinkedHashMap<>();
 
     private Optional<User> user = Optional.empty();
 
@@ -3706,18 +3705,18 @@ public final class BatchEvent {
     }
 
     @JsonSetter(value = "data", nulls = Nulls.SKIP)
-    public Builder data(Map<String, Optional<Object>> data) {
+    public Builder data(Map<String, Object> data) {
       this.data.clear();
       this.data.putAll(data);
       return this;
     }
 
-    public Builder putAllData(Map<String, Optional<Object>> data) {
+    public Builder putAllData(Map<String, Object> data) {
       this.data.putAll(data);
       return this;
     }
 
-    public Builder data(String key, Optional<Object> value) {
+    public Builder data(String key, Object value) {
       this.data.put(key, value);
       return this;
     }
@@ -4943,11 +4942,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonDeserialize(builder = ProviderOverride.Builder.class)
 public final class ProviderOverride {
-  private final Map<String, Optional<Object>> payload;
+  private final Map<String, Object> payload;
 
   private final List<Param> formParams;
 
@@ -4960,7 +4958,7 @@ public final class ProviderOverride {
   private int _cachedHashCode;
 
   ProviderOverride(
-      Map<String, Optional<Object>> payload,
+      Map<String, Object> payload,
       List<Param> formParams,
       List<Param> queryParams,
       List<Param> pathParams,
@@ -4973,7 +4971,7 @@ public final class ProviderOverride {
   }
 
   @JsonProperty("payload")
-  public Map<String, Optional<Object>> getPayload() {
+  public Map<String, Object> getPayload() {
     return payload;
   }
 
@@ -5043,7 +5041,7 @@ public final class ProviderOverride {
 
   @JsonIgnoreProperties(ignoreUnknown = true)
   public static final class Builder {
-    private Map<String, Optional<Object>> payload = new LinkedHashMap<>();
+    private Map<String, Object> payload = new LinkedHashMap<>();
 
     private List<Param> formParams = new ArrayList<>();
 
@@ -5065,18 +5063,18 @@ public final class ProviderOverride {
     }
 
     @JsonSetter(value = "payload", nulls = Nulls.SKIP)
-    public Builder payload(Map<String, Optional<Object>> payload) {
+    public Builder payload(Map<String, Object> payload) {
       this.payload.clear();
       this.payload.putAll(payload);
       return this;
     }
 
-    public Builder putAllPayload(Map<String, Optional<Object>> payload) {
+    public Builder putAllPayload(Map<String, Object> payload) {
       this.payload.putAll(payload);
       return this;
     }
 
-    public Builder payload(String key, Optional<Object> value) {
+    public Builder payload(String key, Object value) {
       this.payload.put(key, value);
       return this;
     }
@@ -5367,20 +5365,18 @@ package com.fern.basic.resources.raven.event.types;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonDeserialize(builder = SlackMessage.Builder.class)
 public final class SlackMessage {
   private final String text;
 
-  private final Optional<Object> blocks;
+  private final Object blocks;
 
   private int _cachedHashCode;
 
-  SlackMessage(String text, Optional<Object> blocks) {
+  SlackMessage(String text, Object blocks) {
     this.text = text;
     this.blocks = blocks;
   }
@@ -5391,7 +5387,7 @@ public final class SlackMessage {
   }
 
   @JsonProperty("blocks")
-  public Optional<Object> getBlocks() {
+  public Object getBlocks() {
     return blocks;
   }
 
@@ -5423,24 +5419,24 @@ public final class SlackMessage {
   }
 
   public interface TextStage {
-    _FinalStage text(String text);
+    BlocksStage text(String text);
 
     Builder from(SlackMessage other);
   }
 
-  public interface _FinalStage {
-    SlackMessage build();
-
-    _FinalStage blocks(Optional<Object> blocks);
-
+  public interface BlocksStage {
     _FinalStage blocks(Object blocks);
   }
 
+  public interface _FinalStage {
+    SlackMessage build();
+  }
+
   @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder implements TextStage, _FinalStage {
+  public static final class Builder implements TextStage, BlocksStage, _FinalStage {
     private String text;
 
-    private Optional<Object> blocks = Optional.empty();
+    private Object blocks;
 
     private Builder() {}
 
@@ -5453,20 +5449,14 @@ public final class SlackMessage {
 
     @Override
     @JsonSetter("text")
-    public _FinalStage text(String text) {
+    public BlocksStage text(String text) {
       this.text = text;
       return this;
     }
 
     @Override
+    @JsonSetter("blocks")
     public _FinalStage blocks(Object blocks) {
-      this.blocks = Optional.of(blocks);
-      return this;
-    }
-
-    @Override
-    @JsonSetter(value = "blocks", nulls = Nulls.SKIP)
-    public _FinalStage blocks(Optional<Object> blocks) {
       this.blocks = blocks;
       return this;
     }
