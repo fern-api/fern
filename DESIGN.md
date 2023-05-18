@@ -92,6 +92,18 @@ func (e *Enum) UnmarshalJSON(data []byte) error {
 }
 ```
 
+## Sets
+
+Fern supports the `set` type in a variety of ways (depending on the target
+language). In languages like Java, it's easy to specify a set of custom
+types (e.g. `Set<Movie>`). In Go, it's not so easy - a `map[<type>]struct{}`
+is the idiomatic way to represent a set of `<type>`, but using a pointer `<type>`
+often ends up with a confusing user experience because the same pointer must
+be used to check for existence (not just the values set in the pointer).
+
+For now, the Go generator represents the `set` type just like the `list`.
+Note that we might revisit this later.
+
 ## Compile-time Checks
 
 We need to include some sort of compile-time check that users can opt-in
