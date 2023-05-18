@@ -200,7 +200,7 @@ type TypeReference interface {
 
 // TypeReferenceNamed is the named TypeReference.
 type TypeReferenceNamed struct {
-	Named *DeclaredTypeName `json:"named,omitempty"`
+	*DeclaredTypeName
 }
 
 func (t *TypeReferenceNamed) isTypeReference() {}

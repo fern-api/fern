@@ -84,6 +84,7 @@ func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
 		}
 	}
 	f.P("}")
+	f.P()
 	return nil
 }
 
@@ -94,7 +95,9 @@ func typeReferenceToGoType(typeReference types.TypeReference) string {
 	case *types.TypeReferenceContainer:
 		return containerTypeToGoType(value.Container)
 	case *types.TypeReferenceNamed:
-		return value.Named.Name.PascalCase.UnsafeName
+		// TODO: Need to determine whether or not the type is an enum, custom type, etc.
+		// We only want to prefix with a pointer if it's a custom type (not an enum).
+		return fmt.Sprintf("*%s", value.Name.PascalCase.UnsafeName)
 	case *types.TypeReferencePrimitive:
 		return primitiveToGoType(value)
 	case *types.TypeReferenceUnknown:
