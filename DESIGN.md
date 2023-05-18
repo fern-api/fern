@@ -43,6 +43,71 @@ func Run(foo *Foo) {
 }
 ```
 
+### Interfaces vs. Structs
+
+In their current state (as represented by the manually-written IR), union values
+have too many layers of indirection. We're defining a separate struct for every
+instance of the union that is unique to that union (due to the fact that every
+union can define its own unique discriminant), but this is largely a [de]serialization
+concern - the user of the Go API just wants to access the underlying type that implements
+the interface.
+
+To be clear, we should refactor this so that the following:
+
+```go
+// TypeReference is a reference to a generic type (e.g. primitives,
+// containers, etc).
+type TypeReference interface {
+	isTypeReference()
+}
+
+// TypeReferenceContainer is a container type reference.
+type TypeReferenceContainer struct {
+	Type      string        `json:"_type,omitempty"`
+	Container ContainerType `json:"container,omitempty"`
+}
+
+func (t *TypeReferenceContainer) isTypeReference() {}
+
+
+// ContainerType is a union of container types (e.g. list, map etc).
+type ContainerType interface {
+	isContainerType()
+}
+
+// ContainerTypeList implements the list ContainerType.
+type ContainerTypeList struct {
+	Type string        `json:"_type,omitempty"`
+	List TypeReference `json:"list,omitempty"`
+}
+
+func (c *ContainerTypeList) isContainerType() {}
+```
+
+Can be replaced with something along the lines of:
+
+```go
+// TypeReference is a reference to a generic type (e.g. primitives,
+// containers, etc).
+type TypeReference interface {
+	isTypeReference()
+}
+
+// ContainerType is a union of container types (e.g. list, map etc).
+type ContainerType interface {
+	isContainerType()
+}
+
+// List is a container list.
+type List struct {
+  TypeReference
+}
+```
+
+However, in this case `List` is _also_ a `TypeReference`, which makes
+this difficult. Although not ideal, we may need to explore a
+`struct`-based approach, after all.
+
 ### Visitors
 
 To ensure compile-time checks (as discussed below), every union has
