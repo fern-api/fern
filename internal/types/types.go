@@ -120,6 +120,8 @@ func (t *TypeDeclaration) UnmarshalJSON(data []byte) error {
 	}
 	if shape.Type != "" {
 		switch shape.Type {
+		case "alias":
+			t.Shape = new(AliasTypeDeclaration)
 		case "object":
 			t.Shape = new(ObjectTypeDeclaration)
 		default:
@@ -130,6 +132,20 @@ func (t *TypeDeclaration) UnmarshalJSON(data []byte) error {
 		}
 	}
 	return nil
+}
+
+// AliasTypeDeclaration is an alias type declaration.
+type AliasTypeDeclaration struct {
+	AliasOf      TypeReference         `json:"aliasOf,omitempty"`
+	ResolvedType ResolvedTypeReference `json:"resolvedType,omitempty"`
+}
+
+func (a *AliasTypeDeclaration) isType() {}
+
+// ResolvedTypeReference is a resolved type reference.
+// TODO: Fill in the remaining resolved type references.
+type ResolvedTypeReference interface {
+	isResolvedTypeReference()
 }
 
 // ExampleType specifies an example of a particular type.
