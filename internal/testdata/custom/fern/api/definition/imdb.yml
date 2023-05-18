@@ -1,0 +1,10 @@
+# Simple test for generating a type that relies on another custom type.
+types:
+  Foo:
+    properties:
+      id: uuid
+      name: string
+
+  Bar:
+    properties:
+      foo: Foo

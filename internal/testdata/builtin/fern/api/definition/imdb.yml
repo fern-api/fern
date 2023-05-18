@@ -1,4 +1,4 @@
-# Simple test for generating a type with all of the primitive properties.
+# Simple test for generating a type with all of the built-in Fern types.
 types:
   Type:
     properties:
