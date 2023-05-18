@@ -70,7 +70,6 @@ type visitor struct {}
 func (v *visitor) VisitTypeReferenceNamed(_ *TypeReferenceNamed) error { return nil }
 func (v *visitor) VisitTypeReferenceContainer(_ *TypeReferenceContainer) error { return nil }
 func (v *visitor) VisitTypeReferencePrimitive(_ *TypeReferencePrimitive) error { return nil }
-
 func (v *visitor) VisitTypeReferenceUnknown(_ *TypeReferenceUnknown) error { return nil }
 
 // ObjectProperty is a single property associated with an object.
@@ -82,18 +81,18 @@ type ObjectProperty struct {
 }
 
 func Run() error {
-	primitive := &ObjectProperty{
-		Docs: "union",
-		Availability: &Availability{
-			Status:  AvailabilityStatusInDevelopment,
-			Message: "in-development",
-		},
-		ValueType: &TypeReferencePrimitive{
-			Type:      "string",
-			Primitive: PrimitiveTypeString,
-		},
-	}
-	visitor := new(visitor)
+  primitive := &ObjectProperty{
+    Docs: "union",
+    Availability: &Availability{
+      Status:  AvailabilityStatusInDevelopment,
+      Message: "in-development",
+    },
+    ValueType: &TypeReferencePrimitive{
+      Type:      "string",
+      Primitive: PrimitiveTypeString,
+    },
+  }
+  visitor := new(visitor)
   if err := primitive.VisitValueType(visitor); err != nil {
     return err
   }
