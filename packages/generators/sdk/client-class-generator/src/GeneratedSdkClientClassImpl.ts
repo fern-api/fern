@@ -363,7 +363,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getEnvironment(endpoint: HttpEndpoint, context: SdkClientClassContext): ts.Expression {
-        let referenceToEnvironmentValue = this.getReferenceToEnvironment();
+        let referenceToEnvironmentValue = this.getReferenceToEnvironment(context);
 
         const defaultEnvironment = context.environments
             .getGeneratedEnvironments()
@@ -469,7 +469,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             const generatedEnvironments = context.environments.getGeneratedEnvironments();
             properties.push({
                 name: GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
-                type: getTextOfTsNode(generatedEnvironments.getTypeForUserSuppliedEnvironment(context)),
+                type: getTextOfTsNode(
+                    context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
+                    )
+                ),
                 hasQuestionToken: generatedEnvironments.hasDefaultEnvironment(),
             });
         }
@@ -604,8 +608,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return basicAuthScheme.password.camelCase.unsafeName;
     }
 
-    private getReferenceToEnvironment(): ts.Expression {
-        return this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME);
+    private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
+        return context.base.coreUtilities.fetcher.Supplier.get(
+            this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
+        );
     }
 
     public getReferenceToOptions(): ts.Expression {
