@@ -1,13 +1,13 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrMigrationContext } from "../IrMigrationContext";
 
-export type GeneratorVersion = string | AlwaysRunMigration | GeneratorDoesNotExistForEitherIrVersion;
+export type GeneratorVersion = string | GeneratorWasNeverUpdatedToConsumeNewIR | GeneratorWasNotCreatedYet;
 
-export const AlwaysRunMigration = Symbol();
-export type AlwaysRunMigration = typeof AlwaysRunMigration;
+export const GeneratorWasNeverUpdatedToConsumeNewIR = Symbol();
+export type GeneratorWasNeverUpdatedToConsumeNewIR = typeof GeneratorWasNeverUpdatedToConsumeNewIR;
 
-export const GeneratorDoesNotExistForEitherIrVersion = Symbol();
-export type GeneratorDoesNotExistForEitherIrVersion = typeof GeneratorDoesNotExistForEitherIrVersion;
+export const GeneratorWasNotCreatedYet = Symbol();
+export type GeneratorWasNotCreatedYet = typeof GeneratorWasNotCreatedYet;
 
 export interface IrMigration<LaterVersion, EarlierVersion> {
     // the version of IR we're migrating from
@@ -22,13 +22,13 @@ export interface IrMigration<LaterVersion, EarlierVersion> {
      * in this map.
      *
      * if the targeted generator's version is less than its value in
-     * minGeneratorVersionsToExclude, then this migration is needed.
+     * firstGeneratorVersionToConsumeNewIR, then this migration is needed.
      *
-     * if the targeted generator's version is AlwaysRunMigration, then this
+     * if the targeted generator's version is GeneratorWasNeverUpdatedToConsumeNewIR, then this
      * migration is needed.
      *
-     * if the targeted generator's version is GeneratorDoesNotExistForEitherIrVersion,
+     * if the targeted generator's version is GeneratorWasNotCreatedYet,
      * we throw if this migration is encountered for this generator.
      */
-    minGeneratorVersionsToExclude: Record<GeneratorName, GeneratorVersion>;
+    firstGeneratorVersionToConsumeNewIR: Record<GeneratorName, GeneratorVersion>;
 }

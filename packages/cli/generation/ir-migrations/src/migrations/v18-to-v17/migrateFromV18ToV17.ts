@@ -1,7 +1,11 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
-import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "../../types/IrMigration";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration,
+} from "../../types/IrMigration";
 
 export const V18_TO_V17_MIGRATION: IrMigration<
     IrVersions.V18.ir.IntermediateRepresentation,
@@ -9,22 +13,24 @@ export const V18_TO_V17_MIGRATION: IrMigration<
 > = {
     laterVersion: "v18",
     earlierVersion: "v17",
-    minGeneratorVersionsToExclude: {
-        [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
+    firstGeneratorVersionToConsumeNewIR: {
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_SDK]: "0.5.14-1-ga6817141",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.5.14-1-ga6817141",
-        [GeneratorName.JAVA]: AlwaysRunMigration,
-        [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
-        [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
-        [GeneratorName.JAVA_SPRING]: AlwaysRunMigration,
+        [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_FASTAPI]: "0.3.0-3-ge125e311",
         [GeneratorName.PYTHON_PYDANTIC]: "0.3.0-3-ge125e311",
-        [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
-        [GeneratorName.OPENAPI]: AlwaysRunMigration,
-        [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
-        [GeneratorName.POSTMAN]: AlwaysRunMigration,
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: "0.3.0-3-ge125e311",
-        [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
+        [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
     },
     migrateBackwards: (v18, { taskContext, targetGenerator }): IrVersions.V17.ir.IntermediateRepresentation => {
         return {

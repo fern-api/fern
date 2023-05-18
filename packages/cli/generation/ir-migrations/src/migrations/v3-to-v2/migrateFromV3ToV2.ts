@@ -1,6 +1,10 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
-import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "../../types/IrMigration";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration,
+} from "../../types/IrMigration";
 import { getReferencedTypesForInlinedRequest } from "./getReferencedTypesForInlinedRequest";
 
 export const V3_TO_V2_MIGRATION: IrMigration<
@@ -9,22 +13,24 @@ export const V3_TO_V2_MIGRATION: IrMigration<
 > = {
     laterVersion: "v3",
     earlierVersion: "v2",
-    minGeneratorVersionsToExclude: {
-        [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
+    firstGeneratorVersionToConsumeNewIR: {
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.TYPESCRIPT_SDK]: "0.0.249",
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.0.264",
-        [GeneratorName.JAVA]: AlwaysRunMigration,
+        [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: "0.0.134-3-g97d4964",
         [GeneratorName.JAVA_SDK]: "0.0.134-3-g97d4964",
         [GeneratorName.JAVA_SPRING]: "0.0.134-3-g97d4964",
-        [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
-        [GeneratorName.OPENAPI]: AlwaysRunMigration,
-        [GeneratorName.POSTMAN]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_SDK]: GeneratorDoesNotExistForEitherIrVersion,
-        [GeneratorName.STOPLIGHT]: GeneratorDoesNotExistForEitherIrVersion,
-        [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorDoesNotExistForEitherIrVersion,
-        [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
+        [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.STOPLIGHT]: GeneratorWasNotCreatedYet,
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
     },
     migrateBackwards: (v3): IrVersions.V2.ir.IntermediateRepresentation => {
         const newTypes = [...v3.types];

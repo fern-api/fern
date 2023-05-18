@@ -26,6 +26,12 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
     [GeneratorName.TYPESCRIPT_SDK]: {
         version: "0.2.2",
     },
+    [GeneratorName.TYPESCRIPT_NODE_SDK]: {
+        version: "0.6.0",
+    },
+    [GeneratorName.TYPESCRIPT_BROWSER_SDK]: {
+        version: "0.6.0",
+    },
     [GeneratorName.PYTHON_PYDANTIC]: {
         version: "0.1.0",
     },

@@ -22,7 +22,7 @@ import { V6_TO_V5_MIGRATION } from "./migrations/v6-to-v5/migrateFromV6ToV5";
 import { V7_TO_V6_MIGRATION } from "./migrations/v7-to-v6/migrateFromV7ToV6";
 import { V8_TO_V7_MIGRATION } from "./migrations/v8-to-v7/migrateFromV8ToV7";
 import { V9_TO_V8_MIGRATION } from "./migrations/v9-to-v8/migrateFromV9ToV8";
-import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "./types/IrMigration";
+import { GeneratorWasNeverUpdatedToConsumeNewIR, GeneratorWasNotCreatedYet, IrMigration } from "./types/IrMigration";
 
 export function getIntermediateRepresentationMigrator(): IntermediateRepresentationMigrator {
     return INTERMEDIATE_REPRESENTATION_MIGRATOR;
@@ -191,7 +191,8 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         migration: IrMigration<any, any>;
         targetGenerator: GeneratorNameAndVersion;
     }): boolean {
-        const minVersionToExclude = migration.minGeneratorVersionsToExclude[targetGenerator.name as GeneratorName];
+        const minVersionToExclude =
+            migration.firstGeneratorVersionToConsumeNewIR[targetGenerator.name as GeneratorName];
 
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (minVersionToExclude == null) {
@@ -201,9 +202,9 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         }
 
         switch (minVersionToExclude) {
-            case AlwaysRunMigration:
+            case GeneratorWasNeverUpdatedToConsumeNewIR:
                 return true;
-            case GeneratorDoesNotExistForEitherIrVersion:
+            case GeneratorWasNotCreatedYet:
                 throw new Error(
                     `Cannot migrate intermediate representation. Generator was created after intermediate representation ${migration.laterVersion}.`
                 );
