@@ -1,50 +1,49 @@
-import { entries } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DEFAULT_GROUP_NAME, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
-import { OpenApiConvertedFernDefinition } from "@fern-api/openapi-migrator";
 import {
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
+    OPENAPI_DIRECTORY,
     ROOT_API_FILENAME,
 } from "@fern-api/project-configuration";
 import { formatDefinitionFile } from "@fern-api/yaml-formatter";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import path from "path";
 import { SAMPLE_IMDB_API } from "./sampleImdbApi";
 
-export async function createWorkspace({
+export async function createFernWorkspace({
     directoryOfWorkspace,
-    fernDefinition,
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
-    fernDefinition: OpenApiConvertedFernDefinition | undefined;
 }): Promise<void> {
     await mkdir(directoryOfWorkspace);
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
     });
     const directoryOfDefinition = join(directoryOfWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
-    if (fernDefinition == null) {
-        await writeSampleApiDefinition({
-            directoryOfDefinition,
-        });
-    } else {
-        await mkdir(directoryOfDefinition);
-        await writeFile(
-            join(directoryOfDefinition, RelativeFilePath.of(ROOT_API_FILENAME)),
-            yaml.dump(fernDefinition.rootApiFile)
-        );
-        for (const [relativePath, definitionFile] of entries(fernDefinition.definitionFiles)) {
-            const absoluteFilepath = join(directoryOfDefinition, relativePath);
-            await writeFile(
-                absoluteFilepath,
-                formatDefinitionFile({
-                    fileContents: yaml.dump(definitionFile),
-                })
-            );
-        }
-    }
+    await writeSampleApiDefinition({
+        directoryOfDefinition,
+    });
+}
+
+export async function createOpenAPIWorkspace({
+    directoryOfWorkspace,
+    openAPIFilePath,
+}: {
+    directoryOfWorkspace: AbsoluteFilePath;
+    openAPIFilePath: AbsoluteFilePath;
+}): Promise<void> {
+    await mkdir(directoryOfWorkspace);
+    await writeGeneratorsConfiguration({
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+    });
+    const openapiDirectory = join(directoryOfWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
+    await mkdir(openapiDirectory);
+    const openAPIContents = await readFile(openAPIFilePath);
+    const openAPIfilename = path.basename(openAPIFilePath);
+    await writeFile(join(openapiDirectory, RelativeFilePath.of(openAPIfilename)), openAPIContents);
 }
 
 const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {

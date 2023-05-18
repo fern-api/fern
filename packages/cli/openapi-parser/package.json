@@ -28,7 +28,6 @@
   },
   "dependencies": {
     "@apidevtools/swagger-parser": "^10.1.0",
-    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",

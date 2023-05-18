@@ -4,9 +4,6 @@ import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
-const OPEN_API_FILENAME = "openapi.json";
-
-const FIXTURES = ["gigs", "telematica", "covie"];
 
 describe("fern init", () => {
     it("no existing fern directory", async () => {
@@ -32,15 +29,13 @@ describe("fern init", () => {
         ).toBe(true);
     }, 60_000);
 
-    for (const fixture of FIXTURES) {
-        it(`${fixture} openapi`, async () => {
-            const openApiPath = join(
-                FIXTURES_DIR,
-                RelativeFilePath.of(fixture),
-                RelativeFilePath.of(OPEN_API_FILENAME)
-            );
-            const pathOfDirectory = await init({ openApiPath });
-            expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
-        }, 60_000);
-    }
+    it("init openapi", async () => {
+        const openApiPath = join(
+            FIXTURES_DIR,
+            RelativeFilePath.of("openapi"),
+            RelativeFilePath.of("petstore-openapi.yml")
+        );
+        const pathOfDirectory = await init({ openApiPath });
+        expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
+    }, 60_000);
 });
