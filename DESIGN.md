@@ -74,10 +74,10 @@ func (v *visitor) VisitTypeReferenceUnknown(_ *TypeReferenceUnknown) error { ret
 
 // ObjectProperty is a single property associated with an object.
 type ObjectProperty struct {
-	Docs         string            `json:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty"`
-	Name         *NameAndWireValue `json:"name,omitempty"`
-	ValueType    TypeReference     `json:"valueType,omitempty"`
+  Docs         string            `json:"docs,omitempty"`
+  Availability *Availability     `json:"availability,omitempty"`
+  Name         *NameAndWireValue `json:"name,omitempty"`
+  ValueType    TypeReference     `json:"valueType,omitempty"`
 }
 
 func Run() error {
@@ -97,6 +97,23 @@ func Run() error {
     return err
   }
   // ...
+}
+```
+
+Also note that we may want to consider changing the `Visit*` methods to be based on
+the name of the union key, and not the type, e.g.:
+
+```yaml
+container:
+  type: ContainerType
+  key: container
+named: ResolvedNamedType
+```
+
+```go
+type TypeReferenceVisitor interface {
+  VisitContainer(*types.ContainerType)
+  VisitNamed(types.ResolvedNamedType)
 }
 ```
 
