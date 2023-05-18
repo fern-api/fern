@@ -10,6 +10,7 @@ import { PersistedTypescriptProject } from "./PersistedTypescriptProject";
 export declare namespace TypescriptProject {
     export interface Init {
         tsMorphProject: Project;
+        extraDependencies: Record<string, string>;
     }
 }
 
@@ -19,9 +20,11 @@ export abstract class TypescriptProject {
 
     protected volume = new Volume();
     protected tsMorphProject: Project;
+    protected extraDependencies: Record<string, string>;
 
-    constructor({ tsMorphProject }: TypescriptProject.Init) {
+    constructor({ tsMorphProject, extraDependencies }: TypescriptProject.Init) {
         this.tsMorphProject = tsMorphProject;
+        this.extraDependencies = extraDependencies;
     }
 
     public async persist(): Promise<PersistedTypescriptProject> {

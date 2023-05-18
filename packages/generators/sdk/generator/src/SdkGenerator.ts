@@ -81,6 +81,7 @@ export declare namespace SdkGenerator {
         timeoutInSeconds: number | "infinity" | undefined;
         skipResponseValidation: boolean;
         targetRuntime: JavaScriptRuntime;
+        extraDependencies: Record<string, string>;
     }
 }
 
@@ -281,12 +282,14 @@ export class SdkGenerator {
                   npmPackage: this.npmPackage,
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
+                  extraDependencies: this.config.extraDependencies,
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
                   dependencies: this.dependencyManager.getDependencies(),
                   tsMorphProject: this.project,
                   outputEsm: this.config.outputEsm,
+                  extraDependencies: this.config.extraDependencies,
               });
     }
 

@@ -14,6 +14,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     requireDefaultEnvironment: z.optional(z.boolean()),
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
+    extraDependencies: z.optional(z.record(z.string())),
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

@@ -104,6 +104,9 @@ const FIXTURES: FixtureInfo[] = [
             bundle: true,
             includeUtilsOnUnionMembers: true,
             includeOtherInUnionTypes: true,
+            extraDependencies: {
+                "lodash-es": "^4.17.21",
+            },
         },
         targetRuntime: JavaScriptRuntime.NODE,
     },

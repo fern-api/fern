@@ -12,4 +12,5 @@ export interface SdkCustomConfig {
     requireDefaultEnvironment: boolean;
     timeoutInSeconds: number | "infinity" | undefined;
     skipResponseValidation: boolean;
+    extraDependencies: Record<string, string>;
 }

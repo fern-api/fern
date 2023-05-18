@@ -38,6 +38,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
             timeoutInSeconds: parsed?.timeoutInSeconds,
             skipResponseValidation: parsed?.skipResponseValidation ?? false,
+            extraDependencies: parsed?.extraDependencies ?? {},
         };
     }
 
@@ -77,6 +78,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 timeoutInSeconds: customConfig.timeoutInSeconds,
                 skipResponseValidation: customConfig.skipResponseValidation,
                 targetRuntime: this.targetRuntime,
+                extraDependencies: customConfig.extraDependencies,
             },
         });
 

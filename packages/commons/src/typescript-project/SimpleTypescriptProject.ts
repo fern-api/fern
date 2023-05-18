@@ -143,7 +143,10 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
         packageJson = produce(packageJson, (draft) => {
             if (Object.keys(this.dependencies[DependencyType.PROD]).length > 0) {
-                draft.dependencies = this.dependencies[DependencyType.PROD];
+                draft.dependencies = {
+                    ...this.dependencies[DependencyType.PROD],
+                    ...this.extraDependencies,
+                };
             }
             if (Object.keys(this.dependencies[DependencyType.PEER]).length > 0) {
                 draft.peerDependencies = this.dependencies[DependencyType.PEER];
