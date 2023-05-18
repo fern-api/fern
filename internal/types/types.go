@@ -28,6 +28,23 @@ type ObjectProperty struct {
 	ValueType    TypeReference     `json:"valueType,omitempty"`
 }
 
+// VisitValueType visits the ValueType field using the given visitor.
+func (o *ObjectProperty) VisitValueType(v TypeReferenceVisitor) error {
+	switch value := o.ValueType.(type) {
+	case *TypeReferenceNamed:
+		return v.VisitTypeReferenceNamed(value)
+	case *TypeReferenceContainer:
+		return v.VisitTypeReferenceContainer(value)
+	case *TypeReferencePrimitive:
+		return v.VisitTypeReferencePrimitive(value)
+	case *TypeReferenceUnknown:
+		return v.VisitTypeReferenceUnknown(value)
+	default:
+		// Unreachable.
+		return fmt.Errorf("unrecognized type %T for %T.ValueType", value, o)
+	}
+}
+
 // UnmarshalJSON implements json.Unmarshaler.
 func (o *ObjectProperty) UnmarshalJSON(data []byte) error {
 	var raw struct {
@@ -196,6 +213,16 @@ type DeclaredTypeName struct {
 // containers, etc).
 type TypeReference interface {
 	isTypeReference()
+}
+
+// TypeReferenceVisitor can visit all of the supported TypeReferences.
+// Any type that relies on the TypeReference union will have a method
+// that depends on this type.
+type TypeReferenceVisitor interface {
+	VisitTypeReferenceNamed(*TypeReferenceNamed) error
+	VisitTypeReferenceContainer(*TypeReferenceContainer) error
+	VisitTypeReferencePrimitive(*TypeReferencePrimitive) error
+	VisitTypeReferenceUnknown(*TypeReferenceUnknown) error
 }
 
 // TypeReferenceNamed is the named TypeReference.

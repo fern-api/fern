@@ -43,6 +43,64 @@ func Run(foo *Foo) {
 }
 ```
 
+### Visitors
+
+To ensure compile-time checks (as discussed below), every union has
+a visitor that can be used to visit its fields. Given that we're
+modeling unions as interfaces (which is idiomatic to Go), this means
+that the visitor must be implemented on the type the contains the
+union, and not on the union itself (i.e. interfaces can't implement
+methods).
+
+Note that if this ends up not being desirable, we can instead model
+unions as a `struct` with a field reserved for every possible value
+of the union (but this is not idiomatic).
+
+The current API is demonstrated in `internal/types/types_test.go`, but
+it's subject to change based on the overall union design.
+
+An example snippet is shown below:
+
+```go
+package example
+
+// visitor visits types associated with the TypeReference union.
+type visitor struct {}
+
+func (v *visitor) VisitTypeReferenceNamed(_ *TypeReferenceNamed) error { return nil }
+func (v *visitor) VisitTypeReferenceContainer(_ *TypeReferenceContainer) error { return nil }
+func (v *visitor) VisitTypeReferencePrimitive(_ *TypeReferencePrimitive) error { return nil }
+
+func (v *visitor) VisitTypeReferenceUnknown(_ *TypeReferenceUnknown) error { return nil }
+
+// ObjectProperty is a single property associated with an object.
+type ObjectProperty struct {
+	Docs         string            `json:"docs,omitempty"`
+	Availability *Availability     `json:"availability,omitempty"`
+	Name         *NameAndWireValue `json:"name,omitempty"`
+	ValueType    TypeReference     `json:"valueType,omitempty"`
+}
+
+func Run() error {
+	primitive := &ObjectProperty{
+		Docs: "union",
+		Availability: &Availability{
+			Status:  AvailabilityStatusInDevelopment,
+			Message: "in-development",
+		},
+		ValueType: &TypeReferencePrimitive{
+			Type:      "string",
+			Primitive: PrimitiveTypeString,
+		},
+	}
+	visitor := new(visitor)
+  if err := primitive.VisitValueType(visitor); err != nil {
+    return err
+  }
+  // ...
+}
+```
+
 ## Enums
 
 Enums implement `json.Unmarshaler` with a pointer receiver (unlike
