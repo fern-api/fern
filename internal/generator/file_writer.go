@@ -48,10 +48,6 @@ func (f *fileWriter) P(elements ...any) {
 }
 
 // Finish formats and writes the content stored in the writer's buffer into a *File.
-//
-// TODO: We might want to reserve the package declaration and import statements until
-// the very end and apply them here. That way we can capture all of the manual and
-// user-provided statements in a single block at the top of the file.
 func (f *fileWriter) File() (*File, error) {
 	// Start with the package declaration and import statements.
 	header := newFileWriter(f.filename)
