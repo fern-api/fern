@@ -2,13 +2,21 @@ import { Endpoint, EndpointSdkName, HttpMethod, Schema } from "@fern-fern/openap
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "../DummyOpenAPIV3ParserContext";
-import { X_FERN_ASYNC_CONFIG } from "../extensions/extensions";
+import { FernOpenAPIExtension, getExtension } from "../extensions/extensions";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertServer } from "./convertServer";
 import { convertParameters } from "./endpoint/convertParameters";
 import { convertRequest } from "./endpoint/convertRequest";
 import { convertResponse } from "./endpoint/convertResponse";
+
+interface FernAsyncConfig {
+    discriminant: {
+        name: string;
+        value: string;
+    };
+    "response-status-code": number;
+}
 
 export function convertPathItem(
     path: string,
@@ -106,11 +114,11 @@ function convertSyncAndAsyncEndpoints({
     const parameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const asynConfig = (operation as any)[X_FERN_ASYNC_CONFIG] as Record<string, any> | undefined;
-    if (asynConfig != null) {
-        const headerToIgnore = asynConfig.discriminant.name as string;
-        const headerValue = asynConfig.discriminant.value as string;
-        const asyncResponseStatusCode = asynConfig["response-status-code"] as number;
+    const asyncConfig = getExtension<FernAsyncConfig>(operation, FernOpenAPIExtension.ASYNC_CONFIG);
+    if (asyncConfig != null) {
+        const headerToIgnore = asyncConfig.discriminant.name;
+        const headerValue = asyncConfig.discriminant.value;
+        const asyncResponseStatusCode = asyncConfig["response-status-code"];
 
         const parametersWithoutHeader = parameters.filter((parameter) => {
             const resolvedParameter = isReferenceObject(parameter)
@@ -187,10 +195,8 @@ function convertSyncAndAsyncEndpoints({
 }
 
 function getSdkName({ operation }: { operation: OpenAPIV3.OperationObject }): EndpointSdkName | undefined {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const sdkMethodName = (operation as any)["x-fern-sdk-method-name"] as string | undefined;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const sdkGroupName = (operation as any)["x-fern-sdk-group-name"] as string | undefined;
+    const sdkMethodName = getExtension<string>(operation, FernOpenAPIExtension.SDK_METHOD_NAME);
+    const sdkGroupName = getExtension<string>(operation, FernOpenAPIExtension.SDK_GROUP_NAME);
     if (sdkMethodName != null) {
         return {
             groupName: sdkGroupName,
@@ -237,10 +243,11 @@ function convertToEndpoint({
         baseBreadcrumbs.push(suffix);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const isStreaming = (operation as any)["x-fern-streaming"] as boolean | undefined;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const requestNameOverride = (operation as any)["x-request-name"] as string | undefined;
+    const isStreaming = getExtension<boolean>(operation, FernOpenAPIExtension.STREAMING);
+    const requestNameOverride = getExtension<string>(operation, [
+        FernOpenAPIExtension.REQUEST_NAME_V1,
+        FernOpenAPIExtension.REQUEST_NAME_V2,
+    ]);
     const requestBreadcrumbs = [...baseBreadcrumbs, "Request"];
 
     const convertedParameters = convertParameters(parameters, context, requestBreadcrumbs);

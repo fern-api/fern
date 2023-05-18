@@ -1,5 +1,5 @@
 import { OpenAPIV3 } from "openapi-types";
-import { X_FERN_PASSWORD_VARIABLE_NAME, X_FERN_USERNAME_VARIABLE_NAME } from "./extensions";
+import { FernOpenAPIExtension, getExtension } from "./extensions";
 
 export interface BasicSecuritySchemeNames {
     usernameVariable?: string;
@@ -7,10 +7,14 @@ export interface BasicSecuritySchemeNames {
 }
 
 export function getBasicSecuritySchemeNames(securityScheme: OpenAPIV3.SecuritySchemeObject): BasicSecuritySchemeNames {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const usernameVariable = (securityScheme as any)[X_FERN_USERNAME_VARIABLE_NAME] as undefined | string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const passwordVariable = (securityScheme as any)[X_FERN_PASSWORD_VARIABLE_NAME] as undefined | string;
+    const usernameVariable = getExtension<string>(
+        securityScheme,
+        FernOpenAPIExtension.BASIC_AUTH_USERNAME_VARIABLE_NAME
+    );
+    const passwordVariable = getExtension<string>(
+        securityScheme,
+        FernOpenAPIExtension.BASIC_AUTH_PASSWORD_VARIABLE_NAME
+    );
 
     return {
         usernameVariable,
