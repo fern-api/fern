@@ -34,14 +34,13 @@ func (g *Generator) Generate() ([]*File, error) {
 }
 
 func (g *Generator) generate(ir *types.IntermediateRepresentation) ([]*File, error) {
+	// TODO: Every type should be generated into its own file,
+	// also taking its Fern package name into consideration.
 	writer := newFileWriter(fmt.Sprintf("%s.go", ir.APIName.SnakeCase.UnsafeName))
 	if err := writer.AddPackage(ir.APIName); err != nil {
 		return nil, err
 	}
 	for _, irType := range ir.Types {
-		// TODO: How do we want to delineate types across files? Should
-		// a single file contain all of the types? It should probably
-		// correspond to the FernFilepath associated with every type.
 		if err := writer.WriteType(irType); err != nil {
 			return nil, err
 		}
