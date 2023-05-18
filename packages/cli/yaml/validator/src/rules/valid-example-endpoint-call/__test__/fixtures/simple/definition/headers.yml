@@ -20,7 +20,6 @@ service:
             serviceHeader: hello
             endpointHeader: hello
         - headers:
-            optionalGlobalHeader: hello
             serviceHeader: hello
             optionalServiceHeader: hello
             endpointHeader: hello
