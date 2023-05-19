@@ -43,6 +43,9 @@ class EndpointResponseCodeWriter:
             f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_text_method(is_async=self._is_async)}(): "
         )
         with writer.indent():
+            writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
+            with writer.indent():
+                writer.write_line("continue")
             writer.write("yield ")
             writer.write_node(
                 Pydantic.parse_obj_as(

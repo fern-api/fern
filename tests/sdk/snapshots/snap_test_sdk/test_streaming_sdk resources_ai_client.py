@@ -26,6 +26,8 @@ class AiClient:
         ) as _response:
             if 200 <= _response.status_code < 300:
                 for _text in _response.iter_text():
+                    if len(_text) == 0:
+                        continue
                     yield pydantic.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
                 return
             try:
@@ -49,6 +51,8 @@ class AsyncAiClient:
             ) as _response:
                 if 200 <= _response.status_code < 300:
                     async for _text in _response.aiter_text():
+                        if len(_text) == 0:
+                            continue
                         yield pydantic.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
                     return
                 try:
