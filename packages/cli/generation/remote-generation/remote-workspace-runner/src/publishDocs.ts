@@ -44,10 +44,10 @@ export async function publishDocs({
     } else {
         registerDocsResponse.error._visit({
             unauthorizedError: () => {
-                return context.failAndThrow("Insufficient permissions.");
+                return context.failAndThrow("Insufficient permissions. Failed to publish docs to " + domain);
             },
             userNotInOrgError: () => {
-                return context.failAndThrow("Insufficient permissions.");
+                return context.failAndThrow("Insufficient permissions. Failed to publish docs to " + domain);
             },
             _other: (value) => {
                 if (value.reason === "non-json") {
