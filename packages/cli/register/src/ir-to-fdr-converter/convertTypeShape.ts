@@ -136,8 +136,8 @@ export function convertTypeReference(
                     string: FernRegistry.api.v1.register.PrimitiveType.string,
                     boolean: FernRegistry.api.v1.register.PrimitiveType.boolean,
                     dateTime: FernRegistry.api.v1.register.PrimitiveType.datetime,
-                    date: FernRegistry.api.v1.register.PrimitiveType.string,
-                    base64: FernRegistry.api.v1.register.PrimitiveType.string,
+                    date: FernRegistry.api.v1.register.PrimitiveType.date,
+                    base64: FernRegistry.api.v1.register.PrimitiveType.base64,
                     uuid: FernRegistry.api.v1.register.PrimitiveType.uuid,
                     _unknown: () => {
                         throw new Error("Unknown primitive: " + primitive);
