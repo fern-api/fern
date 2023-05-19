@@ -269,12 +269,17 @@ export async function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.streamingResponse != null);
     });
 
+    const hasFileDownloadEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
+        return service.endpoints.some((endpoint) => endpoint.response?.type === "fileDownload");
+    });
+
     return {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
         sdkConfig: {
             isAuthMandatory,
             hasStreamingEndpoints,
+            hasFileDownloadEndpoints,
             platformHeaders: {
                 language: "X-Fern-Language",
                 sdkName: "X-Fern-SDK-Name",

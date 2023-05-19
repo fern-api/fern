@@ -103,6 +103,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -1278,6 +1279,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -1726,6 +1728,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -7505,6 +7508,7 @@ exports[`ir {"name":"migration","version":"v1"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -8361,6 +8365,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -9684,6 +9689,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -10822,6 +10828,7 @@ exports[`ir {"name":"packages"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -13035,6 +13042,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -22108,6 +22116,7 @@ exports[`ir {"name":"simple"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -22563,6 +22572,7 @@ exports[`ir {"name":"streaming"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": true,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
@@ -23454,6 +23464,7 @@ exports[`ir {"name":"variables"} 1`] = `
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
