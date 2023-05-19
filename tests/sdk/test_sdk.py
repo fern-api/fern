@@ -139,3 +139,14 @@ def test_file_upload_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
         filename_of_test=__file__,
         custom_config={"use_api_name_in_package": True},
     )
+
+
+def test_streaming_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
+    run_snapshot_test(
+        snapshot=snapshot,
+        fixture_name="streaming",
+        tmpdir=tmpdir,
+        cli=cli,
+        filename_of_test=__file__,
+        custom_config={"use_api_name_in_package": True},
+    )

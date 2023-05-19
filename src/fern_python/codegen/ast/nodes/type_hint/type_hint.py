@@ -81,6 +81,20 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
+    def iterator(wrapped_type: TypeHint) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("Iterator"),
+            type_parameters=[TypeParameter(wrapped_type)],
+        )
+
+    @staticmethod
+    def async_iterator(wrapped_type: TypeHint) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("AsyncIterator"),
+            type_parameters=[TypeParameter(wrapped_type)],
+        )
+
+    @staticmethod
     def list(wrapped_type: TypeHint) -> TypeHint:
         return TypeHint(
             type=get_reference_to_typing_import("List"),
