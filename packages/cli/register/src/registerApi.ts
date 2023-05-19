@@ -4,7 +4,7 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRegistry } from "@fern-fern/registry";
+import { FernRegistry } from "@fern-fern/registry-node";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
 
 export async function registerApi({

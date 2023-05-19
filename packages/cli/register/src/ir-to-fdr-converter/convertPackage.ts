@@ -1,5 +1,5 @@
 import * as Ir from "@fern-fern/ir-model";
-import { FernRegistry } from "@fern-fern/registry";
+import { FernRegistry } from "@fern-fern/registry-node";
 import { startCase } from "lodash-es";
 import { convertTypeId, convertTypeReference } from "./convertTypeShape";
 
