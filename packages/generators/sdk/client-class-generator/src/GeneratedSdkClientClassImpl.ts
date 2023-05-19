@@ -583,7 +583,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 type: getTextOfTsNode(context.base.coreUtilities.fetcher.FetchFunction._getReferenceToType()),
                 hasQuestionToken: true,
             });
-            if (this.intermediateRepresentation.sdkConfig.hasStreamingEndpoints) {
+            if (this.doesSdkUseStreamingFetcher()) {
                 properties.push({
                     name: GeneratedSdkClientClassImpl.CUSTOM_STREAMING_FETCHER_PROPERTY_NAME,
                     type: getTextOfTsNode(
@@ -598,6 +598,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
             properties,
         };
+    }
+
+    private doesSdkUseStreamingFetcher(): boolean {
+        if (this.intermediateRepresentation.sdkConfig.hasStreamingEndpoints) {
+            return true;
+        }
+        return visitJavaScriptRuntime(this.targetRuntime, {
+            node: () => this.intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints,
+            browser: () => false,
+        });
     }
 
     private getBasicAuthUsernameOptionKey(basicAuthScheme: BasicAuthScheme): string {
