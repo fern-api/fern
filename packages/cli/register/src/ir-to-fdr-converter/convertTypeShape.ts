@@ -1,5 +1,5 @@
 import * as Ir from "@fern-fern/ir-model";
-import { FernRegistry } from "@fern-fern/registry";
+import { FernRegistry } from "@fern-fern/registry-node";
 
 export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.register.TypeShape {
     return Ir.types.Type._visit<FernRegistry.api.v1.register.TypeShape>(irType, {

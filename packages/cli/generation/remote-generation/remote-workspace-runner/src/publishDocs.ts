@@ -7,7 +7,7 @@ import { registerApi } from "@fern-api/register";
 import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsDefinition, FernWorkspace } from "@fern-api/workspace-loader";
-import { FernRegistry } from "@fern-fern/registry";
+import { FernRegistry } from "@fern-fern/registry-node";
 import chalk from "chalk";
 
 export async function publishDocs({
@@ -28,7 +28,7 @@ export async function publishDocs({
     audiences: Audiences;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
-    await fdr.docs.v1.registerDocs(
+    const registerDocsResponse = await fdr.docs.v1.write.registerDocs(
         await constructRegisterDocsRequest({
             docsDefinition,
             domain,
@@ -39,7 +39,36 @@ export async function publishDocs({
             audiences,
         })
     );
-    context.logger.info(chalk.green("Published docs to " + domain));
+    if (registerDocsResponse.ok) {
+        context.logger.info(chalk.green("Published docs to " + domain));
+    } else {
+        registerDocsResponse.error._visit({
+            unauthorizedError: () => {
+                return context.failAndThrow("Insufficient permissions. Failed to publish docs to " + domain);
+            },
+            userNotInOrgError: () => {
+                return context.failAndThrow("Insufficient permissions. Failed to publish docs to " + domain);
+            },
+            _other: (value) => {
+                if (value.reason === "non-json") {
+                    context.logger.error("Request failed. Failed to publish docs to " + domain);
+                    context.logger.debug(
+                        `Received status code ${value.statusCode}. The body of the response was ${value.rawBody}`
+                    );
+                } else if (value.reason === "status-code") {
+                    context.logger.error("Request failed. Failed to publish docs to " + domain);
+                    context.logger.debug(
+                        `Received status code ${value.statusCode}. The body of the response was ${JSON.stringify(
+                            value.body
+                        )}`
+                    );
+                } else if (value.reason === "timeout") {
+                    context.logger.error("Request timed out. Failed to publish docs to " + domain);
+                }
+            },
+        });
+        return context.failAndThrow();
+    }
 }
 
 async function constructRegisterDocsRequest({
@@ -58,7 +87,7 @@ async function constructRegisterDocsRequest({
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
-}): Promise<FernRegistry.docs.v1.RegisterDocsRequest> {
+}): Promise<FernRegistry.docs.v1.write.RegisterDocsRequest> {
     return {
         domain,
         orgId: FernRegistry.OrgId(organization),
@@ -96,7 +125,7 @@ async function convertDocsConfiguration({
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
-}): Promise<FernRegistry.docs.v1.DocsConfig> {
+}): Promise<FernRegistry.docs.v1.write.DocsConfig> {
     return {
         logo: docsDefinition.config.logo != null ? await convertLogoReference(docsDefinition.config.logo) : undefined,
         navigation: {
@@ -110,10 +139,10 @@ async function convertDocsConfiguration({
     };
 }
 
-async function convertLogoReference(logoReference: LogoReference): Promise<FernRegistry.docs.v1.Url> {
+async function convertLogoReference(logoReference: LogoReference): Promise<FernRegistry.docs.v1.write.Url> {
     switch (logoReference.type) {
         case "url":
-            return FernRegistry.docs.v1.Url(logoReference.url);
+            return FernRegistry.docs.v1.write.Url(logoReference.url);
         case "file": {
             // TODO upload to s3
             throw new Error("Logo must be a URL");
@@ -139,14 +168,14 @@ async function convertNavigationItem({
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
-}): Promise<FernRegistry.docs.v1.NavigationItem> {
+}): Promise<FernRegistry.docs.v1.write.NavigationItem> {
     switch (item.type) {
         case "page":
-            return FernRegistry.docs.v1.NavigationItem.page(
+            return FernRegistry.docs.v1.write.NavigationItem.page(
                 constructPageId(relative(docsDefinition.absoluteFilepath, item.absolutePath))
             );
         case "section":
-            return FernRegistry.docs.v1.NavigationItem.section({
+            return FernRegistry.docs.v1.write.NavigationItem.section({
                 title: item.title,
                 items: await Promise.all(
                     item.items.map((nestedItem) =>
@@ -170,7 +199,7 @@ async function convertNavigationItem({
                 token,
                 audiences: combineAudiences(audiences, item.audiences),
             });
-            return FernRegistry.docs.v1.NavigationItem.api({
+            return FernRegistry.docs.v1.write.NavigationItem.api({
                 title: item.title,
                 api: apiDefinitionId,
             });
@@ -180,6 +209,6 @@ async function convertNavigationItem({
     }
 }
 
-function constructPageId(pathToPage: RelativeFilePath): FernRegistry.docs.v1.PageId {
-    return FernRegistry.docs.v1.PageId(pathToPage);
+function constructPageId(pathToPage: RelativeFilePath): FernRegistry.docs.v1.write.PageId {
+    return FernRegistry.docs.v1.write.PageId(pathToPage);
 }

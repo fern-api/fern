@@ -4549,7 +4549,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.1839
-    "@fern-fern/registry": ^0.0.328
+    "@fern-fern/registry-node": ^0.0.425
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -4585,7 +4585,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.193
     "@fern-fern/ir-model": 0.0.1839
-    "@fern-fern/registry": ^0.0.328
+    "@fern-fern/registry-node": ^0.0.425
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -4695,7 +4695,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/registry": ^0.0.328
+    "@fern-fern/registry-node": ^0.0.425
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -5277,6 +5277,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/registry-node@npm:^0.0.425":
+  version: 0.0.425
+  resolution: "@fern-fern/registry-node@npm:0.0.425"
+  dependencies:
+    "@types/url-join": 4.0.1
+    "@ungap/url-search-params": 0.2.2
+    axios: 0.27.2
+    js-base64: 3.7.2
+    url-join: 4.0.1
+  checksum: 16cd0006ef511c8dd945238d82eb1e7cf6dc0e56e7526bceb74d171f3fc0c34054dcc52a8f6c16e7c43a402f9f3faf3e776542fccac4c81d5f390b7ae9cd699c
+  languageName: node
+  linkType: hard
+
 "@fern-fern/registry@npm:0.0.300":
   version: 0.0.300
   resolution: "@fern-fern/registry@npm:0.0.300"
@@ -5286,18 +5299,6 @@ __metadata:
     js-base64: 3.7.2
     url-join: 4.0.1
   checksum: 8e0a3ee0afb288e5d1015d49c3e8c46ce54b4d052fa95d38c792edbac3727f68ea73e14abc84ab2b66e3842d4d6be12ca8d57eb64a31fbd45425f2bef2b0ffe5
-  languageName: node
-  linkType: hard
-
-"@fern-fern/registry@npm:^0.0.328":
-  version: 0.0.328
-  resolution: "@fern-fern/registry@npm:0.0.328"
-  dependencies:
-    "@types/url-join": 4.0.1
-    axios: 0.27.2
-    js-base64: 3.7.2
-    url-join: 4.0.1
-  checksum: 9661dce1c444b78dadb9f38ad779872b763fdf7c6e49ae8254e8a541eb6b57d997170fc7fdb6687eb102ba379e2fe0bbc6d5ceeb10ede2c5e0754dfb0028d7ee
   languageName: node
   linkType: hard
 
@@ -7636,6 +7637,13 @@ __metadata:
     "@typescript-eslint/types": 5.32.0
     eslint-visitor-keys: ^3.3.0
   checksum: 1f9b756d648c2346a6e8538ffde729d3d9ce6621fded3d9f15c96aa0ebf8f511daf8232470423fb36359c2113538a4daaf3336181be78a0cfbfd297af91ce9ba
+  languageName: node
+  linkType: hard
+
+"@ungap/url-search-params@npm:0.2.2":
+  version: 0.2.2
+  resolution: "@ungap/url-search-params@npm:0.2.2"
+  checksum: 779506cca3d36bc291e4e6eb0484e8bd87186cbe5bb6a6d37f17a866c47069d8a3a20b9331ef0a5c96f26b4db8210cf26c6e5a1f4a6c8be3be13a619e82cb93c
   languageName: node
   linkType: hard
 
