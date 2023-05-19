@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React from "react";
 import { PackagePath } from "../../commons/PackagePath";
 import { ResolvedUrlPath, UrlPathResolver } from "./url-path-resolver/UrlPathResolver";
@@ -8,12 +8,17 @@ export const ApiDefinitionContext = React.createContext<() => ApiDefinitionConte
 });
 
 export interface ApiDefinitionContextValue {
-    api: FernRegistry.ApiDefinition;
-    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition;
-    resolveTypeByName: (packagePath: PackagePath, typeName: string) => FernRegistry.TypeDefinition | undefined;
-    getPackagePathForTypeId: (typeId: FernRegistry.TypeId) => PackagePath;
-    resolveEndpointById: (packagePath: PackagePath, endpointId: string) => FernRegistry.EndpointDefinition | undefined;
-    resolveSubpackageById: (subpackageId: FernRegistry.SubpackageId) => FernRegistry.ApiDefinitionSubpackage;
+    api: FernRegistryApiRead.ApiDefinition;
+    resolveTypeById: (typeId: FernRegistryApiRead.TypeId) => FernRegistryApiRead.TypeDefinition;
+    resolveTypeByName: (packagePath: PackagePath, typeName: string) => FernRegistryApiRead.TypeDefinition | undefined;
+    getPackagePathForTypeId: (typeId: FernRegistryApiRead.TypeId) => PackagePath;
+    resolveEndpointById: (
+        packagePath: PackagePath,
+        endpointId: string
+    ) => FernRegistryApiRead.EndpointDefinition | undefined;
+    resolveSubpackageById: (
+        subpackageId: FernRegistryApiRead.SubpackageId
+    ) => FernRegistryApiRead.ApiDefinitionSubpackage;
     urlPathResolver: UrlPathResolver;
     onClickSidebarItem: (item: ResolvedUrlPath) => void;
     registerSidebarItemClickListener: (path: ResolvedUrlPath, listener: () => void) => () => void;

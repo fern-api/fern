@@ -1,11 +1,11 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useMemo } from "react";
 import { ResolvedSubpackagePath } from "../../api-context/url-path-resolver/UrlPathResolver";
 import { Endpoint } from "../endpoints/Endpoint";
 
 export declare namespace SubpackageEndpoint {
     export interface Props extends Omit<Endpoint.Props, "resolvedUrlPath"> {
-        subpackageId: FernRegistry.SubpackageId;
+        subpackageId: FernRegistryApiRead.SubpackageId;
     }
 }
 

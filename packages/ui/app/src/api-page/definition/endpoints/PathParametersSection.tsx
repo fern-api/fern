@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback, useMemo } from "react";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointParametersSection } from "./EndpointParametersSection";
@@ -6,7 +6,7 @@ import { EndpointPathParameter } from "./EndpointPathParameter";
 
 export declare namespace PathParametersSection {
     export interface Props {
-        pathParameters: FernRegistry.PathParameter[];
+        pathParameters: FernRegistryApiRead.PathParameter[];
     }
 }
 

@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
@@ -18,7 +18,7 @@ import { QueryParametersSection } from "./QueryParametersSection";
 export declare namespace EndpointContent {
     export interface Props {
         resolvedUrlPath: ResolvedUrlPath;
-        endpoint: FernRegistry.EndpointDefinition;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
         setIsInView?: (endpointId: string, isInView: boolean) => void;
     }
 }

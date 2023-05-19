@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
@@ -14,7 +14,7 @@ import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinitio
 export declare namespace DiscriminatedUnionVariant {
     export interface Props {
         discriminant: string;
-        unionVariant: FernRegistry.DiscriminatedUnionMember;
+        unionVariant: FernRegistryApiRead.DiscriminatedUnionVariant;
     }
 }
 
@@ -25,12 +25,12 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
     const shape = useMemo(() => {
-        return FernRegistry.TypeShape.object({
+        return FernRegistryApiRead.TypeShape.object({
             ...unionVariant.additionalProperties,
             properties: [
                 {
                     key: discriminant,
-                    valueType: FernRegistry.TypeReference.primitive(FernRegistry.PrimitiveType.string()),
+                    valueType: FernRegistryApiRead.TypeReference.primitive(FernRegistryApiRead.PrimitiveType.string()),
                 },
                 ...unionVariant.additionalProperties.properties,
             ],

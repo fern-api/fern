@@ -1,11 +1,11 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { TypeShorthand } from "./TypeShorthand";
 
 export declare namespace ReferencedTypePreviewPart {
     export interface Props {
-        typeId: FernRegistry.TypeId;
+        typeId: FernRegistryApiRead.TypeId;
         plural: boolean;
     }
 }

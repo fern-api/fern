@@ -3,6 +3,7 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../../cli/services" },
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/loadable" },
     { "path": "../../commons/react/common-components" },

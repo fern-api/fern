@@ -1,11 +1,11 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useMemo } from "react";
 import { EndpointParameter } from "./EndpointParameter";
 import { EndpointParametersSection } from "./EndpointParametersSection";
 
 export declare namespace QueryParametersSection {
     export interface Props {
-        queryParameters: FernRegistry.QueryParameter[];
+        queryParameters: FernRegistryApiRead.QueryParameter[];
     }
 }
 

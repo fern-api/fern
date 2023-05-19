@@ -1,6 +1,6 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { JsonExample } from "../../examples/json-example/JsonExample";
 import { TitledExample } from "../../examples/TitledExample";
@@ -8,8 +8,8 @@ import { useEndpointContext } from "../context/useEndpointContext";
 
 export declare namespace EndpointExample {
     export interface Props {
-        endpoint: FernRegistry.EndpointDefinition;
-        example: FernRegistry.ExampleEndpointCall;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+        example: FernRegistryApiRead.ExampleEndpointCall;
     }
 }
 

@@ -1,15 +1,13 @@
 import { useBooleanState } from "@fern-api/react-commons";
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback, useEffect, useState } from "react";
 import { generatePath, useNavigate } from "react-router-dom";
-import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { DefinitionRoutes } from "../../routes";
-import { useCurrentApiIdOrThrow } from "../../routes/useCurrentApiId";
 
 export declare namespace useSubpackageScrolling {
     export interface Args {
-        subpackageId: FernRegistry.SubpackageId;
+        subpackageId: FernRegistryApiRead.SubpackageId;
         containerRef: HTMLElement | undefined;
     }
 
@@ -55,17 +53,12 @@ export function useSubpackageScrolling({
     }, [setIsScrolling, setIsNotScrolling, containerRef]);
 
     const endpointInView = endpointsInView[0];
-    const organizationId = useCurrentOrganizationIdOrThrow();
-    const apiId = useCurrentApiIdOrThrow();
     const navigate = useNavigate();
     const { urlPathResolver } = useApiDefinitionContext();
     useEffect(() => {
         if (isScrolling && endpointInView != null) {
             navigate(
                 generatePath(DefinitionRoutes.API_PACKAGE.absolutePath, {
-                    ENVIRONMENT_ID: "latest",
-                    ORGANIZATION_ID: organizationId,
-                    API_ID: apiId,
                     "*": urlPathResolver.getUrlPathForEndpoint(subpackageId, endpointInView),
                 })
             );

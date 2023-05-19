@@ -4872,10 +4872,11 @@ __metadata:
     "@fern-api/react-commons": "workspace:*"
     "@fern-api/react-query-utils": "workspace:*"
     "@fern-api/routing-utils": "workspace:*"
+    "@fern-api/services": "workspace:*"
     "@fern-api/split-view": "workspace:*"
     "@fern-api/theme": "workspace:*"
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
-    "@fern-fern/registry": 0.0.300
+    "@fern-fern/registry-browser": 0.0.391
     "@fontsource/ibm-plex-mono": ^4.5.13
     "@fontsource/inter": ^4.5.11
     "@tanstack/react-query": ^4.24.10
@@ -5277,15 +5278,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry@npm:0.0.300":
-  version: 0.0.300
-  resolution: "@fern-fern/registry@npm:0.0.300"
+"@fern-fern/registry-browser@npm:0.0.391":
+  version: 0.0.391
+  resolution: "@fern-fern/registry-browser@npm:0.0.391"
   dependencies:
     "@types/url-join": 4.0.1
+    "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 8e0a3ee0afb288e5d1015d49c3e8c46ce54b4d052fa95d38c792edbac3727f68ea73e14abc84ab2b66e3842d4d6be12ca8d57eb64a31fbd45425f2bef2b0ffe5
+  checksum: 2bed23c9c53614b39fbc820309f18385c048b68a53d0814c58f16edf72cf891b5b076593c4047b8afafcf7e88208f1824948d77b2fb8d742eb458eaae41a2638
   languageName: node
   linkType: hard
 
@@ -7636,6 +7638,13 @@ __metadata:
     "@typescript-eslint/types": 5.32.0
     eslint-visitor-keys: ^3.3.0
   checksum: 1f9b756d648c2346a6e8538ffde729d3d9ce6621fded3d9f15c96aa0ebf8f511daf8232470423fb36359c2113538a4daaf3336181be78a0cfbfd297af91ce9ba
+  languageName: node
+  linkType: hard
+
+"@ungap/url-search-params@npm:0.2.2":
+  version: 0.2.2
+  resolution: "@ungap/url-search-params@npm:0.2.2"
+  checksum: 779506cca3d36bc291e4e6eb0484e8bd87186cbe5bb6a6d37f17a866c47069d8a3a20b9331ef0a5c96f26b4db8210cf26c6e5a1f4a6c8be3be13a619e82cb93c
   languageName: node
   linkType: hard
 

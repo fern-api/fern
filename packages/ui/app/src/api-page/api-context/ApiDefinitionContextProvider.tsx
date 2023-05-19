@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React, { useCallback, useMemo, useRef } from "react";
 import { PackagePath } from "../../commons/PackagePath";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
@@ -7,7 +7,7 @@ import { ResolvedUrlPath, UrlPathResolverImpl } from "./url-path-resolver/UrlPat
 
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
-        api: FernRegistry.ApiDefinition;
+        api: FernRegistryApiRead.ApiDefinition;
     }>;
 }
 
@@ -17,7 +17,7 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
      */
 
     const resolveSubpackageById = useCallback(
-        (subpackageId: FernRegistry.SubpackageId): FernRegistry.ApiDefinitionSubpackage => {
+        (subpackageId: FernRegistryApiRead.SubpackageId): FernRegistryApiRead.ApiDefinitionSubpackage => {
             const subpackage = api.subpackages[subpackageId];
             if (subpackage == null) {
                 throw new Error("Subpackage does not exist");
@@ -32,7 +32,7 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
      */
 
     const resolveTypeById = useCallback(
-        (typeId: FernRegistry.TypeId): FernRegistry.TypeDefinition => {
+        (typeId: FernRegistryApiRead.TypeId): FernRegistryApiRead.TypeDefinition => {
             const type = api.types[typeId];
             if (type == null) {
                 throw new Error("Type does not exist");
@@ -43,7 +43,7 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
     );
 
     const resolveTypeByName = useCallback(
-        (packagePath: PackagePath, typeName: string): FernRegistry.TypeDefinition | undefined => {
+        (packagePath: PackagePath, typeName: string): FernRegistryApiRead.TypeDefinition | undefined => {
             return resolvePackageItem({
                 package_: api.rootPackage,
                 packagePath,
@@ -65,7 +65,7 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
     );
 
     const getPackagePathForTypeId = useCallback(
-        (typeId: FernRegistry.TypeId) => {
+        (typeId: FernRegistryApiRead.TypeId) => {
             return typeIdToPackagePathCache.get(typeId);
         },
         [typeIdToPackagePathCache]
@@ -76,7 +76,7 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
      */
 
     const resolveEndpointById = useCallback(
-        (packagePath: PackagePath, endpointId: string): FernRegistry.EndpointDefinition | undefined => {
+        (packagePath: PackagePath, endpointId: string): FernRegistryApiRead.EndpointDefinition | undefined => {
             return resolvePackageItem({
                 package_: api.rootPackage,
                 packagePath,
@@ -169,10 +169,12 @@ function resolvePackageItem<T>({
     resolveSubpackageById,
     getItem,
 }: {
-    package_: FernRegistry.ApiDefinitionPackage;
+    package_: FernRegistryApiRead.ApiDefinitionPackage;
     packagePath: PackagePath;
-    resolveSubpackageById: (subpackageId: FernRegistry.SubpackageId) => FernRegistry.ApiDefinitionSubpackage;
-    getItem: (package_: FernRegistry.ApiDefinitionPackage) => T;
+    resolveSubpackageById: (
+        subpackageId: FernRegistryApiRead.SubpackageId
+    ) => FernRegistryApiRead.ApiDefinitionSubpackage;
+    getItem: (package_: FernRegistryApiRead.ApiDefinitionPackage) => T;
 }): T | undefined {
     const [nextSubpackage, ...remainingPackagePath] = packagePath;
     if (nextSubpackage == null) {
@@ -195,10 +197,12 @@ function findSubpackageByName({
     resolveSubpackageById,
     subpackageName,
 }: {
-    package_: FernRegistry.ApiDefinitionPackage;
-    resolveSubpackageById: (subpackageId: FernRegistry.SubpackageId) => FernRegistry.ApiDefinitionSubpackage;
+    package_: FernRegistryApiRead.ApiDefinitionPackage;
+    resolveSubpackageById: (
+        subpackageId: FernRegistryApiRead.SubpackageId
+    ) => FernRegistryApiRead.ApiDefinitionSubpackage;
     subpackageName: string;
-}): FernRegistry.ApiDefinitionSubpackage | undefined {
+}): FernRegistryApiRead.ApiDefinitionSubpackage | undefined {
     return findItemByName({
         ids: package_.subpackages,
         name: subpackageName,
@@ -212,10 +216,10 @@ function findTypeByName({
     resolveTypeById,
     typeName,
 }: {
-    package_: FernRegistry.ApiDefinitionPackage;
-    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition;
+    package_: FernRegistryApiRead.ApiDefinitionPackage;
+    resolveTypeById: (typeId: FernRegistryApiRead.TypeId) => FernRegistryApiRead.TypeDefinition;
     typeName: string;
-}): FernRegistry.TypeDefinition | undefined {
+}): FernRegistryApiRead.TypeDefinition | undefined {
     return findItemByName({
         ids: package_.types,
         name: typeName,

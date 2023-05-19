@@ -1,11 +1,11 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 
 export declare namespace EndpointTypeSection {
     export interface Props {
-        httpBody: FernRegistry.HttpBody;
+        httpBody: FernRegistryApiRead.HttpBody;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
     }
 }
@@ -17,7 +17,7 @@ export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ httpB
             {httpBody.type._visit({
                 object: (object) => (
                     <TypeDefinition
-                        typeShape={FernRegistry.TypeShape.object(object)}
+                        typeShape={FernRegistryApiRead.TypeShape.object(object)}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
                     />

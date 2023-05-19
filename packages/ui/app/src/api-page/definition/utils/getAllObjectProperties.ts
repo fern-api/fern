@@ -1,9 +1,9 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 
 export function getAllObjectProperties(
-    object: FernRegistry.ObjectType,
-    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition
-): FernRegistry.ObjectProperty[] {
+    object: FernRegistryApiRead.ObjectType,
+    resolveTypeById: (typeId: FernRegistryApiRead.TypeId) => FernRegistryApiRead.TypeDefinition
+): FernRegistryApiRead.ObjectProperty[] {
     return [
         ...object.properties,
         ...object.extends.flatMap((typeId) => {

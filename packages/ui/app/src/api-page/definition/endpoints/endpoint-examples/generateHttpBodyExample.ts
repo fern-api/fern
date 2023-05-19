@@ -1,9 +1,9 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 
 export function generateHttpBodyExample(
-    type: FernRegistry.HttpBodyShape,
-    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition
+    type: FernRegistryApiRead.HttpBodyShape,
+    resolveTypeById: (typeId: FernRegistryApiRead.TypeId) => FernRegistryApiRead.TypeDefinition
 ): unknown {
     return type._visit({
         object: (object) => generateExampleObject(object, resolveTypeById),
@@ -13,8 +13,8 @@ export function generateHttpBodyExample(
 }
 
 function generateExampleObject(
-    object: FernRegistry.ObjectType,
-    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition
+    object: FernRegistryApiRead.ObjectType,
+    resolveTypeById: (typeId: FernRegistryApiRead.TypeId) => FernRegistryApiRead.TypeDefinition
 ): Record<string, unknown> {
     const example: Record<string, unknown> = {};
     for (const property of getAllObjectProperties(object, resolveTypeById)) {
@@ -24,26 +24,26 @@ function generateExampleObject(
 }
 
 function generateExampleFromId(
-    id: FernRegistry.TypeId,
-    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition
+    id: FernRegistryApiRead.TypeId,
+    resolveTypeById: (typeId: FernRegistryApiRead.TypeId) => FernRegistryApiRead.TypeDefinition
 ): unknown {
     return resolveTypeById(id).shape._visit<unknown>({
         object: (object) => generateExampleObject(object, resolveTypeById),
-        undiscriminatedUnion: ({ members }) => {
-            const member = members[0];
-            if (member == null) {
+        undiscriminatedUnion: ({ variants }) => {
+            const variant = variants[0];
+            if (variant == null) {
                 return {};
             }
-            return generateExampleFromTypeReference(member.type, resolveTypeById);
+            return generateExampleFromTypeReference(variant.type, resolveTypeById);
         },
-        discriminatedUnion: ({ discriminant, members }) => {
-            const member = members[0];
-            if (member == null) {
+        discriminatedUnion: ({ discriminant, variants }) => {
+            const variant = variants[0];
+            if (variant == null) {
                 return {};
             }
             return {
-                [discriminant]: member.discriminantValue,
-                ...generateExampleObject(member.additionalProperties, resolveTypeById),
+                [discriminant]: variant.discriminantValue,
+                ...generateExampleObject(variant.additionalProperties, resolveTypeById),
             };
         },
         alias: (type) => generateExampleFromTypeReference(type, resolveTypeById),
@@ -53,10 +53,10 @@ function generateExampleFromId(
 }
 
 function generateExampleFromTypeReference(
-    reference: FernRegistry.TypeReference,
-    resolveTypeById: (typeId: FernRegistry.TypeId) => FernRegistry.TypeDefinition
+    reference: FernRegistryApiRead.TypeReference,
+    resolveTypeById: (typeId: FernRegistryApiRead.TypeId) => FernRegistryApiRead.TypeDefinition
 ): unknown {
-    return reference._visit({
+    return reference._visit<unknown>({
         primitive: (primitive) => generateExamplePrimitive(primitive),
         id: (id) => generateExampleFromId(id, resolveTypeById),
         optional: ({ itemType }) => generateExampleFromTypeReference(itemType, resolveTypeById),
@@ -70,11 +70,16 @@ function generateExampleFromTypeReference(
             ),
         }),
         unknown: () => ({}),
+        literal: (literal) =>
+            literal._visit({
+                stringLiteral: (value) => value,
+                _other: () => null,
+            }),
         _other: () => null,
     });
 }
 
-function generateExamplePrimitive(reference: FernRegistry.PrimitiveType): string | number | boolean | null {
+function generateExamplePrimitive(reference: FernRegistryApiRead.PrimitiveType): string | number | boolean | null {
     return reference._visit<string | number | boolean | null>({
         string: () => "string",
         integer: () => 0,

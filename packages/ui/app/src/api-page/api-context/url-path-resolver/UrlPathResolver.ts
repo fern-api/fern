@@ -1,35 +1,39 @@
 import { assertNever, entries } from "@fern-api/core-utils";
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 
 export type ResolvedUrlPath = ResolvedTopLevelEndpointPath | ResolvedSubpackagePath;
 
 export interface ResolvedTopLevelEndpointPath {
     type: "top-level-endpoint";
-    endpoint: FernRegistry.EndpointDefinition;
+    endpoint: FernRegistryApiRead.EndpointDefinition;
 }
 
 export interface ResolvedSubpackagePath {
     type: "subpackage";
-    subpackageId: FernRegistry.SubpackageId;
+    subpackageId: FernRegistryApiRead.SubpackageId;
     endpointId: string | undefined;
 }
 
 export interface UrlPathResolver {
-    getUrlPathForSubpackage(subpackageId: FernRegistry.SubpackageId): string;
-    getUrlPathForEndpoint(subpackageId: FernRegistry.SubpackageId, endpointId: string): string;
+    getUrlPathForSubpackage(subpackageId: FernRegistryApiRead.SubpackageId): string;
+    getUrlPathForEndpoint(subpackageId: FernRegistryApiRead.SubpackageId, endpointId: string): string;
     getUrlPathForTopLevelEndpoint(endpointId: string): string;
     resolvePath(args: { pathname: string; hash: string }): ResolvedUrlPath | undefined;
     getHashForEndpoint(endpointId: string): string;
     getHtmlIdForEndpoint(endpointId: string): string;
     isTopLevelEndpointSelected(args: { endpointId: string; pathname: string; hash: string }): boolean;
     isSubpackageEndpointSelected(args: {
-        subpackageId: FernRegistry.SubpackageId;
+        subpackageId: FernRegistryApiRead.SubpackageId;
         pathname: string;
         hash: string;
     }): boolean;
-    isSubpackageSelected(args: { subpackageId: FernRegistry.SubpackageId; pathname: string; hash: string }): boolean;
+    isSubpackageSelected(args: {
+        subpackageId: FernRegistryApiRead.SubpackageId;
+        pathname: string;
+        hash: string;
+    }): boolean;
     isEndpointSelected(args: {
-        subpackageId: FernRegistry.SubpackageId;
+        subpackageId: FernRegistryApiRead.SubpackageId;
         endpointId: string;
         pathname: string;
         hash: string;
@@ -40,29 +44,27 @@ export interface UrlPathResolver {
 const HASH_PREFIX_REGEX = /^#/;
 
 interface SubpackageWithId {
-    subpackage: FernRegistry.ApiDefinitionSubpackage;
-    subpackageId: FernRegistry.SubpackageId;
+    subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+    subpackageId: FernRegistryApiRead.SubpackageId;
 }
 export class UrlPathResolverImpl implements UrlPathResolver {
-    private apiDefinition: FernRegistry.ApiDefinition;
-    private subpackageIdToParentId: Record<FernRegistry.SubpackageId, FernRegistry.SubpackageId> = {};
+    private apiDefinition: FernRegistryApiRead.ApiDefinition;
+    private subpackageIdToParentId: Record<FernRegistryApiRead.SubpackageId, FernRegistryApiRead.SubpackageId> = {};
 
-    constructor(apiDefinition: FernRegistry.ApiDefinition) {
+    constructor(apiDefinition: FernRegistryApiRead.ApiDefinition) {
         this.apiDefinition = apiDefinition;
 
         for (const [parentId, parent] of entries(apiDefinition.subpackages)) {
-            if (parent != null) {
-                for (const childId of parent.subpackages) {
-                    this.subpackageIdToParentId[childId] = parentId;
-                }
+            for (const childId of parent.subpackages) {
+                this.subpackageIdToParentId[childId] = parentId;
             }
         }
     }
 
-    public getUrlPathForSubpackage(subpackageId: FernRegistry.SubpackageId): string {
+    public getUrlPathForSubpackage(subpackageId: FernRegistryApiRead.SubpackageId): string {
         const parts: string[] = [];
 
-        let childId: FernRegistry.SubpackageId | undefined = subpackageId;
+        let childId: FernRegistryApiRead.SubpackageId | undefined = subpackageId;
         while (childId != null) {
             const child = this.apiDefinition.subpackages[childId];
             if (child == null) {
@@ -75,7 +77,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         return parts.join("/");
     }
 
-    public getUrlPathForEndpoint(subpackageId: FernRegistry.SubpackageId, endpointId: string): string {
+    public getUrlPathForEndpoint(subpackageId: FernRegistryApiRead.SubpackageId, endpointId: string): string {
         return `${this.getUrlPathForSubpackage(subpackageId)}${this.getHashForEndpoint(endpointId)}`;
     }
 
@@ -136,7 +138,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         pathname,
         hash,
     }: {
-        subpackageId: FernRegistry.SubpackageId;
+        subpackageId: FernRegistryApiRead.SubpackageId;
         pathname: string;
         hash: string;
     }): boolean {
@@ -153,7 +155,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         pathname,
         hash,
     }: {
-        subpackageId: FernRegistry.SubpackageId;
+        subpackageId: FernRegistryApiRead.SubpackageId;
         pathname: string;
         hash: string;
     }): boolean {
@@ -174,7 +176,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         pathname,
         hash,
     }: {
-        subpackageId: FernRegistry.SubpackageId;
+        subpackageId: FernRegistryApiRead.SubpackageId;
         endpointId: string;
         pathname: string;
         hash: string;
@@ -212,7 +214,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
     }
 
     private resolveSubpackage(
-        parent: FernRegistry.ApiDefinitionPackage,
+        parent: FernRegistryApiRead.ApiDefinitionPackage,
         subpackageNamePath: string[]
     ): SubpackageWithId | undefined {
         const [nextSubpackageName, ...remainingSubpackageNames] = subpackageNamePath;
@@ -230,7 +232,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
     }
 
     private getSubpackageByName(
-        parent: FernRegistry.ApiDefinitionPackage,
+        parent: FernRegistryApiRead.ApiDefinitionPackage,
         subpackageName: string
     ): SubpackageWithId | undefined {
         for (const subpackageId of parent.subpackages) {

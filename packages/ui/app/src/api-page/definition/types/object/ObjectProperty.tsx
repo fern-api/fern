@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
@@ -14,7 +14,7 @@ import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
     export interface Props {
-        property: FernRegistry.ObjectProperty;
+        property: FernRegistryApiRead.ObjectProperty;
     }
 }
 

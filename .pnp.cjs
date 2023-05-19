@@ -9755,10 +9755,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fern-api/react-query-utils", "workspace:packages/commons/react/react-query-utils"],\
             ["@fern-api/routing-utils", "workspace:packages/commons/react/routing-utils"],\
+            ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/split-view", "workspace:packages/commons/react/split-view"],\
             ["@fern-api/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
-            ["@fern-fern/registry", "npm:0.0.300"],\
+            ["@fern-fern/registry-browser", "npm:0.0.391"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@fontsource/inter", "npm:4.5.15"],\
             ["@tanstack/react-query", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:4.24.10"],\
@@ -10221,22 +10222,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry", [\
-        ["npm:0.0.300", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.300-c513ee42db-8e0a3ee0af.zip/node_modules/@fern-fern/registry/",\
+        ["npm:0.0.328", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.328-efe16a4d29-9661dce1c4.zip/node_modules/@fern-fern/registry/",\
           "packageDependencies": [\
-            ["@fern-fern/registry", "npm:0.0.300"],\
+            ["@fern-fern/registry", "npm:0.0.328"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["npm:0.0.328", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-npm-0.0.328-efe16a4d29-9661dce1c4.zip/node_modules/@fern-fern/registry/",\
+        }]\
+      ]],\
+      ["@fern-fern/registry-browser", [\
+        ["npm:0.0.391", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.0.391-f3d7c33b3f-2bed23c9c5.zip/node_modules/@fern-fern/registry-browser/",\
           "packageDependencies": [\
-            ["@fern-fern/registry", "npm:0.0.328"],\
+            ["@fern-fern/registry-browser", "npm:0.0.391"],\
             ["@types/url-join", "npm:4.0.1"],\
+            ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
             ["url-join", "npm:4.0.1"]\
@@ -13282,6 +13286,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/visitor-keys", "npm:5.32.0"],\
             ["@typescript-eslint/types", "npm:5.32.0"],\
             ["eslint-visitor-keys", "npm:3.3.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@ungap/url-search-params", [\
+        ["npm:0.2.2", {\
+          "packageLocation": "./.yarn/cache/@ungap-url-search-params-npm-0.2.2-038ac53cb9-779506cca3.zip/node_modules/@ungap/url-search-params/",\
+          "packageDependencies": [\
+            ["@ungap/url-search-params", "npm:0.2.2"]\
           ],\
           "linkType": "HARD"\
         }]\

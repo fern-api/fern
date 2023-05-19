@@ -1,12 +1,12 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useState } from "react";
 import { SubpackageEndpoint } from "./SubpackageEndpoint";
 import { useSubpackageScrolling } from "./useSubpackageScrolling";
 
 export declare namespace Subpackage {
     export interface Props {
-        subpackageId: FernRegistry.SubpackageId;
-        subpackage: FernRegistry.ApiDefinitionSubpackage;
+        subpackageId: FernRegistryApiRead.SubpackageId;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 }
 

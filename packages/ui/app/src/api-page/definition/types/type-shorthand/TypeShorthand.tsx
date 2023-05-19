@@ -1,9 +1,9 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { ReferencedTypePreviewPart } from "./ReferencedTypePreviewPart";
 
 export declare namespace TypeShorthand {
     export interface Props {
-        type: FernRegistry.TypeReference;
+        type: FernRegistryApiRead.TypeReference;
         plural: boolean;
     }
 }
@@ -57,6 +57,11 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural }) =
                         </>
                     );
                 },
+                literal: (literal) =>
+                    literal._visit({
+                        stringLiteral: (value) => `"${value}"`,
+                        _other: () => "<unknown>",
+                    }),
                 unknown: () => "any",
                 _other: () => "<unknown>",
             })}
