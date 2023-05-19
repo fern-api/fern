@@ -36,6 +36,7 @@ export async function registerApi({
     });
 
     if (response.ok) {
+        context.logger.debug(`Registered API Definition with id ${response.body.apiDefinitionId}`);
         return response.body.apiDefinitionId;
     } else {
         return response.error._visit<never>({

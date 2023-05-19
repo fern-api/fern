@@ -28,7 +28,7 @@ export async function publishDocs({
     audiences: Audiences;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
-    await fdr.docs.v1.registerDocs(
+    const registerDocsResponse = await fdr.docs.v1.registerDocs(
         await constructRegisterDocsRequest({
             docsDefinition,
             domain,
@@ -39,7 +39,36 @@ export async function publishDocs({
             audiences,
         })
     );
-    context.logger.info(chalk.green("Published docs to " + domain));
+    if (registerDocsResponse.ok) {
+        context.logger.info(chalk.green("Published docs to " + domain));
+    } else {
+        registerDocsResponse.error._visit({
+            unauthorizedError: () => {
+                return context.failAndThrow("Insufficient permissions.");
+            },
+            userNotInOrgError: () => {
+                return context.failAndThrow("Insufficient permissions.");
+            },
+            _other: (value) => {
+                if (value.reason === "non-json") {
+                    context.logger.error("Request failed. Failed to publish docs to " + domain);
+                    context.logger.debug(
+                        `Received status code ${value.statusCode}. The body of the response was ${value.rawBody}`
+                    );
+                } else if (value.reason === "status-code") {
+                    context.logger.error("Request failed. Failed to publish docs to " + domain);
+                    context.logger.debug(
+                        `Received status code ${value.statusCode}. The body of the response was ${JSON.stringify(
+                            value.body
+                        )}`
+                    );
+                } else if (value.reason === "timeout") {
+                    context.logger.error("Request timed out. Failed to publish docs to " + domain);
+                }
+            },
+        });
+        return context.failAndThrow();
+    }
 }
 
 async function constructRegisterDocsRequest({
