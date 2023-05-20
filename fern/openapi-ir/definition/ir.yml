@@ -276,6 +276,11 @@ types:
     properties:
       key: string
       schema: Schema
+      conflict: optional<ObjectPropertyConflict>
+
+  ObjectPropertyConflict:
+    properties:
+      schemaId: SchemaId
 
   ArraySchema:
     extends: WithDescription
