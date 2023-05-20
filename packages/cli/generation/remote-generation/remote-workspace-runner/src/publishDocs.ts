@@ -178,7 +178,7 @@ async function convertNavigationItem({
             return FernRegistry.docs.v1.write.NavigationItem.section({
                 title: item.title,
                 items: await Promise.all(
-                    item.items.map((nestedItem) =>
+                    item.contents.map((nestedItem) =>
                         convertNavigationItem({
                             item: nestedItem,
                             docsDefinition,
