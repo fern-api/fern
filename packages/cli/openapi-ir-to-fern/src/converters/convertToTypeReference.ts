@@ -18,7 +18,7 @@ import {
     convertObjectToTypeDeclaration,
     convertOneOfToTypeDeclaration,
 } from "./convertToTypeDeclaration";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface TypeReference {
     typeReference: RawSchemas.TypeReferenceWithDocsSchema;
@@ -177,7 +177,7 @@ export function convertOptionalToTypeReference({
     const valueType = getTypeFromTypeReference(valueTypeReference.typeReference);
     return {
         typeReference: {
-            docs: schema.description ?? undefined,
+            docs: schema.description ?? getDocsFromTypeReference(valueTypeReference.typeReference),
             type: valueType.startsWith("optional<") ? valueType : `optional<${valueType}>`,
         },
         additionalTypeDeclarations: {
@@ -203,7 +203,7 @@ export function convertNullableToTypeReference({
     const valueType = getTypeFromTypeReference(valueTypeReference.typeReference);
     return {
         typeReference: {
-            docs: schema.description ?? undefined,
+            docs: schema.description ?? getDocsFromTypeReference(valueTypeReference.typeReference),
             type: valueType.startsWith("optional<") ? valueType : `optional<${valueType}>`,
         },
         additionalTypeDeclarations: {
