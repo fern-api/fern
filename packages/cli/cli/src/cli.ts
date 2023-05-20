@@ -7,7 +7,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
     loadProjectConfig,
-    PROJECT_CONFIG_FILENAME,
+    PROJECT_CONFIG_FILENAME
 } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
@@ -22,6 +22,7 @@ import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWor
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
+import { generateTraceForWorkspaces } from "./commands/type-trace/generateTraceForWorkspaces";
 import { upgrade } from "./commands/upgrade/upgrade";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
@@ -124,6 +125,7 @@ async function tryRunCli(cliContext: CliContext) {
     addAddCommand(cli, cliContext);
     addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
+    addTraceCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
@@ -312,6 +314,41 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 generationLanguage: argv.language,
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version,
+            });
+        }
+    );
+}
+
+function addTraceCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "type-trace <path-to-output>",
+        false, // hide from help message
+        (yargs) =>
+            yargs
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write trace output",
+                    demandOption: true,
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    default: new Array<string>(),
+                    description: "Filter the IR for certain audiences",
+                }),
+        async (argv) => {
+            await generateTraceForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: false,
+                }),
+                typeTraceFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext,
+                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
             });
         }
     );
