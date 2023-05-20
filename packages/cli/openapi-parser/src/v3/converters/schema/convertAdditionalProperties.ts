@@ -8,28 +8,28 @@ export function convertAdditionalProperties({
     breadcrumbs,
     additionalProperties,
     description,
-    wrapAsOptional,
+    wrapAsNullable,
     context,
 }: {
     breadcrumbs: string[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     context: AbstractOpenAPIV3ParserContext;
 }): Schema {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesEmptyDictionary(additionalProperties)) {
         return wrapMap({
-            wrapAsOptional,
+            wrapAsNullable,
             description,
             keySchema: PrimitiveSchemaValue.string(),
             valueSchema: Schema.unknown(),
         });
     }
     return wrapMap({
-        wrapAsOptional,
+        wrapAsNullable,
         description,
         keySchema: PrimitiveSchemaValue.string(),
-        valueSchema: convertSchema(additionalProperties, wrapAsOptional, context, [...breadcrumbs, "Value"]),
+        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
     });
 }
 
@@ -42,16 +42,16 @@ function isAdditionalPropertiesEmptyDictionary(
 export function wrapMap({
     keySchema,
     valueSchema,
-    wrapAsOptional,
+    wrapAsNullable,
     description,
 }: {
     keySchema: PrimitiveSchemaValue;
     valueSchema: Schema;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     description: string | undefined;
 }): Schema {
-    if (wrapAsOptional) {
-        return Schema.optional({
+    if (wrapAsNullable) {
+        return Schema.nullable({
             value: Schema.map({
                 description: undefined,
                 key: keySchema,

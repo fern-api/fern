@@ -8,7 +8,7 @@ export function convertUndiscriminatedOneOf({
     generatedName,
     breadcrumbs,
     description,
-    wrapAsOptional,
+    wrapAsNullable,
     context,
     subtypes,
 }: {
@@ -16,7 +16,7 @@ export function convertUndiscriminatedOneOf({
     generatedName: string;
     breadcrumbs: string[];
     description: string | undefined;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     context: AbstractOpenAPIV3ParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
 }): Schema {
@@ -26,7 +26,7 @@ export function convertUndiscriminatedOneOf({
     return wrapUndiscriminantedOneOf({
         nameOverride,
         generatedName,
-        wrapAsOptional,
+        wrapAsNullable,
         description,
         subtypes: convertedSubtypes,
     });
@@ -35,18 +35,18 @@ export function convertUndiscriminatedOneOf({
 export function wrapUndiscriminantedOneOf({
     nameOverride,
     generatedName,
-    wrapAsOptional,
+    wrapAsNullable,
     description,
     subtypes,
 }: {
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     nameOverride: string | undefined;
     generatedName: string;
     description: string | undefined;
     subtypes: Schema[];
 }): Schema {
-    if (wrapAsOptional) {
-        return Schema.optional({
+    if (wrapAsNullable) {
+        return Schema.nullable({
             value: Schema.oneOf({
                 type: "undisciminated",
                 description: undefined,

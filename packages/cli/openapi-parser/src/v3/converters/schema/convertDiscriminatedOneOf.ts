@@ -10,7 +10,7 @@ export function convertDiscriminatedOneOf({
     properties,
     description,
     required,
-    wrapAsOptional,
+    wrapAsNullable,
     discriminator,
     context,
 }: {
@@ -20,7 +20,7 @@ export function convertDiscriminatedOneOf({
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     description: string | undefined;
     required: string[] | undefined;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     discriminator: OpenAPIV3.DiscriminatorObject;
     context: AbstractOpenAPIV3ParserContext;
 }): Schema {
@@ -52,7 +52,7 @@ export function convertDiscriminatedOneOf({
     return wrapDiscriminantedOneOf({
         nameOverride,
         generatedName,
-        wrapAsOptional,
+        wrapAsNullable,
         properties: convertedProperties,
         description,
         discriminant,
@@ -63,7 +63,7 @@ export function convertDiscriminatedOneOf({
 export function wrapDiscriminantedOneOf({
     nameOverride,
     generatedName,
-    wrapAsOptional,
+    wrapAsNullable,
     properties,
     description,
     discriminant,
@@ -71,14 +71,14 @@ export function wrapDiscriminantedOneOf({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     properties: ObjectProperty[];
     description: string | undefined;
     discriminant: string;
     subtypes: Record<string, Schema>;
 }): Schema {
-    if (wrapAsOptional) {
-        return Schema.optional({
+    if (wrapAsNullable) {
+        return Schema.nullable({
             value: Schema.oneOf({
                 type: "discriminated",
                 description: undefined,

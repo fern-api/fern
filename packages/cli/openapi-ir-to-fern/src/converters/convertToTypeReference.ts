@@ -3,6 +3,7 @@ import {
     ArraySchema,
     EnumSchema,
     MapSchema,
+    NullableSchema,
     ObjectSchema,
     OneOfSchema,
     OptionalSchema,
@@ -45,6 +46,8 @@ export function convertToTypeReference({
         return convertUnknownToTypeReference();
     } else if (schema.type === "optional") {
         return convertOptionalToTypeReference({ schema, prefix, schemas });
+    } else if (schema.type === "nullable") {
+        return convertNullableToTypeReference({ schema, prefix, schemas });
     } else if (schema.type === "enum") {
         return convertEnumToTypeReference({ schema, prefix });
     } else if (schema.type === "literal") {
@@ -163,6 +166,31 @@ export function convertOptionalToTypeReference({
     schemas,
 }: {
     schema: OptionalSchema;
+    prefix?: string;
+    schemas: Record<SchemaId, Schema>;
+}): TypeReference {
+    const valueTypeReference = convertToTypeReference({
+        schema: schema.value,
+        prefix,
+        schemas,
+    });
+    return {
+        typeReference: {
+            docs: schema.description ?? undefined,
+            type: `optional<${getTypeFromTypeReference(valueTypeReference.typeReference)}>`,
+        },
+        additionalTypeDeclarations: {
+            ...valueTypeReference.additionalTypeDeclarations,
+        },
+    };
+}
+
+export function convertNullableToTypeReference({
+    schema,
+    prefix,
+    schemas,
+}: {
+    schema: NullableSchema;
     prefix?: string;
     schemas: Record<SchemaId, Schema>;
 }): TypeReference {

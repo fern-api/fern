@@ -9,7 +9,7 @@ export function convertEnum({
     enumNames,
     enumValues,
     description,
-    wrapAsOptional,
+    wrapAsNullable,
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -17,7 +17,7 @@ export function convertEnum({
     enumNames: Record<string, string> | undefined;
     enumValues: string[];
     description: string | undefined;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
 }): Schema {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const values = enumValues.map((value, index) => {
@@ -31,7 +31,7 @@ export function convertEnum({
         };
     });
     return wrapEnum({
-        wrapAsOptional,
+        wrapAsNullable,
         nameOverride,
         generatedName,
         values,
@@ -40,20 +40,20 @@ export function convertEnum({
 }
 
 export function wrapEnum({
-    wrapAsOptional,
+    wrapAsNullable,
     nameOverride,
     generatedName,
     values,
     description,
 }: {
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     nameOverride: string | undefined;
     generatedName: string;
     values: EnumValue[];
     description: string | undefined;
 }): Schema {
-    if (wrapAsOptional) {
-        return Schema.optional({
+    if (wrapAsNullable) {
+        return Schema.nullable({
             value: Schema.enum({
                 nameOverride,
                 generatedName,
