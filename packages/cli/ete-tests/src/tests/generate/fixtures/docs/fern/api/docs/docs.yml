@@ -1,8 +1,10 @@
 navigation:
-  - foo.md
+  - page: Foo
+    path: foo.md
   - section: Section
-    pages:
-      - foo.md
+    contents:
+      - page: Foo
+        path: foo.md
   - api: API Reference
 
 colors: {}
