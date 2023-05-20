@@ -22514,9 +22514,9 @@ starts from the beginning.
                   "type": "optional<string>",
                 },
                 "email": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters Dev users based on email addresses.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
@@ -22532,15 +22532,15 @@ used.
                   "type": "optional<root.ListMode>",
                 },
                 "sort_by": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Fields to sort the Dev users by and the direction to sort them.
 ",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "state": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters Dev users based on state.",
-                  "type": "optional<list<root.UserState>>",
+                  "type": "optional<root.UserState>",
                 },
               },
             },
@@ -22682,9 +22682,9 @@ used.
               "name": "PartsListRequest",
               "query-parameters": {
                 "created_by": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for parts created by any of these users.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "cursor": {
                   "allow-multiple": undefined,
@@ -22707,19 +22707,19 @@ used.
                   "type": "optional<root.ListMode>",
                 },
                 "name": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for parts of the provided name(s).",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "owned_by": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for parts owned by any of these users.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "type": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for parts of the provided type(s).",
-                  "type": "optional<list<root.PartType>>",
+                  "type": "optional<root.PartType>",
                 },
               },
             },
@@ -22903,9 +22903,9 @@ to access.
               "name": "RevOrgsListRequest",
               "query-parameters": {
                 "created_by": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters by creator.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "created_date.after": {
                   "allow-multiple": undefined,
@@ -22928,9 +22928,9 @@ starts from the beginning.
                   "type": "optional<string>",
                 },
                 "external_ref": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "List of external refs to filter Rev organizations for.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
@@ -22959,11 +22959,11 @@ used.
                   "type": "optional<string>",
                 },
                 "sort_by": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Fields to sort the Rev organizations by and the direction to sort
 them.
 ",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
               },
             },
@@ -23648,14 +23648,14 @@ won't receive any object events until successfully verified.
               "name": "WorksExportRequest",
               "query-parameters": {
                 "applies_to_part": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for work belonging to any of the provided parts.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "created_by": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for work created by any of these users.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "first": {
                   "allow-multiple": undefined,
@@ -23665,42 +23665,42 @@ is '5000'.
                   "type": "optional<integer>",
                 },
                 "issue.priority": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for issues with any of the provided priorities.",
-                  "type": "optional<list<root.IssuePriority>>",
+                  "type": "optional<root.IssuePriority>",
                 },
                 "issue.rev_orgs": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for issues with any of the provided Rev organizations.
 ",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "owned_by": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for work owned by any of these users.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "stage.name": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for records in the provided stage(s).",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "ticket.rev_org": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for tickets that are associated with any of the provided Rev
 organizations.
 ",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "ticket.severity": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for tickets with any of the provided severities.",
-                  "type": "optional<list<root.TicketSeverity>>",
+                  "type": "optional<root.TicketSeverity>",
                 },
                 "type": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for work of the provided types.",
-                  "type": "optional<list<root.WorkType>>",
+                  "type": "optional<root.WorkType>",
                 },
               },
             },
@@ -23755,14 +23755,14 @@ organizations.
               "name": "WorksListRequest",
               "query-parameters": {
                 "applies_to_part": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for work belonging to any of the provided parts.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "created_by": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for work created by any of these users.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "cursor": {
                   "allow-multiple": undefined,
@@ -23772,15 +23772,15 @@ starts from the beginning.
                   "type": "optional<string>",
                 },
                 "issue.priority": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for issues with any of the provided priorities.",
-                  "type": "optional<list<root.IssuePriority>>",
+                  "type": "optional<root.IssuePriority>",
                 },
                 "issue.rev_orgs": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for issues with any of the provided Rev organizations.
 ",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "limit": {
                   "allow-multiple": undefined,
@@ -23796,31 +23796,31 @@ used.
                   "type": "optional<root.ListMode>",
                 },
                 "owned_by": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for work owned by any of these users.",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "stage.name": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for records in the provided stage(s).",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "ticket.rev_org": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for tickets that are associated with any of the provided Rev
 organizations.
 ",
-                  "type": "optional<list<string>>",
+                  "type": "optional<string>",
                 },
                 "ticket.severity": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for tickets with any of the provided severities.",
-                  "type": "optional<list<root.TicketSeverity>>",
+                  "type": "optional<root.TicketSeverity>",
                 },
                 "type": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Filters for work of the provided types.",
-                  "type": "optional<list<root.WorkType>>",
+                  "type": "optional<root.WorkType>",
                 },
               },
             },
@@ -25774,9 +25774,9 @@ exports[`open api converter hathora simple 1`] = `
                   "type": "optional<integer>",
                 },
                 "metrics": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": undefined,
-                  "type": "optional<list<root.MetricName>>",
+                  "type": "optional<root.MetricName>",
                 },
                 "start": {
                   "allow-multiple": undefined,
@@ -26231,9 +26231,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                   "type": "optional<root.SortBy>",
                 },
                 "status": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "Include only jobs with these statuses.",
-                  "type": "optional<list<root.Status>>",
+                  "type": "optional<root.Status>",
                 },
                 "timestamp_ms": {
                   "allow-multiple": undefined,

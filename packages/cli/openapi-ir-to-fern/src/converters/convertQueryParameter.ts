@@ -46,7 +46,7 @@ function getQueryParameterTypeReference({
     schemas: Record<SchemaId, Schema>;
 }): QueryParameterTypeReference {
     const prefix = isPackageYml ? undefined : ROOT_PREFIX;
-    if (schema.type === "optional") {
+    if (schema.type === "optional" || schema.type === "nullable") {
         if (schema.value.type === "array") {
             return {
                 value: convertToTypeReference({

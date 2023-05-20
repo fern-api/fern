@@ -109,8 +109,8 @@ function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedSer
         const typeDeclaration = convertToTypeDeclaration(schema, openApiFile.schemas);
         types = {
             ...types,
-            ...typeDeclaration.additionalTypeDeclarations,
             [typeDeclaration.name ?? schemaId]: typeDeclaration.typeDeclaration,
+            ...typeDeclaration.additionalTypeDeclarations,
         };
     }
     const errors: Record<string, RawSchemas.ErrorDeclarationSchema> = {};
