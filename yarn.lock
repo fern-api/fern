@@ -6490,11 +6490,11 @@ __metadata:
   linkType: hard
 
 "@tanstack/match-sorter-utils@npm:^8.7.0":
-  version: 8.7.6
-  resolution: "@tanstack/match-sorter-utils@npm:8.7.6"
+  version: 8.8.4
+  resolution: "@tanstack/match-sorter-utils@npm:8.8.4"
   dependencies:
     remove-accents: 0.4.2
-  checksum: 3f3dda277e6e55ca1224a28b38a2deb3ac912c2f2f5263a32fa0d9126c6b6d05feb475539729fd248f1eb88b612109db90b847ec8fdfc05d0f4073c900a2d3f6
+  checksum: d005f500754f52ef94966cbbe4217f26e7e3c07291faa2578b06bca9a5abe01689569994c37a1d01c6e783addf5ffbb28fa82eba7961d36eabf43ec43d1e496b
   languageName: node
   linkType: hard
 
@@ -6506,17 +6506,17 @@ __metadata:
   linkType: hard
 
 "@tanstack/react-query-devtools@npm:^4.24.12":
-  version: 4.24.12
-  resolution: "@tanstack/react-query-devtools@npm:4.24.12"
+  version: 4.29.7
+  resolution: "@tanstack/react-query-devtools@npm:4.29.7"
   dependencies:
     "@tanstack/match-sorter-utils": ^8.7.0
     superjson: ^1.10.0
     use-sync-external-store: ^1.2.0
   peerDependencies:
-    "@tanstack/react-query": 4.24.10
+    "@tanstack/react-query": 4.29.7
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 8cea2cd99268aa057ee22d63d0f1e24ec659134598b624cad45369c9a2a589bb90fd7cc56f9b4b794036e870afedf6867e61c79d9c52ee24763102d7c4c21f70
+  checksum: deb28b3d7d614d5bede33b2b643903aaaff8b215ba0620d48b9b4dd32fcdd88947879afab883f8ac0347656be0c9448d850d6e962307314e903074ac51e802b5
   languageName: node
   linkType: hard
 
@@ -10030,11 +10030,11 @@ __metadata:
   linkType: hard
 
 "copy-anything@npm:^3.0.2":
-  version: 3.0.3
-  resolution: "copy-anything@npm:3.0.3"
+  version: 3.0.4
+  resolution: "copy-anything@npm:3.0.4"
   dependencies:
     is-what: ^4.1.8
-  checksum: d456dc5ec98dee7c7cf87d809eac30dc2ac942acd4cf970fab394e280ceb6dd7a8a7a5a44fcbcc50e0206658de3cc20b92863562f5797930bb2619f164f4c182
+  checksum: 65ba2384db4c8d9fd19bb0d0e14a4381377d8f6733ff725c7340a22b392d1478f1b695e4c7972252d4a129ab66ae1a0c134bffb23151e91f14781c58d8831f1f
   languageName: node
   linkType: hard
 
@@ -14465,9 +14465,9 @@ env-cmd@toddbluhm/env-cmd:
   linkType: hard
 
 "is-what@npm:^4.1.8":
-  version: 4.1.8
-  resolution: "is-what@npm:4.1.8"
-  checksum: b9bec3acff102d14ad467f4c74c9886af310fa160e07a63292c8c181e6768c7c4c1054644e13d67185b963644e4a513bce8c6b8ce3d3ca6f9488a69fccad5f97
+  version: 4.1.10
+  resolution: "is-what@npm:4.1.10"
+  checksum: 39805a480ede3b52d6855d7472c5f6da99cdde550822d4c8a36805a15b400c9a3f28eb05906248d2888b4a559c66b67675ff8e0f8a2e89b06cd72c73aa2ce3ce
   languageName: node
   linkType: hard
 
@@ -21178,11 +21178,11 @@ env-cmd@toddbluhm/env-cmd:
   linkType: hard
 
 "superjson@npm:^1.10.0":
-  version: 1.12.2
-  resolution: "superjson@npm:1.12.2"
+  version: 1.12.3
+  resolution: "superjson@npm:1.12.3"
   dependencies:
     copy-anything: ^3.0.2
-  checksum: cf7735e172811ed87476a7c2f1bb0e83725a0e3c2d7a50a71303a973060b3c710288767fb767a7a7eee8e5625d3ccaee1176a93e27f43841627512c15c4cdf84
+  checksum: 3549cc1d03e93745632d8114f91ed1668d81a0cf4c618f8f89a1b06f426a9cd1a2879f0e79469a6a193fd19dcea9a8fecff6215d12527b98c40c67cd98f185d3
   languageName: node
   linkType: hard
 

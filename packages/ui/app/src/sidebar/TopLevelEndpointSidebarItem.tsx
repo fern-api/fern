@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { EndpointTitle } from "../api-page/definition/endpoints/EndpointTitle";
-import { ClickableSidebarItem } from "./ClickableSidebarItem";
+import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 
 export declare namespace TopLevelEndpointSidebarItem {
     export interface Props {
@@ -10,5 +10,5 @@ export declare namespace TopLevelEndpointSidebarItem {
 }
 
 export const TopLevelEndpointSidebarItem: React.FC<TopLevelEndpointSidebarItem.Props> = ({ slug, endpoint }) => {
-    return <ClickableSidebarItem path={slug} title={<EndpointTitle endpoint={endpoint} />} />;
+    return <NavigatingSidebarItem path={slug} title={<EndpointTitle endpoint={endpoint} />} />;
 };

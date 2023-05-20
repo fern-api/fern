@@ -15,10 +15,8 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId }) =
     const subpackage = resolveSubpackageById(subpackageId);
 
     const [ref, setRef] = useState<HTMLDivElement | null>(null);
-
-    const { setIsEndpointInView, setIsEndpointInVerticalCenter } = useSubpackageScrolling({
+    const { setIsEndpointInVerticalCenter, setIsEndpointInView } = useSubpackageScrolling({
         containerRef: ref ?? undefined,
-        subpackageId,
     });
 
     return (

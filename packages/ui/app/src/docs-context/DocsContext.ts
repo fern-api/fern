@@ -11,8 +11,14 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
 export interface DocsContextValue {
     resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
-    onClickSidebarItem: (path: string) => void;
-    registerSidebarItemClickListener: (path: string, listener: () => void) => () => void;
+
+    navigateToAnchor: (anchor: string) => void;
+    registerNavigateToAnchorListener: (anchor: string, listener: () => void) => () => void;
+    scrollToTop: () => void;
+    registerScrollToTopListener: (listener: () => void) => () => void;
+    anchorInView: string | undefined;
+    setAnchorInView: (anchor: string) => void;
+
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
     urlPathResolver: UrlPathResolver;
 }

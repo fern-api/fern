@@ -1,7 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import { useLocation } from "react-router-dom";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { useDocsContext } from "../../../docs-context/useDocsContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
@@ -31,7 +30,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
     setIsInView,
     setIsIntersectingVerticalCenter,
 }) => {
-    const { registerSidebarItemClickListener } = useDocsContext();
+    const { registerNavigateToAnchorListener } = useDocsContext();
 
     const { setHoveredResponsePropertyPath } = useEndpointContext();
     const onHoverResponseProperty = useCallback(
@@ -81,14 +80,12 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
         [setRefForInVerticalCenterIntersectionObserver, setRefForInViewIntersectionObserver]
     );
 
-    const location = useLocation();
-
     useEffect(() => {
-        const unsubscribe = registerSidebarItemClickListener(`${location.pathname}#${endpoint.urlSlug}`, () => {
+        const unsubscribe = registerNavigateToAnchorListener(endpoint.urlSlug, () => {
             containerRef.current?.scrollIntoView();
         });
         return unsubscribe;
-    }, [endpoint.urlSlug, location.pathname, registerSidebarItemClickListener]);
+    }, [endpoint.urlSlug, registerNavigateToAnchorListener]);
 
     return (
         <div className="flex-1 flex gap-24 px-24 min-w-0" id={endpoint.urlSlug} ref={setContainerRef}>

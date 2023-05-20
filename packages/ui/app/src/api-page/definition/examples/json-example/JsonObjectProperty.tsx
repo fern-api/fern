@@ -65,8 +65,8 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
     }, [isSelected]);
 
     return (
-        <div ref={ref}>
-            <JsonExampleLine className="relative">
+        <div className="relative" ref={ref}>
+            <JsonExampleLine>
                 <div>
                     <span>
                         <span className="text-[#aadafa]">{propertyKey}</span>
@@ -75,17 +75,17 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
                     &nbsp;
                     <JsonItemTopLineContent value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
                 </div>
-                <div
-                    className={classNames(
-                        "absolute inset-x-1 inset-y-0 border rounded transition",
-                        isSelected ? "bg-[#716FEC]/20 border-[#716FEC]" : "bg-transparent border-transparent"
-                    )}
-                />
             </JsonExampleLine>
             <JsonExampleBreadcumbsContext.Provider value={contextValue}>
                 <JsonItemMiddleLines value={propertyValue} />
             </JsonExampleBreadcumbsContext.Provider>
             <JsonItemBottomLine value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
+            <div
+                className={classNames(
+                    "absolute inset-x-1 inset-y-0 border rounded transition",
+                    isSelected ? "bg-[#716FEC]/20 border-[#716FEC]" : "bg-transparent border-transparent"
+                )}
+            />
         </div>
     );
 };

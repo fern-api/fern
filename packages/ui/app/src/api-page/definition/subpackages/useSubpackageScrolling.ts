@@ -1,12 +1,9 @@
-import { useBooleanState } from "@fern-api/react-commons";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { useDocsContext } from "../../../docs-context/useDocsContext";
 
 export declare namespace useSubpackageScrolling {
     export interface Args {
-        subpackageId: FernRegistryApiRead.SubpackageId;
         containerRef: HTMLElement | undefined;
     }
 
@@ -19,10 +16,9 @@ export declare namespace useSubpackageScrolling {
     }
 }
 
-export function useSubpackageScrolling({
-    subpackageId,
-    containerRef,
-}: useSubpackageScrolling.Args): useSubpackageScrolling.Return {
+export function useSubpackageScrolling({ containerRef }: useSubpackageScrolling.Args): useSubpackageScrolling.Return {
+    const { registerScrollToTopListener, setAnchorInView } = useDocsContext();
+
     const [endpointInVerticalCenter, setEndpointInVerticalCenter] = useState<FernRegistryApiRead.EndpointDefinition>();
     const [endpointsInView, setEndpointsInView] = useState<FernRegistryApiRead.EndpointDefinition[]>([]);
 
@@ -52,43 +48,22 @@ export function useSubpackageScrolling({
         []
     );
 
-    const { value: isScrolling, setTrue: setIsScrolling, setFalse: setIsNotScrolling } = useBooleanState(false);
-    useEffect(() => {
-        let timeout: NodeJS.Timeout | undefined;
-        const onScroll = () => {
-            clearTimeout(timeout);
-            setIsScrolling();
-            timeout = setTimeout(setIsNotScrolling, 100);
-        };
-
-        containerRef?.addEventListener("scroll", onScroll);
-        containerRef?.addEventListener("scrollend", setIsNotScrolling);
-        return () => {
-            containerRef?.removeEventListener("scroll", onScroll);
-            containerRef?.removeEventListener("scrollend", setIsNotScrolling);
-        };
-    }, [setIsScrolling, setIsNotScrolling, containerRef]);
-
     const endpointInView = endpointsInView[0] ?? endpointInVerticalCenter;
-    const navigate = useNavigate();
-    const location = useLocation();
     useEffect(() => {
-        if (isScrolling && endpointInView != null) {
-            navigate(`${location.pathname}#${endpointInView.urlSlug}`);
+        if (endpointInView?.urlSlug != null) {
+            setAnchorInView(endpointInView.urlSlug);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [endpointInView]);
-
-    const { registerSidebarItemClickListener } = useDocsContext();
+    }, [endpointInView?.urlSlug]);
 
     useEffect(() => {
-        const unsubscribe = registerSidebarItemClickListener(location.pathname, () => {
+        const unsubscribe = registerScrollToTopListener(() => {
             containerRef?.scrollTo({
                 top: 0,
             });
         });
         return unsubscribe;
-    }, [containerRef, location.pathname, registerSidebarItemClickListener, subpackageId]);
+    }, [containerRef, registerScrollToTopListener]);
 
     return {
         setIsEndpointInView,

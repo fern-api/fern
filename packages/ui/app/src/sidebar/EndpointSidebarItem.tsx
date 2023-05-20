@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { EndpointTitle } from "../api-page/definition/endpoints/EndpointTitle";
-import { ClickableSidebarItem } from "./ClickableSidebarItem";
+import { AnchorSidebarItem } from "./AnchorSidebarItem";
 
 export declare namespace EndpointSidebarItem {
     export interface Props {
@@ -9,11 +9,6 @@ export declare namespace EndpointSidebarItem {
     }
 }
 
-export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpoint, parentSlug }) => {
-    return (
-        <ClickableSidebarItem
-            path={`${parentSlug}#${endpoint.urlSlug}`}
-            title={<EndpointTitle endpoint={endpoint} />}
-        />
-    );
+export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ endpoint }) => {
+    return <AnchorSidebarItem anchor={endpoint.urlSlug} title={<EndpointTitle endpoint={endpoint} />} />;
 };

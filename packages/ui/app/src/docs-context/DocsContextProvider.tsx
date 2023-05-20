@@ -1,7 +1,8 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { PropsWithChildren, useCallback, useMemo, useRef } from "react";
+import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { DocsContext, DocsContextValue } from "./DocsContext";
 import { UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
 
@@ -36,18 +37,18 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [docsDefinition.pages]
     );
 
-    const sidebarItemClickListeners = useRef<Record<string, (() => void)[]>>({});
+    const navigateToAnchorListeners = useRef<Record<string, (() => void)[]>>({});
 
-    const registerSidebarItemClickListener = useCallback((path: string, listener: () => void) => {
-        const listenersForPath = (sidebarItemClickListeners.current[path] ??= []);
+    const registerNavigateToAnchorListener = useCallback((anchor: string, listener: () => void) => {
+        const listenersForPath = (navigateToAnchorListeners.current[anchor] ??= []);
         listenersForPath.push(listener);
         return () => {
-            const listeners = sidebarItemClickListeners.current[path];
+            const listeners = navigateToAnchorListeners.current[anchor];
             if (listeners != null) {
                 const indexOfListenerToDelete = listeners.indexOf(listener);
                 if (indexOfListenerToDelete !== -1) {
                     // eslint-disable-next-line no-console
-                    console.warn("Failed to locate sidebar item click listener for deregistration.");
+                    console.warn("Failed to hash change listener for deregistration.");
                 } else {
                     listeners.splice(indexOfListenerToDelete, 1);
                 }
@@ -55,13 +56,48 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         };
     }, []);
 
-    const onClickSidebarItem = useCallback((path: string) => {
-        const listeners = sidebarItemClickListeners.current[path];
+    const navigateToAnchor = useCallback((anchor: string) => {
+        const listeners = navigateToAnchorListeners.current[anchor];
         if (listeners != null) {
             for (const listener of listeners) {
                 listener();
             }
         }
+    }, []);
+
+    const [anchorInView, setAnchorInView] = useState<string>();
+
+    const scrollToTopListeners = useRef<(() => void)[]>([]);
+
+    const registerScrollToTopListener = useCallback((listener: () => void) => {
+        scrollToTopListeners.current.push(listener);
+        return () => {
+            const indexOfListenerToDelete = scrollToTopListeners.current.indexOf(listener);
+            if (indexOfListenerToDelete !== -1) {
+                // eslint-disable-next-line no-console
+                console.warn("Failed to locate hash remove listener for deregistration.");
+            } else {
+                scrollToTopListeners.current.splice(indexOfListenerToDelete, 1);
+            }
+        };
+    }, []);
+
+    const scrollToTop = useCallback(() => {
+        setAnchorInView(undefined);
+        for (const listener of scrollToTopListeners.current) {
+            listener();
+        }
+    }, []);
+
+    const location = useLocation();
+    useEffect(() => {
+        const anchor = location.hash.substring(1); // remove the leading #
+        if (anchor.length > 0) {
+            navigateToAnchor(anchor);
+            setAnchorInView(anchor);
+        }
+        // only run on mount
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const contextValue = useCallback(
@@ -70,10 +106,24 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             resolvePage,
             docsDefinition,
             urlPathResolver,
-            registerSidebarItemClickListener,
-            onClickSidebarItem,
+            registerNavigateToAnchorListener,
+            navigateToAnchor,
+            registerScrollToTopListener,
+            scrollToTop,
+            anchorInView,
+            setAnchorInView,
         }),
-        [resolveApi, resolvePage, docsDefinition, onClickSidebarItem, registerSidebarItemClickListener, urlPathResolver]
+        [
+            resolveApi,
+            resolvePage,
+            docsDefinition,
+            urlPathResolver,
+            registerNavigateToAnchorListener,
+            navigateToAnchor,
+            registerScrollToTopListener,
+            scrollToTop,
+            anchorInView,
+        ]
     );
 
     return <DocsContext.Provider value={contextValue}>{children}</DocsContext.Provider>;

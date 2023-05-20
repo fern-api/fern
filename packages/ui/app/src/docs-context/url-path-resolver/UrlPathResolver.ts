@@ -21,14 +21,13 @@ export interface ResolvedApiSubpackagePath {
     type: "api-subpackage";
     apiId: FernRegistry.ApiDefinitionId;
     subpackageId: FernRegistryApiRead.SubpackageId;
-    endpointId: string | undefined;
 }
 
 export interface UrlPathResolver {
     // getUrlPathForSubpackage(subpackageId: FernRegistryApiRead.SubpackageId): string;
     // getUrlPathForEndpoint(subpackageId: FernRegistryApiRead.SubpackageId, endpointId: string): string;
     // getUrlPathForTopLevelEndpoint(endpointId: string): string;
-    resolvePath(args: { pathname: string; hash: string }): ResolvedUrlPath | undefined;
+    resolvePath(pathname: string): ResolvedUrlPath | undefined;
     // getHashForEndpoint(endpointId: string): string;
     // getHtmlIdForEndpoint(endpointId: string): string;
     // isTopLevelEndpointSelected(args: { endpointId: string; pathname: string; hash: string }): boolean;
@@ -51,8 +50,6 @@ export interface UrlPathResolver {
     // stringifyPath: (resolvedPath: ResolvedUrlPath) => string;
 }
 
-const HASH_PREFIX_REGEX = /^#/;
-
 export class UrlPathResolverImpl implements UrlPathResolver {
     private urlSlugTree: UrlSlugTree;
 
@@ -60,7 +57,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
         this.urlSlugTree = new UrlSlugTree(docsDefinition);
     }
 
-    public resolvePath({ pathname, hash }: { pathname: string; hash: string }): ResolvedUrlPath | undefined {
+    public resolvePath(pathname: string): ResolvedUrlPath | undefined {
         const resolvedPath = this.urlSlugTree.resolveUrlPath(pathname);
         if (resolvedPath == null) {
             return undefined;
@@ -76,7 +73,6 @@ export class UrlPathResolverImpl implements UrlPathResolver {
                     type: "api-subpackage",
                     apiId: resolvedPath.apiId,
                     subpackageId: resolvedPath.subpackage.subpackageId,
-                    endpointId: hash.replace(HASH_PREFIX_REGEX, ""),
                 };
             case "topLevelEndpoint":
                 return {

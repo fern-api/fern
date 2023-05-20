@@ -1,6 +1,6 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { ClickableSidebarItem } from "./ClickableSidebarItem";
 import { SidebarGroup } from "./SidebarGroup";
+import { SidebarItemLayout } from "./SidebarItemLayout";
 import { SidebarItems } from "./SidebarItems";
 
 export declare namespace SidebarDocsSection {
@@ -12,7 +12,7 @@ export declare namespace SidebarDocsSection {
 
 export const SidebarDocsSection: React.FC<SidebarDocsSection.Props> = ({ slug, section }) => {
     return (
-        <SidebarGroup title={<ClickableSidebarItem title={section.title} path={slug} />}>
+        <SidebarGroup title={<SidebarItemLayout title={section.title} />}>
             <SidebarItems slug={slug} navigationItems={section.items} />
         </SidebarGroup>
     );

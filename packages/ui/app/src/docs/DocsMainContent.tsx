@@ -14,12 +14,11 @@ export const DocsMainContent: React.FC = () => {
 
     const resolvedPath = useMemo(
         () =>
-            urlPathResolver.resolvePath({
+            urlPathResolver.resolvePath(
                 // remove leading / from location.pathname
-                pathname: location.pathname.substring(1),
-                hash: location.hash,
-            }),
-        [location.hash, location.pathname, urlPathResolver]
+                location.pathname.substring(1)
+            ),
+        [location.pathname, urlPathResolver]
     );
 
     if (resolvedPath == null) {
