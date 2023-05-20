@@ -97,9 +97,10 @@ export function convertReferenceToTypeReference({
         throw new Error(`Failed to look up schema with id ${schema.schema}`);
     }
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
+    const typeWithPrefix = prefix != null ? `${prefix}.${schemaName}` : schemaName;
     return {
         typeReference: {
-            type: prefix != null ? `${prefix}.${schemaName}` : schemaName,
+            type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
             docs: schema.description ?? undefined,
         },
         additionalTypeDeclarations: {},

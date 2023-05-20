@@ -862,7 +862,7 @@ For \`access_to_resource_denied\` errors, the description is:
             },
             "category": {
               "docs": undefined,
-              "type": "EnumAccountCategory",
+              "type": "optional<EnumAccountCategory>",
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -874,7 +874,7 @@ For \`access_to_resource_denied\` errors, the description is:
             },
             "credit_data": {
               "docs": undefined,
-              "type": "AccountsCreditData",
+              "type": "optional<AccountsCreditData>",
             },
             "currency": {
               "docs": "The currency of the account. For example:
@@ -914,7 +914,7 @@ For \`access_to_resource_denied\` errors, the description is:
             },
             "loan_data": {
               "docs": undefined,
-              "type": "AccountsLoanData",
+              "type": "optional<AccountsLoanData>",
             },
             "name": {
               "docs": "The account name, as given by the institution.",
@@ -1125,7 +1125,7 @@ The closing day of the month for the loan.
             },
             "fees": {
               "docs": "Breakdown of the fees applied to the loan.",
-              "type": "optional<list<AccountsLoanDataFees>>",
+              "type": "optional<list<optional<AccountsLoanDataFees>>>",
             },
             "interest_rate": {
               "docs": "This field has been deprecated.
@@ -1224,7 +1224,7 @@ The minimum amount required to pay to avoid generating interest.
             },
             "type": {
               "docs": undefined,
-              "type": "EnumLoanDataInterestRateType",
+              "type": "optional<EnumLoanDataInterestRateType>",
             },
             "value": {
               "docs": "The interest rate (in percent or currency value).",
@@ -1252,7 +1252,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "results": {
               "docs": "An array of Account objects.",
-              "type": "optional<list<Account>>",
+              "type": "optional<list<optional<Account>>>",
             },
           },
         },
@@ -1844,7 +1844,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "category": {
               "docs": undefined,
-              "type": "EnumCategorizationTransactionCategory",
+              "type": "optional<EnumCategorizationTransactionCategory>",
             },
             "currency": {
               "docs": "The currency of the account, in ISO-4217 format. For example:
@@ -1869,7 +1869,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "merchant": {
               "docs": undefined,
-              "type": "CategorizationMerchantData",
+              "type": "optional<CategorizationMerchantData>",
             },
             "subcategory": {
               "docs": undefined,
@@ -4728,7 +4728,7 @@ We return one of the following enum values:
             },
             "type": {
               "docs": undefined,
-              "type": "EnumIncomeVerificationType",
+              "type": "optional<EnumIncomeVerificationType>",
             },
             "value_date": {
               "docs": "The date when the income transaction occurred, in \`YYYY-MM-DD\` format.",
@@ -5591,7 +5591,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "instruments": {
               "docs": "An array of instruments that fall into the investment portfolio.",
-              "type": "optional<list<InvestmentsPortfolioInstrument>>",
+              "type": "optional<list<optional<InvestmentsPortfolioInstrument>>>",
             },
             "name": {
               "docs": "The name of the portfolio, as given in the institution.
@@ -5634,7 +5634,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "fees": {
               "docs": "An array of fees that apply to the instrument.",
-              "type": "optional<list<InvestmentsPortfolioInstrumentFees>>",
+              "type": "optional<list<optional<InvestmentsPortfolioInstrumentFees>>>",
             },
             "id": {
               "docs": "Belvo's unique ID for the current instrument.",
@@ -5642,7 +5642,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "interest_rates": {
               "docs": "An array of interest rates that apply to the instrument.",
-              "type": "optional<list<InvestmentsPortfolioInstrumentInterestRate>>",
+              "type": "optional<list<optional<InvestmentsPortfolioInstrumentInterestRate>>>",
             },
             "name": {
               "docs": "The name of the instrument, as given by the institution.",
@@ -5673,7 +5673,7 @@ Please note that other currencies other than in the list above may be returned.
 
 For example, the due date, the liquidity date, the previdencia type, and so on.
 ",
-              "type": "optional<list<InvestmentsPortfolioInstrumentRedemptionConditions>>",
+              "type": "optional<list<optional<InvestmentsPortfolioInstrumentRedemptionConditions>>>",
             },
             "subtype": {
               "docs": "The subtype for the instrument, as given by the institution.",
@@ -5996,7 +5996,7 @@ For example: If the invoice is paid in installments, this field indicates the da
             },
             "invoice_type": {
               "docs": undefined,
-              "type": "EnumInvoiceDianInvoiceType",
+              "type": "optional<EnumInvoiceDianInvoiceType>",
             },
             "link": {
               "docs": "The \`link.id\` the invoice belongs to.",
@@ -6030,7 +6030,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "payroll": {
               "docs": undefined,
-              "type": "InvoicesPayrollDian",
+              "type": "optional<InvoicesPayrollDian>",
             },
             "place_of_issue": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -6094,7 +6094,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "type": {
               "docs": undefined,
-              "type": "EnumInvoiceType",
+              "type": "optional<EnumInvoiceType>",
             },
             "usage": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -6275,7 +6275,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             },
             "invoice_type": {
               "docs": undefined,
-              "type": "EnumInvoiceSatInvoiceType",
+              "type": "optional<EnumInvoiceSatInvoiceType>",
             },
             "link": {
               "docs": "The \`link.id\` the invoice belongs to.",
@@ -6311,7 +6311,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             },
             "payroll": {
               "docs": undefined,
-              "type": "InvoicesPayrollSat",
+              "type": "optional<InvoicesPayrollSat>",
             },
             "place_of_issue": {
               "docs": "The postcode of where the invoice was issued.
@@ -6380,7 +6380,7 @@ Possible statuses are:
             },
             "type": {
               "docs": undefined,
-              "type": "EnumInvoiceType",
+              "type": "optional<EnumInvoiceType>",
             },
             "usage": {
               "docs": "The invoice's usage code, as defined by the legal entity of the country. 
@@ -9217,15 +9217,15 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "number_of_installments": {
               "docs": undefined,
-              "type": "ReceivablesTransactionNumberOfInstallments",
+              "type": "optional<ReceivablesTransactionNumberOfInstallments>",
             },
             "status": {
               "docs": undefined,
-              "type": "EnumReceivableTransactionStatus",
+              "type": "optional<EnumReceivableTransactionStatus>",
             },
             "type": {
               "docs": undefined,
-              "type": "EnumReceivableTransactionType",
+              "type": "optional<EnumReceivableTransactionType>",
             },
             "value_date": {
               "docs": "The date that the transactions occurred, according to the institution, in \`YYYY-MM-DD\` format.",
@@ -9292,7 +9292,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "EnumReceivableTransactionFeeType",
+              "type": "optional<EnumReceivableTransactionFeeType>",
             },
             "value": {
               "docs": "The value of \`fees.type\`.",
@@ -9326,7 +9326,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "account": {
               "docs": undefined,
-              "type": "Account",
+              "type": "optional<Account>",
             },
             "average_transaction_amount": {
               "docs": "The average transaction amount of the recurring expense.",
@@ -9364,11 +9364,11 @@ Based on the frequency, you can infer how many days until the next charge will o
             },
             "payment_type": {
               "docs": undefined,
-              "type": "EnumRecurringExpensePaymentType",
+              "type": "optional<EnumRecurringExpensePaymentType>",
             },
             "transactions": {
               "docs": "An array of minified transaction objects used to evaluate the recurring expense. If no transactions were found, we return an empty array.",
-              "type": "list<RecurringExpenseSourceTransaction>",
+              "type": "list<optional<RecurringExpenseSourceTransaction>>",
             },
           },
         },
@@ -9442,7 +9442,7 @@ For \`request_timeout\` errors, the description is:
             },
             "payment_status": {
               "docs": undefined,
-              "type": "EnumTaxRetentionPaymentStatus",
+              "type": "optional<EnumTaxRetentionPaymentStatus>",
             },
             "retained_amount": {
               "docs": "The amount retained.
@@ -9543,11 +9543,11 @@ For \`request_timeout\` errors, the description is:
             },
             "balances_metrics": {
               "docs": undefined,
-              "type": "RiskInsightsBalanceMetrics",
+              "type": "optional<RiskInsightsBalanceMetrics>",
             },
             "cashflow_metrics": {
               "docs": undefined,
-              "type": "RiskInsightsCashflowMetrics",
+              "type": "optional<RiskInsightsCashflowMetrics>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
@@ -9555,7 +9555,7 @@ For \`request_timeout\` errors, the description is:
             },
             "credit_cards_metrics": {
               "docs": undefined,
-              "type": "RiskInsightsCreditCardMetrics",
+              "type": "optional<RiskInsightsCreditCardMetrics>",
             },
             "id": {
               "docs": "Belvo's unique ID for the risk insights request.",
@@ -9567,11 +9567,11 @@ For \`request_timeout\` errors, the description is:
             },
             "loans_metrics": {
               "docs": undefined,
-              "type": "RiskInsightsLoansMetrics",
+              "type": "optional<RiskInsightsLoansMetrics>",
             },
             "transactions_metrics": {
               "docs": undefined,
-              "type": "RiskInsightsTransactionMetrics",
+              "type": "optional<RiskInsightsTransactionMetrics>",
             },
           },
         },
@@ -10457,7 +10457,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "receiver_nationality": {
               "docs": undefined,
-              "type": "EnumTaxRetentionReceiverNationality",
+              "type": "optional<EnumTaxRetentionReceiverNationality>",
             },
             "retention_breakdown": {
               "docs": "A breakdown of the retained taxes.",
@@ -11042,7 +11042,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           "properties": {
             "address": {
               "docs": undefined,
-              "type": "TaxStatusAddressDian",
+              "type": "optional<TaxStatusAddressDian>",
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -11108,7 +11108,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "tax_payer_information": {
               "docs": undefined,
-              "type": "TaxStatusTaxPayerInformationDian",
+              "type": "optional<TaxStatusTaxPayerInformationDian>",
             },
           },
         },
@@ -11306,7 +11306,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "address": {
               "docs": undefined,
-              "type": "TaxStatusAddressSat",
+              "type": "optional<TaxStatusAddressSat>",
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -11369,7 +11369,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "tax_payer_information": {
               "docs": undefined,
-              "type": "TaxStatusTaxPayerInformationSat",
+              "type": "optional<TaxStatusTaxPayerInformationSat>",
             },
           },
         },
@@ -11589,7 +11589,7 @@ For \`too_many_sessions\` errors, the description is:
           "properties": {
             "account": {
               "docs": undefined,
-              "type": "Account",
+              "type": "optional<Account>",
             },
             "accounting_date": {
               "docs": "The ISO timestamp when the transaction was processed and accounted for by the institution.",
@@ -11607,7 +11607,7 @@ For \`too_many_sessions\` errors, the description is:
             },
             "category": {
               "docs": undefined,
-              "type": "EnumTransactionCategory",
+              "type": "optional<EnumTransactionCategory>",
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -11641,7 +11641,7 @@ For \`too_many_sessions\` errors, the description is:
             },
             "merchant": {
               "docs": undefined,
-              "type": "TransactionMerchantData",
+              "type": "optional<TransactionMerchantData>",
             },
             "observations": {
               "docs": "Additional observations provided by the institution on the transaction.",
@@ -11653,7 +11653,7 @@ For \`too_many_sessions\` errors, the description is:
             },
             "status": {
               "docs": undefined,
-              "type": "EnumTransactionStatus",
+              "type": "optional<EnumTransactionStatus>",
             },
             "subcategory": {
               "docs": undefined,
@@ -11661,7 +11661,7 @@ For \`too_many_sessions\` errors, the description is:
             },
             "type": {
               "docs": undefined,
-              "type": "EnumTransactionType",
+              "type": "optional<EnumTransactionType>",
             },
             "value_date": {
               "docs": "The date when the transaction occurred, in \`YYYY-MM-DD\` format.",
@@ -12004,7 +12004,7 @@ For \`session_expired\` errors, the description can be (among others):
             },
             "response": {
               "docs": "Ok",
-              "type": "root.Account",
+              "type": "optional<root.Account>",
             },
           },
           "ListAccounts": {
@@ -12268,7 +12268,7 @@ For \`session_expired\` errors, the description can be (among others):
             },
             "response": {
               "docs": "Ok (when \`save_data=false\`)",
-              "type": "list<root.Account>",
+              "type": "list<optional<root.Account>>",
             },
           },
           "RetrieveAccounts": {
@@ -12318,7 +12318,7 @@ For \`session_expired\` errors, the description can be (among others):
             },
             "response": {
               "docs": "Ok (when \`save_data=false\`)",
-              "type": "list<root.Account>",
+              "type": "list<optional<root.Account>>",
             },
           },
         },
@@ -14114,7 +14114,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   },
                   "type": {
                     "docs": undefined,
-                    "type": "root.EnumInvoiceType",
+                    "type": "optional<root.EnumInvoiceType>",
                   },
                 },
               },
