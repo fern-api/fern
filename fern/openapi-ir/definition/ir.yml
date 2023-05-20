@@ -239,6 +239,7 @@ types:
       reference: ReferencedSchema
       literal: LiteralSchema
       oneOf: OneOfSchema
+      nullable: NullableSchema
       unknown: {}
 
   PrimitiveSchema:
@@ -288,6 +289,11 @@ types:
       value: Schema
 
   OptionalSchema:
+    extends: WithDescription
+    properties:
+      value: Schema
+
+  NullableSchema:
     extends: WithDescription
     properties:
       value: Schema

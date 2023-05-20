@@ -42,6 +42,7 @@ types:
     properties:
       isAuthMandatory: boolean
       hasStreamingEndpoints: boolean
+      hasFileDownloadEndpoints: boolean
       platformHeaders: PlatformHeaders
   PlatformHeaders:
     properties:

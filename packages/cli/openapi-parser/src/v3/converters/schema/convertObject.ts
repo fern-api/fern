@@ -11,7 +11,7 @@ export function convertObject({
     properties,
     description,
     required,
-    wrapAsOptional,
+    wrapAsNullable,
     allOf,
     context,
 }: {
@@ -21,7 +21,7 @@ export function convertObject({
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     description: string | undefined;
     required: string[] | undefined;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
     context: AbstractOpenAPIV3ParserContext;
 }): Schema {
@@ -46,16 +46,21 @@ export function convertObject({
 
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = allRequired.includes(propertyName);
-        const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
+        const schema = convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]);
         return {
             key: propertyName,
-            schema,
+            schema: isRequired
+                ? schema
+                : Schema.optional({
+                      description: undefined,
+                      value: schema,
+                  }),
         };
     });
     return wrapObject({
         nameOverride,
         generatedName,
-        wrapAsOptional,
+        wrapAsNullable,
         properties: convertedProperties,
         description,
         allOf: referencedAllOf,
@@ -65,22 +70,22 @@ export function convertObject({
 export function wrapObject({
     nameOverride,
     generatedName,
-    wrapAsOptional,
+    wrapAsNullable,
     properties,
     description,
     allOf,
 }: {
     nameOverride: string | undefined;
     generatedName: string;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     properties: ObjectProperty[];
     description: string | undefined;
     allOf: ReferencedSchema[];
 }): Schema {
-    if (wrapAsOptional) {
-        return Schema.optional({
+    if (wrapAsNullable) {
+        return Schema.nullable({
             value: Schema.object({
-                description: undefined,
+                description,
                 properties,
                 nameOverride,
                 generatedName,
