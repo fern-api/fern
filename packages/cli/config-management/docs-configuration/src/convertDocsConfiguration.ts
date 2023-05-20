@@ -41,17 +41,18 @@ function convertNavigationItem(
     rawConfig: RawDocs.NavigationItem,
     absolutePathOfConfiguration: AbsoluteFilePath
 ): DocsNavigationItem {
-    if (typeof rawConfig === "string") {
+    if (isRawPageConfig(rawConfig)) {
         return {
             type: "page",
-            absolutePath: resolve(dirname(absolutePathOfConfiguration), rawConfig),
+            title: rawConfig.page,
+            absolutePath: resolve(dirname(absolutePathOfConfiguration), rawConfig.path),
         };
     }
     if (isRawSectionConfig(rawConfig)) {
         return {
             type: "section",
             title: rawConfig.section,
-            items: rawConfig.pages.map((item) => convertNavigationItem(item, absolutePathOfConfiguration)),
+            contents: rawConfig.contents.map((item) => convertNavigationItem(item, absolutePathOfConfiguration)),
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -63,6 +64,11 @@ function convertNavigationItem(
         };
     }
     assertNever(rawConfig);
+}
+
+function isRawPageConfig(item: RawDocs.NavigationItem): item is RawDocs.PageConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as RawDocs.PageConfiguration).page != null;
 }
 
 function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.SectionConfiguration {

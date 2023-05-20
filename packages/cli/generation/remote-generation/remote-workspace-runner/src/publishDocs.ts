@@ -171,14 +171,15 @@ async function convertNavigationItem({
 }): Promise<FernRegistry.docs.v1.write.NavigationItem> {
     switch (item.type) {
         case "page":
-            return FernRegistry.docs.v1.write.NavigationItem.page(
-                constructPageId(relative(docsDefinition.absoluteFilepath, item.absolutePath))
-            );
+            return FernRegistry.docs.v1.write.NavigationItem.page({
+                title: item.title,
+                id: constructPageId(relative(docsDefinition.absoluteFilepath, item.absolutePath)),
+            });
         case "section":
             return FernRegistry.docs.v1.write.NavigationItem.section({
                 title: item.title,
                 items: await Promise.all(
-                    item.items.map((nestedItem) =>
+                    item.contents.map((nestedItem) =>
                         convertNavigationItem({
                             item: nestedItem,
                             docsDefinition,
