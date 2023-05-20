@@ -846,7 +846,7 @@ exports[`open api converter belvo simple 1`] = `
             },
             "bank_product_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "category": {
               "docs": undefined,
@@ -875,7 +875,7 @@ exports[`open api converter belvo simple 1`] = `
             },
             "funds_data": {
               "docs": undefined,
-              "type": "optional<optional<list<AccountsFundsData>>>",
+              "type": "optional<list<AccountsFundsData>>",
             },
             "id": {
               "docs": undefined,
@@ -887,7 +887,7 @@ exports[`open api converter belvo simple 1`] = `
             },
             "internal_identification": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "last_accessed_at": {
               "docs": "The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.",
@@ -895,7 +895,7 @@ exports[`open api converter belvo simple 1`] = `
             },
             "link": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "loan_data": {
               "docs": undefined,
@@ -940,7 +940,7 @@ For example: \`0444/45722-0\`.
           "properties": {
             "available": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "current": {
               "docs": "The current balance is calculated differently according to the type of account.
@@ -975,7 +975,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "end_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "interest_rate": {
               "docs": "The annualized interest rate of the credit.",
@@ -983,7 +983,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "last_payment_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "minimum_payment": {
               "docs": "The minimum amount to be paid on the \`next_payment_date\`.",
@@ -991,7 +991,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "monthly_payment": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "next_payment_date": {
               "docs": "The due date for the next payment (\`YYYY-MM-DD\`).",
@@ -1008,7 +1008,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           "properties": {
             "balance": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "collected_at": {
               "docs": undefined,
@@ -1016,19 +1016,19 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "percentage": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "public_identifications": {
               "docs": undefined,
-              "type": "optional<optional<list<AccountsFundsDataPublicIdentifications>>>",
+              "type": "optional<list<AccountsFundsDataPublicIdentifications>>",
             },
             "type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -1054,7 +1054,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "contract_amount": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "contract_end_date": {
               "docs": undefined,
@@ -1062,31 +1062,31 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "contract_number": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "contract_start_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "credit_limit": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "cutting_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "cutting_day": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "fees": {
               "docs": undefined,
-              "type": "optional<optional<list<AccountsLoanDataFees>>>",
+              "type": "optional<list<AccountsLoanDataFees>>",
             },
             "interest_rate": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "interest_rates": {
               "docs": "Breakdown of the interest applied to the loan.",
@@ -1094,19 +1094,19 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "last_payment_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "last_period_balance": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "limit_day": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "loan_type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "monthly_payment": {
               "docs": "The recurrent monthly payment, if applicable.",
@@ -1114,15 +1114,15 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "no_interest_payment": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "number_of_installments_outstanding": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "number_of_installments_total": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "outstanding_balance": {
               "docs": "The amount remaining to pay in total, including interest.",
@@ -1130,11 +1130,11 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "outstanding_principal": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "payment_day": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "principal": {
               "docs": "Total amount of the loan (the amount the user receives).",
@@ -1182,11 +1182,11 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -1383,11 +1383,11 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "collected_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "current_balance": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "id": {
               "docs": undefined,
@@ -1395,7 +1395,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "statement": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "value_date": {
               "docs": undefined,
@@ -1412,11 +1412,11 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -1639,11 +1639,11 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -1725,11 +1725,11 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "institution": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "number": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -1788,7 +1788,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "mcc": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "merchant": {
               "docs": undefined,
@@ -1851,7 +1851,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "mcc": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "transaction_id": {
               "docs": "Your unique ID for the transaction.",
@@ -1872,7 +1872,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "properties": {
             "logo": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "merchant_name": {
               "docs": undefined,
@@ -1880,7 +1880,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "website": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -2134,7 +2134,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "properties": {
             "address": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "country": {
               "docs": undefined,
@@ -2165,7 +2165,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "phone": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -2174,7 +2174,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "properties": {
             "address": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "country": {
               "docs": undefined,
@@ -2205,7 +2205,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "phone": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -2443,7 +2443,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "properties": {
             "address": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "country": {
               "docs": undefined,
@@ -2486,7 +2486,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "phone": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -2499,11 +2499,11 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -2530,7 +2530,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "properties": {
             "address": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "country": {
               "docs": undefined,
@@ -2573,7 +2573,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "phone": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -2962,7 +2962,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "properties": {
             "document_number": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "document_type": {
               "docs": undefined,
@@ -3004,7 +3004,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "valid_until": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -3026,7 +3026,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "properties": {
             "birth_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "document_ids": {
               "docs": undefined,
@@ -3034,7 +3034,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "email": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "entitlements": {
               "docs": undefined,
@@ -3042,15 +3042,15 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "first_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "last_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "official_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -3059,15 +3059,15 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "properties": {
             "weeks_contributed": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "weeks_redeemed": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "weeks_reinstated": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
           },
         },
@@ -3080,11 +3080,11 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -4680,11 +4680,11 @@ For each income stream, we provide additional insights such as:
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -4713,7 +4713,7 @@ For each income stream, we provide additional insights such as:
             },
             "icon_logo": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": undefined,
@@ -4725,7 +4725,7 @@ For each income stream, we provide additional insights such as:
             },
             "logo": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "name": {
               "docs": undefined,
@@ -4745,7 +4745,7 @@ For each income stream, we provide additional insights such as:
             },
             "text_logo": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "type": {
               "docs": undefined,
@@ -4753,7 +4753,7 @@ For each income stream, we provide additional insights such as:
             },
             "website": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -4942,11 +4942,11 @@ For each income stream, we provide additional insights such as:
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -5022,7 +5022,7 @@ For each income stream, we provide additional insights such as:
             },
             "balance_type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "currency": {
               "docs": "The currency of the portfolio. For example:
@@ -5043,7 +5043,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "instruments": {
               "docs": undefined,
-              "type": "optional<optional<list<InvestmentsPortfolioInstrument>>>",
+              "type": "optional<list<InvestmentsPortfolioInstrument>>",
             },
             "name": {
               "docs": "The name of the portfolio, as given in the institution.
@@ -5206,11 +5206,11 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -5223,7 +5223,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           "properties": {
             "collected_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "description": {
               "docs": "The description of the invoice item (an invoice can have one or more items).",
@@ -5252,7 +5252,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
             },
             "tax_type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "total_amount": {
               "docs": "The total price for this invoice item (\`pre_tax_amount\` + \`tax_amount\`).",
@@ -5279,7 +5279,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           "properties": {
             "collected_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "retained_tax_amount": {
               "docs": "The amount of retained tax.",
@@ -5295,7 +5295,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
             },
             "tax_type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -5304,7 +5304,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           "properties": {
             "collected_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "description": {
               "docs": "The description of the invoice item (an invoice can have one or more items).",
@@ -5338,7 +5338,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
             },
             "tax_type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "total_amount": {
               "docs": "The total price for this invoice item (\`pre_tax_amount\` + \`tax_amount\`).",
@@ -5414,11 +5414,11 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
             },
             "expiration_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "folio": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": undefined,
@@ -5451,7 +5451,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
             },
             "payment_method_description": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "payment_type": {
               "docs": "The payment type code used for this invoice, as defined by the country legal entity.
@@ -5476,7 +5476,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "place_of_issue": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "receiver_details": {
               "docs": undefined,
@@ -5492,7 +5492,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "receiver_tax_fraud_status": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "sender_details": {
               "docs": undefined,
@@ -5508,7 +5508,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "sender_tax_fraud_status": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "status": {
               "docs": "The status of the invoice. Can be one of:
@@ -5538,11 +5538,11 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "usage": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "version": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "warnings": {
               "docs": undefined,
@@ -5550,7 +5550,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "xml": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -5559,35 +5559,35 @@ For detailed information regarding DIAN's payment types, please see their [offic
           "properties": {
             "address": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "collected_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "country": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "email": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "phone_number": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "regimen": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "tax_payer_type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "tax_scheme": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -5673,7 +5673,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "folio": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": undefined,
@@ -5706,7 +5706,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "payment_method_description": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "payment_type": {
               "docs": "The payment type code used for this invoice, as defined by the country legal entity.
@@ -5731,11 +5731,11 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "place_of_issue": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "receiver_blacklist_status": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "receiver_id": {
               "docs": "The fiscal ID of the invoice receiver.",
@@ -5747,11 +5747,11 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "receiver_tax_fraud_status": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "sender_blacklist_status": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "sender_id": {
               "docs": "The fiscal ID of the invoice sender",
@@ -5763,7 +5763,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "sender_tax_fraud_status": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "status": {
               "docs": "The status of the invoice. Can be either *Vigente* (valid) or *Cancelado* (cancelled).",
@@ -5789,11 +5789,11 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "usage": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "version": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "warnings": {
               "docs": undefined,
@@ -5801,7 +5801,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "xml": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -5820,7 +5820,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "beneficiary_rfc": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "currency": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -5894,7 +5894,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "partiality_number": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "payment_method": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -5968,7 +5968,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "beneficiary_rfc": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "currency": {
               "docs": "The currency of the payment. For example:
@@ -6035,7 +6035,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "collected_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "date_from": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -6079,7 +6079,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "collected_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "date_from": {
               "docs": "The start date of the payment period.
@@ -6120,35 +6120,35 @@ Please note that other currencies other than in the list above may be returned.
           "properties": {
             "address": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "collected_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "country": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "email": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "phone_number": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "regimen": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "tax_payer_type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "tax_scheme": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -6161,11 +6161,11 @@ Please note that other currencies other than in the list above may be returned.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -6282,7 +6282,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "external_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": undefined,
@@ -6298,7 +6298,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "last_accessed_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "refresh_rate": {
               "docs": undefined,
@@ -7135,7 +7135,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "first_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": undefined,
@@ -7147,7 +7147,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "last_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "link": {
               "docs": undefined,
@@ -7159,7 +7159,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "second_last_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -7198,11 +7198,11 @@ Please note that other currencies other than in the list above may be returned.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -7219,11 +7219,11 @@ Please note that other currencies other than in the list above may be returned.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -7346,7 +7346,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "legal_entity_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "logo": {
               "docs": undefined,
@@ -7513,11 +7513,11 @@ Please note that other currencies other than in the list above may be returned.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -7561,7 +7561,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "cpf": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "payer_institution": {
               "docs": "Belvo's unique ID to reference the payer's institution.",
@@ -7879,7 +7879,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -7929,7 +7929,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -7979,7 +7979,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -7992,11 +7992,11 @@ Please note that other currencies other than in the list above may be returned.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -8064,7 +8064,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -8150,15 +8150,15 @@ Please note that other currencies other than in the list above may be returned.
           "properties": {
             "end_to_end_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "provider_request_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "redirect_url": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -8167,19 +8167,19 @@ Please note that other currencies other than in the list above may be returned.
           "properties": {
             "bank_payment_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "end_to_end_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "provider_request_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "redirect_url": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -8324,11 +8324,11 @@ Please note that other currencies other than in the list above may be returned.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -8345,11 +8345,11 @@ Please note that other currencies other than in the list above may be returned.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -8383,11 +8383,11 @@ Please note that other currencies other than in the list above may be returned.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -8519,11 +8519,11 @@ Please note that other currencies other than in the list above may be returned.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -8625,11 +8625,11 @@ Based on the frequency, you can infer how many days until the next charge will o
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -8997,11 +8997,11 @@ Based on the frequency, you can infer how many days until the next charge will o
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -9205,11 +9205,11 @@ If the account has not been open long enough to have the transaction data for a 
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -9354,7 +9354,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "internal_identification": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "outcome": {
               "docs": undefined,
@@ -9366,7 +9366,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "rfc": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -9379,11 +9379,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -9453,11 +9453,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -9527,11 +9527,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -9723,11 +9723,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -9756,11 +9756,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "datos_adicionales": {
               "docs": undefined,
-              "type": "optional<optional<map<string, unknown>>>",
+              "type": "optional<map<string, unknown>>",
             },
             "deducciones_autorizadas": {
               "docs": undefined,
-              "type": "optional<optional<map<string, unknown>>>",
+              "type": "optional<map<string, unknown>>",
             },
             "detalle_pago_r1_isr_personas_morales": {
               "docs": "Details of the tax payment.",
@@ -9772,7 +9772,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "dividendos_o_utilidades_distribuidos": {
               "docs": undefined,
-              "type": "optional<optional<map<string, unknown>>>",
+              "type": "optional<map<string, unknown>>",
             },
             "estado_posicion_financiera_balance": {
               "docs": "Details regarding balance sheet of the legal entity.",
@@ -9841,7 +9841,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "receipt_pdf": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "type": {
               "docs": "The type of tax return. Can be either monthly or annual.",
@@ -9862,7 +9862,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "datos_informativos": {
               "docs": undefined,
-              "type": "optional<optional<map<string, unknown>>>",
+              "type": "optional<map<string, unknown>>",
             },
             "deducciones_personales": {
               "docs": "List of all personal tax deductions.",
@@ -9943,7 +9943,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "receipt_pdf": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "type": {
               "docs": "The type of tax return. Can be either monthly or annual.",
@@ -9960,11 +9960,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -9981,11 +9981,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -10036,11 +10036,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -10057,11 +10057,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -10108,11 +10108,11 @@ By default, Belvo returns the yearly (annual) tax returns.
           "properties": {
             "street_one": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "street_two": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10121,11 +10121,11 @@ By default, Belvo returns the yearly (annual) tax returns.
           "properties": {
             "street_one": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "street_two": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10134,23 +10134,23 @@ By default, Belvo returns the yearly (annual) tax returns.
           "properties": {
             "between_street": {
               "docs": undefined,
-              "type": "optional<optional<list<TaxStatusAddressBetweenStreetDian>>>",
+              "type": "optional<list<TaxStatusAddressBetweenStreetDian>>",
             },
             "exterior_number": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "interior_number": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "locality": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "municipality": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "postal_code": {
               "docs": "The postcode of the address.
@@ -10159,19 +10159,19 @@ By default, Belvo returns the yearly (annual) tax returns.
             },
             "state": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "street": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "street_type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "suburb": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10180,23 +10180,23 @@ By default, Belvo returns the yearly (annual) tax returns.
           "properties": {
             "between_street": {
               "docs": undefined,
-              "type": "optional<optional<list<TaxStatusAddressBetweenStreetSat>>>",
+              "type": "optional<list<TaxStatusAddressBetweenStreetSat>>",
             },
             "exterior_number": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "interior_number": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "locality": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "municipality": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "postal_code": {
               "docs": "The postcode of the address.
@@ -10205,19 +10205,19 @@ By default, Belvo returns the yearly (annual) tax returns.
             },
             "state": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "street": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "street_type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "suburb": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10301,23 +10301,23 @@ Note: For individuals in Colombia, this field will return \`null\`.
           "properties": {
             "economic_activity": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "end_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "initial_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "order": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "percentage": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10326,23 +10326,23 @@ Note: For individuals in Colombia, this field will return \`null\`.
           "properties": {
             "economic_activity": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "end_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "initial_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "order": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "percentage": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10354,19 +10354,19 @@ Note: For individuals in Colombia, this field will return \`null\`.
           "properties": {
             "end_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "expiration": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "initial_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "obligation": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10378,19 +10378,19 @@ Note: For individuals in Colombia, this field will return \`null\`.
           "properties": {
             "end_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "expiration": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "initial_date": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "obligation": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10403,11 +10403,11 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -10544,19 +10544,19 @@ Note: For individuals in Colombia, this field will return \`null\`.
           "properties": {
             "commercial_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "curp": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "email": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "first_last_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "last_status_change_date": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -10565,11 +10565,11 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "phone": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "rfc": {
               "docs": "The tax payers's identification number (NIT).
@@ -10578,11 +10578,11 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "second_last_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "social_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "start_operations_date": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -10600,19 +10600,19 @@ Note: For individuals in Colombia, this field will return \`null\`.
           "properties": {
             "commercial_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "curp": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "email": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "first_last_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "last_status_change_date": {
               "docs": "Date when \`status_padron\` was most recently updated.
@@ -10621,11 +10621,11 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "phone": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "rfc": {
               "docs": "The tax payers's identification number (For Mexico, this is the RFC).
@@ -10634,11 +10634,11 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "second_last_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "social_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "start_operations_date": {
               "docs": "Date when the tax payer commenced taxable commercial activities.
@@ -10777,7 +10777,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "internal_identification": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "merchant": {
               "docs": undefined,
@@ -10841,11 +10841,11 @@ Note: For individuals in Colombia, this field will return \`null\`.
           "properties": {
             "bill_amount": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "bill_name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "bill_status": {
               "docs": undefined,
@@ -10853,11 +10853,11 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "collected_at": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous_bill_total": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10866,7 +10866,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
           "properties": {
             "logo": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "merchant_name": {
               "docs": undefined,
@@ -10874,7 +10874,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "website": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -10887,11 +10887,11 @@ Note: For individuals in Colombia, this field will return \`null\`.
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -11010,7 +11010,7 @@ A Link's status is set to \`unconfirmed_link\` when your user has not completed 
             },
             "field": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "message": {
               "docs": undefined,
@@ -17283,11 +17283,11 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -17304,11 +17304,11 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -17325,11 +17325,11 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -17346,11 +17346,11 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -17367,11 +17367,11 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -17388,11 +17388,11 @@ exports[`open api converter buzzshot simple 1`] = `
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -20658,7 +20658,7 @@ issues.
             },
             "sprint": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -20698,7 +20698,7 @@ issues.
             },
             "rev_org": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "severity": {
               "docs": undefined,
@@ -26272,7 +26272,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "partitioning": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "properties": {
               "docs": undefined,
@@ -26310,11 +26310,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "ids": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "oData": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "q": {
               "docs": undefined,
@@ -26322,19 +26322,19 @@ exports[`open api converter squidex simple 1`] = `
             },
             "references": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "referencing": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "scheduledFrom": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "scheduledTo": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -26358,7 +26358,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "description": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": "The ID of the app.",
@@ -26366,7 +26366,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "label": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "lastModified": {
               "docs": "The timestamp when the app has been modified last.",
@@ -26382,7 +26382,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "roleName": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "roleProperties": {
               "docs": "The properties from the role.",
@@ -26390,7 +26390,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "teamId": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "version": {
               "docs": "The version of the app.",
@@ -26471,15 +26471,15 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "maxItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "uniqueFields": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
           },
         },
@@ -26488,7 +26488,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "condition": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -26512,11 +26512,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "editToken": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "fileHash": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "fileName": {
               "docs": "The file name.",
@@ -26572,11 +26572,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "pixelHeight": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "pixelWidth": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "slug": {
               "docs": "The slug.",
@@ -26584,7 +26584,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "tags": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "type": {
               "docs": undefined,
@@ -26691,31 +26691,31 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "annotate": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "create": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "delete": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "move": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "query": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "queryPre": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "update": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "version": {
               "docs": "The version of the app.",
@@ -26769,19 +26769,19 @@ exports[`open api converter squidex simple 1`] = `
             },
             "allowedExtensions": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "aspectHeight": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "aspectWidth": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "defaultValue": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "defaultValues": {
               "docs": undefined,
@@ -26793,39 +26793,39 @@ exports[`open api converter squidex simple 1`] = `
             },
             "folderId": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "maxHeight": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "maxItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "maxSize": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "maxWidth": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minHeight": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minSize": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minWidth": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "mustBeImage": {
               "docs": "True to resolve first image in the content list.",
@@ -26833,7 +26833,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "previewFormat": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previewMode": {
               "docs": undefined,
@@ -26862,7 +26862,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "role": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -26911,7 +26911,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "stopped": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -26945,7 +26945,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "defaultValue": {
               "docs": undefined,
-              "type": "optional<optional<boolean>>",
+              "type": "optional<boolean>",
             },
             "defaultValues": {
               "docs": undefined,
@@ -26966,7 +26966,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "contentId": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "error": {
               "docs": undefined,
@@ -26974,7 +26974,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "jobIndex": {
               "docs": "The index of the bulk job where the result belongs to. The order can change.",
@@ -27008,7 +27008,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "fileName": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": undefined,
@@ -27016,11 +27016,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "isProtected": {
               "docs": undefined,
-              "type": "optional<optional<boolean>>",
+              "type": "optional<boolean>",
             },
             "metadata": {
               "docs": undefined,
-              "type": "optional<optional<map<string, unknown>>>",
+              "type": "optional<map<string, unknown>>",
             },
             "parentId": {
               "docs": undefined,
@@ -27032,11 +27032,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "slug": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "tags": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "type": {
               "docs": undefined,
@@ -27086,7 +27086,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "dueTime": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "expectedCount": {
               "docs": undefined,
@@ -27098,7 +27098,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "patch": {
               "docs": undefined,
@@ -27114,11 +27114,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "schema": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "status": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "type": {
               "docs": undefined,
@@ -27225,7 +27225,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "role": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "secret": {
               "docs": "The client secret.",
@@ -27262,7 +27262,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "url": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "user": {
               "docs": "The user who created or updated the comment.",
@@ -27288,7 +27288,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "condition": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -27297,15 +27297,15 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "createdComments": {
               "docs": undefined,
-              "type": "optional<optional<list<CommentDto>>>",
+              "type": "optional<list<CommentDto>>",
             },
             "deletedComments": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "updatedComments": {
               "docs": undefined,
-              "type": "optional<optional<list<CommentDto>>>",
+              "type": "optional<list<CommentDto>>",
             },
             "version": {
               "docs": "The current version.",
@@ -27318,7 +27318,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "schemaIds": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
           },
         },
@@ -27327,19 +27327,19 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "maxItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "schemaIds": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "uniqueFields": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
           },
         },
@@ -27356,11 +27356,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "referencedSchemas": {
               "docs": undefined,
-              "type": "optional<optional<list<SchemaCondition>>>",
+              "type": "optional<list<SchemaCondition>>",
             },
             "schemas": {
               "docs": undefined,
-              "type": "optional<optional<list<SchemaCondition>>>",
+              "type": "optional<list<SchemaCondition>>",
             },
           },
         },
@@ -27385,7 +27385,7 @@ exports[`open api converter squidex simple 1`] = `
             "data": "unknown",
             "editToken": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": "The if of the content item.",
@@ -27405,11 +27405,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "newStatus": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "newStatusColor": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "referenceData": {
               "docs": undefined,
@@ -27417,7 +27417,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "referenceFields": {
               "docs": undefined,
-              "type": "optional<optional<list<FieldDto>>>",
+              "type": "optional<list<FieldDto>>",
             },
             "scheduleJob": {
               "docs": undefined,
@@ -27425,7 +27425,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "schemaDisplayName": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "schemaId": {
               "docs": "The ID of the schema.",
@@ -27433,7 +27433,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "schemaName": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "status": {
               "docs": "The status of the content.",
@@ -27493,7 +27493,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "role": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -27608,7 +27608,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "defaultValue": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "defaultValues": {
               "docs": undefined,
@@ -27620,15 +27620,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "format": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "maxValue": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "minValue": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -27645,7 +27645,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "category": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "text": {
               "docs": "The text as markdown.",
@@ -27657,7 +27657,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "topic": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "url": {
               "docs": "The url to the discourse server.",
@@ -27749,11 +27749,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "details": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "errorCode": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "message": {
               "docs": "Error message.",
@@ -27765,11 +27765,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "traceId": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "type": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -27785,7 +27785,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "error": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "isResetting": {
               "docs": "Indicates if the event consumer is resetting at the moment.",
@@ -27801,7 +27801,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "position": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -27888,7 +27888,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "nested": {
               "docs": undefined,
-              "type": "optional<optional<list<NestedFieldDto>>>",
+              "type": "optional<list<NestedFieldDto>>",
             },
             "partitioning": {
               "docs": "Defines the partitioning of the field.",
@@ -28018,7 +28018,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "condition": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "field": {
               "docs": "The field to update.",
@@ -28136,7 +28136,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "graphQLSchema": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -28182,7 +28182,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "downloadUrl": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -28302,11 +28302,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "allowedValues": {
               "docs": undefined,
-              "type": "optional<optional<list<double>>>",
+              "type": "optional<list<double>>",
             },
             "defaultValue": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "defaultValues": {
               "docs": undefined,
@@ -28326,11 +28326,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "maxValue": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "minValue": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
           },
         },
@@ -28368,7 +28368,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "message": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "name": {
               "docs": "The name of the suggestion.",
@@ -28385,7 +28385,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "redirectUri": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -28394,7 +28394,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "confirmText": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "costs": {
               "docs": "The monthly costs of the plan.",
@@ -28426,15 +28426,15 @@ exports[`open api converter squidex simple 1`] = `
             },
             "yearlyConfirmText": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "yearlyCosts": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "yearlyId": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -28443,7 +28443,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "currentPlanId": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "locked": {
               "docs": undefined,
@@ -28451,7 +28451,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "planOwner": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "plans": {
               "docs": "The available plans.",
@@ -28459,7 +28459,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "portalLink": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "referral": {
               "docs": undefined,
@@ -28510,15 +28510,15 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "ids": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "oData": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "parentId": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "q": {
               "docs": undefined,
@@ -28535,7 +28535,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "fullText": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "random": {
               "docs": undefined,
@@ -28547,7 +28547,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "sort": {
               "docs": undefined,
-              "type": "optional<optional<list<SortNode>>>",
+              "type": "optional<list<SortNode>>",
             },
             "take": {
               "docs": undefined,
@@ -28593,7 +28593,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "defaultValue": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "defaultValues": {
               "docs": undefined,
@@ -28605,11 +28605,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "maxItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "mustBePublished": {
               "docs": "True when all references must be published.",
@@ -28621,7 +28621,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "schemaIds": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
           },
         },
@@ -28702,7 +28702,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "metadata": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "method": {
               "docs": "The link method.",
@@ -28734,7 +28734,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "stopped": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "url": {
               "docs": "The uri to load from.",
@@ -28893,7 +28893,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "lastExecuted": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "lastModified": {
               "docs": "The date and time when the rule has been modified last.",
@@ -28905,7 +28905,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "numFailed": {
               "docs": "The number of failed executions.",
@@ -28938,11 +28938,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "iconColor": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "iconImage": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "properties": {
               "docs": "The properties.",
@@ -28950,11 +28950,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "readMore": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "title": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -28963,7 +28963,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "description": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "display": {
               "docs": "The label to use.",
@@ -28987,7 +28987,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "options": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
           },
         },
@@ -29019,11 +29019,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "lastDump": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "nextAttempt": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "numCalls": {
               "docs": "The number of calls.",
@@ -29181,7 +29181,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "runningRuleId": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -29215,7 +29215,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "condition": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -29224,7 +29224,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "condition": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "schemaId": {
               "docs": undefined,
@@ -29240,7 +29240,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "category": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "created": {
               "docs": "The date and time when the schema has been created.",
@@ -29317,27 +29317,27 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "contentEditorUrl": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "contentSidebarUrl": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "contentsSidebarUrl": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "hints": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "label": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "tags": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "validateOnPublish": {
               "docs": "True to validate the content items on publish.",
@@ -29350,27 +29350,27 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "change": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "create": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "delete": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "query": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "queryPre": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "update": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -29420,7 +29420,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "label": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "name": {
               "docs": "The name of the search result.",
@@ -29495,11 +29495,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "actionData": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "actionName": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "enrichedEvent": {
               "docs": undefined,
@@ -29507,7 +29507,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "error": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "event": "unknown",
             "eventId": {
@@ -29729,7 +29729,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "allowedValues": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "contentType": {
               "docs": undefined,
@@ -29741,7 +29741,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "defaultValue": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "defaultValues": {
               "docs": undefined,
@@ -29753,7 +29753,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "folderId": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "inlineEditable": {
               "docs": "Indicates that the inline editor is enabled for this field.",
@@ -29769,39 +29769,39 @@ exports[`open api converter squidex simple 1`] = `
             },
             "maxCharacters": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "maxLength": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "maxWords": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minCharacters": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minLength": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minWords": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "pattern": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "patternMessage": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "schemaIds": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
           },
         },
@@ -29827,7 +29827,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "allowedValues": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "createEnum": {
               "docs": "Indicates whether GraphQL Enum should be created.",
@@ -29835,7 +29835,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "defaultValue": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "defaultValues": {
               "docs": undefined,
@@ -29847,11 +29847,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "maxItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "minItems": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
           },
         },
@@ -29879,7 +29879,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "roleName": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "version": {
               "docs": "The version of the team.",
@@ -29944,7 +29944,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "text": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -30074,7 +30074,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "url": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },
@@ -30083,23 +30083,23 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "category": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "fieldRules": {
               "docs": undefined,
-              "type": "optional<optional<list<FieldRuleDto>>>",
+              "type": "optional<list<FieldRuleDto>>",
             },
             "fields": {
               "docs": undefined,
-              "type": "optional<optional<list<UpsertSchemaFieldDto>>>",
+              "type": "optional<list<UpsertSchemaFieldDto>>",
             },
             "fieldsInLists": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "fieldsInReferences": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "isPublished": {
               "docs": "Set it to true to autopublish the schema.",
@@ -30107,7 +30107,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "previewUrls": {
               "docs": undefined,
-              "type": "optional<optional<map<string, optional<string>>>>",
+              "type": "optional<map<string, optional<string>>>",
             },
             "properties": {
               "docs": undefined,
@@ -30140,11 +30140,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "nested": {
               "docs": undefined,
-              "type": "optional<optional<list<UpsertSchemaNestedFieldDto>>>",
+              "type": "optional<list<UpsertSchemaNestedFieldDto>>",
             },
             "partitioning": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "properties": {
               "docs": undefined,
@@ -30186,7 +30186,7 @@ exports[`open api converter squidex simple 1`] = `
             },
             "numDays": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
           },
         },
@@ -30317,11 +30317,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "name": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "schemaIds": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "steps": {
               "docs": undefined,
@@ -30334,7 +30334,7 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "color": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "noUpdate": {
               "docs": undefined,
@@ -30342,11 +30342,11 @@ exports[`open api converter squidex simple 1`] = `
             },
             "noUpdateExpression": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "noUpdateRoles": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "transitions": {
               "docs": undefined,
@@ -30363,11 +30363,11 @@ exports[`open api converter squidex simple 1`] = `
           "properties": {
             "expression": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "roles": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
           },
         },
@@ -30832,7 +30832,7 @@ You will be assigned as owner of the new app automatically.",
                   },
                   "template": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -31030,11 +31030,11 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "description": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "label": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -31068,7 +31068,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "teamId": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -31102,31 +31102,31 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "annotate": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "create": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "delete": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "move": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "query": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "queryPre": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "update": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -31164,23 +31164,23 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "allowAnonymous": {
                     "docs": undefined,
-                    "type": "optional<optional<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "apiCallsLimit": {
                     "docs": undefined,
-                    "type": "optional<optional<integer>>",
+                    "type": "optional<integer>",
                   },
                   "apiTrafficLimit": {
                     "docs": undefined,
-                    "type": "optional<optional<integer>>",
+                    "type": "optional<integer>",
                   },
                   "name": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "role": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -31218,11 +31218,11 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "fallback": {
                     "docs": undefined,
-                    "type": "optional<optional<list<string>>>",
+                    "type": "optional<list<string>>",
                   },
                   "isMaster": {
                     "docs": undefined,
-                    "type": "optional<optional<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "isOptional": {
                     "docs": undefined,
@@ -31356,11 +31356,11 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "name": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "schemaIds": {
                     "docs": undefined,
-                    "type": "optional<optional<list<string>>>",
+                    "type": "optional<list<string>>",
                   },
                   "steps": {
                     "docs": "The workflow steps.",
@@ -31448,7 +31448,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "jobs": {
                     "docs": undefined,
-                    "type": "optional<optional<list<root.BulkUpdateAssetsJobDto>>>",
+                    "type": "optional<list<root.BulkUpdateAssetsJobDto>>",
                   },
                   "optimizeValidation": {
                     "docs": undefined,
@@ -32038,23 +32038,23 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "fileName": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "isProtected": {
                     "docs": undefined,
-                    "type": "optional<optional<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "metadata": {
                     "docs": undefined,
-                    "type": "optional<optional<map<string, unknown>>>",
+                    "type": "optional<map<string, unknown>>",
                   },
                   "slug": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "tags": {
                     "docs": undefined,
-                    "type": "optional<optional<list<string>>>",
+                    "type": "optional<list<string>>",
                   },
                 },
               },
@@ -32404,7 +32404,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "name": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "url": {
                     "docs": "The url to the restore file.",
@@ -33266,7 +33266,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "dueTime": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "status": {
                     "docs": "The new status.",
@@ -34082,11 +34082,11 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "isEnabled": {
                     "docs": undefined,
-                    "type": "optional<optional<boolean>>",
+                    "type": "optional<boolean>",
                   },
                   "name": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "trigger": {
                     "docs": undefined,
@@ -34754,7 +34754,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "name": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -34932,7 +34932,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "fieldRules": {
                     "docs": undefined,
-                    "type": "optional<optional<list<root.FieldRuleDto>>>",
+                    "type": "optional<list<root.FieldRuleDto>>",
                   },
                 },
               },
@@ -34970,27 +34970,27 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "contentEditorUrl": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "contentSidebarUrl": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "contentsSidebarUrl": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "hints": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "label": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "tags": {
                     "docs": undefined,
-                    "type": "optional<optional<list<string>>>",
+                    "type": "optional<list<string>>",
                   },
                   "validateOnPublish": {
                     "docs": "True to validate the content items on publish.",
@@ -35108,11 +35108,11 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "fieldsInLists": {
                     "docs": undefined,
-                    "type": "optional<optional<list<string>>>",
+                    "type": "optional<list<string>>",
                   },
                   "fieldsInReferences": {
                     "docs": undefined,
-                    "type": "optional<optional<list<string>>>",
+                    "type": "optional<list<string>>",
                   },
                 },
               },
@@ -35936,7 +35936,7 @@ You will be assigned as owner of the new team automatically.",
                   },
                   "password": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "permissions": {
                     "docs": "Additional permissions for the user.",
@@ -44134,15 +44134,15 @@ Generate a completion using a previously defined deployment.
                 "properties": {
                   "deployment_id": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "deployment_name": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "options": {
                     "docs": undefined,
-                    "type": "optional<optional<GenerateOptionsRequest>>",
+                    "type": "optional<GenerateOptionsRequest>",
                   },
                   "requests": {
                     "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
@@ -44179,15 +44179,15 @@ Perform a search against a document index.
                 "properties": {
                   "index_id": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "index_name": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "options": {
                     "docs": undefined,
-                    "type": "optional<optional<SearchRequestOptionsRequest>>",
+                    "type": "optional<SearchRequestOptionsRequest>",
                   },
                   "query": {
                     "docs": "The query to search for.",
@@ -44228,11 +44228,11 @@ Used to submit feedback regarding the quality of previously generated completion
                   },
                   "deployment_id": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                   "deployment_name": {
                     "docs": undefined,
-                    "type": "optional<optional<string>>",
+                    "type": "optional<string>",
                   },
                 },
               },
@@ -44250,7 +44250,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "properties": {
             "external_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": "The ID of the document.",
@@ -44284,7 +44284,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "properties": {
             "external_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "finish_reason": {
               "docs": "The reason the generation finished.",
@@ -44296,7 +44296,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "logprobs": {
               "docs": undefined,
-              "type": "optional<optional<NormalizedLogProbs>>",
+              "type": "optional<NormalizedLogProbs>",
             },
             "model_version_id": {
               "docs": "The ID of the model version used to generate this completion.",
@@ -44348,7 +44348,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "properties": {
             "external_ids": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
             "input_values": {
               "docs": "Key/value pairs for each template variable defined in the deployment's prompt.",
@@ -44456,7 +44456,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "sandbox_snapshot": {
               "docs": undefined,
-              "type": "optional<optional<ModelVersionSandboxSnapshot>>",
+              "type": "optional<ModelVersionSandboxSnapshot>",
             },
           },
         },
@@ -44469,7 +44469,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "logit_bias": {
               "docs": undefined,
-              "type": "optional<optional<map<string, optional<double>>>>",
+              "type": "optional<map<string, optional<double>>>",
             },
             "max_tokens": {
               "docs": undefined,
@@ -44607,11 +44607,11 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "next": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "previous": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "results": {
               "docs": undefined,
@@ -44671,7 +44671,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "properties": {
             "external_ids": {
               "docs": undefined,
-              "type": "optional<optional<list<string>>>",
+              "type": "optional<list<string>>",
             },
           },
         },
@@ -44680,19 +44680,19 @@ Used to submit feedback regarding the quality of previously generated completion
           "properties": {
             "filters": {
               "docs": undefined,
-              "type": "optional<optional<SearchFiltersRequest>>",
+              "type": "optional<SearchFiltersRequest>",
             },
             "limit": {
               "docs": undefined,
-              "type": "optional<optional<integer>>",
+              "type": "optional<integer>",
             },
             "result_merging": {
               "docs": undefined,
-              "type": "optional<optional<SearchResultMergingRequest>>",
+              "type": "optional<SearchResultMergingRequest>",
             },
             "weights": {
               "docs": undefined,
-              "type": "optional<optional<SearchWeightsRequest>>",
+              "type": "optional<SearchWeightsRequest>",
             },
           },
         },
@@ -44757,7 +44757,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "external_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": "Vellum-generated ID that uniquely identifies this document.",
@@ -44799,23 +44799,23 @@ Used to submit feedback regarding the quality of previously generated completion
           "properties": {
             "external_id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "id": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "quality": {
               "docs": undefined,
-              "type": "optional<optional<double>>",
+              "type": "optional<double>",
             },
             "text": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
             "timestamp": {
               "docs": undefined,
-              "type": "optional<optional<string>>",
+              "type": "optional<string>",
             },
           },
         },

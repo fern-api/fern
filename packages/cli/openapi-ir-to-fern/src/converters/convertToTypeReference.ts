@@ -174,10 +174,11 @@ export function convertOptionalToTypeReference({
         prefix,
         schemas,
     });
+    const valueType = getTypeFromTypeReference(valueTypeReference.typeReference);
     return {
         typeReference: {
             docs: schema.description ?? undefined,
-            type: `optional<${getTypeFromTypeReference(valueTypeReference.typeReference)}>`,
+            type: valueType.startsWith("optional<") ? valueType : `optional<${valueType}>`,
         },
         additionalTypeDeclarations: {
             ...valueTypeReference.additionalTypeDeclarations,
@@ -199,10 +200,11 @@ export function convertNullableToTypeReference({
         prefix,
         schemas,
     });
+    const valueType = getTypeFromTypeReference(valueTypeReference.typeReference);
     return {
         typeReference: {
             docs: schema.description ?? undefined,
-            type: `optional<${getTypeFromTypeReference(valueTypeReference.typeReference)}>`,
+            type: valueType.startsWith("optional<") ? valueType : `optional<${valueType}>`,
         },
         additionalTypeDeclarations: {
             ...valueTypeReference.additionalTypeDeclarations,
