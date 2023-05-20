@@ -1,7 +1,8 @@
 navigation:
-  - foo.md
+  - page: Foo
+    path: foo.md
   - section: Section
-    pages:
+    contents:
       - foo.md
   - api: API Reference
 
