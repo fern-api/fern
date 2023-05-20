@@ -3,8 +3,10 @@ import { assertNever } from "@fern-api/core-utils";
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
+import { Endpoint } from "../api-page/definition/endpoints/Endpoint";
 import { ApiSubpackage } from "../api-page/definition/subpackages/ApiSubpackage";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { MarkdownPage } from "../markdown-page/MarkdownPage";
 
 export const DocsMainContent: React.FC = () => {
     const location = useLocation();
@@ -26,9 +28,13 @@ export const DocsMainContent: React.FC = () => {
 
     switch (resolvedPath.type) {
         case "page":
-            return <div>page</div>;
+            return <MarkdownPage pageId={resolvedPath.pageId} />;
         case "top-level-endpoint":
-            return <NonIdealState title="Top-level endpoint" />;
+            return (
+                <ApiDefinitionContextProvider apiId={resolvedPath.apiId}>
+                    <Endpoint endpoint={resolvedPath.endpoint} />
+                </ApiDefinitionContextProvider>
+            );
         case "api-subpackage":
             return (
                 <ApiDefinitionContextProvider apiId={resolvedPath.apiId}>

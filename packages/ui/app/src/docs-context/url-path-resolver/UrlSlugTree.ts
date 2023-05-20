@@ -11,8 +11,8 @@ export class UrlSlugTree {
         this.rootNodes = this.constructSlugToNodeRecord(docsDefinition.config.navigation.items);
     }
 
-    public resolveUrlPath(urlPath: string): UrlSlugTreeNode | undefined {
-        const slugs = urlPath.split("/");
+    public resolveUrlPath(pathname: string): UrlSlugTreeNode | undefined {
+        const slugs = pathname.split("/").map(decodeURIComponent);
         return this.resolveSlugsRecursive(slugs, this.rootNodes);
     }
 
