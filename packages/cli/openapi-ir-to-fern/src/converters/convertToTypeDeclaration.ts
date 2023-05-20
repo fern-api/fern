@@ -44,6 +44,8 @@ export function convertToTypeDeclaration(schema: Schema, schemas: Record<SchemaI
         return convertReferenceToTypeDeclaration({ schema, schemas });
     } else if (schema.type === "optional") {
         return convertOptionalToTypeDeclaration({ schema, schemas });
+    } else if (schema.type === "nullable") {
+        return convertToTypeDeclaration(schema.value, schemas);
     } else if (schema.type === "literal") {
         return convertLiteralToTypeDeclaration(schema.value);
     } else if (schema.type === "unknown") {

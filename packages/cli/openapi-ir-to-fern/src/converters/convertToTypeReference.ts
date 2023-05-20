@@ -3,6 +3,7 @@ import {
     ArraySchema,
     EnumSchema,
     MapSchema,
+    NullableSchema,
     ObjectSchema,
     OneOfSchema,
     OptionalSchema,
@@ -17,7 +18,7 @@ import {
     convertObjectToTypeDeclaration,
     convertOneOfToTypeDeclaration,
 } from "./convertToTypeDeclaration";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface TypeReference {
     typeReference: RawSchemas.TypeReferenceWithDocsSchema;
@@ -45,6 +46,8 @@ export function convertToTypeReference({
         return convertUnknownToTypeReference();
     } else if (schema.type === "optional") {
         return convertOptionalToTypeReference({ schema, prefix, schemas });
+    } else if (schema.type === "nullable") {
+        return convertNullableToTypeReference({ schema, prefix, schemas });
     } else if (schema.type === "enum") {
         return convertEnumToTypeReference({ schema, prefix });
     } else if (schema.type === "literal") {
@@ -94,9 +97,10 @@ export function convertReferenceToTypeReference({
         throw new Error(`Failed to look up schema with id ${schema.schema}`);
     }
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
+    const typeWithPrefix = prefix != null ? `${prefix}.${schemaName}` : schemaName;
     return {
         typeReference: {
-            type: prefix != null ? `${prefix}.${schemaName}` : schemaName,
+            type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
             docs: schema.description ?? undefined,
         },
         additionalTypeDeclarations: {},
@@ -171,10 +175,37 @@ export function convertOptionalToTypeReference({
         prefix,
         schemas,
     });
+    const valueType = getTypeFromTypeReference(valueTypeReference.typeReference);
     return {
         typeReference: {
-            docs: schema.description ?? undefined,
-            type: `optional<${getTypeFromTypeReference(valueTypeReference.typeReference)}>`,
+            docs: schema.description ?? getDocsFromTypeReference(valueTypeReference.typeReference),
+            type: valueType.startsWith("optional<") ? valueType : `optional<${valueType}>`,
+        },
+        additionalTypeDeclarations: {
+            ...valueTypeReference.additionalTypeDeclarations,
+        },
+    };
+}
+
+export function convertNullableToTypeReference({
+    schema,
+    prefix,
+    schemas,
+}: {
+    schema: NullableSchema;
+    prefix?: string;
+    schemas: Record<SchemaId, Schema>;
+}): TypeReference {
+    const valueTypeReference = convertToTypeReference({
+        schema: schema.value,
+        prefix,
+        schemas,
+    });
+    const valueType = getTypeFromTypeReference(valueTypeReference.typeReference);
+    return {
+        typeReference: {
+            docs: schema.description ?? getDocsFromTypeReference(valueTypeReference.typeReference),
+            type: valueType.startsWith("optional<") ? valueType : `optional<${valueType}>`,
         },
         additionalTypeDeclarations: {
             ...valueTypeReference.additionalTypeDeclarations,

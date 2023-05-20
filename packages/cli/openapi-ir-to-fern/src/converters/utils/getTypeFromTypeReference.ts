@@ -6,3 +6,10 @@ export function getTypeFromTypeReference(typeReference: RawSchemas.TypeReference
     }
     return typeReference.type;
 }
+
+export function getDocsFromTypeReference(typeReference: RawSchemas.TypeReferenceWithDocsSchema): string | undefined {
+    if (typeof typeReference === "string") {
+        return undefined;
+    }
+    return typeReference.docs;
+}

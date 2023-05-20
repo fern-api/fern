@@ -4,34 +4,34 @@ import { wrapPrimitive } from "../convertSchemas";
 export function convertNumber({
     format,
     description,
-    wrapAsOptional,
+    wrapAsNullable,
 }: {
     format: string | undefined;
     description: string | undefined;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
 }): Schema {
     if (format == null || format === "double") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.double(),
-            wrapAsOptional,
+            wrapAsNullable,
             description,
         });
     } else if (format === "float") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.float(),
-            wrapAsOptional,
+            wrapAsNullable,
             description,
         });
     } else if (format === "int32") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.int(),
-            wrapAsOptional,
+            wrapAsNullable,
             description,
         });
     } else if (format === "int64") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.int64(),
-            wrapAsOptional,
+            wrapAsNullable,
             description,
         });
     }
