@@ -81,7 +81,7 @@ export function wrapDiscriminantedOneOf({
         return Schema.nullable({
             value: Schema.oneOf({
                 type: "discriminated",
-                description: undefined,
+                description,
                 discriminantProperty: discriminant,
                 nameOverride,
                 generatedName,

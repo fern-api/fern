@@ -58,7 +58,7 @@ export function wrapEnum({
                 nameOverride,
                 generatedName,
                 values,
-                description: undefined,
+                description,
             }),
             description,
         });

@@ -342,7 +342,7 @@ export function wrapPrimitive({
         return Schema.nullable({
             value: Schema.primitive({
                 schema: primitive,
-                description: undefined,
+                description,
             }),
             description,
         });

@@ -37,7 +37,7 @@ export function wrapArray({
         return Schema.nullable({
             value: Schema.array({
                 value: itemSchema,
-                description: undefined,
+                description,
             }),
             description,
         });

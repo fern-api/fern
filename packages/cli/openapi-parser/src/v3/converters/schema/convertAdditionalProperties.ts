@@ -53,7 +53,7 @@ export function wrapMap({
     if (wrapAsNullable) {
         return Schema.nullable({
             value: Schema.map({
-                description: undefined,
+                description,
                 key: keySchema,
                 value: valueSchema,
             }),

@@ -49,7 +49,7 @@ export function wrapUndiscriminantedOneOf({
         return Schema.nullable({
             value: Schema.oneOf({
                 type: "undisciminated",
-                description: undefined,
+                description,
                 nameOverride,
                 generatedName,
                 schemas: subtypes,

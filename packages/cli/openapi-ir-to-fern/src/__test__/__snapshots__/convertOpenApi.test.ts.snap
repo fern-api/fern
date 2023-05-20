@@ -833,7 +833,10 @@ exports[`open api converter belvo simple 1`] = `
           },
         },
         "Account": {
-          "docs": undefined,
+          "docs": "Details regarding the account.
+
+**Note**: For our recurring expenses resource, this account relates to the account that was analyzed to generate the recurring expenses report.
+",
           "properties": {
             "balance": {
               "docs": undefined,
@@ -959,7 +962,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
         },
         "AccountsCreditData": {
-          "docs": undefined,
+          "docs": "The credit options associated with this account.",
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -1046,7 +1049,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
         },
         "AccountsLoanData": {
-          "docs": undefined,
+          "docs": "The loan options associated with this account.",
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
@@ -1143,7 +1146,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
         },
         "AccountsLoanDataFees": {
-          "docs": undefined,
+          "docs": "Breakdown of the fees applied to the loan.",
           "properties": {
             "type": {
               "docs": undefined,
@@ -1195,7 +1198,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           },
         },
         "AccountsReceivablesData": {
-          "docs": undefined,
+          "docs": "Additional details regarding the receivables account, if applicable.",
           "properties": {
             "anticipated": {
               "docs": "The amount that the owner of the account received earlier than contracted.",
@@ -1868,7 +1871,8 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           },
         },
         "CategorizationMerchantData": {
-          "docs": undefined,
+          "docs": "Additional data regarding the merchant involved in the transaction.
+",
           "properties": {
             "logo": {
               "docs": undefined,
@@ -3093,7 +3097,18 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           },
         },
         "EnumAccountCategory": {
-          "docs": undefined,
+          "docs": "The type of account.
+We return one of the following enum values:
+  - \`CHECKING_ACCOUNT\`
+  - \`CREDIT_CARD\`
+  - \`INVESTMENT_ACCOUNT\`
+  - \`LOAN_ACCOUNT\`
+  - \`PENSION_FUND_ACCOUNT\`
+  - \`RECEIVABLES_ACCOUNT\`
+  - \`SAVINGS_ACCOUNT\`
+  - \`UNCATEGORIZED\`
+  - \`null\`
+",
           "type": "string",
         },
         "EnumBankAccountHolderTypeOfpi": {
@@ -3183,11 +3198,113 @@ Can be either:
           ],
         },
         "EnumCategorizationTransactionCategory": {
-          "docs": undefined,
+          "docs": "The name of the category to which this transaction belongs. For more info about this feature, check our [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions) article. 
+
+We return one of the following enum values:
+
+  - \`Bills & Utilities\`
+  - \`Credits & Loans\`
+  - \`Deposits\`
+  - \`Fees & Charges\`
+  - \`Food & Groceries\`
+  - \`Home & Life\`
+  - \`Income & Payments\`
+  - \`Insurance\`
+  - \`Investments & Savings\`
+  - \`Online Platforms & Leisure\`
+  - \`Personal Shopping\`
+  - \`Taxes\`
+  - \`Transfers\`
+  - \`Transport & Travel\`
+  - \`Unknown\`
+  - \`Withdrawal & ATM\`
+  - \`null\`
+",
           "type": "string",
         },
         "EnumCategorizationTransactionSubcategory": {
-          "docs": undefined,
+          "docs": "The transactions subcategory. For more info about this feature, check our [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions) article. 
+
+We return one of the following enum values:
+
+  - \`Electricity & Energy\`
+  - \`Rent\`
+  - \`Telecommunications\`
+  - \`Water\`
+  - \`Auto\`
+  - \`Credit Card\`
+  - \`Instalment\`
+  - \`Interest & Charges\`
+  - \`Mortgage\`
+  - \`Pay Advance\`
+  - \`Personal\`
+  - \`Adjustments\`
+  - \`Bank Fees\`
+  - \`Chargeback\`
+  - \`Refund\`
+  - \`Blocked Balances\`
+  - \`Alimony\`
+  - \`Alcohol & Tobacco\`
+  - \`Bakery & Coffee\`
+  - \`Bars & Nightclubs\`
+  - \`Convenience Store\`
+  - \`Delivery\`
+  - \`Groceries\`
+  - \`Restaurants\`
+  - \`Education\`
+  - \`Gyms & Fitness\`
+  - \`Hair & Beauty\`
+  - \`Health\`
+  - \`Home Decor & Appliances\`
+  - \`Laundry & Dry Cleaning\`
+  - \`Pharmacies\`
+  - \`Professional Services\`
+  - \`Veterinary Services\`
+  - \`Freelance\`
+  - \`Interest\`
+  - \`Retirement\`
+  - \`Salary\`
+  - \`Government\`
+  - \`Home Insurance\`
+  - \`Auto Insurance\`
+  - \`Health & Life Insurance\`
+  - \`Savings\`
+  - \`Fixed income\`
+  - \`Equity\`
+  - \`Investment Funds\`
+  - \`Derivatives\`
+  - \`Cryptocurrencies\`
+  - \`Apps, Software and Cloud Services\`
+  - \`Events, Parks and Museums\`
+  - \`Gambling\`
+  - \`Gaming\`
+  - \`Lottery\`
+  - \`Movie & Audio\`
+  - \`Books & News\`
+  - \`Clothing & Accessories\`
+  - \`Department Store\`
+  - \`Electronics\`
+  - \`E-commerce\`
+  - \`Gifts\`
+  - \`Office Supplies\`
+  - \`Pet Supplies\`
+  - \`Auto Tax & Fees\`
+  - \`Donation\`
+  - \`Government Fees\`
+  - \`Income Tax\`
+  - \`Real Estate Tax & Fees\`
+  - \`Tax Return\`
+  - \`Accommodation\`
+  - \`Auto Expenses\`
+  - \`Auto Rental\`
+  - \`Flights\`
+  - \`Gas\`
+  - \`Mileage Programs\`
+  - \`Parking & Tolls\`
+  - \`Public Transit\`
+  - \`Taxis & Rideshares\`
+  - \`Other\`
+  - \`null\`",
           "type": "string",
         },
         "EnumCategorizationTransactionType": {
@@ -3272,7 +3389,11 @@ Can be either:
           ],
         },
         "EnumEmploymentRecordDocumentType": {
-          "docs": undefined,
+          "docs": "The type of document related to the individual. We return one of the following values:
+
+  - \`NSS\`
+  - \`CURP\`
+",
           "enum": [
             {
               "name": "NSS",
@@ -3285,7 +3406,8 @@ Can be either:
           ],
         },
         "EnumEmploymentRecordStatus": {
-          "docs": undefined,
+          "docs": "Indicates whether or not the individual is currently \`EMPLOYED\` or \`UNEMPLOYED\`.
+",
           "enum": [
             {
               "name": "EMPLOYED",
@@ -3516,7 +3638,10 @@ Can be either:
           ],
         },
         "EnumIncomeVerificationType": {
-          "docs": undefined,
+          "docs": "The direction of the transaction:
+  
+- \`INFLOW\` indicates money coming into the account.
+",
           "enum": [
             {
               "name": "INFLOW",
@@ -3707,7 +3832,12 @@ You can send through one or more of the following values:
           ],
         },
         "EnumInvoiceDianInvoiceType": {
-          "docs": undefined,
+          "docs": "The fiscal institution's classification of the invoice.
+
+For Colombia's DIAN, we return one of the following values:
+
+  - \`Factura Electrónica de Venta\`
+",
           "enum": [
             {
               "name": "FacturaElectronicaDeVenta",
@@ -3716,11 +3846,27 @@ You can send through one or more of the following values:
           ],
         },
         "EnumInvoiceDianPaymentMethod": {
-          "docs": undefined,
+          "docs": "The payment method used for this invoice, as defined by the legal entity of the country.
+
+For DIAN Colombia, we return one of the following values:
+
+  - \`Contado\`
+  - \`Crédito\`
+  - \`null\`
+",
           "type": "string",
         },
         "EnumInvoiceSatInvoiceType": {
-          "docs": undefined,
+          "docs": "The fiscal institution's classification of the invoice.
+
+For Mexico's SAT, we return one of the following values:
+
+  - \`Egreso\`
+  - \`Ingreso\`
+  - \`Nómina\`
+  - \`Pago\`
+  - \`Traslado\`
+",
           "enum": [
             {
               "name": "Egreso",
@@ -3745,11 +3891,16 @@ You can send through one or more of the following values:
           ],
         },
         "EnumInvoiceSatPaymentMethod": {
-          "docs": undefined,
+          "docs": "The payment method code used for this invoice, as defined by the legal entity of the country.
+
+- 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payment-method). For Mexico, we return \`PUE\`, \`PIP\`, \`PPD\`, or \`null\`.
+",
           "type": "string",
         },
         "EnumInvoiceType": {
-          "docs": undefined,
+          "docs": "The direction of the invoice (from the perspective of the Link owner).
+- \`OUTFLOW\` indicates a sent invoice. - \`INFLOW\` indicates a received invoice.
+",
           "type": "string",
         },
         "EnumLinkAccessModeRequest": {
@@ -3772,11 +3923,25 @@ For more information, see our [Links](https://developers.belvo.com/docs/links-an
           ],
         },
         "EnumLinkAccessModeResponse": {
-          "docs": undefined,
+          "docs": "The link type.
+For more information, see our [Links](https://developers.belvo.com/docs/links-and-institutions#links) article.
+We return one of the following enum values:
+  - \`single\`
+  - \`recurrent\`
+  - \`null\`
+",
           "type": "string",
         },
         "EnumLinkRefreshRate": {
-          "docs": undefined,
+          "docs": "The update refresh rate for the recurrent link. For more information, check out our [recurrent link documentation](https://developers.belvo.com/docs/links-and-institutions#recurrent-links) in our DevPortal.
+We return one of the following enum values:
+  - \`6h\`
+  - \`12h\`
+  - \`24h\`
+  - \`7d\` (default)
+  - \`30d\` (once a month)
+  - \`null\` (for single links)
+",
           "type": "string",
         },
         "EnumLinkStatus": {
@@ -3829,7 +3994,11 @@ We return one of the following values:
           ],
         },
         "EnumLoanDataInterestRateType": {
-          "docs": undefined,
+          "docs": "The period that the interest is applied to the loan. We return one of the following values:
+
+  - \`MONTHLY\`
+  - \`YEARLY\`
+",
           "enum": [
             {
               "name": "MONTHLY",
@@ -3984,7 +4153,9 @@ We return one of the following values:
           ],
         },
         "EnumReceivableTransactionFeeType": {
-          "docs": undefined,
+          "docs": "The type of fee applied to the transaction. We return one of the following values:
+
+  - \`TRANSACTION_FEE\`",
           "enum": [
             {
               "name": "TRANSACTION_FEE",
@@ -3993,7 +4164,12 @@ We return one of the following values:
           ],
         },
         "EnumReceivableTransactionStatus": {
-          "docs": undefined,
+          "docs": "The status of the transaction. Can be either:
+
+  - \`APPROVED\`
+  - \`CANCELLED\`
+  - \`REVERTED\`
+  - \`UNCATEGORIZED\`",
           "enum": [
             {
               "name": "APPROVED",
@@ -4014,7 +4190,18 @@ We return one of the following values:
           ],
         },
         "EnumReceivableTransactionType": {
-          "docs": undefined,
+          "docs": "The type of transaction. For example, whether the transaction was a \`VISA_DEBIT\` or a \`MASTERCARD_CREDIT\`.
+
+We return one of the following values:
+
+  - \`VISA_CREDIT\`
+  - \`VISA_DEBIT\`
+  - \`MASTERCARD_CREDIT\`
+  - \`MASTERCARD_DEBIT\`
+  - \`ELO_CREDIT\`
+  - \`ELO_DEBIT\`
+  - \`null\`
+",
           "type": "string",
         },
         "EnumRecurringExpenseCategory": {
@@ -4068,7 +4255,11 @@ We return one of the following values:
           ],
         },
         "EnumRecurringExpensePaymentType": {
-          "docs": undefined,
+          "docs": "The type of recurring expense. We return one of the following values:
+
+  - \`SUBSCRIPTION\`
+  - \`REGULAR\`
+",
           "enum": [
             {
               "name": "SUBSCRIPTION",
@@ -4081,7 +4272,7 @@ We return one of the following values:
           ],
         },
         "EnumTaxComplianceStatusOutcome": {
-          "docs": undefined,
+          "docs": "Indicates whether the taxpayer is complying to all their tax obligations (\`POSITIVE\`), if they are not (\`NEGATIVE\`), or have none to comply to (\`NO_OBLIGATIONS\`).",
           "enum": [
             {
               "name": "POSITIVE",
@@ -4098,7 +4289,10 @@ We return one of the following values:
           ],
         },
         "EnumTaxRetentionPaymentStatus": {
-          "docs": undefined,
+          "docs": "Indicates whether or not the tax has been paid or not. Can be either:
+  - \`PAID\`
+  - \`PROVISIONED\`
+",
           "enum": [
             {
               "name": "PAID",
@@ -4111,7 +4305,10 @@ We return one of the following values:
           ],
         },
         "EnumTaxRetentionReceiverNationality": {
-          "docs": undefined,
+          "docs": "Whether the invoice receiver is a Mexican national or not. If the receiver is not considered a Mexican national, the retained taxes can be calculated differently. Possible values:
+  - \`NATIONAL\`
+  - \`FOREIGN\`
+",
           "enum": [
             {
               "name": "NATIONAL",
@@ -4141,23 +4338,153 @@ We return one of the following values:
           ],
         },
         "EnumTransactionBillStatus": {
-          "docs": undefined,
+          "docs": "The status of the bill that the transaction appears on. Can be one of:
+
+  - \`PAID\`: The bill has been paid in full.
+  - \`CLOSED\`: The bill has been closed by the institution.
+  - \`OPEN\`: The bill is currently open. (Note: This is the main bill that Belvo retrieves balance data from).
+  - \`FUTURE\`: The bill is pending.
+  - \`null\`: No bill status was identified.
+  
+ℹ️ Note: Some banks consider CLOSED as PAID.",
           "type": "string",
         },
         "EnumTransactionCategory": {
-          "docs": undefined,
+          "docs": "The name of the category to which this transaction belongs.
+
+> **Get transaction categorization**
+With [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions), we clean and categorize transactions for you, turning raw data into actionable insights. To enable this feature, just [reach out](https://belvo.com/contact/?utm_source=documentation) to us, and we'll get right to it.
+
+We return one of the following enum values:
+
+  - \`Bills & Utilities\`
+  - \`Credits & Loans\`
+  - \`Deposits\`
+  - \`Fees & Charges\`
+  - \`Food & Groceries\`
+  - \`Home & Life\`
+  - \`Income & Payments\`
+  - \`Insurance\`
+  - \`Investments & Savings\`
+  - \`Online Platforms & Leisure\`
+  - \`Personal Shopping\`
+  - \`Taxes\`
+  - \`Transfers\`
+  - \`Transport & Travel\`
+  - \`Unknown\`*
+  - \`Withdrawal & ATM\`
+  - \`null\`
+
+
+  \\* For clients not using our Transaction Categorization product, we return \`null\` instead.
+",
           "type": "string",
         },
         "EnumTransactionStatus": {
-          "docs": undefined,
+          "docs": "The status of the transaction. We return one of the following values:
+
+  - \`PENDING\`
+  - \`PROCESSED\`
+  - \`UNCATEGORIZED\`
+  - \`null\`
+",
           "type": "string",
         },
         "EnumTransactionSubcategory": {
-          "docs": undefined,
+          "docs": "The transactions subcategory.
+
+  > **Get transaction categorization**
+  For clients not using our [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions), we return \`null\` instead. To enable this feature, just [reach out](https://belvo.com/contact/?utm_source=documentation) to us, and we'll get right to it.
+
+
+We return one of the following enum values:
+
+  - \`Electricity & Energy\`
+  - \`Rent\`
+  - \`Telecommunications\`
+  - \`Water\`
+  - \`Auto\`
+  - \`Credit Card\`
+  - \`Instalment\`
+  - \`Interest & Charges\`
+  - \`Mortgage\`
+  - \`Pay Advance\`
+  - \`Personal\`
+  - \`Adjustments\`
+  - \`Bank Fees\`
+  - \`Chargeback\`
+  - \`Refund\`
+  - \`Blocked Balances\`
+  - \`Alimony\`
+  - \`Alcohol & Tobacco\`
+  - \`Bakery & Coffee\`
+  - \`Bars & Nightclubs\`
+  - \`Convenience Store\`
+  - \`Delivery\`
+  - \`Groceries\`
+  - \`Restaurants\`
+  - \`Education\`
+  - \`Gyms & Fitness\`
+  - \`Hair & Beauty\`
+  - \`Health\`
+  - \`Home Decor & Appliances\`
+  - \`Laundry & Dry Cleaning\`
+  - \`Pharmacies\`
+  - \`Professional Services\`
+  - \`Veterinary Services\`
+  - \`Freelance\`
+  - \`Interest\`
+  - \`Retirement\`
+  - \`Salary\`
+  - \`Government\`
+  - \`Home Insurance\`
+  - \`Auto Insurance\`
+  - \`Health & Life Insurance\`
+  - \`Savings\`
+  - \`Fixed income\`
+  - \`Equity\`
+  - \`Investment Funds\`
+  - \`Derivatives\`
+  - \`Cryptocurrencies\`
+  - \`Apps, Software and Cloud Services\`
+  - \`Events, Parks and Museums\`
+  - \`Gambling\`
+  - \`Gaming\`
+  - \`Lottery\`
+  - \`Movie & Audio\`
+  - \`Books & News\`
+  - \`Clothing & Accessories\`
+  - \`Department Store\`
+  - \`Electronics\`
+  - \`E-commerce\`
+  - \`Gifts\`
+  - \`Office Supplies\`
+  - \`Pet Supplies\`
+  - \`Auto Tax & Fees\`
+  - \`Donation\`
+  - \`Government Fees\`
+  - \`Income Tax\`
+  - \`Real Estate Tax & Fees\`
+  - \`Tax Return\`
+  - \`Accommodation\`
+  - \`Auto Expenses\`
+  - \`Auto Rental\`
+  - \`Flights\`
+  - \`Gas\`
+  - \`Mileage Programs\`
+  - \`Parking & Tolls\`
+  - \`Public Transit\`
+  - \`Taxis & Rideshares\`
+  - \`Other\`
+  - \`null\`",
           "type": "string",
         },
         "EnumTransactionType": {
-          "docs": undefined,
+          "docs": "The direction of the transaction:
+- \`INFLOW\` indicates money coming into the account.
+- \`OUTFLOW\` indicates money going out of the account.
+- \`null\` when no information was present regarding the direction of the transaction.
+",
           "type": "string",
         },
         "EquityStatementBusiness": {
@@ -5555,7 +5882,8 @@ For detailed information regarding DIAN's payment types, please see their [offic
           },
         },
         "InvoiceSenderDetailsDian": {
-          "docs": undefined,
+          "docs": "Details regarding the sender.
+",
           "properties": {
             "address": {
               "docs": undefined,
@@ -5592,7 +5920,8 @@ For detailed information regarding DIAN's payment types, please see their [offic
           },
         },
         "InvoiceWarningsDian": {
-          "docs": undefined,
+          "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
           "properties": {
             "code": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -5607,7 +5936,8 @@ For detailed information regarding DIAN's payment types, please see their [offic
           },
         },
         "InvoiceWarningsSat": {
-          "docs": undefined,
+          "docs": "Object containing information about any warnings related to this invoice.
+",
           "properties": {
             "code": {
               "docs": "The warning code.
@@ -6026,7 +6356,8 @@ Please note that other currencies other than in the list above may be returned.
           },
         },
         "InvoicesPayrollDian": {
-          "docs": undefined,
+          "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
+",
           "properties": {
             "amount": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -6070,7 +6401,8 @@ Please note that other currencies other than in the list above may be returned.
           },
         },
         "InvoicesPayrollSat": {
-          "docs": undefined,
+          "docs": "Details regarding the payroll payment. Only applicable for payroll invoices.
+",
           "properties": {
             "amount": {
               "docs": "The total amount of the payroll payment.
@@ -6116,7 +6448,8 @@ Please note that other currencies other than in the list above may be returned.
           },
         },
         "InvoicesReceiverDetailsDian": {
-          "docs": undefined,
+          "docs": "Details regarding the receiver.
+",
           "properties": {
             "address": {
               "docs": undefined,
@@ -7164,7 +7497,7 @@ Please note that other currencies other than in the list above may be returned.
           },
         },
         "OwnerDocumentId": {
-          "docs": undefined,
+          "docs": "Information regarding the identification document the owner provided to the bank.",
           "properties": {
             "document_number": {
               "docs": "The document's identification number.",
@@ -8498,7 +8831,7 @@ Please note that other currencies other than in the list above may be returned.
           },
         },
         "ReceivablesTransactionNumberOfInstallments": {
-          "docs": undefined,
+          "docs": "Details regarding the number of installments for the transaction, if applicable.",
           "properties": {
             "paid": {
               "docs": "The number of payments already made to pay the cost of the transaction.",
@@ -8545,7 +8878,7 @@ Please note that other currencies other than in the list above may be returned.
           },
         },
         "RecurringExpenseSourceTransaction": {
-          "docs": undefined,
+          "docs": "An array of minified transaction objects used to evaluate the recurring expense. If no transactions were found, we return an empty array.",
           "properties": {
             "amount": {
               "docs": "The transaction amount.",
@@ -8811,7 +9144,7 @@ Based on the frequency, you can infer how many days until the next charge will o
           },
         },
         "RiskInsightsBalanceMetrics": {
-          "docs": undefined,
+          "docs": "Balance metrics calculated based on the user's balances from checking and savings accounts.",
           "properties": {
             "balance_threshold_x": {
               "docs": "The threshold used to compute \`days_balance_below_x_period\`. Please note, this is value is country specific (both in terms of the amount and the currency).
@@ -8886,7 +9219,10 @@ Based on the frequency, you can infer how many days until the next charge will o
           },
         },
         "RiskInsightsCashflowMetrics": {
-          "docs": undefined,
+          "docs": "Aggregated metrics calculated based on the user's transactions from checking, savings, credit, and loan accounts.
+
+However, internal transfers (transfers between accounts belonging to the same link) are not used in the calculation.
+",
           "properties": {
             "positive_to_negative_ratio_1m": {
               "docs": "The ratio between sum_positive / sum_negative  in the last month (counted from the time of the request).
@@ -8944,7 +9280,7 @@ Based on the frequency, you can infer how many days until the next charge will o
           },
         },
         "RiskInsightsCreditCardMetrics": {
-          "docs": undefined,
+          "docs": "Aggregated metrics calculated based on the link's credit card accounts.",
           "properties": {
             "num_accounts": {
               "docs": "Number of credit cards accounts associated to the link.
@@ -8964,7 +9300,7 @@ Based on the frequency, you can infer how many days until the next charge will o
           },
         },
         "RiskInsightsLoansMetrics": {
-          "docs": undefined,
+          "docs": "Aggregated metrics calculated based on the user's loan accounts.",
           "properties": {
             "num_accounts": {
               "docs": "Number of loan accounts associated with the link.
@@ -9010,7 +9346,7 @@ Based on the frequency, you can infer how many days until the next charge will o
           },
         },
         "RiskInsightsTransactionMetrics": {
-          "docs": undefined,
+          "docs": "Aggregated metrics calculated band on the user's transactions from checking, savings, credit card, and loan accounts.",
           "properties": {
             "max_incoming_amount_1m": {
               "docs": "The highest value inflow transaction in the last month.
@@ -10130,7 +10466,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           },
         },
         "TaxStatusAddressDian": {
-          "docs": undefined,
+          "docs": "The tax payer's address details.",
           "properties": {
             "between_street": {
               "docs": undefined,
@@ -10176,7 +10512,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           },
         },
         "TaxStatusAddressSat": {
-          "docs": undefined,
+          "docs": "The tax payer's address details.",
           "properties": {
             "between_street": {
               "docs": undefined,
@@ -10540,7 +10876,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
           },
         },
         "TaxStatusTaxPayerInformationDian": {
-          "docs": undefined,
+          "docs": "Details regarding the taxpayer.",
           "properties": {
             "commercial_name": {
               "docs": undefined,
@@ -10596,7 +10932,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
           },
         },
         "TaxStatusTaxPayerInformationSat": {
-          "docs": undefined,
+          "docs": "Details regarding the taxpayer.",
           "properties": {
             "commercial_name": {
               "docs": undefined,
@@ -10837,7 +11173,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
           ],
         },
         "TransactionCreditCardData": {
-          "docs": undefined,
+          "docs": "Additional data provided by the institution for credit card transactions.",
           "properties": {
             "bill_amount": {
               "docs": undefined,
@@ -10862,7 +11198,11 @@ Note: For individuals in Colombia, this field will return \`null\`.
           },
         },
         "TransactionMerchantData": {
-          "docs": undefined,
+          "docs": "Additional data regarding the merchant involved in the transaction.
+We only return merchant information for new transactions made from *checking* or *credit card* accounts.
+> **Get merchant information**
+ We retrieve the merchant information for a transaction as part of our [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions) product, turning raw data into actionable insights. To enable this product, just [reach out](https://belvo.com/contact/?utm_source=documentation) to us, and we'll get right to it.
+",
           "properties": {
             "logo": {
               "docs": undefined,

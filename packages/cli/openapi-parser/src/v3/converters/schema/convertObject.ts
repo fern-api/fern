@@ -85,7 +85,7 @@ export function wrapObject({
     if (wrapAsNullable) {
         return Schema.nullable({
             value: Schema.object({
-                description: undefined,
+                description,
                 properties,
                 nameOverride,
                 generatedName,
