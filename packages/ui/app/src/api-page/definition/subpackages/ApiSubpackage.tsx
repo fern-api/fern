@@ -1,19 +1,22 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useState } from "react";
-import { SubpackageEndpoint } from "./SubpackageEndpoint";
+import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { Endpoint } from "../endpoints/Endpoint";
 import { useSubpackageScrolling } from "./useSubpackageScrolling";
 
-export declare namespace Subpackage {
+export declare namespace ApiSubpackage {
     export interface Props {
         subpackageId: FernRegistryApiRead.SubpackageId;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 }
 
-export const Subpackage: React.FC<Subpackage.Props> = ({ subpackageId, subpackage }) => {
+export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId }) => {
+    const { resolveSubpackageById } = useApiDefinitionContext();
+    const subpackage = resolveSubpackageById(subpackageId);
+
     const [ref, setRef] = useState<HTMLDivElement | null>(null);
 
-    const { setIsEndpointInView } = useSubpackageScrolling({
+    const { setIsEndpointInView, setIsEndpointInVerticalCenter } = useSubpackageScrolling({
         containerRef: ref ?? undefined,
         subpackageId,
     });
@@ -22,10 +25,10 @@ export const Subpackage: React.FC<Subpackage.Props> = ({ subpackageId, subpackag
         <div className="min-h-0 overflow-y-auto" ref={setRef}>
             {subpackage.endpoints.map((endpoint) => (
                 <div key={endpoint.id} className="flex-1 flex pb-36 min-w-0">
-                    <SubpackageEndpoint
-                        subpackageId={subpackageId}
+                    <Endpoint
                         endpoint={endpoint}
                         setIsInView={setIsEndpointInView}
+                        setIsIntersectingVerticalCenter={setIsEndpointInVerticalCenter}
                     />
                 </div>
             ))}

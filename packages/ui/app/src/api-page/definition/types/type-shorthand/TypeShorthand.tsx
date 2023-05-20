@@ -22,6 +22,8 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural }) =
                         boolean: () => (plural ? "booleans" : "boolean"),
                         datetime: () => (plural ? "datetimes" : "datetime"),
                         uuid: () => (plural ? "UUIDs" : "UUID"),
+                        base64: () => (plural ? "Base64 strings" : "Base64 string"),
+                        date: () => (plural ? "dates" : "date"),
                         _other: () => "<unknown>",
                     });
                 },

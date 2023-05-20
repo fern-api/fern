@@ -88,6 +88,8 @@ function generateExamplePrimitive(reference: FernRegistryApiRead.PrimitiveType):
         long: () => 99999,
         datetime: () => "2023-01-01T00:00:00Z",
         uuid: () => "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        base64: () => "SGVsbG8gV29ybGQ=",
+        date: () => "2023-01-01",
         _other: () => null,
     });
 }

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import React, { useCallback } from "react";
 import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
 import { JsonExampleContext, JsonExampleContextValue } from "./contexts/JsonExampleContext";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
@@ -13,7 +13,7 @@ export declare namespace JsonExample {
     }
 }
 
-export const JsonExample: React.FC<JsonExample.Props> = ({ json, selectedProperty }) => {
+export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ json, selectedProperty }) {
     const contextValue = useCallback(
         (): JsonExampleContextValue => ({
             selectedProperty,
@@ -30,4 +30,4 @@ export const JsonExample: React.FC<JsonExample.Props> = ({ json, selectedPropert
             </MonospaceText>
         </JsonExampleContext.Provider>
     );
-};
+});

@@ -3,10 +3,11 @@ import { ClickableSidebarItem } from "./ClickableSidebarItem";
 
 export declare namespace PageSidebarItem {
     export interface Props {
+        slug: string;
         pageMetadata: FernRegistryDocsRead.PageMetadata;
     }
 }
 
-export const PageSidebarItem: React.FC<PageSidebarItem.Props> = () => {
-    return <ClickableSidebarItem path={""} title="Page" isSelected={false} />;
+export const PageSidebarItem: React.FC<PageSidebarItem.Props> = ({ slug, pageMetadata }) => {
+    return <ClickableSidebarItem path={slug} title={pageMetadata.id} />;
 };

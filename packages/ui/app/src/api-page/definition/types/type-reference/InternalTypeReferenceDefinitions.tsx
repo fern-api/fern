@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { useApiDefinitionContext } from "../../../../api-context/useApiDefinitionContext";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
 import { MapTypeContextProvider } from "./MapTypeContextProvider";

@@ -1,5 +1,5 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { PackagePath } from "../../commons/PackagePath";
+import { PackagePath } from "../commons/PackagePath";
 
 export class TypeIdToPackagePathCache {
     private cache: Record<FernRegistryApiRead.TypeId, PackagePath> = {};

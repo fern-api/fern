@@ -5,7 +5,7 @@ import { REGISTRY_SERVICE } from "../services/registry";
 
 export function useDocs(domain: string): Loadable<FernRegistryDocsRead.DocsDefinition> {
     return useTypedQuery(buildQueryKey(domain), async () => {
-        const response = await REGISTRY_SERVICE.docs.v1.read.getDocsForDomain(domain);
+        const response = await REGISTRY_SERVICE.docs.v1.read.getDocsForDomain({ domain });
         if (response.ok) {
             return response.body;
         } else {

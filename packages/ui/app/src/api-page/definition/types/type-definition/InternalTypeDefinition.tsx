@@ -4,7 +4,7 @@ import { useBooleanState, useIsHovering } from "@fern-api/react-commons";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { useApiDefinitionContext } from "../../../../api-context/useApiDefinitionContext";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,

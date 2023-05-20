@@ -1,8 +1,7 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
-import { useDocsContext } from "../../docs-context/useDocsContext";
-import { SidebarItemLayout } from "./SidebarItemLayout";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarItems } from "./SidebarItems";
 
 export const Sidebar: React.FC = () => {
@@ -24,8 +23,7 @@ export const Sidebar: React.FC = () => {
                 <div>⌘K</div>
             </div>
             <div className="flex flex-col overflow-y-auto">
-                <SidebarItemLayout title={<div className="uppercase font-bold text-white">API Reference</div>} />
-                <SidebarItems navigationItems={docsDefinition.config.navigation.items} />
+                <SidebarItems navigationItems={docsDefinition.config.navigation.items} slug="" />
             </div>
         </div>
     );

@@ -1,9 +1,9 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
+import { useLocation } from "react-router-dom";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
-import { ResolvedUrlPath } from "../../api-context/url-path-resolver/UrlPathResolver";
-import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { useDocsContext } from "../../../docs-context/useDocsContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { useEndpointContext } from "./context/useEndpointContext";
@@ -17,14 +17,21 @@ import { QueryParametersSection } from "./QueryParametersSection";
 
 export declare namespace EndpointContent {
     export interface Props {
-        resolvedUrlPath: ResolvedUrlPath;
         endpoint: FernRegistryApiRead.EndpointDefinition;
-        setIsInView?: (endpointId: string, isInView: boolean) => void;
+        setIsInView?: (endpoint: FernRegistryApiRead.EndpointDefinition, isInView: boolean) => void;
+        setIsIntersectingVerticalCenter?: (
+            endpoint: FernRegistryApiRead.EndpointDefinition,
+            isInVerticalCenter: boolean
+        ) => void;
     }
 }
 
-export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPath, endpoint, setIsInView }) => {
-    const { urlPathResolver, registerSidebarItemClickListener } = useApiDefinitionContext();
+export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
+    endpoint,
+    setIsInView,
+    setIsIntersectingVerticalCenter,
+}) {
+    const { registerSidebarItemClickListener } = useDocsContext();
 
     const { setHoveredResponsePropertyPath } = useEndpointContext();
     const onHoverResponseProperty = useCallback(
@@ -37,40 +44,54 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPa
     const onChangeIsInView = useMemo(() => {
         if (setIsInView != null) {
             return (isInView: boolean) => {
-                setIsInView(endpoint.id, isInView);
+                setIsInView(endpoint, isInView);
             };
         } else {
             return undefined;
         }
-    }, [endpoint.id, setIsInView]);
+    }, [endpoint, setIsInView]);
 
-    const { ref: setRefForIntersectionObserver } = useInView({
+    const { ref: setRefForInViewIntersectionObserver } = useInView({
         threshold: 0.5,
         onChange: onChangeIsInView,
+    });
+
+    const onChangeIsInVerticalCenter = useMemo(() => {
+        if (setIsIntersectingVerticalCenter != null) {
+            return (isInView: boolean) => {
+                setIsIntersectingVerticalCenter(endpoint, isInView);
+            };
+        } else {
+            return undefined;
+        }
+    }, [endpoint, setIsIntersectingVerticalCenter]);
+
+    const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
+        rootMargin: "-50% 0% -50% 0%",
+        onChange: onChangeIsInVerticalCenter,
     });
 
     const containerRef = useRef<HTMLDivElement | null>(null);
     const setContainerRef = useCallback(
         (ref: HTMLDivElement | null) => {
-            setRefForIntersectionObserver(ref);
+            setRefForInViewIntersectionObserver(ref);
+            setRefForInVerticalCenterIntersectionObserver(ref);
             containerRef.current = ref;
         },
-        [setRefForIntersectionObserver]
+        [setRefForInVerticalCenterIntersectionObserver, setRefForInViewIntersectionObserver]
     );
 
+    const location = useLocation();
+
     useEffect(() => {
-        const unsubscribe = registerSidebarItemClickListener(resolvedUrlPath, () => {
+        const unsubscribe = registerSidebarItemClickListener(`${location.pathname}#${endpoint.urlSlug}`, () => {
             containerRef.current?.scrollIntoView();
         });
         return unsubscribe;
-    }, [registerSidebarItemClickListener, resolvedUrlPath]);
+    }, [endpoint.urlSlug, location.pathname, registerSidebarItemClickListener]);
 
     return (
-        <div
-            className="flex-1 flex gap-24 px-24 min-w-0"
-            id={urlPathResolver.getHtmlIdForEndpoint(endpoint.id)}
-            ref={setContainerRef}
-        >
+        <div className="flex-1 flex gap-24 px-24 min-w-0" id={endpoint.urlSlug} ref={setContainerRef}>
             <div className="flex-1 flex flex-col">
                 <div className="pt-10 text-2xl font-bold">
                     <EndpointTitle endpoint={endpoint} />
@@ -127,4 +148,4 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPa
             </div>
         </div>
     );
-};
+});

@@ -1,24 +1,32 @@
 import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import { useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace ClickableSidebarItem {
     export interface Props {
         title: JSX.Element | string;
         path: string;
-        isSelected: boolean;
         onClick?: () => void;
     }
 }
 
-export const ClickableSidebarItem: React.FC<ClickableSidebarItem.Props> = ({ title, path, isSelected, onClick }) => {
+export const ClickableSidebarItem: React.FC<ClickableSidebarItem.Props> = ({ title, path, onClick }) => {
+    const { onClickSidebarItem } = useDocsContext();
+
     const navigate = useNavigate();
     const handleClick = useCallback(() => {
         navigate(path);
+        onClickSidebarItem(`/${path}`);
         onClick?.();
-    }, [navigate, onClick, path]);
+    }, [navigate, onClick, onClickSidebarItem, path]);
+
+    const location = useLocation();
+    // remove leading / from location.pathname
+    const currentPath = location.pathname.substring(1) + location.hash;
+    const isSelected = path === currentPath;
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
