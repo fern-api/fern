@@ -13,7 +13,7 @@ export declare namespace JsonExample {
     }
 }
 
-export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ json, selectedProperty }) {
+export const JsonExample: React.FC<JsonExample.Props> = ({ json, selectedProperty }) => {
     const contextValue = useCallback(
         (): JsonExampleContextValue => ({
             selectedProperty,
@@ -30,4 +30,4 @@ export const JsonExample = React.memo<JsonExample.Props>(function JsonExample({ 
             </MonospaceText>
         </JsonExampleContext.Provider>
     );
-});
+};

@@ -7,7 +7,7 @@ import "normalize.css";
 import { initializePosthog } from "./analytics/posthog";
 import styles from "./App.module.scss";
 import { CONTEXTS } from "./contexts";
-import { DocsPage } from "./docs-page/DocsPage";
+import { Docs } from "./docs/Docs";
 import { useAreFernFontsReady } from "./useAreFernFontsReady";
 
 FocusStyleManager.onlyShowFocusOnTabs();
@@ -30,7 +30,7 @@ export const App: React.FC = () => {
                 (children, Context) => (
                     <Context>{children}</Context>
                 ),
-                <DocsPage />
+                <Docs />
             )}
         </div>
     );

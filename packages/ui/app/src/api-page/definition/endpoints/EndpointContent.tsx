@@ -26,11 +26,11 @@ export declare namespace EndpointContent {
     }
 }
 
-export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
+export const EndpointContent: React.FC<EndpointContent.Props> = ({
     endpoint,
     setIsInView,
     setIsIntersectingVerticalCenter,
-}) {
+}) => {
     const { registerSidebarItemClickListener } = useDocsContext();
 
     const { setHoveredResponsePropertyPath } = useEndpointContext();
@@ -148,4 +148,4 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             </div>
         </div>
     );
-});
+};

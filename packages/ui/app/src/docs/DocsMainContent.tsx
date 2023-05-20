@@ -6,7 +6,7 @@ import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContex
 import { ApiSubpackage } from "../api-page/definition/subpackages/ApiSubpackage";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
-export const DocsPageMainContent: React.FC = () => {
+export const DocsMainContent: React.FC = () => {
     const location = useLocation();
     const { urlPathResolver } = useDocsContext();
 

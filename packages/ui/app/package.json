@@ -47,7 +47,7 @@
     "@fern-api/split-view": "workspace:*",
     "@fern-api/theme": "workspace:*",
     "@fern-api/venus-api-sdk": "0.0.20-7-g6ea8dc4",
-    "@fern-fern/registry-browser": "0.0.495",
+    "@fern-fern/registry-browser": "0.0.517",
     "@fontsource/ibm-plex-mono": "^4.5.13",
     "@fontsource/inter": "^4.5.11",
     "@tanstack/react-query": "^4.24.10",

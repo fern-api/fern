@@ -12,7 +12,7 @@ export declare namespace Markdown {
 const REMARK_PLUGINS = [remarkGfm];
 const REHYPE_PLUGINS = [rehypeRaw];
 
-export const Markdown = React.memo<Markdown.Props>(function Markdown({ children }) {
+export const Markdown: React.FC<Markdown.Props> = ({ children }) => {
     return (
         <ReactMarkdown
             className="prose prose-sm dark:prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-slate-700 prose-code:py-px prose-code:px-1 prose-code:rounded"
@@ -22,4 +22,4 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children 
             {children}
         </ReactMarkdown>
     );
-});
+};

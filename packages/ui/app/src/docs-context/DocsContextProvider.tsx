@@ -25,6 +25,17 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [docsDefinition.apis]
     );
 
+    const resolvePage = useCallback(
+        (pageId: FernRegistryDocsRead.PageId): FernRegistryDocsRead.PageContent => {
+            const page = docsDefinition.pages[pageId];
+            if (page == null) {
+                throw new Error("Page does not exist: " + pageId);
+            }
+            return page;
+        },
+        [docsDefinition.pages]
+    );
+
     const sidebarItemClickListeners = useRef<Record<string, (() => void)[]>>({});
 
     const registerSidebarItemClickListener = useCallback((path: string, listener: () => void) => {
@@ -56,12 +67,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
     const contextValue = useCallback(
         (): DocsContextValue => ({
             resolveApi,
+            resolvePage,
             docsDefinition,
             urlPathResolver,
             registerSidebarItemClickListener,
             onClickSidebarItem,
         }),
-        [resolveApi, docsDefinition, onClickSidebarItem, registerSidebarItemClickListener, urlPathResolver]
+        [resolveApi, resolvePage, docsDefinition, onClickSidebarItem, registerSidebarItemClickListener, urlPathResolver]
     );
 
     return <DocsContext.Provider value={contextValue}>{children}</DocsContext.Provider>;

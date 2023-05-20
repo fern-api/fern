@@ -10,6 +10,7 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
 
 export interface DocsContextValue {
     resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
+    resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
     onClickSidebarItem: (path: string) => void;
     registerSidebarItemClickListener: (path: string, listener: () => void) => () => void;
     docsDefinition: FernRegistryDocsRead.DocsDefinition;

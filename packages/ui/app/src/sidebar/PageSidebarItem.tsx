@@ -9,5 +9,5 @@ export declare namespace PageSidebarItem {
 }
 
 export const PageSidebarItem: React.FC<PageSidebarItem.Props> = ({ slug, pageMetadata }) => {
-    return <ClickableSidebarItem path={slug} title={pageMetadata.id} />;
+    return <ClickableSidebarItem path={slug} title={pageMetadata.title} />;
 };
