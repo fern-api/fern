@@ -3,12 +3,12 @@ import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
-import { Markdown } from "../../markdown/Markdown";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
+import { Description } from "../Description";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 
 export declare namespace DiscriminatedUnionVariant {
@@ -30,12 +30,14 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
             properties: [
                 {
                     key: discriminant,
-                    valueType: FernRegistryApiRead.TypeReference.primitive(FernRegistryApiRead.PrimitiveType.string()),
+                    valueType: FernRegistryApiRead.TypeReference.literal(
+                        FernRegistryApiRead.LiteralType.stringLiteral(unionVariant.discriminantValue)
+                    ),
                 },
                 ...unionVariant.additionalProperties.properties,
             ],
         });
-    }, [discriminant, unionVariant.additionalProperties]);
+    }, [discriminant, unionVariant.additionalProperties, unionVariant.discriminantValue]);
 
     const contextValue = useTypeDefinitionContext();
     const newContextValue = useCallback(
@@ -61,11 +63,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
         >
             <MonospaceText>{startCase(unionVariant.discriminantValue)}</MonospaceText>
             <div className="flex flex-col">
-                {unionVariant.description != null && (
-                    <div className={classNames("mt-3", "text-gray-500", "dark:text-gray-400")}>
-                        <Markdown>{unionVariant.description}</Markdown>
-                    </div>
-                )}
+                <Description description={unionVariant.description} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition typeShape={shape} isCollapsible={true} />
                 </TypeDefinitionContext.Provider>

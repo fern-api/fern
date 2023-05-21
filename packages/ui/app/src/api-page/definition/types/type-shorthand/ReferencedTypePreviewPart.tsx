@@ -7,22 +7,30 @@ export declare namespace ReferencedTypePreviewPart {
     export interface Props {
         typeId: FernRegistryApiRead.TypeId;
         plural: boolean;
+        withArticle?: boolean;
     }
 }
 
-export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props> = ({ typeId, plural }) => {
+export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props> = ({
+    typeId,
+    plural,
+    withArticle = false,
+}) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
     const shape = resolveTypeById(typeId).shape;
+
+    const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
+        withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
 
     return (
         <>
             {shape._visit<JSX.Element | string>({
                 alias: (typeReference) => <TypeShorthand type={typeReference} plural={plural} />,
-                object: () => (plural ? "objects" : "object"),
-                undiscriminatedUnion: () => (plural ? "unions" : "union"),
-                discriminatedUnion: () => (plural ? "unions" : "union"),
-                enum: () => (plural ? "enums" : "enum"),
+                object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
+                undiscriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
+                discriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
+                enum: () => (plural ? "enums" : maybeWithArticle("an", "enum")),
                 _other: () => "<unknown>",
             })}
         </>

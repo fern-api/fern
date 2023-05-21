@@ -2,8 +2,8 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiSubpackages } from "./ApiSubpackages";
 import { joinUrlSlugs } from "./joinUrlSlugs";
+import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";
-import { SidebarItemLayout } from "./SidebarItemLayout";
 import { TopLevelEndpointSidebarItem } from "./TopLevelEndpointSidebarItem";
 
 export declare namespace ApiSidebarSection {
@@ -22,7 +22,7 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({ slug, api
     }
 
     return (
-        <SidebarGroup title={<SidebarItemLayout title={apiSection.title} />}>
+        <SidebarGroup title={<NonClickableSidebarGroupTitle title={apiSection.title} />} includeTopMargin>
             {api.rootPackage.endpoints.map((endpoint) => (
                 <TopLevelEndpointSidebarItem
                     key={endpoint.id}

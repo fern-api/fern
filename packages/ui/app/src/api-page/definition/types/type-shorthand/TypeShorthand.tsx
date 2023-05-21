@@ -5,38 +5,41 @@ export declare namespace TypeShorthand {
     export interface Props {
         type: FernRegistryApiRead.TypeReference;
         plural: boolean;
+        withArticle?: boolean;
     }
 }
 
-export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural }) => {
+export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, withArticle = false }) => {
+    const maybeWithArticle = (article: string, stringWithoutArticle: string) =>
+        withArticle ? `${article} ${stringWithoutArticle}` : stringWithoutArticle;
+
     return (
         <>
             {type._visit<JSX.Element | string>({
-                id: (typeId) => <ReferencedTypePreviewPart typeId={typeId} plural={plural} />,
+                id: (typeId) => <ReferencedTypePreviewPart typeId={typeId} plural={plural} withArticle={withArticle} />,
                 primitive: (primitive) => {
                     return primitive._visit({
-                        string: () => (plural ? "strings" : "string"),
-                        integer: () => (plural ? "integers" : "integer"),
-                        double: () => (plural ? "doubles" : "double"),
-                        long: () => (plural ? "longs" : "long"),
-                        boolean: () => (plural ? "booleans" : "boolean"),
-                        datetime: () => (plural ? "datetimes" : "datetime"),
-                        uuid: () => (plural ? "UUIDs" : "UUID"),
-                        base64: () => (plural ? "Base64 strings" : "Base64 string"),
-                        date: () => (plural ? "dates" : "date"),
+                        string: () => (plural ? "strings" : maybeWithArticle("a", "string")),
+                        integer: () => (plural ? "integers" : maybeWithArticle("an", "integer")),
+                        double: () => (plural ? "doubles" : maybeWithArticle("a", "double")),
+                        long: () => (plural ? "longs" : maybeWithArticle("a", "long")),
+                        boolean: () => (plural ? "booleans" : maybeWithArticle("a", "boolean")),
+                        datetime: () => (plural ? "datetimes" : maybeWithArticle("a", "datetime")),
+                        uuid: () => (plural ? "UUIDs" : maybeWithArticle("a", "UUID")),
+                        base64: () => (plural ? "Base64 strings" : maybeWithArticle("a", "Base64 string")),
+                        date: () => (plural ? "dates" : maybeWithArticle("a", "date")),
                         _other: () => "<unknown>",
                     });
                 },
                 optional: ({ itemType }) => (
                     <>
-                        {"optional "}
-                        <TypeShorthand type={itemType} plural={plural} />
+                        {maybeWithArticle("an", "optional")} <TypeShorthand type={itemType} plural={plural} />
                     </>
                 ),
                 list: ({ itemType }) => {
                     return (
                         <>
-                            {plural ? "lists of " : "list of "}
+                            {plural ? "lists of" : maybeWithArticle("a", "list of")}{" "}
                             <TypeShorthand type={itemType} plural />
                         </>
                     );
@@ -44,7 +47,7 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural }) =
                 set: ({ itemType }) => {
                     return (
                         <>
-                            {plural ? "sets of " : "set of "}
+                            {plural ? "sets of" : maybeWithArticle("a", "set of")}{" "}
                             <TypeShorthand type={itemType} plural />
                         </>
                     );
@@ -52,7 +55,7 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural }) =
                 map: ({ keyType, valueType }) => {
                     return (
                         <>
-                            {plural ? "maps from " : "map from "}
+                            {plural ? "maps from " : maybeWithArticle("a", "map from ")}
                             <TypeShorthand type={keyType} plural />
                             {" to "}
                             <TypeShorthand type={valueType} plural />

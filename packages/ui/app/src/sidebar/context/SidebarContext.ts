@@ -1,8 +1,6 @@
 import React from "react";
 
-export const SidebarContext = React.createContext<SidebarContextValue>({
-    depth: 0,
-});
+export const SidebarContext = React.createContext<SidebarContextValue | undefined>(undefined);
 
 export interface SidebarContextValue {
     depth: number;

@@ -18,7 +18,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className
 
     const isClickable = onClick != null || onDoubleClick != null;
 
-    const { depth } = useContext(SidebarContext);
+    const sidebarContext = useContext(SidebarContext);
 
     return (
         <Text
@@ -27,7 +27,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className
                 "cursor-pointer": isClickable,
             })}
             style={{
-                paddingLeft: 12 + 15 * depth,
+                paddingLeft: 12 + (sidebarContext != null ? 15 * sidebarContext.depth : 0),
                 paddingRight: 12,
             }}
             onClick={onClick}

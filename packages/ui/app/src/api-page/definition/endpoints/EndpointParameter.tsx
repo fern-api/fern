@@ -10,20 +10,14 @@ export declare namespace EndpointParameter {
         name: string;
         description?: string;
         type: FernRegistryApiRead.TypeReference;
-        renderName?: (name: string) => JSX.Element;
     }
 }
 
-export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
-    name,
-    description,
-    type,
-    renderName = (name) => <>{name}</>,
-}) => {
+export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, description, type }) => {
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 py-4">
             <div className="flex items-center gap-1">
-                <MonospaceText>{renderName(name)}</MonospaceText>
+                <MonospaceText>{name}</MonospaceText>
                 <div className={classNames("text-xs", "text-gray-500", "dark:text-gray-500")}>
                     <TypeShorthand type={type} plural={false} />
                 </div>

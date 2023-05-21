@@ -126,7 +126,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                         )}
                         {endpoint.request != null && (
                             <EndpointSection title="Request">
-                                <EndpointTypeSection httpBody={endpoint.request} />
+                                <EndpointTypeSection httpBody={endpoint.request} verb="expects" />
                             </EndpointSection>
                         )}
                         {endpoint.response != null && (
@@ -134,6 +134,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                                 <EndpointTypeSection
                                     httpBody={endpoint.response}
                                     onHoverProperty={onHoverResponseProperty}
+                                    verb="returns"
                                 />
                             </EndpointSection>
                         )}

@@ -3,8 +3,8 @@ import { assertNever } from "@fern-api/core-utils";
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
-import { Endpoint } from "../api-page/definition/endpoints/Endpoint";
 import { ApiSubpackage } from "../api-page/definition/subpackages/ApiSubpackage";
+import { TopLevelEndpoint } from "../api-page/definition/top-level-endpoint/TopLevelEndpoint";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MarkdownPage } from "../markdown-page/MarkdownPage";
 
@@ -31,7 +31,7 @@ export const DocsMainContent: React.FC = () => {
         case "top-level-endpoint":
             return (
                 <ApiDefinitionContextProvider apiId={resolvedPath.apiId}>
-                    <Endpoint endpoint={resolvedPath.endpoint} />
+                    <TopLevelEndpoint endpoint={resolvedPath.endpoint} />
                 </ApiDefinitionContextProvider>
             );
         case "api-subpackage":

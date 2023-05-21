@@ -1,4 +1,5 @@
 import React from "react";
+import { TypeComponentSeparator } from "../TypeComponentSeparator";
 
 export declare namespace TypeDefinitionDetails {
     export interface Props {
@@ -10,17 +11,17 @@ export declare namespace TypeDefinitionDetails {
 export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({ elements, separatorText }) => {
     return (
         <div className="flex flex-col">
-            <div className="h-px bg-gray-200 dark:bg-gray-700" />
+            <TypeComponentSeparator />
             {zipWith(
                 elements,
                 separatorText != null ? (
                     <div className="flex items-center gap-2">
-                        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+                        <TypeComponentSeparator className="flex-1" />
                         <div className="text-gray-200 dark:text-gray-700">{separatorText}</div>
-                        <div className="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+                        <TypeComponentSeparator className="flex-1" />
                     </div>
                 ) : (
-                    <div className="h-px bg-gray-200 dark:bg-gray-700" />
+                    <TypeComponentSeparator />
                 )
             )}
         </div>

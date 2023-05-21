@@ -45,6 +45,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
                 }),
+                // TODO
                 undiscriminatedUnion: () => undefined,
                 discriminatedUnion: (union) => ({
                     elements: union.variants.map((variant) => (
@@ -62,8 +63,8 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     elements: enum_.values.map((enumValue) => (
                         <EnumValue key={enumValue.value} enumValue={enumValue} />
                     )),
-                    elementNameSingular: "possible value",
-                    elementNamePlural: "possible values",
+                    elementNameSingular: "enum value",
+                    elementNamePlural: "enum values",
                 }),
                 _other: () => undefined,
             }),
