@@ -107,7 +107,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         return {
             headers: this.getHeaders(context),
             queryParameters: this.queryParams.getReferenceTo(context),
-            body: this.getSerializedRequestBody(context),
+            body: this.getSerializedRequestBodyWithNullCheck(context),
             contentType: "application/json",
             onUploadProgress: undefined,
         };
@@ -123,7 +123,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         });
     }
 
-    private getSerializedRequestBody(context: SdkClientClassContext): ts.Expression | undefined {
+    private getSerializedRequestBodyWithNullCheck(context: SdkClientClassContext): ts.Expression | undefined {
         if (this.requestParameter == null || this.requestBody == null) {
             return undefined;
         }
@@ -132,7 +132,35 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             return undefined;
         }
 
-        switch (this.requestBody.type) {
+        let serializeExpression = this.getSerializedRequestBodyWithoutNullCheck(
+            this.requestBody,
+            referenceToRequestBody,
+            context
+        );
+
+        if (this.isRequestBodyNullable(this.requestBody, context)) {
+            serializeExpression = ts.factory.createConditionalExpression(
+                ts.factory.createBinaryExpression(
+                    referenceToRequestBody,
+                    ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                    ts.factory.createNull()
+                ),
+                ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                serializeExpression,
+                ts.factory.createToken(ts.SyntaxKind.ColonToken),
+                ts.factory.createIdentifier("undefined")
+            );
+        }
+
+        return serializeExpression;
+    }
+
+    private getSerializedRequestBodyWithoutNullCheck(
+        requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference,
+        referenceToRequestBody: ts.Expression,
+        context: SdkClientClassContext
+    ): ts.Expression {
+        switch (requestBody.type) {
             case "inlinedRequestBody":
                 return context.sdkInlinedRequestBodySchema
                     .getGeneratedInlinedRequestBodySchema(this.packageId, this.endpoint.name)
@@ -142,7 +170,23 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                     .getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name)
                     .serializeRequest(referenceToRequestBody, context);
             default:
-                assertNever(this.requestBody);
+                assertNever(requestBody);
+        }
+    }
+
+    private isRequestBodyNullable(
+        requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference,
+        context: SdkClientClassContext
+    ): boolean {
+        switch (requestBody.type) {
+            case "inlinedRequestBody":
+                return false;
+            case "reference": {
+                const resolvedType = context.type.resolveTypeReference(requestBody.requestBodyType);
+                return resolvedType._type === "container" && resolvedType.container._type === "optional";
+            }
+            default:
+                assertNever(requestBody);
         }
     }
 
