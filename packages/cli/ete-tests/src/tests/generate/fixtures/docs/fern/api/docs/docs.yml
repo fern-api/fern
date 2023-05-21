@@ -1,3 +1,5 @@
+logo: ./fern.png
+
 navigation:
   - page: Foo
     path: foo.md
