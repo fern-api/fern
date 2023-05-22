@@ -18,12 +18,12 @@ type TypeDeclaration struct {
 
 // Type is a generic type.
 type Type struct {
-	Type   string
-	Alias  *AliasTypeDeclaration
-	Enum   *EnumTypeDeclaration
-	Object *ObjectTypeDeclaration
-
-	// TODO: Fill in the remaining Type union values.
+	Type                 string
+	Alias                *AliasTypeDeclaration
+	Enum                 *EnumTypeDeclaration
+	Object               *ObjectTypeDeclaration
+	Union                *UnionTypeDeclaration
+	UndiscriminatedUnion *UndiscriminatedUnionTypeDeclaration
 }
 
 // UnmarshalJSON implement json.Unmarshaler.
@@ -60,6 +60,22 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		t.Object = value
+	case "union":
+		// This type does not have an explicit union key, so we need to
+		// unmarshal it as its underyling type.
+		value := new(UnionTypeDeclaration)
+		if err := json.Unmarshal(data, value); err != nil {
+			return err
+		}
+		t.Union = value
+	case "undiscriminatedUnion":
+		// This type does not have an explicit union key, so we need to
+		// unmarshal it as its underyling type.
+		value := new(UndiscriminatedUnionTypeDeclaration)
+		if err := json.Unmarshal(data, value); err != nil {
+			return err
+		}
+		t.UndiscriminatedUnion = value
 	}
 	return nil
 }
@@ -70,6 +86,8 @@ type TypeVisitor interface {
 	VisitAlias(*AliasTypeDeclaration) error
 	VisitEnum(*EnumTypeDeclaration) error
 	VisitObject(*ObjectTypeDeclaration) error
+	VisitUnion(*UnionTypeDeclaration) error
+	VisitUndiscriminatedUnion(*UndiscriminatedUnionTypeDeclaration) error
 }
 
 // Accept accepts the visitor so that it can visit the union's value.
@@ -81,9 +99,110 @@ func (t *Type) Accept(v TypeVisitor) error {
 		return v.VisitEnum(t.Enum)
 	case "object":
 		return v.VisitObject(t.Object)
+	case "union":
+		return v.VisitUnion(t.Union)
+	case "undiscriminatedUnion":
+		return v.VisitUndiscriminatedUnion(t.UndiscriminatedUnion)
 	default:
 		return fmt.Errorf("invalid type %s in %T", t.Type, t)
 	}
+}
+
+// UndiscriminatedUnionTypeDeclaration implements the Type interface.
+type UndiscriminatedUnionTypeDeclaration struct {
+	Members []*UndiscriminatedUnionMember `json:"members,omitempty"`
+}
+
+// UndiscriminatedUnionMember is a member of an undiscriminated union.
+type UndiscriminatedUnionMember struct {
+	Docs string         `json:"docs,omitempty"`
+	Type *TypeReference `json:"type,omitempty"`
+}
+
+// UnionTypeDeclaration implements the Type interface.
+type UnionTypeDeclaration struct {
+	Discriminant   *NameAndWireValue   `json:"discriminant,omitempty"`
+	Extends        []*DeclaredTypeName `json:"extends,omitempty"`
+	Types          []*SingleUnionType  `json:"types,omitempty"`
+	BaseProperties []*ObjectProperty   `json:"baseProperties,omitempty"`
+}
+
+// SingleUnionType is a single union type.
+type SingleUnionType struct {
+	Docs              string                     `json:"docs,omitempty"`
+	DiscriminantValue *NameAndWireValue          `json:"discriminantValue,omitempty"`
+	Shape             *SingleUnionTypeProperties `json:"shape,omitempty"`
+}
+
+// SingleUnionTypeProperties is a union of all the supported union properties.
+type SingleUnionTypeProperties struct {
+	PropertiesType         string
+	SamePropertiesAsObject *DeclaredTypeName
+	SingleProperty         *SingleUnionTypeProperty
+	NoProperties           any
+}
+
+// UnmarshalJSON implement json.Unmarshaler.
+func (s *SingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		PropertiesType string `json:"_type,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	s.PropertiesType = unmarshaler.PropertiesType
+	switch unmarshaler.PropertiesType {
+	case "samePropertiesAsObject":
+		value := new(DeclaredTypeName)
+		if err := json.Unmarshal(data, value); err != nil {
+			return err
+		}
+		s.SamePropertiesAsObject = value
+	case "singleProperty":
+		value := new(SingleUnionTypeProperty)
+		if err := json.Unmarshal(data, value); err != nil {
+			return err
+		}
+		s.SingleProperty = value
+	case "noProperties":
+		value := make(map[string]any)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		// Remove the type that's already present at the top-level
+		// because it's redundant.
+		delete(value, "_type")
+		s.NoProperties = value
+	}
+	return nil
+}
+
+// SingleUnionTypePropertiesVisitor can visit all of the possible types available in the
+// SingleUnionTypePropertiesVisitor union.
+type SingleUnionTypePropertiesVisitor interface {
+	VisitSamePropertiesAsObject(*DeclaredTypeName) error
+	VisitSingleProperty(*SingleUnionTypeProperty) error
+	VisitNoProperties(any) error
+}
+
+// Accept accepts the visitor so that it can visit the union's value.
+func (s *SingleUnionTypeProperties) Accept(v SingleUnionTypePropertiesVisitor) error {
+	switch s.PropertiesType {
+	case "samePropertiesAsObject":
+		return v.VisitSamePropertiesAsObject(s.SamePropertiesAsObject)
+	case "singleProperty":
+		return v.VisitSingleProperty(s.SingleProperty)
+	case "noProperties":
+		return v.VisitNoProperties(s.NoProperties)
+	default:
+		return fmt.Errorf("invalid type %s in %T", s.PropertiesType, s)
+	}
+}
+
+// SingleUnionTypeProperty is a single union type property.
+type SingleUnionTypeProperty struct {
+	Name *NameAndWireValue `json:"name,omitempty"`
+	Type *TypeReference    `json:"type,omitempty"`
 }
 
 // EnumTypeDeclaration implements the Type interface.

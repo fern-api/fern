@@ -1,0 +1,45 @@
+# Simple test for generating a union.
+types:
+  Union:
+    union:
+      foo:
+        type: Foo
+        key: foo
+      bar:
+        type: Bar
+        key: bar
+
+  UnionWithDiscriminant:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      foo:
+        type: Foo
+        key: foo
+      bar:
+        type: Bar
+        key: bar
+
+  UnionWithPrimitive:
+    union:
+      boolean: boolean
+      string: string
+
+  UnionWithoutKey:
+    union:
+      foo: Foo
+      bar: Bar
+
+  UnionWithUnknown:
+    union:
+      foo: Foo
+      unknown: {}
+
+  Foo:
+    properties:
+      name: string
+
+  Bar:
+    properties:
+      name: string

@@ -2,6 +2,7 @@ package generator
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"go/format"
 	"go/parser"
@@ -101,6 +102,13 @@ func containerTypeToGoType(containerType *types.ContainerType) string {
 	return visitor.value
 }
 
+// singleUnionTypePropertiesToGoType maps the given container type into its Go-equivalent.
+func singleUnionTypePropertiesToGoType(singleUnionTypeProperties *types.SingleUnionTypeProperties) string {
+	visitor := new(singleUnionTypePropertiesVisitor)
+	_ = singleUnionTypeProperties.Accept(visitor)
+	return visitor.value
+}
+
 // literalToGoType maps the given literal into its Go-equivalent.
 func literalToGoType(literal *types.Literal) string {
 	visitor := new(literalVisitor)
@@ -196,6 +204,58 @@ func (t *typeVisitor) VisitObject(object *types.ObjectTypeDeclaration) error {
 	return nil
 }
 
+func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
+	// TODO: Write extended properties.
+
+	// Write the union type definition.
+	discriminantName := union.Discriminant.Name.PascalCase.UnsafeName
+	t.writer.P("type ", t.typeName, " struct {")
+	t.writer.P(discriminantName, " string")
+	for _, property := range union.BaseProperties {
+		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType))
+	}
+	for _, unionType := range union.Types {
+		typeName := singleUnionTypePropertiesToGoType(unionType.Shape)
+		if typeName == "" {
+			// If the union has no properties, there's nothing for us to do.
+			continue
+		}
+		t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName)
+	}
+	t.writer.P("}")
+
+	// Implement the json.Unmarshaler interface.
+	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+	t.writer.P("var unmarshaler struct {")
+	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
+	t.writer.P("}")
+	t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
+	t.writer.P("return err")
+	t.writer.P("}")
+
+	// Set the union's type on the exported type.
+	t.writer.P("x.", discriminantName, " = unmarshaler.", discriminantName)
+
+	// Generate the switch to unmarshal the appropriate type.
+	t.writer.P("switch unmarshaler.", discriminantName, " {")
+	for _, unionType := range union.Types {
+		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
+		// TODO: The way we unmarshal each type is different based on
+		// it it's an object, a primitive, etc.
+	}
+	t.writer.P("}")
+	t.writer.P("return nil")
+	t.writer.P("}")
+	t.writer.P()
+
+	// TODO: Generate the Visitor interface and Accept method.
+	return nil
+}
+
+func (t *typeVisitor) VisitUndiscriminatedUnion(union *types.UndiscriminatedUnionTypeDeclaration) error {
+	return errors.New("unimplemented")
+}
+
 // typeReferenceVisitor retrieves the string representation of type references
 // (e.g. containers, primitives, etc).
 type typeReferenceVisitor struct {
@@ -258,6 +318,29 @@ func (c *containerTypeVisitor) VisitSet(set *types.TypeReference) error {
 
 func (c *containerTypeVisitor) VisitLiteral(literal *types.Literal) error {
 	c.value = literalToGoType(literal)
+	return nil
+}
+
+// singleUnionTypePropertiesVisitor retrieves the string representation of
+// single union type properties.
+type singleUnionTypePropertiesVisitor struct {
+	value string
+}
+
+// Compile-time assertion.
+var _ types.SingleUnionTypePropertiesVisitor = (*singleUnionTypePropertiesVisitor)(nil)
+
+func (c *singleUnionTypePropertiesVisitor) VisitSamePropertiesAsObject(named *types.DeclaredTypeName) error {
+	c.value = fmt.Sprintf("*%s", named.Name.PascalCase.UnsafeName)
+	return nil
+}
+
+func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *types.SingleUnionTypeProperty) error {
+	c.value = typeReferenceToGoType(property.Type)
+	return nil
+}
+
+func (c *singleUnionTypePropertiesVisitor) VisitNoProperties(_ any) error {
 	return nil
 }
 
