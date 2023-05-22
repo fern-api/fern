@@ -1,7 +1,6 @@
 import * as acm from "@aws-cdk/aws-certificatemanager";
 import * as cloudfront from "@aws-cdk/aws-cloudfront";
 import * as route53 from "@aws-cdk/aws-route53";
-import * as targets from "@aws-cdk/aws-route53-targets";
 import * as s3 from "@aws-cdk/aws-s3";
 import * as s3Deploy from "@aws-cdk/aws-s3-deployment";
 import * as cdk from "@aws-cdk/core";
@@ -72,11 +71,11 @@ export class CdkStack extends cdk.Stack {
             }),
         });
 
-        new route53.ARecord(this, "AliasRecord", {
-            zone,
-            recordName: subDomain,
-            target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
-        });
+        // new route53.ARecord(this, "AliasRecord", {
+        //     zone,
+        //     recordName: subDomain,
+        //     target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+        // });
 
         new s3Deploy.BucketDeployment(this, "deploy", {
             sources: [s3Deploy.Source.asset(distDirectory)],

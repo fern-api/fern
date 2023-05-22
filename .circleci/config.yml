@@ -276,13 +276,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Publish docs (dev)
+          name: Set nodeLinker to node-modules
           command: |
             # without this, multiple versions of react-query are included
             # in the bundle
             yarn config set nodeLinker node-modules
-            yarn install
-            yarn workspace @fern-api/fe-bundle deploy:dev
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Publish docs (dev)
+          command: yarn workspace @fern-api/fe-bundle deploy:dev
 
 workflows:
   version: 2
