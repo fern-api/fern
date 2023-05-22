@@ -26,10 +26,6 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@aws-cdk/aws-certificatemanager": "^1.202.0",
-    "@aws-cdk/aws-cloudfront": "^1.202.0",
-    "@aws-cdk/aws-route53": "^1.202.0",
-    "@aws-cdk/aws-route53-targets": "^1.202.0",
     "@aws-cdk/aws-s3": "^1.202.0",
     "@aws-cdk/aws-s3-deployment": "^1.202.0",
     "@aws-cdk/core": "^1.202.0",
