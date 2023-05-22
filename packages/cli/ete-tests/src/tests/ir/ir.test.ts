@@ -41,6 +41,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "variables",
     },
+    {
+        name: "navigation-points-to",
+    },
 ];
 
 interface Fixture {

@@ -23,12 +23,23 @@ export class PackageTreeGenerator {
         types: [],
         errors: [],
         subpackages: [],
+        navigationConfig: undefined,
     };
+
+    public addPackageRedirection({ from, to }: { from: FernFilepath; to: FernFilepath }): void {
+        const package_ = this.getPackageForFernFilepath(from);
+        if (package_.navigationConfig != null) {
+            throw new Error("Found duplicate navigationConfig for package");
+        }
+        package_.navigationConfig = {
+            pointsTo: IdGenerator.generateSubpackageId(to),
+        };
+    }
 
     public addDocs(fernFilepath: FernFilepath, docs: string): void {
         const package_ = this.getPackageForFernFilepath(fernFilepath);
         if (package_.docs != null) {
-            throw new Error("Found docs service for package");
+            throw new Error("Found duplicate docs for package");
         }
         package_.docs = docs;
     }
@@ -179,6 +190,7 @@ export class PackageTreeGenerator {
                 types: [],
                 errors: [],
                 subpackages: [],
+                navigationConfig: undefined,
             };
             this.subpackages[newParentId] = newParent;
             parent.subpackages.push(newParentId);

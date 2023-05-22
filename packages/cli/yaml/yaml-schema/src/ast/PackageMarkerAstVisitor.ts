@@ -6,7 +6,7 @@ export type PackageMarkerAstVisitor<R = void | Promise<void>> = {
 
 export interface PackageMarkerAstNodeTypes {
     export: string | undefined;
-    navigation: string[] | undefined;
+    navigation: string | string[] | undefined;
 }
 
 export type PackageMarkerAstNodeVisitor<K extends keyof PackageMarkerAstNodeTypes, R = void | Promise<void>> = (

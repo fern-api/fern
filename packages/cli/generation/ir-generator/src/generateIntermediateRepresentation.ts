@@ -229,27 +229,37 @@ export async function generateIntermediateRepresentation({
             return;
         }
 
-        const childrenInOrder = packageMarker.navigation.map((childFilepath) => {
-            return IdGenerator.generateSubpackageId(
-                convertToFernFilepath({
-                    relativeFilepath: join(dirname(relativeFilepath), RelativeFilePath.of(childFilepath)),
+        if (typeof packageMarker.navigation === "string") {
+            packageTreeGenerator.addPackageRedirection({
+                from: convertToFernFilepath({ relativeFilepath, casingsGenerator }),
+                to: convertToFernFilepath({
+                    relativeFilepath: join(dirname(relativeFilepath), RelativeFilePath.of(packageMarker.navigation)),
                     casingsGenerator,
-                })
-            );
-        });
-
-        if (relativeFilepath === FERN_PACKAGE_MARKER_FILENAME) {
-            packageTreeGenerator.sortRootPackage(childrenInOrder);
+                }),
+            });
         } else {
-            packageTreeGenerator.sortSubpackage(
-                IdGenerator.generateSubpackageId(
+            const childrenInOrder = packageMarker.navigation.map((childFilepath) => {
+                return IdGenerator.generateSubpackageId(
                     convertToFernFilepath({
-                        relativeFilepath,
+                        relativeFilepath: join(dirname(relativeFilepath), RelativeFilePath.of(childFilepath)),
                         casingsGenerator,
                     })
-                ),
-                childrenInOrder
-            );
+                );
+            });
+
+            if (relativeFilepath === FERN_PACKAGE_MARKER_FILENAME) {
+                packageTreeGenerator.sortRootPackage(childrenInOrder);
+            } else {
+                packageTreeGenerator.sortSubpackage(
+                    IdGenerator.generateSubpackageId(
+                        convertToFernFilepath({
+                            relativeFilepath,
+                            casingsGenerator,
+                        })
+                    ),
+                    childrenInOrder
+                );
+            }
         }
     });
 
