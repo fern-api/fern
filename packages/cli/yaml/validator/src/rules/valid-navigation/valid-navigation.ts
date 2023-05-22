@@ -1,5 +1,5 @@
 import { keys } from "@fern-api/core-utils";
-import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
+import { dirname, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { getAllNamedDefinitionFiles } from "@fern-api/workspace-loader";
 import path from "path";
@@ -25,6 +25,28 @@ export const ValidNavigationRule: Rule = {
                     if (navigation == null) {
                         return [];
                     }
+
+                    if (typeof navigation === "string") {
+                        const pathToNavigated = relative(
+                            workspace.definition.absoluteFilepath,
+                            join(
+                                workspace.definition.absoluteFilepath,
+                                dirname(relativeFilepath),
+                                RelativeFilePath.of(navigation)
+                            )
+                        );
+                        if (allDefinitionFilepaths.some((filepath) => filepath.startsWith(pathToNavigated))) {
+                            return [];
+                        } else {
+                            return [
+                                {
+                                    severity: "error",
+                                    message: `${navigation} does not exist.`,
+                                },
+                            ];
+                        }
+                    }
+
                     const actualItems = new Set(navigation);
 
                     const expectedItems = directoryToChildren[dirname(relativeFilepath)];
