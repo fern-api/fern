@@ -37,6 +37,17 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [docsDefinition.pages]
     );
 
+    const resolveFile = useCallback(
+        (fileId: FernRegistryDocsRead.FileId): FernRegistryDocsRead.Url => {
+            const file = docsDefinition.files[fileId];
+            if (file == null) {
+                throw new Error("File does not exist: " + fileId);
+            }
+            return file;
+        },
+        [docsDefinition.files]
+    );
+
     const navigateToAnchorListeners = useRef<Record<string, (() => void)[]>>({});
 
     const registerNavigateToAnchorListener = useCallback((anchor: string, listener: () => void) => {
@@ -104,6 +115,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         (): DocsContextValue => ({
             resolveApi,
             resolvePage,
+            resolveFile,
             docsDefinition,
             urlPathResolver,
             registerNavigateToAnchorListener,
@@ -116,6 +128,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [
             resolveApi,
             resolvePage,
+            resolveFile,
             docsDefinition,
             urlPathResolver,
             registerNavigateToAnchorListener,

@@ -19,7 +19,7 @@ export const Markdown: React.FC<Markdown.Props> = ({ children, className }) => {
         <ReactMarkdown
             className={classNames(
                 className,
-                "prose prose-sm dark:prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-slate-700 prose-code:py-px prose-code:px-1 prose-code:rounded"
+                "prose prose-sm dark:prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-slate-700 prose-code:py-px prose-code:px-1 prose-code:rounded max-w-none"
             )}
             remarkPlugins={REMARK_PLUGINS}
             rehypePlugins={REHYPE_PLUGINS}

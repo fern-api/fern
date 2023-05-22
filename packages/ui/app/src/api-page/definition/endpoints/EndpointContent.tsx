@@ -1,4 +1,5 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
@@ -141,7 +142,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({
                     </div>
                 </div>
             </div>
-            <div className="flex-1 flex sticky self-start top-0 max-h-[calc(100vh-20px)] min-w-0">
+            <div
+                className={classNames(
+                    "flex-1 flex sticky self-start top-0 min-w-0",
+                    // the 4rem is the same as the h-10 as the Header
+                    "max-h-[calc(100vh-4rem)]"
+                )}
+            >
                 <EndpointExamples endpoint={endpoint} />
             </div>
         </div>

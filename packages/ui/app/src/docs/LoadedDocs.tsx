@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { Sidebar } from "../sidebar/Sidebar";
 import { DocsMainContent } from "./DocsMainContent";
+import { Header } from "./Header";
 
 export const LoadedDocs: React.FC = () => {
     return (
@@ -9,6 +10,7 @@ export const LoadedDocs: React.FC = () => {
                 <Sidebar />
             </div>
             <div className="flex flex-col flex-1 min-w-0">
+                <Header />
                 <DocsMainContent />
             </div>
         </div>

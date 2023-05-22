@@ -22,7 +22,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId }) =
     return (
         <div className="min-h-0 overflow-y-auto" ref={setRef}>
             {subpackage.endpoints.map((endpoint) => (
-                <div key={endpoint.id} className="flex-1 flex pb-36 min-w-0">
+                <div key={endpoint.id} className="flex-1 flex pb-72 min-w-0">
                     <Endpoint
                         endpoint={endpoint}
                         setIsInView={setIsEndpointInView}

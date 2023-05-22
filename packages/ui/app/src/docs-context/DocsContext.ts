@@ -11,6 +11,7 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
 export interface DocsContextValue {
     resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
+    resolveFile: (fileId: FernRegistryDocsRead.FileId) => FernRegistryDocsRead.Url;
 
     navigateToAnchor: (anchor: string) => void;
     registerNavigateToAnchorListener: (anchor: string, listener: () => void) => () => void;

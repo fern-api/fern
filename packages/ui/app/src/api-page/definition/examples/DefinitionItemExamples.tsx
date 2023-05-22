@@ -23,7 +23,7 @@ export const DefinitionItemExamples: React.FC<DefinitionItemExamples.Props> = ({
         <div className="flex-1 flex flex-col min-h-0 min-w-0">
             {example.name != null && <div className="text-lg font-bold mb-1">{example.name}</div>}
             {example.description != null && <Markdown>{example.description}</Markdown>}
-            <div className="flex flex-1 flex-col mt-5 min-h-0">{example.render()}</div>
+            <div className="flex flex-1 flex-col my-10 min-h-0">{example.render()}</div>
         </div>
     );
 };
