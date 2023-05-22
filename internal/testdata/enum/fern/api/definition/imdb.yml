@@ -1,0 +1,7 @@
+# Simple test for generating an enum.
+types:
+  Enum:
+    enum:
+      - ONE
+      - TWO
+      - THREE

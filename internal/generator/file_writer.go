@@ -29,6 +29,9 @@ func newFileWriter(filename string) *fileWriter {
 	// These imports are removed from the generated output if
 	// they aren't used.
 	imports := make(imports)
+	imports.Add("fmt")
+	imports.Add("encoding/json")
+	imports.Add("strconv")
 	imports.Add("time")
 	imports.Add("github.com/gofrs/uuid")
 
@@ -117,6 +120,68 @@ var _ types.TypeVisitor = (*typeVisitor)(nil)
 func (t *typeVisitor) VisitAlias(alias *types.AliasTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " = ", typeReferenceToGoType(alias.AliasOf))
 	t.writer.P()
+	return nil
+}
+
+func (t *typeVisitor) VisitEnum(enum *types.EnumTypeDeclaration) error {
+	// Write the enum type definition.
+	t.writer.P("type ", t.typeName, " uint8")
+	t.writer.P()
+
+	// Write all of the supported enum values in a single const block.
+	t.writer.P("const (")
+	for i, enumValue := range enum.Values {
+		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
+		if i == 0 {
+			t.writer.P(enumName, " ", t.typeName, " = iota + 1")
+			continue
+		}
+		t.writer.P(enumName)
+	}
+	t.writer.P(")")
+	t.writer.P()
+
+	// Implement the fmt.Stringer interface.
+	t.writer.P("func (x ", t.typeName, ") String() string {")
+	t.writer.P("switch x {")
+	for i, enumValue := range enum.Values {
+		if i == 0 {
+			// Implement the default case first.
+			t.writer.P("default:")
+			t.writer.P("return strconv.Itoa(int(x))")
+		}
+		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
+		t.writer.P("case ", enumName, ":")
+		t.writer.P("return \"", enumValue.Name.WireValue, "\"")
+	}
+	t.writer.P("}")
+	t.writer.P("}")
+	t.writer.P()
+
+	// Implement the json.Marshaler interface.
+	t.writer.P("func (x ", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("return []byte(fmt.Sprintf(\"%q\", x.String())), nil")
+	t.writer.P("}")
+	t.writer.P()
+
+	// Implement the json.Unmarshaler interface.
+	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+	t.writer.P("var raw string")
+	t.writer.P("if err := json.Unmarshal(data, &raw); err != nil {")
+	t.writer.P("return err")
+	t.writer.P("}")
+	t.writer.P("switch raw {")
+	for _, enumValue := range enum.Values {
+		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
+		t.writer.P("case \"", enumValue.Name.WireValue, "\":")
+		t.writer.P("value := ", enumName)
+		t.writer.P("*x = value")
+	}
+	t.writer.P("}")
+	t.writer.P("return nil")
+	t.writer.P("}")
+	t.writer.P()
+
 	return nil
 }
 

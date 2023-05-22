@@ -18,9 +18,10 @@ type TypeDeclaration struct {
 
 // Type is a generic type.
 type Type struct {
-	Type   string                 `json:"_type,omitempty"`
-	Alias  *AliasTypeDeclaration  `json:"alias,omitempty"`
-	Object *ObjectTypeDeclaration `json:"object,omitempty"`
+	Type   string
+	Alias  *AliasTypeDeclaration
+	Enum   *EnumTypeDeclaration
+	Object *ObjectTypeDeclaration
 
 	// TODO: Fill in the remaining Type union values.
 }
@@ -43,6 +44,14 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		t.Alias = value
+	case "enum":
+		// This type does not have an explicit union key, so we need to
+		// unmarshal it as its underyling type.
+		value := new(EnumTypeDeclaration)
+		if err := json.Unmarshal(data, value); err != nil {
+			return err
+		}
+		t.Enum = value
 	case "object":
 		// This type does not have an explicit union key, so we need to
 		// unmarshal it as its underyling type.
@@ -59,6 +68,7 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 // Type union.
 type TypeVisitor interface {
 	VisitAlias(*AliasTypeDeclaration) error
+	VisitEnum(*EnumTypeDeclaration) error
 	VisitObject(*ObjectTypeDeclaration) error
 }
 
@@ -67,11 +77,25 @@ func (t *Type) Accept(v TypeVisitor) error {
 	switch t.Type {
 	case "alias":
 		return v.VisitAlias(t.Alias)
+	case "enum":
+		return v.VisitEnum(t.Enum)
 	case "object":
 		return v.VisitObject(t.Object)
 	default:
 		return fmt.Errorf("invalid type %s in %T", t.Type, t)
 	}
+}
+
+// EnumTypeDeclaration implements the Type interface.
+type EnumTypeDeclaration struct {
+	Values []*EnumValue `json:"values,omitempty"`
+}
+
+// EnumValue is an enum value.
+type EnumValue struct {
+	Docs         string            `json:"docs,omitempty"`
+	Availability *Availability     `json:"availability,omitempty"`
+	Name         *NameAndWireValue `json:"name,omitempty"`
 }
 
 // ObjectTypeDeclaration implements the Type interface.
