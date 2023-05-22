@@ -1,0 +1,650 @@
+{
+  "version": "21.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "fern-docs-DEV": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://985111089818/us-east-1",
+      "properties": {
+        "templateFile": "fern-docs-DEV.template.json",
+        "validateOnSynth": false
+      },
+      "metadata": {
+        "/fern-docs-DEV": [
+          {
+            "type": "aws:cdk:asset",
+            "data": {
+              "path": "asset.57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52",
+              "id": "57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52",
+              "packaging": "zip",
+              "sourceHash": "57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52",
+              "s3BucketParameter": "AssetParameters57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52S3BucketAF5CA86B",
+              "s3KeyParameter": "AssetParameters57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52S3VersionKey50057F68",
+              "artifactHashParameter": "AssetParameters57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52ArtifactHash050EEE47"
+            },
+            "trace": [
+              "ConstructNode.addMetadata (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/construct-compat.js:416:62)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:202:29)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-9927f53a8b/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:114:33)",
+              "new DnsValidatedCertificate (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-certificatemanager-virtual-7277a8b2a4/0/cache/@aws-cdk-aws-certificatemanager-npm-1.202.0-ffa1f77f13-e53b9678af.zip/node_modules/@aws-cdk/aws-certificatemanager/lib/dns-validated-certificate.js:40:35)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:28:31)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          },
+          {
+            "type": "aws:cdk:asset",
+            "data": {
+              "path": "asset.d239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5b.zip",
+              "id": "d239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5b",
+              "packaging": "file",
+              "sourceHash": "d239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5b",
+              "s3BucketParameter": "AssetParametersd239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5bS3Bucket2C6BA582",
+              "s3KeyParameter": "AssetParametersd239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5bS3VersionKey3BF8AE51",
+              "artifactHashParameter": "AssetParametersd239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5bArtifactHashCFD7F3C4"
+            },
+            "trace": [
+              "ConstructNode.addMetadata (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/construct-compat.js:416:62)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:202:29)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new LayerVersion (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/layers.js:47:33)",
+              "new AwsCliLayer (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-lambda-layer-awscli-virtual-c93cd4a580/0/cache/@aws-cdk-lambda-layer-awscli-npm-1.202.0-0f6ee2d9c3-8606824b1a.zip/node_modules/@aws-cdk/lambda-layer-awscli/lib/awscli-layer.js:14:9)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:81:22)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          },
+          {
+            "type": "aws:cdk:asset",
+            "data": {
+              "path": "asset.f98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711da",
+              "id": "f98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711da",
+              "packaging": "zip",
+              "sourceHash": "f98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711da",
+              "s3BucketParameter": "AssetParametersf98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711daS3BucketF23C0DE7",
+              "s3KeyParameter": "AssetParametersf98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711daS3VersionKey5E97B17D",
+              "artifactHashParameter": "AssetParametersf98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711daArtifactHashD85D28D8"
+            },
+            "trace": [
+              "ConstructNode.addMetadata (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/construct-compat.js:416:62)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:202:29)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:114:33)",
+              "SingletonFunction.ensureLambda (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:164:16)",
+              "new SingletonFunction (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:32:36)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:78:25)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          },
+          {
+            "type": "aws:cdk:asset",
+            "data": {
+              "path": "asset.44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984c",
+              "id": "44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984c",
+              "packaging": "zip",
+              "sourceHash": "44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984c",
+              "s3BucketParameter": "AssetParameters44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984cS3Bucket1316051C",
+              "s3KeyParameter": "AssetParameters44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984cS3VersionKey42E8B6FA",
+              "artifactHashParameter": "AssetParameters44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984cArtifactHash2AA3091F"
+            },
+            "trace": [
+              "ConstructNode.addMetadata (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/construct-compat.js:416:62)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:202:29)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "Object.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/source.js:62:31)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:62",
+              "Array.map (<anonymous>)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:39)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bucket43879C71",
+            "trace": [
+              "new Bucket (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-virtual-13f19c3b70/0/cache/@aws-cdk-aws-s3-npm-1.202.0-bd4f39c953-1336218731.zip/node_modules/@aws-cdk/aws-s3/lib/bucket.js:666:26)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:19:24)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/bucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "bucketPolicy638F945D",
+            "trace": [
+              "new BucketPolicy (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-virtual-13f19c3b70/0/cache/@aws-cdk-aws-s3-npm-1.202.0-bd4f39c953-1336218731.zip/node_modules/@aws-cdk/aws-s3/lib/bucket-policy.js:45:25)",
+              "Bucket.addToResourcePolicy (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-virtual-13f19c3b70/0/cache/@aws-cdk-aws-s3-npm-1.202.0-bd4f39c953-1336218731.zip/node_modules/@aws-cdk/aws-s3/lib/bucket.js:169:27)",
+              "Grant.addToPrincipalOrResource (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-iam-virtual-951bb23766/0/cache/@aws-cdk-aws-iam-npm-1.202.0-867d0360c0-34e74f7576.zip/node_modules/@aws-cdk/aws-iam/lib/grant.js:75:49)",
+              "Bucket.grant (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-virtual-13f19c3b70/0/cache/@aws-cdk-aws-s3-npm-1.202.0-bd4f39c953-1336218731.zip/node_modules/@aws-cdk/aws-s3/lib/bucket.js:487:31)",
+              "Bucket.grantRead (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-virtual-13f19c3b70/0/cache/@aws-cdk-aws-s3-npm-1.202.0-bd4f39c953-1336218731.zip/node_modules/@aws-cdk/aws-s3/lib/bucket.js:302:21)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:24:16)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/OIA/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "OIAE39B2685",
+            "trace": [
+              "new OriginAccessIdentity (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-cloudfront-virtual-8f99bcf9eb/0/cache/@aws-cdk-aws-cloudfront-npm-1.202.0-c56ebb8692-ee8562246d.zip/node_modules/@aws-cdk/aws-cloudfront/lib/origin-access-identity.js:45:25)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:23:38)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/certificate/CertificateRequestorFunction/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateCertificateRequestorFunctionServiceRoleA4FA97BB",
+            "trace": [
+              "new Role (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-iam-virtual-951bb23766/0/cache/@aws-cdk-aws-iam-npm-1.202.0-867d0360c0-34e74f7576.zip/node_modules/@aws-cdk/aws-iam/lib/role.js:63:22)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:97:35)",
+              "new DnsValidatedCertificate (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-certificatemanager-virtual-7277a8b2a4/0/cache/@aws-cdk-aws-certificatemanager-npm-1.202.0-ffa1f77f13-e53b9678af.zip/node_modules/@aws-cdk/aws-certificatemanager/lib/dns-validated-certificate.js:40:35)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:28:31)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/certificate/CertificateRequestorFunction/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateCertificateRequestorFunctionServiceRoleDefaultPolicy8ED55FEE",
+            "trace": [
+              "new Policy (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-iam-virtual-951bb23766/0/cache/@aws-cdk-aws-iam-npm-1.202.0-867d0360c0-34e74f7576.zip/node_modules/@aws-cdk/aws-iam/lib/policy.js:57:26)",
+              "Role.addToPrincipalPolicy (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-iam-virtual-951bb23766/0/cache/@aws-cdk-aws-iam-npm-1.202.0-867d0360c0-34e74f7576.zip/node_modules/@aws-cdk/aws-iam/lib/role.js:247:34)",
+              "Function.addToRolePolicy (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function-base.js:101:19)",
+              "new DnsValidatedCertificate (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-certificatemanager-virtual-7277a8b2a4/0/cache/@aws-cdk-aws-certificatemanager-npm-1.202.0-ffa1f77f13-e53b9678af.zip/node_modules/@aws-cdk/aws-certificatemanager/lib/dns-validated-certificate.js:47:27)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:28:31)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/certificate/CertificateRequestorFunction/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateCertificateRequestorFunction5D4BA95F",
+            "trace": [
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:172:26)",
+              "new DnsValidatedCertificate (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-certificatemanager-virtual-7277a8b2a4/0/cache/@aws-cdk-aws-certificatemanager-npm-1.202.0-ffa1f77f13-e53b9678af.zip/node_modules/@aws-cdk/aws-certificatemanager/lib/dns-validated-certificate.js:40:35)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:28:31)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/certificate/CertificateRequestorResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "certificateCertificateRequestorResourceFD86DD58",
+            "trace": [
+              "new CustomResource (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/custom-resource.js:49:25)",
+              "new DnsValidatedCertificate (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-certificatemanager-virtual-7277a8b2a4/0/cache/@aws-cdk-aws-certificatemanager-npm-1.202.0-ffa1f77f13-e53b9678af.zip/node_modules/@aws-cdk/aws-certificatemanager/lib/dns-validated-certificate.js:59:29)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:28:31)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52/S3Bucket": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParameters57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52S3BucketAF5CA86B",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:12:36)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-9927f53a8b/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:114:33)",
+              "new DnsValidatedCertificate (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-certificatemanager-virtual-7277a8b2a4/0/cache/@aws-cdk-aws-certificatemanager-npm-1.202.0-ffa1f77f13-e53b9678af.zip/node_modules/@aws-cdk/aws-certificatemanager/lib/dns-validated-certificate.js:40:35)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:28:31)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52/S3VersionKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParameters57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52S3VersionKey50057F68",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:16:35)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-9927f53a8b/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:114:33)",
+              "new DnsValidatedCertificate (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-certificatemanager-virtual-7277a8b2a4/0/cache/@aws-cdk-aws-certificatemanager-npm-1.202.0-ffa1f77f13-e53b9678af.zip/node_modules/@aws-cdk/aws-certificatemanager/lib/dns-validated-certificate.js:40:35)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:28:31)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52/ArtifactHash": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParameters57ed3297d84e7c092939da72067d3c6c454ad63e86b4b5079d4306b424eafd52ArtifactHash050EEE47",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:20:38)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-9927f53a8b/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-235dc249a2/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:114:33)",
+              "new DnsValidatedCertificate (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-certificatemanager-virtual-7277a8b2a4/0/cache/@aws-cdk-aws-certificatemanager-npm-1.202.0-ffa1f77f13-e53b9678af.zip/node_modules/@aws-cdk/aws-certificatemanager/lib/dns-validated-certificate.js:40:35)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:28:31)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/d239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5b/S3Bucket": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParametersd239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5bS3Bucket2C6BA582",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:12:36)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new LayerVersion (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/layers.js:47:33)",
+              "new AwsCliLayer (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-lambda-layer-awscli-virtual-c93cd4a580/0/cache/@aws-cdk-lambda-layer-awscli-npm-1.202.0-0f6ee2d9c3-8606824b1a.zip/node_modules/@aws-cdk/lambda-layer-awscli/lib/awscli-layer.js:14:9)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:81:22)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/d239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5b/S3VersionKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParametersd239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5bS3VersionKey3BF8AE51",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:16:35)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new LayerVersion (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/layers.js:47:33)",
+              "new AwsCliLayer (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-lambda-layer-awscli-virtual-c93cd4a580/0/cache/@aws-cdk-lambda-layer-awscli-npm-1.202.0-0f6ee2d9c3-8606824b1a.zip/node_modules/@aws-cdk/lambda-layer-awscli/lib/awscli-layer.js:14:9)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:81:22)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/d239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5b/ArtifactHash": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParametersd239e44411f232659ddaaba440db903153fce7e504182dfb3ee2a70a03897d5bArtifactHashCFD7F3C4",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:20:38)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new LayerVersion (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/layers.js:47:33)",
+              "new AwsCliLayer (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-lambda-layer-awscli-virtual-c93cd4a580/0/cache/@aws-cdk-lambda-layer-awscli-npm-1.202.0-0f6ee2d9c3-8606824b1a.zip/node_modules/@aws-cdk/lambda-layer-awscli/lib/awscli-layer.js:14:9)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:81:22)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/f98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711da/S3Bucket": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParametersf98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711daS3BucketF23C0DE7",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:12:36)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:114:33)",
+              "SingletonFunction.ensureLambda (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:164:16)",
+              "new SingletonFunction (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:32:36)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:78:25)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/f98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711da/S3VersionKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParametersf98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711daS3VersionKey5E97B17D",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:16:35)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:114:33)",
+              "SingletonFunction.ensureLambda (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:164:16)",
+              "new SingletonFunction (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:32:36)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:78:25)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/f98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711da/ArtifactHash": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParametersf98b78092dcdd31f5e6d47489beb5f804d4835ef86a8085d0a2053cb9ae711daArtifactHashD85D28D8",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:20:38)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "AssetCode.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/code.js:277:26)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:114:33)",
+              "SingletonFunction.ensureLambda (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:164:16)",
+              "new SingletonFunction (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:32:36)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:78:25)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984c/S3Bucket": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParameters44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984cS3Bucket1316051C",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:12:36)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "Object.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/source.js:62:31)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:62",
+              "Array.map (<anonymous>)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:39)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984c/S3VersionKey": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParameters44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984cS3VersionKey42E8B6FA",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:16:35)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "Object.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/source.js:62:31)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:62",
+              "Array.map (<anonymous>)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:39)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AssetParameters/44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984c/ArtifactHash": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AssetParameters44de5b3befb30508e786e9a6c264eddaf789939b2f8c872ed3963ac90e30984cArtifactHash2AA3091F",
+            "trace": [
+              "new FileAssetParameters (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/asset-parameters.js:20:38)",
+              "LegacyStackSynthesizer.doAddFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:189:22)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:98:25)",
+              "CdkStack.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack.js:473:33)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:59",
+              "withoutDeprecationWarnings (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:229:16)",
+              "LegacyStackSynthesizer.addFileAsset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stack-synthesizers/legacy.js:103:20)",
+              "new Asset (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:46:44)",
+              "Object.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/source.js:62:31)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:62",
+              "Array.map (<anonymous>)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:39)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/distribution/CFDistribution": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "distributionCFDistribution99A57736",
+            "trace": [
+              "new CloudFrontWebDistribution (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-cloudfront-virtual-8f99bcf9eb/0/cache/@aws-cdk-aws-cloudfront-npm-1.202.0-c56ebb8692-ee8562246d.zip/node_modules/@aws-cdk/aws-cloudfront/lib/web-distribution.js:326:30)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:33:30)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AliasRecord/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AliasRecord851000D2",
+            "trace": [
+              "new RecordSet (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-route53-virtual-8cb201df89/0/cache/@aws-cdk-aws-route53-npm-1.202.0-6c5245fe26-1c46ee8be4.zip/node_modules/@aws-cdk/aws-route53/lib/record-set.js:179:27)",
+              "new ARecord (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-route53-virtual-8cb201df89/0/cache/@aws-cdk-aws-route53-npm-1.202.0-6c5245fe26-1c46ee8be4.zip/node_modules/@aws-cdk/aws-route53/lib/record-set.js:211:9)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:54:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/AWSCloudFrontPartitionHostedZoneIdMap": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWSCloudFrontPartitionHostedZoneIdMap",
+            "trace": [
+              "CloudFrontTarget.getHostedZoneId (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-route53-targets-virtual-96999dd04b/0/cache/@aws-cdk-aws-route53-targets-npm-1.202.0-0adf4870d6-70c016b939.zip/node_modules/@aws-cdk/aws-route53-targets/lib/cloudfront-target.js:23:13)",
+              "CloudFrontTarget.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-route53-targets-virtual-96999dd04b/0/cache/@aws-cdk-aws-route53-targets-npm-1.202.0-0adf4870d6-70c016b939.zip/node_modules/@aws-cdk/aws-route53-targets/lib/cloudfront-target.js:37:44)",
+              "new RecordSet (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-route53-virtual-8cb201df89/0/cache/@aws-cdk-aws-route53-npm-1.202.0-6c5245fe26-1c46ee8be4.zip/node_modules/@aws-cdk/aws-route53/lib/record-set.js:184:79)",
+              "new ARecord (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-route53-virtual-8cb201df89/0/cache/@aws-cdk-aws-route53-npm-1.202.0-6c5245fe26-1c46ee8be4.zip/node_modules/@aws-cdk/aws-route53/lib/record-set.js:211:9)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:54:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/deploy/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deployAwsCliLayer488F4205",
+            "trace": [
+              "new LayerVersion (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/layers.js:54:26)",
+              "new AwsCliLayer (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-lambda-layer-awscli-virtual-c93cd4a580/0/cache/@aws-cdk-lambda-layer-awscli-npm-1.202.0-0f6ee2d9c3-8606824b1a.zip/node_modules/@aws-cdk/lambda-layer-awscli/lib/awscli-layer.js:14:9)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:81:22)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/deploy/CustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "deployCustomResourceA57DB580",
+            "trace": [
+              "new CustomResource (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/custom-resource.js:49:25)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:117:19)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265",
+            "trace": [
+              "new Role (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-iam-virtual-951bb23766/0/cache/@aws-cdk-aws-iam-npm-1.202.0-867d0360c0-34e74f7576.zip/node_modules/@aws-cdk/aws-iam/lib/role.js:63:22)",
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:97:35)",
+              "SingletonFunction.ensureLambda (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:164:16)",
+              "new SingletonFunction (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:32:36)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:78:25)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
+            "trace": [
+              "new Policy (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-iam-virtual-951bb23766/0/cache/@aws-cdk-aws-iam-npm-1.202.0-867d0360c0-34e74f7576.zip/node_modules/@aws-cdk/aws-iam/lib/policy.js:57:26)",
+              "Role.addToPrincipalPolicy (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-iam-virtual-951bb23766/0/cache/@aws-cdk-aws-iam-npm-1.202.0-867d0360c0-34e74f7576.zip/node_modules/@aws-cdk/aws-iam/lib/role.js:247:34)",
+              "Grant.addToPrincipal (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-iam-virtual-951bb23766/0/cache/@aws-cdk-aws-iam-npm-1.202.0-867d0360c0-34e74f7576.zip/node_modules/@aws-cdk/aws-iam/lib/grant.js:102:65)",
+              "Grant.addToPrincipalOrResource (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-iam-virtual-951bb23766/0/cache/@aws-cdk-aws-iam-npm-1.202.0-867d0360c0-34e74f7576.zip/node_modules/@aws-cdk/aws-iam/lib/grant.js:50:30)",
+              "Import.grant (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-virtual-13f19c3b70/0/cache/@aws-cdk-aws-s3-npm-1.202.0-bd4f39c953-1336218731.zip/node_modules/@aws-cdk/aws-s3/lib/bucket.js:487:31)",
+              "Import.grantRead (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-virtual-13f19c3b70/0/cache/@aws-cdk-aws-s3-npm-1.202.0-bd4f39c953-1336218731.zip/node_modules/@aws-cdk/aws-s3/lib/bucket.js:302:21)",
+              "Asset.grantRead (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-assets-virtual-ab442969a7/0/cache/@aws-cdk-aws-s3-assets-npm-1.202.0-ca7ba0faa3-65d8d5233e.zip/node_modules/@aws-cdk/aws-s3-assets/lib/asset.js:99:21)",
+              "Object.bind (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/source.js:69:23)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:62",
+              "Array.map (<anonymous>)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:101:39)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536",
+            "trace": [
+              "new Function (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/function.js:172:26)",
+              "SingletonFunction.ensureLambda (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:164:16)",
+              "new SingletonFunction (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-lambda-virtual-e08b025c53/0/cache/@aws-cdk-aws-lambda-npm-1.202.0-54f6ca9850-9ab3120b07.zip/node_modules/@aws-cdk/aws-lambda/lib/singleton-lambda.js:32:36)",
+              "new BucketDeployment (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-aws-s3-deployment-virtual-2286a64298/0/cache/@aws-cdk-aws-s3-deployment-npm-1.202.0-a86ae0143d-844124b297.zip/node_modules/@aws-cdk/aws-s3-deployment/lib/bucket-deployment.js:78:25)",
+              "new CdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/stack.js:59:9)",
+              "createCdkStack (file:///Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/cdk-utils/lib/createCdkStack.js:11:5)",
+              "process.processTicksAndRejections (node:internal/process/task_queues:95:5)"
+            ]
+          }
+        ],
+        "/fern-docs-DEV/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata",
+            "trace": [
+              "new MetadataResource (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/metadata-resource.js:22:30)",
+              "/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/synthesis.js:139:9",
+              "visit (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/synthesis.js:200:9)",
+              "visit (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/synthesis.js:197:9)",
+              "injectMetadataResources (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/synthesis.js:128:5)",
+              "Object.synthesize (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/private/synthesis.js:17:5)",
+              "App.synth (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/stage.js:104:41)",
+              "process.<anonymous> (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.yarn/__virtual__/@aws-cdk-core-virtual-f639036887/0/cache/@aws-cdk-core-npm-1.202.0-a918d82bc5-11d7b2e6f6.zip/node_modules/@aws-cdk/core/lib/app.js:58:51)",
+              "Object.onceWrapper (node:events:628:26)",
+              "process.emit (node:events:513:28)",
+              "process.emit (/Users/zachkirsch/Dropbox/Mac/Documents/fern/.pnp.cjs:45473:25)"
+            ]
+          }
+        ]
+      },
+      "displayName": "fern-docs-DEV"
+    }
+  }
+}
