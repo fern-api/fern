@@ -129,6 +129,13 @@ export class UrlSlugTree {
         apiDefinition: FernRegistryApiRead.ApiDefinition,
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage
     ): UrlSlugTreeNode.ApiSubpackage {
+        if (subpackage.pointsTo != null) {
+            const pointedTo = apiDefinition.subpackages[subpackage.pointsTo];
+            if (pointedTo == null) {
+                throw new Error("Subpackage does not exist: " + subpackage.pointsTo);
+            }
+            return this.constructApiSubpackageNode(apiDefinition, pointedTo);
+        }
         return {
             type: "apiSubpackage",
             apiId: apiDefinition.id,
