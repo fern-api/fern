@@ -1,6 +1,7 @@
-import { ObjectProperty, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { ObjectProperty, ReferencedSchema, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "../convertSchemas";
 
@@ -101,4 +102,23 @@ export function wrapObject({
         generatedName,
         allOf,
     });
+}
+
+function getPropertiesFromExtendedSchemas({
+    allOf,
+    context,
+}: {
+    allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
+    context: OpenAPIV3ParserContext;
+}): Record<string, Record<SchemaId, Schema>> {
+    const result: Record<string, Record<SchemaId, Schema>> = {};
+    for (const allOfObject of allOf) {
+        const resolvedAllOfObject = isReferenceObject(allOfObject)
+            ? context.resolveSchemaReference(allOfObject)
+            : allOfObject;
+        for (const property of resolvedAllOfObject.properties ?? []) {
+            if (property in result) {
+            }
+        }
+    }
 }
