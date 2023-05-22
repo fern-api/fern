@@ -74,10 +74,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
     );
 
     const navigateToAnchor = useCallback((anchor: Anchor) => {
+        setAnchorInView(anchor);
         const listeners = navigateToAnchorListeners.current[stringifyAnchor(anchor)];
         if (listeners != null) {
             for (const listener of listeners) {
-                listener();
+                setTimeout(listener, 0);
             }
         }
     }, []);
