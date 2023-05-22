@@ -8375,7 +8375,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"navigation-points-to","only":true} 1`] = `
+exports[`ir {"name":"navigation-points-to"} 1`] = `
 "{
     "apiName": {
         "originalName": "my-api",
