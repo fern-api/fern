@@ -1,10 +1,10 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { useBooleanState, useIsHovering } from "@fern-api/react-commons";
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { useApiDefinitionContext } from "../../../../api-context/useApiDefinitionContext";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
@@ -19,7 +19,7 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: FernRegistry.TypeShape;
+        typeShape: FernRegistryApiRead.TypeShape;
         isCollapsible: boolean;
     }
 }
@@ -45,9 +45,10 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
                 }),
+                // TODO
                 undiscriminatedUnion: () => undefined,
                 discriminatedUnion: (union) => ({
-                    elements: union.members.map((variant) => (
+                    elements: union.variants.map((variant) => (
                         <DiscriminatedUnionVariant
                             key={variant.discriminantValue}
                             discriminant={union.discriminant}
@@ -62,8 +63,8 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     elements: enum_.values.map((enumValue) => (
                         <EnumValue key={enumValue.value} enumValue={enumValue} />
                     )),
-                    elementNameSingular: "possible value",
-                    elementNamePlural: "possible values",
+                    elementNameSingular: "enum value",
+                    elementNamePlural: "enum values",
                 }),
                 _other: () => undefined,
             }),

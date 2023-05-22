@@ -1,20 +1,20 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
-import { Markdown } from "../../markdown/Markdown";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,
     useTypeDefinitionContext,
 } from "../context/TypeDefinitionContext";
+import { Description } from "../Description";
 import { InternalTypeReferenceDefinitions } from "../type-reference/InternalTypeReferenceDefinitions";
 import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
     export interface Props {
-        property: FernRegistry.ObjectProperty;
+        property: FernRegistryApiRead.ObjectProperty;
     }
 }
 
@@ -73,11 +73,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                 </div>
             </div>
             <div className="flex flex-col">
-                {property.description != null && (
-                    <div className={classNames("mt-3", "text-gray-500", "dark:text-gray-400")}>
-                        <Markdown>{property.description}</Markdown>
-                    </div>
-                )}
+                <Description description={property.description} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions type={property.valueType} isCollapsible />
                 </TypeDefinitionContext.Provider>

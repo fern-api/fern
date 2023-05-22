@@ -1,22 +1,22 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useMemo } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { useApiDefinitionContext } from "../../../../api-context/useApiDefinitionContext";
 import { DefinitionItemExamples } from "../../examples/DefinitionItemExamples";
 import { EndpointExample } from "./EndpointExample";
 import { generateHttpBodyExample } from "./generateHttpBodyExample";
 
 export declare namespace DummyEndpointExamples {
     export interface Props {
-        endpoint: FernRegistry.EndpointDefinition;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 }
 
 export const DummyEndpointExamples: React.FC<DummyEndpointExamples.Props> = ({ endpoint }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
-    const example = useMemo((): FernRegistry.ExampleEndpointCall => {
+    const example = useMemo((): FernRegistryApiRead.ExampleEndpointCall => {
         return {
-            url: "",
+            path: "",
             pathParameters: {},
             queryParameters: {},
             headers: {},

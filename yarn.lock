@@ -238,25 +238,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@auth0/auth0-react@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@auth0/auth0-react@npm:2.0.1"
-  dependencies:
-    "@auth0/auth0-spa-js": ^2.0.4
-  peerDependencies:
-    react: ^16.11.0 || ^17 || ^18
-    react-dom: ^16.11.0 || ^17 || ^18
-  checksum: b2119c5d2112141072ce99f7053a8f38723928ff4336f0cc2bf189c34b91e18ba0dd19cacd3f62c1bc89b115eece7e20323c91dc6669a3246be0e282b8c8b457
-  languageName: node
-  linkType: hard
-
-"@auth0/auth0-spa-js@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "@auth0/auth0-spa-js@npm:2.0.4"
-  checksum: 1ff91b47cca70bfc911a0bd97ee5a4d9e055784cde7961266ca68d3c4d1721b11aba1d33fee5a1919d1808f21949682041e6cd293bb014e2f1f1edfe454e8f0c
-  languageName: node
-  linkType: hard
-
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.12.13, @babel/code-frame@npm:^7.16.0, @babel/code-frame@npm:^7.18.6, @babel/code-frame@npm:^7.8.3":
   version: 7.18.6
   resolution: "@babel/code-frame@npm:7.18.6"
@@ -4854,7 +4835,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ui@workspace:packages/ui/app"
   dependencies:
-    "@auth0/auth0-react": ^2.0.1
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
@@ -4864,8 +4844,6 @@ __metadata:
     "@blueprintjs/select": ^4.4.2
     "@emotion/react": ^11.9.3
     "@emotion/styled": ^11.9.3
-    "@fern-api/common-components": "workspace:*"
-    "@fern-api/contexted-dialog": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fonts": "workspace:*"
     "@fern-api/loadable": "workspace:*"
@@ -4874,8 +4852,7 @@ __metadata:
     "@fern-api/routing-utils": "workspace:*"
     "@fern-api/split-view": "workspace:*"
     "@fern-api/theme": "workspace:*"
-    "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
-    "@fern-fern/registry": 0.0.300
+    "@fern-fern/registry-browser": 0.0.597
     "@fontsource/ibm-plex-mono": ^4.5.13
     "@fontsource/inter": ^4.5.11
     "@tanstack/react-query": ^4.24.10
@@ -4886,10 +4863,7 @@ __metadata:
     "@types/react": ^18.0.20
     "@types/react-syntax-highlighter": ^15.5.6
     classnames: ^2.3.1
-    date-fns: ^2.29.3
-    date-fns-tz: ^2.0.0
     depcheck: ^1.4.3
-    emoji-picker-react: ^4.4.7
     eslint: ^8.26.0
     jest: ^29.0.3
     lodash-es: ^4.17.21
@@ -4899,7 +4873,6 @@ __metadata:
     prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
-    react-icons: ^4.7.1
     react-intersection-observer: ^9.4.3
     react-markdown: ^8.0.5
     react-router-dom: ^6.4.3
@@ -5277,6 +5250,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/registry-browser@npm:0.0.597":
+  version: 0.0.597
+  resolution: "@fern-fern/registry-browser@npm:0.0.597"
+  dependencies:
+    "@types/url-join": 4.0.1
+    "@ungap/url-search-params": 0.2.2
+    axios: 0.27.2
+    js-base64: 3.7.2
+    url-join: 4.0.1
+  checksum: 0c7ef6c4bbfac2f903af613a64288bcd8f8e0f262a930279b1fb8beb672160ad888bb0b68d8746e24b59c7624bd26b10f6cceb21ab3d858d3cb45cc40d2d5b99
+  languageName: node
+  linkType: hard
+
 "@fern-fern/registry-node@npm:^0.0.598":
   version: 0.0.598
   resolution: "@fern-fern/registry-node@npm:0.0.598"
@@ -5287,18 +5273,6 @@ __metadata:
     js-base64: 3.7.2
     url-join: 4.0.1
   checksum: a927ebb253156eeca948890cb5a3fbe043d51b26f69b1531d0bf4104d4a5d1351f4c07a2280e20afb1ef7eb986b00b227586398a9b4b55932b1e6bb8f12ea8e0
-  languageName: node
-  linkType: hard
-
-"@fern-fern/registry@npm:0.0.300":
-  version: 0.0.300
-  resolution: "@fern-fern/registry@npm:0.0.300"
-  dependencies:
-    "@types/url-join": 4.0.1
-    axios: 0.27.2
-    js-base64: 3.7.2
-    url-join: 4.0.1
-  checksum: 8e0a3ee0afb288e5d1015d49c3e8c46ce54b4d052fa95d38c792edbac3727f68ea73e14abc84ab2b66e3842d4d6be12ca8d57eb64a31fbd45425f2bef2b0ffe5
   languageName: node
   linkType: hard
 
@@ -6486,11 +6460,11 @@ __metadata:
   linkType: hard
 
 "@tanstack/match-sorter-utils@npm:^8.7.0":
-  version: 8.7.6
-  resolution: "@tanstack/match-sorter-utils@npm:8.7.6"
+  version: 8.8.4
+  resolution: "@tanstack/match-sorter-utils@npm:8.8.4"
   dependencies:
     remove-accents: 0.4.2
-  checksum: 3f3dda277e6e55ca1224a28b38a2deb3ac912c2f2f5263a32fa0d9126c6b6d05feb475539729fd248f1eb88b612109db90b847ec8fdfc05d0f4073c900a2d3f6
+  checksum: d005f500754f52ef94966cbbe4217f26e7e3c07291faa2578b06bca9a5abe01689569994c37a1d01c6e783addf5ffbb28fa82eba7961d36eabf43ec43d1e496b
   languageName: node
   linkType: hard
 
@@ -6502,17 +6476,17 @@ __metadata:
   linkType: hard
 
 "@tanstack/react-query-devtools@npm:^4.24.12":
-  version: 4.24.12
-  resolution: "@tanstack/react-query-devtools@npm:4.24.12"
+  version: 4.29.7
+  resolution: "@tanstack/react-query-devtools@npm:4.29.7"
   dependencies:
     "@tanstack/match-sorter-utils": ^8.7.0
     superjson: ^1.10.0
     use-sync-external-store: ^1.2.0
   peerDependencies:
-    "@tanstack/react-query": 4.24.10
+    "@tanstack/react-query": 4.29.7
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 8cea2cd99268aa057ee22d63d0f1e24ec659134598b624cad45369c9a2a589bb90fd7cc56f9b4b794036e870afedf6867e61c79d9c52ee24763102d7c4c21f70
+  checksum: deb28b3d7d614d5bede33b2b643903aaaff8b215ba0620d48b9b4dd32fcdd88947879afab883f8ac0347656be0c9448d850d6e962307314e903074ac51e802b5
   languageName: node
   linkType: hard
 
@@ -10026,11 +10000,11 @@ __metadata:
   linkType: hard
 
 "copy-anything@npm:^3.0.2":
-  version: 3.0.3
-  resolution: "copy-anything@npm:3.0.3"
+  version: 3.0.4
+  resolution: "copy-anything@npm:3.0.4"
   dependencies:
     is-what: ^4.1.8
-  checksum: d456dc5ec98dee7c7cf87d809eac30dc2ac942acd4cf970fab394e280ceb6dd7a8a7a5a44fcbcc50e0206658de3cc20b92863562f5797930bb2619f164f4c182
+  checksum: 65ba2384db4c8d9fd19bb0d0e14a4381377d8f6733ff725c7340a22b392d1478f1b695e4c7972252d4a129ab66ae1a0c134bffb23151e91f14781c58d8831f1f
   languageName: node
   linkType: hard
 
@@ -10381,22 +10355,6 @@ __metadata:
   version: 3.1.0
   resolution: "csstype@npm:3.1.0"
   checksum: 644e986cefab86525f0b674a06889cfdbb1f117e5b7d1ce0fc55b0423ecc58807a1ea42ecc75c4f18999d14fc42d1d255f84662a45003a52bb5840e977eb2ffd
-  languageName: node
-  linkType: hard
-
-"date-fns-tz@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "date-fns-tz@npm:2.0.0"
-  peerDependencies:
-    date-fns: ">=2.0.0"
-  checksum: a6553603a9d26dd9669326c99a58a2335ac550bc060c74b86a5ad9e1de73c9d4e3e5236f0f552f990e616e4e8dcc2b6a637913a04d2e04396e6a9f8ae83c73da
-  languageName: node
-  linkType: hard
-
-"date-fns@npm:^2.29.3":
-  version: 2.29.3
-  resolution: "date-fns@npm:2.29.3"
-  checksum: e01cf5b62af04e05dfff921bb9c9933310ed0e1ae9a81eb8653452e64dc841acf7f6e01e1a5ae5644d0337e9a7f936175fd2cb6819dc122fdd9c5e86c56be484
   languageName: node
   linkType: hard
 
@@ -11155,17 +11113,6 @@ __metadata:
   version: 0.10.2
   resolution: "emittery@npm:0.10.2"
   checksum: ee3e21788b043b90885b18ea756ec3105c1cedc50b29709c92b01e239c7e55345d4bb6d3aef4ddbaf528eef448a40b3bb831bad9ee0fc9c25cbf1367ab1ab5ac
-  languageName: node
-  linkType: hard
-
-"emoji-picker-react@npm:^4.4.7":
-  version: 4.4.7
-  resolution: "emoji-picker-react@npm:4.4.7"
-  dependencies:
-    clsx: ^1.2.1
-  peerDependencies:
-    react: ">=16"
-  checksum: 76d3c56a1d4f3ae23e0544350b7eaee3a53cee660d78acbdff07330a8a659b99778ad04a9020ba586afe7b2d7294065540d9c3d4199d9ea93eeb8ff9091cc5d8
   languageName: node
   linkType: hard
 
@@ -14461,9 +14408,9 @@ env-cmd@toddbluhm/env-cmd:
   linkType: hard
 
 "is-what@npm:^4.1.8":
-  version: 4.1.8
-  resolution: "is-what@npm:4.1.8"
-  checksum: b9bec3acff102d14ad467f4c74c9886af310fa160e07a63292c8c181e6768c7c4c1054644e13d67185b963644e4a513bce8c6b8ce3d3ca6f9488a69fccad5f97
+  version: 4.1.10
+  resolution: "is-what@npm:4.1.10"
+  checksum: 39805a480ede3b52d6855d7472c5f6da99cdde550822d4c8a36805a15b400c9a3f28eb05906248d2888b4a559c66b67675ff8e0f8a2e89b06cd72c73aa2ce3ce
   languageName: node
   linkType: hard
 
@@ -18970,15 +18917,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"react-icons@npm:^4.7.1":
-  version: 4.7.1
-  resolution: "react-icons@npm:4.7.1"
-  peerDependencies:
-    react: "*"
-  checksum: ed3cbdc5fc0c4d7d2debf78fdc8c4c80aeacf85a506a9a3c11b1d5922de393ac0a6542012b7fb81761e9280c54d0f26827d50a92b54ec8f0c8e52364d89970b5
-  languageName: node
-  linkType: hard
-
 "react-intersection-observer@npm:^9.4.3":
   version: 9.4.3
   resolution: "react-intersection-observer@npm:9.4.3"
@@ -21174,11 +21112,11 @@ env-cmd@toddbluhm/env-cmd:
   linkType: hard
 
 "superjson@npm:^1.10.0":
-  version: 1.12.2
-  resolution: "superjson@npm:1.12.2"
+  version: 1.12.3
+  resolution: "superjson@npm:1.12.3"
   dependencies:
     copy-anything: ^3.0.2
-  checksum: cf7735e172811ed87476a7c2f1bb0e83725a0e3c2d7a50a71303a973060b3c710288767fb767a7a7eee8e5625d3ccaee1176a93e27f43841627512c15c4cdf84
+  checksum: 3549cc1d03e93745632d8114f91ed1668d81a0cf4c618f8f89a1b06f426a9cd1a2879f0e79469a6a193fd19dcea9a8fecff6215d12527b98c40c67cd98f185d3
   languageName: node
   linkType: hard
 

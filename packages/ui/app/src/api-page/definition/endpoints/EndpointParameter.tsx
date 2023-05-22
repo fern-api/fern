@@ -1,4 +1,4 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { Markdown } from "../markdown/Markdown";
@@ -9,21 +9,15 @@ export declare namespace EndpointParameter {
     export interface Props {
         name: string;
         description?: string;
-        type: FernRegistry.TypeReference;
-        renderName?: (name: string) => JSX.Element;
+        type: FernRegistryApiRead.TypeReference;
     }
 }
 
-export const EndpointParameter: React.FC<EndpointParameter.Props> = ({
-    name,
-    description,
-    type,
-    renderName = (name) => <>{name}</>,
-}) => {
+export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, description, type }) => {
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 py-4">
             <div className="flex items-center gap-1">
-                <MonospaceText>{renderName(name)}</MonospaceText>
+                <MonospaceText>{name}</MonospaceText>
                 <div className={classNames("text-xs", "text-gray-500", "dark:text-gray-500")}>
                     <TypeShorthand type={type} plural={false} />
                 </div>

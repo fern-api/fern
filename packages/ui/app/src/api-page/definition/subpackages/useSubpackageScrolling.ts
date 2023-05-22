@@ -1,97 +1,72 @@
-import { useBooleanState } from "@fern-api/react-commons";
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback, useEffect, useState } from "react";
-import { generatePath, useNavigate } from "react-router-dom";
-import { useCurrentOrganizationIdOrThrow } from "../../../routes/useCurrentOrganization";
-import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { DefinitionRoutes } from "../../routes";
-import { useCurrentApiIdOrThrow } from "../../routes/useCurrentApiId";
+import { useDocsContext } from "../../../docs-context/useDocsContext";
 
 export declare namespace useSubpackageScrolling {
     export interface Args {
-        subpackageId: FernRegistry.SubpackageId;
         containerRef: HTMLElement | undefined;
     }
 
     export interface Return {
-        setIsEndpointInView: (endpointId: string, isInView: boolean) => void;
+        setIsEndpointInView: (endpoint: FernRegistryApiRead.EndpointDefinition, isInView: boolean) => void;
+        setIsEndpointInVerticalCenter: (
+            endpoint: FernRegistryApiRead.EndpointDefinition,
+            isInVerticalCenter: boolean
+        ) => void;
     }
 }
 
-type EndpointId = string;
+export function useSubpackageScrolling({ containerRef }: useSubpackageScrolling.Args): useSubpackageScrolling.Return {
+    const { registerScrollToTopListener, setAnchorInView } = useDocsContext();
 
-export function useSubpackageScrolling({
-    subpackageId,
-    containerRef,
-}: useSubpackageScrolling.Args): useSubpackageScrolling.Return {
-    const [endpointsInView, setEndpointsInView] = useState<EndpointId[]>([]);
+    const [endpointInVerticalCenter, setEndpointInVerticalCenter] = useState<FernRegistryApiRead.EndpointDefinition>();
+    const [endpointsInView, setEndpointsInView] = useState<FernRegistryApiRead.EndpointDefinition[]>([]);
 
-    const setIsEndpointInView = useCallback((endpointId: string, isInView: boolean) => {
+    const setIsEndpointInView = useCallback((endpoint: FernRegistryApiRead.EndpointDefinition, isInView: boolean) => {
         setEndpointsInView((existing) => {
-            const existingWithoutEndpoint = existing.filter((id) => id !== endpointId);
+            const existingWithoutEndpoint = existing.filter((other) => other.id !== endpoint.id);
             if (isInView) {
-                return [endpointId, ...existingWithoutEndpoint];
+                return [endpoint, ...existingWithoutEndpoint];
             } else {
                 return existingWithoutEndpoint;
             }
         });
     }, []);
 
-    const { value: isScrolling, setTrue: setIsScrolling, setFalse: setIsNotScrolling } = useBooleanState(false);
-    useEffect(() => {
-        let timeout: NodeJS.Timeout | undefined;
-        const onScroll = () => {
-            clearTimeout(timeout);
-            setIsScrolling();
-            timeout = setTimeout(setIsNotScrolling, 100);
-        };
+    const setIsEndpointInVerticalCenter = useCallback(
+        (endpoint: FernRegistryApiRead.EndpointDefinition, isInVerticalCenter: boolean) => {
+            return setEndpointInVerticalCenter((existing) => {
+                if (isInVerticalCenter) {
+                    return endpoint;
+                } else if (endpoint.id === existing?.id) {
+                    return undefined;
+                } else {
+                    return existing;
+                }
+            });
+        },
+        []
+    );
 
-        containerRef?.addEventListener("scroll", onScroll);
-        containerRef?.addEventListener("scrollend", setIsNotScrolling);
-        return () => {
-            containerRef?.removeEventListener("scroll", onScroll);
-            containerRef?.removeEventListener("scrollend", setIsNotScrolling);
-        };
-    }, [setIsScrolling, setIsNotScrolling, containerRef]);
-
-    const endpointInView = endpointsInView[0];
-    const organizationId = useCurrentOrganizationIdOrThrow();
-    const apiId = useCurrentApiIdOrThrow();
-    const navigate = useNavigate();
-    const { urlPathResolver } = useApiDefinitionContext();
+    const endpointInView = endpointsInView[0] ?? endpointInVerticalCenter;
     useEffect(() => {
-        if (isScrolling && endpointInView != null) {
-            navigate(
-                generatePath(DefinitionRoutes.API_PACKAGE.absolutePath, {
-                    ENVIRONMENT_ID: "latest",
-                    ORGANIZATION_ID: organizationId,
-                    API_ID: apiId,
-                    "*": urlPathResolver.getUrlPathForEndpoint(subpackageId, endpointInView),
-                })
-            );
+        if (endpointInView?.urlSlug != null) {
+            setAnchorInView(endpointInView.urlSlug);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [endpointInView]);
-
-    const { registerSidebarItemClickListener } = useApiDefinitionContext();
+    }, [endpointInView?.urlSlug]);
 
     useEffect(() => {
-        const unsubscribe = registerSidebarItemClickListener(
-            {
-                type: "subpackage",
-                subpackageId,
-                endpointId: undefined,
-            },
-            () => {
-                containerRef?.scrollTo({
-                    top: 0,
-                });
-            }
-        );
+        const unsubscribe = registerScrollToTopListener(() => {
+            containerRef?.scrollTo({
+                top: 0,
+            });
+        });
         return unsubscribe;
-    }, [containerRef, registerSidebarItemClickListener, subpackageId]);
+    }, [containerRef, registerScrollToTopListener]);
 
     return {
         setIsEndpointInView,
+        setIsEndpointInVerticalCenter,
     };
 }

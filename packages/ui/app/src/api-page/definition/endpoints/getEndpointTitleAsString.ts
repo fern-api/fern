@@ -1,10 +1,10 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 
-export function getEndpointTitleAsString(endpoint: FernRegistry.EndpointDefinition): string {
+export function getEndpointTitleAsString(endpoint: FernRegistryApiRead.EndpointDefinition): string {
     return endpoint.name ?? getEndpointPathAsString(endpoint);
 }
 
-export function getEndpointPathAsString(endpoint: FernRegistry.EndpointDefinition): string {
+export function getEndpointPathAsString(endpoint: FernRegistryApiRead.EndpointDefinition): string {
     return (
         "GET" +
         " " +
@@ -20,6 +20,6 @@ export function getEndpointPathAsString(endpoint: FernRegistry.EndpointDefinitio
     );
 }
 
-export function getPathParameterAsString(pathParameterKey: FernRegistry.PathParameterKey): string {
+export function getPathParameterAsString(pathParameterKey: FernRegistryApiRead.PathParameterKey): string {
     return `:${pathParameterKey}`;
 }

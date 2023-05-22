@@ -1,13 +1,13 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { useApiDefinitionContext } from "../../../../api-context/useApiDefinitionContext";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
 import { MapTypeContextProvider } from "./MapTypeContextProvider";
 
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {
-        type: FernRegistry.TypeReference;
+        type: FernRegistryApiRead.TypeReference;
         isCollapsible: boolean;
         className?: string;
     }
@@ -52,6 +52,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 />
             </MapTypeContextProvider>
         ),
+        literal: () => null,
         unknown: () => null,
         _other: () => null,
     });

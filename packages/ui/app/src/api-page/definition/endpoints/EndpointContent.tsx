@@ -1,9 +1,9 @@
-import { FernRegistry } from "@fern-fern/registry";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import classNames from "classnames";
+import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
-import { ResolvedUrlPath } from "../../api-context/url-path-resolver/UrlPathResolver";
-import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { useDocsContext } from "../../../docs-context/useDocsContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { useEndpointContext } from "./context/useEndpointContext";
@@ -17,14 +17,21 @@ import { QueryParametersSection } from "./QueryParametersSection";
 
 export declare namespace EndpointContent {
     export interface Props {
-        resolvedUrlPath: ResolvedUrlPath;
-        endpoint: FernRegistry.EndpointDefinition;
-        setIsInView?: (endpointId: string, isInView: boolean) => void;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+        setIsInView?: (endpoint: FernRegistryApiRead.EndpointDefinition, isInView: boolean) => void;
+        setIsIntersectingVerticalCenter?: (
+            endpoint: FernRegistryApiRead.EndpointDefinition,
+            isInVerticalCenter: boolean
+        ) => void;
     }
 }
 
-export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPath, endpoint, setIsInView }) => {
-    const { urlPathResolver, registerSidebarItemClickListener } = useApiDefinitionContext();
+export const EndpointContent: React.FC<EndpointContent.Props> = ({
+    endpoint,
+    setIsInView,
+    setIsIntersectingVerticalCenter,
+}) => {
+    const { registerNavigateToAnchorListener } = useDocsContext();
 
     const { setHoveredResponsePropertyPath } = useEndpointContext();
     const onHoverResponseProperty = useCallback(
@@ -37,40 +44,52 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPa
     const onChangeIsInView = useMemo(() => {
         if (setIsInView != null) {
             return (isInView: boolean) => {
-                setIsInView(endpoint.id, isInView);
+                setIsInView(endpoint, isInView);
             };
         } else {
             return undefined;
         }
-    }, [endpoint.id, setIsInView]);
+    }, [endpoint, setIsInView]);
 
-    const { ref: setRefForIntersectionObserver } = useInView({
+    const { ref: setRefForInViewIntersectionObserver } = useInView({
         threshold: 0.5,
         onChange: onChangeIsInView,
+    });
+
+    const onChangeIsInVerticalCenter = useMemo(() => {
+        if (setIsIntersectingVerticalCenter != null) {
+            return (isInView: boolean) => {
+                setIsIntersectingVerticalCenter(endpoint, isInView);
+            };
+        } else {
+            return undefined;
+        }
+    }, [endpoint, setIsIntersectingVerticalCenter]);
+
+    const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
+        rootMargin: "-50% 0% -50% 0%",
+        onChange: onChangeIsInVerticalCenter,
     });
 
     const containerRef = useRef<HTMLDivElement | null>(null);
     const setContainerRef = useCallback(
         (ref: HTMLDivElement | null) => {
-            setRefForIntersectionObserver(ref);
+            setRefForInViewIntersectionObserver(ref);
+            setRefForInVerticalCenterIntersectionObserver(ref);
             containerRef.current = ref;
         },
-        [setRefForIntersectionObserver]
+        [setRefForInVerticalCenterIntersectionObserver, setRefForInViewIntersectionObserver]
     );
 
     useEffect(() => {
-        const unsubscribe = registerSidebarItemClickListener(resolvedUrlPath, () => {
+        const unsubscribe = registerNavigateToAnchorListener(endpoint.urlSlug, () => {
             containerRef.current?.scrollIntoView();
         });
         return unsubscribe;
-    }, [registerSidebarItemClickListener, resolvedUrlPath]);
+    }, [endpoint.urlSlug, registerNavigateToAnchorListener]);
 
     return (
-        <div
-            className="flex-1 flex gap-24 px-24 min-w-0"
-            id={urlPathResolver.getHtmlIdForEndpoint(endpoint.id)}
-            ref={setContainerRef}
-        >
+        <div className="flex-1 flex gap-24 px-24 min-w-0" id={endpoint.urlSlug} ref={setContainerRef}>
             <div className="flex-1 flex flex-col">
                 <div className="pt-10 text-2xl font-bold">
                     <EndpointTitle endpoint={endpoint} />
@@ -108,7 +127,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPa
                         )}
                         {endpoint.request != null && (
                             <EndpointSection title="Request">
-                                <EndpointTypeSection httpBody={endpoint.request} />
+                                <EndpointTypeSection httpBody={endpoint.request} verb="expects" />
                             </EndpointSection>
                         )}
                         {endpoint.response != null && (
@@ -116,13 +135,20 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ resolvedUrlPa
                                 <EndpointTypeSection
                                     httpBody={endpoint.response}
                                     onHoverProperty={onHoverResponseProperty}
+                                    verb="returns"
                                 />
                             </EndpointSection>
                         )}
                     </div>
                 </div>
             </div>
-            <div className="flex-1 flex sticky self-start top-0 max-h-[calc(100vh-20px)] min-w-0">
+            <div
+                className={classNames(
+                    "flex-1 flex sticky self-start top-0 min-w-0",
+                    // the 4rem is the same as the h-10 as the Header
+                    "max-h-[calc(100vh-4rem)]"
+                )}
+            >
                 <EndpointExamples endpoint={endpoint} />
             </div>
         </div>

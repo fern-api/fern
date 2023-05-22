@@ -1,12 +1,12 @@
-import { FernRegistry } from "@fern-fern/registry";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
-import { Markdown } from "../../markdown/Markdown";
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
+import { Description } from "../Description";
 
 export declare namespace EnumValue {
     export interface Props {
-        enumValue: FernRegistry.EnumValue;
+        enumValue: FernRegistryApiRead.EnumValue;
     }
 }
 
@@ -20,11 +20,7 @@ export const EnumValue: React.FC<EnumValue.Props> = ({ enumValue }) => {
             })}
         >
             <MonospaceText>{`"${enumValue.value}"`}</MonospaceText>
-            {enumValue.description != null && (
-                <div className={classNames("mt-3", "text-gray-500", "dark:text-gray-400")}>
-                    <Markdown>{enumValue.description}</Markdown>
-                </div>
-            )}
+            <Description description={enumValue.description} />
         </div>
     );
 };
