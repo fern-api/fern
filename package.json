@@ -8,8 +8,7 @@
     "packages/**",
     "!packages/**/lib",
     "!packages/**/dist",
-    "!packages/**/generated",
-    "!packages/**/deploy"
+    "!packages/**/generated"
   ],
   "scripts": {
     "clean": "yarn workspace @fern-api/compile-root run clean",

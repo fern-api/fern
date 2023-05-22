@@ -3973,9 +3973,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/docs-deploy@workspace:*, @fern-api/docs-deploy@workspace:packages/ui/cdk-utils":
+"@fern-api/docs-deploy@workspace:*, @fern-api/docs-deploy@workspace:packages/ui/deploy":
   version: 0.0.0-use.local
-  resolution: "@fern-api/docs-deploy@workspace:packages/ui/cdk-utils"
+  resolution: "@fern-api/docs-deploy@workspace:packages/ui/deploy"
   dependencies:
     "@aws-cdk/aws-certificatemanager": ^1.202.0
     "@aws-cdk/aws-cloudfront": ^1.202.0
@@ -3987,7 +3987,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/fern-cloud-sdk": ^0.0.24
+    "@fern-fern/fern-cloud-sdk": ^0.0.35
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -5280,16 +5280,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/fern-cloud-sdk@npm:^0.0.24":
-  version: 0.0.24
-  resolution: "@fern-fern/fern-cloud-sdk@npm:0.0.24"
+"@fern-fern/fern-cloud-sdk@npm:^0.0.35":
+  version: 0.0.35
+  resolution: "@fern-fern/fern-cloud-sdk@npm:0.0.35"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 3b1a4991f83e5a01377443b15cb2eaf5fe5c9df1fec1d66a3522ad18680977cf468204e572a94c548bc3c1532e50b8a92d49c6041fff869bdfdaefd4f544f2b2
+  checksum: 8db8e794a43de0ba263b377aeb9042ed170b6403f75188ff33f3a37daa6f77d665291eba2c832e3f6df6540c7d0e08638791db5343cd08adf616a3fbb74d3fe1
   languageName: node
   linkType: hard
 

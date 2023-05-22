@@ -21,7 +21,7 @@ export async function createCdkStack({ distDirectory }: { distDirectory: string 
             },
         },
         distDirectory,
-        domain: (await getEnvironmentConfig()).docsDomain,
+        bucketName: (await getEnvironmentConfig()).docsS3BucketName,
     });
 }
 
