@@ -35,12 +35,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         <SidebarGroup
             title={<SidebarItemLayout title={<div className="font-bold">{startCase(subpackage.name)}</div>} />}
         >
-            <ApiSubpackageSidebarSectionContents
-                apiId={apiId}
-                subpackage={subpackage}
-                shouldShowEndpoints={true}
-                slug={slug}
-            />
+            <ApiSubpackageSidebarSectionContents apiId={apiId} subpackage={subpackage} slug={slug} />
         </SidebarGroup>
     );
 };

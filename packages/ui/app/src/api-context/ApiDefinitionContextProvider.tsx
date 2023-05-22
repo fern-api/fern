@@ -20,6 +20,9 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
             if (subpackage == null) {
                 throw new Error("Subpackage does not exist");
             }
+            if (subpackage.pointsTo != null) {
+                return resolveSubpackageById(subpackage.pointsTo);
+            }
             return subpackage;
         },
         [api]
