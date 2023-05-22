@@ -32,19 +32,19 @@ the given union. For example,
 
 ```go
 type UnionVisitor interface {
-	VisitFoo(*Foo) error
-	VisitBar(*Bar) error
+  VisitFoo(*Foo) error
+  VisitBar(*Bar) error
 }
 
 func (u *Union) Accept(v UnionVisitor) error {
-	switch u.Type {
-	case "foo":
-		return v.VisitFoo(u.Foo)
-	case "bar":
-		return v.VisitBar(u.Bar)
-	default:
-		return fmt.Errorf("invalid type %s in %T", u.Type, u)
-	}
+  switch u.Type {
+  case "foo":
+    return v.VisitFoo(u.Foo)
+  case "bar":
+    return v.VisitBar(u.Bar)
+  default:
+    return fmt.Errorf("invalid type %s in %T", u.Type, u)
+  }
 }
 ```
 
@@ -65,8 +65,8 @@ func (u *unionVisitor) VisitBar(bar *Bar) error {
 }
 
 func Run(u *Union) error {
-	visitor := new(unionVisitor)
-	if err := u.Accept(visitor); err != nil {
+  visitor := new(unionVisitor)
+  if err := u.Accept(visitor); err != nil {
     return err
   }
   // ...
