@@ -21,7 +21,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId }) =
     });
 
     return (
-        <div className="min-h-0 overflow-y-auto" ref={setRef}>
+        <div className="min-h-0 overflow-y-auto pb-36" ref={setRef}>
             <SeparatedElements
                 separator={
                     <div className="h-72 flex items-center">
