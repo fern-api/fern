@@ -14,22 +14,22 @@ type visitor struct {
 	visitedUnknown   bool
 }
 
-func (v *visitor) VisitTypeReferenceNamed(_ *TypeReferenceNamed) error {
+func (v *visitor) VisitNamed(_ *DeclaredTypeName) error {
 	v.visitedNamed = true
 	return nil
 }
 
-func (v *visitor) VisitTypeReferenceContainer(_ *TypeReferenceContainer) error {
+func (v *visitor) VisitContainer(_ *ContainerType) error {
 	v.visitedContainer = true
 	return nil
 }
 
-func (v *visitor) VisitTypeReferencePrimitive(_ *TypeReferencePrimitive) error {
+func (v *visitor) VisitPrimitive(_ PrimitiveType) error {
 	v.visitedPrimitive = true
 	return nil
 }
 
-func (v *visitor) VisitTypeReferenceUnknown(_ *TypeReferenceUnknown) error {
+func (v *visitor) VisitUnknown(_ any) error {
 	v.visitedUnknown = true
 	return nil
 }
@@ -41,12 +41,12 @@ func TestVisitor(t *testing.T) {
 			Status:  AvailabilityStatusInDevelopment,
 			Message: "in-development",
 		},
-		ValueType: &TypeReferencePrimitive{
-			Type:      "string",
+		ValueType: &TypeReference{
+			Type:      "primitive",
 			Primitive: PrimitiveTypeString,
 		},
 	}
 	visitor := new(visitor)
-	require.NoError(t, primitive.VisitValueType(visitor))
+	require.NoError(t, primitive.ValueType.Accept(visitor))
 	assert.True(t, visitor.visitedPrimitive)
 }

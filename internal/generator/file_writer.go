@@ -2,6 +2,7 @@ package generator
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"go/format"
 	"go/parser"
@@ -77,11 +78,10 @@ func (f *fileWriter) AddPackage(apiName *types.Name) error {
 // WriteType writes a complete type, including all of its properties.
 func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
 	f.P("type ", typeDeclaration.Name.Name.PascalCase.UnsafeName, " struct {")
-	switch shape := typeDeclaration.Shape.(type) {
-	case *types.ObjectTypeDeclaration:
-		for _, property := range shape.Properties {
-			f.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
-		}
+	if err := typeDeclaration.Shape.Accept(&typeVisitor{writer: f}); err != nil {
+		// Unreachable - we might want to just remove all instances of errors
+		// in this file.
+		return err
 	}
 	f.P("}")
 	f.P()
@@ -90,81 +90,133 @@ func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
 
 // typeReferenceToGoType maps the given type reference into its Go-equivalent.
 // TODO: Handle the case where this type is defined in another package.
-func typeReferenceToGoType(typeReference types.TypeReference) string {
-	switch value := typeReference.(type) {
-	case *types.TypeReferenceContainer:
-		return containerTypeToGoType(value.Container)
-	case *types.TypeReferenceNamed:
-		// TODO: Need to determine whether or not the type is an enum, custom type, etc.
-		// We only want to prefix with a pointer if it's a custom type (not an enum).
-		return fmt.Sprintf("*%s", value.Name.PascalCase.UnsafeName)
-	case *types.TypeReferencePrimitive:
-		return primitiveToGoType(value)
-	case *types.TypeReferenceUnknown:
-		return unknownToGoType(value)
-	}
-	return ""
+func typeReferenceToGoType(typeReference *types.TypeReference) string {
+	visitor := new(typeReferenceVisitor)
+	_ = typeReference.Accept(visitor)
+	return visitor.value
 }
 
 // containerTypeToGoType maps the given container type into its Go-equivalent.
-func containerTypeToGoType(containerType types.ContainerType) string {
-	switch value := containerType.(type) {
-	case *types.ContainerTypeList:
-		return containerTypeListToGoType(value)
-	case *types.ContainerTypeMap:
-		return containerTypeMapToGoType(value)
-	case *types.ContainerTypeOptional:
-		return containerTypeOptionalToGoType(value)
-	case *types.ContainerTypeSet:
-		return containerTypeSetToGoType(value)
-	case *types.ContainerTypeLiteral:
-		return containerTypeLiteralToGoType(value)
-	}
-	return ""
-}
-
-// containerTypeListToGoType maps the given list into its Go-equivalent.
-func containerTypeListToGoType(containerTypeList *types.ContainerTypeList) string {
-	return fmt.Sprintf("[]%s", typeReferenceToGoType(containerTypeList.List))
-}
-
-// containerTypeMapToGoType maps the given map into its Go-equivalent.
-func containerTypeMapToGoType(containerTypeMap *types.ContainerTypeMap) string {
-	return fmt.Sprintf("map[%s]%s", typeReferenceToGoType(containerTypeMap.KeyType), typeReferenceToGoType(containerTypeMap.ValueType))
-}
-
-// containerTypeOptionalToGoType maps the given optional into its Go-equivalent.
-func containerTypeOptionalToGoType(containerTypeMap *types.ContainerTypeOptional) string {
-	return fmt.Sprintf("*%s", typeReferenceToGoType(containerTypeMap.Optional))
-}
-
-// containerTypeSetToGoType maps the given set into its Go-equivalent.
-func containerTypeSetToGoType(containerTypeSet *types.ContainerTypeSet) string {
-	return fmt.Sprintf("[]%s", typeReferenceToGoType(containerTypeSet.Set))
-}
-
-// containerTypeLiteralToGoType maps the given literal into its Go-equivalent.
-func containerTypeLiteralToGoType(containerTypeLiteral *types.ContainerTypeLiteral) string {
-	return literalToGoType(containerTypeLiteral.Literal)
+func containerTypeToGoType(containerType *types.ContainerType) string {
+	visitor := new(containerTypeVisitor)
+	_ = containerType.Accept(visitor)
+	return visitor.value
 }
 
 // literalToGoType maps the given literal into its Go-equivalent.
-func literalToGoType(literal types.Literal) string {
-	switch value := literal.(type) {
-	case *types.LiteralString:
-		return value.String
+func literalToGoType(literal *types.Literal) string {
+	visitor := new(literalVisitor)
+	_ = literal.Accept(visitor)
+	return visitor.value
+}
+
+// typeVisitor writes the internal properties of types (e.g. properties).
+type typeVisitor struct {
+	writer *fileWriter
+}
+
+// Compile-time assertion.
+var _ types.TypeVisitor = (*typeVisitor)(nil)
+
+func (t *typeVisitor) VisitAlias(*types.AliasTypeDeclaration) error {
+	return errors.New("TODO")
+}
+
+func (t *typeVisitor) VisitObject(object *types.ObjectTypeDeclaration) error {
+	// TODO: Write extended properties.
+	for _, property := range object.Properties {
+		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
 	}
-	return ""
+	return nil
+}
+
+// typeReferenceVisitor retrieves the string representation of type references
+// (e.g. containers, primitives, etc).
+type typeReferenceVisitor struct {
+	value string
+}
+
+// Compile-time assertion.
+var _ types.TypeReferenceVisitor = (*typeReferenceVisitor)(nil)
+
+func (t *typeReferenceVisitor) VisitContainer(container *types.ContainerType) error {
+	t.value = containerTypeToGoType(container)
+	return nil
+}
+
+func (t *typeReferenceVisitor) VisitNamed(named *types.DeclaredTypeName) error {
+	// TODO: Need to determine whether or not the type is an enum, custom type, etc.
+	// We only want to prefix with a pointer if it's a custom type (not an enum).
+	t.value = fmt.Sprintf("*%s", named.Name.PascalCase.UnsafeName)
+	return nil
+}
+
+func (t *typeReferenceVisitor) VisitPrimitive(primitive types.PrimitiveType) error {
+	t.value = primitiveToGoType(primitive)
+	return nil
+}
+
+func (t *typeReferenceVisitor) VisitUnknown(unknown any) error {
+	t.value = unknownToGoType(unknown)
+	return nil
+}
+
+// containerTypeVisitor retrieves the string representation of container types
+// (e.g. lists, maps, etc).
+type containerTypeVisitor struct {
+	value string
+}
+
+// Compile-time assertion.
+var _ types.ContainerTypeVisitor = (*containerTypeVisitor)(nil)
+
+func (c *containerTypeVisitor) VisitList(list *types.TypeReference) error {
+	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(list))
+	return nil
+}
+
+func (c *containerTypeVisitor) VisitMap(mapType *types.MapType) error {
+	c.value = fmt.Sprintf("map[%s]%s", typeReferenceToGoType(mapType.KeyType), typeReferenceToGoType(mapType.ValueType))
+	return nil
+}
+
+func (c *containerTypeVisitor) VisitOptional(optional *types.TypeReference) error {
+	c.value = fmt.Sprintf("*%s", typeReferenceToGoType(optional))
+	return nil
+}
+
+func (c *containerTypeVisitor) VisitSet(set *types.TypeReference) error {
+	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(set))
+	return nil
+}
+
+func (c *containerTypeVisitor) VisitLiteral(literal *types.Literal) error {
+	c.value = literalToGoType(literal)
+	return nil
+}
+
+// containerTypeVisitor retrieves the string representation of literal types.
+// Strings are the only supported literals for now.
+type literalVisitor struct {
+	value string
+}
+
+// Compile-time assertion.
+var _ types.LiteralVisitor = (*literalVisitor)(nil)
+
+func (l *literalVisitor) VisitString(value string) error {
+	l.value = value
+	return nil
 }
 
 // unknownToGoType maps the given unknown into its Go-equivalent.
-func unknownToGoType(_ *types.TypeReferenceUnknown) string {
+func unknownToGoType(_ any) string {
 	return "any"
 }
 
 // primitiveToGoType maps Fern's primitive types to their Go-equivalent.
-func primitiveToGoType(p *types.TypeReferencePrimitive) string {
-	switch p.Primitive {
+func primitiveToGoType(primitive types.PrimitiveType) string {
+	switch primitive {
 	case types.PrimitiveTypeInteger:
 		return "int"
 	case types.PrimitiveTypeDouble:
@@ -185,7 +237,7 @@ func primitiveToGoType(p *types.TypeReferencePrimitive) string {
 	case types.PrimitiveTypeBase64:
 		return "[]byte"
 	default:
-		return "unknown"
+		return "any"
 	}
 }
 

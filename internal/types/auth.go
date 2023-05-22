@@ -53,42 +53,6 @@ func (a *AuthRequirement) UnmarshalJSON(data []byte) error {
 type APIAuth struct {
 	Docs        string          `json:"docs,omitempty"`
 	Requirement AuthRequirement `json:"requirement,omitempty"`
-	Schemes     []AuthScheme    `json:"schemes,omitempty"`
+
+	// TODO: Schemes     []AuthScheme    `json:"schemes,omitempty"`
 }
-
-// AuthScheme represents a union of auth schemes.
-type AuthScheme interface {
-	isAuthScheme()
-}
-
-// AuthSchemeBearer is the bearer AuthScheme.
-type AuthSchemeBearer struct {
-	Type  string `json:"_type,omitempty"`
-	Docs  string `json:"docs,omitempty"`
-	Token *Name  `json:"token,omitempty"`
-}
-
-func (*AuthSchemeBearer) isAuthScheme() {}
-
-// AuthSchemeBasic is the basic AuthScheme.
-type AuthSchemeBasic struct {
-	Type     string `json:"_type,omitempty"`
-	Docs     string `json:"docs,omitempty"`
-	Username *Name  `json:"username,omitempty"`
-	Password *Name  `json:"password,omitempty"`
-}
-
-func (*AuthSchemeBasic) isAuthScheme() {}
-
-// AuthSchemeHeader is the header AuthScheme.
-type AuthSchemeHeader struct {
-	Type             string            `json:"_type,omitempty"`
-	Docs             string            `json:"docs,omitempty"`
-	NameAndWireValue *NameAndWireValue `json:"nameAndWireValue,omitempty"`
-
-	// TODO: Add the rest of the valid TypeReferences (only primitive is supported so far).
-	ValueType TypeReference `json:"valueType,omitempty"`
-	Prefix    string        `json:"prefix,omitempty"`
-}
-
-func (*AuthSchemeHeader) isAuthScheme() {}

@@ -6,183 +6,114 @@ import (
 	"strconv"
 )
 
+// TypeDeclaration declares a generic type.
+type TypeDeclaration struct {
+	Docs            string              `json:"docs,omitempty"`
+	Availability    *Availability       `json:"availability,omitempty"`
+	Name            *DeclaredTypeName   `json:"name,omitempty"`
+	Shape           *Type               `json:"shape,omitempty"`
+	Examples        []*ExampleType      `json:"examples,omitempty"`
+	ReferencedTypes []*DeclaredTypeName `json:"referenceTypes,omitempty"`
+}
+
 // Type is a generic type.
-type Type interface {
-	isType()
+type Type struct {
+	Type   string                 `json:"_type,omitempty"`
+	Alias  *AliasTypeDeclaration  `json:"alias,omitempty"`
+	Object *ObjectTypeDeclaration `json:"object,omitempty"`
+
+	// TODO: Fill in the remaining Type union values.
+}
+
+// UnmarshalJSON implement json.Unmarshaler.
+func (t *Type) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"_type,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	t.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "alias":
+		// This type does not have an explicit union key, so we need to
+		// unmarshal it as its underyling type.
+		value := new(AliasTypeDeclaration)
+		if err := json.Unmarshal(data, value); err != nil {
+			return err
+		}
+		t.Alias = value
+	case "object":
+		// This type does not have an explicit union key, so we need to
+		// unmarshal it as its underyling type.
+		value := new(ObjectTypeDeclaration)
+		if err := json.Unmarshal(data, value); err != nil {
+			return err
+		}
+		t.Object = value
+	}
+	return nil
+}
+
+// TypeVisitor can visit all of the possible types available in the
+// Type union.
+type TypeVisitor interface {
+	VisitAlias(*AliasTypeDeclaration) error
+	VisitObject(*ObjectTypeDeclaration) error
+}
+
+// Accept accepts the visitor so that it can visit the union's value.
+func (t *Type) Accept(v TypeVisitor) error {
+	switch t.Type {
+	case "alias":
+		return v.VisitAlias(t.Alias)
+	case "object":
+		return v.VisitObject(t.Object)
+	default:
+		return fmt.Errorf("invalid type %s in %T", t.Type, t)
+	}
 }
 
 // ObjectTypeDeclaration implements the Type interface.
 type ObjectTypeDeclaration struct {
-	Type       string              `json:"_type,omitempty"`
 	Extends    []*DeclaredTypeName `json:"extends,omitempty"`
 	Properties []*ObjectProperty   `json:"properties,omitempty"`
 }
-
-func (o ObjectTypeDeclaration) isType() {}
 
 // ObjectProperty is a single property associated with an object.
 type ObjectProperty struct {
 	Docs         string            `json:"docs,omitempty"`
 	Availability *Availability     `json:"availability,omitempty"`
 	Name         *NameAndWireValue `json:"name,omitempty"`
-	ValueType    TypeReference     `json:"valueType,omitempty"`
-}
-
-// VisitValueType visits the ValueType field using the given visitor.
-func (o *ObjectProperty) VisitValueType(v TypeReferenceVisitor) error {
-	switch value := o.ValueType.(type) {
-	case *TypeReferenceNamed:
-		return v.VisitTypeReferenceNamed(value)
-	case *TypeReferenceContainer:
-		return v.VisitTypeReferenceContainer(value)
-	case *TypeReferencePrimitive:
-		return v.VisitTypeReferencePrimitive(value)
-	case *TypeReferenceUnknown:
-		return v.VisitTypeReferenceUnknown(value)
-	default:
-		// Unreachable.
-		return fmt.Errorf("unrecognized type %T for %T.ValueType", value, o)
-	}
-}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (o *ObjectProperty) UnmarshalJSON(data []byte) error {
-	var raw struct {
-		Docs         string            `json:"docs,omitempty"`
-		Availability *Availability     `json:"availability,omitempty"`
-		Name         *NameAndWireValue `json:"name,omitempty"`
-		ValueType    json.RawMessage   `json:"valueType,omitempty"`
-	}
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-
-	// Set all of the simple, non-union fields.
-	o.Docs = raw.Docs
-	o.Availability = raw.Availability
-	o.Name = raw.Name
-
-	// Then unmarshal each union based on its type.
-	// This needs to take the discriminant into
-	// consideration.
-	var valueType struct {
-		Type string `json:"_type,omitempty"`
-	}
-	if err := json.Unmarshal(raw.ValueType, &valueType); err != nil {
-		return err
-	}
-	if valueType.Type != "" {
-		switch valueType.Type {
-		case "container":
-			o.ValueType = new(TypeReferenceContainer)
-		case "named":
-			o.ValueType = new(TypeReferenceNamed)
-		case "primitive":
-			o.ValueType = new(TypeReferencePrimitive)
-		case "unknown":
-			o.ValueType = new(TypeReferenceUnknown)
-		default:
-			return fmt.Errorf("unrecognized %T type: %v", o.ValueType, valueType.Type)
-		}
-		if err := json.Unmarshal(raw.ValueType, o.ValueType); err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-// TypeDeclaration declares a generic type.
-type TypeDeclaration struct {
-	Docs         string            `json:"docs,omitempty"`
-	Availability *Availability     `json:"availability,omitempty"`
-	Name         *DeclaredTypeName `json:"name,omitempty"`
-	Shape        Type              `json:"shape,omitempty"`
-	Examples     []*ExampleType    `json:"examples,omitempty"`
-
-	// TODO: This is actually represented as a Fern set, but this is problematic
-	// w.r.t. a complex struct as a map key. Verify the wire representation to
-	// see if this is actually just a list with unique elements.
-	ReferencedTypes []*DeclaredTypeName `json:"referenceTypes,omitempty"`
-}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (t *TypeDeclaration) UnmarshalJSON(data []byte) error {
-	var raw struct {
-		Docs            string              `json:"docs,omitempty"`
-		Availability    *Availability       `json:"availability,omitempty"`
-		Name            *DeclaredTypeName   `json:"name,omitempty"`
-		Shape           json.RawMessage     `json:"shape,omitempty"`
-		Examples        []*ExampleType      `json:"examples,omitempty"`
-		ReferencedTypes []*DeclaredTypeName `json:"referenceTypes,omitempty"`
-	}
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-
-	// Set all of the simple, non-union fields.
-	t.Docs = raw.Docs
-	t.Availability = raw.Availability
-	t.Name = raw.Name
-	t.Examples = raw.Examples
-	t.ReferencedTypes = raw.ReferencedTypes
-
-	// Then unmarshal each union based on its type.
-	// This needs to take the discriminant into
-	// consideration.
-	var shape struct {
-		Type string `json:"_type,omitempty"`
-	}
-	if err := json.Unmarshal(raw.Shape, &shape); err != nil {
-		return err
-	}
-	if shape.Type != "" {
-		switch shape.Type {
-		case "alias":
-			t.Shape = new(AliasTypeDeclaration)
-		case "object":
-			t.Shape = new(ObjectTypeDeclaration)
-		default:
-			return fmt.Errorf("unrecognized %T type: %v", t.Shape, shape.Type)
-		}
-		if err := json.Unmarshal(raw.Shape, t.Shape); err != nil {
-			return err
-		}
-	}
-	return nil
+	ValueType    *TypeReference    `json:"valueType,omitempty"`
 }
 
 // AliasTypeDeclaration is an alias type declaration.
 type AliasTypeDeclaration struct {
-	AliasOf      TypeReference         `json:"aliasOf,omitempty"`
-	ResolvedType ResolvedTypeReference `json:"resolvedType,omitempty"`
+	AliasOf      *TypeReference         `json:"aliasOf,omitempty"`
+	ResolvedType *ResolvedTypeReference `json:"resolvedType,omitempty"`
 }
 
-func (a *AliasTypeDeclaration) isType() {}
-
 // ResolvedTypeReference is a resolved type reference.
-// TODO: Fill in the remaining resolved type references.
-type ResolvedTypeReference interface {
-	isResolvedTypeReference()
+type ResolvedTypeReference struct {
+	// TODO: Fill this in!
 }
 
 // ExampleType specifies an example of a particular type.
 type ExampleType struct {
-	Docs        string `json:"docs,omitempty"`
-	JSONExample any    `json:"jsonExample,omitempty"`
-	Name        *Name  `json:"name,omitempty"`
-
-	// TODO: Add the following field.
-	// Shape       ExampleTypeShape `json:"shape,omitempty"` // TODO: Needs custom json.Unmarshaler.
+	Docs        string            `json:"docs,omitempty"`
+	JSONExample any               `json:"jsonExample,omitempty"`
+	Name        *Name             `json:"name,omitempty"`
+	Shape       *ExampleTypeShape `json:"shape,omitempty"`
 }
 
 // ExampleTypeShape specifies the shape of an example type.
-type ExampleTypeShape interface {
-	isExampleTypeShape()
+type ExampleTypeShape struct {
+	Object *ExampleObjectType `json:"object,omitempty"` // TODO: This is actually flattened in the JSON representation - we need to customize the unmarshaler.
 }
 
 // ExampleTypeShapeObject implements the ExampleTypeShape interface.
-type ExampleTypeShapeObject struct {
-	Type       string                   `json:"type,omitempty"`
+type ExampleObjectType struct {
 	Properties []*ExampleObjectProperty `json:"properties,omitempty"`
 }
 
@@ -211,380 +142,173 @@ type DeclaredTypeName struct {
 
 // TypeReference is a reference to a generic type (e.g. primitives,
 // containers, etc).
-type TypeReference interface {
-	isTypeReference()
+type TypeReference struct {
+	Type      string
+	Container *ContainerType
+	Named     *DeclaredTypeName
+	Primitive PrimitiveType
+	Unknown   any
 }
 
-// TypeReferenceVisitor can visit all of the supported TypeReferences.
-// Any type that relies on the TypeReference union will have a method
-// that depends on this type.
+// TypeReferenceVisitor can visit all of the possible types available in the
+// TypeReference union.
 type TypeReferenceVisitor interface {
-	VisitTypeReferenceNamed(*TypeReferenceNamed) error
-	VisitTypeReferenceContainer(*TypeReferenceContainer) error
-	VisitTypeReferencePrimitive(*TypeReferencePrimitive) error
-	VisitTypeReferenceUnknown(*TypeReferenceUnknown) error
+	VisitContainer(*ContainerType) error
+	VisitNamed(*DeclaredTypeName) error
+	VisitPrimitive(PrimitiveType) error
+	VisitUnknown(any) error
 }
 
-// TypeReferenceNamed is the named TypeReference.
-type TypeReferenceNamed struct {
-	*DeclaredTypeName
-}
-
-func (t *TypeReferenceNamed) isTypeReference() {}
-
-// TypeReferenceContainer is the container TypeReference.
-type TypeReferenceContainer struct {
-	Type      string        `json:"_type,omitempty"`
-	Container ContainerType `json:"container,omitempty"`
-}
-
-func (t *TypeReferenceContainer) isTypeReference() {}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (t *TypeReferenceContainer) UnmarshalJSON(data []byte) error {
-	var raw struct {
-		Type      string          `json:"_type,omitempty"`
-		Container json.RawMessage `json:"container,omitempty"`
+// Accept accepts the visitor so that it can visit the union's value.
+func (t *TypeReference) Accept(v TypeReferenceVisitor) error {
+	switch t.Type {
+	case "container":
+		return v.VisitContainer(t.Container)
+	case "named":
+		return v.VisitNamed(t.Named)
+	case "primitive":
+		return v.VisitPrimitive(t.Primitive)
+	case "unknown":
+		return v.VisitUnknown(t.Unknown)
+	default:
+		return fmt.Errorf("invalid type %s in %T", t.Type, t)
 	}
-	if err := json.Unmarshal(data, &raw); err != nil {
+}
+
+// UnmarshalJSON implement json.Unmarshaler.
+func (t *TypeReference) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type      string         `json:"_type,omitempty"`
+		Container *ContainerType `json:"container,omitempty"`
+		Primitive PrimitiveType  `json:"primitive,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-
-	// Set all of the simple, non-union fields.
-	t.Type = raw.Type
-
-	// Then unmarshal each union based on its type.
-	// This needs to take the discriminant into
-	// consideration.
-	var container struct {
-		Type string `json:"_type,omitempty"`
-	}
-	if err := json.Unmarshal(raw.Container, &container); err != nil {
-		return err
-	}
-	if container.Type != "" {
-		switch container.Type {
-		case "list":
-			t.Container = new(ContainerTypeList)
-		case "map":
-			t.Container = new(ContainerTypeMap)
-		case "optional":
-			t.Container = new(ContainerTypeOptional)
-		case "set":
-			t.Container = new(ContainerTypeSet)
-		case "literal":
-			t.Container = new(ContainerTypeLiteral)
-		default:
-			return fmt.Errorf("unrecognized %T type: %v", t.Container, container.Type)
-		}
-		if err := json.Unmarshal(raw.Container, t.Container); err != nil {
+	t.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "container":
+		t.Container = unmarshaler.Container
+	case "named":
+		// This type does not have an explicit union key, so we need to
+		// unmarshal it as its underyling type.
+		value := new(DeclaredTypeName)
+		if err := json.Unmarshal(data, value); err != nil {
 			return err
 		}
+		t.Named = value
+	case "primitive":
+		t.Primitive = unmarshaler.Primitive
+	case "unknown":
+		value := make(map[string]any)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		// Remove the type that's already present at the top-level
+		// because it's redundant.
+		delete(value, "_type")
+		t.Unknown = value
 	}
-
 	return nil
 }
 
-// ContainerType is a union of container types (e.g. list, map etc).
-type ContainerType interface {
-	isContainerType()
+// ContainerType is a union of container types.
+type ContainerType struct {
+	Type     string
+	List     *TypeReference
+	Map      *MapType
+	Optional *TypeReference
+	Set      *TypeReference
+	Literal  *Literal
 }
 
-// ContainerTypeList implements the list ContainerType.
-type ContainerTypeList struct {
-	Type string        `json:"_type,omitempty"`
-	List TypeReference `json:"list,omitempty"`
+// ContainerTypeVisitor can visit all of the possible types available in the
+// ContainerType union.
+type ContainerTypeVisitor interface {
+	VisitList(*TypeReference) error
+	VisitMap(*MapType) error
+	VisitOptional(*TypeReference) error
+	VisitSet(*TypeReference) error
+	VisitLiteral(*Literal) error
 }
 
-func (c *ContainerTypeList) isContainerType() {}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (c *ContainerTypeList) UnmarshalJSON(data []byte) error {
-	var raw struct {
-		Type string          `json:"_type,omitempty"`
-		List json.RawMessage `json:"list,omitempty"`
+// Accept accepts the visitor so that it can visit the union's value.
+func (c *ContainerType) Accept(v ContainerTypeVisitor) error {
+	switch c.Type {
+	case "list":
+		return v.VisitList(c.List)
+	case "map":
+		return v.VisitMap(c.Map)
+	case "optional":
+		return v.VisitOptional(c.Optional)
+	case "set":
+		return v.VisitSet(c.Set)
+	case "literal":
+		return v.VisitLiteral(c.Literal)
+	default:
+		return fmt.Errorf("invalid type %s in %T", c.Type, c)
 	}
-	if err := json.Unmarshal(data, &raw); err != nil {
+}
+
+// UnmarshalJSON implement json.Unmarshaler.
+func (c *ContainerType) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type     string         `json:"_type,omitempty"`
+		List     *TypeReference `json:"list,omitempty"`
+		Optional *TypeReference `json:"optional,omitempty"`
+		Set      *TypeReference `json:"set,omitempty"`
+		Literal  *Literal       `json:"literal,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-
-	// Set all of the simple, non-union fields.
-	c.Type = raw.Type
-
-	// Then unmarshal each union based on its type.
-	// This needs to take the discriminant into
-	// consideration.
-	var list struct {
-		Type string `json:"_type,omitempty"`
-	}
-	if err := json.Unmarshal(raw.List, &list); err != nil {
-		return err
-	}
-	if list.Type != "" {
-		switch list.Type {
-		case "container":
-			c.List = new(TypeReferenceContainer)
-		case "named":
-			c.List = new(TypeReferenceNamed)
-		case "primitive":
-			c.List = new(TypeReferencePrimitive)
-		case "unknown":
-			c.List = new(TypeReferenceUnknown)
-		default:
-			return fmt.Errorf("unrecognized %T type: %v", c.List, list.Type)
-		}
-		if err := json.Unmarshal(raw.List, c.List); err != nil {
+	c.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "list":
+		c.List = unmarshaler.List
+	case "map":
+		value := new(MapType)
+		if err := json.Unmarshal(data, value); err != nil {
 			return err
 		}
+		c.Map = value
+	case "optional":
+		c.Optional = unmarshaler.Optional
+	case "set":
+		c.Set = unmarshaler.Set
+	case "literal":
+		c.Literal = unmarshaler.Literal
 	}
-
 	return nil
 }
 
-// ContainerTypeMap implements the map ContainerType.
-type ContainerTypeMap struct {
-	Type      string        `json:"_type,omitempty"`
-	KeyType   TypeReference `json:"keyType,omitempty"`
-	ValueType TypeReference `json:"valueType,omitempty"`
-}
-
-func (c *ContainerTypeMap) isContainerType() {}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (c *ContainerTypeMap) UnmarshalJSON(data []byte) error {
-	var raw struct {
-		Type      string          `json:"_type,omitempty"`
-		KeyType   json.RawMessage `json:"keyType,omitempty"`
-		ValueType json.RawMessage `json:"valueType,omitempty"`
-	}
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-
-	// Set all of the simple, non-union fields.
-	c.Type = raw.Type
-
-	// Then unmarshal each union based on its type.
-	// This needs to take the discriminant into
-	// consideration.
-	var keyType struct {
-		Type string `json:"_type,omitempty"`
-	}
-	if err := json.Unmarshal(raw.KeyType, &keyType); err != nil {
-		return err
-	}
-	if keyType.Type != "" {
-		switch keyType.Type {
-		case "container":
-			c.KeyType = new(TypeReferenceContainer)
-		case "named":
-			c.KeyType = new(TypeReferenceNamed)
-		case "primitive":
-			c.KeyType = new(TypeReferencePrimitive)
-		case "unknown":
-			c.KeyType = new(TypeReferenceUnknown)
-		default:
-			return fmt.Errorf("unrecognized %T type: %v", c.KeyType, keyType.Type)
-		}
-		if err := json.Unmarshal(raw.KeyType, c.KeyType); err != nil {
-			return err
-		}
-	}
-
-	var valueType struct {
-		Type string `json:"_type,omitempty"`
-	}
-	if err := json.Unmarshal(raw.ValueType, &valueType); err != nil {
-		return err
-	}
-	if valueType.Type != "" {
-		switch valueType.Type {
-		case "container":
-			c.ValueType = new(TypeReferenceContainer)
-		case "named":
-			c.ValueType = new(TypeReferenceNamed)
-		case "primitive":
-			c.ValueType = new(TypeReferencePrimitive)
-		case "unknown":
-			c.ValueType = new(TypeReferenceUnknown)
-		default:
-			return fmt.Errorf("unrecognized %T type: %v", c.ValueType, valueType.Type)
-		}
-		if err := json.Unmarshal(raw.ValueType, c.ValueType); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContainerTypeOptional implements the optional ContainerType.
-type ContainerTypeOptional struct {
-	Type     string        `json:"_type,omitempty"`
-	Optional TypeReference `json:"optional,omitempty"`
-}
-
-func (c *ContainerTypeOptional) isContainerType() {}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (c *ContainerTypeOptional) UnmarshalJSON(data []byte) error {
-	var raw struct {
-		Type     string          `json:"_type,omitempty"`
-		Optional json.RawMessage `json:"optional,omitempty"`
-	}
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-
-	// Set all of the simple, non-union fields.
-	c.Type = raw.Type
-
-	// Then unmarshal each union based on its type.
-	// This needs to take the discriminant into
-	// consideration.
-	var optional struct {
-		Type string `json:"_type,omitempty"`
-	}
-	if err := json.Unmarshal(raw.Optional, &optional); err != nil {
-		return err
-	}
-	if optional.Type != "" {
-		switch optional.Type {
-		case "container":
-			c.Optional = new(TypeReferenceContainer)
-		case "named":
-			c.Optional = new(TypeReferenceNamed)
-		case "primitive":
-			c.Optional = new(TypeReferencePrimitive)
-		case "unknown":
-			c.Optional = new(TypeReferenceUnknown)
-		default:
-			return fmt.Errorf("unrecognized %T type: %v", c.Optional, optional.Type)
-		}
-		if err := json.Unmarshal(raw.Optional, c.Optional); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContainerTypeSet implements the set ContainerType.
-type ContainerTypeSet struct {
-	Type string        `json:"_type,omitempty"`
-	Set  TypeReference `json:"set,omitempty"`
-}
-
-func (c *ContainerTypeSet) isContainerType() {}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (c *ContainerTypeSet) UnmarshalJSON(data []byte) error {
-	var raw struct {
-		Type string          `json:"_type,omitempty"`
-		Set  json.RawMessage `json:"set,omitempty"`
-	}
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-
-	// Set all of the simple, non-union fields.
-	c.Type = raw.Type
-
-	// Then unmarshal each union based on its type.
-	// This needs to take the discriminant into
-	// consideration.
-	var set struct {
-		Type string `json:"_type,omitempty"`
-	}
-	if err := json.Unmarshal(raw.Set, &set); err != nil {
-		return err
-	}
-	if set.Type != "" {
-		switch set.Type {
-		case "container":
-			c.Set = new(TypeReferenceContainer)
-		case "named":
-			c.Set = new(TypeReferenceNamed)
-		case "primitive":
-			c.Set = new(TypeReferencePrimitive)
-		case "unknown":
-			c.Set = new(TypeReferenceUnknown)
-		default:
-			return fmt.Errorf("unrecognized %T type: %v", c.Set, set.Type)
-		}
-		if err := json.Unmarshal(raw.Set, c.Set); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-// ContainerTypeLiteral implements the set ContainerType.
-type ContainerTypeLiteral struct {
-	Type    string  `json:"_type,omitempty"`
-	Literal Literal `json:"literal,omitempty"`
-}
-
-func (c *ContainerTypeLiteral) isContainerType() {}
-
-// UnmarshalJSON implements json.Unmarshaler.
-func (c *ContainerTypeLiteral) UnmarshalJSON(data []byte) error {
-	var raw struct {
-		Type    string          `json:"_type,omitempty"`
-		Literal json.RawMessage `json:"literal,omitempty"`
-	}
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-
-	// Literal all of the simple, non-union fields.
-	c.Type = raw.Type
-
-	// Then unmarshal each union based on its type.
-	// This needs to take the discriminant into
-	// consideration.
-	var literal struct {
-		Type string `json:"_type,omitempty"`
-	}
-	if err := json.Unmarshal(raw.Literal, &literal); err != nil {
-		return err
-	}
-	if literal.Type != "" {
-		switch literal.Type {
-		case "string":
-			c.Literal = new(LiteralString)
-		default:
-			return fmt.Errorf("unrecognized %T type: %v", c.Literal, literal.Type)
-		}
-		if err := json.Unmarshal(raw.Literal, c.Literal); err != nil {
-			return err
-		}
-	}
-
-	return nil
+// MapType implements the map ContainerType.
+type MapType struct {
+	KeyType   *TypeReference `json:"keyType,omitempty"`
+	ValueType *TypeReference `json:"valueType,omitempty"`
 }
 
 // Literal is a literal value.
-type Literal interface {
-	isLiteral()
-}
-
-// LiteralString is a string literal.
-type LiteralString struct {
+type Literal struct {
 	Type   string `json:"type,omitempty"`
 	String string `json:"string,omitempty"`
 }
 
-func (l *LiteralString) isLiteral() {}
-
-// TypeReferencePrimitive is the primitive TypeReference.
-type TypeReferencePrimitive struct {
-	Type      string        `json:"_type,omitempty"`
-	Primitive PrimitiveType `json:"primitive,omitempty"`
+// LiteralVisitor can visit all of the possible types available in the
+// Literal union.
+type LiteralVisitor interface {
+	VisitString(string) error
 }
 
-func (t *TypeReferencePrimitive) isTypeReference() {}
+// Accept accepts the visitor so that it can visit the union's value.
+func (l *Literal) Accept(v LiteralVisitor) error {
+	switch l.Type {
+	case "string":
+		return v.VisitString(l.String)
+	default:
+		return fmt.Errorf("invalid type %s in %T", l.Type, l)
+	}
+}
 
 // PrimitiveType defines a primitive type.
 type PrimitiveType uint8
@@ -670,11 +394,3 @@ func (p *PrimitiveType) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
-
-// TypeReferenceUnknown is the unknown TypeReference.
-type TypeReferenceUnknown struct {
-	Type    string `json:"_type,omitempty"`
-	Unknown any    `json:"unknown,omitempty"`
-}
-
-func (t *TypeReferenceUnknown) isTypeReference() {}
