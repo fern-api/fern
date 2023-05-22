@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback, useEffect, useState } from "react";
-import { useDocsContext } from "../../../docs-context/useDocsContext";
+import { useDocsContext } from "../../docs-context/useDocsContext";
 
 export declare namespace useSubpackageScrolling {
     export interface Args {

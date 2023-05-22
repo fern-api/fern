@@ -1,53 +1,59 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { UrlSlugTree } from "./UrlSlugTree";
 
-export type ResolvedUrlPath = ResolvedPagePath | ResolvedTopLevelEndpointPath | ResolvedApiSubpackagePath;
+export type ResolvedUrlPath =
+    | ResolvedUrlPath.Section
+    | ResolvedUrlPath.Page
+    | ResolvedUrlPath.Api
+    | ResolvedUrlPath.TopLevelEndpoint
+    | ResolvedUrlPath.ApiSubpackage
+    | ResolvedUrlPath.Endpoint;
 
-export interface ResolvedPagePath {
-    type: "page";
-    pageId: FernRegistryDocsRead.PageId;
-}
+export declare namespace ResolvedUrlPath {
+    export interface Section {
+        type: "section";
+        section: FernRegistryDocsRead.DocsSection;
+        slug: string;
+    }
 
-export interface ResolvedTopLevelEndpointPath {
-    type: "top-level-endpoint";
-    apiId: FernRegistry.ApiDefinitionId;
-    endpoint: FernRegistryApiRead.EndpointDefinition;
-}
+    export interface Page {
+        type: "page";
+        page: FernRegistryDocsRead.PageMetadata;
+        slug: string;
+    }
 
-export interface ResolvedApiSubpackagePath {
-    type: "api-subpackage";
-    apiId: FernRegistry.ApiDefinitionId;
-    subpackageId: FernRegistryApiRead.SubpackageId;
+    export interface Api {
+        type: "api";
+        api: FernRegistryDocsRead.ApiSection;
+        slug: string;
+    }
+
+    export interface TopLevelEndpoint {
+        type: "topLevelEndpoint";
+        api: FernRegistryDocsRead.ApiSection;
+        slug: string;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+    }
+
+    export interface ApiSubpackage {
+        type: "apiSubpackage";
+        api: FernRegistryDocsRead.ApiSection;
+        slug: string;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+    }
+
+    export interface Endpoint {
+        type: "endpoint";
+        api: FernRegistryDocsRead.ApiSection;
+        slug: string;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+    }
 }
 
 export interface UrlPathResolver {
-    // getUrlPathForSubpackage(subpackageId: FernRegistryApiRead.SubpackageId): string;
-    // getUrlPathForEndpoint(subpackageId: FernRegistryApiRead.SubpackageId, endpointId: string): string;
-    // getUrlPathForTopLevelEndpoint(endpointId: string): string;
     resolvePath(pathname: string): ResolvedUrlPath | undefined;
-    // getHashForEndpoint(endpointId: string): string;
-    // getHtmlIdForEndpoint(endpointId: string): string;
-    // isTopLevelEndpointSelected(args: { endpointId: string; pathname: string; hash: string }): boolean;
-    // isSubpackageEndpointSelected(args: {
-    //     subpackageId: FernRegistryApiRead.SubpackageId;
-    //     pathname: string;
-    //     hash: string;
-    // }): boolean;
-    // isSubpackageSelected(args: {
-    //     subpackageId: FernRegistryApiRead.SubpackageId;
-    //     pathname: string;
-    //     hash: string;
-    // }): boolean;
-    // isEndpointSelected(args: {
-    //     subpackageId: FernRegistryApiRead.SubpackageId;
-    //     endpointId: string;
-    //     pathname: string;
-    //     hash: string;
-    // }): boolean;
-    // stringifyPath: (resolvedPath: ResolvedUrlPath) => string;
 }
 
 export class UrlPathResolverImpl implements UrlPathResolver {
@@ -58,33 +64,52 @@ export class UrlPathResolverImpl implements UrlPathResolver {
     }
 
     public resolvePath(pathname: string): ResolvedUrlPath | undefined {
-        const resolvedPath = this.urlSlugTree.resolveUrlPath(pathname);
-        if (resolvedPath == null) {
+        const node = this.urlSlugTree.resolveUrlPath(pathname);
+        if (node == null) {
             return undefined;
         }
-        switch (resolvedPath.type) {
+        switch (node.type) {
+            case "section":
+                return {
+                    type: "section",
+                    section: node.section,
+                    slug: node.slug,
+                };
             case "page":
                 return {
                     type: "page",
-                    pageId: resolvedPath.page.id,
+                    page: node.page,
+                    slug: node.slug,
                 };
-            case "apiSubpackage":
+            case "api":
                 return {
-                    type: "api-subpackage",
-                    apiId: resolvedPath.apiId,
-                    subpackageId: resolvedPath.subpackage.subpackageId,
+                    type: "api",
+                    api: node.apiSection,
+                    slug: node.slug,
                 };
             case "topLevelEndpoint":
                 return {
-                    type: "top-level-endpoint",
-                    apiId: resolvedPath.apiId,
-                    endpoint: resolvedPath.endpoint,
+                    type: "topLevelEndpoint",
+                    api: node.apiSection,
+                    slug: this.urlSlugTree.joinUrlSlugs(node.apiSlug, node.endpoint.urlSlug),
+                    endpoint: node.endpoint,
                 };
-            case "section":
-            case "apiSection":
-                return undefined;
+            case "apiSubpackage":
+                return {
+                    type: "apiSubpackage",
+                    api: node.apiSection,
+                    slug: this.urlSlugTree.joinUrlSlugs(node.apiSlug, node.slugInsideApi),
+                    subpackage: node.subpackage,
+                };
+            case "endpoint":
+                return {
+                    type: "endpoint",
+                    api: node.apiSection,
+                    slug: this.urlSlugTree.joinUrlSlugs(node.apiSlug, node.slugInsideApi),
+                    endpoint: node.endpoint,
+                };
             default:
-                assertNever(resolvedPath);
+                assertNever(node);
         }
     }
 }

@@ -1,10 +1,10 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { Markdown } from "../api-page/definition/markdown/Markdown";
+import { Markdown } from "../api-components/markdown/Markdown";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
 export declare namespace MarkdownPage {
     export interface Props {
-        pageId: FernRegistryDocsRead.PageId;
+        page: FernRegistryDocsRead.PageMetadata;
     }
 }
 

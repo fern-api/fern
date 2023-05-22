@@ -2,8 +2,8 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
-import { MonospaceText } from "../../../commons/monospace/MonospaceText";
-import { useDocsContext } from "../../../docs-context/useDocsContext";
+import { MonospaceText } from "../../commons/monospace/MonospaceText";
+import { useDocsContext } from "../../docs-context/useDocsContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { useEndpointContext } from "./context/useEndpointContext";

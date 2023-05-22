@@ -1,5 +1,5 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { startCase } from "lodash-es";
 import { useMemo } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
@@ -9,17 +9,13 @@ import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace ApiSubpackageSidebarSection {
     export interface Props {
-        apiId: FernRegistry.ApiDefinitionId;
+        api: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         slug: string;
     }
 }
 
-export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.Props> = ({
-    apiId,
-    subpackage,
-    slug,
-}) => {
+export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.Props> = ({ api, subpackage, slug }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
 
     const hasEndpoints = useMemo(
@@ -35,7 +31,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         <SidebarGroup
             title={<SidebarItemLayout title={<div className="font-bold">{startCase(subpackage.name)}</div>} />}
         >
-            <ApiSubpackageSidebarSectionContents apiId={apiId} subpackage={subpackage} slug={slug} />
+            <ApiSubpackageSidebarSectionContents api={api} subpackage={subpackage} slug={slug} />
         </SidebarGroup>
     );
 };

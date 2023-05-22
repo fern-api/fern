@@ -1,7 +1,7 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
+import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiSidebarSection } from "./ApiSidebarSection";
-import { joinUrlSlugs } from "./joinUrlSlugs";
 import { PageSidebarItem } from "./PageSidebarItem";
 import { SidebarDocsSection } from "./SidebarDocsSection";
 

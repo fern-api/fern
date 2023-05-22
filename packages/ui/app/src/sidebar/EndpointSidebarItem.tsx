@@ -1,21 +1,28 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { useMemo } from "react";
-import { EndpointTitle } from "../api-page/definition/endpoints/EndpointTitle";
-import { Anchor } from "../docs-context/DocsContext";
-import { AnchorSidebarItem } from "./AnchorSidebarItem";
+import { EndpointTitle } from "../api-components/endpoints/EndpointTitle";
+import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
+import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 
 export declare namespace EndpointSidebarItem {
     export interface Props {
-        parentSlug: string;
+        slug: string;
+        api: FernRegistryDocsRead.ApiSection;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 }
 
-export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ parentSlug, endpoint }) => {
-    const anchor = useMemo(
-        (): Anchor => ({ pathname: parentSlug, hash: endpoint.urlSlug }),
-        [endpoint.urlSlug, parentSlug]
+export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ slug, api, endpoint }) => {
+    const path = useMemo(
+        (): ResolvedUrlPath.Endpoint => ({
+            type: "endpoint",
+            api,
+            slug,
+            endpoint,
+        }),
+        [api, endpoint, slug]
     );
 
-    return <AnchorSidebarItem anchor={anchor} title={<EndpointTitle endpoint={endpoint} />} />;
+    return <NavigatingSidebarItem path={path} title={<EndpointTitle endpoint={endpoint} />} />;
 };

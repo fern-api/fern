@@ -1,12 +1,11 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
 import { useMemo } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
-import { ApiSubpackage } from "../api-page/definition/subpackages/ApiSubpackage";
-import { TopLevelEndpoint } from "../api-page/definition/top-level-endpoint/TopLevelEndpoint";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MarkdownPage } from "../markdown-page/MarkdownPage";
+import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
 
 export const DocsMainContent: React.FC = () => {
     const location = useLocation();
@@ -23,34 +22,25 @@ export const DocsMainContent: React.FC = () => {
 
     if (resolvedPath == null) {
         if (location.pathname === "/") {
-            const urlSlug = docsDefinition.config.navigation.items[0]?._visit({
-                page: (page) => page.urlSlug,
-                section: (section) => section.urlSlug,
-                api: (api) => api.urlSlug,
-                _other: () => undefined,
-            });
-            if (urlSlug != null) {
-                return <Navigate to={urlSlug} replace />;
-            }
+            return <RedirectToFirstNavigationItem items={docsDefinition.config.navigation.items} />;
         }
         return <NonIdealState title="404" />;
     }
 
     switch (resolvedPath.type) {
         case "page":
-            return <MarkdownPage pageId={resolvedPath.pageId} />;
-        case "top-level-endpoint":
+            return <MarkdownPage page={resolvedPath.page} />;
+        case "api":
+        case "apiSubpackage":
+        case "endpoint":
+        case "topLevelEndpoint":
             return (
-                <ApiDefinitionContextProvider apiId={resolvedPath.apiId}>
-                    <TopLevelEndpoint endpoint={resolvedPath.endpoint} />
+                <ApiDefinitionContextProvider apiId={resolvedPath.api.api}>
+                    <ApiPage api={resolvedPath.api} />
                 </ApiDefinitionContextProvider>
             );
-        case "api-subpackage":
-            return (
-                <ApiDefinitionContextProvider apiId={resolvedPath.apiId}>
-                    <ApiSubpackage key={resolvedPath.subpackageId} subpackageId={resolvedPath.subpackageId} />
-                </ApiDefinitionContextProvider>
-            );
+        case "section":
+            return <RedirectToFirstNavigationItem items={resolvedPath.section.items} />;
         default:
             assertNever(resolvedPath);
     }

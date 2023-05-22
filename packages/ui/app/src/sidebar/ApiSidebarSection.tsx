@@ -1,7 +1,7 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiSubpackages } from "./ApiSubpackages";
-import { joinUrlSlugs } from "./joinUrlSlugs";
 import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";
 import { TopLevelEndpointSidebarItem } from "./TopLevelEndpointSidebarItem";
@@ -26,11 +26,12 @@ export const ApiSidebarSection: React.FC<ApiSidebarSection.Props> = ({ slug, api
             {api.rootPackage.endpoints.map((endpoint) => (
                 <TopLevelEndpointSidebarItem
                     key={endpoint.id}
+                    api={apiSection}
                     slug={joinUrlSlugs(slug, endpoint.urlSlug)}
                     endpoint={endpoint}
                 />
             ))}
-            <ApiSubpackages apiId={apiSection.api} package={api.rootPackage} slug={slug} />
+            <ApiSubpackages api={apiSection} package={api.rootPackage} slug={slug} />
         </SidebarGroup>
     );
 };

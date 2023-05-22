@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { Markdown } from "../markdown/Markdown";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";

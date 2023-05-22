@@ -1,7 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { SeparatedElements } from "../../../commons/SeparatedElements";
+import { SeparatedElements } from "../../commons/SeparatedElements";
 import { Endpoint } from "../endpoints/Endpoint";
 import { useSubpackageScrolling } from "./useSubpackageScrolling";
 
