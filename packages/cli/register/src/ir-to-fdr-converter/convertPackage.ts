@@ -12,6 +12,8 @@ export function convertPackage(
         endpoints: service != null ? convertService(service, ir) : [],
         types: irPackage.types.map((typeId) => convertTypeId(typeId)),
         subpackages: irPackage.subpackages.map((subpackageId) => convertSubpackageId(subpackageId)),
+        pointsTo:
+            irPackage.navigationConfig != null ? convertSubpackageId(irPackage.navigationConfig.pointsTo) : undefined,
     };
 }
 
