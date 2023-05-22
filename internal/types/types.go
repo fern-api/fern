@@ -96,7 +96,79 @@ type AliasTypeDeclaration struct {
 
 // ResolvedTypeReference is a resolved type reference.
 type ResolvedTypeReference struct {
-	// TODO: Fill this in!
+	Type      string
+	Container *ContainerType
+	Named     *ResolvedNamedType
+	Primitive PrimitiveType
+	Unknown   any
+}
+
+// ResolvedTypeReferenceVisitor can visit all of the possible types available in the
+// ResolvedTypeReference union.
+type ResolvedTypeReferenceVisitor interface {
+	VisitContainer(*ContainerType) error
+	VisitNamed(*ResolvedNamedType) error
+	VisitPrimitive(PrimitiveType) error
+	VisitUnknown(any) error
+}
+
+// Accept accepts the visitor so that it can visit the union's value.
+func (t *ResolvedTypeReference) Accept(v ResolvedTypeReferenceVisitor) error {
+	switch t.Type {
+	case "container":
+		return v.VisitContainer(t.Container)
+	case "named":
+		return v.VisitNamed(t.Named)
+	case "primitive":
+		return v.VisitPrimitive(t.Primitive)
+	case "unknown":
+		return v.VisitUnknown(t.Unknown)
+	default:
+		return fmt.Errorf("invalid type %s in %T", t.Type, t)
+	}
+}
+
+// UnmarshalJSON implement json.Unmarshaler.
+func (t *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type      string         `json:"_type,omitempty"`
+		Container *ContainerType `json:"container,omitempty"`
+		Primitive PrimitiveType  `json:"primitive,omitempty"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	t.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "container":
+		t.Container = unmarshaler.Container
+	case "named":
+		// This type does not have an explicit union key, so we need to
+		// unmarshal it as its underyling type.
+		value := new(ResolvedNamedType)
+		if err := json.Unmarshal(data, value); err != nil {
+			return err
+		}
+		t.Named = value
+	case "primitive":
+		t.Primitive = unmarshaler.Primitive
+	case "unknown":
+		value := make(map[string]any)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		// Remove the type that's already present at the top-level
+		// because it's redundant.
+		delete(value, "_type")
+		t.Unknown = value
+	}
+	return nil
+}
+
+// ResolvedNamedType is a resolved named type.
+type ResolvedNamedType struct {
+	Name  *DeclaredTypeName `json:"name,omitempty"`
+	Shape ShapeType         `json:"shape,omitempty"`
 }
 
 // ExampleType specifies an example of a particular type.
@@ -391,6 +463,61 @@ func (p *PrimitiveType) UnmarshalJSON(data []byte) error {
 	case "BASE_64":
 		value := PrimitiveTypeBase64
 		*p = value
+	}
+	return nil
+}
+
+// ShapeType defines a shape type.
+type ShapeType uint8
+
+// All of the support auth requirements.
+const (
+	ShapeTypeEnum ShapeType = iota + 1
+	ShapeTypeObject
+	ShapeTypeUnion
+	ShapeTypeUndiscriminatedUnion
+)
+
+// String implements fmt.Stringer.
+func (s ShapeType) String() string {
+	switch s {
+	case ShapeTypeEnum:
+		return "ENUM"
+	case ShapeTypeObject:
+		return "OBJECT"
+	case ShapeTypeUnion:
+		return "UNION"
+	case ShapeTypeUndiscriminatedUnion:
+		return "UNDISCRIMINATED_UNION"
+	default:
+		return strconv.Itoa(int(s))
+	}
+}
+
+// MarshalJSON implements json.Marshaler.
+func (s ShapeType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", s.String())), nil
+}
+
+// UnmarshalJSON implements json.Unmarshaler.
+func (s *ShapeType) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "ENUM":
+		value := ShapeTypeEnum
+		*s = value
+	case "OBJECT":
+		value := ShapeTypeObject
+		*s = value
+	case "UNION":
+		value := ShapeTypeUnion
+		*s = value
+	case "UNDISCRIMNATED_UNION":
+		value := ShapeTypeUndiscriminatedUnion
+		*s = value
 	}
 	return nil
 }

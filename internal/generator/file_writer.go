@@ -2,7 +2,6 @@ package generator
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"go/format"
 	"go/parser"
@@ -77,15 +76,11 @@ func (f *fileWriter) AddPackage(apiName *types.Name) error {
 
 // WriteType writes a complete type, including all of its properties.
 func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
-	f.P("type ", typeDeclaration.Name.Name.PascalCase.UnsafeName, " struct {")
-	if err := typeDeclaration.Shape.Accept(&typeVisitor{writer: f}); err != nil {
-		// Unreachable - we might want to just remove all instances of errors
-		// in this file.
-		return err
+	visitor := &typeVisitor{
+		typeName: typeDeclaration.Name.Name.PascalCase.UnsafeName,
+		writer:   f,
 	}
-	f.P("}")
-	f.P()
-	return nil
+	return typeDeclaration.Shape.Accept(visitor)
 }
 
 // typeReferenceToGoType maps the given type reference into its Go-equivalent.
@@ -112,21 +107,27 @@ func literalToGoType(literal *types.Literal) string {
 
 // typeVisitor writes the internal properties of types (e.g. properties).
 type typeVisitor struct {
-	writer *fileWriter
+	typeName string
+	writer   *fileWriter
 }
 
 // Compile-time assertion.
 var _ types.TypeVisitor = (*typeVisitor)(nil)
 
-func (t *typeVisitor) VisitAlias(*types.AliasTypeDeclaration) error {
-	return errors.New("TODO")
+func (t *typeVisitor) VisitAlias(alias *types.AliasTypeDeclaration) error {
+	t.writer.P("type ", t.typeName, " = ", typeReferenceToGoType(alias.AliasOf))
+	t.writer.P()
+	return nil
 }
 
 func (t *typeVisitor) VisitObject(object *types.ObjectTypeDeclaration) error {
 	// TODO: Write extended properties.
+	t.writer.P("type ", t.typeName, " struct {")
 	for _, property := range object.Properties {
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
 	}
+	t.writer.P("}")
+	t.writer.P()
 	return nil
 }
 
