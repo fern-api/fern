@@ -57,6 +57,7 @@
     { "path": "../editor/ui/fe-bundle" },
     { "path": "../scripts" },
     { "path": "../ui/app" },
+    { "path": "../ui/cdk-utils" },
     { "path": "../ui/fe-bundle" }
   ]
 }

@@ -275,11 +275,14 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
       - run:
           name: Publish docs (dev)
-          command: yarn workspace @fern-api/fe-bundle deploy:dev
+          command: |
+            # without this, multiple versions of react-query are included
+            # in the bundle
+            yarn config set nodeLinker node-modules
+            yarn install
+            yarn workspace @fern-api/fe-bundle deploy:dev
 
 workflows:
   version: 2
@@ -410,9 +413,9 @@ workflows:
             - fern-tokens
 
       - deploy-docs-dev:
-          filters:
-            branches:
-              only: main
+          # filters:
+          #   branches:
+          #     only: main
           requires:
             - check
             - organize-imports
