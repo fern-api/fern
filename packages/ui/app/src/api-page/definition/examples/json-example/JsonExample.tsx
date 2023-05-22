@@ -23,7 +23,7 @@ export const JsonExample: React.FC<JsonExample.Props> = ({ json, selectedPropert
 
     return (
         <JsonExampleContext.Provider value={contextValue}>
-            <MonospaceText className="leading-relaxed bg-[#252529] py-1 flex-1 overflow-auto">
+            <MonospaceText className="leading-relaxed bg-[#252529] py-1 flex-1 overflow-auto text-xs">
                 <JsonItemTopLine value={json} isNonLastItemInCollection={false} />
                 <JsonItemMiddleLines value={json} />
                 <JsonItemBottomLine value={json} isNonLastItemInCollection={false} />

@@ -13,13 +13,18 @@ export interface DocsContextValue {
     resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
     resolveFile: (fileId: FernRegistryDocsRead.FileId) => FernRegistryDocsRead.Url;
 
-    navigateToAnchor: (anchor: string) => void;
-    registerNavigateToAnchorListener: (anchor: string, listener: () => void) => () => void;
+    navigateToAnchor: (anchor: Anchor) => void;
+    registerNavigateToAnchorListener: (hash: string, listener: () => void) => () => void;
     scrollToTop: () => void;
     registerScrollToTopListener: (listener: () => void) => () => void;
-    anchorInView: string | undefined;
-    setAnchorInView: (anchor: string) => void;
+    anchorInView: Anchor | undefined;
+    setAnchorInView: (hash: string) => void;
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
     urlPathResolver: UrlPathResolver;
+}
+
+export interface Anchor {
+    pathname: string;
+    hash: string;
 }

@@ -2,13 +2,14 @@ import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { Anchor } from "../docs-context/DocsContext";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace AnchorSidebarItem {
     export interface Props {
         title: JSX.Element | string;
-        anchor: string;
+        anchor: Anchor;
         onClick?: () => void;
     }
 }
@@ -18,12 +19,13 @@ export const AnchorSidebarItem: React.FC<AnchorSidebarItem.Props> = ({ title, an
     const navigate = useNavigate();
 
     const handleClick = useCallback(() => {
-        navigate({ hash: anchor });
+        navigate({ pathname: anchor.pathname, hash: anchor.hash });
         navigateToAnchor(anchor);
         onClick?.();
     }, [anchor, navigate, navigateToAnchor, onClick]);
 
-    const isSelected = anchorInView === anchor;
+    const isSelected =
+        anchorInView != null && anchorInView.pathname === anchor.pathname && anchorInView.hash === anchor.hash;
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
@@ -31,9 +33,8 @@ export const AnchorSidebarItem: React.FC<AnchorSidebarItem.Props> = ({ title, an
                 <>
                     <Text
                         className={classNames("select-none", {
-                            "text-gray-300": isSelected,
-                            "text-white": isHovering && isSelected,
-                            "text-[#B1BCF1]": isHovering && !isSelected,
+                            "text-[#B1BCF1]": isSelected,
+                            "text-black dark:text-gray-400": !isSelected && isHovering,
                         })}
                         ellipsize
                     >
@@ -45,5 +46,5 @@ export const AnchorSidebarItem: React.FC<AnchorSidebarItem.Props> = ({ title, an
         [isSelected, title]
     );
 
-    return <SidebarItemLayout title={renderTitle} onClick={handleClick} />;
+    return <SidebarItemLayout title={renderTitle} onClick={handleClick} isSelected={isSelected} />;
 };

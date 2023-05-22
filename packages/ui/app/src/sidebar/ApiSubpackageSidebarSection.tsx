@@ -3,11 +3,9 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { startCase } from "lodash-es";
 import { useMemo } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
-import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiSubpackageSidebarSectionContents } from "./ApiSubpackageSidebarSectionContents";
-import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 import { SidebarGroup } from "./SidebarGroup";
-import { useIsPathnameSelected } from "./useIsPathnameSelected";
+import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace ApiSubpackageSidebarSection {
     export interface Props {
@@ -23,33 +21,20 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     slug,
 }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
-    const { scrollToTop } = useDocsContext();
 
     const hasEndpoints = useMemo(
         () => hasEndpointsRecursive(subpackage.subpackageId, resolveSubpackageById),
         [resolveSubpackageById, subpackage.subpackageId]
     );
 
-    const isSelected = useIsPathnameSelected(slug);
-
     if (!hasEndpoints) {
         return null;
     }
 
-    const sidebarItem = (
-        <NavigatingSidebarItem
-            title={<div className="font-bold">{startCase(subpackage.name)}</div>}
-            path={slug}
-            onClick={scrollToTop}
-        />
-    );
-
-    if (!isSelected && subpackage.subpackages.length === 0) {
-        return sidebarItem;
-    }
-
     return (
-        <SidebarGroup title={sidebarItem}>
+        <SidebarGroup
+            title={<SidebarItemLayout title={<div className="font-bold">{startCase(subpackage.name)}</div>} />}
+        >
             <ApiSubpackageSidebarSectionContents
                 apiId={apiId}
                 subpackage={subpackage}

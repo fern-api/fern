@@ -3,7 +3,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { DocsContext, DocsContextValue } from "./DocsContext";
+import { Anchor, DocsContext, DocsContextValue } from "./DocsContext";
 import { UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
 
 export declare namespace DocsContextProvider {
@@ -13,6 +13,8 @@ export declare namespace DocsContextProvider {
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsDefinition, children }) => {
+    const location = useLocation();
+    const pathnameWithoutLeadingSlash = location.pathname.substring(1);
     const urlPathResolver = useMemo(() => new UrlPathResolverImpl(docsDefinition), [docsDefinition]);
 
     const resolveApi = useCallback(
@@ -48,27 +50,31 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [docsDefinition.files]
     );
 
-    const navigateToAnchorListeners = useRef<Record<string, (() => void)[]>>({});
+    const navigateToAnchorListeners = useRef<Record<StringifiedAnchor, (() => void)[]>>({});
 
-    const registerNavigateToAnchorListener = useCallback((anchor: string, listener: () => void) => {
-        const listenersForPath = (navigateToAnchorListeners.current[anchor] ??= []);
-        listenersForPath.push(listener);
-        return () => {
-            const listeners = navigateToAnchorListeners.current[anchor];
-            if (listeners != null) {
-                const indexOfListenerToDelete = listeners.indexOf(listener);
-                if (indexOfListenerToDelete !== -1) {
-                    // eslint-disable-next-line no-console
-                    console.warn("Failed to hash change listener for deregistration.");
-                } else {
-                    listeners.splice(indexOfListenerToDelete, 1);
+    const registerNavigateToAnchorListener = useCallback(
+        (hash: string, listener: () => void) => {
+            const stringifiedAnchor = stringifyAnchor({ pathname: pathnameWithoutLeadingSlash, hash });
+            const listenersForPath = (navigateToAnchorListeners.current[stringifiedAnchor] ??= []);
+            listenersForPath.push(listener);
+            return () => {
+                const listeners = navigateToAnchorListeners.current[stringifiedAnchor];
+                if (listeners != null) {
+                    const indexOfListenerToDelete = listeners.indexOf(listener);
+                    if (indexOfListenerToDelete !== -1) {
+                        // eslint-disable-next-line no-console
+                        console.warn("Failed to hash change listener for deregistration.");
+                    } else {
+                        listeners.splice(indexOfListenerToDelete, 1);
+                    }
                 }
-            }
-        };
-    }, []);
+            };
+        },
+        [pathnameWithoutLeadingSlash]
+    );
 
-    const navigateToAnchor = useCallback((anchor: string) => {
-        const listeners = navigateToAnchorListeners.current[anchor];
+    const navigateToAnchor = useCallback((anchor: Anchor) => {
+        const listeners = navigateToAnchorListeners.current[stringifyAnchor(anchor)];
         if (listeners != null) {
             for (const listener of listeners) {
                 listener();
@@ -76,7 +82,17 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         }
     }, []);
 
-    const [anchorInView, setAnchorInView] = useState<string>();
+    const [anchorInView, setAnchorInView] = useState<Anchor>();
+
+    const setAnchorInViewOnCurrentPage = useCallback(
+        (hash: string) => {
+            setAnchorInView({
+                pathname: pathnameWithoutLeadingSlash,
+                hash,
+            });
+        },
+        [pathnameWithoutLeadingSlash]
+    );
 
     const scrollToTopListeners = useRef<(() => void)[]>([]);
 
@@ -100,16 +116,22 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         }
     }, []);
 
-    const location = useLocation();
     useEffect(() => {
-        const anchor = location.hash.substring(1); // remove the leading #
-        if (anchor.length > 0) {
+        const hash = location.hash.substring(1); // remove the leading #
+        if (hash.length > 0) {
+            const anchor: Anchor = {
+                pathname: pathnameWithoutLeadingSlash,
+                hash,
+            };
             navigateToAnchor(anchor);
             setAnchorInView(anchor);
         }
-        // only run on mount
+        return () => {
+            setAnchorInView(undefined);
+        };
+        // only run when page changes
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [pathnameWithoutLeadingSlash]);
 
     const contextValue = useCallback(
         (): DocsContextValue => ({
@@ -123,7 +145,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             registerScrollToTopListener,
             scrollToTop,
             anchorInView,
-            setAnchorInView,
+            setAnchorInView: setAnchorInViewOnCurrentPage,
         }),
         [
             resolveApi,
@@ -136,8 +158,15 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             registerScrollToTopListener,
             scrollToTop,
             anchorInView,
+            setAnchorInViewOnCurrentPage,
         ]
     );
 
     return <DocsContext.Provider value={contextValue}>{children}</DocsContext.Provider>;
 };
+
+type StringifiedAnchor = string;
+
+function stringifyAnchor(anchor: Anchor): string {
+    return `${anchor.pathname}#${anchor.hash}`;
+}

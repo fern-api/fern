@@ -10,10 +10,17 @@ export declare namespace SidebarItemLayout {
         className?: string;
         onClick?: () => void;
         onDoubleClick?: () => void;
+        isSelected?: boolean;
     }
 }
 
-export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className, title, onClick, onDoubleClick }) => {
+export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({
+    className,
+    title,
+    onClick,
+    onDoubleClick,
+    isSelected,
+}) => {
     const { isHovering, ...hoveringCallbacks } = useIsHovering();
 
     const isClickable = onClick != null || onDoubleClick != null;
@@ -25,6 +32,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className
             ellipsize
             className={classNames(className, "flex shrink-0 items-center h-[30px] min-w-0 text-gray-500", {
                 "cursor-pointer": isClickable,
+                "bg-[#4435D0]/20 relative": isSelected,
             })}
             style={{
                 paddingLeft: 12 + (sidebarContext != null ? 15 * sidebarContext.depth : 0),
@@ -35,6 +43,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className
             {...hoveringCallbacks}
         >
             {typeof title === "function" ? title({ isHovering }) : title}
+            {isSelected && <div className="w-1 bg-[#979de8] absolute top-0 right-0 bottom-0" />}
         </Text>
     );
 };

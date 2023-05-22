@@ -25,30 +25,19 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
-                <>
-                    <Text
-                        className={classNames("select-none", {
-                            "text-[#B1BCF1]": isSelected,
-                            "text-black dark:text-gray-400": !isSelected && isHovering,
-                        })}
-                        ellipsize
-                    >
-                        {title}
-                    </Text>
-                    {isSelected && <div className="w-1 bg-[#979de8] absolute top-0 right-0 bottom-0" />}
-                </>
+                <Text
+                    className={classNames("select-none", {
+                        "text-[#B1BCF1]": isSelected,
+                        "text-black dark:text-gray-400": !isSelected && isHovering,
+                    })}
+                    ellipsize
+                >
+                    {title}
+                </Text>
             );
         },
         [isSelected, title]
     );
 
-    return (
-        <SidebarItemLayout
-            className={classNames({
-                "bg-[#4435D0]/20 relative": isSelected,
-            })}
-            title={renderTitle}
-            onClick={handleClick}
-        />
-    );
+    return <SidebarItemLayout title={renderTitle} onClick={handleClick} isSelected={isSelected} />;
 };
