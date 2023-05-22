@@ -5,180 +5,71 @@ Go model generator.
 
 ## Unions
 
-Unions are represented as an `interface`, where every type included
-in the union is a `struct` that implements that `interface`. This
-lets users use an idiomatic type assertion to act upon the value
-that's set, like so:
+Unions are represented as a `struct`, where exactly one of its fields
+is non-empty.
 
 ```go
-// Foo is a standard type with a single union property.
+type Union struct {
+  Type string
+  Foo *Foo
+  Bar *Bar
+}
+
 type Foo struct {
-  Bar Bar
+  ID string
 }
 
-// Bar is a union property, implemented by every struct that
-// begins with the 'Bar' prefix.
-type Bar interface {
-  isBar()
-}
-
-// BarBaz implements the Bar interface.
-type BarBaz struct {
-  Type string
-}
-
-// BarQux implements the Bar interface.
-type BarQux struct {
-  Type string
-}
-
-func Run(foo *Foo) {
-  switch foo.Bar.(type) {
-  case *BarBaz:
-    // Do something with BarBaz.
-  case *BarQux:
-    // Do something with BarQux.
-  }
-  ...
+type Bar struct {
+  ID string
 }
 ```
 
-### Interfaces vs. Structs
-
-In their current state (as represented by the manually-written IR), union values
-have too many layers of indirection. We're defining a separate struct for every
-instance of the union that is unique to that union (due to the fact that every
-union can define its own unique discriminant), but this is largely a [de]serialization
-concern - the user of the Go API just wants to access the underlying type that implements
-the interface.
-
-To be clear, we should refactor this so that the following:
+A visitor is generated for every union so that it's easier to access
+the non-empty attribute (i.e. without a series of `if` conditions
+checking for existence). Plus, this gives users a compile-time assertion
+that they've recognized all of the values that can be represented by
+the given union. For example,
 
 ```go
-// TypeReference is a reference to a generic type (e.g. primitives,
-// containers, etc).
-type TypeReference interface {
-	isTypeReference()
+type UnionVisitor interface {
+	VisitFoo(*Foo) error
+	VisitBar(*Bar) error
 }
 
-// TypeReferenceContainer is a container type reference.
-type TypeReferenceContainer struct {
-	Type      string        `json:"_type,omitempty"`
-	Container ContainerType `json:"container,omitempty"`
-}
-
-func (t *TypeReferenceContainer) isTypeReference() {}
-
-
-// ContainerType is a union of container types (e.g. list, map etc).
-type ContainerType interface {
-	isContainerType()
-}
-
-// ContainerTypeList implements the list ContainerType.
-type ContainerTypeList struct {
-	Type string        `json:"_type,omitempty"`
-	List TypeReference `json:"list,omitempty"`
-}
-
-func (c *ContainerTypeList) isContainerType() {}
-```
-
-Can be replaced with something along the lines of:
-
-```go
-// TypeReference is a reference to a generic type (e.g. primitives,
-// containers, etc).
-type TypeReference interface {
-	isTypeReference()
-}
-
-// ContainerType is a union of container types (e.g. list, map etc).
-type ContainerType interface {
-	isContainerType()
-}
-
-// List is a container list.
-type List struct {
-  TypeReference
+func (u *Union) Accept(v UnionVisitor) error {
+	switch u.Type {
+	case "foo":
+		return v.VisitFoo(u.Foo)
+	case "bar":
+		return v.VisitBar(u.Bar)
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	}
 }
 ```
 
-However, in this case `List` is _also_ a `TypeReference`, which makes
-this difficult. Although not ideal, we may need to explore a
-`struct`-based approach, after all.
-
-### Visitors
-
-To ensure compile-time checks (as discussed below), every union has
-a visitor that can be used to visit its fields. Given that we're
-modeling unions as interfaces (which is idiomatic to Go), this means
-that the visitor must be implemented on the type the contains the
-union, and not on the union itself (i.e. interfaces can't implement
-methods).
-
-Note that if this ends up not being desirable, we can instead model
-unions as a `struct` with a field reserved for every possible value
-of the union (but this is not idiomatic).
-
-The current API is demonstrated in `internal/types/types_test.go`, but
-it's subject to change based on the overall union design.
-
-An example snippet is shown below:
+With this, users can implement the visitor interface and interact
+with the generated union type like so:
 
 ```go
-package example
-
-// visitor visits types associated with the TypeReference union.
-type visitor struct {}
-
-func (v *visitor) VisitTypeReferenceNamed(_ *TypeReferenceNamed) error { return nil }
-func (v *visitor) VisitTypeReferenceContainer(_ *TypeReferenceContainer) error { return nil }
-func (v *visitor) VisitTypeReferencePrimitive(_ *TypeReferencePrimitive) error { return nil }
-func (v *visitor) VisitTypeReferenceUnknown(_ *TypeReferenceUnknown) error { return nil }
-
-// ObjectProperty is a single property associated with an object.
-type ObjectProperty struct {
-  Docs         string            `json:"docs,omitempty"`
-  Availability *Availability     `json:"availability,omitempty"`
-  Name         *NameAndWireValue `json:"name,omitempty"`
-  ValueType    TypeReference     `json:"valueType,omitempty"`
+type unionVisitor struct {
+  // ...
 }
 
-func Run() error {
-  primitive := &ObjectProperty{
-    Docs: "union",
-    Availability: &Availability{
-      Status:  AvailabilityStatusInDevelopment,
-      Message: "in-development",
-    },
-    ValueType: &TypeReferencePrimitive{
-      Type:      "string",
-      Primitive: PrimitiveTypeString,
-    },
-  }
-  visitor := new(visitor)
-  if err := primitive.VisitValueType(visitor); err != nil {
+func (u *unionVisitor) VisitFoo(foo *Foo) error {
+  // Do something with *Foo ...
+}
+
+func (u *unionVisitor) VisitBar(bar *Bar) error {
+  // Do something with *Bar ...
+}
+
+func Run(u *Union) error {
+	visitor := new(unionVisitor)
+	if err := u.Accept(visitor); err != nil {
     return err
   }
   // ...
-}
-```
-
-Also note that we may want to consider changing the `Visit*` methods to be based on
-the name of the union key, and not the type, e.g.:
-
-```yaml
-container:
-  type: ContainerType
-  key: container
-named: ResolvedNamedType
-```
-
-```go
-type TypeReferenceVisitor interface {
-  VisitContainer(*types.ContainerType)
-  VisitNamed(types.ResolvedNamedType)
 }
 ```
 
@@ -242,50 +133,3 @@ be used to check for existence (not just the values set in the pointer).
 
 For now, the Go generator represents the `set` type just like the `list`.
 Note that we might revisit this later.
-
-## Compile-time Checks
-
-We need to include some sort of compile-time check that users can opt-in
-to so that they can recognize whether or not they're handling all of
-the types in a union.
-
-For example, consider the case when a new type (e.g. `Blue`) is introduced
-to a `Color` union. It's impossible for the program to have handled this case
-before the generator is run to include the new color, but in the traditional
-case this will only be recognized at runtime:
-
-```go
-func Run(color Color) {
-  switch color.(type) {
-  case *Red:
-    // ...
-  case *Yellow:
-    // ...
-  }
-  ...
-}
-```
-
-In this case, the `Color` will continue to work just fine, but `*Blue` isn't
-explicitly handled by the user's implementation.
-
-We might be able to take inspiration from the gRPC+Protobuf approach to ensure
-that a server implements all the endpoints specified by the API (which is an
-opt-in model).
-
-Alternatively, there is the concept of a "sealed interface", which requires that
-the user takes advantage of an interface to interact with all the union types.
-For example,
-
-```go
-type ColorVisitor interface {
-  VisitRed(*Red)
-  VisitYellow(*Yellow)
-  VisitBlue(*Blue)
-}
-```
-
-In this case, if the user is expected to implement the interface in order to
-interact with the union, then they will initially have a compile-time error
-because their implemnentation will not have implemented `VisitBlue` before the
-new code was generated.
