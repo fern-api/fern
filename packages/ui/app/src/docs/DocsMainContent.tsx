@@ -1,7 +1,7 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
 import { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { ApiSubpackage } from "../api-page/definition/subpackages/ApiSubpackage";
 import { TopLevelEndpoint } from "../api-page/definition/top-level-endpoint/TopLevelEndpoint";
@@ -10,7 +10,7 @@ import { MarkdownPage } from "../markdown-page/MarkdownPage";
 
 export const DocsMainContent: React.FC = () => {
     const location = useLocation();
-    const { urlPathResolver } = useDocsContext();
+    const { urlPathResolver, docsDefinition } = useDocsContext();
 
     const resolvedPath = useMemo(
         () =>
@@ -22,6 +22,17 @@ export const DocsMainContent: React.FC = () => {
     );
 
     if (resolvedPath == null) {
+        if (location.pathname === "/") {
+            const urlSlug = docsDefinition.config.navigation.items[0]?._visit({
+                page: (page) => page.urlSlug,
+                section: (section) => section.urlSlug,
+                api: (api) => api.urlSlug,
+                _other: () => undefined,
+            });
+            if (urlSlug != null) {
+                return <Navigate to={urlSlug} replace />;
+            }
+        }
         return <NonIdealState title="404" />;
     }
 
