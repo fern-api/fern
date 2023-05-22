@@ -9710,7 +9710,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/select", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:4.5.1"],\
             ["@emotion/react", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:11.9.3"],\
             ["@emotion/styled", "virtual:deb42edf95131dd20187988e048bb24c3f9e341898ff06f968de00e1e5db860f4a8496f67316c18a20a103fbfd41147197ef70255869efc7b27b1e43570e1098#npm:11.9.3"],\
-            ["@fern-api/common-components", "workspace:packages/commons/react/common-components"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fonts", "workspace:packages/commons/react/fonts"],\
             ["@fern-api/loadable", "workspace:packages/commons/loadable"],\
