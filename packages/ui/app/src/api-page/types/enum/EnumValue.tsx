@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
+import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { useTypeDefinitionContext } from "../context/TypeDefinitionContext";
 import { Description } from "../Description";
 

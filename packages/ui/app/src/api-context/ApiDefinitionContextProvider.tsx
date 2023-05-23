@@ -1,22 +1,27 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import React, { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
-        apiId: FernRegistry.ApiDefinitionId;
+        apiSection: FernRegistryDocsRead.ApiSection;
+        apiSlug: string;
     }>;
 }
 
-export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider.Props> = ({ apiId, children }) => {
+export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider.Props> = ({
+    apiSection,
+    apiSlug,
+    children,
+}) => {
     const { resolveApi } = useDocsContext();
-    const api = resolveApi(apiId);
+    const apiDefinition = resolveApi(apiSection.api);
 
     const resolveSubpackageById = useCallback(
         (subpackageId: FernRegistryApiRead.SubpackageId): FernRegistryApiRead.ApiDefinitionSubpackage => {
-            const subpackage = api.subpackages[subpackageId];
+            const subpackage = apiDefinition.subpackages[subpackageId];
             if (subpackage == null) {
                 throw new Error("Subpackage does not exist");
             }
@@ -31,27 +36,29 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
                 return subpackage;
             }
         },
-        [api]
+        [apiDefinition]
     );
 
     const resolveTypeById = useCallback(
         (typeId: FernRegistryApiRead.TypeId): FernRegistryApiRead.TypeDefinition => {
-            const type = api.types[typeId];
+            const type = apiDefinition.types[typeId];
             if (type == null) {
                 throw new Error("Type does not exist");
             }
             return type;
         },
-        [api]
+        [apiDefinition]
     );
 
     const contextValue = useCallback(
         (): ApiDefinitionContextValue => ({
-            api,
+            apiDefinition,
+            apiSection,
+            apiSlug,
             resolveTypeById,
             resolveSubpackageById,
         }),
-        [api, resolveSubpackageById, resolveTypeById]
+        [apiDefinition, apiSlug, apiSection, resolveSubpackageById, resolveTypeById]
     );
 
     return <ApiDefinitionContext.Provider value={contextValue}>{children}</ApiDefinitionContext.Provider>;

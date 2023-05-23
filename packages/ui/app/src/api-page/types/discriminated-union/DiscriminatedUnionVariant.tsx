@@ -2,7 +2,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import classNames from "classnames";
 import { startCase } from "lodash-es";
 import { useCallback, useMemo } from "react";
-import { MonospaceText } from "../../../../commons/monospace/MonospaceText";
+import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import {
     TypeDefinitionContext,
     TypeDefinitionContextValue,

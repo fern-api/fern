@@ -1,7 +1,7 @@
 import { NonIdealState } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { Navigate } from "react-router-dom";
-import { joinUrlSlugs } from "../sidebar/joinUrlSlugs";
+import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 
 export declare namespace RedirectToFirstNavigationItem {
     export interface Props {
@@ -24,7 +24,13 @@ export const RedirectToFirstNavigationItem: React.FC<RedirectToFirstNavigationIt
                         slug={joinUrlSlugs(slug, firstItem.urlSlug)}
                     />
                 );
+            default:
+                assertVoid(firstItem.type);
         }
     }
     return <NonIdealState title="No content" />;
 };
+
+function assertVoid(_: void): void {
+    // no-op
+}

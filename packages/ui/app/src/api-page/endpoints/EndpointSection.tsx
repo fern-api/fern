@@ -1,4 +1,4 @@
-import { MonospaceText } from "../../../commons/monospace/MonospaceText";
+import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { Markdown } from "../markdown/Markdown";
 
 export declare namespace EndpointSection {

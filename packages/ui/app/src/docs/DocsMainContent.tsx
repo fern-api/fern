@@ -3,8 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
-import { ApiSubpackage } from "../api-page/definition/subpackages/ApiSubpackage";
-import { TopLevelEndpoint } from "../api-page/definition/top-level-endpoint/TopLevelEndpoint";
+import { ApiPage } from "../api-page/ApiPage";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MarkdownPage } from "../markdown-page/MarkdownPage";
 import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
@@ -14,11 +13,7 @@ export const DocsMainContent: React.FC = () => {
     const { urlPathResolver, docsDefinition } = useDocsContext();
 
     const resolvedPath = useMemo(
-        () =>
-            urlPathResolver.resolvePath(
-                // remove leading / from location.pathname
-                location.pathname.substring(1)
-            ),
+        () => urlPathResolver.resolvePath(removeLeadingAndTrailingSlashes(location.pathname)),
         [location.pathname, urlPathResolver]
     );
 
@@ -31,20 +26,34 @@ export const DocsMainContent: React.FC = () => {
 
     switch (resolvedPath.type) {
         case "page":
-            return <MarkdownPage pageId={resolvedPath.pageId} />;
-        case "top-level-endpoint":
+            return <MarkdownPage path={resolvedPath} />;
+        case "api":
             return (
-                <ApiDefinitionContextProvider apiId={resolvedPath.apiId}>
-                    <TopLevelEndpoint endpoint={resolvedPath.endpoint} />
+                <ApiDefinitionContextProvider apiSection={resolvedPath.api} apiSlug={resolvedPath.slug}>
+                    <ApiPage />
                 </ApiDefinitionContextProvider>
             );
-        case "api-subpackage":
+        case "apiSubpackage":
+        case "endpoint":
+        case "topLevelEndpoint":
             return (
-                <ApiDefinitionContextProvider apiId={resolvedPath.apiId}>
-                    <ApiSubpackage key={resolvedPath.subpackageId} subpackageId={resolvedPath.subpackageId} />
+                <ApiDefinitionContextProvider apiSection={resolvedPath.api} apiSlug={resolvedPath.apiSlug}>
+                    <ApiPage />
                 </ApiDefinitionContextProvider>
             );
+        case "section":
+            return <RedirectToFirstNavigationItem items={resolvedPath.section.items} slug={resolvedPath.slug} />;
         default:
             assertNever(resolvedPath);
     }
 };
+
+function removeLeadingAndTrailingSlashes(s: string): string {
+    if (s.startsWith("/")) {
+        s = s.substring(1);
+    }
+    if (s.endsWith("/")) {
+        s = s.substring(0, s.length - 1);
+    }
+    return s;
+}

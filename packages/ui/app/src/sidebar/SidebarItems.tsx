@@ -1,7 +1,7 @@
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
+import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiSidebarSection } from "./ApiSidebarSection";
-import { joinUrlSlugs } from "./joinUrlSlugs";
 import { PageSidebarItem } from "./PageSidebarItem";
 import { SidebarDocsSection } from "./SidebarDocsSection";
 
@@ -32,8 +32,8 @@ export const SidebarItems: React.FC<SidebarItems.Props> = ({ slug, navigationIte
                         />
                     ),
                     api: (apiSection) => (
-                        <ApiDefinitionContextProvider key={apiSection.urlSlug} apiId={apiSection.api}>
-                            <ApiSidebarSection slug={joinUrlSlugs(slug, apiSection.urlSlug)} apiSection={apiSection} />
+                        <ApiDefinitionContextProvider key={apiSection.urlSlug} apiSection={apiSection} apiSlug={slug}>
+                            <ApiSidebarSection slug={joinUrlSlugs(slug, apiSection.urlSlug)} />
                         </ApiDefinitionContextProvider>
                     ),
                     _other: () => null,

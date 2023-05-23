@@ -1,26 +1,29 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
-import { ApiSubpackageSidebarSection } from "./ApiSubpackageSidebarSection";
+import { Endpoint } from "./endpoints/Endpoint";
 
-export declare namespace ApiSubpackages {
+export declare namespace ApiPackageContents {
     export interface Props {
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
     }
 }
 
-export const ApiSubpackages: React.FC<ApiSubpackages.Props> = ({ slug, package: package_ }) => {
+export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({ package: package_, slug }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
 
     return (
         <>
+            {package_.endpoints.map((endpoint) => (
+                <Endpoint key={endpoint.id} endpoint={endpoint} slug={joinUrlSlugs(slug, endpoint.urlSlug)} />
+            ))}
             {package_.subpackages.map((subpackageId) => {
                 const subpackage = resolveSubpackageById(subpackageId);
                 return (
-                    <ApiSubpackageSidebarSection
+                    <ApiPackageContents
                         key={subpackageId}
-                        subpackage={subpackage}
+                        package={subpackage}
                         slug={joinUrlSlugs(slug, subpackage.urlSlug)}
                     />
                 );

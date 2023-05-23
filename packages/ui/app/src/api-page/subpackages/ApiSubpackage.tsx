@@ -1,27 +1,22 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { useState } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { SeparatedElements } from "../../../commons/SeparatedElements";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
+import { SeparatedElements } from "../../commons/SeparatedElements";
+import { joinUrlSlugs } from "../../docs-context/joinUrlSlugs";
 import { Endpoint } from "../endpoints/Endpoint";
-import { useSubpackageScrolling } from "./useSubpackageScrolling";
 
 export declare namespace ApiSubpackage {
     export interface Props {
         subpackageId: FernRegistryApiRead.SubpackageId;
+        slug: string;
     }
 }
 
-export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId }) => {
+export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slug }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
     const subpackage = resolveSubpackageById(subpackageId);
 
-    const [ref, setRef] = useState<HTMLDivElement | null>(null);
-    const { setIsEndpointInVerticalCenter, setIsEndpointInView } = useSubpackageScrolling({
-        containerRef: ref ?? undefined,
-    });
-
     return (
-        <div className="min-h-0 overflow-y-auto pb-36" ref={setRef}>
+        <div className="min-h-0 overflow-y-auto pb-36">
             <SeparatedElements
                 separator={
                     <div className="h-72 flex items-center">
@@ -31,11 +26,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId }) =
             >
                 {subpackage.endpoints.map((endpoint) => (
                     <div key={endpoint.id} className="flex-1 flex min-w-0">
-                        <Endpoint
-                            endpoint={endpoint}
-                            setIsInView={setIsEndpointInView}
-                            setIsIntersectingVerticalCenter={setIsEndpointInVerticalCenter}
-                        />
+                        <Endpoint endpoint={endpoint} slug={joinUrlSlugs(slug, endpoint.urlSlug)} />
                     </div>
                 ))}
             </SeparatedElements>
