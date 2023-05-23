@@ -10,7 +10,7 @@
     },
     "package-json": {
       "scripts": {
-        "deploy:dev": "yarn build --mode staging && FERN_CLOUD_ENVIRONMENT=DEV cdk deploy --output deploy/cdk.out --require-approval never --progress events",
+        "deploy:staging": "yarn build --mode staging && FERN_CLOUD_ENVIRONMENT=DEV cdk deploy --output deploy/cdk.out --require-approval never --progress events",
         "deploy:production": "yarn build --mode production && FERN_CLOUD_ENVIRONMENT=PROD cdk deploy --output deploy/cdk.out --require-approval never --progress events"
       }
     }

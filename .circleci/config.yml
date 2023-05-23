@@ -285,7 +285,7 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Publish docs (dev)
-          command: yarn workspace @fern-api/fe-bundle deploy:dev
+          command: yarn workspace @fern-api/fe-bundle deploy:staging
 
 workflows:
   version: 2
