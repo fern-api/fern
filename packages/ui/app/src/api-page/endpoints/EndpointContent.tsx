@@ -54,13 +54,18 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
         onChange: onChangeIsInView,
     });
 
-    const onChangeIsInVerticalCenter = useCallback(() => {
-        setPathInView(path);
-    }, [path, setPathInView]);
+    const onChangeIsInVerticalCenter = useCallback(
+        (isInView: boolean) => {
+            if (isInView) {
+                setPathInView(path);
+            }
+        },
+        [path, setPathInView]
+    );
 
     const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
         // https://stackoverflow.com/questions/54807535/intersection-observer-api-observe-the-center-of-the-viewport
-        rootMargin: "-50% 0% -50% 0%",
+        rootMargin: "-50% 0px",
         threshold: 0,
         onChange: onChangeIsInVerticalCenter,
     });
@@ -83,67 +88,72 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
     }, [path, registerNavigateToPathListener]);
 
     return (
-        <div className="flex-1 flex gap-24 px-24 min-w-0" id={endpoint.urlSlug} ref={setContainerRef}>
-            <div className="flex-1 flex flex-col">
-                <div className="pt-10 text-2xl font-bold">
-                    <EndpointTitle endpoint={endpoint} />
-                </div>
-                <div className="mt-6">
-                    <div className="flex items-center gap-2 text-gray-500">
-                        <div className="font-bold text-base">GET</div>
-                        <div className="flex">
-                            {endpoint.path.parts.map((part, index) => (
-                                <MonospaceText key={index}>
-                                    {part._visit<JSX.Element | string | null>({
-                                        literal: (literal) => literal,
-                                        pathParameter: (pathParameter) => (
-                                            <EndpointPathParameter pathParameter={pathParameter} />
-                                        ),
-                                        _other: () => null,
-                                    })}
-                                </MonospaceText>
-                            ))}
+        <div className="flex flex-col">
+            <div className="flex-1 flex gap-24 px-24 min-w-0" ref={setContainerRef}>
+                <div className="flex-1 flex flex-col">
+                    <div className="pt-10 text-2xl font-bold">
+                        <EndpointTitle endpoint={endpoint} />
+                    </div>
+                    <div className="mt-6">
+                        <div className="flex items-center gap-2 text-gray-500">
+                            <div className="font-bold text-base">GET</div>
+                            <div className="flex">
+                                {endpoint.path.parts.map((part, index) => (
+                                    <MonospaceText key={index}>
+                                        {part._visit<JSX.Element | string | null>({
+                                            literal: (literal) => literal,
+                                            pathParameter: (pathParameter) => (
+                                                <EndpointPathParameter pathParameter={pathParameter} />
+                                            ),
+                                            _other: () => null,
+                                        })}
+                                    </MonospaceText>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                    {endpoint.description != null && (
+                        <div className="mt-6">
+                            <Markdown>{endpoint.description}</Markdown>
+                        </div>
+                    )}
+                    <div className="flex mt-8">
+                        <div className="flex flex-1 flex-col gap-12">
+                            {endpoint.path.pathParameters.length > 0 && (
+                                <PathParametersSection pathParameters={endpoint.path.pathParameters} />
+                            )}
+                            {endpoint.queryParameters.length > 0 && (
+                                <QueryParametersSection queryParameters={endpoint.queryParameters} />
+                            )}
+                            {endpoint.request != null && (
+                                <EndpointSection title="Request">
+                                    <EndpointTypeSection httpBody={endpoint.request} verb="expects" />
+                                </EndpointSection>
+                            )}
+                            {endpoint.response != null && (
+                                <EndpointSection title="Response">
+                                    <EndpointTypeSection
+                                        httpBody={endpoint.response}
+                                        onHoverProperty={onHoverResponseProperty}
+                                        verb="returns"
+                                    />
+                                </EndpointSection>
+                            )}
                         </div>
                     </div>
                 </div>
-                {endpoint.description != null && (
-                    <div className="mt-6">
-                        <Markdown>{endpoint.description}</Markdown>
-                    </div>
-                )}
-                <div className="flex mt-8">
-                    <div className="flex flex-1 flex-col gap-12">
-                        {endpoint.path.pathParameters.length > 0 && (
-                            <PathParametersSection pathParameters={endpoint.path.pathParameters} />
-                        )}
-                        {endpoint.queryParameters.length > 0 && (
-                            <QueryParametersSection queryParameters={endpoint.queryParameters} />
-                        )}
-                        {endpoint.request != null && (
-                            <EndpointSection title="Request">
-                                <EndpointTypeSection httpBody={endpoint.request} verb="expects" />
-                            </EndpointSection>
-                        )}
-                        {endpoint.response != null && (
-                            <EndpointSection title="Response">
-                                <EndpointTypeSection
-                                    httpBody={endpoint.response}
-                                    onHoverProperty={onHoverResponseProperty}
-                                    verb="returns"
-                                />
-                            </EndpointSection>
-                        )}
-                    </div>
+                <div
+                    className={classNames(
+                        "flex-1 flex sticky self-start top-0 min-w-0",
+                        // the 4rem is the same as the h-10 as the Header
+                        "max-h-[calc(100vh-4rem)]"
+                    )}
+                >
+                    <EndpointExamples endpoint={endpoint} />
                 </div>
             </div>
-            <div
-                className={classNames(
-                    "flex-1 flex sticky self-start top-0 min-w-0",
-                    // the 4rem is the same as the h-10 as the Header
-                    "max-h-[calc(100vh-4rem)]"
-                )}
-            >
-                <EndpointExamples endpoint={endpoint} />
+            <div className="h-72 flex items-center">
+                <div className="flex-1 h-px bg-neutral-700" />
             </div>
         </div>
     );

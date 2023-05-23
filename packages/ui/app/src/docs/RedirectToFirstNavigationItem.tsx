@@ -11,15 +11,26 @@ export declare namespace RedirectToFirstNavigationItem {
 }
 
 export const RedirectToFirstNavigationItem: React.FC<RedirectToFirstNavigationItem.Props> = ({ items, slug }) => {
-    const urlSlug = items[0]?._visit({
-        page: (page) => page.urlSlug,
-        section: (section) => section.urlSlug,
-        api: (api) => api.urlSlug,
-        _other: () => undefined,
-    });
-    if (urlSlug != null) {
-        return <Navigate to={joinUrlSlugs(slug, urlSlug)} replace />;
-    } else {
-        return <NonIdealState title="No content" />;
+    const firstItem = items[0];
+    if (firstItem != null) {
+        switch (firstItem.type) {
+            case "page":
+            case "api":
+                return <Navigate to={joinUrlSlugs(slug, firstItem.urlSlug)} replace />;
+            case "section":
+                return (
+                    <RedirectToFirstNavigationItem
+                        items={firstItem.items}
+                        slug={joinUrlSlugs(slug, firstItem.urlSlug)}
+                    />
+                );
+            default:
+                assertVoid(firstItem.type);
+        }
     }
+    return <NonIdealState title="No content" />;
 };
+
+function assertVoid(_: void): void {
+    // no-op
+}
