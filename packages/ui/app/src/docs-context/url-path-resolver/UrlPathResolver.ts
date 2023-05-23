@@ -27,13 +27,13 @@ export declare namespace ResolvedUrlPath {
 
     export interface Api {
         type: "api";
-        api: FernRegistryDocsRead.ApiSection;
+        apiSection: FernRegistryDocsRead.ApiSection;
         slug: string;
     }
 
     export interface TopLevelEndpoint {
         type: "topLevelEndpoint";
-        api: FernRegistryDocsRead.ApiSection;
+        apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
         slug: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
@@ -41,7 +41,7 @@ export declare namespace ResolvedUrlPath {
 
     export interface ApiSubpackage {
         type: "apiSubpackage";
-        api: FernRegistryDocsRead.ApiSection;
+        apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
         slug: string;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
@@ -49,7 +49,7 @@ export declare namespace ResolvedUrlPath {
 
     export interface Endpoint {
         type: "endpoint";
-        api: FernRegistryDocsRead.ApiSection;
+        apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
         slug: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
@@ -88,13 +88,13 @@ export class UrlPathResolverImpl implements UrlPathResolver {
             case "api":
                 return {
                     type: "api",
-                    api: node.apiSection,
+                    apiSection: node.apiSection,
                     slug: node.slug,
                 };
             case "topLevelEndpoint":
                 return {
                     type: "topLevelEndpoint",
-                    api: node.apiSection,
+                    apiSection: node.apiSection,
                     apiSlug: node.apiSlug,
                     slug: joinUrlSlugs(node.apiSlug, node.endpoint.urlSlug),
                     endpoint: node.endpoint,
@@ -102,7 +102,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
             case "apiSubpackage":
                 return {
                     type: "apiSubpackage",
-                    api: node.apiSection,
+                    apiSection: node.apiSection,
                     apiSlug: node.apiSlug,
                     slug: joinUrlSlugs(node.apiSlug, node.slugInsideApi),
                     subpackage: node.subpackage,
@@ -110,7 +110,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
             case "endpoint":
                 return {
                     type: "endpoint",
-                    api: node.apiSection,
+                    apiSection: node.apiSection,
                     apiSlug: node.apiSlug,
                     slug: joinUrlSlugs(node.apiSlug, node.slugInsideApi),
                     endpoint: node.endpoint,

@@ -74,8 +74,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
     }, []);
 
     const navigate = useNavigate();
+    const [justNavigated, setJustNavigated] = useState(false);
     const navigateToPath = useCallback(
         (path: ResolvedUrlPath) => {
+            setJustNavigated(true);
             setSelectedPath(path);
             navigate(path.slug);
             const listeners = navigateToPathListeners.current[path.slug];
@@ -84,6 +86,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
                     setTimeout(listener, 0);
                 }
             }
+            setTimeout(() => {
+                setJustNavigated(false);
+            }, 500);
         },
         [navigate]
     );
@@ -92,10 +97,12 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
 
     const setSelectedPathAndUpdateUrl = useCallback(
         (path: ResolvedUrlPath) => {
-            setSelectedPath(path);
-            navigate(path.slug);
+            if (!justNavigated) {
+                setSelectedPath(path);
+                navigate(path.slug);
+            }
         },
-        [navigate]
+        [justNavigated, navigate]
     );
 
     const contextValue = useCallback(

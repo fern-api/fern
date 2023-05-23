@@ -2,7 +2,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { useMemo } from "react";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { ResolvedUrlPath } from "../../docs-context/url-path-resolver/UrlPathResolver";
-import { EndpointContextProvider } from "./context/EndpointContextProvider";
+import { EndpointContextProvider } from "./endpoint-context/EndpointContextProvider";
 import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
@@ -17,7 +17,7 @@ export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, slug }) => {
     const path = useMemo(
         (): ResolvedUrlPath.Endpoint => ({
             type: "endpoint",
-            api: apiSection,
+            apiSection,
             apiSlug,
             slug,
             endpoint,

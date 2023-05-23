@@ -23,7 +23,10 @@ export const DocsMainContent: React.FC = () => {
             return <MarkdownPage path={resolvedPathFromUrl} />;
         case "api":
             return (
-                <ApiDefinitionContextProvider apiSection={resolvedPathFromUrl.api} apiSlug={resolvedPathFromUrl.slug}>
+                <ApiDefinitionContextProvider
+                    apiSection={resolvedPathFromUrl.apiSection}
+                    apiSlug={resolvedPathFromUrl.slug}
+                >
                     <ApiPage />
                 </ApiDefinitionContextProvider>
             );
@@ -32,7 +35,7 @@ export const DocsMainContent: React.FC = () => {
         case "topLevelEndpoint":
             return (
                 <ApiDefinitionContextProvider
-                    apiSection={resolvedPathFromUrl.api}
+                    apiSection={resolvedPathFromUrl.apiSection}
                     apiSlug={resolvedPathFromUrl.apiSlug}
                 >
                     <ApiPage />

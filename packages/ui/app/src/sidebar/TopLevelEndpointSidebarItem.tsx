@@ -18,7 +18,7 @@ export const TopLevelEndpointSidebarItem: React.FC<TopLevelEndpointSidebarItem.P
     const path = useMemo(
         (): ResolvedUrlPath.TopLevelEndpoint => ({
             type: "topLevelEndpoint",
-            api: apiSection,
+            apiSection,
             apiSlug,
             slug,
             endpoint,

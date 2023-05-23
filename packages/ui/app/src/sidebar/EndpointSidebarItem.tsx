@@ -18,7 +18,7 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ slug,
     const path = useMemo(
         (): ResolvedUrlPath.Endpoint => ({
             type: "endpoint",
-            api: apiSection,
+            apiSection,
             apiSlug,
             slug,
             endpoint,
