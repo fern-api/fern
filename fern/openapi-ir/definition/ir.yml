@@ -277,8 +277,12 @@ types:
       key: string
       schema: Schema
       conflict:
-        type: list<SchemaId>
+        type: map<SchemaId, ObjectPropertyConflictInfo>
         docs: The schemas that conflict with this property
+
+  ObjectPropertyConflictInfo:
+    properties:
+      differentSchema: boolean
 
   ArraySchema:
     extends: WithDescription
