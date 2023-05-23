@@ -3799,7 +3799,7 @@ __metadata:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.19.1
     "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/fern-cloud-sdk": ^0.0.35
+    "@fern-fern/fern-cloud-sdk": ^0.0.42
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -5092,16 +5092,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/fern-cloud-sdk@npm:^0.0.35":
-  version: 0.0.35
-  resolution: "@fern-fern/fern-cloud-sdk@npm:0.0.35"
+"@fern-fern/fern-cloud-sdk@npm:^0.0.42":
+  version: 0.0.42
+  resolution: "@fern-fern/fern-cloud-sdk@npm:0.0.42"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 8db8e794a43de0ba263b377aeb9042ed170b6403f75188ff33f3a37daa6f77d665291eba2c832e3f6df6540c7d0e08638791db5343cd08adf616a3fbb74d3fe1
+  checksum: df37bc397bdb076fcb3d1de4ae66edcdac4814a52cdb4b479bdebd3a93a91859654e413910f49bd926c53ae31cd876c8c0cb6d09b05a9db7d6f3718b5b2c8ee8
   languageName: node
   linkType: hard
 

@@ -29,7 +29,7 @@
     "@aws-cdk/aws-s3": "^1.202.0",
     "@aws-cdk/aws-s3-deployment": "^1.202.0",
     "@aws-cdk/core": "^1.202.0",
-    "@fern-fern/fern-cloud-sdk": "^0.0.35",
+    "@fern-fern/fern-cloud-sdk": "^0.0.42",
     "typescript": "4.6.4"
   },
   "devDependencies": {
