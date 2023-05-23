@@ -1,0 +1,49 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "@aws-cdk/core.Construct",
+          "version": "1.202.0"
+        }
+      },
+      "fern-docs-DEV": {
+        "id": "fern-docs-DEV",
+        "path": "fern-docs-DEV",
+        "children": {
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "fern-docs-DEV/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "fern-docs-DEV/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "@aws-cdk/core.CfnResource",
+                  "version": "1.202.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.Construct",
+              "version": "1.202.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "@aws-cdk/core.Stack",
+          "version": "1.202.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "@aws-cdk/core.App",
+      "version": "1.202.0"
+    }
+  }
+}

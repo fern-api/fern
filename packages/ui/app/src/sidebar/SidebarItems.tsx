@@ -32,8 +32,8 @@ export const SidebarItems: React.FC<SidebarItems.Props> = ({ slug, navigationIte
                         />
                     ),
                     api: (apiSection) => (
-                        <ApiDefinitionContextProvider key={apiSection.urlSlug} apiId={apiSection.api}>
-                            <ApiSidebarSection slug={joinUrlSlugs(slug, apiSection.urlSlug)} apiSection={apiSection} />
+                        <ApiDefinitionContextProvider key={apiSection.urlSlug} apiSection={apiSection} apiSlug={slug}>
+                            <ApiSidebarSection slug={joinUrlSlugs(slug, apiSection.urlSlug)} />
                         </ApiDefinitionContextProvider>
                     ),
                     _other: () => null,

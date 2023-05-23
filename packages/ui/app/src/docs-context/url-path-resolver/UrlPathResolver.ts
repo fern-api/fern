@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { joinUrlSlugs } from "../joinUrlSlugs";
 import { UrlSlugTree } from "./UrlSlugTree";
 
 export type ResolvedUrlPath =
@@ -33,6 +34,7 @@ export declare namespace ResolvedUrlPath {
     export interface TopLevelEndpoint {
         type: "topLevelEndpoint";
         api: FernRegistryDocsRead.ApiSection;
+        apiSlug: string;
         slug: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
@@ -40,6 +42,7 @@ export declare namespace ResolvedUrlPath {
     export interface ApiSubpackage {
         type: "apiSubpackage";
         api: FernRegistryDocsRead.ApiSection;
+        apiSlug: string;
         slug: string;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
@@ -47,6 +50,7 @@ export declare namespace ResolvedUrlPath {
     export interface Endpoint {
         type: "endpoint";
         api: FernRegistryDocsRead.ApiSection;
+        apiSlug: string;
         slug: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
@@ -91,21 +95,24 @@ export class UrlPathResolverImpl implements UrlPathResolver {
                 return {
                     type: "topLevelEndpoint",
                     api: node.apiSection,
-                    slug: this.urlSlugTree.joinUrlSlugs(node.apiSlug, node.endpoint.urlSlug),
+                    apiSlug: node.apiSlug,
+                    slug: joinUrlSlugs(node.apiSlug, node.endpoint.urlSlug),
                     endpoint: node.endpoint,
                 };
             case "apiSubpackage":
                 return {
                     type: "apiSubpackage",
                     api: node.apiSection,
-                    slug: this.urlSlugTree.joinUrlSlugs(node.apiSlug, node.slugInsideApi),
+                    apiSlug: node.apiSlug,
+                    slug: joinUrlSlugs(node.apiSlug, node.slugInsideApi),
                     subpackage: node.subpackage,
                 };
             case "endpoint":
                 return {
                     type: "endpoint",
                     api: node.apiSection,
-                    slug: this.urlSlugTree.joinUrlSlugs(node.apiSlug, node.slugInsideApi),
+                    apiSlug: node.apiSlug,
+                    slug: joinUrlSlugs(node.apiSlug, node.slugInsideApi),
                     endpoint: node.endpoint,
                 };
             default:

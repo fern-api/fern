@@ -1,26 +1,36 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { startCase } from "lodash-es";
 import { useMemo } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
+import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
 import { ApiSubpackageSidebarSectionContents } from "./ApiSubpackageSidebarSectionContents";
+import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 import { SidebarGroup } from "./SidebarGroup";
-import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace ApiSubpackageSidebarSection {
     export interface Props {
-        api: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         slug: string;
     }
 }
 
-export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.Props> = ({ api, subpackage, slug }) => {
-    const { resolveSubpackageById } = useApiDefinitionContext();
+export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.Props> = ({ subpackage, slug }) => {
+    const { resolveSubpackageById, apiSection, apiSlug } = useApiDefinitionContext();
 
     const hasEndpoints = useMemo(
         () => hasEndpointsRecursive(subpackage.subpackageId, resolveSubpackageById),
         [resolveSubpackageById, subpackage.subpackageId]
+    );
+
+    const path = useMemo(
+        (): ResolvedUrlPath.ApiSubpackage => ({
+            type: "apiSubpackage",
+            api: apiSection,
+            apiSlug,
+            subpackage,
+            slug,
+        }),
+        [apiSection, apiSlug, slug, subpackage]
     );
 
     if (!hasEndpoints) {
@@ -28,10 +38,8 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     }
 
     return (
-        <SidebarGroup
-            title={<SidebarItemLayout title={<div className="font-bold">{startCase(subpackage.name)}</div>} />}
-        >
-            <ApiSubpackageSidebarSectionContents api={api} subpackage={subpackage} slug={slug} />
+        <SidebarGroup title={<NavigatingSidebarItem title={startCase(subpackage.name)} path={path} />}>
+            <ApiSubpackageSidebarSectionContents subpackage={subpackage} slug={slug} />
         </SidebarGroup>
     );
 };

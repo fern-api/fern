@@ -2,6 +2,7 @@ import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { PropsWithChildren, useCallback, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { DocsContext, DocsContextValue } from "./DocsContext";
 import { ResolvedUrlPath, UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
 
@@ -66,15 +67,20 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         };
     }, []);
 
-    const navigateToPath = useCallback((path: ResolvedUrlPath) => {
-        setPathInView(path);
-        const listeners = navigateToPathListeners.current[path.slug];
-        if (listeners != null) {
-            for (const listener of listeners) {
-                setTimeout(listener, 0);
+    const navigate = useNavigate();
+    const navigateToPath = useCallback(
+        (path: ResolvedUrlPath) => {
+            setPathInView(path);
+            navigate(path.slug);
+            const listeners = navigateToPathListeners.current[path.slug];
+            if (listeners != null) {
+                for (const listener of listeners) {
+                    setTimeout(listener, 0);
+                }
             }
-        }
-    }, []);
+        },
+        [navigate]
+    );
 
     const [pathInView, setPathInView] = useState<ResolvedUrlPath>();
 
@@ -83,6 +89,14 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             return pathInView?.slug === path.slug;
         },
         [pathInView?.slug]
+    );
+
+    const setPathInViewAndNavigate = useCallback(
+        (path: ResolvedUrlPath) => {
+            setPathInView(path);
+            navigate(path.slug);
+        },
+        [navigate]
     );
 
     const contextValue = useCallback(
@@ -95,7 +109,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             registerNavigateToPathListener,
             navigateToPath,
             isPathInView,
-            setPathInView,
+            setPathInView: setPathInViewAndNavigate,
         }),
         [
             resolveApi,
@@ -106,6 +120,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             registerNavigateToPathListener,
             navigateToPath,
             isPathInView,
+            setPathInViewAndNavigate,
         ]
     );
 
