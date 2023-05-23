@@ -109,6 +109,16 @@ func singleUnionTypePropertiesToGoType(singleUnionTypeProperties *types.SingleUn
 	return visitor.value
 }
 
+// singleUnionTypePropertiesToInitializer maps the given container type into its Go-equivalent initializer.
+//
+// Note this returns the string representation of the statement required to initialize
+// the given property, e.g. 'value := new(Foo)'
+func singleUnionTypePropertiesToInitializer(singleUnionTypeProperties *types.SingleUnionTypeProperties) string {
+	visitor := new(singleUnionTypePropertiesInitializerVisitor)
+	_ = singleUnionTypeProperties.Accept(visitor)
+	return visitor.value
+}
+
 // literalToGoType maps the given literal into its Go-equivalent.
 func literalToGoType(literal *types.Literal) string {
 	visitor := new(literalVisitor)
@@ -223,6 +233,7 @@ func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
 		t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName)
 	}
 	t.writer.P("}")
+	t.writer.P()
 
 	// Implement the json.Unmarshaler interface.
 	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
@@ -240,15 +251,41 @@ func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
 	t.writer.P("switch unmarshaler.", discriminantName, " {")
 	for _, unionType := range union.Types {
 		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
-		// TODO: The way we unmarshal each type is different based on
-		// it it's an object, a primitive, etc.
+		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape))
+		t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
+		t.writer.P("return err")
+		t.writer.P("}")
+		t.writer.P("x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = value")
 	}
 	t.writer.P("}")
 	t.writer.P("return nil")
 	t.writer.P("}")
 	t.writer.P()
 
-	// TODO: Generate the Visitor interface and Accept method.
+	// Generate the Visitor interface.
+	t.writer.P("type ", t.typeName, "Visitor interface {")
+	for _, unionType := range union.Types {
+		t.writer.P("Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(", singleUnionTypePropertiesToGoType(unionType.Shape), ") error")
+	}
+	t.writer.P("}")
+	t.writer.P()
+
+	// Generate the Accept method.
+	t.writer.P("func (x *", t.typeName, ") Accept(v ", t.typeName, "Visitor) error {")
+	t.writer.P("switch x.", discriminantName, "{")
+	for i, unionType := range union.Types {
+		if i == 0 {
+			// Implement the default case first.
+			t.writer.P("default:")
+			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", x.", discriminantName, ", x)")
+		}
+		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
+		t.writer.P("return v.Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ")")
+	}
+	t.writer.P("}")
+	t.writer.P("}")
+	t.writer.P()
+
 	return nil
 }
 
@@ -331,6 +368,8 @@ type singleUnionTypePropertiesVisitor struct {
 var _ types.SingleUnionTypePropertiesVisitor = (*singleUnionTypePropertiesVisitor)(nil)
 
 func (c *singleUnionTypePropertiesVisitor) VisitSamePropertiesAsObject(named *types.DeclaredTypeName) error {
+	// TODO: Need to determine whether or not the type is an enum, custom type, etc.
+	// We only want to prefix with a pointer if it's a custom type (not an enum).
 	c.value = fmt.Sprintf("*%s", named.Name.PascalCase.UnsafeName)
 	return nil
 }
@@ -341,6 +380,34 @@ func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *types.S
 }
 
 func (c *singleUnionTypePropertiesVisitor) VisitNoProperties(_ any) error {
+	c.value = "any"
+	return nil
+}
+
+// singleUnionTypePropertiesInitializerVisitor retrieves the string representation of
+// single union type property initializers.
+//
+// This visitor determines the string representation of the constructor used
+// in the json.Unmarshaler implementation.
+type singleUnionTypePropertiesInitializerVisitor struct {
+	value string
+}
+
+// Compile-time assertion.
+var _ types.SingleUnionTypePropertiesVisitor = (*singleUnionTypePropertiesInitializerVisitor)(nil)
+
+func (c *singleUnionTypePropertiesInitializerVisitor) VisitSamePropertiesAsObject(named *types.DeclaredTypeName) error {
+	c.value = fmt.Sprintf("value := new(%s)", named.Name.PascalCase.UnsafeName)
+	return nil
+}
+
+func (c *singleUnionTypePropertiesInitializerVisitor) VisitSingleProperty(property *types.SingleUnionTypeProperty) error {
+	c.value = fmt.Sprintf("var value %s", typeReferenceToGoType(property.Type))
+	return nil
+}
+
+func (c *singleUnionTypePropertiesInitializerVisitor) VisitNoProperties(_ any) error {
+	c.value = "value := make(map[string]any)"
 	return nil
 }
 
