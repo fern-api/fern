@@ -20,7 +20,7 @@ export class CdkStack extends cdk.Stack {
     }) {
         super(scope, id, stackProps);
 
-        const distribution = cloudfront.Distribution.fromDistributionAttributes(scope, "docs-cloudfront", {
+        const distribution = cloudfront.Distribution.fromDistributionAttributes(this, "docs-cloudfront", {
             domainName: environmentConfig.docsCloudFrontInfo.domainName,
             distributionId: environmentConfig.docsCloudFrontInfo.distributionId,
         });
