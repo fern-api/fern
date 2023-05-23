@@ -210,23 +210,21 @@ func (t *typeVisitor) VisitEnum(enum *types.EnumTypeDeclaration) error {
 }
 
 func (t *typeVisitor) VisitObject(object *types.ObjectTypeDeclaration) error {
-	// TODO: Write extended properties.
 	t.writer.P("type ", t.typeName, " struct {")
-	for _, property := range object.Properties {
-		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
-	}
+	_ = t.visitObjectProperties(object, true /* includeTags */)
 	t.writer.P("}")
 	t.writer.P()
 	return nil
 }
 
 func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
-	// TODO: Write extended properties.
-
 	// Write the union type definition.
 	discriminantName := union.Discriminant.Name.PascalCase.UnsafeName
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
+	for _, extend := range union.Extends {
+		_ = t.visitObjectProperties(t.writer.types[extend.TypeID].Shape.Object, false /* includeTags */)
+	}
 	for _, property := range union.BaseProperties {
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types))
 	}
@@ -245,13 +243,25 @@ func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
 	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 	t.writer.P("var unmarshaler struct {")
 	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
+	var propertyNames []string
+	for _, extend := range union.Extends {
+		propertyNames = append(propertyNames, t.visitObjectProperties(t.writer.types[extend.TypeID].Shape.Object, true /* includeTags */)...)
+	}
+	for _, property := range union.BaseProperties {
+		propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
+	}
 	t.writer.P("}")
 	t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
 	t.writer.P("return err")
 	t.writer.P("}")
 
-	// Set the union's type on the exported type.
+	// Set the union's type on the exported type, plus all of the other
+	// extended and/or base properties.
 	t.writer.P("x.", discriminantName, " = unmarshaler.", discriminantName)
+	for _, propertyName := range propertyNames {
+		t.writer.P("x.", propertyName, " = unmarshaler.", propertyName)
+	}
 
 	// Generate the switch to unmarshal the appropriate type.
 	t.writer.P("switch unmarshaler.", discriminantName, " {")
@@ -297,6 +307,28 @@ func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
 
 func (t *typeVisitor) VisitUndiscriminatedUnion(union *types.UndiscriminatedUnionTypeDeclaration) error {
 	return errors.New("unimplemented")
+}
+
+// visitObjectProperties writes all of this object's properties, and recursively calls itself with
+// the object's extended properties (if any). The 'includeTags' parameter controls whether or not
+// to generate JSON struct tags, which is only relevant for object types (not unions).
+//
+// A slice of all the transitive property names are returned.
+func (t *typeVisitor) visitObjectProperties(object *types.ObjectTypeDeclaration, includeTags bool) []string {
+	var names []string
+	for _, extend := range object.Extends {
+		// You can only extend other objects.
+		names = append(names, t.visitObjectProperties(t.writer.types[extend.TypeID].Shape.Object, includeTags)...)
+	}
+	for _, property := range object.Properties {
+		names = append(names, property.Name.Name.PascalCase.UnsafeName)
+		if includeTags {
+			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
+			continue
+		}
+		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types))
+	}
+	return names
 }
 
 // typeReferenceVisitor retrieves the string representation of type references
