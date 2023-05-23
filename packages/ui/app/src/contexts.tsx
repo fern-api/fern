@@ -2,7 +2,6 @@ import { HotkeysProvider } from "@blueprintjs/core";
 import { SplitViewProvider } from "@fern-api/split-view";
 import { ThemeProvider } from "@fern-api/theme";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PropsWithChildren } from "react";
 import { BrowserRouter } from "react-router-dom";
 
@@ -12,10 +11,7 @@ export const CONTEXTS = [
     ({ children }: PropsWithChildren): JSX.Element => <ThemeProvider theme="dark">{children}</ThemeProvider>,
     BrowserRouter,
     ({ children }: PropsWithChildren): JSX.Element => (
-        <QueryClientProvider client={queryClient}>
-            {children}
-            <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     ),
     HotkeysProvider,
     SplitViewProvider,

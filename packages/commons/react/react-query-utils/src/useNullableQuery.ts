@@ -13,7 +13,16 @@ export function useNullableQuery<
     queryFn: QueryFunction<TQueryFnData, TQueryKey>,
     options?: Omit<UseQueryOptions<TQueryFnData, TError, TQueryFnData, TQueryKey>, "queryKey" | "queryFn">
 ): Loadable<TQueryFnData, TError> {
-    const { enabled: isEnabledProp = true, refetchInterval, onSettled, onSuccess, isDataEqual, select } = options ?? {};
+    const {
+        enabled: isEnabledProp = true,
+        refetchInterval,
+        // eslint-disable-next-line deprecation/deprecation
+        onSettled,
+        // eslint-disable-next-line deprecation/deprecation
+        onSuccess,
+        isDataEqual,
+        select,
+    } = options ?? {};
 
     const result = useTypedQuery<TQueryFnData | NullableQueryResult, TError>(
         queryKey ?? createNullableQueryKey(),
