@@ -24,7 +24,9 @@ export const JsonExample: React.FC<JsonExample.Props> = ({ json, selectedPropert
 
     return (
         <JsonExampleContext.Provider value={contextValue}>
-            <div className={classNames(styles.code, "leading-relaxed bg-[#252529] py-1 flex-1 overflow-auto text-xs")}>
+            <div
+                className={classNames(styles.code, "leading-relaxed bg-[#969CEE]/10 py-1 flex-1 overflow-auto text-xs")}
+            >
                 <JsonItemTopLine value={json} isNonLastItemInCollection={false} />
                 <JsonItemMiddleLines value={json} />
                 <JsonItemBottomLine value={json} isNonLastItemInCollection={false} />
