@@ -13,9 +13,6 @@ packages/**/tsconfig*tsbuildinfo
 .docusaurus
 .cache-loader
 
-# environment
-.env.local
-
 # misc
 .DS_Store
 
