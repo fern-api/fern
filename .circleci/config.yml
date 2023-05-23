@@ -416,16 +416,16 @@ workflows:
             - fern-tokens
 
       - deploy-docs-dev:
-          # filters:
-          #   branches:
-          #     only: main
-          # requires:
-          #   - check
-          #   - organize-imports
-          #   - compile
-          #   - eslint
-          #   - test
-          #   - ete-tests
+          filters:
+            branches:
+              only: main
+          requires:
+            - check
+            - organize-imports
+            - compile
+            - eslint
+            - test
+            - ete-tests
           context:
             - aws
             - github
