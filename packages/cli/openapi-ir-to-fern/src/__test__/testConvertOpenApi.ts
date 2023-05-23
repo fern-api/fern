@@ -8,7 +8,7 @@ import { convert } from "../convert";
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 // eslint-disable-next-line jest/no-export
-export function testConvertOpenAPI(fixtureName: string, filename: string) {
+export function testConvertOpenAPI(fixtureName: string, filename: string): void {
     // eslint-disable-next-line jest/valid-title
     describe(fixtureName, () => {
         it("simple", async () => {
