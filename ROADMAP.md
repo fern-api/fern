@@ -11,6 +11,7 @@ The following outlines a roadmap for the development of the Go generator.
 - [] Handle object aliases (i.e. in `json.Unmarshaler`)
 - [x] Generate the IR
 - [] Bootstrap the generator (i.e. Replace the manually-written IR with the generated IR)
+- [] Handle cross-package imports
 - [] Verify with round-trip tests (i.e. deserialize and re-serialize `ir.json` and verify its equivalent)
 - [] Design and implement better generator output (i.e. generate into separate Go packages, files, etc)
 - [] Generate a basic `go.mod`, `go.sum`, etc (similar to Fern's Typescript generator's `package.json`)
