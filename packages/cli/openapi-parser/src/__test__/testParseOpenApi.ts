@@ -7,7 +7,7 @@ import { parse } from "../parse";
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 // eslint-disable-next-line jest/no-export
-export function testParseOpenAPI(fixtureName: string, filename: string) {
+export function testParseOpenAPI(fixtureName: string, filename: string): void {
     // eslint-disable-next-line jest/valid-title
     describe(fixtureName, () => {
         it("parse open api", async () => {
