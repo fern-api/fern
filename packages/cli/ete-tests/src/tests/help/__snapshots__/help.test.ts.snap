@@ -11,8 +11,8 @@ Commands:
   fern-dev login             Log in to Fern via GitHub
   fern-dev format            Formats your Fern Definition
   fern-dev upgrade           Upgrades version in fern.config.json. Also upgrades
-                              generators in generators.yml to their minimum-comp
-                             atible versions.
+                             generators in generators.yml to their
+                             minimum-compatible versions.
 
 Options:
       --help       Show help                                           [boolean]

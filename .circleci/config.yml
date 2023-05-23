@@ -269,6 +269,24 @@ jobs:
             yarn generate-json-schema
             git --no-pager diff --exit-code
 
+  deploy-docs-dev:
+    docker:
+      - image: cimg/node:lts
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: Set nodeLinker to node-modules
+          command: |
+            # without this, multiple versions of react-query are included
+            # in the bundle
+            yarn config set nodeLinker node-modules
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Publish docs (dev)
+          command: yarn workspace @fern-api/fe-bundle deploy:dev
+
 workflows:
   version: 2
   build:
@@ -396,6 +414,21 @@ workflows:
             - live-test-dev
           context:
             - fern-tokens
+
+      - deploy-docs-dev:
+          filters:
+            branches:
+              only: main
+          requires:
+            - check
+            - organize-imports
+            - compile
+            - eslint
+            - test
+            - ete-tests
+          context:
+            - aws
+            - github
 
       - check-release-is-allowed:
           filters:

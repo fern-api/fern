@@ -57,6 +57,7 @@
     { "path": "../editor/ui/fe-bundle" },
     { "path": "../scripts" },
     { "path": "../ui/app" },
+    { "path": "../ui/deploy" },
     { "path": "../ui/fe-bundle" }
   ]
 }
