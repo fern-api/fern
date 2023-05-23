@@ -2,6 +2,7 @@ package generator
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/fern-api/fern-go/internal/types"
 )
@@ -36,10 +37,11 @@ func (g *Generator) Generate() ([]*File, error) {
 func (g *Generator) generate(ir *types.IntermediateRepresentation) ([]*File, error) {
 	// TODO: Every type should be generated into its own file,
 	// also taking its Fern package name into consideration.
-	writer := newFileWriter(fmt.Sprintf("%s.go", ir.APIName.SnakeCase.UnsafeName))
-	if err := writer.AddPackage(ir.APIName); err != nil {
-		return nil, err
-	}
+	writer := newFileWriter(
+		fmt.Sprintf("%s.go", ir.APIName.SnakeCase.UnsafeName),
+		strings.ToLower(ir.APIName.CamelCase.SafeName),
+		ir.Types,
+	)
 	for _, irType := range ir.Types {
 		if err := writer.WriteType(irType); err != nil {
 			return nil, err
