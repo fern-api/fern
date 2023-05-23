@@ -1,0 +1,5033 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser hathora parse open api 1`] = `
+{
+  "files": {
+    "openapi.json": {
+      "dependencies": [],
+      "description": undefined,
+      "endpoints": [
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [],
+          "generatedRequestName": "GetAppsRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetApps",
+          "path": "/apps/v1/list",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetAppsResponseItem",
+                "nameOverride": undefined,
+                "schema": "ApplicationWithDeployment",
+                "type": "reference",
+              },
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            422,
+            500,
+          ],
+          "generatedRequestName": "CreateAppRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "CreateApp",
+          "path": "/apps/v1/create",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "CreateAppRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "authConfiguration",
+                  "schema": {
+                    "allOf": [],
+                    "description": undefined,
+                    "generatedName": "CreateAppRequestAuthConfiguration",
+                    "nameOverride": undefined,
+                    "properties": [
+                      {
+                        "conflict": [],
+                        "key": "google",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "allOf": [],
+                            "description": undefined,
+                            "generatedName": "CreateAppRequestAuthConfigurationGoogle",
+                            "nameOverride": undefined,
+                            "properties": [
+                              {
+                                "conflict": [],
+                                "key": "clientId",
+                                "schema": {
+                                  "description": undefined,
+                                  "schema": {
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "object",
+                          },
+                        },
+                      },
+                      {
+                        "conflict": [],
+                        "key": "nickname",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "description": undefined,
+                            "file": undefined,
+                            "generatedName": "CreateAppRequestAuthConfigurationNickname",
+                            "nameOverride": undefined,
+                            "schema": "Record_string.never_",
+                            "type": "reference",
+                          },
+                        },
+                      },
+                      {
+                        "conflict": [],
+                        "key": "anonymous",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "description": undefined,
+                            "file": undefined,
+                            "generatedName": "CreateAppRequestAuthConfigurationAnonymous",
+                            "nameOverride": undefined,
+                            "schema": "Record_string.never_",
+                            "type": "reference",
+                          },
+                        },
+                      },
+                    ],
+                    "type": "object",
+                  },
+                },
+                {
+                  "conflict": [],
+                  "key": "appName",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateAppResponse",
+              "nameOverride": undefined,
+              "schema": "Application",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
+          "generatedRequestName": "UpdateAppRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "UpdateApp",
+          "path": "/apps/v1/update/{appId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "UpdateAppRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "UpdateAppRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "authConfiguration",
+                  "schema": {
+                    "allOf": [],
+                    "description": undefined,
+                    "generatedName": "UpdateAppRequestAuthConfiguration",
+                    "nameOverride": undefined,
+                    "properties": [
+                      {
+                        "conflict": [],
+                        "key": "google",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "allOf": [],
+                            "description": undefined,
+                            "generatedName": "UpdateAppRequestAuthConfigurationGoogle",
+                            "nameOverride": undefined,
+                            "properties": [
+                              {
+                                "conflict": [],
+                                "key": "clientId",
+                                "schema": {
+                                  "description": undefined,
+                                  "schema": {
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
+                            "type": "object",
+                          },
+                        },
+                      },
+                      {
+                        "conflict": [],
+                        "key": "nickname",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "description": undefined,
+                            "file": undefined,
+                            "generatedName": "UpdateAppRequestAuthConfigurationNickname",
+                            "nameOverride": undefined,
+                            "schema": "Record_string.never_",
+                            "type": "reference",
+                          },
+                        },
+                      },
+                      {
+                        "conflict": [],
+                        "key": "anonymous",
+                        "schema": {
+                          "description": undefined,
+                          "type": "optional",
+                          "value": {
+                            "description": undefined,
+                            "file": undefined,
+                            "generatedName": "UpdateAppRequestAuthConfigurationAnonymous",
+                            "nameOverride": undefined,
+                            "schema": "Record_string.never_",
+                            "type": "reference",
+                          },
+                        },
+                      },
+                    ],
+                    "type": "object",
+                  },
+                },
+                {
+                  "conflict": [],
+                  "key": "appName",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "UpdateAppResponse",
+              "nameOverride": undefined,
+              "schema": "Application",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetAppInfoRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetAppInfo",
+          "path": "/apps/v1/info/{appId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetAppInfoRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetAppInfoResponse",
+              "nameOverride": undefined,
+              "schema": "Application",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            500,
+          ],
+          "generatedRequestName": "DeleteAppRequest",
+          "headers": [],
+          "method": "DELETE",
+          "operationId": "DeleteApp",
+          "path": "/apps/v1/delete/{appId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DeleteAppRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": undefined,
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AppV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "LoginAnonymousRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "LoginAnonymous",
+          "path": "/auth/v1/{appId}/login/anonymous",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "LoginAnonymousRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "LoginAnonymousResponse",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "token",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AuthV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "LoginNicknameRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "LoginNickname",
+          "path": "/auth/v1/{appId}/login/nickname",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "LoginNicknameRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "LoginNicknameRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "nickname",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "LoginNicknameResponse",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "token",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AuthV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            401,
+            404,
+          ],
+          "generatedRequestName": "LoginGoogleRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "LoginGoogle",
+          "path": "/auth/v1/{appId}/login/google",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "LoginGoogleRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "LoginGoogleRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "idToken",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "LoginGoogleResponse",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "token",
+                  "schema": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "AuthV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetBuildsRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetBuilds",
+          "path": "/builds/v1/{appId}/list",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetBuildsRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetBuildsResponseItem",
+                "nameOverride": undefined,
+                "schema": "Build",
+                "type": "reference",
+              },
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetBuildInfoRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetBuildInfo",
+          "path": "/builds/v1/{appId}/info/{buildId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetBuildInfoRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetBuildInfoRequestBuildId",
+                "nameOverride": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetBuildInfoResponse",
+              "nameOverride": undefined,
+              "schema": "Build",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
+          "generatedRequestName": "CreateBuildRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "CreateBuild",
+          "path": "/builds/v1/{appId}/create",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreateBuildRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateBuildResponse",
+              "nameOverride": undefined,
+              "schema": "Build",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [],
+          "generatedRequestName": "RunBuildRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "RunBuild",
+          "path": "/builds/v1/{appId}/run/{buildId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "RunBuildRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "RunBuildRequestBuildId",
+                "nameOverride": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "name": undefined,
+            "properties": [
+              {
+                "description": undefined,
+                "key": "file",
+                "schema": {
+                  "type": "file",
+                },
+              },
+            ],
+            "type": "multipart",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "type": "file",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
+          "generatedRequestName": "DeleteBuildRequest",
+          "headers": [],
+          "method": "DELETE",
+          "operationId": "DeleteBuild",
+          "path": "/builds/v1/{appId}/delete/{buildId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DeleteBuildRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DeleteBuildRequestBuildId",
+                "nameOverride": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": undefined,
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "BuildV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetDeploymentsRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetDeployments",
+          "path": "/deployments/v1/{appId}/list",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetDeploymentsRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetDeploymentsResponseItem",
+                "nameOverride": undefined,
+                "schema": "Deployment",
+                "type": "reference",
+              },
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "DeploymentV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetDeploymentInfoRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetDeploymentInfo",
+          "path": "/deployments/v1/{appId}/info/{deploymentId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetDeploymentInfoRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "deploymentId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetDeploymentInfoRequestDeploymentId",
+                "nameOverride": undefined,
+                "schema": "DeploymentId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetDeploymentInfoResponse",
+              "nameOverride": undefined,
+              "schema": "Deployment",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "DeploymentV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
+          "generatedRequestName": "CreateDeploymentRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "CreateDeployment",
+          "path": "/deployments/v1/{appId}/create/{buildId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreateDeploymentRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreateDeploymentRequestBuildId",
+                "nameOverride": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateDeploymentRequest",
+              "nameOverride": undefined,
+              "schema": "DeploymentConfig",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateDeploymentResponse",
+              "nameOverride": undefined,
+              "schema": "Deployment",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "DeploymentV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [],
+          "generatedRequestName": "GetPingServiceEndpointsRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetPingServiceEndpoints",
+          "path": "/discovery/v1/ping",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetPingServiceEndpointsResponse",
+              "nameOverride": undefined,
+              "schema": "DiscoveryResponse",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "DiscoveryV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
+          "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreatePrivateLobbyDeprecated",
+          "path": "/lobby/v1/{appId}/create/private",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreatePrivateLobbyDeprecatedRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "CreatePrivateLobbyDeprecatedRequestRegion",
+                  "nameOverride": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "local",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreatePrivateLobbyDeprecatedResponse",
+              "nameOverride": undefined,
+              "schema": "RoomId",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
+          "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreatePublicLobbyDeprecated",
+          "path": "/lobby/v1/{appId}/create/public",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreatePublicLobbyDeprecatedRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "CreatePublicLobbyDeprecatedRequestRegion",
+                  "nameOverride": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "local",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreatePublicLobbyDeprecatedResponse",
+              "nameOverride": undefined,
+              "schema": "RoomId",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            401,
+            404,
+          ],
+          "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "GET",
+          "operationId": "ListActivePublicLobbiesDeprecated",
+          "path": "/lobby/v1/{appId}/list",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ListActivePublicLobbiesDeprecatedRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "local",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ListActivePublicLobbiesDeprecatedRequestRegion",
+                  "nameOverride": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ListActivePublicLobbiesDeprecatedResponseItem",
+                "nameOverride": undefined,
+                "schema": "Lobby",
+                "type": "reference",
+              },
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
+          "generatedRequestName": "CreatePrivateLobbyRequest",
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreatePrivateLobby",
+          "path": "/lobby/v2/{appId}/create/private",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreatePrivateLobbyRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "CreatePrivateLobbyRequestRoomId",
+                  "nameOverride": undefined,
+                  "schema": "RoomId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "CreatePrivateLobbyRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "initialConfig",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+                {
+                  "conflict": [],
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "CreatePrivateLobbyRequestRegion",
+                    "nameOverride": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreatePrivateLobbyResponse",
+              "nameOverride": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
+          "generatedRequestName": "CreatePublicLobbyRequest",
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreatePublicLobby",
+          "path": "/lobby/v2/{appId}/create/public",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreatePublicLobbyRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "CreatePublicLobbyRequestRoomId",
+                  "nameOverride": undefined,
+                  "schema": "RoomId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "CreatePublicLobbyRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "initialConfig",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+                {
+                  "conflict": [],
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "CreatePublicLobbyRequestRegion",
+                    "nameOverride": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreatePublicLobbyResponse",
+              "nameOverride": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
+          "generatedRequestName": "CreateLocalLobbyRequest",
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreateLocalLobby",
+          "path": "/lobby/v2/{appId}/create/local",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreateLocalLobbyRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "CreateLocalLobbyRequestRoomId",
+                  "nameOverride": undefined,
+                  "schema": "RoomId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "CreateLocalLobbyRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "initialConfig",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+                {
+                  "conflict": [],
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "CreateLocalLobbyRequestRegion",
+                    "nameOverride": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateLocalLobbyResponse",
+              "nameOverride": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            401,
+            404,
+            422,
+            429,
+            500,
+          ],
+          "generatedRequestName": "CreateLobbyRequest",
+          "headers": [
+            {
+              "description": undefined,
+              "name": "Authorization",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "method": "POST",
+          "operationId": "CreateLobby",
+          "path": "/lobby/v2/{appId}/create",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreateLobbyRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "CreateLobbyRequestRoomId",
+                  "nameOverride": undefined,
+                  "schema": "RoomId",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "CreateLobbyRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "visibility",
+                  "schema": {
+                    "description": undefined,
+                    "generatedName": "CreateLobbyRequestVisibility",
+                    "nameOverride": undefined,
+                    "type": "enum",
+                    "values": [
+                      {
+                        "generatedName": "public",
+                        "nameOverride": undefined,
+                        "value": "public",
+                      },
+                      {
+                        "generatedName": "private",
+                        "nameOverride": undefined,
+                        "value": "private",
+                      },
+                      {
+                        "generatedName": "local",
+                        "nameOverride": undefined,
+                        "value": "local",
+                      },
+                    ],
+                  },
+                },
+                {
+                  "conflict": [],
+                  "key": "initialConfig",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+                {
+                  "conflict": [],
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "CreateLobbyRequestRegion",
+                    "nameOverride": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateLobbyResponse",
+              "nameOverride": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [],
+          "generatedRequestName": "ListActivePublicLobbiesRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "ListActivePublicLobbies",
+          "path": "/lobby/v2/{appId}/list/public",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ListActivePublicLobbiesRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ListActivePublicLobbiesRequestRegion",
+                  "nameOverride": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ListActivePublicLobbiesResponseItem",
+                "nameOverride": undefined,
+                "schema": "Lobby",
+                "type": "reference",
+              },
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetLobbyInfoRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetLobbyInfo",
+          "path": "/lobby/v2/{appId}/info/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetLobbyInfoRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetLobbyInfoRequestRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetLobbyInfoResponse",
+              "nameOverride": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            422,
+          ],
+          "generatedRequestName": "SetLobbyStateRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "SetLobbyState",
+          "path": "/lobby/v2/{appId}/setState/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "SetLobbyStateRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "SetLobbyStateRequestRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "SetLobbyStateRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "state",
+                  "schema": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "type": "unknown",
+                    },
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "SetLobbyStateResponse",
+              "nameOverride": undefined,
+              "schema": "Lobby",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LobbyV2",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [],
+          "generatedRequestName": "GetLogsForAppRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetLogsForApp",
+          "path": "/logs/v1/{appId}/all",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetLogsForAppRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "follow",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "tailLines",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GetLogsForAppRequestRegion",
+                  "nameOverride": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "type": "file",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LogV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [],
+          "generatedRequestName": "GetLogsForProcessRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetLogsForProcess",
+          "path": "/logs/v1/{appId}/process/{processId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetLogsForProcessRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetLogsForProcessRequestProcessId",
+                "nameOverride": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "follow",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "tailLines",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "type": "file",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LogV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [],
+          "generatedRequestName": "GetLogsForDeploymentRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetLogsForDeployment",
+          "path": "/logs/v1/{appId}/deployment/{deploymentId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetLogsForDeploymentRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "deploymentId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetLogsForDeploymentRequestDeploymentId",
+                "nameOverride": undefined,
+                "schema": "DeploymentId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "follow",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "boolean",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "tailLines",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "type": "file",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "LogV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            422,
+          ],
+          "generatedRequestName": "GetMetricsRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetMetrics",
+          "path": "/metrics/v1/{appId}/process/{processId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetMetricsRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetMetricsRequestProcessId",
+                "nameOverride": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "metrics",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "GetMetricsRequestMetricsItem",
+                    "nameOverride": undefined,
+                    "schema": "MetricName",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "end",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "start",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": undefined,
+              "name": "step",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetMetricsResponse",
+              "nameOverride": undefined,
+              "schema": "MetricsResponse",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "MetricsV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetRunningProcessesRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetRunningProcesses",
+          "path": "/processes/v1/{appId}/list/running",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetRunningProcessesRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GetRunningProcessesRequestRegion",
+                  "nameOverride": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetRunningProcessesResponseItem",
+                "nameOverride": undefined,
+                "schema": "ProcessWithRooms",
+                "type": "reference",
+              },
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "ProcessesV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetStoppedProcessesRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetStoppedProcesses",
+          "path": "/processes/v1/{appId}/list/stopped",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetStoppedProcessesRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [
+            {
+              "description": undefined,
+              "name": "region",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GetStoppedProcessesRequestRegion",
+                  "nameOverride": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetStoppedProcessesResponseItem",
+                "nameOverride": undefined,
+                "schema": "Process",
+                "type": "reference",
+              },
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "ProcessesV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetProcessInfoRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetProcessInfo",
+          "path": "/processes/v1/{appId}/info/{processId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetProcessInfoRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetProcessInfoRequestProcessId",
+                "nameOverride": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetProcessInfoResponse",
+              "nameOverride": undefined,
+              "schema": "Process",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "ProcessesV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            500,
+          ],
+          "generatedRequestName": "CreateRoomRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "CreateRoom",
+          "path": "/rooms/v1/{appId}/create",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "CreateRoomRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "allOf": [],
+              "description": undefined,
+              "generatedName": "CreateRoomRequest",
+              "nameOverride": undefined,
+              "properties": [
+                {
+                  "conflict": [],
+                  "key": "region",
+                  "schema": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "CreateRoomRequestRegion",
+                    "nameOverride": undefined,
+                    "schema": "Region",
+                    "type": "reference",
+                  },
+                },
+              ],
+              "type": "object",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateRoomResponse",
+              "nameOverride": undefined,
+              "schema": "RoomId",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetRoomInfoRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetRoomInfo",
+          "path": "/rooms/v1/{appId}/info/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetRoomInfoRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetRoomInfoRequestRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetRoomInfoResponse",
+              "nameOverride": undefined,
+              "schema": "Room",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetActiveRoomsForProcessRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetActiveRoomsForProcess",
+          "path": "/rooms/v1/{appId}/list/{processId}/active",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetActiveRoomsForProcessRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetActiveRoomsForProcessRequestProcessId",
+                "nameOverride": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetActiveRoomsForProcessResponseItem",
+                "nameOverride": undefined,
+                "schema": "RoomWithoutAllocations",
+                "type": "reference",
+              },
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+          ],
+          "generatedRequestName": "GetInactiveRoomsForProcessRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetInactiveRoomsForProcess",
+          "path": "/rooms/v1/{appId}/list/{processId}/inactive",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetInactiveRoomsForProcessRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetInactiveRoomsForProcessRequestProcessId",
+                "nameOverride": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "type": "array",
+              "value": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetInactiveRoomsForProcessResponseItem",
+                "nameOverride": undefined,
+                "schema": "RoomWithoutAllocations",
+                "type": "reference",
+              },
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            500,
+          ],
+          "generatedRequestName": "DestroyRoomRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "DestroyRoom",
+          "path": "/rooms/v1/{appId}/destroy/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DestroyRoomRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DestroyRoomRequestRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": undefined,
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            500,
+          ],
+          "generatedRequestName": "SuspendRoomRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "SuspendRoom",
+          "path": "/rooms/v1/{appId}/suspend/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "SuspendRoomRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "SuspendRoomRequestRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": undefined,
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+        {
+          "authed": true,
+          "description": undefined,
+          "errorStatusCode": [
+            404,
+            422,
+            500,
+          ],
+          "generatedRequestName": "GetConnectionInfoRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "GetConnectionInfo",
+          "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
+          "pathParameters": [
+            {
+              "description": undefined,
+              "name": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetConnectionInfoRequestAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+            {
+              "description": undefined,
+              "name": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "GetConnectionInfoRequestRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "Ok",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GetConnectionInfoResponse",
+              "nameOverride": undefined,
+              "schema": "ConnectionInfo",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "RoomV1",
+          ],
+        },
+      ],
+      "errors": {
+        "401": {
+          "description": undefined,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": undefined,
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": undefined,
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": undefined,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": undefined,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "schema": {
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
+      "nonRequestReferencedSchemas": [
+        "ApplicationWithDeployment",
+        "Record_string.never_",
+        "Application",
+        "AppId",
+        "Build",
+        "BuildId",
+        "Deployment",
+        "DeploymentId",
+        "DiscoveryResponse",
+        "Region",
+        "RoomId",
+        "Lobby",
+        "ProcessId",
+        "MetricName",
+        "MetricsResponse",
+        "ProcessWithRooms",
+        "Process",
+        "Room",
+        "RoomWithoutAllocations",
+        "ConnectionInfo",
+        "OrgId",
+        "PlanName",
+        "TransportType",
+        "MetricValue",
+        "Record_Partial_MetricName_.MetricValue-Array_",
+        "RoomAllocationId",
+        "RoomStatus",
+        "RoomAllocation",
+        "Pick_Room.Exclude_keyofRoom.allocations__",
+        "Omit_Room.allocations_",
+        "StartingConnectionInfo",
+        "ActiveConnectionInfo",
+      ],
+      "schemas": {
+        "ActiveConnectionInfo": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "ActiveConnectionInfo",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "generatedName": "ActiveConnectionInfoStatus",
+                "nameOverride": undefined,
+                "type": "enum",
+                "values": [
+                  {
+                    "generatedName": "active",
+                    "nameOverride": undefined,
+                    "value": "active",
+                  },
+                ],
+              },
+            },
+            {
+              "conflict": [],
+              "key": "transportType",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ActiveConnectionInfoTransportType",
+                "nameOverride": undefined,
+                "schema": "TransportType",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "port",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "host",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ActiveConnectionInfoRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "AppId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "Application": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Application",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "deletedBy",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "deletedAt",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "createdAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "createdBy",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "orgId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ApplicationOrgId",
+                "nameOverride": undefined,
+                "schema": "OrgId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "authConfiguration",
+              "schema": {
+                "allOf": [],
+                "description": undefined,
+                "generatedName": "ApplicationAuthConfiguration",
+                "nameOverride": undefined,
+                "properties": [
+                  {
+                    "conflict": [],
+                    "key": "google",
+                    "schema": {
+                      "description": undefined,
+                      "type": "optional",
+                      "value": {
+                        "allOf": [],
+                        "description": undefined,
+                        "generatedName": "ApplicationAuthConfigurationGoogle",
+                        "nameOverride": undefined,
+                        "properties": [
+                          {
+                            "conflict": [],
+                            "key": "clientId",
+                            "schema": {
+                              "description": undefined,
+                              "schema": {
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        ],
+                        "type": "object",
+                      },
+                    },
+                  },
+                  {
+                    "conflict": [],
+                    "key": "nickname",
+                    "schema": {
+                      "description": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "file": undefined,
+                        "generatedName": "ApplicationAuthConfigurationNickname",
+                        "nameOverride": undefined,
+                        "schema": "Record_string.never_",
+                        "type": "reference",
+                      },
+                    },
+                  },
+                  {
+                    "conflict": [],
+                    "key": "anonymous",
+                    "schema": {
+                      "description": undefined,
+                      "type": "optional",
+                      "value": {
+                        "description": undefined,
+                        "file": undefined,
+                        "generatedName": "ApplicationAuthConfigurationAnonymous",
+                        "nameOverride": undefined,
+                        "schema": "Record_string.never_",
+                        "type": "reference",
+                      },
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "appSecret",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "appName",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ApplicationWithDeployment": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "Application",
+              "nameOverride": undefined,
+              "schema": "Application",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "generatedName": "ApplicationWithDeployment",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "deployment",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ApplicationWithDeploymentDeployment",
+                "nameOverride": undefined,
+                "schema": "Deployment",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Build": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Build",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "regionalContainerTags",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "allOf": [],
+                  "description": undefined,
+                  "generatedName": "BuildRegionalContainerTagsItem",
+                  "nameOverride": undefined,
+                  "properties": [
+                    {
+                      "conflict": [],
+                      "key": "containerTag",
+                      "schema": {
+                        "description": undefined,
+                        "schema": {
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    {
+                      "conflict": [],
+                      "key": "region",
+                      "schema": {
+                        "description": undefined,
+                        "file": undefined,
+                        "generatedName": "BuildRegionalContainerTagsItemRegion",
+                        "nameOverride": undefined,
+                        "schema": "Region",
+                        "type": "reference",
+                      },
+                    },
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "imageSize",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "generatedName": "BuildStatus",
+                "nameOverride": undefined,
+                "type": "enum",
+                "values": [
+                  {
+                    "generatedName": "created",
+                    "nameOverride": undefined,
+                    "value": "created",
+                  },
+                  {
+                    "generatedName": "running",
+                    "nameOverride": undefined,
+                    "value": "running",
+                  },
+                  {
+                    "generatedName": "succeeded",
+                    "nameOverride": undefined,
+                    "value": "succeeded",
+                  },
+                  {
+                    "generatedName": "failed",
+                    "nameOverride": undefined,
+                    "value": "failed",
+                  },
+                ],
+              },
+            },
+            {
+              "conflict": [],
+              "key": "deletedAt",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "finishedAt",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "startedAt",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "createdAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "createdBy",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "BuildBuildId",
+                "nameOverride": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "BuildAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "BuildId": {
+          "description": undefined,
+          "schema": {
+            "type": "double",
+          },
+          "type": "primitive",
+        },
+        "ConnectionInfo": {
+          "oneOf": {
+            "description": undefined,
+            "generatedName": "ConnectionInfo",
+            "nameOverride": undefined,
+            "schemas": [
+              {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ConnectionInfoConnectionInfo",
+                "nameOverride": undefined,
+                "schema": "StartingConnectionInfo",
+                "type": "reference",
+              },
+              {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ConnectionInfoConnectionInfo",
+                "nameOverride": undefined,
+                "schema": "ActiveConnectionInfo",
+                "type": "reference",
+              },
+            ],
+            "type": "undisciminated",
+          },
+          "type": "oneOf",
+        },
+        "Deployment": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "DeploymentConfig",
+              "nameOverride": undefined,
+              "schema": "DeploymentConfig",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "generatedName": "Deployment",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "createdAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "createdBy",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "requestedMemoryMB",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "requestedCPU",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "deploymentId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DeploymentDeploymentId",
+                "nameOverride": undefined,
+                "schema": "DeploymentId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "buildId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DeploymentBuildId",
+                "nameOverride": undefined,
+                "schema": "BuildId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DeploymentAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "DeploymentConfig": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "DeploymentConfig",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "env",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "allOf": [],
+                  "description": undefined,
+                  "generatedName": "DeploymentConfigEnvItem",
+                  "nameOverride": undefined,
+                  "properties": [
+                    {
+                      "conflict": [],
+                      "key": "value",
+                      "schema": {
+                        "description": undefined,
+                        "schema": {
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    {
+                      "conflict": [],
+                      "key": "name",
+                      "schema": {
+                        "description": undefined,
+                        "schema": {
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
+                  "type": "object",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "roomsPerProcess",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "planName",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DeploymentConfigPlanName",
+                "nameOverride": undefined,
+                "schema": "PlanName",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "transportType",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "DeploymentConfigTransportType",
+                "nameOverride": undefined,
+                "schema": "TransportType",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "containerPort",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "DeploymentId": {
+          "description": undefined,
+          "schema": {
+            "type": "double",
+          },
+          "type": "primitive",
+        },
+        "DiscoveryResponse": {
+          "description": undefined,
+          "type": "array",
+          "value": {
+            "allOf": [],
+            "description": undefined,
+            "generatedName": "DiscoveryResponseItem",
+            "nameOverride": undefined,
+            "properties": [
+              {
+                "conflict": [],
+                "key": "port",
+                "schema": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+              {
+                "conflict": [],
+                "key": "host",
+                "schema": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+              {
+                "conflict": [],
+                "key": "region",
+                "schema": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "DiscoveryResponseItemRegion",
+                  "nameOverride": undefined,
+                  "schema": "Region",
+                  "type": "reference",
+                },
+              },
+            ],
+            "type": "object",
+          },
+        },
+        "Lobby": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Lobby",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "state",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "key": {
+                    "type": "string",
+                  },
+                  "type": "map",
+                  "value": {
+                    "type": "unknown",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "initialConfig",
+              "schema": {
+                "description": undefined,
+                "key": {
+                  "type": "string",
+                },
+                "type": "map",
+                "value": {
+                  "type": "unknown",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "createdAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "createdBy",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "local",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "visibility",
+              "schema": {
+                "description": undefined,
+                "generatedName": "LobbyVisibility",
+                "nameOverride": undefined,
+                "type": "enum",
+                "values": [
+                  {
+                    "generatedName": "private",
+                    "nameOverride": undefined,
+                    "value": "private",
+                  },
+                  {
+                    "generatedName": "public",
+                    "nameOverride": undefined,
+                    "value": "public",
+                  },
+                  {
+                    "generatedName": "local",
+                    "nameOverride": undefined,
+                    "value": "local",
+                  },
+                ],
+              },
+            },
+            {
+              "conflict": [],
+              "key": "region",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "LobbyRegion",
+                "nameOverride": undefined,
+                "schema": "Region",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "LobbyRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "LobbyAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "MetricName": {
+          "description": undefined,
+          "generatedName": "MetricName",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "cpu",
+              "nameOverride": undefined,
+              "value": "cpu",
+            },
+            {
+              "generatedName": "memory",
+              "nameOverride": undefined,
+              "value": "memory",
+            },
+            {
+              "generatedName": "rate_egress",
+              "nameOverride": undefined,
+              "value": "rate_egress",
+            },
+            {
+              "generatedName": "total_egress",
+              "nameOverride": undefined,
+              "value": "total_egress",
+            },
+          ],
+        },
+        "MetricValue": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "MetricValue",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "value",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "timestamp",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "MetricsResponse": {
+          "description": undefined,
+          "file": undefined,
+          "generatedName": "MetricsResponse",
+          "nameOverride": undefined,
+          "schema": "Record_Partial_MetricName_.MetricValue-Array_",
+          "type": "reference",
+        },
+        "Omit_Room.allocations_": {
+          "description": undefined,
+          "file": undefined,
+          "generatedName": "OmitRoomAllocations",
+          "nameOverride": undefined,
+          "schema": "Pick_Room.Exclude_keyofRoom.allocations__",
+          "type": "reference",
+        },
+        "OrgId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "Pick_Room.Exclude_keyofRoom.allocations__": {
+          "allOf": [],
+          "description": "From T, pick a set of properties whose keys are in the union K",
+          "generatedName": "PickRoomExcludeKeyofRoomAllocations",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "PickRoomExcludeKeyofRoomAllocationsAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "PickRoomExcludeKeyofRoomAllocationsRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "PickRoomExcludeKeyofRoomAllocationsStatus",
+                "nameOverride": undefined,
+                "schema": "RoomStatus",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "currentAllocation",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
+                  "nameOverride": undefined,
+                  "schema": "RoomAllocation",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "PlanName": {
+          "description": undefined,
+          "generatedName": "PlanName",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "tiny",
+              "nameOverride": undefined,
+              "value": "tiny",
+            },
+            {
+              "generatedName": "small",
+              "nameOverride": undefined,
+              "value": "small",
+            },
+            {
+              "generatedName": "medium",
+              "nameOverride": undefined,
+              "value": "medium",
+            },
+            {
+              "generatedName": "large",
+              "nameOverride": undefined,
+              "value": "large",
+            },
+          ],
+        },
+        "Process": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Process",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "egressedBytes",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "idleSince",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "activeConnections",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "roomSlotsAvailable",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "draining",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "terminatedAt",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "stoppingAt",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "startedAt",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "startingAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "roomsPerProcess",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "port",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "host",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "region",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ProcessRegion",
+                "nameOverride": undefined,
+                "schema": "Region",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ProcessProcessId",
+                "nameOverride": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "deploymentId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ProcessDeploymentId",
+                "nameOverride": undefined,
+                "schema": "DeploymentId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ProcessAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ProcessId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "ProcessWithRooms": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "Process",
+              "nameOverride": undefined,
+              "schema": "Process",
+              "type": "reference",
+            },
+          ],
+          "description": undefined,
+          "generatedName": "ProcessWithRooms",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "rooms",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "ProcessWithRoomsRoomsItem",
+                  "nameOverride": undefined,
+                  "schema": "RoomWithoutAllocations",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "totalRooms",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Record_Partial_MetricName_.MetricValue-Array_": {
+          "allOf": [],
+          "description": "Construct a type with a set of properties K of type T",
+          "generatedName": "RecordPartialMetricNameMetricValueArray",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "cpu",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "RecordPartialMetricNameMetricValueArrayCpuItem",
+                    "nameOverride": undefined,
+                    "schema": "MetricValue",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "memory",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "RecordPartialMetricNameMetricValueArrayMemoryItem",
+                    "nameOverride": undefined,
+                    "schema": "MetricValue",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "rate_egress",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "RecordPartialMetricNameMetricValueArrayRateEgressItem",
+                    "nameOverride": undefined,
+                    "schema": "MetricValue",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "total_egress",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "RecordPartialMetricNameMetricValueArrayTotalEgressItem",
+                    "nameOverride": undefined,
+                    "schema": "MetricValue",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Record_string.never_": {
+          "allOf": [],
+          "description": "Construct a type with a set of properties K of type T",
+          "generatedName": "RecordStringNever",
+          "nameOverride": undefined,
+          "properties": [],
+          "type": "object",
+        },
+        "Region": {
+          "description": undefined,
+          "generatedName": "Region",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "Seattle",
+              "nameOverride": undefined,
+              "value": "Seattle",
+            },
+            {
+              "generatedName": "Washington_DC",
+              "nameOverride": undefined,
+              "value": "Washington_DC",
+            },
+            {
+              "generatedName": "Chicago",
+              "nameOverride": undefined,
+              "value": "Chicago",
+            },
+            {
+              "generatedName": "London",
+              "nameOverride": undefined,
+              "value": "London",
+            },
+            {
+              "generatedName": "Frankfurt",
+              "nameOverride": undefined,
+              "value": "Frankfurt",
+            },
+            {
+              "generatedName": "Mumbai",
+              "nameOverride": undefined,
+              "value": "Mumbai",
+            },
+            {
+              "generatedName": "Singapore",
+              "nameOverride": undefined,
+              "value": "Singapore",
+            },
+            {
+              "generatedName": "Tokyo",
+              "nameOverride": undefined,
+              "value": "Tokyo",
+            },
+            {
+              "generatedName": "Sydney",
+              "nameOverride": undefined,
+              "value": "Sydney",
+            },
+            {
+              "generatedName": "Sao_Paulo",
+              "nameOverride": undefined,
+              "value": "Sao_Paulo",
+            },
+          ],
+        },
+        "Room": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Room",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "currentAllocation",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "RoomCurrentAllocation",
+                  "nameOverride": undefined,
+                  "schema": "RoomAllocation",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "RoomStatus",
+                "nameOverride": undefined,
+                "schema": "RoomStatus",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "allocations",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "RoomAllocationsItem",
+                  "nameOverride": undefined,
+                  "schema": "RoomAllocation",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "RoomRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "appId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "RoomAppId",
+                "nameOverride": undefined,
+                "schema": "AppId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "RoomAllocation": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "RoomAllocation",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "unscheduledAt",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "scheduledAt",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "processId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "RoomAllocationProcessId",
+                "nameOverride": undefined,
+                "schema": "ProcessId",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "roomAllocationId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "RoomAllocationRoomAllocationId",
+                "nameOverride": undefined,
+                "schema": "RoomAllocationId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "RoomAllocationId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "RoomId": {
+          "description": undefined,
+          "schema": {
+            "type": "string",
+          },
+          "type": "primitive",
+        },
+        "RoomStatus": {
+          "description": undefined,
+          "generatedName": "RoomStatus",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "scheduling",
+              "nameOverride": undefined,
+              "value": "scheduling",
+            },
+            {
+              "generatedName": "active",
+              "nameOverride": undefined,
+              "value": "active",
+            },
+            {
+              "generatedName": "suspended",
+              "nameOverride": undefined,
+              "value": "suspended",
+            },
+            {
+              "generatedName": "destroyed",
+              "nameOverride": undefined,
+              "value": "destroyed",
+            },
+          ],
+        },
+        "RoomWithoutAllocations": {
+          "description": undefined,
+          "file": undefined,
+          "generatedName": "RoomWithoutAllocations",
+          "nameOverride": undefined,
+          "schema": "Omit_Room.allocations_",
+          "type": "reference",
+        },
+        "StartingConnectionInfo": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "StartingConnectionInfo",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "generatedName": "StartingConnectionInfoStatus",
+                "nameOverride": undefined,
+                "type": "enum",
+                "values": [
+                  {
+                    "generatedName": "starting",
+                    "nameOverride": undefined,
+                    "value": "starting",
+                  },
+                ],
+              },
+            },
+            {
+              "conflict": [],
+              "key": "roomId",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "StartingConnectionInfoRoomId",
+                "nameOverride": undefined,
+                "schema": "RoomId",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "TransportType": {
+          "description": undefined,
+          "generatedName": "TransportType",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "tcp",
+              "nameOverride": undefined,
+              "value": "tcp",
+            },
+            {
+              "generatedName": "udp",
+              "nameOverride": undefined,
+              "value": "udp",
+            },
+            {
+              "generatedName": "tls",
+              "nameOverride": undefined,
+              "value": "tls",
+            },
+          ],
+        },
+      },
+      "securitySchemes": {
+        "auth0": {
+          "type": "bearer",
+        },
+      },
+      "servers": [
+        {
+          "description": undefined,
+          "name": undefined,
+          "url": "https://api.hathora.dev",
+        },
+        {
+          "description": undefined,
+          "name": undefined,
+          "url": "/",
+        },
+      ],
+      "tags": [],
+      "title": "Hathora Cloud API",
+      "variables": {},
+    },
+  },
+  "rootPackage": {
+    "file": "openapi.json",
+    "name": "",
+    "subpackages": [],
+  },
+}
+`;
