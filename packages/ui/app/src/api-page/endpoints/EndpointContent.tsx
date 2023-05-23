@@ -1,10 +1,11 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { ResolvedUrlPath } from "../../docs-context/url-path-resolver/UrlPathResolver";
 import { useDocsContext } from "../../docs-context/useDocsContext";
+import { useIsPathSelected } from "../../docs-context/useIsPathSelected";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { useEndpointContext } from "./context/useEndpointContext";
@@ -29,7 +30,12 @@ export declare namespace EndpointContent {
 }
 
 export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, path, setIsInView }) => {
-    const { registerNavigateToPathListener, setPathInView } = useDocsContext();
+    const isInitialMount = useRef(true);
+    useLayoutEffect(() => {
+        isInitialMount.current = false;
+    }, []);
+
+    const { registerNavigateToPathListener, setSelectedPath } = useDocsContext();
 
     const { setHoveredResponsePropertyPath } = useEndpointContext();
     const onHoverResponseProperty = useCallback(
@@ -54,13 +60,18 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
         onChange: onChangeIsInView,
     });
 
+    const hasCalledVerticalCenterHandler = useRef(false);
     const onChangeIsInVerticalCenter = useCallback(
         (isInView: boolean) => {
+            if (!hasCalledVerticalCenterHandler.current) {
+                hasCalledVerticalCenterHandler.current = true;
+                return;
+            }
             if (isInView) {
-                setPathInView(path);
+                setSelectedPath(path);
             }
         },
-        [path, setPathInView]
+        [path, setSelectedPath]
     );
 
     const { ref: setRefForInVerticalCenterIntersectionObserver } = useInView({
@@ -80,12 +91,23 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
         [setRefForInVerticalCenterIntersectionObserver, setRefForInViewIntersectionObserver]
     );
 
+    const handleIsSelected = useCallback(() => {
+        containerRef.current?.scrollIntoView();
+    }, []);
+
     useEffect(() => {
-        const unsubscribe = registerNavigateToPathListener(path, () => {
-            containerRef.current?.scrollIntoView();
-        });
+        const unsubscribe = registerNavigateToPathListener(path, handleIsSelected);
         return unsubscribe;
-    }, [path, registerNavigateToPathListener]);
+    }, [handleIsSelected, path, registerNavigateToPathListener]);
+
+    const isSelected = useIsPathSelected(path);
+    useLayoutEffect(() => {
+        if (isSelected) {
+            handleIsSelected();
+        }
+        // only run on initial mount
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className="flex flex-col">

@@ -10,11 +10,11 @@ export declare namespace MarkdownPage {
 }
 
 export const MarkdownPage: React.FC<MarkdownPage.Props> = ({ path }) => {
-    const { resolvePage, setPathInView } = useDocsContext();
+    const { resolvePage, setSelectedPath } = useDocsContext();
 
     useEffect(() => {
-        setPathInView(path);
-    }, [path, setPathInView]);
+        setSelectedPath(path);
+    }, [path, setSelectedPath]);
 
     return (
         <div className="flex flex-col items-center overflow-y-auto pb-10">

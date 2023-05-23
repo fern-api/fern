@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { useCallback } from "react";
 import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { useIsPathInView } from "../docs-context/useIsPathInView";
+import { useIsPathSelected } from "../docs-context/useIsPathSelected";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace NavigatingSidebarItem {
@@ -19,7 +19,7 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
         navigateToPath(path);
     }, [navigateToPath, path]);
 
-    const isSelected = useIsPathInView(path);
+    const isSelected = useIsPathSelected(path);
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
