@@ -1,0 +1,49 @@
+package api
+
+import (
+	json "encoding/json"
+	fmt "fmt"
+)
+
+type NestedUnion struct {
+	Type string
+	Docs string
+	Raw  string
+	One  *Type
+}
+
+func (x *NestedUnion) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+		Docs string `json:"docs"`
+		Raw  string `json:"raw"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	x.Type = unmarshaler.Type
+	x.Docs = unmarshaler.Docs
+	x.Raw = unmarshaler.Raw
+	switch unmarshaler.Type {
+	case "one":
+		value := new(Type)
+		if err := json.Unmarshal(data, &unmarshaler); err != nil {
+			return err
+		}
+		x.One = value
+	}
+	return nil
+}
+
+type NestedUnionVisitor interface {
+	VisitOne(*Type) error
+}
+
+func (x *NestedUnion) Accept(v NestedUnionVisitor) error {
+	switch x.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "one":
+		return v.VisitOne(x.One)
+	}
+}
