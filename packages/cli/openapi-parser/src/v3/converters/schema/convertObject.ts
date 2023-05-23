@@ -1,4 +1,10 @@
-import { ObjectProperty, ReferencedSchema, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
+import {
+    ObjectProperty,
+    ObjectPropertyConflictInfo,
+    ReferencedSchema,
+    Schema,
+    SchemaId,
+} from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
@@ -60,11 +66,13 @@ export function convertObject({
         const isRequired = allRequired.includes(propertyName);
         const schema = convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]);
 
-        const conflicts = [];
+        const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
         for (const parent of parents) {
             const parentPropertySchema = parent.properties[propertyName];
             if (parentPropertySchema != null && !isSchemaEqual(schema, parentPropertySchema)) {
-                conflicts.push(parent.schemaId);
+                conflicts[parent.schemaId] = { differentSchema: true };
+            } else if (parentPropertySchema != null) {
+                conflicts[parent.schemaId] = { differentSchema: false };
             }
         }
 

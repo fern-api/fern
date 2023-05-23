@@ -3529,7 +3529,7 @@ organizations.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "expires_at",
               "schema": {
                 "description": undefined,
@@ -3544,7 +3544,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "url",
               "schema": {
                 "description": "The artifact's download URL.",
@@ -3564,7 +3564,7 @@ organizations.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "file_name",
               "schema": {
                 "description": "The name of the file that's being uploaded.",
@@ -3584,7 +3584,7 @@ organizations.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "form_data",
               "schema": {
                 "description": "The POST policy form data.",
@@ -3600,7 +3600,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The generated artifact's ID.",
@@ -3611,7 +3611,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "url",
               "schema": {
                 "description": "The URL that the file's data should be uploaded to.",
@@ -3631,7 +3631,7 @@ organizations.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "key",
               "schema": {
                 "description": "Key of the form field.",
@@ -3642,7 +3642,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "value",
               "schema": {
                 "description": "Value corresponding to the key.",
@@ -3662,7 +3662,7 @@ organizations.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "created_by",
               "schema": {
                 "description": undefined,
@@ -3678,7 +3678,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "created_date",
               "schema": {
                 "description": undefined,
@@ -3693,7 +3693,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_id",
               "schema": {
                 "description": undefined,
@@ -3708,7 +3708,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "Globally unique object ID.",
@@ -3719,7 +3719,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "modified_by",
               "schema": {
                 "description": undefined,
@@ -3735,7 +3735,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "modified_date",
               "schema": {
                 "description": undefined,
@@ -3759,7 +3759,7 @@ organizations.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_id",
               "schema": {
                 "description": undefined,
@@ -3774,7 +3774,7 @@ organizations.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "Globally unique object ID.",
@@ -3904,7 +3904,7 @@ authentication connection.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -3919,7 +3919,7 @@ authentication connection.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "client_secret",
               "schema": {
                 "description": undefined,
@@ -3934,7 +3934,7 @@ authentication connection.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -3960,7 +3960,7 @@ authentication connection.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -3975,7 +3975,7 @@ authentication connection.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "client_secret",
               "schema": {
                 "description": undefined,
@@ -3991,7 +3991,7 @@ authentication connection.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tenant_domain",
               "schema": {
                 "description": undefined,
@@ -4018,7 +4018,7 @@ authentication connection.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -4033,7 +4033,7 @@ authentication connection.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "client_secret",
               "schema": {
                 "description": undefined,
@@ -4048,7 +4048,7 @@ authentication connection.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "issuer",
               "schema": {
                 "description": undefined,
@@ -4074,7 +4074,7 @@ authentication connection.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "sign_in_endpoint",
               "schema": {
                 "description": undefined,
@@ -4089,7 +4089,7 @@ authentication connection.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "signing_cert",
               "schema": {
                 "description": undefined,
@@ -4186,7 +4186,7 @@ for each authentication connection will depend on the type value.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -4203,7 +4203,7 @@ token. Only applicable for application access tokens.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "expires_at",
               "schema": {
                 "description": undefined,
@@ -4218,7 +4218,7 @@ token. Only applicable for application access tokens.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "issued_at",
               "schema": {
                 "description": undefined,
@@ -4233,7 +4233,7 @@ token. Only applicable for application access tokens.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "requested_token_type",
               "schema": {
                 "description": undefined,
@@ -4249,7 +4249,7 @@ token. Only applicable for application access tokens.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "scopes",
               "schema": {
                 "description": undefined,
@@ -4268,7 +4268,7 @@ token. Only applicable for application access tokens.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -4284,7 +4284,7 @@ token. Only applicable for application access tokens.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "subject",
               "schema": {
                 "description": undefined,
@@ -4299,7 +4299,7 @@ token. Only applicable for application access tokens.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "token_hint",
               "schema": {
                 "description": undefined,
@@ -4476,7 +4476,7 @@ type.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "aud",
               "schema": {
                 "description": undefined,
@@ -4495,7 +4495,7 @@ type.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -4514,7 +4514,7 @@ This client_id is only associated with an AAT.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "expires_in",
               "schema": {
                 "description": undefined,
@@ -4530,7 +4530,7 @@ This client_id is only associated with an AAT.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "grant_type",
               "schema": {
                 "description": undefined,
@@ -4546,7 +4546,7 @@ This client_id is only associated with an AAT.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "requested_token_type",
               "schema": {
                 "description": undefined,
@@ -4562,7 +4562,7 @@ This client_id is only associated with an AAT.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_info",
               "schema": {
                 "description": undefined,
@@ -4578,7 +4578,7 @@ This client_id is only associated with an AAT.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "scope",
               "schema": {
                 "description": undefined,
@@ -4596,7 +4596,7 @@ not matter.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "subject_token",
               "schema": {
                 "description": undefined,
@@ -4613,7 +4613,7 @@ requesting an application access token (AAT).
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "subject_token_type",
               "schema": {
                 "description": undefined,
@@ -4629,7 +4629,7 @@ requesting an application access token (AAT).
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "token_hint",
               "schema": {
                 "description": undefined,
@@ -4655,7 +4655,7 @@ requested token type.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "access_token",
               "schema": {
                 "description": "The issued JSON Web Token (JWT) corresponding to the requested
@@ -4668,7 +4668,7 @@ token type.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -4686,7 +4686,7 @@ application access token (AAT).
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "expires_in",
               "schema": {
                 "description": "The validity lifetime of the token specified in seconds since Unix
@@ -4699,7 +4699,7 @@ epoch.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "refresh_token",
               "schema": {
                 "description": undefined,
@@ -4714,7 +4714,7 @@ epoch.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "scope",
               "schema": {
                 "description": undefined,
@@ -4731,7 +4731,7 @@ of values in which the order of values does not matter.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "token_type",
               "schema": {
                 "description": undefined,
@@ -4752,7 +4752,7 @@ of values in which the order of values does not matter.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "token_id",
               "schema": {
                 "description": undefined,
@@ -4779,7 +4779,7 @@ JTI claim of the token in the authorization header.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "token",
               "schema": {
                 "description": undefined,
@@ -4800,7 +4800,7 @@ JTI claim of the token in the authorization header.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tokens",
               "schema": {
                 "description": "The list of token metadata.",
@@ -4825,7 +4825,7 @@ JTI claim of the token in the authorization header.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -4840,7 +4840,7 @@ JTI claim of the token in the authorization header.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -4866,7 +4866,7 @@ issue a Rev session token.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "org_ref",
               "schema": {
                 "description": undefined,
@@ -4881,7 +4881,7 @@ issue a Rev session token.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "org_traits",
               "schema": {
                 "description": undefined,
@@ -4897,7 +4897,7 @@ issue a Rev session token.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_user_id",
               "schema": {
                 "description": undefined,
@@ -4912,7 +4912,7 @@ issue a Rev session token.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "user_ref",
               "schema": {
                 "description": "An identifier which uniquely identifies a Rev user.",
@@ -4923,7 +4923,7 @@ issue a Rev session token.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "user_traits",
               "schema": {
                 "description": undefined,
@@ -4950,7 +4950,7 @@ that match with the provided token type.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "requested_token_type",
               "schema": {
                 "description": undefined,
@@ -4975,7 +4975,7 @@ that match with the provided token type.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "token_hint",
               "schema": {
                 "description": "A hint that identifies the token.",
@@ -4986,7 +4986,7 @@ that match with the provided token type.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "token_id",
               "schema": {
                 "description": "The unique identifier of the token under a given Dev organization.
@@ -5007,7 +5007,7 @@ that match with the provided token type.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "token",
               "schema": {
                 "description": undefined,
@@ -5028,7 +5028,7 @@ that match with the provided token type.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -5043,7 +5043,7 @@ that match with the provided token type.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -5058,7 +5058,7 @@ that match with the provided token type.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "full_name",
               "schema": {
                 "description": undefined,
@@ -5199,7 +5199,7 @@ connection.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "auth_connection",
               "schema": {
                 "description": undefined,
@@ -5223,7 +5223,7 @@ enabled cannot be deleted.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "ID of the authentication connection to be deleted.",
@@ -5245,7 +5245,7 @@ authentication connection.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "auth_connection",
               "schema": {
                 "description": undefined,
@@ -5268,7 +5268,7 @@ authentication connections configured for a Dev organization.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "auth_connections",
               "schema": {
                 "description": "List of all the authentication connections currently configured for
@@ -5297,7 +5297,7 @@ organization.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "ID of the authentication connection to be toggled.",
@@ -5308,7 +5308,7 @@ organization.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "toggle",
               "schema": {
                 "description": undefined,
@@ -5460,7 +5460,7 @@ connection.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "auth_connection",
               "schema": {
                 "description": undefined,
@@ -5490,7 +5490,7 @@ connection.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "external_identities",
               "schema": {
                 "description": undefined,
@@ -5527,7 +5527,7 @@ connection.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "dev_users",
               "schema": {
                 "description": "The list of Dev users.",
@@ -5543,7 +5543,7 @@ connection.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -5560,7 +5560,7 @@ sort order. If not set, then no later elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -5587,7 +5587,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "dev_user",
               "schema": {
                 "description": undefined,
@@ -5627,7 +5627,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "target_close_date",
               "schema": {
                 "description": undefined,
@@ -5668,7 +5668,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -5699,7 +5699,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "allowed_values",
               "schema": {
                 "description": "The allowed values for the field.",
@@ -5714,7 +5714,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "field_name",
               "schema": {
                 "description": "The field whose enum value is invalid.",
@@ -5725,7 +5725,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "value",
               "schema": {
                 "description": "The value that was received.",
@@ -5745,7 +5745,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "field_name",
               "schema": {
                 "description": "The missing field's name.",
@@ -5808,7 +5808,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "field_name",
               "schema": {
                 "description": "The field whose value is not permitted.",
@@ -5819,7 +5819,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "reason",
               "schema": {
                 "description": undefined,
@@ -5843,7 +5843,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "message",
               "schema": {
                 "description": undefined,
@@ -5876,7 +5876,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -5929,7 +5929,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "reference_id",
               "schema": {
                 "description": undefined,
@@ -5946,7 +5946,7 @@ inquiry.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -5999,7 +5999,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6052,7 +6052,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6105,7 +6105,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "retry_after",
               "schema": {
                 "description": undefined,
@@ -6121,7 +6121,7 @@ inquiry.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6174,7 +6174,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6218,7 +6218,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -6239,7 +6239,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the part that was deleted.",
@@ -6259,7 +6259,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -6280,7 +6280,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -6301,7 +6301,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the Rev organization that was deleted.",
@@ -6321,7 +6321,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -6342,7 +6342,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -6363,7 +6363,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the tag that was deleted.",
@@ -6383,7 +6383,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -6404,7 +6404,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "entry",
               "schema": {
                 "description": undefined,
@@ -6425,7 +6425,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the timeline entry that was deleted.",
@@ -6445,7 +6445,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "entry",
               "schema": {
                 "description": undefined,
@@ -6466,7 +6466,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -6487,7 +6487,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the webhook that was deleted.",
@@ -6507,7 +6507,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -6528,7 +6528,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "work",
               "schema": {
                 "description": undefined,
@@ -6549,7 +6549,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the work that was deleted.",
@@ -6569,7 +6569,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "work",
               "schema": {
                 "description": undefined,
@@ -6633,7 +6633,7 @@ inquiry.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "priority",
               "schema": {
                 "description": undefined,
@@ -6718,7 +6718,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -6751,7 +6751,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -6887,7 +6887,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -6907,7 +6907,7 @@ always be returned in the specified sort-by order.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -6922,7 +6922,7 @@ always be returned in the specified sort-by order.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "name",
               "schema": {
                 "description": "Name of the part.",
@@ -6933,7 +6933,7 @@ always be returned in the specified sort-by order.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "owned_by",
               "schema": {
                 "description": "The users that own the part.",
@@ -6949,7 +6949,7 @@ always be returned in the specified sort-by order.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tags",
               "schema": {
                 "description": undefined,
@@ -6987,7 +6987,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "name",
               "schema": {
                 "description": "Name of the part.",
@@ -7164,7 +7164,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "parent_part",
               "schema": {
                 "description": "ID of the parent product for the capability.",
@@ -7188,7 +7188,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "parent_part",
               "schema": {
                 "description": "ID of the parent part on which the enhancement is to be created.
@@ -7204,7 +7204,7 @@ always be returned in the specified sort-by order.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "target_close_date",
               "schema": {
                 "description": undefined,
@@ -7229,7 +7229,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "parent_part",
               "schema": {
                 "description": "ID of the parent capability/feature for the feature.",
@@ -7263,7 +7263,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -7284,7 +7284,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the part to delete.",
@@ -7314,7 +7314,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -7335,7 +7335,7 @@ always be returned in the specified sort-by order.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -7352,7 +7352,7 @@ sort order. If not set, then no later elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "parts",
               "schema": {
                 "description": "The list of parts.",
@@ -7368,7 +7368,7 @@ sort order. If not set, then no later elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -7511,7 +7511,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "target_close_date",
               "schema": {
                 "description": undefined,
@@ -7545,7 +7545,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -7585,7 +7585,7 @@ empty.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -7631,7 +7631,7 @@ empty.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -7646,7 +7646,7 @@ empty.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -7661,7 +7661,7 @@ empty.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "external_ref",
               "schema": {
                 "description": undefined,
@@ -7699,7 +7699,7 @@ organization.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -7714,7 +7714,7 @@ organization.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_name",
               "schema": {
                 "description": "Name of the Rev organization.",
@@ -7725,7 +7725,7 @@ organization.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -7740,7 +7740,7 @@ organization.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "environment",
               "schema": {
                 "description": undefined,
@@ -7756,7 +7756,7 @@ organization.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "external_ref",
               "schema": {
                 "description": undefined,
@@ -7774,7 +7774,7 @@ records.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tier",
               "schema": {
                 "description": undefined,
@@ -7799,7 +7799,7 @@ records.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -7820,7 +7820,7 @@ records.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of Rev organization to delete.",
@@ -7850,7 +7850,7 @@ records.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -7872,7 +7872,7 @@ records.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -7889,7 +7889,7 @@ sort order. If not set, then no later elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -7906,7 +7906,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_orgs",
               "schema": {
                 "description": "List with all of the Rev organizations' information.",
@@ -7932,7 +7932,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -7947,7 +7947,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -7962,7 +7962,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -7977,7 +7977,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "environment",
               "schema": {
                 "description": undefined,
@@ -7993,7 +7993,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "external_ref",
               "schema": {
                 "description": undefined,
@@ -8011,7 +8011,7 @@ records.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of Rev organization to update.",
@@ -8022,7 +8022,7 @@ records.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tier",
               "schema": {
                 "description": undefined,
@@ -8046,7 +8046,7 @@ records.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -8076,7 +8076,7 @@ records.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "external_ref",
               "schema": {
                 "description": undefined,
@@ -8096,7 +8096,7 @@ system-generated identifier will be assigned to the user.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -8121,7 +8121,7 @@ system-generated identifier will be assigned to the user.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the tag.",
@@ -8132,7 +8132,7 @@ system-generated identifier will be assigned to the user.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "value",
               "schema": {
                 "description": undefined,
@@ -8158,7 +8158,7 @@ the value must be one that's specified in the tag's allowed values.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "name",
               "schema": {
                 "description": "Current stage name of the work item.",
@@ -8178,7 +8178,7 @@ the value must be one that's specified in the tag's allowed values.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "name",
               "schema": {
                 "description": undefined,
@@ -8202,7 +8202,7 @@ the value must be one that's specified in the tag's allowed values.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "name",
               "schema": {
                 "description": undefined,
@@ -8244,7 +8244,7 @@ the value must be one that's specified in the tag's allowed values.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "allowed_values",
               "schema": {
                 "description": undefined,
@@ -8266,7 +8266,7 @@ provided when the association is made.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -8283,7 +8283,7 @@ on the tag's purpose and usage.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "name",
               "schema": {
                 "description": "The name of the tag, which denotes the logical concept by which all
@@ -8315,7 +8315,7 @@ unique.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "name",
               "schema": {
                 "description": "The name of the tag, which denotes the logical concept by which all
@@ -8338,7 +8338,7 @@ unique.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -8350,7 +8350,7 @@ unique.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "value",
               "schema": {
                 "description": undefined,
@@ -8374,7 +8374,7 @@ unique.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "allowed_values",
               "schema": {
                 "description": undefined,
@@ -8395,7 +8395,7 @@ permitted.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -8410,7 +8410,7 @@ permitted.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "name",
               "schema": {
                 "description": "The name for the tag, which must be unique across all tags.
@@ -8431,7 +8431,7 @@ permitted.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -8452,7 +8452,7 @@ permitted.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the tag to delete.",
@@ -8482,7 +8482,7 @@ permitted.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -8503,7 +8503,7 @@ permitted.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -8520,7 +8520,7 @@ sort order. If not set, then no later elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -8537,7 +8537,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tags",
               "schema": {
                 "description": "The list of tags.",
@@ -8562,7 +8562,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -8590,7 +8590,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "allowed_values",
               "schema": {
                 "description": undefined,
@@ -8606,7 +8606,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -8621,7 +8621,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The ID of the tag to update.",
@@ -8632,7 +8632,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "name",
               "schema": {
                 "description": undefined,
@@ -8658,7 +8658,7 @@ tags.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -8688,7 +8688,7 @@ tags.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "group",
               "schema": {
                 "description": undefined,
@@ -8704,7 +8704,7 @@ tags.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -8720,7 +8720,7 @@ tags.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "severity",
               "schema": {
                 "description": undefined,
@@ -8782,7 +8782,7 @@ tags.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -8802,7 +8802,7 @@ tags.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "body",
               "schema": {
                 "description": undefined,
@@ -8819,7 +8819,7 @@ will appear in the response.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "body_type",
               "schema": {
                 "description": undefined,
@@ -8835,7 +8835,7 @@ will appear in the response.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "snap_kit_body",
               "schema": {
                 "description": undefined,
@@ -8927,7 +8927,7 @@ will appear in the response.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -8946,7 +8946,7 @@ will appear in the response.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "body",
               "schema": {
                 "description": undefined,
@@ -8961,7 +8961,7 @@ will appear in the response.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "body_type",
               "schema": {
                 "description": undefined,
@@ -8977,7 +8977,7 @@ will appear in the response.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "snap_kit_body",
               "schema": {
                 "description": undefined,
@@ -9017,7 +9017,7 @@ will appear in the response.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "timeline_entry",
               "schema": {
                 "description": undefined,
@@ -9038,7 +9038,7 @@ will appear in the response.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "timeline_entry",
               "schema": {
                 "description": undefined,
@@ -9059,7 +9059,7 @@ will appear in the response.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -9076,7 +9076,7 @@ sort order. If not set, then no later elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -9093,7 +9093,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "timeline_entries",
               "schema": {
                 "description": "The timeline entries for the object.",
@@ -9150,7 +9150,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -9166,7 +9166,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "body",
               "schema": {
                 "description": undefined,
@@ -9181,7 +9181,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "body_type",
               "schema": {
                 "description": undefined,
@@ -9197,7 +9197,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "snap_kit_body",
               "schema": {
                 "description": undefined,
@@ -9224,7 +9224,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "add",
               "schema": {
                 "description": undefined,
@@ -9246,7 +9246,7 @@ already attached. Mutually exclusive with \`set\`.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "remove",
               "schema": {
                 "description": undefined,
@@ -9267,7 +9267,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -9308,7 +9308,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "timeline_entry",
               "schema": {
                 "description": undefined,
@@ -9396,7 +9396,7 @@ default visibility.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -9412,7 +9412,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_picture",
               "schema": {
                 "description": undefined,
@@ -9428,7 +9428,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -9443,7 +9443,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "full_name",
               "schema": {
                 "description": undefined,
@@ -9458,7 +9458,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "phone_numbers",
               "schema": {
                 "description": undefined,
@@ -9477,7 +9477,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "state",
               "schema": {
                 "description": undefined,
@@ -9511,7 +9511,7 @@ default visibility.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -9527,7 +9527,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "display_picture",
               "schema": {
                 "description": undefined,
@@ -9543,7 +9543,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -9558,7 +9558,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "full_name",
               "schema": {
                 "description": undefined,
@@ -9573,7 +9573,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "state",
               "schema": {
                 "description": undefined,
@@ -9700,7 +9700,7 @@ default visibility.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "event_types",
               "schema": {
                 "description": undefined,
@@ -9720,7 +9720,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "secret",
               "schema": {
                 "description": "The secret to use for verifying webhook events.",
@@ -9731,7 +9731,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -9743,7 +9743,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "url",
               "schema": {
                 "description": "The URL of the webhook endpoint.",
@@ -9763,7 +9763,7 @@ default visibility.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The event's ID.",
@@ -9774,7 +9774,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "part_created",
               "schema": {
                 "description": undefined,
@@ -9790,7 +9790,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "part_deleted",
               "schema": {
                 "description": undefined,
@@ -9806,7 +9806,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "part_updated",
               "schema": {
                 "description": undefined,
@@ -9822,7 +9822,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org_created",
               "schema": {
                 "description": undefined,
@@ -9838,7 +9838,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org_deleted",
               "schema": {
                 "description": undefined,
@@ -9854,7 +9854,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org_updated",
               "schema": {
                 "description": undefined,
@@ -9870,7 +9870,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tag_created",
               "schema": {
                 "description": undefined,
@@ -9886,7 +9886,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tag_deleted",
               "schema": {
                 "description": undefined,
@@ -9902,7 +9902,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tag_updated",
               "schema": {
                 "description": undefined,
@@ -9918,7 +9918,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "timeline_entry_created",
               "schema": {
                 "description": undefined,
@@ -9934,7 +9934,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "timeline_entry_deleted",
               "schema": {
                 "description": undefined,
@@ -9950,7 +9950,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "timeline_entry_updated",
               "schema": {
                 "description": undefined,
@@ -9966,7 +9966,7 @@ default visibility.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "timestamp",
               "schema": {
                 "description": undefined,
@@ -9985,7 +9985,7 @@ seconds.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -10001,7 +10001,7 @@ seconds.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "verify",
               "schema": {
                 "description": undefined,
@@ -10017,7 +10017,7 @@ seconds.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhook_created",
               "schema": {
                 "description": undefined,
@@ -10033,7 +10033,7 @@ seconds.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhook_deleted",
               "schema": {
                 "description": undefined,
@@ -10049,7 +10049,7 @@ seconds.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhook_id",
               "schema": {
                 "description": "ID of the webhook for the event.",
@@ -10060,7 +10060,7 @@ seconds.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhook_updated",
               "schema": {
                 "description": undefined,
@@ -10076,7 +10076,7 @@ seconds.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "work_created",
               "schema": {
                 "description": undefined,
@@ -10092,7 +10092,7 @@ seconds.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "work_deleted",
               "schema": {
                 "description": undefined,
@@ -10108,7 +10108,7 @@ seconds.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "work_updated",
               "schema": {
                 "description": undefined,
@@ -10133,7 +10133,7 @@ seconds.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "challenge",
               "schema": {
                 "description": undefined,
@@ -10262,7 +10262,7 @@ be set for other request types.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "challenge",
               "schema": {
                 "description": "The challenge that must be echoed in the response.",
@@ -10305,7 +10305,7 @@ be set for other request types.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "event_types",
               "schema": {
                 "description": undefined,
@@ -10325,7 +10325,7 @@ be set for other request types.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "secret",
               "schema": {
                 "description": undefined,
@@ -10344,7 +10344,7 @@ response.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "url",
               "schema": {
                 "description": "The URL of the webhook endpoint.",
@@ -10364,7 +10364,7 @@ response.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -10385,7 +10385,7 @@ response.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "ID for the webhook.",
@@ -10415,7 +10415,7 @@ response.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -10436,7 +10436,7 @@ response.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhooks",
               "schema": {
                 "description": "The list of webhooks.",
@@ -10479,7 +10479,7 @@ response.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "action",
               "schema": {
                 "description": undefined,
@@ -10495,7 +10495,7 @@ response.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "event_types",
               "schema": {
                 "description": undefined,
@@ -10511,7 +10511,7 @@ response.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "ID for the webhook.",
@@ -10522,7 +10522,7 @@ response.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "secret",
               "schema": {
                 "description": undefined,
@@ -10542,7 +10542,7 @@ won't receive any object events until successfully verified.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "url",
               "schema": {
                 "description": undefined,
@@ -10569,7 +10569,7 @@ won't receive any object events until successfully verified.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "add",
               "schema": {
                 "description": undefined,
@@ -10592,7 +10592,7 @@ with 'set'.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "remove",
               "schema": {
                 "description": undefined,
@@ -10615,7 +10615,7 @@ with 'set'.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -10647,7 +10647,7 @@ event types. Note this is mutually exclusive with 'add' and
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -10706,7 +10706,7 @@ event types. Note this is mutually exclusive with 'add' and
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "applies_to_part",
               "schema": {
                 "description": undefined,
@@ -10722,7 +10722,7 @@ event types. Note this is mutually exclusive with 'add' and
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -10742,7 +10742,7 @@ event types. Note this is mutually exclusive with 'add' and
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "body",
               "schema": {
                 "description": undefined,
@@ -10757,7 +10757,7 @@ event types. Note this is mutually exclusive with 'add' and
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "owned_by",
               "schema": {
                 "description": "The users that own the work.",
@@ -10773,7 +10773,7 @@ event types. Note this is mutually exclusive with 'add' and
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "reported_by",
               "schema": {
                 "description": undefined,
@@ -10793,7 +10793,7 @@ event types. Note this is mutually exclusive with 'add' and
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "stage",
               "schema": {
                 "description": undefined,
@@ -10809,7 +10809,7 @@ event types. Note this is mutually exclusive with 'add' and
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "tags",
               "schema": {
                 "description": undefined,
@@ -10829,7 +10829,7 @@ event types. Note this is mutually exclusive with 'add' and
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "target_close_date",
               "schema": {
                 "description": undefined,
@@ -10844,7 +10844,7 @@ event types. Note this is mutually exclusive with 'add' and
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "title",
               "schema": {
                 "description": "Title of the work object.",
@@ -11049,7 +11049,7 @@ issues.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "priority",
               "schema": {
                 "description": undefined,
@@ -11065,7 +11065,7 @@ issues.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "sprint",
               "schema": {
                 "description": undefined,
@@ -11089,7 +11089,7 @@ issues.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "group",
               "schema": {
                 "description": undefined,
@@ -11104,7 +11104,7 @@ issues.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -11119,7 +11119,7 @@ issues.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "severity",
               "schema": {
                 "description": undefined,
@@ -11144,7 +11144,7 @@ issues.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "work",
               "schema": {
                 "description": undefined,
@@ -11165,7 +11165,7 @@ issues.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "id",
               "schema": {
                 "description": "The work's ID.",
@@ -11195,7 +11195,7 @@ issues.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "works",
               "schema": {
                 "description": "The resulting collection of work items.",
@@ -11220,7 +11220,7 @@ issues.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "work",
               "schema": {
                 "description": undefined,
@@ -11241,7 +11241,7 @@ issues.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -11258,7 +11258,7 @@ sort order. If not set, then no later elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -11275,7 +11275,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "works",
               "schema": {
                 "description": "The list of works.",
@@ -11485,7 +11485,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -11513,7 +11513,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "priority",
               "schema": {
                 "description": undefined,
@@ -11529,7 +11529,7 @@ sort order. If not set, then no prior elements exist.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "sprint",
               "schema": {
                 "description": undefined,
@@ -11557,7 +11557,7 @@ sort order. If not set, then no prior elements exist.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -11587,7 +11587,7 @@ empty.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -11616,7 +11616,7 @@ empty.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -11645,7 +11645,7 @@ empty.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "group",
               "schema": {
                 "description": undefined,
@@ -11660,7 +11660,7 @@ empty.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -11681,7 +11681,7 @@ empty.
               },
             },
             {
-              "conflict": [],
+              "conflict": {},
               "key": "severity",
               "schema": {
                 "description": undefined,
@@ -11706,7 +11706,7 @@ empty.
           "nameOverride": undefined,
           "properties": [
             {
-              "conflict": [],
+              "conflict": {},
               "key": "work",
               "schema": {
                 "description": undefined,

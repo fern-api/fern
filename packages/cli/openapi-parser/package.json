@@ -32,7 +32,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/validator": "workspace:*",
-    "@fern-fern/openapi-ir-model": "0.0.64",
+    "@fern-fern/openapi-ir-model": "0.0.65",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.0.0",
     "swagger2openapi": "7.0.8"
