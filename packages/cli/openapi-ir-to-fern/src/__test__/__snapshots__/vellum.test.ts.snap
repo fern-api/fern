@@ -1,0 +1,916 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser vellum simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "errors": {
+        "BadRequestError": {
+          "status-code": 400,
+          "type": "unknown",
+        },
+        "InternalServerError": {
+          "status-code": 500,
+          "type": "unknown",
+        },
+        "NotFoundError": {
+          "status-code": 404,
+          "type": "unknown",
+        },
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "generate": {
+            "auth": true,
+            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Generate a completion using a previously defined deployment.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+            "errors": [
+              "BadRequestError",
+              "NotFoundError",
+              "InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/v1/generate",
+            "request": {
+              "body": {
+                "properties": {
+                  "deployment_id": {
+                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                    "type": "optional<string>",
+                  },
+                  "deployment_name": {
+                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                    "type": "optional<string>",
+                  },
+                  "options": {
+                    "docs": "Additional configuration that can be used to control what's included in the response.",
+                    "type": "optional<GenerateOptionsRequest>",
+                  },
+                  "requests": {
+                    "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                    "type": "list<GenerateRequestRequest>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "GenerateRequestBodyRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "GenerateResponse",
+            },
+            "url": "Default",
+          },
+          "search": {
+            "auth": true,
+            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Perform a search against a document index.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+            "errors": [
+              "BadRequestError",
+              "NotFoundError",
+              "InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/v1/search",
+            "request": {
+              "body": {
+                "properties": {
+                  "index_id": {
+                    "docs": "The ID of the index to search against. Must provide either this or index_name.",
+                    "type": "optional<string>",
+                  },
+                  "index_name": {
+                    "docs": "The name of the index to search against. Must provide either this or index_id.",
+                    "type": "optional<string>",
+                  },
+                  "options": {
+                    "docs": "Configuration options for the search.",
+                    "type": "optional<SearchRequestOptionsRequest>",
+                  },
+                  "query": {
+                    "docs": "The query to search for.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "SearchRequestBodyRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "SearchResponse",
+            },
+            "url": "Predict",
+          },
+          "submit-completion-actuals": {
+            "auth": true,
+            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Used to submit feedback regarding the quality of previously generated completions.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+            "errors": [
+              "BadRequestError",
+              "NotFoundError",
+              "InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/v1/submit-completion-actuals",
+            "request": {
+              "body": {
+                "properties": {
+                  "actuals": {
+                    "docs": "Feedback regarding the quality of previously generated completions",
+                    "type": "list<SubmitCompletionActualRequest>",
+                  },
+                  "deployment_id": {
+                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                    "type": "optional<string>",
+                  },
+                  "deployment_name": {
+                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "SubmitCompletionActualsRequestRequest",
+              "query-parameters": undefined,
+            },
+            "url": "Predict",
+          },
+        },
+      },
+      "types": {
+        "Document": {
+          "docs": undefined,
+          "properties": {
+            "external_id": {
+              "docs": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "The ID of the document.",
+              "type": "string",
+            },
+            "label": {
+              "docs": "The human-readable name for the document.",
+              "type": "string",
+            },
+          },
+        },
+        "DocumentDocumentToDocumentIndex": {
+          "docs": undefined,
+          "properties": {
+            "document_index_id": {
+              "docs": "Vellum-generated ID that uniquely identifies the index this document is included in.",
+              "type": "string",
+            },
+            "id": {
+              "docs": "Vellum-generated ID that uniquely identifies this link.",
+              "type": "string",
+            },
+            "indexing_state": {
+              "docs": "An enum value representing where this document is along its indexing lifecycle for this index.",
+              "type": "optional<IndexingStateEnum>",
+            },
+          },
+        },
+        "EnrichedNormalizedCompletion": {
+          "docs": undefined,
+          "properties": {
+            "external_id": {
+              "docs": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+              "type": "optional<string>",
+            },
+            "finish_reason": {
+              "docs": "The reason the generation finished.",
+              "type": "FinishReasonEnum",
+            },
+            "id": {
+              "docs": "The Vellum-generated ID of the completion.",
+              "type": "string",
+            },
+            "logprobs": {
+              "docs": "The logprobs of the completion. Only present if specified in the original request options.",
+              "type": "optional<NormalizedLogProbs>",
+            },
+            "model_version_id": {
+              "docs": "The ID of the model version used to generate this completion.",
+              "type": "string",
+            },
+            "text": {
+              "docs": "The text generated by the LLM.",
+              "type": "string",
+            },
+          },
+        },
+        "FinishReasonEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "LENGTH",
+              "value": "LENGTH",
+            },
+            {
+              "name": "STOP",
+              "value": "STOP",
+            },
+            {
+              "name": "UNKNOWN",
+              "value": "UNKNOWN",
+            },
+          ],
+        },
+        "GenerateErrorResponse": {
+          "docs": undefined,
+          "properties": {
+            "detail": {
+              "docs": "Details about why the request failed.",
+              "type": "string",
+            },
+          },
+        },
+        "GenerateOptionsRequest": {
+          "docs": undefined,
+          "properties": {
+            "logprobs": {
+              "docs": "Which logprobs to include, if any. Defaults to NONE.",
+              "type": "optional<LogprobsEnum>",
+            },
+          },
+        },
+        "GenerateRequestRequest": {
+          "docs": undefined,
+          "properties": {
+            "external_ids": {
+              "docs": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+              "type": "optional<list<string>>",
+            },
+            "input_values": {
+              "docs": "Key/value pairs for each template variable defined in the deployment's prompt.",
+              "type": "map<string, unknown>",
+            },
+          },
+        },
+        "GenerateResponse": {
+          "docs": undefined,
+          "properties": {
+            "results": {
+              "docs": "The results of each generation request.",
+              "type": "list<GenerateResult>",
+            },
+          },
+        },
+        "GenerateResult": {
+          "docs": undefined,
+          "properties": {
+            "data": {
+              "docs": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
+              "type": "optional<GenerateResultData>",
+            },
+            "error": {
+              "docs": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
+              "type": "optional<GenerateResultError>",
+            },
+          },
+        },
+        "GenerateResultData": {
+          "docs": undefined,
+          "properties": {
+            "completions": {
+              "docs": "The generated completions. This will generally be a list of length one.",
+              "type": "list<EnrichedNormalizedCompletion>",
+            },
+          },
+        },
+        "GenerateResultError": {
+          "docs": undefined,
+          "properties": {
+            "message": {
+              "docs": "The error message returned by the LLM provider.",
+              "type": "string",
+            },
+          },
+        },
+        "IndexingStateEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "AWAITING_PROCESSING",
+              "value": "AWAITING_PROCESSING",
+            },
+            {
+              "name": "QUEUED",
+              "value": "QUEUED",
+            },
+            {
+              "name": "INDEXING",
+              "value": "INDEXING",
+            },
+            {
+              "name": "INDEXED",
+              "value": "INDEXED",
+            },
+            {
+              "name": "FAILED",
+              "value": "FAILED",
+            },
+          ],
+        },
+        "LogprobsEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "ALL",
+              "value": "ALL",
+            },
+            {
+              "name": "NONE",
+              "value": "NONE",
+            },
+          ],
+        },
+        "ModelTypeEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "GENERATE",
+              "value": "GENERATE",
+            },
+            {
+              "name": "CLASSIFY",
+              "value": "CLASSIFY",
+            },
+          ],
+        },
+        "ModelVersionBuildConfig": {
+          "docs": undefined,
+          "properties": {
+            "base_model": {
+              "docs": "The name of the base model used to create this model version, as identified by the LLM provider.",
+              "type": "string",
+            },
+            "sandbox_snapshot": {
+              "docs": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
+              "type": "optional<ModelVersionSandboxSnapshot>",
+            },
+          },
+        },
+        "ModelVersionExecConfigParameters": {
+          "docs": undefined,
+          "properties": {
+            "frequency_penalty": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "logit_bias": {
+              "docs": undefined,
+              "type": "optional<map<string, optional<double>>>",
+            },
+            "max_tokens": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "presence_penalty": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "stop": {
+              "docs": undefined,
+              "type": "optional<list<string>>",
+            },
+            "temperature": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "top_k": {
+              "docs": undefined,
+              "type": "optional<double>",
+            },
+            "top_p": {
+              "docs": undefined,
+              "type": "double",
+            },
+          },
+        },
+        "ModelVersionExecConfigRead": {
+          "docs": undefined,
+          "properties": {
+            "input_variables": {
+              "docs": "Names of the template variables specified in the prompt template.",
+              "type": "list<string>",
+            },
+            "parameters": {
+              "docs": "The generation parameters that are passed to the LLM provider at runtime.",
+              "type": "ModelVersionExecConfigParameters",
+            },
+            "prompt_template": {
+              "docs": "The template used to generate prompts for this model version.",
+              "type": "string",
+            },
+          },
+        },
+        "ModelVersionRead": {
+          "docs": undefined,
+          "properties": {
+            "build_config": {
+              "docs": "Configuration used to build this model version.",
+              "type": "ModelVersionBuildConfig",
+            },
+            "created": {
+              "docs": "Timestamp of when this model version was created.",
+              "type": "string",
+            },
+            "exec_config": {
+              "docs": "Configuration used to execute this model version.",
+              "type": "ModelVersionExecConfigRead",
+            },
+            "external_id": {
+              "docs": "The unique id of this model version as it exists in the above provider's system.",
+              "type": "string",
+            },
+            "id": {
+              "docs": "Vellum-generated ID that uniquely identifies this model version.",
+              "type": "string",
+            },
+            "label": {
+              "docs": "Human-friendly name for this model version.",
+              "type": "string",
+            },
+            "model_type": {
+              "docs": "The type of task this model is used for.",
+              "type": "ModelTypeEnum",
+            },
+            "provider": {
+              "docs": "Which LLM provider this model version is associated with.",
+              "type": "ProviderEnum",
+            },
+          },
+        },
+        "ModelVersionSandboxSnapshot": {
+          "docs": undefined,
+          "properties": {
+            "id": {
+              "docs": "The ID of the sandbox snapshot.",
+              "type": "string",
+            },
+            "prompt_index": {
+              "docs": "The index of the prompt in the sandbox snapshot.",
+              "type": "integer",
+            },
+          },
+        },
+        "NormalizedLogProbs": {
+          "docs": undefined,
+          "properties": {
+            "likelihood": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "tokens": {
+              "docs": undefined,
+              "type": "list<NormalizedTokenLogProbs>",
+            },
+          },
+        },
+        "NormalizedTokenLogProbs": {
+          "docs": undefined,
+          "properties": {
+            "logprob": {
+              "docs": undefined,
+              "type": "optional<double>",
+            },
+            "text_offset": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "token": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "top_logprobs": {
+              "docs": undefined,
+              "type": "optional<map<string, optional<double>>>",
+            },
+          },
+        },
+        "PaginatedSlimDocumentList": {
+          "docs": undefined,
+          "properties": {
+            "count": {
+              "docs": undefined,
+              "type": "optional<integer>",
+            },
+            "next": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "previous": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "results": {
+              "docs": undefined,
+              "type": "optional<list<SlimDocument>>",
+            },
+          },
+        },
+        "ProcessingStateEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "QUEUED",
+              "value": "QUEUED",
+            },
+            {
+              "name": "PROCESSING",
+              "value": "PROCESSING",
+            },
+            {
+              "name": "PROCESSED",
+              "value": "PROCESSED",
+            },
+            {
+              "name": "FAILED",
+              "value": "FAILED",
+            },
+          ],
+        },
+        "ProviderEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "OPENAI",
+              "value": "OPENAI",
+            },
+            {
+              "name": "COHERE",
+              "value": "COHERE",
+            },
+            {
+              "name": "ANTHROPIC",
+              "value": "ANTHROPIC",
+            },
+          ],
+        },
+        "SearchErrorResponse": {
+          "docs": undefined,
+          "properties": {
+            "detail": {
+              "docs": "Details about why the request failed.",
+              "type": "string",
+            },
+          },
+        },
+        "SearchFiltersRequest": {
+          "docs": undefined,
+          "properties": {
+            "external_ids": {
+              "docs": "The document external IDs to filter by",
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "SearchRequestOptionsRequest": {
+          "docs": undefined,
+          "properties": {
+            "filters": {
+              "docs": "The filters to apply to the search.",
+              "type": "optional<SearchFiltersRequest>",
+            },
+            "limit": {
+              "docs": "The maximum number of results to return.",
+              "type": "optional<integer>",
+            },
+            "result_merging": {
+              "docs": "The configuration for merging results.",
+              "type": "optional<SearchResultMergingRequest>",
+            },
+            "weights": {
+              "docs": "The weights to use for the search. Must add up to 1.0.",
+              "type": "optional<SearchWeightsRequest>",
+            },
+          },
+        },
+        "SearchResponse": {
+          "docs": undefined,
+          "properties": {
+            "results": {
+              "docs": "The results of the search. Each result represents a chunk that matches the search query.",
+              "type": "list<SearchResult>",
+            },
+          },
+        },
+        "SearchResult": {
+          "docs": undefined,
+          "properties": {
+            "document": {
+              "docs": "The document that contains the chunk that matched the search query.",
+              "type": "Document",
+            },
+            "keywords": {
+              "docs": undefined,
+              "type": "list<string>",
+            },
+            "score": {
+              "docs": "A score representing how well the chunk matches the search query.",
+              "type": "double",
+            },
+            "text": {
+              "docs": "The text of the chunk that matched the search query.",
+              "type": "string",
+            },
+          },
+        },
+        "SearchResultMergingRequest": {
+          "docs": undefined,
+          "properties": {
+            "enabled": {
+              "docs": "Whether to enable merging results",
+              "type": "boolean",
+            },
+          },
+        },
+        "SearchWeightsRequest": {
+          "docs": undefined,
+          "properties": {
+            "keywords": {
+              "docs": "The relative weight to give to keyword matches",
+              "type": "double",
+            },
+            "semantic_similarity": {
+              "docs": "The relative weight to give to semantic similarity",
+              "type": "double",
+            },
+          },
+        },
+        "SlimDocument": {
+          "docs": undefined,
+          "properties": {
+            "document_to_document_indexes": {
+              "docs": undefined,
+              "type": "list<DocumentDocumentToDocumentIndex>",
+            },
+            "external_id": {
+              "docs": "The external ID that was originally provided when uploading the document.",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "Vellum-generated ID that uniquely identifies this document.",
+              "type": "string",
+            },
+            "keywords": {
+              "docs": "A list of keywords associated with this document. Originally provided when uploading the document.",
+              "type": "optional<list<string>>",
+            },
+            "label": {
+              "docs": "Human-friendly name for this document.",
+              "type": "string",
+            },
+            "last_uploaded_at": {
+              "docs": "A timestamp representing when this document was most recently uploaded.",
+              "type": "string",
+            },
+            "processing_state": {
+              "docs": "The current processing state of the document",
+              "type": "optional<ProcessingStateEnum>",
+            },
+            "status": {
+              "docs": "The document's current status.",
+              "type": "optional<StatusEnum>",
+            },
+          },
+        },
+        "StatusEnum": {
+          "docs": undefined,
+          "enum": [
+            {
+              "name": "ACTIVE",
+              "value": "ACTIVE",
+            },
+          ],
+        },
+        "SubmitCompletionActualRequest": {
+          "docs": undefined,
+          "properties": {
+            "external_id": {
+              "docs": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+              "type": "optional<string>",
+            },
+            "id": {
+              "docs": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+              "type": "optional<string>",
+            },
+            "quality": {
+              "docs": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+              "type": "optional<double>",
+            },
+            "text": {
+              "docs": "Text representing what the completion _should_ have been.",
+              "type": "optional<string>",
+            },
+            "timestamp": {
+              "docs": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+              "type": "optional<string>",
+            },
+          },
+        },
+        "SubmitCompletionActualsErrorResponse": {
+          "docs": undefined,
+          "properties": {
+            "detail": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "UploadDocumentErrorResponse": {
+          "docs": undefined,
+          "properties": {
+            "detail": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "UploadDocumentResponse": {
+          "docs": undefined,
+          "properties": {
+            "document_id": {
+              "docs": "The ID of the newly created document.",
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+    "documents.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "list": {
+            "auth": true,
+            "docs": "
+<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Used to list documents. Optionally filter on supported fields.
+",
+            "errors": [],
+            "method": "GET",
+            "path": "/v1/documents",
+            "request": {
+              "name": "ListDocumentsRequest",
+              "query-parameters": {
+                "document_index_id": {
+                  "allow-multiple": undefined,
+                  "docs": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
+                  "type": "optional<string>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": "Number of results to return per page.",
+                  "type": "optional<integer>",
+                },
+                "offset": {
+                  "allow-multiple": undefined,
+                  "docs": "The initial index from which to return the results.",
+                  "type": "optional<integer>",
+                },
+                "ordering": {
+                  "allow-multiple": undefined,
+                  "docs": "Which field to use when ordering the results.",
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.PaginatedSlimDocumentList",
+            },
+            "url": "Default",
+          },
+          "upload": {
+            "auth": true,
+            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Upload a document to be indexed and used for search.
+
+**Note:** Uses a base url of \`https://documents.vellum.ai\`.",
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/v1/upload-document",
+            "request": {
+              "body": {
+                "properties": {
+                  "add_to_index_names": {
+                    "docs": "Optionally include the names of all indexes that you'd like this document to be included in",
+                    "type": "optional<list<string>>",
+                  },
+                  "contents": "file",
+                  "external_id": {
+                    "docs": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                    "type": "optional<string>",
+                  },
+                  "keywords": {
+                    "docs": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                    "type": "optional<list<string>>",
+                  },
+                  "label": {
+                    "docs": "A human-friendly name for this document. Typically the filename.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "UploadDocumentRequestBodyRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "root.UploadDocumentResponse",
+            },
+            "url": "Documents",
+          },
+        },
+      },
+    },
+    "modelVersions.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "retrieve": {
+            "auth": true,
+            "docs": "
+<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+
+Used to retrieve a model version given its ID.
+",
+            "errors": [],
+            "method": "GET",
+            "path": "/v1/model-versions/{id}",
+            "path-parameters": {
+              "id": {
+                "docs": "A UUID string identifying this model version.",
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.ModelVersionRead",
+            },
+            "url": "Default",
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "apiKeyAuth",
+    "auth-schemes": {
+      "apiKeyAuth": {
+        "header": "X_API_KEY",
+        "name": "apiKey",
+        "type": "string",
+      },
+    },
+    "default-environment": "Production",
+    "display-name": "Vellum Client API",
+    "environments": {
+      "Production": {
+        "urls": {
+          "Default": "https://api.vellum.ai",
+          "Documents": "https://documents.vellum.ai",
+          "Predict": "https://predict.vellum.ai",
+        },
+      },
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

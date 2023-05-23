@@ -1,0 +1,2538 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser vellum parse open api 1`] = `
+{
+  "files": {
+    "openapi.yml": {
+      "dependencies": [],
+      "description": "
+## Vellum API Documentation
+
+### Welcome 👋
+Welcome to Vellum's API documentation! Here you'll find information about the various endpoints available to you,
+as well as the parameters and responses that they accept and return.
+
+We will be exposing more and more of our APIs over time as they stabilize. If there is some action you can perform
+via the UI that you wish you could perform via API, please let us know and we can expose it here in an unstable state.
+
+### API Stability
+Some of the APIs documented within are undergoing active development. Use the
+<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+and
+<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+tags to differentiate between those that are stable and those that are not.
+
+### Base URLs
+Some endpoints are hosted separately from the main Vellum API and therefore have a different base url. If this is
+the case, they will say so in their description.
+
+Unless otherwise specified, all endpoints use <code>https://api.vellum.ai</code> as their base URL.
+
+### Official API Clients:
+Vellum maintains official API clients for Python and Node/Typescript. We recommend using these clients to interact
+with all stable endpoints. You can find them here:
+- [Python](https://github.com/vocify/vellum-client-python)
+- [Node/Typescript](https://github.com/vocify/vellum-client-node)
+",
+      "endpoints": [
+        {
+          "authed": true,
+          "description": "
+<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Used to list documents. Optionally filter on supported fields.
+",
+          "errorStatusCode": [],
+          "generatedRequestName": "DocumentsListRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "documents_list",
+          "path": "/v1/documents",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "description": "Filter down to only those documents that are included in the specified index. You may provide either the Vellum-generated ID or the unique name of the index specified upon initial creation.",
+              "name": "document_index_id",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": "Number of results to return per page.",
+              "name": "limit",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "int",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": "The initial index from which to return the results.",
+              "name": "offset",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "int",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "description": "Which field to use when ordering the results.",
+              "name": "ordering",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "request": undefined,
+          "requestNameOverride": "ListDocumentsRequest",
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "DocumentsListResponse",
+              "nameOverride": undefined,
+              "schema": "PaginatedSlimDocumentList",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "documents",
+          ],
+        },
+        {
+          "authed": true,
+          "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Generate a completion using a previously defined deployment.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
+          "generatedRequestName": "GenerateRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "generate",
+          "path": "/v1/generate",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GenerateRequest",
+              "nameOverride": undefined,
+              "schema": "GenerateRequestBodyRequest",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GenerateResponse",
+              "nameOverride": undefined,
+              "schema": "GenerateResponse",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "generate",
+          ],
+        },
+        {
+          "authed": true,
+          "description": "
+<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
+
+Used to retrieve a model version given its ID.
+",
+          "errorStatusCode": [],
+          "generatedRequestName": "ModelVersionsRetrieveRequest",
+          "headers": [],
+          "method": "GET",
+          "operationId": "model_versions_retrieve",
+          "path": "/v1/model-versions/{id}",
+          "pathParameters": [
+            {
+              "description": "A UUID string identifying this model version.",
+              "name": "id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "variableReference": undefined,
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "ModelVersionsRetrieveResponse",
+              "nameOverride": undefined,
+              "schema": "ModelVersionRead",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [],
+          "summary": undefined,
+          "tags": [
+            "model-versions",
+          ],
+        },
+        {
+          "authed": true,
+          "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Perform a search against a document index.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
+          "generatedRequestName": "SearchRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "search",
+          "path": "/v1/search",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "SearchRequest",
+              "nameOverride": undefined,
+              "schema": "SearchRequestBodyRequest",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "SearchResponse",
+              "nameOverride": undefined,
+              "schema": "SearchResponse",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [
+            {
+              "description": undefined,
+              "name": "Predict",
+              "url": "https://predict.vellum.ai",
+            },
+          ],
+          "summary": undefined,
+          "tags": [
+            "search",
+          ],
+        },
+        {
+          "authed": true,
+          "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Used to submit feedback regarding the quality of previously generated completions.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
+          "generatedRequestName": "SubmitCompletionActualsRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "submit_completion_actuals",
+          "path": "/v1/submit-completion-actuals",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "SubmitCompletionActualsRequest",
+              "nameOverride": undefined,
+              "schema": "SubmitCompletionActualsRequestRequest",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "requestNameOverride": undefined,
+          "response": undefined,
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [
+            {
+              "description": undefined,
+              "name": "Predict",
+              "url": "https://predict.vellum.ai",
+            },
+          ],
+          "summary": undefined,
+          "tags": [
+            "submit-completion-actuals",
+          ],
+        },
+        {
+          "authed": true,
+          "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Upload a document to be indexed and used for search.
+
+**Note:** Uses a base url of \`https://documents.vellum.ai\`.",
+          "errorStatusCode": [
+            400,
+            404,
+            500,
+          ],
+          "generatedRequestName": "DocumentsUploadRequest",
+          "headers": [],
+          "method": "POST",
+          "operationId": "documents_upload",
+          "path": "/v1/upload-document",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "description": undefined,
+            "name": "UploadDocumentRequestBodyRequest",
+            "properties": [
+              {
+                "description": undefined,
+                "key": "add_to_index_names",
+                "schema": {
+                  "json": {
+                    "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                    "type": "nullable",
+                    "value": {
+                      "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                      "type": "array",
+                      "value": {
+                        "description": undefined,
+                        "schema": {
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+              {
+                "description": undefined,
+                "key": "external_id",
+                "schema": {
+                  "json": {
+                    "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                    "type": "nullable",
+                    "value": {
+                      "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                      "schema": {
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+              {
+                "description": undefined,
+                "key": "label",
+                "schema": {
+                  "json": {
+                    "description": "A human-friendly name for this document. Typically the filename.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "type": "json",
+                },
+              },
+              {
+                "description": undefined,
+                "key": "contents",
+                "schema": {
+                  "type": "file",
+                },
+              },
+              {
+                "description": undefined,
+                "key": "keywords",
+                "schema": {
+                  "json": {
+                    "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                    "type": "nullable",
+                    "value": {
+                      "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                      "type": "array",
+                      "value": {
+                        "description": undefined,
+                        "schema": {
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+            ],
+            "type": "multipart",
+          },
+          "requestNameOverride": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "DocumentsUploadResponse",
+              "nameOverride": undefined,
+              "schema": "UploadDocumentResponse",
+              "type": "reference",
+            },
+            "type": "json",
+          },
+          "responseIsStreaming": false,
+          "sdkName": undefined,
+          "server": [
+            {
+              "description": undefined,
+              "name": "Documents",
+              "url": "https://documents.vellum.ai",
+            },
+          ],
+          "summary": undefined,
+          "tags": [
+            "documents",
+          ],
+        },
+      ],
+      "errors": {
+        "400": {
+          "description": undefined,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
+        "404": {
+          "description": undefined,
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": undefined,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "type": "unknown",
+          },
+        },
+      },
+      "nonRequestReferencedSchemas": [
+        "PaginatedSlimDocumentList",
+        "GenerateResponse",
+        "ModelVersionRead",
+        "SearchResponse",
+        "UploadDocumentResponse",
+        "IndexingStateEnum",
+        "FinishReasonEnum",
+        "NormalizedLogProbs",
+        "LogprobsEnum",
+        "GenerateRequestRequest",
+        "GenerateOptionsRequest",
+        "GenerateResult",
+        "GenerateResultData",
+        "GenerateResultError",
+        "EnrichedNormalizedCompletion",
+        "ModelVersionSandboxSnapshot",
+        "ModelVersionExecConfigParameters",
+        "ModelTypeEnum",
+        "ProviderEnum",
+        "ModelVersionBuildConfig",
+        "ModelVersionExecConfigRead",
+        "NormalizedTokenLogProbs",
+        "SlimDocument",
+        "SearchRequestOptionsRequest",
+        "SearchWeightsRequest",
+        "SearchResultMergingRequest",
+        "SearchFiltersRequest",
+        "SearchResult",
+        "Document",
+        "ProcessingStateEnum",
+        "StatusEnum",
+        "DocumentDocumentToDocumentIndex",
+        "SubmitCompletionActualRequest",
+      ],
+      "schemas": {
+        "Document": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "Document",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "id",
+              "schema": {
+                "description": "The ID of the document.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "label",
+              "schema": {
+                "description": "The human-readable name for the document.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "external_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "DocumentDocumentToDocumentIndex": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "DocumentDocumentToDocumentIndex",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "id",
+              "schema": {
+                "description": "Vellum-generated ID that uniquely identifies this link.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "document_index_id",
+              "schema": {
+                "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "indexing_state",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "An enum value representing where this document is along its indexing lifecycle for this index.",
+                  "file": undefined,
+                  "generatedName": "DocumentDocumentToDocumentIndexIndexingState",
+                  "nameOverride": undefined,
+                  "schema": "IndexingStateEnum",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "EnrichedNormalizedCompletion": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "EnrichedNormalizedCompletion",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "id",
+              "schema": {
+                "description": "The Vellum-generated ID of the completion.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "external_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "text",
+              "schema": {
+                "description": "The text generated by the LLM.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "finish_reason",
+              "schema": {
+                "description": "The reason the generation finished.",
+                "file": undefined,
+                "generatedName": "EnrichedNormalizedCompletionFinishReason",
+                "nameOverride": undefined,
+                "schema": "FinishReasonEnum",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "logprobs",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The logprobs of the completion. Only present if specified in the original request options.",
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "EnrichedNormalizedCompletionLogprobs",
+                    "nameOverride": undefined,
+                    "schema": "NormalizedLogProbs",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "model_version_id",
+              "schema": {
+                "description": "The ID of the model version used to generate this completion.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "FinishReasonEnum": {
+          "description": undefined,
+          "generatedName": "FinishReasonEnum",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "LENGTH",
+              "nameOverride": undefined,
+              "value": "LENGTH",
+            },
+            {
+              "generatedName": "STOP",
+              "nameOverride": undefined,
+              "value": "STOP",
+            },
+            {
+              "generatedName": "UNKNOWN",
+              "nameOverride": undefined,
+              "value": "UNKNOWN",
+            },
+          ],
+        },
+        "GenerateErrorResponse": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GenerateErrorResponse",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "detail",
+              "schema": {
+                "description": "Details about why the request failed.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GenerateOptionsRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GenerateOptionsRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "logprobs",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Which logprobs to include, if any. Defaults to NONE.",
+                  "file": undefined,
+                  "generatedName": "GenerateOptionsRequestLogprobs",
+                  "nameOverride": undefined,
+                  "schema": "LogprobsEnum",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GenerateRequestBodyRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GenerateRequestBodyRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "deployment_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "deployment_name",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The name of the deployment. Must provide either this or deployment_id.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The name of the deployment. Must provide either this or deployment_id.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "requests",
+              "schema": {
+                "description": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GenerateRequestBodyRequestRequestsItem",
+                  "nameOverride": undefined,
+                  "schema": "GenerateRequestRequest",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "options",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Additional configuration that can be used to control what's included in the response.",
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "GenerateRequestBodyRequestOptions",
+                    "nameOverride": undefined,
+                    "schema": "GenerateOptionsRequest",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GenerateRequestRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GenerateRequestRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "input_values",
+              "schema": {
+                "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
+                "key": {
+                  "type": "string",
+                },
+                "type": "map",
+                "value": {
+                  "type": "unknown",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "external_ids",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "Optionally include a unique identifier for each generation, as represented outside of Vellum. Note that this should generally be a list of length one.",
+                    "type": "array",
+                    "value": {
+                      "description": undefined,
+                      "schema": {
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GenerateResponse": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GenerateResponse",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "results",
+              "schema": {
+                "description": "The results of each generation request.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GenerateResponseResultsItem",
+                  "nameOverride": undefined,
+                  "schema": "GenerateResult",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GenerateResult": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GenerateResult",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "data",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "An object containing the resulting generation. This key will be absent if the LLM provider experienced an error.",
+                  "file": undefined,
+                  "generatedName": "GenerateResultData",
+                  "nameOverride": undefined,
+                  "schema": "GenerateResultData",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "error",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "An object containing details about the error that occurred. This key will be absent if the LLM provider did not experience an error.",
+                  "file": undefined,
+                  "generatedName": "GenerateResultError",
+                  "nameOverride": undefined,
+                  "schema": "GenerateResultError",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GenerateResultData": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GenerateResultData",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "completions",
+              "schema": {
+                "description": "The generated completions. This will generally be a list of length one.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "GenerateResultDataCompletionsItem",
+                  "nameOverride": undefined,
+                  "schema": "EnrichedNormalizedCompletion",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "GenerateResultError": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "GenerateResultError",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "message",
+              "schema": {
+                "description": "The error message returned by the LLM provider.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "IndexingStateEnum": {
+          "description": undefined,
+          "generatedName": "IndexingStateEnum",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "AWAITING_PROCESSING",
+              "nameOverride": undefined,
+              "value": "AWAITING_PROCESSING",
+            },
+            {
+              "generatedName": "QUEUED",
+              "nameOverride": undefined,
+              "value": "QUEUED",
+            },
+            {
+              "generatedName": "INDEXING",
+              "nameOverride": undefined,
+              "value": "INDEXING",
+            },
+            {
+              "generatedName": "INDEXED",
+              "nameOverride": undefined,
+              "value": "INDEXED",
+            },
+            {
+              "generatedName": "FAILED",
+              "nameOverride": undefined,
+              "value": "FAILED",
+            },
+          ],
+        },
+        "LogprobsEnum": {
+          "description": undefined,
+          "generatedName": "LogprobsEnum",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "ALL",
+              "nameOverride": undefined,
+              "value": "ALL",
+            },
+            {
+              "generatedName": "NONE",
+              "nameOverride": undefined,
+              "value": "NONE",
+            },
+          ],
+        },
+        "ModelTypeEnum": {
+          "description": undefined,
+          "generatedName": "ModelTypeEnum",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "GENERATE",
+              "nameOverride": undefined,
+              "value": "GENERATE",
+            },
+            {
+              "generatedName": "CLASSIFY",
+              "nameOverride": undefined,
+              "value": "CLASSIFY",
+            },
+          ],
+        },
+        "ModelVersionBuildConfig": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "ModelVersionBuildConfig",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "base_model",
+              "schema": {
+                "description": "The name of the base model used to create this model version, as identified by the LLM provider.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "sandbox_snapshot",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Information about the sandbox snapshot that was used to create this model version, if applicable.",
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "ModelVersionBuildConfigSandboxSnapshot",
+                    "nameOverride": undefined,
+                    "schema": "ModelVersionSandboxSnapshot",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ModelVersionExecConfigParameters": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "ModelVersionExecConfigParameters",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "temperature",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "max_tokens",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "stop",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "top_p",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "top_k",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "frequency_penalty",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "presence_penalty",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "logit_bias",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "key": {
+                      "type": "string",
+                    },
+                    "type": "map",
+                    "value": {
+                      "description": undefined,
+                      "type": "nullable",
+                      "value": {
+                        "description": undefined,
+                        "schema": {
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ModelVersionExecConfigRead": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "ModelVersionExecConfigRead",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "prompt_template",
+              "schema": {
+                "description": "The template used to generate prompts for this model version.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "parameters",
+              "schema": {
+                "description": "The generation parameters that are passed to the LLM provider at runtime.",
+                "file": undefined,
+                "generatedName": "ModelVersionExecConfigReadParameters",
+                "nameOverride": undefined,
+                "schema": "ModelVersionExecConfigParameters",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "input_variables",
+              "schema": {
+                "description": "Names of the template variables specified in the prompt template.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ModelVersionRead": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "ModelVersionRead",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "id",
+              "schema": {
+                "description": "Vellum-generated ID that uniquely identifies this model version.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "created",
+              "schema": {
+                "description": "Timestamp of when this model version was created.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "label",
+              "schema": {
+                "description": "Human-friendly name for this model version.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "model_type",
+              "schema": {
+                "description": "The type of task this model is used for.",
+                "file": undefined,
+                "generatedName": "ModelVersionReadModelType",
+                "nameOverride": undefined,
+                "schema": "ModelTypeEnum",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "provider",
+              "schema": {
+                "description": "Which LLM provider this model version is associated with.",
+                "file": undefined,
+                "generatedName": "ModelVersionReadProvider",
+                "nameOverride": undefined,
+                "schema": "ProviderEnum",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "external_id",
+              "schema": {
+                "description": "The unique id of this model version as it exists in the above provider's system.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "build_config",
+              "schema": {
+                "description": "Configuration used to build this model version.",
+                "file": undefined,
+                "generatedName": "ModelVersionReadBuildConfig",
+                "nameOverride": undefined,
+                "schema": "ModelVersionBuildConfig",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "exec_config",
+              "schema": {
+                "description": "Configuration used to execute this model version.",
+                "file": undefined,
+                "generatedName": "ModelVersionReadExecConfig",
+                "nameOverride": undefined,
+                "schema": "ModelVersionExecConfigRead",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ModelVersionSandboxSnapshot": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "ModelVersionSandboxSnapshot",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "id",
+              "schema": {
+                "description": "The ID of the sandbox snapshot.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "prompt_index",
+              "schema": {
+                "description": "The index of the prompt in the sandbox snapshot.",
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "NormalizedLogProbs": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "NormalizedLogProbs",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "tokens",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "NormalizedLogProbsTokensItem",
+                  "nameOverride": undefined,
+                  "schema": "NormalizedTokenLogProbs",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "likelihood",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "NormalizedTokenLogProbs": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "NormalizedTokenLogProbs",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "token",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "logprob",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "double",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "top_logprobs",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "key": {
+                    "type": "string",
+                  },
+                  "type": "map",
+                  "value": {
+                    "description": undefined,
+                    "type": "nullable",
+                    "value": {
+                      "description": undefined,
+                      "schema": {
+                        "type": "double",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "text_offset",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "PaginatedSlimDocumentList": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "PaginatedSlimDocumentList",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "count",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "int",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "next",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "previous",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "results",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "PaginatedSlimDocumentListResultsItem",
+                    "nameOverride": undefined,
+                    "schema": "SlimDocument",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "ProcessingStateEnum": {
+          "description": undefined,
+          "generatedName": "ProcessingStateEnum",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "QUEUED",
+              "nameOverride": undefined,
+              "value": "QUEUED",
+            },
+            {
+              "generatedName": "PROCESSING",
+              "nameOverride": undefined,
+              "value": "PROCESSING",
+            },
+            {
+              "generatedName": "PROCESSED",
+              "nameOverride": undefined,
+              "value": "PROCESSED",
+            },
+            {
+              "generatedName": "FAILED",
+              "nameOverride": undefined,
+              "value": "FAILED",
+            },
+          ],
+        },
+        "ProviderEnum": {
+          "description": undefined,
+          "generatedName": "ProviderEnum",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "OPENAI",
+              "nameOverride": undefined,
+              "value": "OPENAI",
+            },
+            {
+              "generatedName": "COHERE",
+              "nameOverride": undefined,
+              "value": "COHERE",
+            },
+            {
+              "generatedName": "ANTHROPIC",
+              "nameOverride": undefined,
+              "value": "ANTHROPIC",
+            },
+          ],
+        },
+        "SearchErrorResponse": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SearchErrorResponse",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "detail",
+              "schema": {
+                "description": "Details about why the request failed.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SearchFiltersRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SearchFiltersRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "external_ids",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The document external IDs to filter by",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The document external IDs to filter by",
+                    "type": "array",
+                    "value": {
+                      "description": undefined,
+                      "schema": {
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SearchRequestBodyRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SearchRequestBodyRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "index_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The ID of the index to search against. Must provide either this or index_name.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The ID of the index to search against. Must provide either this or index_name.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "index_name",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The name of the index to search against. Must provide either this or index_id.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The name of the index to search against. Must provide either this or index_id.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "query",
+              "schema": {
+                "description": "The query to search for.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "options",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Configuration options for the search.",
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "SearchRequestBodyRequestOptions",
+                    "nameOverride": undefined,
+                    "schema": "SearchRequestOptionsRequest",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SearchRequestOptionsRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SearchRequestOptionsRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "limit",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The maximum number of results to return.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The maximum number of results to return.",
+                    "schema": {
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "weights",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The weights to use for the search. Must add up to 1.0.",
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "SearchRequestOptionsRequestWeights",
+                    "nameOverride": undefined,
+                    "schema": "SearchWeightsRequest",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "result_merging",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The configuration for merging results.",
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "SearchRequestOptionsRequestResultMerging",
+                    "nameOverride": undefined,
+                    "schema": "SearchResultMergingRequest",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "filters",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The filters to apply to the search.",
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "SearchRequestOptionsRequestFilters",
+                    "nameOverride": undefined,
+                    "schema": "SearchFiltersRequest",
+                    "type": "reference",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SearchResponse": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SearchResponse",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "results",
+              "schema": {
+                "description": "The results of the search. Each result represents a chunk that matches the search query.",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "SearchResponseResultsItem",
+                  "nameOverride": undefined,
+                  "schema": "SearchResult",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SearchResult": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SearchResult",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "document",
+              "schema": {
+                "description": "The document that contains the chunk that matched the search query.",
+                "file": undefined,
+                "generatedName": "SearchResultDocument",
+                "nameOverride": undefined,
+                "schema": "Document",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "text",
+              "schema": {
+                "description": "The text of the chunk that matched the search query.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "keywords",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "schema": {
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "score",
+              "schema": {
+                "description": "A score representing how well the chunk matches the search query.",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SearchResultMergingRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SearchResultMergingRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "enabled",
+              "schema": {
+                "description": "Whether to enable merging results",
+                "schema": {
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SearchWeightsRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SearchWeightsRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "semantic_similarity",
+              "schema": {
+                "description": "The relative weight to give to semantic similarity",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "keywords",
+              "schema": {
+                "description": "The relative weight to give to keyword matches",
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SlimDocument": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SlimDocument",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "id",
+              "schema": {
+                "description": "Vellum-generated ID that uniquely identifies this document.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "external_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The external ID that was originally provided when uploading the document.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The external ID that was originally provided when uploading the document.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "last_uploaded_at",
+              "schema": {
+                "description": "A timestamp representing when this document was most recently uploaded.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "label",
+              "schema": {
+                "description": "Human-friendly name for this document.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "processing_state",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The current processing state of the document",
+                  "file": undefined,
+                  "generatedName": "SlimDocumentProcessingState",
+                  "nameOverride": undefined,
+                  "schema": "ProcessingStateEnum",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "status",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The document's current status.",
+                  "file": undefined,
+                  "generatedName": "SlimDocumentStatus",
+                  "nameOverride": undefined,
+                  "schema": "StatusEnum",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "keywords",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "A list of keywords associated with this document. Originally provided when uploading the document.",
+                  "type": "array",
+                  "value": {
+                    "description": undefined,
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "document_to_document_indexes",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "SlimDocumentDocumentToDocumentIndexesItem",
+                  "nameOverride": undefined,
+                  "schema": "DocumentDocumentToDocumentIndex",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "StatusEnum": {
+          "description": undefined,
+          "generatedName": "StatusEnum",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "generatedName": "ACTIVE",
+              "nameOverride": undefined,
+              "value": "ACTIVE",
+            },
+          ],
+        },
+        "SubmitCompletionActualRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SubmitCompletionActualRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "external_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "text",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Text representing what the completion _should_ have been.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "Text representing what the completion _should_ have been.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "quality",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "A number between 0 and 1 representing the quality of the completion. 0 is the worst, 1 is the best.",
+                    "schema": {
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "timestamp",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SubmitCompletionActualsErrorResponse": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SubmitCompletionActualsErrorResponse",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "detail",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "SubmitCompletionActualsRequestRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "SubmitCompletionActualsRequestRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "deployment_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The ID of the deployment. Must provide either this or deployment_name.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "deployment_name",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "The name of the deployment. Must provide either this or deployment_id.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "The name of the deployment. Must provide either this or deployment_id.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "actuals",
+              "schema": {
+                "description": "Feedback regarding the quality of previously generated completions",
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "SubmitCompletionActualsRequestRequestActualsItem",
+                  "nameOverride": undefined,
+                  "schema": "SubmitCompletionActualRequest",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "UploadDocumentErrorResponse": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "UploadDocumentErrorResponse",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "detail",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "UploadDocumentRequestBodyRequest": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "UploadDocumentRequestBodyRequest",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "add_to_index_names",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                  "type": "nullable",
+                  "value": {
+                    "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                    "type": "array",
+                    "value": {
+                      "description": undefined,
+                      "schema": {
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "external_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                    "schema": {
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
+            {
+              "conflict": [],
+              "key": "label",
+              "schema": {
+                "description": "A human-friendly name for this document. Typically the filename.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "contents",
+              "schema": {
+                "description": "The file contents of the document.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": [],
+              "key": "keywords",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                    "type": "array",
+                    "value": {
+                      "description": undefined,
+                      "schema": {
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "UploadDocumentResponse": {
+          "allOf": [],
+          "description": undefined,
+          "generatedName": "UploadDocumentResponse",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": [],
+              "key": "document_id",
+              "schema": {
+                "description": "The ID of the newly created document.",
+                "schema": {
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+      },
+      "securitySchemes": {
+        "apiKeyAuth": {
+          "headerName": "X_API_KEY",
+          "type": "header",
+        },
+      },
+      "servers": [
+        {
+          "description": "Default Server",
+          "name": "Default",
+          "url": "https://api.vellum.ai",
+        },
+      ],
+      "tags": [],
+      "title": "Vellum Client API",
+      "variables": {},
+    },
+  },
+  "rootPackage": {
+    "file": "openapi.yml",
+    "name": "",
+    "subpackages": [],
+  },
+}
+`;
