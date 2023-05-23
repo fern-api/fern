@@ -346,7 +346,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-cdk/aws-cloudfront@npm:1.202.0":
+"@aws-cdk/aws-cloudfront@npm:1.202.0, @aws-cdk/aws-cloudfront@npm:^1.202.0":
   version: 1.202.0
   resolution: "@aws-cdk/aws-cloudfront@npm:1.202.0"
   dependencies:
@@ -3793,6 +3793,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-deploy@workspace:packages/ui/deploy"
   dependencies:
+    "@aws-cdk/aws-cloudfront": ^1.202.0
     "@aws-cdk/aws-s3": ^1.202.0
     "@aws-cdk/aws-s3-deployment": ^1.202.0
     "@aws-cdk/core": ^1.202.0

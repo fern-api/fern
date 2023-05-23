@@ -26,6 +26,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@aws-cdk/aws-cloudfront": "^1.202.0",
     "@aws-cdk/aws-s3": "^1.202.0",
     "@aws-cdk/aws-s3-deployment": "^1.202.0",
     "@aws-cdk/core": "^1.202.0",
