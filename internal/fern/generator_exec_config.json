@@ -1,0 +1,15 @@
+{
+    "irFilepath": "generator_exec_ir.json",
+    "output": {
+        "mode": {
+            "type": "downloadFiles"
+        },
+        "path": "generatorexec"
+    },
+    "workspaceName": "generator-exec",
+    "organization": "fernbot",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false
+}

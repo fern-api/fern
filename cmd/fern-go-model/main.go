@@ -1,11 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
 	"github.com/fern-api/fern-go"
-	"github.com/fern-api/fern-go/internal/config"
+	"github.com/fern-api/fern-go/internal/fern/generatorexec"
 	"github.com/fern-api/fern-go/internal/generator"
 	"github.com/fern-api/fern-go/internal/writer"
 )
@@ -39,7 +40,7 @@ func main() {
 }
 
 func run(configFilename string) error {
-	config, err := config.ReadConfig(configFilename)
+	config, err := readConfig(configFilename)
 	if err != nil {
 		return err
 	}
@@ -51,7 +52,7 @@ func run(configFilename string) error {
 	if err != nil {
 		return err
 	}
-	generatorConfig, err := generator.NewConfig(config.DryRun, config.IRFilepath)
+	generatorConfig, err := generator.NewConfig(config.DryRun, config.IrFilepath)
 	if err != nil {
 		return err
 	}
@@ -70,11 +71,24 @@ func run(configFilename string) error {
 	return writer.WriteFiles(files)
 }
 
-func outputModeFromConfig(c *config.Config) (writer.OutputMode, error) {
-	switch outputConfigMode := c.Output.Mode.(type) {
-	case *config.OutputModeGithub:
-		return writer.NewGithubConfig(outputConfigMode.Version, outputConfigMode.RepoURL)
-	case *config.OutputModeDownloadFiles:
+// readConfig returns the generator configuration from the given filename.
+func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
+	bytes, err := os.ReadFile(configFilename)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read generator configuration: %v", err)
+	}
+	config := new(generatorexec.GeneratorConfig)
+	if err := json.Unmarshal(bytes, config); err != nil {
+		return nil, fmt.Errorf("failed to unmarshal generator configuration: %v", err)
+	}
+	return config, nil
+}
+
+func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, error) {
+	switch outputConfigMode := c.Output.Mode; outputConfigMode.Type {
+	case "github":
+		return writer.NewGithubConfig(outputConfigMode.Github.Version, outputConfigMode.Github.RepoUrl)
+	case "downloadFiles":
 		return writer.NewLocalConfig(c.Output.Path)
 	default:
 		return nil, fmt.Errorf("unrecognized output configuration mode: %T", outputConfigMode)

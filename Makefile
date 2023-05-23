@@ -4,7 +4,7 @@ build:
 
 .PHONY: generate
 generate: install
-	cd internal/fern; fern-go-model config.json
+	cd internal/fern; fern-go-model ir_config.json && fern-go-model generator_exec_config.json
 
 .PHONY: install
 install:
