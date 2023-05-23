@@ -276,11 +276,9 @@ types:
     properties:
       key: string
       schema: Schema
-      conflict: optional<ObjectPropertyConflict>
-
-  ObjectPropertyConflict:
-    properties:
-      schemaId: SchemaId
+      conflict:
+        type: list<SchemaId>
+        docs: The schemas that conflict with this property
 
   ArraySchema:
     extends: WithDescription
@@ -343,8 +341,13 @@ types:
       - WithName
     properties:
       discriminantProperty: string
-      commonProperties: list<ObjectProperty>
+      commonProperties: list<CommonProperty>
       schemas: map<string, Schema>
+
+  CommonProperty:
+    properties:
+      key: string
+      schema: Schema
 
   UnDiscriminatedOneOfSchema:
     extends:

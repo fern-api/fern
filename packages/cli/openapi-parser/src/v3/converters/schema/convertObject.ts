@@ -1,9 +1,15 @@
 import { ObjectProperty, ReferencedSchema, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { OpenAPIV3ParserContext } from "../../OpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
+import { isSchemaEqual } from "../../utils/isSchemaEqual";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "../convertSchemas";
+
+interface ReferencedAllOfInfo {
+    schemaId: SchemaId;
+    convertedSchema: ReferencedSchema;
+    properties: Record<string, Schema>;
+}
 
 export function convertObject({
     nameOverride,
@@ -28,7 +34,7 @@ export function convertObject({
 }): Schema {
     let allRequired = [...(required ?? [])];
     let propertiesToConvert = { ...properties };
-    const referencedAllOf: ReferencedSchema[] = [];
+    const parents: ReferencedAllOfInfo[] = [];
     for (const allOfElement of allOf) {
         if (isReferenceObject(allOfElement)) {
             // if allOf element is a union, then don't inherit from it
@@ -36,7 +42,12 @@ export function convertObject({
             if (resolvedReference.discriminator != null && resolvedReference.discriminator.mapping != null) {
                 continue;
             }
-            referencedAllOf.push(convertToReferencedSchema(allOfElement, [getSchemaIdFromReference(allOfElement)]));
+            const schemaId = getSchemaIdFromReference(allOfElement);
+            parents.push({
+                schemaId,
+                convertedSchema: convertToReferencedSchema(allOfElement, [schemaId]),
+                properties: getAllProperties({ schema: allOfElement, context, breadcrumbs }),
+            });
         } else {
             if (allOfElement.properties != null) {
                 allRequired = [...allRequired, ...(allOfElement.required ?? [])];
@@ -48,6 +59,15 @@ export function convertObject({
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = allRequired.includes(propertyName);
         const schema = convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]);
+
+        const conflicts = [];
+        for (const parent of parents) {
+            const parentPropertySchema = parent.properties[propertyName];
+            if (parentPropertySchema != null && !isSchemaEqual(schema, parentPropertySchema)) {
+                conflicts.push(parent.schemaId);
+            }
+        }
+
         return {
             key: propertyName,
             schema: isRequired
@@ -56,15 +76,17 @@ export function convertObject({
                       description: undefined,
                       value: schema,
                   }),
+            conflict: conflicts,
         };
     });
+
     return wrapObject({
         nameOverride,
         generatedName,
         wrapAsNullable,
         properties: convertedProperties,
         description,
-        allOf: referencedAllOf,
+        allOf: parents.map((parent) => parent.convertedSchema),
     });
 }
 
@@ -104,21 +126,31 @@ export function wrapObject({
     });
 }
 
-function getPropertiesFromExtendedSchemas({
-    allOf,
+function getAllProperties({
+    schema,
     context,
+    breadcrumbs,
 }: {
-    allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
-    context: OpenAPIV3ParserContext;
-}): Record<string, Record<SchemaId, Schema>> {
-    const result: Record<string, Record<SchemaId, Schema>> = {};
-    for (const allOfObject of allOf) {
-        const resolvedAllOfObject = isReferenceObject(allOfObject)
-            ? context.resolveSchemaReference(allOfObject)
-            : allOfObject;
-        for (const property of resolvedAllOfObject.properties ?? []) {
-            if (property in result) {
-            }
-        }
+    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    context: AbstractOpenAPIV3ParserContext;
+    breadcrumbs: string[];
+}): Record<string, Schema> {
+    let properties: Record<string, Schema> = {};
+    const [resolvedSchema, resolvedBreadCrumbs] = isReferenceObject(schema)
+        ? [context.resolveSchemaReference(schema), [getSchemaIdFromReference(schema)]]
+        : [schema, breadcrumbs];
+    for (const allOfElement of resolvedSchema.allOf ?? []) {
+        properties = {
+            ...properties,
+            ...getAllProperties({ schema: allOfElement, context, breadcrumbs: resolvedBreadCrumbs }),
+        };
     }
+    for (const [propertyName, propertySchema] of Object.entries(resolvedSchema.properties ?? {})) {
+        const convertedPropertySchema = convertSchema(propertySchema, false, context, [
+            ...resolvedBreadCrumbs,
+            propertyName,
+        ]);
+        properties[propertyName] = convertedPropertySchema;
+    }
+    return properties;
 }

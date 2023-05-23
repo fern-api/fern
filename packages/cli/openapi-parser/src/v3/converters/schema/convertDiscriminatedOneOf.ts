@@ -1,4 +1,4 @@
-import { ObjectProperty, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { CommonProperty, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { convertReferenceObject, convertSchema } from "../convertSchemas";
@@ -72,7 +72,7 @@ export function wrapDiscriminantedOneOf({
     nameOverride: string | undefined;
     generatedName: string;
     wrapAsNullable: boolean;
-    properties: ObjectProperty[];
+    properties: CommonProperty[];
     description: string | undefined;
     discriminant: string;
     subtypes: Record<string, Schema>;
