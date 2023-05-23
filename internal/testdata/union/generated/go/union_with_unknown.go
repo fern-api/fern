@@ -22,13 +22,13 @@ func (x *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)
-		if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
 		x.Foo = value
 	case "unknown":
 		value := make(map[string]any)
-		if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
 		x.Unknown = value

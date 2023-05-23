@@ -14,6 +14,8 @@ type UnionWithDiscriminant struct {
 func (x *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
+		Foo  *Foo   `json:"foo"`
+		Bar  *Bar   `json:"bar"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -21,17 +23,9 @@ func (x *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	x.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "foo":
-		value := new(Foo)
-		if err := json.Unmarshal(data, &unmarshaler); err != nil {
-			return err
-		}
-		x.Foo = value
+		x.Foo = unmarshaler.Foo
 	case "bar":
-		value := new(Bar)
-		if err := json.Unmarshal(data, &unmarshaler); err != nil {
-			return err
-		}
-		x.Bar = value
+		x.Bar = unmarshaler.Bar
 	}
 	return nil
 }

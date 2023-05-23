@@ -24,7 +24,7 @@ func (x *Union) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "one":
 		value := new(Type)
-		if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
 		x.One = value

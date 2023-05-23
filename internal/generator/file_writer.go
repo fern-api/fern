@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/fern-api/fern-go/internal/types"
+	"github.com/fern-api/fern-go/internal/fern/ir"
 	"golang.org/x/tools/go/ast/astutil"
 )
 
@@ -19,14 +19,14 @@ type fileWriter struct {
 	filename    string
 	packageName string
 	imports     imports
-	types       map[types.TypeID]*types.TypeDeclaration
+	types       map[ir.TypeId]*ir.TypeDeclaration
 	buffer      *bytes.Buffer
 }
 
 func newFileWriter(
 	filename string,
 	packageName string,
-	types map[types.TypeID]*types.TypeDeclaration,
+	types map[ir.TypeId]*ir.TypeDeclaration,
 ) *fileWriter {
 	// The default set of imports used in the generated output.
 	// These imports are removed from the generated output if
@@ -77,7 +77,7 @@ func (f *fileWriter) File() (*File, error) {
 }
 
 // WriteType writes a complete type, including all of its properties.
-func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
+func (f *fileWriter) WriteType(typeDeclaration *ir.TypeDeclaration) error {
 	visitor := &typeVisitor{
 		typeName: typeDeclaration.Name.Name.PascalCase.UnsafeName,
 		writer:   f,
@@ -87,7 +87,7 @@ func (f *fileWriter) WriteType(typeDeclaration *types.TypeDeclaration) error {
 
 // typeReferenceToGoType maps the given type reference into its Go-equivalent.
 // TODO: Handle the case where this type is defined in another package.
-func typeReferenceToGoType(typeReference *types.TypeReference, types map[types.TypeID]*types.TypeDeclaration) string {
+func typeReferenceToGoType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
 	visitor := &typeReferenceVisitor{
 		types: types,
 	}
@@ -96,7 +96,7 @@ func typeReferenceToGoType(typeReference *types.TypeReference, types map[types.T
 }
 
 // containerTypeToGoType maps the given container type into its Go-equivalent.
-func containerTypeToGoType(containerType *types.ContainerType, types map[types.TypeID]*types.TypeDeclaration) string {
+func containerTypeToGoType(containerType *ir.ContainerType, types map[ir.TypeId]*ir.TypeDeclaration) string {
 	visitor := &containerTypeVisitor{
 		types: types,
 	}
@@ -105,7 +105,7 @@ func containerTypeToGoType(containerType *types.ContainerType, types map[types.T
 }
 
 // singleUnionTypePropertiesToGoType maps the given container type into its Go-equivalent.
-func singleUnionTypePropertiesToGoType(singleUnionTypeProperties *types.SingleUnionTypeProperties, types map[types.TypeID]*types.TypeDeclaration) string {
+func singleUnionTypePropertiesToGoType(singleUnionTypeProperties *ir.SingleUnionTypeProperties, types map[ir.TypeId]*ir.TypeDeclaration) string {
 	visitor := &singleUnionTypePropertiesVisitor{
 		types: types,
 	}
@@ -117,16 +117,17 @@ func singleUnionTypePropertiesToGoType(singleUnionTypeProperties *types.SingleUn
 //
 // Note this returns the string representation of the statement required to initialize
 // the given property, e.g. 'value := new(Foo)'
-func singleUnionTypePropertiesToInitializer(singleUnionTypeProperties *types.SingleUnionTypeProperties, types map[types.TypeID]*types.TypeDeclaration) string {
+func singleUnionTypePropertiesToInitializer(singleUnionTypeProperties *ir.SingleUnionTypeProperties, discriminantName string, types map[ir.TypeId]*ir.TypeDeclaration) string {
 	visitor := &singleUnionTypePropertiesInitializerVisitor{
-		types: types,
+		discriminantName: discriminantName,
+		types:            types,
 	}
 	_ = singleUnionTypeProperties.Accept(visitor)
 	return visitor.value
 }
 
 // literalToGoType maps the given literal into its Go-equivalent.
-func literalToGoType(literal *types.Literal) string {
+func literalToGoType(literal *ir.Literal) string {
 	visitor := new(literalVisitor)
 	_ = literal.Accept(visitor)
 	return visitor.value
@@ -139,15 +140,15 @@ type typeVisitor struct {
 }
 
 // Compile-time assertion.
-var _ types.TypeVisitor = (*typeVisitor)(nil)
+var _ ir.TypeVisitor = (*typeVisitor)(nil)
 
-func (t *typeVisitor) VisitAlias(alias *types.AliasTypeDeclaration) error {
+func (t *typeVisitor) VisitAlias(alias *ir.AliasTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " = ", typeReferenceToGoType(alias.AliasOf, t.writer.types))
 	t.writer.P()
 	return nil
 }
 
-func (t *typeVisitor) VisitEnum(enum *types.EnumTypeDeclaration) error {
+func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 	// Write the enum type definition.
 	t.writer.P("type ", t.typeName, " uint8")
 	t.writer.P()
@@ -209,7 +210,7 @@ func (t *typeVisitor) VisitEnum(enum *types.EnumTypeDeclaration) error {
 	return nil
 }
 
-func (t *typeVisitor) VisitObject(object *types.ObjectTypeDeclaration) error {
+func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " struct {")
 	_ = t.visitObjectProperties(object, true /* includeTags */)
 	t.writer.P("}")
@@ -217,13 +218,13 @@ func (t *typeVisitor) VisitObject(object *types.ObjectTypeDeclaration) error {
 	return nil
 }
 
-func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
+func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Write the union type definition.
 	discriminantName := union.Discriminant.Name.PascalCase.UnsafeName
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
 	for _, extend := range union.Extends {
-		_ = t.visitObjectProperties(t.writer.types[extend.TypeID].Shape.Object, false /* includeTags */)
+		_ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */)
 	}
 	for _, property := range union.BaseProperties {
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types))
@@ -245,11 +246,19 @@ func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
 	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 	var propertyNames []string
 	for _, extend := range union.Extends {
-		propertyNames = append(propertyNames, t.visitObjectProperties(t.writer.types[extend.TypeID].Shape.Object, true /* includeTags */)...)
+		propertyNames = append(propertyNames, t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)...)
 	}
 	for _, property := range union.BaseProperties {
 		propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
+	}
+	// Include all of the types that need to be unmarshaled on the top level
+	// unmarshaler variable (the single property unions).
+	for _, unionType := range union.Types {
+		if unionType.Shape.PropertiesType == "singleProperty" {
+			typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types)
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.DiscriminantValue.Name.CamelCase.UnsafeName, "\"`")
+		}
 	}
 	t.writer.P("}")
 	t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
@@ -267,8 +276,12 @@ func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
 	t.writer.P("switch unmarshaler.", discriminantName, " {")
 	for _, unionType := range union.Types {
 		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
-		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, t.writer.types))
-		t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
+		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, unionType.DiscriminantValue.Name.PascalCase.UnsafeName, t.writer.types))
+		if unionType.Shape.PropertiesType == "singleProperty" {
+			// If the union is a single property, we don't need the json.Unmarshal step.
+			continue
+		}
+		t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
 		t.writer.P("return err")
 		t.writer.P("}")
 		t.writer.P("x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = value")
@@ -305,7 +318,7 @@ func (t *typeVisitor) VisitUnion(union *types.UnionTypeDeclaration) error {
 	return nil
 }
 
-func (t *typeVisitor) VisitUndiscriminatedUnion(union *types.UndiscriminatedUnionTypeDeclaration) error {
+func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTypeDeclaration) error {
 	return errors.New("unimplemented")
 }
 
@@ -314,11 +327,11 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *types.UndiscriminatedUnio
 // to generate JSON struct tags, which is only relevant for object types (not unions).
 //
 // A slice of all the transitive property names are returned.
-func (t *typeVisitor) visitObjectProperties(object *types.ObjectTypeDeclaration, includeTags bool) []string {
+func (t *typeVisitor) visitObjectProperties(object *ir.ObjectTypeDeclaration, includeTags bool) []string {
 	var names []string
 	for _, extend := range object.Extends {
 		// You can only extend other objects.
-		names = append(names, t.visitObjectProperties(t.writer.types[extend.TypeID].Shape.Object, includeTags)...)
+		names = append(names, t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeTags)...)
 	}
 	for _, property := range object.Properties {
 		names = append(names, property.Name.Name.PascalCase.UnsafeName)
@@ -335,27 +348,27 @@ func (t *typeVisitor) visitObjectProperties(object *types.ObjectTypeDeclaration,
 // (e.g. containers, primitives, etc).
 type typeReferenceVisitor struct {
 	value string
-	types map[types.TypeID]*types.TypeDeclaration
+	types map[ir.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
-var _ types.TypeReferenceVisitor = (*typeReferenceVisitor)(nil)
+var _ ir.TypeReferenceVisitor = (*typeReferenceVisitor)(nil)
 
-func (t *typeReferenceVisitor) VisitContainer(container *types.ContainerType) error {
+func (t *typeReferenceVisitor) VisitContainer(container *ir.ContainerType) error {
 	t.value = containerTypeToGoType(container, t.types)
 	return nil
 }
 
-func (t *typeReferenceVisitor) VisitNamed(named *types.DeclaredTypeName) error {
+func (t *typeReferenceVisitor) VisitNamed(named *ir.DeclaredTypeName) error {
 	format := "%s"
-	if isPointer(t.types[named.TypeID]) {
+	if isPointer(t.types[named.TypeId]) {
 		format = "*%s"
 	}
 	t.value = fmt.Sprintf(format, named.Name.PascalCase.UnsafeName)
 	return nil
 }
 
-func (t *typeReferenceVisitor) VisitPrimitive(primitive types.PrimitiveType) error {
+func (t *typeReferenceVisitor) VisitPrimitive(primitive ir.PrimitiveType) error {
 	t.value = primitiveToGoType(primitive)
 	return nil
 }
@@ -369,35 +382,35 @@ func (t *typeReferenceVisitor) VisitUnknown(unknown any) error {
 // (e.g. lists, maps, etc).
 type containerTypeVisitor struct {
 	value string
-	types map[types.TypeID]*types.TypeDeclaration
+	types map[ir.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
-var _ types.ContainerTypeVisitor = (*containerTypeVisitor)(nil)
+var _ ir.ContainerTypeVisitor = (*containerTypeVisitor)(nil)
 
-func (c *containerTypeVisitor) VisitList(list *types.TypeReference) error {
+func (c *containerTypeVisitor) VisitList(list *ir.TypeReference) error {
 	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(list, c.types))
 	return nil
 }
 
-func (c *containerTypeVisitor) VisitMap(mapType *types.MapType) error {
+func (c *containerTypeVisitor) VisitMap(mapType *ir.MapType) error {
 	c.value = fmt.Sprintf("map[%s]%s", typeReferenceToGoType(mapType.KeyType, c.types), typeReferenceToGoType(mapType.ValueType, c.types))
 	return nil
 }
 
-func (c *containerTypeVisitor) VisitOptional(optional *types.TypeReference) error {
+func (c *containerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
 	// Trim all of the preceding pointers from the underlying type so that we don't
 	// unnecessarily generate double pointers for objects and unions (e.g. '**Foo)').
 	c.value = fmt.Sprintf("*%s", strings.TrimLeft(typeReferenceToGoType(optional, c.types), "*"))
 	return nil
 }
 
-func (c *containerTypeVisitor) VisitSet(set *types.TypeReference) error {
+func (c *containerTypeVisitor) VisitSet(set *ir.TypeReference) error {
 	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(set, c.types))
 	return nil
 }
 
-func (c *containerTypeVisitor) VisitLiteral(literal *types.Literal) error {
+func (c *containerTypeVisitor) VisitLiteral(literal *ir.Literal) error {
 	c.value = literalToGoType(literal)
 	return nil
 }
@@ -406,22 +419,22 @@ func (c *containerTypeVisitor) VisitLiteral(literal *types.Literal) error {
 // single union type properties.
 type singleUnionTypePropertiesVisitor struct {
 	value string
-	types map[types.TypeID]*types.TypeDeclaration
+	types map[ir.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
-var _ types.SingleUnionTypePropertiesVisitor = (*singleUnionTypePropertiesVisitor)(nil)
+var _ ir.SingleUnionTypePropertiesVisitor = (*singleUnionTypePropertiesVisitor)(nil)
 
-func (c *singleUnionTypePropertiesVisitor) VisitSamePropertiesAsObject(named *types.DeclaredTypeName) error {
+func (c *singleUnionTypePropertiesVisitor) VisitSamePropertiesAsObject(named *ir.DeclaredTypeName) error {
 	format := "%s"
-	if isPointer(c.types[named.TypeID]) {
+	if isPointer(c.types[named.TypeId]) {
 		format = "*%s"
 	}
 	c.value = fmt.Sprintf(format, named.Name.PascalCase.UnsafeName)
 	return nil
 }
 
-func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *types.SingleUnionTypeProperty) error {
+func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.SingleUnionTypeProperty) error {
 	c.value = typeReferenceToGoType(property.Type, c.types)
 	return nil
 }
@@ -437,29 +450,25 @@ func (c *singleUnionTypePropertiesVisitor) VisitNoProperties(_ any) error {
 // This visitor determines the string representation of the constructor used
 // in the json.Unmarshaler implementation.
 type singleUnionTypePropertiesInitializerVisitor struct {
-	value string
-	types map[types.TypeID]*types.TypeDeclaration
+	value            string
+	discriminantName string
+	types            map[ir.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
-var _ types.SingleUnionTypePropertiesVisitor = (*singleUnionTypePropertiesInitializerVisitor)(nil)
+var _ ir.SingleUnionTypePropertiesVisitor = (*singleUnionTypePropertiesInitializerVisitor)(nil)
 
-func (c *singleUnionTypePropertiesInitializerVisitor) VisitSamePropertiesAsObject(named *types.DeclaredTypeName) error {
+func (c *singleUnionTypePropertiesInitializerVisitor) VisitSamePropertiesAsObject(named *ir.DeclaredTypeName) error {
 	format := "var value %s"
-	if isPointer(c.types[named.TypeID]) {
+	if isPointer(c.types[named.TypeId]) {
 		format = "value := new(%s)"
 	}
 	c.value = fmt.Sprintf(format, named.Name.PascalCase.UnsafeName)
 	return nil
 }
 
-func (c *singleUnionTypePropertiesInitializerVisitor) VisitSingleProperty(property *types.SingleUnionTypeProperty) error {
-	format := "var value %s"
-	if property.Type.Named != nil && isPointer(c.types[property.Type.Named.TypeID]) {
-		format = "value := new(%s)"
-	}
-	// Trim the '*' prefix, if any, so that the constructor above is compatible.
-	c.value = fmt.Sprintf(format, strings.TrimPrefix(typeReferenceToGoType(property.Type, c.types), "*"))
+func (c *singleUnionTypePropertiesInitializerVisitor) VisitSingleProperty(_ *ir.SingleUnionTypeProperty) error {
+	c.value = fmt.Sprintf("x.%s = unmarshaler.%s", c.discriminantName, c.discriminantName)
 	return nil
 }
 
@@ -468,14 +477,14 @@ func (c *singleUnionTypePropertiesInitializerVisitor) VisitNoProperties(_ any) e
 	return nil
 }
 
-// containerTypeVisitor retrieves the string representation of literal types.
+// containerTypeVisitor retrieves the string representation of literal ir.
 // Strings are the only supported literals for now.
 type literalVisitor struct {
 	value string
 }
 
 // Compile-time assertion.
-var _ types.LiteralVisitor = (*literalVisitor)(nil)
+var _ ir.LiteralVisitor = (*literalVisitor)(nil)
 
 func (l *literalVisitor) VisitString(value string) error {
 	l.value = value
@@ -488,26 +497,26 @@ func unknownToGoType(_ any) string {
 }
 
 // primitiveToGoType maps Fern's primitive types to their Go-equivalent.
-func primitiveToGoType(primitive types.PrimitiveType) string {
+func primitiveToGoType(primitive ir.PrimitiveType) string {
 	switch primitive {
-	case types.PrimitiveTypeInteger:
+	case ir.PrimitiveTypeInteger:
 		return "int"
-	case types.PrimitiveTypeDouble:
+	case ir.PrimitiveTypeDouble:
 		return "float64"
-	case types.PrimitiveTypeString:
+	case ir.PrimitiveTypeString:
 		return "string"
-	case types.PrimitiveTypeBoolean:
+	case ir.PrimitiveTypeBoolean:
 		return "bool"
-	case types.PrimitiveTypeLong:
+	case ir.PrimitiveTypeLong:
 		return "int64"
 	// TODO: We'll need to add some special handling for [un]marshaling Date[Time] to and from time.Time.
-	case types.PrimitiveTypeDateTime:
+	case ir.PrimitiveTypeDateTime:
 		return "time.Time"
-	case types.PrimitiveTypeDate:
+	case ir.PrimitiveTypeDate:
 		return "time.Time"
-	case types.PrimitiveTypeUUID:
+	case ir.PrimitiveTypeUuid:
 		return "uuid.UUID"
-	case types.PrimitiveTypeBase64:
+	case ir.PrimitiveTypeBase64:
 		return "[]byte"
 	default:
 		return "any"
@@ -516,7 +525,7 @@ func primitiveToGoType(primitive types.PrimitiveType) string {
 
 // isPointer returns true if the given type is a pointer type (e.g. objects and
 // unions). Enums, primitives, and aliases of these types do not require pointers.
-func isPointer(typeDeclaration *types.TypeDeclaration) bool {
+func isPointer(typeDeclaration *ir.TypeDeclaration) bool {
 	switch typeDeclaration.Shape.Type {
 	case "object", "union", "undiscriminatedUnion":
 		return true

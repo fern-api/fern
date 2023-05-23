@@ -13,7 +13,9 @@ type UnionWithPrimitive struct {
 
 func (x *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type    string `json:"type"`
+		Boolean bool   `json:"boolean"`
+		String  string `json:"string"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -21,17 +23,9 @@ func (x *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 	x.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "boolean":
-		var value bool
-		if err := json.Unmarshal(data, &unmarshaler); err != nil {
-			return err
-		}
-		x.Boolean = value
+		x.Boolean = unmarshaler.Boolean
 	case "string":
-		var value string
-		if err := json.Unmarshal(data, &unmarshaler); err != nil {
-			return err
-		}
-		x.String = value
+		x.String = unmarshaler.String
 	}
 	return nil
 }
