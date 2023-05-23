@@ -1,0 +1,5 @@
+# Simple test for generating a Fern definition with multiple packages.
+types:
+  Foo:
+    properties:
+      name: string

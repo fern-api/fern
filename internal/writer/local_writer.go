@@ -40,6 +40,9 @@ func (l *localWriter) WriteFiles(files []*generator.File) error {
 	}
 	for _, file := range files {
 		filename := filepath.Join(l.config.Path, file.Path)
+		if err := os.MkdirAll(filepath.Dir(filename), 0755); err != nil {
+			return err
+		}
 		if err := os.WriteFile(filename, file.Content, 0644); err != nil {
 			return err
 		}
