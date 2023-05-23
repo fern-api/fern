@@ -35,26 +35,21 @@ func (g *Generator) Generate() ([]*File, error) {
 }
 
 func (g *Generator) generate(ir *types.IntermediateRepresentation) ([]*File, error) {
-	// TODO: Every type should be generated into its own file,
-	// also taking its Fern package name into consideration.
-	writer := newFileWriter(
-		fmt.Sprintf("%s.go", ir.APIName.SnakeCase.UnsafeName),
-		strings.ToLower(ir.APIName.CamelCase.SafeName),
-		ir.Types,
-	)
-	// TODO: Results aren't determinisitc because we're iterating
-	// over a map here. Update this to be deterministic depending
-	// on how we delineate types across files (i.e. sort the types
-	// if we write multiple in the same file, or simply just write
-	// them to their own file).
+	var files []*File
 	for _, irType := range ir.Types {
+		writer := newFileWriter(
+			fmt.Sprintf("%s.go", ir.APIName.SnakeCase.UnsafeName),
+			strings.ToLower(ir.APIName.CamelCase.SafeName),
+			ir.Types,
+		)
 		if err := writer.WriteType(irType); err != nil {
 			return nil, err
 		}
+		file, err := writer.File()
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
 	}
-	file, err := writer.File()
-	if err != nil {
-		return nil, err
-	}
-	return []*File{file}, nil
+	return files, nil
 }
