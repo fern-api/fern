@@ -386,7 +386,9 @@ func (c *containerTypeVisitor) VisitMap(mapType *types.MapType) error {
 }
 
 func (c *containerTypeVisitor) VisitOptional(optional *types.TypeReference) error {
-	c.value = fmt.Sprintf("*%s", typeReferenceToGoType(optional, c.types))
+	// Trim all of the preceding pointers from the underlying type so that we don't
+	// unnecessarily generate double pointers for objects and unions (e.g. '**Foo)').
+	c.value = fmt.Sprintf("*%s", strings.TrimLeft(typeReferenceToGoType(optional, c.types), "*"))
 	return nil
 }
 

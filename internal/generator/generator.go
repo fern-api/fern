@@ -42,6 +42,11 @@ func (g *Generator) generate(ir *types.IntermediateRepresentation) ([]*File, err
 		strings.ToLower(ir.APIName.CamelCase.SafeName),
 		ir.Types,
 	)
+	// TODO: Results aren't determinisitc because we're iterating
+	// over a map here. Update this to be deterministic depending
+	// on how we delineate types across files (i.e. sort the types
+	// if we write multiple in the same file, or simply just write
+	// them to their own file).
 	for _, irType := range ir.Types {
 		if err := writer.WriteType(irType); err != nil {
 			return nil, err
