@@ -46,7 +46,47 @@ function getQueryParameterTypeReference({
     schemas: Record<SchemaId, Schema>;
 }): QueryParameterTypeReference {
     const prefix = isPackageYml ? undefined : ROOT_PREFIX;
+
+    if (schema.type === "reference") {
+        const resolvedSchema = schemas[schema.schema];
+        if (resolvedSchema == null) {
+            throw new Error(`Failed to resolve schema=${schema.schema}`);
+        }
+        if (resolvedSchema.type === "array") {
+            return {
+                value: convertToTypeReference({
+                    schema: Schema.optional({
+                        value: resolvedSchema.value,
+                        description: schema.description ?? resolvedSchema.description,
+                    }),
+                    prefix,
+                    schemas,
+                }),
+                allowMultiple: true,
+            };
+        }
+    }
+
     if (schema.type === "optional" || schema.type === "nullable") {
+        if (schema.value.type === "reference") {
+            const resolvedSchema = schemas[schema.value.schema];
+            if (resolvedSchema == null) {
+                throw new Error(`Failed to resolve schema=${schema.value.schema}`);
+            }
+            if (resolvedSchema.type === "array") {
+                return {
+                    value: convertToTypeReference({
+                        schema: Schema.optional({
+                            value: resolvedSchema.value,
+                            description: schema.description ?? resolvedSchema.description,
+                        }),
+                        prefix,
+                        schemas,
+                    }),
+                    allowMultiple: true,
+                };
+            }
+        }
         if (schema.value.type === "array") {
             return {
                 value: convertToTypeReference({
