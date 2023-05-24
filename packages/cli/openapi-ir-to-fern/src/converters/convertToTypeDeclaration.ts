@@ -3,6 +3,7 @@ import {
     ArraySchema,
     EnumSchema,
     MapSchema,
+    ObjectProperty,
     ObjectSchema,
     OneOfSchema,
     OptionalSchema,
@@ -66,7 +67,20 @@ export function convertObjectToTypeDeclaration({
 }): TypeDeclarations {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
+    const schemasToInline = new Set<SchemaId>();
     for (const property of schema.properties) {
+        if (Object.keys(property.conflict).length > 0) {
+            const parentHasIdentiticalProperty = Object.entries(property.conflict).every(([_, conflict]) => {
+                return !conflict.differentSchema;
+            });
+            if (parentHasIdentiticalProperty) {
+                continue; // just use the parent property instead of redefining
+            } else {
+                Object.entries(property.conflict).forEach(([schemaId]) => {
+                    schemasToInline.add(schemaId);
+                });
+            }
+        }
         const propertyTypeReference = convertToTypeReference({ schema: property.schema, schemas });
         properties[property.key] = propertyTypeReference.typeReference;
         additionalTypeDeclarations = {
@@ -76,6 +90,9 @@ export function convertObjectToTypeDeclaration({
     }
     const extendedSchemas: string[] = [];
     for (const allOf of schema.allOf) {
+        if (schemasToInline.has(allOf.schema)) {
+            continue; // dont extend from schemas that need to be inlined
+        }
         const allOfTypeReference = convertToTypeReference({ schema: Schema.reference(allOf), schemas });
         extendedSchemas.push(getTypeFromTypeReference(allOfTypeReference.typeReference));
         additionalTypeDeclarations = {
@@ -83,6 +100,25 @@ export function convertObjectToTypeDeclaration({
             ...allOfTypeReference.additionalTypeDeclarations,
         };
     }
+
+    for (const inlineSchemaId of schemasToInline) {
+        const inlinedSchema = schemas[inlineSchemaId];
+        if (inlinedSchema == null) {
+            throw new Error(`Failed to find schema=${inlineSchemaId}`);
+        }
+        const inlinedSchemaProperties = getAllProperties({
+            schema: inlinedSchema,
+            schemas,
+            schemaId: inlineSchemaId,
+        });
+        for (const propertyToInline of inlinedSchemaProperties) {
+            if (properties[propertyToInline.key] == null) {
+                const propertyTypeReference = convertToTypeReference({ schema: propertyToInline.schema, schemas });
+                properties[propertyToInline.key] = propertyTypeReference.typeReference;
+            }
+        }
+    }
+
     const objectTypeDeclaration: RawSchemas.ObjectSchema = {
         docs: schema.description ?? undefined,
         properties,
@@ -95,6 +131,29 @@ export function convertObjectToTypeDeclaration({
         typeDeclaration: objectTypeDeclaration,
         additionalTypeDeclarations,
     };
+}
+
+function getAllProperties({
+    schemaId,
+    schema,
+    schemas,
+}: {
+    schemaId: SchemaId;
+    schema: Schema;
+    schemas: Record<SchemaId, Schema>;
+}): ObjectProperty[] {
+    if (schema.type !== "object") {
+        throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}`);
+    }
+    const properties: ObjectProperty[] = [...schema.properties];
+    for (const parent of schema.allOf) {
+        const parentSchema = schemas[parent.schema];
+        if (parentSchema == null) {
+            throw new Error(`Failed to find schema=${parent.schema}`);
+        }
+        properties.push(...getAllProperties({ schemaId: parent.schema, schema: parentSchema, schemas }));
+    }
+    return properties;
 }
 
 export function convertArrayToTypeDeclaration({
