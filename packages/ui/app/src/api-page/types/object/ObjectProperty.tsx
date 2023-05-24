@@ -1,6 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
+import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import {
@@ -19,6 +20,8 @@ export declare namespace ObjectProperty {
 }
 
 export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => {
+    const { resolveTypeById } = useApiDefinitionContext();
+
     const contextValue = useTypeDefinitionContext();
     const jsonPropertyPath = useMemo(
         (): JsonPropertyPath => [
@@ -58,6 +61,16 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
         };
     }, [contextValue, jsonPropertyPath]);
 
+    const description = useMemo(() => {
+        if (property.description != null) {
+            return property.description;
+        }
+        if (property.valueType.type === "id") {
+            return resolveTypeById(property.valueType.value).description;
+        }
+        return undefined;
+    }, [property.description, property.valueType, resolveTypeById]);
+
     return (
         <div
             className={classNames("flex flex-col py-4", {
@@ -73,7 +86,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                 </div>
             </div>
             <div className="flex flex-col">
-                <Description description={property.description} />
+                <Description description={description} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions type={property.valueType} isCollapsible />
                 </TypeDefinitionContext.Provider>
