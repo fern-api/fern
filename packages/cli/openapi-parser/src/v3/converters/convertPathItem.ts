@@ -114,7 +114,6 @@ function convertSyncAndAsyncEndpoints({
     const sdkName = getSdkName({ operation });
     const parameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const asyncConfig = getExtension<FernAsyncConfig>(operation, FernOpenAPIExtension.ASYNC_CONFIG);
     if (asyncConfig != null) {
         const headerToIgnore = asyncConfig.discriminant.name;

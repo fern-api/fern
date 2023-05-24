@@ -35803,9 +35803,11 @@ paths:
             enum:
               - created_at
               - "-created_at"
-            x-enum-names:
-              created_at: Ascending
-              -created_at: Descending
+            x-fern-enum:
+              created_at:
+                name: Ascending
+              -created_at:
+                name: Descending
             example: "-created_at"
         - name: search
           in: query
