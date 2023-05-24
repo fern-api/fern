@@ -1,9 +1,10 @@
 ---
 title: "Using extensions"
-description: "Improve the quality of your generated SDKs by levearging fern's OpenAPI extensions."
+description: "Improve the quality of your generated SDKs with OpenAPI extensions."
 ---
 
-Fern supports a wide-variety of OpenAPI extensions so that you can customize your SDK beyond the defaults.
+Fern supports different OpenAPI extensions so that you can generate higher-quality SDKs.
+If there's an extension you want that doesn't already exist, ask
 
 ## SDK Method Names
 
@@ -19,6 +20,7 @@ The following OpenAPI will generate a sdk that reads `client.users.create()`.
 paths:
   /users
     post:
+      # client.users.create()
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: create
 ```
@@ -30,6 +32,7 @@ For example, the following OpenAPI will generate an sdk that reads `client.creat
 paths:
   /users:
     post:
+      # client.create_user()
       x-fern-sdk-method-name: create_user
 ```
 
@@ -38,10 +41,10 @@ paths:
 OpenAPI doesn't natively support adding descriptions to enum values. To do this in Fern you can use the `x-fern-enum`
 extension.
 
-In the example below, we've added some descriptions to a couple of enum values. These descriptions will
+In the example below, we've added some descriptions to enum values. These descriptions will
 propagate into the generated SDK and docs website.
 
-```openapi.yml
+```yaml openapi.yml
 components:
   schemas:
     CardSuit:
@@ -57,12 +60,12 @@ components:
           description: Some docs about spades
 ```
 
-There are occasions when the enum strings are not code-friendly
+There are occasions when the enum values are not code-friendly
 (i.e. do not start with a letter & only contain alphanumeric characters and hyphens).
-If this is the case, [fern check](/compiler/cli-reference#`fern check`) will flag this. To fix, you can specify
-code friendly names in the `x-fern-enum` extension. See below:
+[fern check](../compiler/cli-reference) will alert when this is the case. To fix, you can specify
+code friendly names in the `x-fern-enum` extension. See the example below:
 
-```openapi.yml
+```yaml openapi.yml
 components:
   schemas:
     CardSuit:
@@ -104,8 +107,8 @@ components:
                 type: integer
 ```
 
-When Fern generates an SDK for this OpenAPI, we will automatically generate names for all the inlined types.
-Tye corresponding TypeScript code fro the OpenAPI above is something like:
+Fern automatically generate names for all the inlined types. For example, in this example,
+Fern would generate the name `CastItem` for the inlined array item definition.
 
 ```typescript
 export interface Movie {
@@ -120,7 +123,7 @@ export interface CastItem  { # <----- Auto-generated name
 }
 ```
 
-If you want to override the generated name, you can use the extension `x-fern-type-name`. For example,
+If you want to override the generated name, you can use the extension `x-fern-type-name`.
 
 ```yaml openapi.yml
 components:
@@ -144,7 +147,7 @@ components:
                 type: integer
 ```
 
-would replace `CastItem` with `Person` and the generated code would read more idiomatically:
+This would replace `CastItem` with `Person` and the generated code would read more idiomatically:
 
 ```typescript
 export interface Movie {
