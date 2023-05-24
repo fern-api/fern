@@ -73,6 +73,59 @@ func Run(u *Union) error {
 }
 ```
 
+## Undiscriminated Unions
+
+Fern supports undiscriminated unions, which function exactly how it sounds - the
+wire representation is simply the underlying JSON object, with nothing signifying
+what is encoded. However, we still want to reprsent these types like standard unions,
+so that users can explore the union type with the `Visitor` pattern, and can clearly
+understand what type they are interacting with.
+
+However, given that undiscriminated unions are specified as a simple list, the Go
+generator has to come up with its own naming convention to handle cases for the
+primitive and built-in types.
+
+For example, consider the following Fern definition:
+
+```yaml
+types:
+  Union:
+    discriminated: false
+    union:
+      - Type
+      - string
+      - optional<integer>
+      - map<string, boolean>
+      - list<string>
+      - list<list<string>>
+      - set<double>
+  Type:
+    properties:
+      id: string
+```
+
+For custom types, the naming convention just uses the same name as the type (i.e. `Type`
+is recognized with a field name of `Type`). But what do we do for the built-in types like
+`list<string>`?
+
+In these cases, we generate a name based on the underlying type. For the `list` type we
+use the `List` suffix, the `map` type a `Map` suffix, and so on. The generated code looks
+like the following:
+
+```go
+package api
+
+type Union struct {
+  Type             *Type
+  String           string
+  IntegerOptional  *int
+  StringBooleanMap map[string]bool
+  StringList       []string
+  StringListList   [][]string
+  DoubleSet        []float64
+}
+```
+
 ## Enums
 
 Enums implement `json.Unmarshaler` with a pointer receiver (unlike
