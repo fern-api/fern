@@ -4,7 +4,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import classNames from "classnames";
 import { JsonExample } from "../../examples/json-example/JsonExample";
 import { TitledExample } from "../../examples/TitledExample";
-import { useEndpointContext } from "../context/useEndpointContext";
+import { useEndpointContext } from "../endpoint-context/useEndpointContext";
 
 export declare namespace EndpointExample {
     export interface Props {

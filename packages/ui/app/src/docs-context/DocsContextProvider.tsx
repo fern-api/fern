@@ -2,7 +2,7 @@ import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { PropsWithChildren, useCallback, useMemo, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { DocsContext, DocsContextValue } from "./DocsContext";
 import { ResolvedUrlPath, UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
 
@@ -14,6 +14,12 @@ export declare namespace DocsContextProvider {
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsDefinition, children }) => {
     const urlPathResolver = useMemo(() => new UrlPathResolverImpl(docsDefinition), [docsDefinition]);
+
+    const location = useLocation();
+    const resolvedPathFromUrl = useMemo(
+        () => urlPathResolver.resolvePath(removeLeadingAndTrailingSlashes(location.pathname)),
+        [location.pathname, urlPathResolver]
+    );
 
     const resolveApi = useCallback(
         (apiId: FernRegistry.ApiDefinitionId): FernRegistryApiRead.ApiDefinition => {
@@ -68,9 +74,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
     }, []);
 
     const navigate = useNavigate();
+    const [justNavigated, setJustNavigated] = useState(false);
     const navigateToPath = useCallback(
         (path: ResolvedUrlPath) => {
-            setPathInView(path);
+            setJustNavigated(true);
+            setSelectedPath(path);
             navigate(path.slug);
             const listeners = navigateToPathListeners.current[path.slug];
             if (listeners != null) {
@@ -78,25 +86,23 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
                     setTimeout(listener, 0);
                 }
             }
+            setTimeout(() => {
+                setJustNavigated(false);
+            }, 500);
         },
         [navigate]
     );
 
-    const [pathInView, setPathInView] = useState<ResolvedUrlPath>();
+    const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
 
-    const isPathInView = useCallback(
+    const setSelectedPathAndUpdateUrl = useCallback(
         (path: ResolvedUrlPath) => {
-            return pathInView?.slug === path.slug;
+            if (!justNavigated) {
+                setSelectedPath(path);
+                navigate(path.slug);
+            }
         },
-        [pathInView?.slug]
-    );
-
-    const setPathInViewAndNavigate = useCallback(
-        (path: ResolvedUrlPath) => {
-            setPathInView(path);
-            navigate(path.slug);
-        },
-        [navigate]
+        [justNavigated, navigate]
     );
 
     const contextValue = useCallback(
@@ -105,24 +111,34 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             resolvePage,
             resolveFile,
             docsDefinition,
-            urlPathResolver,
+            resolvedPathFromUrl,
             registerNavigateToPathListener,
             navigateToPath,
-            isPathInView,
-            setPathInView: setPathInViewAndNavigate,
+            selectedPath,
+            setSelectedPath: setSelectedPathAndUpdateUrl,
         }),
         [
             resolveApi,
             resolvePage,
             resolveFile,
             docsDefinition,
-            urlPathResolver,
+            resolvedPathFromUrl,
             registerNavigateToPathListener,
             navigateToPath,
-            isPathInView,
-            setPathInViewAndNavigate,
+            selectedPath,
+            setSelectedPathAndUpdateUrl,
         ]
     );
 
     return <DocsContext.Provider value={contextValue}>{children}</DocsContext.Provider>;
 };
+
+function removeLeadingAndTrailingSlashes(s: string): string {
+    if (s.startsWith("/")) {
+        s = s.substring(1);
+    }
+    if (s.endsWith("/")) {
+        s = s.substring(0, s.length - 1);
+    }
+    return s;
+}

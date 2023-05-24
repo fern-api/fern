@@ -168,12 +168,13 @@ export class UrlSlugTree {
             if (subpackage == null) {
                 throw new Error("Subpackage does not exist: " + subpackageId);
             }
+            const resolvedSubpackage = resolveSubpackage(apiDefinition, subpackageId);
             acc[subpackage.urlSlug] = this.constructApiSubpackageNode({
                 apiDefinition,
                 apiSection,
-                subpackage,
+                subpackage: resolvedSubpackage,
                 apiSlug,
-                slugInsideApiExcludingThisSubpackage: slugInsideApi,
+                slugInsideApi: joinUrlSlugs(slugInsideApi, subpackage.urlSlug),
             });
             return acc;
         }, {});
@@ -201,30 +202,14 @@ export class UrlSlugTree {
         apiSection,
         subpackage,
         apiSlug,
-        slugInsideApiExcludingThisSubpackage,
+        slugInsideApi,
     }: {
         apiDefinition: FernRegistryApiRead.ApiDefinition;
         apiSection: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         apiSlug: string;
-        slugInsideApiExcludingThisSubpackage: string;
+        slugInsideApi: string;
     }): UrlSlugTreeNode.ApiSubpackage {
-        if (subpackage.pointsTo != null) {
-            const pointedTo = apiDefinition.subpackages[subpackage.pointsTo];
-            if (pointedTo == null) {
-                throw new Error("Subpackage does not exist: " + subpackage.pointsTo);
-            }
-            return this.constructApiSubpackageNode({
-                apiDefinition,
-                apiSection,
-                subpackage: pointedTo,
-                apiSlug,
-                slugInsideApiExcludingThisSubpackage,
-            });
-        }
-
-        const slugInsideApi = joinUrlSlugs(slugInsideApiExcludingThisSubpackage, subpackage.urlSlug);
-
         return {
             type: "apiSubpackage",
             apiSection,
@@ -345,5 +330,20 @@ export declare namespace UrlSlugTreeNode {
         apiSlug: string;
         slugInsideApi: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
+    }
+}
+
+function resolveSubpackage(
+    apiDefinition: FernRegistryApiRead.ApiDefinition,
+    subpackageId: FernRegistryApiRead.SubpackageId
+): FernRegistryApiRead.ApiDefinitionSubpackage {
+    const subpackage = apiDefinition.subpackages[subpackageId];
+    if (subpackage == null) {
+        throw new Error("Subpackage does not exist: " + subpackageId);
+    }
+    if (subpackage.pointsTo != null) {
+        return resolveSubpackage(apiDefinition, subpackage.pointsTo);
+    } else {
+        return subpackage;
     }
 }

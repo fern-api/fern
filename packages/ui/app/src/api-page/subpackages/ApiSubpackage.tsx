@@ -1,8 +1,13 @@
+import { H2 } from "@blueprintjs/core";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { useMemo } from "react";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { SeparatedElements } from "../../commons/SeparatedElements";
-import { joinUrlSlugs } from "../../docs-context/joinUrlSlugs";
-import { Endpoint } from "../endpoints/Endpoint";
+import { ResolvedUrlPath } from "../../docs-context/url-path-resolver/UrlPathResolver";
+import { PageMargins } from "../../page-margins/PageMargins";
+import { ApiPackageContents } from "../ApiPackageContents";
+import { useApiPageCenterElement } from "../useApiPageCenterElement";
+import { doesSubpackageHaveEndpointsRecursive } from "./doesSubpackageHaveEndpointsRecursive";
+import { SubpackageTitle } from "./SubpackageTitlte";
 
 export declare namespace ApiSubpackage {
     export interface Props {
@@ -12,24 +17,39 @@ export declare namespace ApiSubpackage {
 }
 
 export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slug }) => {
-    const { resolveSubpackageById } = useApiDefinitionContext();
+    const { resolveSubpackageById, apiSection, apiSlug } = useApiDefinitionContext();
+
     const subpackage = resolveSubpackageById(subpackageId);
 
+    const path = useMemo(
+        (): ResolvedUrlPath.ApiSubpackage => ({
+            type: "apiSubpackage",
+            apiSection,
+            apiSlug,
+            slug,
+            subpackage,
+        }),
+        [apiSection, apiSlug, slug, subpackage]
+    );
+
+    const { setTargetRef } = useApiPageCenterElement({ path });
+
+    const hasEndpointsInTree = useMemo(
+        () => doesSubpackageHaveEndpointsRecursive(subpackageId, resolveSubpackageById),
+        [resolveSubpackageById, subpackageId]
+    );
+    if (!hasEndpointsInTree) {
+        return null;
+    }
+
     return (
-        <div className="min-h-0 overflow-y-auto pb-36">
-            <SeparatedElements
-                separator={
-                    <div className="h-72 flex items-center">
-                        <div className="flex-1 h-px bg-neutral-700" />
-                    </div>
-                }
-            >
-                {subpackage.endpoints.map((endpoint) => (
-                    <div key={endpoint.id} className="flex-1 flex min-w-0">
-                        <Endpoint endpoint={endpoint} slug={joinUrlSlugs(slug, endpoint.urlSlug)} />
-                    </div>
-                ))}
-            </SeparatedElements>
-        </div>
+        <>
+            <PageMargins>
+                <H2 elementRef={setTargetRef} key="title">
+                    <SubpackageTitle subpackage={subpackage} />
+                </H2>
+            </PageMargins>
+            <ApiPackageContents key={subpackageId} package={subpackage} slug={slug} path={path} />
+        </>
     );
 };
