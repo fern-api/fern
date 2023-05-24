@@ -125,6 +125,26 @@ func singleUnionTypePropertiesToInitializer(singleUnionTypeProperties *ir.Single
 	return visitor.value
 }
 
+// typeReferenceToUndiscriminatedUnionField maps Fern's type references to the field name used in an
+// undiscriminated union.
+func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+	visitor := &undiscriminatedUnionTypeReferenceVisitor{
+		types: types,
+	}
+	_ = typeReference.Accept(visitor)
+	return visitor.value
+}
+
+// containerToUndiscriminatedUnionField maps Fern's container types to the field name used in an
+// undiscriminated union.
+func containerToUndiscriminatedUnionField(container *ir.ContainerType, types map[ir.TypeId]*ir.TypeDeclaration) string {
+	visitor := &undiscriminatedUnionContainerTypeVisitor{
+		types: types,
+	}
+	_ = container.Accept(visitor)
+	return visitor.value
+}
+
 // literalToGoType maps the given literal into its Go-equivalent.
 func literalToGoType(literal *ir.Literal) string {
 	visitor := new(literalVisitor)
@@ -318,24 +338,82 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 }
 
 func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTypeDeclaration) error {
-	// TODO: How are discriminated unions represented on the wire? Are they equivalent to their
-	// underlying value with no other value?
-	//
-	// Should we still use the standard union strategy, i.e. a struct with exactly one non-empty value?
-	// For primitives, we would have to use the PascalCase-equivalent of their name, e.g.
-	//
-	// type UndiscriminatedUnion struct {
-	//   Foo *Foo
-	//   String string
-	// }
-	//
-	// func (u *UndiscriminatedUnion) UnmarshalJSON(data []byte) error {
-	//   // We can't switch on a discriminant here, so the best we can do is to just try
-	//   // and unmarshal it into every possible form until it's successful. This is error
-	//   // prone in the presence of property collisions though.
-	// }
-	t.writer.P("type ", t.typeName, " struct {}")
+	// Write the union type definition.
+	t.writer.P("type ", t.typeName, " struct {")
+	for _, member := range union.Members {
+		t.writer.P(typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types), " ", typeReferenceToGoType(member.Type, t.writer.types))
+	}
+	t.writer.P("}")
 	t.writer.P()
+	return nil
+}
+
+// undiscriminatedUnionTypeReferenceVisitor retrieves the string representation of type references
+// (e.g. containers, primitives, etc), but specifically for undiscriminated union generation.
+type undiscriminatedUnionTypeReferenceVisitor struct {
+	value string
+	types map[ir.TypeId]*ir.TypeDeclaration
+}
+
+// Compile-time assertion.
+var _ ir.TypeReferenceVisitor = (*undiscriminatedUnionTypeReferenceVisitor)(nil)
+
+func (u *undiscriminatedUnionTypeReferenceVisitor) VisitContainer(container *ir.ContainerType) error {
+	u.value = containerToUndiscriminatedUnionField(container, u.types)
+	return nil
+}
+
+func (u *undiscriminatedUnionTypeReferenceVisitor) VisitNamed(named *ir.DeclaredTypeName) error {
+	u.value = named.Name.PascalCase.UnsafeName
+	return nil
+}
+
+func (u *undiscriminatedUnionTypeReferenceVisitor) VisitPrimitive(primitive ir.PrimitiveType) error {
+	u.value = primitiveToUndiscriminatedUnionField(primitive)
+	return nil
+}
+
+func (u *undiscriminatedUnionTypeReferenceVisitor) VisitUnknown(unknown any) error {
+	u.value = "Unknown"
+	return nil
+}
+
+// undiscriminatedUnionContainerTypeVisitor retrieves the string representation of container types
+// (e.g. lists, maps, etc).
+type undiscriminatedUnionContainerTypeVisitor struct {
+	value string
+	types map[ir.TypeId]*ir.TypeDeclaration
+}
+
+// Compile-time assertion.
+var _ ir.ContainerTypeVisitor = (*undiscriminatedUnionContainerTypeVisitor)(nil)
+
+func (u *undiscriminatedUnionContainerTypeVisitor) VisitList(list *ir.TypeReference) error {
+	u.value = fmt.Sprintf("%sList", typeReferenceToUndiscriminatedUnionField(list, u.types))
+	return nil
+}
+
+func (u *undiscriminatedUnionContainerTypeVisitor) VisitMap(mapType *ir.MapType) error {
+	u.value = fmt.Sprintf(
+		"%s%sMap",
+		typeReferenceToUndiscriminatedUnionField(mapType.KeyType, u.types),
+		typeReferenceToUndiscriminatedUnionField(mapType.ValueType, u.types),
+	)
+	return nil
+}
+
+func (u *undiscriminatedUnionContainerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
+	u.value = fmt.Sprintf("%sOptional", typeReferenceToUndiscriminatedUnionField(optional, u.types))
+	return nil
+}
+
+func (u *undiscriminatedUnionContainerTypeVisitor) VisitSet(set *ir.TypeReference) error {
+	u.value = fmt.Sprintf("%sSet", typeReferenceToUndiscriminatedUnionField(set, u.types))
+	return nil
+}
+
+func (u *undiscriminatedUnionContainerTypeVisitor) VisitLiteral(literal *ir.Literal) error {
+	u.value = fmt.Sprintf("%sLiteral", literalToUndiscriminatedUnionField(literal))
 	return nil
 }
 
@@ -513,6 +591,17 @@ func unknownToGoType(_ any) string {
 	return "any"
 }
 
+// literalToUndiscriminatedUnionField maps Fern's literal types to the field name used in an
+// undiscriminated union.
+func literalToUndiscriminatedUnionField(literal *ir.Literal) string {
+	switch literal.Type {
+	case "string":
+		return "String"
+	default:
+		return "Unknown"
+	}
+}
+
 // primitiveToGoType maps Fern's primitive types to their Go-equivalent.
 func primitiveToGoType(primitive ir.PrimitiveType) string {
 	switch primitive {
@@ -537,6 +626,33 @@ func primitiveToGoType(primitive ir.PrimitiveType) string {
 		return "[]byte"
 	default:
 		return "any"
+	}
+}
+
+// primitiveToUndiscriminatedUnionField maps Fern's primitive types to the field name used in an
+// undiscriminated union.
+func primitiveToUndiscriminatedUnionField(primitive ir.PrimitiveType) string {
+	switch primitive {
+	case ir.PrimitiveTypeInteger:
+		return "Integer"
+	case ir.PrimitiveTypeDouble:
+		return "Double"
+	case ir.PrimitiveTypeString:
+		return "String"
+	case ir.PrimitiveTypeBoolean:
+		return "Boolean"
+	case ir.PrimitiveTypeLong:
+		return "Long"
+	case ir.PrimitiveTypeDateTime:
+		return "DateTime"
+	case ir.PrimitiveTypeDate:
+		return "Date"
+	case ir.PrimitiveTypeUuid:
+		return "Uuid"
+	case ir.PrimitiveTypeBase64:
+		return "Base64"
+	default:
+		return "Any"
 	}
 }
 
