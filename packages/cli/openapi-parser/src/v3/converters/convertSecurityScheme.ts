@@ -19,7 +19,7 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
         const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
         return SecurityScheme.header({
             headerName: securityScheme.name,
-            prefix: bearerFormat != null ? "Bearer " : undefined,
+            prefix: bearerFormat != null ? "Bearer" : undefined,
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
         return SecurityScheme.bearer();
