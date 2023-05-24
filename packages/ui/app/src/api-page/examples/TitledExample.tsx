@@ -26,8 +26,13 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(exampleAsString);
 
     return (
-        <div className={classNames("flex flex-col basis-full min-h-0 rounded border border-[#252529]", className)}>
-            <div className="flex items-center justify-between p-2">
+        <div
+            className={classNames(
+                "flex flex-col basis-full min-h-0 rounded border border-[#252529] overflow-hidden",
+                className
+            )}
+        >
+            <div className="flex items-center justify-between px-2 py-1 bg-[#969CEE]/30">
                 <div className="flex items-center gap-2">
                     <div className="font-bold uppercase text-[#A7A7B0]">{title}</div>
                     {titleRightContent}

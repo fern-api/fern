@@ -69,7 +69,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
             <JsonExampleLine>
                 <div>
                     <span>
-                        <span className="text-[#aadafa]">{propertyKey}</span>
+                        <span className="text-[#a5acb8]">&quot;{propertyKey}&quot;</span>
                         <span>:</span>
                     </span>
                     &nbsp;
