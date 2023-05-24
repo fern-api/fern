@@ -6,7 +6,11 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentationForGenerator } from "../migrateIntermediateRepresentationForGenerator";
-import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, GeneratorVersion } from "../types/IrMigration";
+import {
+    GeneratorVersion,
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+} from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 
 describe("migrateIntermediateRepresentation", () => {
@@ -15,22 +19,22 @@ describe("migrateIntermediateRepresentation", () => {
         for (const generatorName of Object.values(GeneratorName)) {
             // eslint-disable-next-line jest/valid-title
             it(generatorName, () => {
-                const versions: Exclude<GeneratorVersion, AlwaysRunMigration>[] = migrations
-                    .map((migration) => migration.minGeneratorVersionsToExclude[generatorName])
+                const versions: Exclude<GeneratorVersion, GeneratorWasNeverUpdatedToConsumeNewIR>[] = migrations
+                    .map((migration) => migration.firstGeneratorVersionToConsumeNewIR[generatorName])
                     .filter(
-                        (version): version is Exclude<typeof version, AlwaysRunMigration> =>
-                            version !== AlwaysRunMigration
+                        (version): version is Exclude<typeof version, GeneratorWasNeverUpdatedToConsumeNewIR> =>
+                            version !== GeneratorWasNeverUpdatedToConsumeNewIR
                     );
                 const expectedVersions = [...versions].sort((a, b) => {
                     if (a === b) {
                         return 0;
                     }
 
-                    // GeneratorDoesNotExistForEitherIrVersion's should be last
-                    if (a === GeneratorDoesNotExistForEitherIrVersion) {
+                    // GeneratorWasNotCreatedYet's should be last
+                    if (a === GeneratorWasNotCreatedYet) {
                         return 1;
                     }
-                    if (b === GeneratorDoesNotExistForEitherIrVersion) {
+                    if (b === GeneratorWasNotCreatedYet) {
                         return -1;
                     }
 

@@ -42,6 +42,7 @@ types:
     properties:
       isAuthMandatory: boolean
       hasStreamingEndpoints: boolean
+      hasFileDownloadEndpoints: boolean
       platformHeaders: PlatformHeaders
   PlatformHeaders:
     properties:
@@ -65,7 +66,11 @@ types:
       errors: list<commons.ErrorId>
       subpackages: list<commons.SubpackageId>
       hasEndpointsInTree: boolean
+      navigationConfig: optional<PackageNavigationConfig>
   Subpackage:
     extends: Package
     properties:
       name: commons.Name
+  PackageNavigationConfig:
+    properties:
+      pointsTo: commons.SubpackageId

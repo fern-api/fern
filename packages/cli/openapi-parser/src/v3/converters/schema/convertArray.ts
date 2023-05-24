@@ -7,37 +7,37 @@ export function convertArray({
     breadcrumbs,
     item,
     description,
-    wrapAsOptional,
+    wrapAsNullable,
     context,
 }: {
     breadcrumbs: string[];
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     description: string | undefined;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     context: AbstractOpenAPIV3ParserContext;
 }): Schema {
     const itemSchema = item == null ? Schema.unknown() : convertSchema(item, false, context, [...breadcrumbs, "Item"]);
     return wrapArray({
         itemSchema,
-        wrapAsOptional,
+        wrapAsNullable,
         description,
     });
 }
 
 export function wrapArray({
     itemSchema,
-    wrapAsOptional,
+    wrapAsNullable,
     description,
 }: {
     itemSchema: Schema;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     description: string | undefined;
 }): Schema {
-    if (wrapAsOptional) {
-        return Schema.optional({
+    if (wrapAsNullable) {
+        return Schema.nullable({
             value: Schema.array({
                 value: itemSchema,
-                description: undefined,
+                description,
             }),
             description,
         });

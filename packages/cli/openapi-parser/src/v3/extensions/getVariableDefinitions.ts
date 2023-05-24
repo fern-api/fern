@@ -1,6 +1,7 @@
 import { PrimitiveSchema, PrimitiveSchemaValue } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { FernOpenAPIExtension, getExtension } from "./extensions";
+import { FernOpenAPIExtension } from "./fernExtensions";
+import { getExtension } from "./getExtension";
 
 export function getVariableDefinitions(document: OpenAPIV3.Document): Record<string, PrimitiveSchema> {
     const variables = getExtension<Record<string, OpenAPIV3.SchemaObject>>(

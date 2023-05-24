@@ -8,14 +8,19 @@ types:
   NavigationItem:
     discriminated: false
     union:
-      - string # page
+      - PageConfiguration
       - SectionConfiguration
       - ApiSectionConfiguration
+
+  PageConfiguration:
+    properties:
+      page: string
+      path: string
 
   SectionConfiguration:
     properties:
       section: string
-      pages: list<NavigationItem>
+      contents: list<NavigationItem>
 
   ApiSectionConfiguration:
     properties:

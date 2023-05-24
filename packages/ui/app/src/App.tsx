@@ -6,8 +6,9 @@ import "@blueprintjs/select/lib/css/blueprint-select.css";
 import "normalize.css";
 import { initializePosthog } from "./analytics/posthog";
 import styles from "./App.module.scss";
-import { AppRoutes } from "./AppRoutes";
 import { CONTEXTS } from "./contexts";
+import { Docs } from "./docs/Docs";
+import { useAreFernFontsReady } from "./useAreFernFontsReady";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -18,13 +19,18 @@ if (POSTHOG_API_KEY != null) {
 }
 
 export const App: React.FC = () => {
+    const areFontsReady = useAreFernFontsReady();
+    if (!areFontsReady) {
+        return null;
+    }
+
     return (
         <div className={styles.app}>
             {CONTEXTS.reduceRight(
                 (children, Context) => (
                     <Context>{children}</Context>
                 ),
-                <AppRoutes />
+                <Docs />
             )}
         </div>
     );

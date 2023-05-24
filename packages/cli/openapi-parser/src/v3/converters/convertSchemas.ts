@@ -2,7 +2,10 @@ import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/opena
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension, getExtension } from "../extensions/extensions";
+import { OpenAPIExtension } from "../extensions/extensions";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions";
+import { getExtension } from "../extensions/getExtension";
+import { getFernEnum } from "../extensions/getFernEnum";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
@@ -17,7 +20,7 @@ export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
-    wrapAsOptional: boolean,
+    wrapAsNullable: boolean,
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[],
     referencedAsRequest = false
@@ -28,20 +31,20 @@ export function convertSchema(
         } else {
             context.markSchemaAsReferencedByRequest(getSchemaIdFromReference(schema));
         }
-        return convertReferenceObject(schema, wrapAsOptional, breadcrumbs);
+        return convertReferenceObject(schema, wrapAsNullable, breadcrumbs);
     } else {
-        return convertSchemaObject(schema, wrapAsOptional, context, breadcrumbs);
+        return convertSchemaObject(schema, wrapAsNullable, context, breadcrumbs);
     }
 }
 
 export function convertReferenceObject(
     schema: OpenAPIV3.ReferenceObject,
-    wrapAsOptional: boolean,
+    wrapAsNullable: boolean,
     breadcrumbs: string[]
 ): Schema {
     const referenceSchema = Schema.reference(convertToReferencedSchema(schema, breadcrumbs));
-    if (wrapAsOptional) {
-        return Schema.optional({
+    if (wrapAsNullable) {
+        return Schema.nullable({
             value: referenceSchema,
             description: undefined,
         });
@@ -52,7 +55,7 @@ export function convertReferenceObject(
 
 function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject,
-    wrapAsOptionalParam: boolean,
+    wrapAsNullable: boolean,
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[]
 ): Schema {
@@ -60,8 +63,10 @@ function convertSchemaObject(
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
 
-    // nullable parameters should be optional
-    const wrapAsOptional = wrapAsOptionalParam || schema.nullable === true;
+    // if a schema is null then we should wrap it as nullable
+    if (!wrapAsNullable && schema.nullable === true) {
+        return convertSchemaObject(schema, true, context, breadcrumbs);
+    }
 
     // enums
     if (schema.enum != null) {
@@ -70,24 +75,18 @@ function convertSchemaObject(
             // TODO(dsinghvi): Emit a warning we are doing this.
             return wrapPrimitive({
                 primitive: PrimitiveSchemaValue.string(),
-                wrapAsOptional,
+                wrapAsNullable,
                 description,
             });
         }
         return convertEnum({
             nameOverride,
             generatedName,
-            enumNames: getExtension<Record<string, string>>(schema, [
-                FernOpenAPIExtension.ENUM_NAMES_V1,
-                FernOpenAPIExtension.ENUM_NAMES_V2,
-            ]),
-            enumVarNames: getExtension<string[]>(schema, [
-                FernOpenAPIExtension.ENUM_VAR_NAMES_V1,
-                FernOpenAPIExtension.ENUM_VAR_NAMES_V2,
-            ]),
+            fernEnum: getFernEnum(schema),
+            enumVarNames: getExtension<string[]>(schema, [OpenAPIExtension.ENUM_VAR_NAMES]),
             enumValues: schema.enum,
             description,
-            wrapAsOptional,
+            wrapAsNullable,
         });
     }
 
@@ -95,31 +94,31 @@ function convertSchemaObject(
     if (schema === "boolean" || schema.type === "boolean") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.boolean(),
-            wrapAsOptional,
+            wrapAsNullable,
             description,
         });
     }
     if (schema === "number" || schema.type === "number") {
-        return convertNumber({ format: schema.format, description, wrapAsOptional });
+        return convertNumber({ format: schema.format, description, wrapAsNullable });
     }
     if (schema === "integer" || schema.type === "integer") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.int(),
-            wrapAsOptional,
+            wrapAsNullable,
             description,
         });
     }
     if (schema === "string" || schema.type === "string") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.string(),
-            wrapAsOptional,
+            wrapAsNullable,
             description,
         });
     }
 
     // arrays
     if (schema.type === "array") {
-        return convertArray({ breadcrumbs, item: schema.items, description, wrapAsOptional, context });
+        return convertArray({ breadcrumbs, item: schema.items, description, wrapAsNullable, context });
     }
 
     // maps
@@ -128,7 +127,7 @@ function convertSchemaObject(
             breadcrumbs,
             additionalProperties: schema.additionalProperties,
             description,
-            wrapAsOptional,
+            wrapAsNullable,
             context,
         });
     }
@@ -143,7 +142,7 @@ function convertSchemaObject(
             discriminator: schema.discriminator,
             properties: schema.properties ?? {},
             required: schema.required,
-            wrapAsOptional,
+            wrapAsNullable,
             context,
         });
     }
@@ -163,11 +162,11 @@ function convertSchemaObject(
                 discriminator: schema.discriminator,
                 properties: schema.properties ?? {},
                 required: schema.required,
-                wrapAsOptional,
+                wrapAsNullable,
                 context,
             });
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
-            const convertedSchema = convertSchema(schema.oneOf[0], wrapAsOptional, context, breadcrumbs);
+            const convertedSchema = convertSchema(schema.oneOf[0], wrapAsNullable, context, breadcrumbs);
             return maybeInjectDescription(convertedSchema, description);
         } else if (schema.oneOf.length > 1) {
             return convertUndiscriminatedOneOf({
@@ -175,7 +174,7 @@ function convertSchemaObject(
                 generatedName,
                 breadcrumbs,
                 description,
-                wrapAsOptional,
+                wrapAsNullable,
                 context,
                 subtypes: schema.oneOf,
             });
@@ -189,7 +188,7 @@ function convertSchemaObject(
             generatedName,
             breadcrumbs,
             description,
-            wrapAsOptional,
+            wrapAsNullable,
             context,
             subtypes: schema.anyOf,
         });
@@ -201,7 +200,7 @@ function convertSchemaObject(
         if (schema.allOf != null) {
             const maybeSingularAllOf = getSingularAllOf({ properties: schema.properties ?? {}, allOf: schema.allOf });
             if (maybeSingularAllOf != null) {
-                const convertedSchema = convertSchema(maybeSingularAllOf, wrapAsOptional, context, breadcrumbs);
+                const convertedSchema = convertSchema(maybeSingularAllOf, wrapAsNullable, context, breadcrumbs);
                 return maybeInjectDescription(convertedSchema, description);
             }
         }
@@ -214,7 +213,7 @@ function convertSchemaObject(
             properties: schema.properties ?? {},
             description,
             required: schema.required,
-            wrapAsOptional,
+            wrapAsNullable,
             allOf: schema.allOf ?? [],
             context,
         });
@@ -224,7 +223,7 @@ function convertSchemaObject(
     if (schema.type === "object" && hasNoOneOf(schema) && hasNoAllOf(schema) && hasNoProperties(schema)) {
         return wrapMap({
             description,
-            wrapAsOptional,
+            wrapAsNullable,
             keySchema: PrimitiveSchemaValue.string(),
             valueSchema: Schema.unknown(),
         });
@@ -288,6 +287,13 @@ function maybeInjectDescription(schema: Schema, description: string | undefined)
             }),
             description,
         });
+    } else if (schema.type === "nullable" && schema.value.type === "reference") {
+        return Schema.nullable({
+            value: Schema.reference({
+                ...schema.value,
+            }),
+            description,
+        });
     }
     return schema;
 }
@@ -325,18 +331,18 @@ function isAllOfElementEmpty(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.Schem
 
 export function wrapPrimitive({
     primitive,
-    wrapAsOptional,
+    wrapAsNullable,
     description,
 }: {
     primitive: PrimitiveSchemaValue;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     description: string | undefined;
 }): Schema {
-    if (wrapAsOptional) {
-        return Schema.optional({
+    if (wrapAsNullable) {
+        return Schema.nullable({
             value: Schema.primitive({
                 schema: primitive,
-                description: undefined,
+                description,
             }),
             description,
         });

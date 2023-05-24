@@ -229,27 +229,37 @@ export async function generateIntermediateRepresentation({
             return;
         }
 
-        const childrenInOrder = packageMarker.navigation.map((childFilepath) => {
-            return IdGenerator.generateSubpackageId(
-                convertToFernFilepath({
-                    relativeFilepath: join(dirname(relativeFilepath), RelativeFilePath.of(childFilepath)),
+        if (typeof packageMarker.navigation === "string") {
+            packageTreeGenerator.addPackageRedirection({
+                from: convertToFernFilepath({ relativeFilepath, casingsGenerator }),
+                to: convertToFernFilepath({
+                    relativeFilepath: join(dirname(relativeFilepath), RelativeFilePath.of(packageMarker.navigation)),
                     casingsGenerator,
-                })
-            );
-        });
-
-        if (relativeFilepath === FERN_PACKAGE_MARKER_FILENAME) {
-            packageTreeGenerator.sortRootPackage(childrenInOrder);
+                }),
+            });
         } else {
-            packageTreeGenerator.sortSubpackage(
-                IdGenerator.generateSubpackageId(
+            const childrenInOrder = packageMarker.navigation.map((childFilepath) => {
+                return IdGenerator.generateSubpackageId(
                     convertToFernFilepath({
-                        relativeFilepath,
+                        relativeFilepath: join(dirname(relativeFilepath), RelativeFilePath.of(childFilepath)),
                         casingsGenerator,
                     })
-                ),
-                childrenInOrder
-            );
+                );
+            });
+
+            if (relativeFilepath === FERN_PACKAGE_MARKER_FILENAME) {
+                packageTreeGenerator.sortRootPackage(childrenInOrder);
+            } else {
+                packageTreeGenerator.sortSubpackage(
+                    IdGenerator.generateSubpackageId(
+                        convertToFernFilepath({
+                            relativeFilepath,
+                            casingsGenerator,
+                        })
+                    ),
+                    childrenInOrder
+                );
+            }
         }
     });
 
@@ -269,12 +279,17 @@ export async function generateIntermediateRepresentation({
         return service.endpoints.some((endpoint) => endpoint.streamingResponse != null);
     });
 
+    const hasFileDownloadEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
+        return service.endpoints.some((endpoint) => endpoint.response?.type === "fileDownload");
+    });
+
     return {
         ...intermediateRepresentationForAudiences,
         ...packageTreeGenerator.build(filteredIr),
         sdkConfig: {
             isAuthMandatory,
             hasStreamingEndpoints,
+            hasFileDownloadEndpoints,
             platformHeaders: {
                 language: "X-Fern-Language",
                 sdkName: "X-Fern-SDK-Name",

@@ -239,6 +239,7 @@ types:
       reference: ReferencedSchema
       literal: LiteralSchema
       oneOf: OneOfSchema
+      nullable: NullableSchema
       unknown: {}
 
   PrimitiveSchema:
@@ -275,6 +276,13 @@ types:
     properties:
       key: string
       schema: Schema
+      conflict:
+        type: map<SchemaId, ObjectPropertyConflictInfo>
+        docs: The schemas that conflict with this property
+
+  ObjectPropertyConflictInfo:
+    properties:
+      differentSchema: boolean
 
   ArraySchema:
     extends: WithDescription
@@ -292,6 +300,11 @@ types:
     properties:
       value: Schema
 
+  NullableSchema:
+    extends: WithDescription
+    properties:
+      value: Schema
+
   EnumSchema:
     extends:
       - WithDescription
@@ -300,6 +313,8 @@ types:
       values: list<EnumValue>
 
   EnumValue:
+    extends:
+      - WithDescription
     properties:
       nameOverride:
         type: optional<string>
@@ -332,8 +347,13 @@ types:
       - WithName
     properties:
       discriminantProperty: string
-      commonProperties: list<ObjectProperty>
+      commonProperties: list<CommonProperty>
       schemas: map<string, Schema>
+
+  CommonProperty:
+    properties:
+      key: string
+      schema: Schema
 
   UnDiscriminatedOneOfSchema:
     extends:

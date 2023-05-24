@@ -33,7 +33,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/validator": "workspace:*",
-    "@fern-fern/openapi-ir-model": "0.0.58",
+    "@fern-fern/openapi-ir-model": "0.0.66",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.0.0",
     "swagger2openapi": "7.0.8"
@@ -48,7 +48,7 @@
     "@types/swagger2openapi": "^7.0.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
-    "jest": "^29.0.3",
+    "jest": "^29.4.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "typescript": "4.6.4"

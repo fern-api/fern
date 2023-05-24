@@ -1,0 +1,2238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser hathora simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "errors": {
+        "BadRequestError": {
+          "status-code": 400,
+          "type": "string",
+        },
+        "InternalServerError": {
+          "status-code": 500,
+          "type": "string",
+        },
+        "NotFoundError": {
+          "status-code": 404,
+          "type": "string",
+        },
+        "TooManyRequestsError": {
+          "status-code": 429,
+          "type": "string",
+        },
+        "UnauthorizedError": {
+          "status-code": 401,
+          "type": "string",
+        },
+        "UnprocessableEntityError": {
+          "status-code": 422,
+          "type": "string",
+        },
+      },
+      "service": undefined,
+      "types": {
+        "ActiveConnectionInfo": {
+          "docs": undefined,
+          "properties": {
+            "host": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "port": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "ActiveConnectionInfoStatus",
+            },
+            "transportType": {
+              "docs": undefined,
+              "type": "TransportType",
+            },
+          },
+        },
+        "ActiveConnectionInfoStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "active",
+              "value": "active",
+            },
+          ],
+        },
+        "AppConfig": {
+          "docs": undefined,
+          "properties": {
+            "appName": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "authConfiguration": {
+              "docs": undefined,
+              "type": "AppConfigAuthConfiguration",
+            },
+          },
+        },
+        "AppConfigAuthConfiguration": {
+          "docs": undefined,
+          "properties": {
+            "anonymous": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+            "google": {
+              "docs": undefined,
+              "type": "optional<AppConfigAuthConfigurationGoogle>",
+            },
+            "nickname": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+          },
+        },
+        "AppConfigAuthConfigurationGoogle": {
+          "docs": undefined,
+          "properties": {
+            "clientId": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "AppId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "Application": {
+          "docs": undefined,
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "appName": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "appSecret": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "authConfiguration": {
+              "docs": undefined,
+              "type": "ApplicationAuthConfiguration",
+            },
+            "createdAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "createdBy": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "deletedAt": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "deletedBy": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "orgId": {
+              "docs": undefined,
+              "type": "OrgId",
+            },
+          },
+        },
+        "ApplicationAuthConfiguration": {
+          "docs": undefined,
+          "properties": {
+            "anonymous": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+            "google": {
+              "docs": undefined,
+              "type": "optional<ApplicationAuthConfigurationGoogle>",
+            },
+            "nickname": {
+              "docs": undefined,
+              "type": "optional<RecordStringNever>",
+            },
+          },
+        },
+        "ApplicationAuthConfigurationGoogle": {
+          "docs": undefined,
+          "properties": {
+            "clientId": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "ApplicationWithDeployment": {
+          "docs": undefined,
+          "extends": [
+            "Application",
+          ],
+          "properties": {
+            "deployment": {
+              "docs": undefined,
+              "type": "Deployment",
+            },
+          },
+        },
+        "Build": {
+          "docs": undefined,
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "buildId": {
+              "docs": undefined,
+              "type": "BuildId",
+            },
+            "createdAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "createdBy": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "deletedAt": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "finishedAt": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "imageSize": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "regionalContainerTags": {
+              "docs": undefined,
+              "type": "list<BuildRegionalContainerTagsItem>",
+            },
+            "startedAt": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "BuildStatus",
+            },
+          },
+        },
+        "BuildId": {
+          "docs": undefined,
+          "type": "double",
+        },
+        "BuildRegionalContainerTagsItem": {
+          "docs": undefined,
+          "properties": {
+            "containerTag": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "region": {
+              "docs": undefined,
+              "type": "Region",
+            },
+          },
+        },
+        "BuildStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "created",
+              "value": "created",
+            },
+            {
+              "docs": undefined,
+              "name": "running",
+              "value": "running",
+            },
+            {
+              "docs": undefined,
+              "name": "succeeded",
+              "value": "succeeded",
+            },
+            {
+              "docs": undefined,
+              "name": "failed",
+              "value": "failed",
+            },
+          ],
+        },
+        "ConnectionInfo": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            {
+              "docs": undefined,
+              "type": "StartingConnectionInfo",
+            },
+            {
+              "docs": undefined,
+              "type": "ActiveConnectionInfo",
+            },
+          ],
+        },
+        "CreateLobbyRequestVisibility": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "public",
+              "value": "public",
+            },
+            {
+              "docs": undefined,
+              "name": "private",
+              "value": "private",
+            },
+            {
+              "docs": undefined,
+              "name": "local",
+              "value": "local",
+            },
+          ],
+        },
+        "Deployment": {
+          "docs": undefined,
+          "extends": [
+            "DeploymentConfig",
+          ],
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "buildId": {
+              "docs": undefined,
+              "type": "BuildId",
+            },
+            "createdAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "createdBy": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "deploymentId": {
+              "docs": undefined,
+              "type": "DeploymentId",
+            },
+            "requestedCPU": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "requestedMemoryMB": {
+              "docs": undefined,
+              "type": "double",
+            },
+          },
+        },
+        "DeploymentConfigEnvItem": {
+          "docs": undefined,
+          "properties": {
+            "name": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "DeploymentId": {
+          "docs": undefined,
+          "type": "double",
+        },
+        "DiscoveryResponse": {
+          "docs": undefined,
+          "type": "list<DiscoveryResponseItem>",
+        },
+        "DiscoveryResponseItem": {
+          "docs": undefined,
+          "properties": {
+            "host": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "port": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "region": {
+              "docs": undefined,
+              "type": "Region",
+            },
+          },
+        },
+        "Lobby": {
+          "docs": undefined,
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "createdAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "createdBy": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "initialConfig": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+            "local": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "region": {
+              "docs": undefined,
+              "type": "Region",
+            },
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "state": {
+              "docs": undefined,
+              "type": "optional<map<string, unknown>>",
+            },
+            "visibility": {
+              "docs": undefined,
+              "type": "LobbyVisibility",
+            },
+          },
+        },
+        "LobbyVisibility": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "private",
+              "value": "private",
+            },
+            {
+              "docs": undefined,
+              "name": "public",
+              "value": "public",
+            },
+            {
+              "docs": undefined,
+              "name": "local",
+              "value": "local",
+            },
+          ],
+        },
+        "LoginAnonymousResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "LoginGoogleResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "LoginNicknameResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "MetricName": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "cpu",
+              "value": "cpu",
+            },
+            {
+              "docs": undefined,
+              "name": "memory",
+              "value": "memory",
+            },
+            {
+              "docs": undefined,
+              "name": "rate_egress",
+              "value": "rate_egress",
+            },
+            {
+              "docs": undefined,
+              "name": "total_egress",
+              "value": "total_egress",
+            },
+          ],
+        },
+        "MetricValue": {
+          "docs": undefined,
+          "properties": {
+            "timestamp": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "double",
+            },
+          },
+        },
+        "MetricsResponse": {
+          "docs": undefined,
+          "type": "RecordPartialMetricNameMetricValueArray",
+        },
+        "OmitRoomAllocations": {
+          "docs": undefined,
+          "type": "PickRoomExcludeKeyofRoomAllocations",
+        },
+        "OrgId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "PickRoomExcludeKeyofRoomAllocations": {
+          "docs": "From T, pick a set of properties whose keys are in the union K",
+          "properties": {
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "currentAllocation": {
+              "docs": undefined,
+              "type": "optional<RoomAllocation>",
+            },
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "RoomStatus",
+            },
+          },
+        },
+        "PlanName": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "tiny",
+              "value": "tiny",
+            },
+            {
+              "docs": undefined,
+              "name": "small",
+              "value": "small",
+            },
+            {
+              "docs": undefined,
+              "name": "medium",
+              "value": "medium",
+            },
+            {
+              "docs": undefined,
+              "name": "large",
+              "value": "large",
+            },
+          ],
+        },
+        "Process": {
+          "docs": undefined,
+          "properties": {
+            "activeConnections": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "deploymentId": {
+              "docs": undefined,
+              "type": "DeploymentId",
+            },
+            "draining": {
+              "docs": undefined,
+              "type": "boolean",
+            },
+            "egressedBytes": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "host": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "idleSince": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "port": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "processId": {
+              "docs": undefined,
+              "type": "ProcessId",
+            },
+            "region": {
+              "docs": undefined,
+              "type": "Region",
+            },
+            "roomSlotsAvailable": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "roomsPerProcess": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "startedAt": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "startingAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "stoppingAt": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "terminatedAt": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "ProcessId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "ProcessWithRooms": {
+          "docs": undefined,
+          "extends": [
+            "Process",
+          ],
+          "properties": {
+            "rooms": {
+              "docs": undefined,
+              "type": "list<RoomWithoutAllocations>",
+            },
+            "totalRooms": {
+              "docs": undefined,
+              "type": "double",
+            },
+          },
+        },
+        "RecordPartialMetricNameMetricValueArray": {
+          "docs": "Construct a type with a set of properties K of type T",
+          "properties": {
+            "cpu": {
+              "docs": undefined,
+              "type": "optional<list<MetricValue>>",
+            },
+            "memory": {
+              "docs": undefined,
+              "type": "optional<list<MetricValue>>",
+            },
+            "rate_egress": {
+              "docs": undefined,
+              "type": "optional<list<MetricValue>>",
+            },
+            "total_egress": {
+              "docs": undefined,
+              "type": "optional<list<MetricValue>>",
+            },
+          },
+        },
+        "RecordStringNever": {
+          "docs": "Construct a type with a set of properties K of type T",
+          "properties": {},
+        },
+        "Region": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "Seattle",
+              "value": "Seattle",
+            },
+            {
+              "docs": undefined,
+              "name": "Washington_DC",
+              "value": "Washington_DC",
+            },
+            {
+              "docs": undefined,
+              "name": "Chicago",
+              "value": "Chicago",
+            },
+            {
+              "docs": undefined,
+              "name": "London",
+              "value": "London",
+            },
+            {
+              "docs": undefined,
+              "name": "Frankfurt",
+              "value": "Frankfurt",
+            },
+            {
+              "docs": undefined,
+              "name": "Mumbai",
+              "value": "Mumbai",
+            },
+            {
+              "docs": undefined,
+              "name": "Singapore",
+              "value": "Singapore",
+            },
+            {
+              "docs": undefined,
+              "name": "Tokyo",
+              "value": "Tokyo",
+            },
+            {
+              "docs": undefined,
+              "name": "Sydney",
+              "value": "Sydney",
+            },
+            {
+              "docs": undefined,
+              "name": "Sao_Paulo",
+              "value": "Sao_Paulo",
+            },
+          ],
+        },
+        "Room": {
+          "docs": undefined,
+          "properties": {
+            "allocations": {
+              "docs": undefined,
+              "type": "list<RoomAllocation>",
+            },
+            "appId": {
+              "docs": undefined,
+              "type": "AppId",
+            },
+            "currentAllocation": {
+              "docs": undefined,
+              "type": "optional<RoomAllocation>",
+            },
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "RoomStatus",
+            },
+          },
+        },
+        "RoomAllocation": {
+          "docs": undefined,
+          "properties": {
+            "processId": {
+              "docs": undefined,
+              "type": "ProcessId",
+            },
+            "roomAllocationId": {
+              "docs": undefined,
+              "type": "RoomAllocationId",
+            },
+            "scheduledAt": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "unscheduledAt": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+          },
+        },
+        "RoomAllocationId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "RoomId": {
+          "docs": undefined,
+          "type": "string",
+        },
+        "RoomStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "scheduling",
+              "value": "scheduling",
+            },
+            {
+              "docs": undefined,
+              "name": "active",
+              "value": "active",
+            },
+            {
+              "docs": undefined,
+              "name": "suspended",
+              "value": "suspended",
+            },
+            {
+              "docs": undefined,
+              "name": "destroyed",
+              "value": "destroyed",
+            },
+          ],
+        },
+        "RoomWithoutAllocations": {
+          "docs": undefined,
+          "type": "OmitRoomAllocations",
+        },
+        "StartingConnectionInfo": {
+          "docs": undefined,
+          "properties": {
+            "roomId": {
+              "docs": undefined,
+              "type": "RoomId",
+            },
+            "status": {
+              "docs": undefined,
+              "type": "StartingConnectionInfoStatus",
+            },
+          },
+        },
+        "StartingConnectionInfoStatus": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "starting",
+              "value": "starting",
+            },
+          ],
+        },
+        "TailLines": {
+          "docs": undefined,
+          "type": "integer",
+        },
+        "TransportType": {
+          "docs": undefined,
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "tcp",
+              "value": "tcp",
+            },
+            {
+              "docs": undefined,
+              "name": "udp",
+              "value": "udp",
+            },
+            {
+              "docs": undefined,
+              "name": "tls",
+              "value": "tls",
+            },
+          ],
+        },
+      },
+    },
+    "appV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateApp": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UnprocessableEntityError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/apps/v1/create",
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.AppConfig",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Application",
+            },
+          },
+          "DeleteApp": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
+            "method": "DELETE",
+            "path": "/apps/v1/delete/{appId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+          },
+          "GetAppInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/apps/v1/info/{appId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Application",
+            },
+          },
+          "GetApps": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [],
+            "method": "GET",
+            "path": "/apps/v1/list",
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.ApplicationWithDeployment>",
+            },
+          },
+          "UpdateApp": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/apps/v1/update/{appId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "root.AppConfig",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Application",
+            },
+          },
+        },
+      },
+    },
+    "authV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "LoginAnonymous": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "POST",
+            "path": "/auth/v1/{appId}/login/anonymous",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.LoginAnonymousResponse",
+            },
+          },
+          "LoginGoogle": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+            ],
+            "method": "POST",
+            "path": "/auth/v1/{appId}/login/google",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "idToken": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "LoginGoogleRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.LoginGoogleResponse",
+            },
+          },
+          "LoginNickname": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "POST",
+            "path": "/auth/v1/{appId}/login/nickname",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "nickname": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "LoginNicknameRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.LoginNicknameResponse",
+            },
+          },
+        },
+      },
+    },
+    "buildV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateBuild": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/builds/v1/{appId}/create",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Build",
+            },
+          },
+          "DeleteBuild": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.InternalServerError",
+            ],
+            "method": "DELETE",
+            "path": "/builds/v1/{appId}/delete/{buildId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "buildId": {
+                "docs": undefined,
+                "type": "root.BuildId",
+              },
+            },
+          },
+          "GetBuildInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/builds/v1/{appId}/info/{buildId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "buildId": {
+                "docs": undefined,
+                "type": "root.BuildId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Build",
+            },
+          },
+          "GetBuilds": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/builds/v1/{appId}/list",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Build>",
+            },
+          },
+          "RunBuild": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [],
+            "method": "POST",
+            "path": "/builds/v1/{appId}/run/{buildId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "buildId": {
+                "docs": undefined,
+                "type": "root.BuildId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "file": "file",
+                },
+              },
+              "headers": undefined,
+              "name": "RunBuildRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
+            },
+          },
+        },
+      },
+    },
+    "deploymentV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateDeployment": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/deployments/v1/{appId}/create/{buildId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "buildId": {
+                "docs": undefined,
+                "type": "root.BuildId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "containerPort": {
+                    "docs": undefined,
+                    "type": "integer",
+                  },
+                  "env": {
+                    "docs": undefined,
+                    "type": "list<root.DeploymentConfigEnvItem>",
+                  },
+                  "planName": {
+                    "docs": undefined,
+                    "type": "root.PlanName",
+                  },
+                  "roomsPerProcess": {
+                    "docs": undefined,
+                    "type": "integer",
+                  },
+                  "transportType": {
+                    "docs": undefined,
+                    "type": "root.TransportType",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "DeploymentConfig",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Deployment",
+            },
+          },
+          "GetDeploymentInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/deployments/v1/{appId}/info/{deploymentId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "deploymentId": {
+                "docs": undefined,
+                "type": "root.DeploymentId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Deployment",
+            },
+          },
+          "GetDeployments": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/deployments/v1/{appId}/list",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Deployment>",
+            },
+          },
+        },
+      },
+    },
+    "discoveryV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetPingServiceEndpoints": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [],
+            "method": "GET",
+            "path": "/discovery/v1/ping",
+            "response": {
+              "docs": "Ok",
+              "type": "root.DiscoveryResponse",
+            },
+          },
+        },
+      },
+    },
+    "lobbyV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreatePrivateLobbyDeprecated": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/lobby/v1/{appId}/create/private",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "headers": {
+                "Authorization": {
+                  "docs": undefined,
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreatePrivateLobbyDeprecatedRequest",
+              "query-parameters": {
+                "local": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.RoomId",
+            },
+          },
+          "CreatePublicLobbyDeprecated": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/lobby/v1/{appId}/create/public",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "headers": {
+                "Authorization": {
+                  "docs": undefined,
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreatePublicLobbyDeprecatedRequest",
+              "query-parameters": {
+                "local": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.RoomId",
+            },
+          },
+          "ListActivePublicLobbiesDeprecated": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/lobby/v1/{appId}/list",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "headers": {
+                "Authorization": {
+                  "docs": undefined,
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "ListActivePublicLobbiesDeprecatedRequest",
+              "query-parameters": {
+                "local": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Lobby>",
+            },
+          },
+        },
+      },
+    },
+    "lobbyV2.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateLobby": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                  "visibility": {
+                    "docs": undefined,
+                    "type": "root.CreateLobbyRequestVisibility",
+                  },
+                },
+              },
+              "headers": {
+                "Authorization": {
+                  "docs": undefined,
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreateLobbyRequest",
+              "query-parameters": {
+                "roomId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.RoomId>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "CreateLocalLobby": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create/local",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                },
+              },
+              "headers": {
+                "Authorization": {
+                  "docs": undefined,
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreateLocalLobbyRequest",
+              "query-parameters": {
+                "roomId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.RoomId>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "CreatePrivateLobby": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create/private",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                },
+              },
+              "headers": {
+                "Authorization": {
+                  "docs": undefined,
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreatePrivateLobbyRequest",
+              "query-parameters": {
+                "roomId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.RoomId>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "CreatePublicLobby": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create/public",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                },
+              },
+              "headers": {
+                "Authorization": {
+                  "docs": undefined,
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreatePublicLobbyRequest",
+              "query-parameters": {
+                "roomId": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.RoomId>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "GetLobbyInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/lobby/v2/{appId}/info/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Lobby",
+            },
+          },
+          "ListActivePublicLobbies": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [],
+            "method": "GET",
+            "path": "/lobby/v2/{appId}/list/public",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "ListActivePublicLobbiesRequest",
+              "query-parameters": {
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Lobby>",
+            },
+          },
+          "SetLobbyState": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/setState/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "state": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "SetLobbyStateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Lobby",
+            },
+          },
+        },
+      },
+    },
+    "logV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetLogsForApp": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [],
+            "method": "GET",
+            "path": "/logs/v1/{appId}/all",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "GetLogsForAppRequest",
+              "query-parameters": {
+                "follow": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+                "tailLines": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.TailLines>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
+            },
+          },
+          "GetLogsForDeployment": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [],
+            "method": "GET",
+            "path": "/logs/v1/{appId}/deployment/{deploymentId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "deploymentId": {
+                "docs": undefined,
+                "type": "root.DeploymentId",
+              },
+            },
+            "request": {
+              "name": "GetLogsForDeploymentRequest",
+              "query-parameters": {
+                "follow": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "tailLines": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.TailLines>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
+            },
+          },
+          "GetLogsForProcess": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [],
+            "method": "GET",
+            "path": "/logs/v1/{appId}/process/{processId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "request": {
+              "name": "GetLogsForProcessRequest",
+              "query-parameters": {
+                "follow": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<boolean>",
+                },
+                "tailLines": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.TailLines>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
+            },
+          },
+        },
+      },
+    },
+    "metricsV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetMetrics": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+              "root.UnprocessableEntityError",
+            ],
+            "method": "GET",
+            "path": "/metrics/v1/{appId}/process/{processId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "request": {
+              "name": "GetMetricsRequest",
+              "query-parameters": {
+                "end": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "metrics": {
+                  "allow-multiple": true,
+                  "docs": undefined,
+                  "type": "optional<root.MetricName>",
+                },
+                "start": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+                "step": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<integer>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.MetricsResponse",
+            },
+          },
+        },
+      },
+    },
+    "processesV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetProcessInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/processes/v1/{appId}/info/{processId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Process",
+            },
+          },
+          "GetRunningProcesses": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/processes/v1/{appId}/list/running",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "GetRunningProcessesRequest",
+              "query-parameters": {
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.ProcessWithRooms>",
+            },
+          },
+          "GetStoppedProcesses": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/processes/v1/{appId}/list/stopped",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "name": "GetStoppedProcessesRequest",
+              "query-parameters": {
+                "region": {
+                  "allow-multiple": undefined,
+                  "docs": undefined,
+                  "type": "optional<root.Region>",
+                },
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Process>",
+            },
+          },
+        },
+      },
+    },
+    "roomV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateRoom": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/rooms/v1/{appId}/create",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "region": {
+                    "docs": undefined,
+                    "type": "root.Region",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "CreateRoomRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "root.RoomId",
+            },
+          },
+          "DestroyRoom": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/rooms/v1/{appId}/destroy/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+          },
+          "GetActiveRoomsForProcess": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/list/{processId}/active",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.RoomWithoutAllocations>",
+            },
+          },
+          "GetConnectionInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.ConnectionInfo",
+            },
+          },
+          "GetInactiveRoomsForProcess": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/list/{processId}/inactive",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "processId": {
+                "docs": undefined,
+                "type": "root.ProcessId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.RoomWithoutAllocations>",
+            },
+          },
+          "GetRoomInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/info/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Room",
+            },
+          },
+          "SuspendRoom": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/rooms/v1/{appId}/suspend/{roomId}",
+            "path-parameters": {
+              "appId": {
+                "docs": undefined,
+                "type": "root.AppId",
+              },
+              "roomId": {
+                "docs": undefined,
+                "type": "root.RoomId",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "bearer",
+    "display-name": "Hathora Cloud API",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

@@ -1,6 +1,10 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
-import { AlwaysRunMigration, GeneratorDoesNotExistForEitherIrVersion, IrMigration } from "../../types/IrMigration";
+import {
+    GeneratorWasNeverUpdatedToConsumeNewIR,
+    GeneratorWasNotCreatedYet,
+    IrMigration,
+} from "../../types/IrMigration";
 
 export const V17_TO_V16_MIGRATION: IrMigration<
     IrVersions.V17.ir.IntermediateRepresentation,
@@ -8,22 +12,24 @@ export const V17_TO_V16_MIGRATION: IrMigration<
 > = {
     laterVersion: "v17",
     earlierVersion: "v16",
-    minGeneratorVersionsToExclude: {
-        [GeneratorName.TYPESCRIPT]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_SDK]: AlwaysRunMigration,
-        [GeneratorName.TYPESCRIPT_EXPRESS]: AlwaysRunMigration,
-        [GeneratorName.JAVA]: AlwaysRunMigration,
-        [GeneratorName.JAVA_MODEL]: AlwaysRunMigration,
-        [GeneratorName.JAVA_SDK]: AlwaysRunMigration,
-        [GeneratorName.JAVA_SPRING]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_FASTAPI]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_PYDANTIC]: AlwaysRunMigration,
-        [GeneratorName.OPENAPI_PYTHON_CLIENT]: AlwaysRunMigration,
-        [GeneratorName.OPENAPI]: AlwaysRunMigration,
-        [GeneratorName.STOPLIGHT]: AlwaysRunMigration,
-        [GeneratorName.POSTMAN]: AlwaysRunMigration,
-        [GeneratorName.PYTHON_SDK]: AlwaysRunMigration,
-        [GeneratorName.GO_MODEL]: GeneratorDoesNotExistForEitherIrVersion,
+    firstGeneratorVersionToConsumeNewIR: {
+        [GeneratorName.TYPESCRIPT_NODE_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.TYPESCRIPT_BROWSER_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.TYPESCRIPT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.TYPESCRIPT_EXPRESS]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.JAVA_SPRING]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
     },
     migrateBackwards: (v17, { taskContext, targetGenerator }): IrVersions.V16.ir.IntermediateRepresentation => {
         for (const [typeName, typeDeclaration] of Object.entries(v17.types)) {

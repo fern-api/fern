@@ -30,6 +30,10 @@ export function convertResponse({
     responseBreadcrumbs: string[];
     responseStatusCode?: number;
 }): ConvertedResponse {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (responses == null) {
+        return { value: undefined, errorStatusCodes: [] };
+    }
     const errorStatusCodes = markErrorSchemas({ responses, context });
     for (const statusCode of responseStatusCode != null ? [responseStatusCode] : SUCCESSFUL_STATUS_CODES) {
         const response = responses[statusCode];

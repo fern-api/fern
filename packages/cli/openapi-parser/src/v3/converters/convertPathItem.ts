@@ -2,7 +2,8 @@ import { Endpoint, EndpointSdkName, HttpMethod, Schema } from "@fern-fern/openap
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "../DummyOpenAPIV3ParserContext";
-import { FernOpenAPIExtension, getExtension } from "../extensions/extensions";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions";
+import { getExtension } from "../extensions/getExtension";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertServer } from "./convertServer";

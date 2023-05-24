@@ -1,37 +1,39 @@
 import { VALID_NAME_REGEX } from "@fern-api/validator";
 import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { camelCase, upperFirst } from "lodash-es";
+import { FernEnumConfig } from "../../extensions/getFernEnum";
 
 export function convertEnum({
     nameOverride,
     generatedName,
+    fernEnum,
     enumVarNames,
-    enumNames,
     enumValues,
     description,
-    wrapAsOptional,
+    wrapAsNullable,
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    fernEnum: FernEnumConfig | undefined;
     enumVarNames: string[] | undefined;
-    enumNames: Record<string, string> | undefined;
     enumValues: string[];
     description: string | undefined;
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
 }): Schema {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const values = enumValues.map((value, index) => {
+        const fernEnumValue = fernEnum?.[value];
         const enumVarName = strippedEnumVarNames[index];
-        const fernEnumName = enumNames?.[value];
         const valueIsValidName = VALID_NAME_REGEX.test(value);
         return {
-            nameOverride: fernEnumName ?? enumVarName,
+            nameOverride: fernEnumValue?.name ?? enumVarName,
             generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
+            description: fernEnumValue?.description,
         };
     });
     return wrapEnum({
-        wrapAsOptional,
+        wrapAsNullable,
         nameOverride,
         generatedName,
         values,
@@ -40,25 +42,25 @@ export function convertEnum({
 }
 
 export function wrapEnum({
-    wrapAsOptional,
+    wrapAsNullable,
     nameOverride,
     generatedName,
     values,
     description,
 }: {
-    wrapAsOptional: boolean;
+    wrapAsNullable: boolean;
     nameOverride: string | undefined;
     generatedName: string;
     values: EnumValue[];
     description: string | undefined;
 }): Schema {
-    if (wrapAsOptional) {
-        return Schema.optional({
+    if (wrapAsNullable) {
+        return Schema.nullable({
             value: Schema.enum({
                 nameOverride,
                 generatedName,
                 values,
-                description: undefined,
+                description,
             }),
             description,
         });

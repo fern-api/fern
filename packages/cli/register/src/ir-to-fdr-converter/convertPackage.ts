@@ -1,5 +1,5 @@
 import * as Ir from "@fern-fern/ir-model";
-import { FernRegistry } from "@fern-fern/registry";
+import { FernRegistry } from "@fern-fern/registry-node";
 import { startCase } from "lodash-es";
 import { convertTypeId, convertTypeReference } from "./convertTypeShape";
 
@@ -12,6 +12,8 @@ export function convertPackage(
         endpoints: service != null ? convertService(service, ir) : [],
         types: irPackage.types.map((typeId) => convertTypeId(typeId)),
         subpackages: irPackage.subpackages.map((subpackageId) => convertSubpackageId(subpackageId)),
+        pointsTo:
+            irPackage.navigationConfig != null ? convertSubpackageId(irPackage.navigationConfig.pointsTo) : undefined,
     };
 }
 

@@ -30,13 +30,14 @@ export type DocsNavigationItem = DocsNavigationItem.Page | DocsNavigationItem.Se
 export declare namespace DocsNavigationItem {
     export interface Page {
         type: "page";
+        title: string;
         absolutePath: AbsoluteFilePath;
     }
 
     export interface Section {
         type: "section";
         title: string;
-        items: DocsNavigationItem[];
+        contents: DocsNavigationItem[];
     }
 
     export interface ApiSection {

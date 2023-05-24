@@ -29,7 +29,7 @@
   "dependencies": {
     "@fern-api/venus-api-sdk": "0.0.20-7-g6ea8dc4",
     "@fern-fern/fiddle-sdk": "^0.0.193",
-    "@fern-fern/registry": "^0.0.328"
+    "@fern-fern/registry-node": "^0.0.598"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -39,7 +39,7 @@
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
-    "jest": "^29.0.3",
+    "jest": "^29.4.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "typescript": "4.6.4"

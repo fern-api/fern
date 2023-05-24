@@ -1,4 +1,1 @@
 name: simple-api
-
-headers:
-  optionalGlobalHeader: optional<string>

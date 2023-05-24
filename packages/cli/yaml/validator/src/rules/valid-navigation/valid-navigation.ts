@@ -1,16 +1,17 @@
 import { keys } from "@fern-api/core-utils";
-import { dirname, RelativeFilePath } from "@fern-api/fs-utils";
+import { dirname, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
-import { getAllNamedDefinitionFiles } from "@fern-api/workspace-loader";
+import { getAllDefinitionFiles, getAllNamedDefinitionFiles } from "@fern-api/workspace-loader";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule";
 
 export const ValidNavigationRule: Rule = {
     name: "valid-navigation",
     create: ({ workspace }) => {
-        const allDefinitionFilepaths = keys(getAllNamedDefinitionFiles(workspace.definition));
+        const allDefinitionFilepaths = keys(getAllDefinitionFiles(workspace.definition));
+        const allNamedDefinitionFilepaths = keys(getAllNamedDefinitionFiles(workspace.definition));
 
-        const directoryToChildren = allDefinitionFilepaths.reduce<Record<RelativeFilePath, Set<string>>>(
+        const directoryToChildren = allNamedDefinitionFilepaths.reduce<Record<RelativeFilePath, Set<string>>>(
             (acc, definitionFilepath) => {
                 const children = (acc[dirname(definitionFilepath)] ??= new Set());
                 children.add(path.basename(definitionFilepath));
@@ -25,6 +26,28 @@ export const ValidNavigationRule: Rule = {
                     if (navigation == null) {
                         return [];
                     }
+
+                    if (typeof navigation === "string") {
+                        const pathToNavigated = relative(
+                            workspace.definition.absoluteFilepath,
+                            join(
+                                workspace.definition.absoluteFilepath,
+                                dirname(relativeFilepath),
+                                RelativeFilePath.of(navigation)
+                            )
+                        );
+                        if (allDefinitionFilepaths.some((filepath) => filepath.startsWith(pathToNavigated))) {
+                            return [];
+                        } else {
+                            return [
+                                {
+                                    severity: "error",
+                                    message: `${navigation} does not exist.`,
+                                },
+                            ];
+                        }
+                    }
+
                     const actualItems = new Set(navigation);
 
                     const expectedItems = directoryToChildren[dirname(relativeFilepath)];
