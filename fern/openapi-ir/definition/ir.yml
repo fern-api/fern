@@ -313,6 +313,8 @@ types:
       values: list<EnumValue>
 
   EnumValue:
+    extends:
+      - WithDescription
     properties:
       nameOverride:
         type: optional<string>

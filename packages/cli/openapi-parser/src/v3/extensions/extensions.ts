@@ -39,3 +39,19 @@ export const X_FERN_SDK_VARIABLE = "x-fern-sdk-variable";
  */
 export const X_FERN_USERNAME_VARIABLE_NAME = "x-fern-username-variable-name";
 export const X_FERN_PASSWORD_VARIABLE_NAME = "x-fern-password-variable-name";
+
+export type FernEnumConfig = Record<string, { docs?: string; name?: string }>;
+/**
+ * The x-fern-enum allows you to specify docs for the enum value.
+ * If your enum is not codegen friendly (not alphanumeric), then you can specify a codegen name as well.
+ *
+ * MyEnum:
+ *   enum:
+ *     - VARIANT_ONE
+ *     - VARIANT_TWO
+ *   x-fern-enum:
+ *     VARIANT_ONE:
+ *       docs: These are docs about the enum
+ *       name: ONE
+ */
+export const X_FERN_ENUM_EXTENSION = "x-fern-enum";

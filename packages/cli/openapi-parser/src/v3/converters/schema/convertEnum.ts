@@ -1,10 +1,12 @@
 import { VALID_NAME_REGEX } from "@fern-api/validator";
 import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { camelCase, upperFirst } from "lodash-es";
+import { FernEnumConfig } from "../../extensions/extensions";
 
 export function convertEnum({
     nameOverride,
     generatedName,
+    fernEnumConfig,
     enumVarNames,
     enumNames,
     enumValues,
@@ -13,6 +15,7 @@ export function convertEnum({
 }: {
     nameOverride: string | undefined;
     generatedName: string;
+    fernEnumConfig: FernEnumConfig | undefined;
     enumVarNames: string[] | undefined;
     enumNames: Record<string, string> | undefined;
     enumValues: string[];
@@ -21,13 +24,15 @@ export function convertEnum({
 }): Schema {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const values = enumValues.map((value, index) => {
+        const fernEnumExtension = fernEnumConfig?.[value];
         const enumVarName = strippedEnumVarNames[index];
         const fernEnumName = enumNames?.[value];
         const valueIsValidName = VALID_NAME_REGEX.test(value);
         return {
-            nameOverride: fernEnumName ?? enumVarName,
+            nameOverride: fernEnumExtension?.name ?? fernEnumName ?? enumVarName,
             generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
+            description: fernEnumExtension?.docs,
         };
     });
     return wrapEnum({

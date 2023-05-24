@@ -1335,14 +1335,17 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "PENDING",
               "value": "PENDING",
             },
             {
+              "docs": undefined,
               "name": "SUCCEEDED",
               "value": "SUCCEEDED",
             },
             {
+              "docs": undefined,
               "name": "FAILED",
               "value": "FAILED",
             },
@@ -2476,10 +2479,12 @@ We return one of the following enum values:
           "docs": "The type of bank account. Can be either \`INDIVIDUAL\` or \`BUSINESS\`.",
           "enum": [
             {
+              "docs": undefined,
               "name": "INDIVIDUAL",
               "value": "INDIVIDUAL",
             },
             {
+              "docs": undefined,
               "name": "BUSINESS",
               "value": "BUSINESS",
             },
@@ -2489,6 +2494,7 @@ We return one of the following enum values:
           "docs": "The type of bank account to create in Belvo. For business bank accounts, this field must the set to \`BUSINESS\`.",
           "enum": [
             {
+              "docs": undefined,
               "name": "BUSINESS",
               "value": "BUSINESS",
             },
@@ -2502,14 +2508,17 @@ We return one of the following enum values:
   - \`SALARY\`",
           "enum": [
             {
+              "docs": undefined,
               "name": "CHECKINGS",
               "value": "CHECKINGS",
             },
             {
+              "docs": undefined,
               "name": "SAVINGS",
               "value": "SAVINGS",
             },
             {
+              "docs": undefined,
               "name": "SALARY",
               "value": "SALARY",
             },
@@ -2524,18 +2533,22 @@ Can be either:
   - \`SAVINGS_ACCOUNT\`",
           "enum": [
             {
+              "docs": undefined,
               "name": "CHECKING_ACCOUNT",
               "value": "CHECKING_ACCOUNT",
             },
             {
+              "docs": undefined,
               "name": "CREDIT_CARD",
               "value": "CREDIT_CARD",
             },
             {
+              "docs": undefined,
               "name": "LOAN_ACCOUNT",
               "value": "LOAN_ACCOUNT",
             },
             {
+              "docs": undefined,
               "name": "SAVINGS_ACCOUNT",
               "value": "SAVINGS_ACCOUNT",
             },
@@ -2549,10 +2562,12 @@ Can be either:
   - \`BUSINESS\`",
           "enum": [
             {
+              "docs": undefined,
               "name": "INDIVIDUAL",
               "value": "INDIVIDUAL",
             },
             {
+              "docs": undefined,
               "name": "BUSINESS",
               "value": "BUSINESS",
             },
@@ -2676,10 +2691,12 @@ Can be either:
   - \`OUTFLOW\` indicates a sent transaction.",
           "enum": [
             {
+              "docs": undefined,
               "name": "INFLOW",
               "value": "INFLOW",
             },
             {
+              "docs": undefined,
               "name": "OUTFLOW",
               "value": "OUTFLOW",
             },
@@ -2692,10 +2709,12 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "CPF",
               "value": "CPF",
             },
             {
+              "docs": undefined,
               "name": "CNPJ",
               "value": "CNPJ",
             },
@@ -2708,22 +2727,27 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "CC",
               "value": "CC",
             },
             {
+              "docs": undefined,
               "name": "PP",
               "value": "PP",
             },
             {
+              "docs": undefined,
               "name": "CE",
               "value": "CE",
             },
             {
+              "docs": undefined,
               "name": "TI",
               "value": "TI",
             },
             {
+              "docs": undefined,
               "name": "NIT",
               "value": "NIT",
             },
@@ -2740,10 +2764,12 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "INDIVIDUAL",
               "value": "INDIVIDUAL",
             },
             {
+              "docs": undefined,
               "name": "BUSINESS",
               "value": "BUSINESS",
             },
@@ -2757,10 +2783,12 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "NSS",
               "value": "NSS",
             },
             {
+              "docs": undefined,
               "name": "CURP",
               "value": "CURP",
             },
@@ -2771,10 +2799,12 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "EMPLOYED",
               "value": "EMPLOYED",
             },
             {
+              "docs": undefined,
               "name": "UNEMPLOYED",
               "value": "UNEMPLOYED",
             },
@@ -2792,26 +2822,32 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "DISMISSED_RESIGNED",
               "value": "DISMISSED_RESIGNED",
             },
             {
+              "docs": undefined,
               "name": "SALARY_MODIFICATION",
               "value": "SALARY_MODIFICATION",
             },
             {
+              "docs": undefined,
               "name": "HIRED",
               "value": "HIRED",
             },
             {
+              "docs": undefined,
               "name": "VOLUNTARY_CONTRIBUTION",
               "value": "VOLUNTARY_CONTRIBUTION",
             },
             {
+              "docs": undefined,
               "name": "ABSENCE",
               "value": "ABSENCE",
             },
             {
+              "docs": undefined,
               "name": "SICK_LEAVE",
               "value": "SICK_LEAVE",
             },
@@ -2828,14 +2864,17 @@ You can send through one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "HIGH",
               "value": "HIGH",
             },
             {
+              "docs": undefined,
               "name": "MEDIUM",
               "value": "MEDIUM",
             },
             {
+              "docs": undefined,
               "name": "LOW",
               "value": "LOW",
             },
@@ -2849,6 +2888,7 @@ We return one of the following enum values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "BANK",
               "value": "BANK",
             },
@@ -2865,14 +2905,17 @@ We return one of the following enum values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "HIGH",
               "value": "HIGH",
             },
             {
+              "docs": undefined,
               "name": "MEDIUM",
               "value": "MEDIUM",
             },
             {
+              "docs": undefined,
               "name": "LOW",
               "value": "LOW",
             },
@@ -2891,22 +2934,27 @@ We return one of the following enum values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "MONTHLY",
               "value": "MONTHLY",
             },
             {
+              "docs": undefined,
               "name": "FORTNIGHTLY",
               "value": "FORTNIGHTLY",
             },
             {
+              "docs": undefined,
               "name": "WEEKLY",
               "value": "WEEKLY",
             },
             {
+              "docs": undefined,
               "name": "IRREGULAR",
               "value": "IRREGULAR",
             },
             {
+              "docs": undefined,
               "name": "SINGLE",
               "value": "SINGLE",
             },
@@ -2930,42 +2978,52 @@ We return one of the following enum values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "SALARY",
               "value": "SALARY",
             },
             {
+              "docs": undefined,
               "name": "GOVERNMENT",
               "value": "GOVERNMENT",
             },
             {
+              "docs": undefined,
               "name": "INTEREST",
               "value": "INTEREST",
             },
             {
+              "docs": undefined,
               "name": "RENT",
               "value": "RENT",
             },
             {
+              "docs": undefined,
               "name": "RETIREMENT",
               "value": "RETIREMENT",
             },
             {
+              "docs": undefined,
               "name": "FREELANCE",
               "value": "FREELANCE",
             },
             {
+              "docs": undefined,
               "name": "ALTERNATIVE_INCOME",
               "value": "ALTERNATIVE_INCOME",
             },
             {
+              "docs": undefined,
               "name": "TRANSFER",
               "value": "TRANSFER",
             },
             {
+              "docs": undefined,
               "name": "DEPOSIT",
               "value": "DEPOSIT",
             },
             {
+              "docs": undefined,
               "name": "UNKNOWN",
               "value": "UNKNOWN",
             },
@@ -2978,10 +3036,12 @@ Can be either:
   - \`SAVINGS_ACCOUNT\`",
           "enum": [
             {
+              "docs": undefined,
               "name": "CHECKING_ACCOUNT",
               "value": "CHECKING_ACCOUNT",
             },
             {
+              "docs": undefined,
               "name": "SAVINGS_ACCOUNT",
               "value": "SAVINGS_ACCOUNT",
             },
@@ -2993,6 +3053,7 @@ Can be either:
   - \`INDIVIDUAL\`",
           "enum": [
             {
+              "docs": undefined,
               "name": "INDIVIDUAL",
               "value": "INDIVIDUAL",
             },
@@ -3005,6 +3066,7 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "INFLOW",
               "value": "INFLOW",
             },
@@ -3018,10 +3080,12 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "credentials",
               "value": "credentials",
             },
             {
+              "docs": undefined,
               "name": "openbanking",
               "value": "openbanking",
             },
@@ -3032,10 +3096,12 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "healthy",
               "value": "healthy",
             },
             {
+              "docs": undefined,
               "name": "down",
               "value": "down",
             },
@@ -3050,14 +3116,17 @@ Can be either:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "bank",
               "value": "bank",
             },
             {
+              "docs": undefined,
               "name": "fiscal",
               "value": "fiscal",
             },
             {
+              "docs": undefined,
               "name": "employment",
               "value": "employment",
             },
@@ -3078,30 +3147,37 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "BOND",
               "value": "BOND",
             },
             {
+              "docs": undefined,
               "name": "DEPOSIT",
               "value": "DEPOSIT",
             },
             {
+              "docs": undefined,
               "name": "ETF",
               "value": "ETF",
             },
             {
+              "docs": undefined,
               "name": "FUND",
               "value": "FUND",
             },
             {
+              "docs": undefined,
               "name": "OTHER",
               "value": "OTHER",
             },
             {
+              "docs": undefined,
               "name": "PENSION",
               "value": "PENSION",
             },
             {
+              "docs": undefined,
               "name": "STOCK",
               "value": "STOCK",
             },
@@ -3119,18 +3195,22 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "FIXED_INCOME",
               "value": "FIXED_INCOME",
             },
             {
+              "docs": undefined,
               "name": "OTHER",
               "value": "OTHER",
             },
             {
+              "docs": undefined,
               "name": "PENSION",
               "value": "PENSION",
             },
             {
+              "docs": undefined,
               "name": "VARIABLE_INCOME",
               "value": "VARIABLE_INCOME",
             },
@@ -3151,42 +3231,52 @@ You can send through one or more of the following values:
   - \`UNKNOWN\`",
           "enum": [
             {
+              "docs": undefined,
               "name": "SALARY",
               "value": "SALARY",
             },
             {
+              "docs": undefined,
               "name": "GOVERNMENT",
               "value": "GOVERNMENT",
             },
             {
+              "docs": undefined,
               "name": "INTEREST",
               "value": "INTEREST",
             },
             {
+              "docs": undefined,
               "name": "RENT",
               "value": "RENT",
             },
             {
+              "docs": undefined,
               "name": "RETIREMENT",
               "value": "RETIREMENT",
             },
             {
+              "docs": undefined,
               "name": "FREELANCE",
               "value": "FREELANCE",
             },
             {
+              "docs": undefined,
               "name": "ALTERNATIVE_INCOME",
               "value": "ALTERNATIVE_INCOME",
             },
             {
+              "docs": undefined,
               "name": "TRANSFER",
               "value": "TRANSFER",
             },
             {
+              "docs": undefined,
               "name": "DEPOSIT",
               "value": "DEPOSIT",
             },
             {
+              "docs": undefined,
               "name": "UNKNOWN",
               "value": "UNKNOWN",
             },
@@ -3201,6 +3291,7 @@ For Colombia's DIAN, we return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "FacturaElectronicaDeVenta",
               "value": "Factura Electrónica de Venta",
             },
@@ -3230,22 +3321,27 @@ For Mexico's SAT, we return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "Egreso",
               "value": "Egreso",
             },
             {
+              "docs": undefined,
               "name": "Ingreso",
               "value": "Ingreso",
             },
             {
+              "docs": undefined,
               "name": "Nomina",
               "value": "Nómina",
             },
             {
+              "docs": undefined,
               "name": "Pago",
               "value": "Pago",
             },
             {
+              "docs": undefined,
               "name": "Traslado",
               "value": "Traslado",
             },
@@ -3274,10 +3370,12 @@ For more information, see our [Links](https://developers.belvo.com/docs/links-an
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "single",
               "value": "single",
             },
             {
+              "docs": undefined,
               "name": "recurrent",
               "value": "recurrent",
             },
@@ -3315,18 +3413,22 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "valid",
               "value": "valid",
             },
             {
+              "docs": undefined,
               "name": "invalid",
               "value": "invalid",
             },
             {
+              "docs": undefined,
               "name": "unconfirmed",
               "value": "unconfirmed",
             },
             {
+              "docs": undefined,
               "name": "token_required",
               "value": "token_required",
             },
@@ -3341,14 +3443,17 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "OPERATION_FEE",
               "value": "OPERATION_FEE",
             },
             {
+              "docs": undefined,
               "name": "INSURANCE_FEE",
               "value": "INSURANCE_FEE",
             },
             {
+              "docs": undefined,
               "name": "OTHERS",
               "value": "OTHERS",
             },
@@ -3362,10 +3467,12 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "MONTHLY",
               "value": "MONTHLY",
             },
             {
+              "docs": undefined,
               "name": "YEARLY",
               "value": "YEARLY",
             },
@@ -3375,10 +3482,12 @@ We return one of the following values:
           "docs": "Type of bank account holder. For PSE, this value must be \`INDIVIDUAL\`.",
           "enum": [
             {
+              "docs": undefined,
               "name": "INDIVIDUAL",
               "value": "INDIVIDUAL",
             },
             {
+              "docs": undefined,
               "name": "BUSINESS",
               "value": "BUSINESS",
             },
@@ -3389,22 +3498,27 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "REQUIRES_PAYMENT_METHOD",
               "value": "REQUIRES_PAYMENT_METHOD",
             },
             {
+              "docs": undefined,
               "name": "REQUIRES_ACTION",
               "value": "REQUIRES_ACTION",
             },
             {
+              "docs": undefined,
               "name": "SUCCEEDED",
               "value": "SUCCEEDED",
             },
             {
+              "docs": undefined,
               "name": "PROCESSING",
               "value": "PROCESSING",
             },
             {
+              "docs": undefined,
               "name": "FAILED",
               "value": "FAILED",
             },
@@ -3417,10 +3531,12 @@ We return one of the following values:
   - For 🇨🇴 Colombia's PSE, the value must be \`pse\`.",
           "enum": [
             {
+              "docs": undefined,
               "name": "open_finance",
               "value": "open_finance",
             },
             {
+              "docs": undefined,
               "name": "pse",
               "value": "pse",
             },
@@ -3435,10 +3551,12 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "belvo",
               "value": "belvo",
             },
             {
+              "docs": undefined,
               "name": "payments_way",
               "value": "payments_way",
             },
@@ -3453,10 +3571,12 @@ We return one of the following values:
 **Note:** You can retrieve the complete payment intent by using our [Get details of a payment link](https://developers.belvo.com/reference/detailcreatepaymentlink) request.",
           "enum": [
             {
+              "docs": undefined,
               "name": "ACTIVE",
               "value": "ACTIVE",
             },
             {
+              "docs": undefined,
               "name": "INACTIVE",
               "value": "INACTIVE",
             },
@@ -3469,10 +3589,12 @@ We return one of the following values:
   - \`OUTFLOW\` indicates money coming out of the account.",
           "enum": [
             {
+              "docs": undefined,
               "name": "INFLOW",
               "value": "INFLOW",
             },
             {
+              "docs": undefined,
               "name": "OUTFLOW",
               "value": "OUTFLOW",
             },
@@ -3487,10 +3609,12 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "BRA",
               "value": "BRA",
             },
             {
+              "docs": undefined,
               "name": "COL",
               "value": "COL",
             },
@@ -3504,10 +3628,12 @@ We return one of the following values:
   - 🇨🇴 COP (Colombian Peso)",
           "enum": [
             {
+              "docs": undefined,
               "name": "BRL",
               "value": "BRL",
             },
             {
+              "docs": undefined,
               "name": "COP",
               "value": "COP",
             },
@@ -3519,6 +3645,7 @@ We return one of the following values:
   - \`TRANSACTION_FEE\`",
           "enum": [
             {
+              "docs": undefined,
               "name": "TRANSACTION_FEE",
               "value": "TRANSACTION_FEE",
             },
@@ -3533,18 +3660,22 @@ We return one of the following values:
   - \`UNCATEGORIZED\`",
           "enum": [
             {
+              "docs": undefined,
               "name": "APPROVED",
               "value": "APPROVED",
             },
             {
+              "docs": undefined,
               "name": "CANCELLED",
               "value": "CANCELLED",
             },
             {
+              "docs": undefined,
               "name": "REVERTED",
               "value": "REVERTED",
             },
             {
+              "docs": undefined,
               "name": "UNCATEGORIZED",
               "value": "UNCATEGORIZED",
             },
@@ -3577,26 +3708,32 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "BillsUtilities",
               "value": "Bills & Utilities",
             },
             {
+              "docs": undefined,
               "name": "CreditsLoans",
               "value": "Credits & Loans",
             },
             {
+              "docs": undefined,
               "name": "Insurance",
               "value": "Insurance",
             },
             {
+              "docs": undefined,
               "name": "OnlinePlatformsLeisure",
               "value": "Online Platforms & Leisure",
             },
             {
+              "docs": undefined,
               "name": "TransportTravel",
               "value": "Transport & Travel",
             },
             {
+              "docs": undefined,
               "name": "Taxes",
               "value": "Taxes",
             },
@@ -3610,6 +3747,7 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "MONTHLY",
               "value": "MONTHLY",
             },
@@ -3623,10 +3761,12 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "SUBSCRIPTION",
               "value": "SUBSCRIPTION",
             },
             {
+              "docs": undefined,
               "name": "REGULAR",
               "value": "REGULAR",
             },
@@ -3636,14 +3776,17 @@ We return one of the following values:
           "docs": "Indicates whether the taxpayer is complying to all their tax obligations (\`POSITIVE\`), if they are not (\`NEGATIVE\`), or have none to comply to (\`NO_OBLIGATIONS\`).",
           "enum": [
             {
+              "docs": undefined,
               "name": "POSITIVE",
               "value": "POSITIVE",
             },
             {
+              "docs": undefined,
               "name": "NEGATIVE",
               "value": "NEGATIVE",
             },
             {
+              "docs": undefined,
               "name": "NO_OBLIGATIONS",
               "value": "NO_OBLIGATIONS",
             },
@@ -3656,10 +3799,12 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "PAID",
               "value": "PAID",
             },
             {
+              "docs": undefined,
               "name": "PROVISIONED",
               "value": "PROVISIONED",
             },
@@ -3672,10 +3817,12 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "NATIONAL",
               "value": "NATIONAL",
             },
             {
+              "docs": undefined,
               "name": "FOREIGN",
               "value": "FOREIGN",
             },
@@ -3689,10 +3836,12 @@ We return one of the following values:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "OUTFLOW",
               "value": "OUTFLOW",
             },
             {
+              "docs": undefined,
               "name": "INFLOW",
               "value": "INFLOW",
             },
@@ -6164,10 +6313,12 @@ A unique 44-character string that can be used to identify a user at a given inst
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Ascending",
               "value": "created_at",
             },
             {
+              "docs": undefined,
               "name": "Descending",
               "value": "-created_at",
             },
@@ -6177,10 +6328,12 @@ A unique 44-character string that can be used to identify a user at a given inst
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ACTIVE",
               "value": "ACTIVE",
             },
             {
+              "docs": undefined,
               "name": "INACTIVE",
               "value": "INACTIVE",
             },
@@ -6320,26 +6473,32 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_method_information",
               "value": "open_finance_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_confirmation_required",
               "value": "open_finance_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_needs_redirect",
               "value": "open_finance_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_processing",
               "value": "open_finance_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_succeeded",
               "value": "open_finance_display_payment_succeeded",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_failed",
               "value": "open_finance_display_payment_failed",
             },
@@ -6370,38 +6529,47 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "pse_display_payment_method_information",
               "value": "pse_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "pse_display_credentials_required",
               "value": "pse_display_credentials_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_needs_redirect",
               "value": "pse_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "pse_display_token_required",
               "value": "pse_display_token_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_customer_bank_accounts",
               "value": "pse_display_customer_bank_accounts",
             },
             {
+              "docs": undefined,
               "name": "pse_display_confirmation_required",
               "value": "pse_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_processing",
               "value": "pse_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_failed",
               "value": "pse_display_payment_failed",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_succeeded",
               "value": "pse_display_payment_succeeded",
             },
@@ -6432,38 +6600,47 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "pse_display_payment_method_information",
               "value": "pse_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "pse_display_credentials_required",
               "value": "pse_display_credentials_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_needs_redirect",
               "value": "pse_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "pse_display_token_required",
               "value": "pse_display_token_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_customer_bank_accounts",
               "value": "pse_display_customer_bank_accounts",
             },
             {
+              "docs": undefined,
               "name": "pse_display_confirmation_required",
               "value": "pse_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_processing",
               "value": "pse_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_failed",
               "value": "pse_display_payment_failed",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_succeeded",
               "value": "pse_display_payment_succeeded",
             },
@@ -6494,38 +6671,47 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "pse_display_payment_method_information",
               "value": "pse_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "pse_display_credentials_required",
               "value": "pse_display_credentials_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_needs_redirect",
               "value": "pse_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "pse_display_token_required",
               "value": "pse_display_token_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_customer_bank_accounts",
               "value": "pse_display_customer_bank_accounts",
             },
             {
+              "docs": undefined,
               "name": "pse_display_confirmation_required",
               "value": "pse_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_processing",
               "value": "pse_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_failed",
               "value": "pse_display_payment_failed",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_succeeded",
               "value": "pse_display_payment_succeeded",
             },
@@ -6556,38 +6742,47 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "pse_display_payment_method_information",
               "value": "pse_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "pse_display_credentials_required",
               "value": "pse_display_credentials_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_needs_redirect",
               "value": "pse_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "pse_display_token_required",
               "value": "pse_display_token_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_customer_bank_accounts",
               "value": "pse_display_customer_bank_accounts",
             },
             {
+              "docs": undefined,
               "name": "pse_display_confirmation_required",
               "value": "pse_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_processing",
               "value": "pse_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_failed",
               "value": "pse_display_payment_failed",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_succeeded",
               "value": "pse_display_payment_succeeded",
             },
@@ -6618,26 +6813,32 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_method_information",
               "value": "open_finance_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_confirmation_required",
               "value": "open_finance_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_needs_redirect",
               "value": "open_finance_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_processing",
               "value": "open_finance_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_succeeded",
               "value": "open_finance_display_payment_succeeded",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_failed",
               "value": "open_finance_display_payment_failed",
             },
@@ -6688,38 +6889,47 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "pse_display_payment_method_information",
               "value": "pse_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "pse_display_credentials_required",
               "value": "pse_display_credentials_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_needs_redirect",
               "value": "pse_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "pse_display_token_required",
               "value": "pse_display_token_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_customer_bank_accounts",
               "value": "pse_display_customer_bank_accounts",
             },
             {
+              "docs": undefined,
               "name": "pse_display_confirmation_required",
               "value": "pse_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_processing",
               "value": "pse_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_failed",
               "value": "pse_display_payment_failed",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_succeeded",
               "value": "pse_display_payment_succeeded",
             },
@@ -6730,26 +6940,32 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_method_information",
               "value": "open_finance_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_confirmation_required",
               "value": "open_finance_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_needs_redirect",
               "value": "open_finance_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_processing",
               "value": "open_finance_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_succeeded",
               "value": "open_finance_display_payment_succeeded",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_failed",
               "value": "open_finance_display_payment_failed",
             },
@@ -6780,26 +6996,32 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_method_information",
               "value": "open_finance_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_confirmation_required",
               "value": "open_finance_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_needs_redirect",
               "value": "open_finance_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_processing",
               "value": "open_finance_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_succeeded",
               "value": "open_finance_display_payment_succeeded",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_failed",
               "value": "open_finance_display_payment_failed",
             },
@@ -6830,26 +7052,32 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_method_information",
               "value": "open_finance_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_confirmation_required",
               "value": "open_finance_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_needs_redirect",
               "value": "open_finance_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_processing",
               "value": "open_finance_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_succeeded",
               "value": "open_finance_display_payment_succeeded",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_failed",
               "value": "open_finance_display_payment_failed",
             },
@@ -6884,38 +7112,47 @@ For \`login_error\` errors, the description can be one of the following:
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "pse_display_payment_method_information",
               "value": "pse_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "pse_display_credentials_required",
               "value": "pse_display_credentials_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_needs_redirect",
               "value": "pse_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "pse_display_token_required",
               "value": "pse_display_token_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_customer_bank_accounts",
               "value": "pse_display_customer_bank_accounts",
             },
             {
+              "docs": undefined,
               "name": "pse_display_confirmation_required",
               "value": "pse_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_processing",
               "value": "pse_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_failed",
               "value": "pse_display_payment_failed",
             },
             {
+              "docs": undefined,
               "name": "pse_display_payment_succeeded",
               "value": "pse_display_payment_succeeded",
             },
@@ -6944,26 +7181,32 @@ For \`login_error\` errors, the description can be one of the following:
           "docs": "The type of \`next_step\` you need to follow.",
           "enum": [
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_method_information",
               "value": "open_finance_display_payment_method_information",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_confirmation_required",
               "value": "open_finance_display_confirmation_required",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_needs_redirect",
               "value": "open_finance_display_needs_redirect",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_processing",
               "value": "open_finance_display_payment_processing",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_succeeded",
               "value": "open_finance_display_payment_succeeded",
             },
             {
+              "docs": undefined,
               "name": "open_finance_display_payment_failed",
               "value": "open_finance_display_payment_failed",
             },
