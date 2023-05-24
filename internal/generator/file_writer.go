@@ -341,10 +341,34 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	// Write the union type definition.
 	t.writer.P("type ", t.typeName, " struct {")
 	for _, member := range union.Members {
-		t.writer.P(typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types), " ", typeReferenceToGoType(member.Type, t.writer.types))
+		field := typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types)
+		value := typeReferenceToGoType(member.Type, t.writer.types)
+		t.writer.P(field, " ", value)
+
 	}
 	t.writer.P("}")
 	t.writer.P()
+
+	// Implement the json.Unmarshaler interface.
+	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+	for _, member := range union.Members {
+		field := typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types)
+		value := typeReferenceToGoType(member.Type, t.writer.types)
+		format := "var " + field + " %s"
+		if member.Type.Named != nil && isPointer(t.writer.types[member.Type.Named.TypeId]) {
+			format = field + " := new(%s)"
+			value = strings.TrimLeft(value, "*")
+		}
+		t.writer.P(fmt.Sprintf(format, value))
+		t.writer.P("if err := json.Unmarshal(data, &", field, "); err == nil {")
+		t.writer.P("x.", field, " = ", field)
+		t.writer.P("return nil")
+		t.writer.P("}")
+	}
+	t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, x)`)
+	t.writer.P("}")
+	t.writer.P()
+
 	return nil
 }
 
