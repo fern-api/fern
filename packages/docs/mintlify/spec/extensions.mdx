@@ -4,39 +4,39 @@ description: "Improve the quality of your generated SDKs with OpenAPI extensions
 ---
 
 Fern supports different OpenAPI extensions so that you can generate higher-quality SDKs.
-If there's an extension you want that doesn't already exist, ask
+If there's an extension you want that doesn't already exist, file an [issue](https://github.com/fern-api/fern/issues/new).
 
-## SDK Method Names
+## SDK method names
 
 By default, Fern uses the `tag` and `operationId` fields to generate the SDK method. So an endpoint with a
 tag `users` and operationId `users_create` will generate an SDK that reads `client.users.create()`.
 
-If you would rather explicitly set the values you can leverage the extensions `x-fern-sdk-group-name` and
-`x-fern-sdk-method-name`.
+To explicitly set the SDK method you can leverage the extensions:
 
-The following OpenAPI will generate a sdk that reads `client.users.create()`.
+- `x-fern-sdk-group-name` which groups SDK methods together
+- `x-fern-sdk-method-name` which is used as the method name in the SDK
+
+The OpenAPI below will `client.users.create()`:
 
 ```yaml openapi.yaml
 paths:
   /users
     post:
-      # client.users.create()
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: create
 ```
 
-If you omit the `x-fern-sdk-group-name` extension, then the generated SDK method will live at the top of the client.
-For example, the following OpenAPI will generate an sdk that reads `client.create_user()`.
+If you omit the `x-fern-sdk-group-name` extension, then the generated SDK method will live at the root.
+For example, the following OpenAPI will generate `client.create_user()`:
 
 ```yaml openapi.yaml
 paths:
   /users:
     post:
-      # client.create_user()
       x-fern-sdk-method-name: create_user
 ```
 
-## Enum Descriptions
+## Enum descriptions and names
 
 OpenAPI doesn't natively support adding descriptions to enum values. To do this in Fern you can use the `x-fern-enum`
 extension.
@@ -60,29 +60,38 @@ components:
           description: Some docs about spades
 ```
 
-There are occasions when the enum values are not code-friendly
-(i.e. do not start with a letter & only contain alphanumeric characters and hyphens).
-[fern check](../compiler/cli-reference) will alert when this is the case. To fix, you can specify
-code friendly names in the `x-fern-enum` extension. See the example below:
+`x-fern-enum` also supports a `name` field that allows you to customize the name of the enum in code.
+This is particularly useful when you have enums that rely on symbolic characters that would otherwise cause
+generated code not to compile.
+
+For example, the following OpenAPI
 
 ```yaml openapi.yml
 components:
   schemas:
-    CardSuit:
+    Operand:
       enum:
-        - "(lub5" # <----- This enum value is not code-friendly
-        - diamonds
-        - hearts
-        - Spades
+        - >
+        - <
       x-fern-enum:
-        "(lub5":
-          name: Clubs # <------ Code-friendly name
-          description: Some docs about clubs
-        spades:
-          description: Some docs about spades
+        >:
+          name: GreaterThan
+          description: Checks if value is greater than
+        <:
+          name: LessThan
+          description: Checks if value is less than
 ```
 
-## Customizing Schema Names
+would generate
+
+```typescript operand.ts
+export enum Operand {
+  GreaterThan = ">",
+  LessThan = "<",
+}
+```
+
+## Schema names
 
 OpenAPI allows you to define inlined schemas that do not have names.
 
@@ -107,8 +116,8 @@ components:
                 type: integer
 ```
 
-Fern automatically generate names for all the inlined types. For example, in this example,
-Fern would generate the name `CastItem` for the inlined array item definition.
+Fern automatically generates names for all the inlined schemas. For example, in this example,
+Fern would generate the name `CastItem` for the inlined array item schema.
 
 ```typescript
 export interface Movie {
