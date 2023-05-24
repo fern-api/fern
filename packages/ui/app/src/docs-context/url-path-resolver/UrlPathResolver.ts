@@ -1,8 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { joinUrlSlugs } from "../joinUrlSlugs";
-import { UrlSlugTree } from "./UrlSlugTree";
+import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 
 export type ResolvedUrlPath =
     | ResolvedUrlPath.Section
@@ -56,22 +55,30 @@ export declare namespace ResolvedUrlPath {
     }
 }
 
-export interface UrlPathResolver {
-    resolvePath(pathname: string): ResolvedUrlPath | undefined;
-}
-
-export class UrlPathResolverImpl implements UrlPathResolver {
+export class UrlPathResolverImpl {
     private urlSlugTree: UrlSlugTree;
 
     constructor(docsDefinition: FernRegistryDocsRead.DocsDefinition) {
         this.urlSlugTree = new UrlSlugTree(docsDefinition);
     }
 
-    public resolvePath(pathname: string): ResolvedUrlPath | undefined {
-        const node = this.urlSlugTree.resolveUrlPath(pathname);
+    public resolveSlug(slug: string): ResolvedUrlPath | undefined {
+        const node = this.urlSlugTree.resolveSlug(slug);
         if (node == null) {
             return undefined;
         }
+        return this.convertNode(node);
+    }
+
+    public resolveSlugOrThrow(slug: string): ResolvedUrlPath {
+        const path = this.resolveSlug(slug);
+        if (path == null) {
+            throw new Error("Failed to resolve slug: " + slug);
+        }
+        return path;
+    }
+
+    private convertNode(node: UrlSlugTreeNode): ResolvedUrlPath {
         switch (node.type) {
             case "section":
                 return {
@@ -96,7 +103,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
                     type: "topLevelEndpoint",
                     apiSection: node.apiSection,
                     apiSlug: node.apiSlug,
-                    slug: joinUrlSlugs(node.apiSlug, node.endpoint.urlSlug),
+                    slug: node.slug,
                     endpoint: node.endpoint,
                 };
             case "apiSubpackage":
@@ -104,7 +111,7 @@ export class UrlPathResolverImpl implements UrlPathResolver {
                     type: "apiSubpackage",
                     apiSection: node.apiSection,
                     apiSlug: node.apiSlug,
-                    slug: joinUrlSlugs(node.apiSlug, node.slugInsideApi),
+                    slug: node.slug,
                     subpackage: node.subpackage,
                 };
             case "endpoint":
@@ -112,11 +119,21 @@ export class UrlPathResolverImpl implements UrlPathResolver {
                     type: "endpoint",
                     apiSection: node.apiSection,
                     apiSlug: node.apiSlug,
-                    slug: joinUrlSlugs(node.apiSlug, node.slugInsideApi),
+                    slug: node.slug,
                     endpoint: node.endpoint,
                 };
             default:
                 assertNever(node);
         }
+    }
+
+    public getNextNavigatableItem(path: ResolvedUrlPath): ResolvedUrlPath | undefined {
+        const { nextNavigatableItem } = this.urlSlugTree.getNeighbors(path.slug);
+        return nextNavigatableItem != null ? this.convertNode(nextNavigatableItem) : undefined;
+    }
+
+    public getPreviousNavigatableItem(path: ResolvedUrlPath): ResolvedUrlPath | undefined {
+        const { previousNavigatableItem } = this.urlSlugTree.getNeighbors(path.slug);
+        return previousNavigatableItem != null ? this.convertNode(previousNavigatableItem) : undefined;
     }
 }

@@ -5,6 +5,7 @@ import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContex
 import { ApiPage } from "../api-page/ApiPage";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MarkdownPage } from "../markdown-page/MarkdownPage";
+import { RedirectToFirstApiItem } from "./RedirectToFirstApiItem";
 import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
 
 export const DocsMainContent: React.FC = () => {
@@ -27,7 +28,7 @@ export const DocsMainContent: React.FC = () => {
                     apiSection={resolvedPathFromUrl.apiSection}
                     apiSlug={resolvedPathFromUrl.slug}
                 >
-                    <ApiPage />
+                    <RedirectToFirstApiItem />
                 </ApiDefinitionContextProvider>
             );
         case "apiSubpackage":

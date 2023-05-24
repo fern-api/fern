@@ -1,22 +1,65 @@
 import { assertNever } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { noop } from "lodash-es";
+import { noop, size } from "lodash-es";
+import { doesSubpackageHaveEndpointsRecursive } from "../../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
 import { joinUrlSlugs } from "../joinUrlSlugs";
 
 export class UrlSlugTree {
-    private rootNodes: Record<UrlSlug, UrlSlugTreeNode>;
+    private root: Record<UrlSlug, UrlSlugTreeNode>;
+    private nodeToNeighbors: Record<UrlSlug, UrlSlugNeighbors> = {};
 
     constructor(private readonly docsDefinition: FernRegistryDocsRead.DocsDefinition) {
-        this.rootNodes = this.constructSlugToNodeRecord({
+        this.root = this.constructSlugToNodeRecord({
             items: docsDefinition.config.navigation.items,
             parentSlug: "",
         });
+
+        const nodesInOrder = this.inOrderTraverse(Object.values(this.root));
+        let indexOfPreviousNavigatableItem = -1,
+            indexOfPreviousPreviousNavigatableItem = -1,
+            indexOfNextNavigatableItem = getIndexOfFirstNavigatableItem(nodesInOrder, { startingAt: 0 });
+        for (const [index, node] of nodesInOrder.entries()) {
+            const newIndexOfNextNavigatableItem =
+                index === indexOfNextNavigatableItem
+                    ? getIndexOfFirstNavigatableItem(nodesInOrder, { startingAt: index + 1 })
+                    : indexOfNextNavigatableItem;
+
+            let previousNavigatableItem = nodesInOrder[indexOfPreviousNavigatableItem];
+            const nextNavigatableItem = nodesInOrder[newIndexOfNextNavigatableItem];
+
+            const apiSlug = getApiSlug(node);
+            if (apiSlug != null && previousNavigatableItem != null) {
+                const apiSlugOfPrevious = getApiSlug(previousNavigatableItem);
+                if (apiSlugOfPrevious === apiSlug) {
+                    previousNavigatableItem = nodesInOrder[indexOfPreviousPreviousNavigatableItem];
+                }
+            }
+
+            this.nodeToNeighbors[node.slug] = {
+                previousNavigatableItem,
+                nextNavigatableItem,
+            };
+
+            if (newIndexOfNextNavigatableItem > indexOfNextNavigatableItem) {
+                indexOfPreviousPreviousNavigatableItem = indexOfPreviousNavigatableItem;
+                indexOfPreviousNavigatableItem = index;
+                indexOfNextNavigatableItem = newIndexOfNextNavigatableItem;
+            }
+        }
     }
 
-    public resolveUrlPath(pathname: string): UrlSlugTreeNode | undefined {
-        const slugs = pathname.split("/").map(decodeURIComponent);
-        return this.resolveSlugsRecursive({ slugs, children: this.rootNodes });
+    public resolveSlug(slug: string): UrlSlugTreeNode | undefined {
+        const slugParts = slug.split("/").map(decodeURIComponent);
+        return this.resolveSlugsRecursive({ slugs: slugParts, children: this.root });
+    }
+
+    public getNeighbors(slug: UrlSlug): UrlSlugNeighbors {
+        const neighbors = this.nodeToNeighbors[slug];
+        if (neighbors == null) {
+            throw new Error("URL slug does not exist: " + slug);
+        }
+        return neighbors;
     }
 
     private resolveSlugsRecursive({
@@ -127,6 +170,7 @@ export class UrlSlugTree {
             type: "api",
             apiSection,
             slug,
+            apiSlug: slug,
             children: {
                 ...this.constructSlugToApiSubpackageRecord({
                     apiDefinition,
@@ -134,13 +178,15 @@ export class UrlSlugTree {
                     package_: apiDefinition.rootPackage,
                     apiSlug: slug,
                     slugInsideApi: "",
+                    isFirstItemInApi: apiDefinition.rootPackage.endpoints.length === 0,
                 }),
                 ...apiDefinition.rootPackage.endpoints.reduce<Record<UrlSlug, UrlSlugTreeNode.TopLevelEndpoint>>(
-                    (acc, topLevelEndpoint) => {
+                    (acc, topLevelEndpoint, index) => {
                         acc[topLevelEndpoint.urlSlug] = this.constructTopLevelEndpointNode({
                             apiSection,
                             topLevelEndpoint,
                             apiSlug: slug,
+                            isFirstItemInApi: index === 0,
                         });
                         return acc;
                     },
@@ -156,26 +202,31 @@ export class UrlSlugTree {
         package_,
         apiSlug,
         slugInsideApi,
+        isFirstItemInApi,
     }: {
         apiDefinition: FernRegistryApiRead.ApiDefinition;
         apiSection: FernRegistryDocsRead.ApiSection;
         package_: FernRegistryApiRead.ApiDefinitionPackage;
         apiSlug: string;
         slugInsideApi: string;
+        isFirstItemInApi: boolean;
     }): Record<UrlSlug, UrlSlugTreeNode.ApiSubpackage> {
         return package_.subpackages.reduce<Record<UrlSlug, UrlSlugTreeNode.ApiSubpackage>>((acc, subpackageId) => {
             const subpackage = apiDefinition.subpackages[subpackageId];
             if (subpackage == null) {
                 throw new Error("Subpackage does not exist: " + subpackageId);
             }
-            const resolvedSubpackage = resolveSubpackage(apiDefinition, subpackageId);
-            acc[subpackage.urlSlug] = this.constructApiSubpackageNode({
-                apiDefinition,
-                apiSection,
-                subpackage: resolvedSubpackage,
-                apiSlug,
-                slugInsideApi: joinUrlSlugs(slugInsideApi, subpackage.urlSlug),
-            });
+            if (doesSubpackageHaveEndpointsRecursive(subpackageId, (id) => resolveSubpackage(apiDefinition, id))) {
+                const resolvedSubpackage = resolveSubpackage(apiDefinition, subpackageId);
+                acc[subpackage.urlSlug] = this.constructApiSubpackageNode({
+                    apiDefinition,
+                    apiSection,
+                    subpackage: resolvedSubpackage,
+                    apiSlug,
+                    slugInsideApi: joinUrlSlugs(slugInsideApi, subpackage.urlSlug),
+                    isFirstItemInApi: isFirstItemInApi && size(acc) === 0,
+                });
+            }
             return acc;
         }, {});
     }
@@ -183,17 +234,21 @@ export class UrlSlugTree {
     private constructTopLevelEndpointNode({
         apiSection,
         topLevelEndpoint,
+        isFirstItemInApi,
         apiSlug,
     }: {
         apiSection: FernRegistryDocsRead.ApiSection;
         topLevelEndpoint: FernRegistryApiRead.EndpointDefinition;
+        isFirstItemInApi: boolean;
         apiSlug: string;
     }): UrlSlugTreeNode.TopLevelEndpoint {
         return {
             type: "topLevelEndpoint",
             apiSection,
             apiSlug,
+            slug: joinUrlSlugs(apiSlug, topLevelEndpoint.urlSlug),
             endpoint: topLevelEndpoint,
+            isFirstItemInApi,
         };
     }
 
@@ -203,19 +258,22 @@ export class UrlSlugTree {
         subpackage,
         apiSlug,
         slugInsideApi,
+        isFirstItemInApi,
     }: {
         apiDefinition: FernRegistryApiRead.ApiDefinition;
         apiSection: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         apiSlug: string;
         slugInsideApi: string;
+        isFirstItemInApi: boolean;
     }): UrlSlugTreeNode.ApiSubpackage {
         return {
             type: "apiSubpackage",
             apiSection,
             apiSlug,
-            slugInsideApi,
+            slug: joinUrlSlugs(apiSlug, slugInsideApi),
             subpackage,
+            isFirstItemInApi,
             children: {
                 ...this.constructSlugToApiSubpackageRecord({
                     apiDefinition,
@@ -223,6 +281,7 @@ export class UrlSlugTree {
                     package_: subpackage,
                     apiSlug,
                     slugInsideApi,
+                    isFirstItemInApi: false,
                 }),
                 ...this.constructSlugToEndpointRecord({
                     apiSection,
@@ -271,9 +330,32 @@ export class UrlSlugTree {
             type: "endpoint",
             apiSection,
             apiSlug,
-            slugInsideApi,
+            slug: joinUrlSlugs(apiSlug, slugInsideApi),
             endpoint,
         };
+    }
+
+    private inOrderTraverse(nodes: UrlSlugTreeNode[]): UrlSlugTreeNode[] {
+        const inOrder: UrlSlugTreeNode[] = [];
+
+        for (const node of nodes) {
+            inOrder.push(node);
+            switch (node.type) {
+                case "section":
+                case "api":
+                case "apiSubpackage":
+                    inOrder.push(...this.inOrderTraverse(Object.values(node.children)));
+                    break;
+                case "page":
+                case "topLevelEndpoint":
+                case "endpoint":
+                    break;
+                default:
+                    assertNever(node);
+            }
+        }
+
+        return inOrder;
     }
 }
 
@@ -288,49 +370,56 @@ export type UrlSlugTreeNode =
     | UrlSlugTreeNode.Endpoint;
 
 export declare namespace UrlSlugTreeNode {
-    export interface Section {
+    export interface Section extends BaseNode {
         type: "section";
         section: FernRegistryDocsRead.DocsSection;
-        slug: string;
         children: Record<UrlSlug, UrlSlugTreeNode>;
     }
 
-    export interface Page {
+    export interface Page extends BaseNode {
         type: "page";
         page: FernRegistryDocsRead.PageMetadata;
-        slug: string;
     }
 
-    export interface Api {
+    export interface Api extends BaseNode, BaseApiNode {
         type: "api";
         apiSection: FernRegistryDocsRead.ApiSection;
-        slug: string;
         children: Record<UrlSlug, TopLevelEndpoint | ApiSubpackage>;
     }
 
-    export interface TopLevelEndpoint {
+    export interface TopLevelEndpoint extends BaseNode, BaseApiNode {
         type: "topLevelEndpoint";
         apiSection: FernRegistryDocsRead.ApiSection;
-        apiSlug: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        isFirstItemInApi: boolean;
     }
 
-    export interface ApiSubpackage {
+    export interface ApiSubpackage extends BaseNode, BaseApiNode {
         type: "apiSubpackage";
         apiSection: FernRegistryDocsRead.ApiSection;
-        apiSlug: string;
-        slugInsideApi: string;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        isFirstItemInApi: boolean;
         children: Record<UrlSlug, ApiSubpackage | Endpoint>;
     }
 
-    export interface Endpoint {
+    export interface Endpoint extends BaseNode, BaseApiNode {
         type: "endpoint";
         apiSection: FernRegistryDocsRead.ApiSection;
-        apiSlug: string;
-        slugInsideApi: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
+
+    export interface BaseNode {
+        slug: string;
+    }
+
+    export interface BaseApiNode {
+        apiSlug: string;
+    }
+}
+
+export interface UrlSlugNeighbors {
+    previousNavigatableItem: UrlSlugTreeNode | undefined;
+    nextNavigatableItem: UrlSlugTreeNode | undefined;
 }
 
 function resolveSubpackage(
@@ -345,5 +434,42 @@ function resolveSubpackage(
         return resolveSubpackage(apiDefinition, subpackage.pointsTo);
     } else {
         return subpackage;
+    }
+}
+
+function getIndexOfFirstNavigatableItem(nodes: UrlSlugTreeNode[], { startingAt }: { startingAt: number }): number {
+    for (const [i, node] of nodes.slice(startingAt).entries()) {
+        switch (node.type) {
+            case "page":
+                return startingAt + i;
+            case "topLevelEndpoint":
+            case "apiSubpackage":
+                if (node.isFirstItemInApi) {
+                    return startingAt + i;
+                }
+                break;
+            case "api":
+            case "endpoint":
+            case "section":
+                break;
+            default:
+                assertNever(node);
+        }
+    }
+    return nodes.length;
+}
+
+function getApiSlug(node: UrlSlugTreeNode): string | undefined {
+    switch (node.type) {
+        case "api":
+        case "endpoint":
+        case "apiSubpackage":
+        case "topLevelEndpoint":
+            return node.apiSlug;
+        case "section":
+        case "page":
+            return undefined;
+        default:
+            assertNever(node);
     }
 }

@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
-import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { useIsPathSelected } from "../docs-context/useIsPathSelected";
+import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 
 export declare namespace useApiPageCenterElement {
     export interface Args {
-        path: ResolvedUrlPath;
+        slug: string;
     }
 
     export interface Return {
@@ -15,7 +14,7 @@ export declare namespace useApiPageCenterElement {
     }
 }
 
-export function useApiPageCenterElement({ path }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
+export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
     const { registerNavigateToPathListener, setSelectedPath } = useDocsContext();
 
     const targetRef = useRef<HTMLElement | null>(null);
@@ -25,10 +24,10 @@ export function useApiPageCenterElement({ path }: useApiPageCenterElement.Args):
         (newIsInVerticalCenter: boolean) => {
             setLocalIsInVerticalCenter(newIsInVerticalCenter);
             if (newIsInVerticalCenter) {
-                setSelectedPath(path);
+                setSelectedPath(slug);
             }
         },
-        [path, setSelectedPath]
+        [slug, setSelectedPath]
     );
 
     const handleIsSelected = useCallback(() => {
@@ -36,11 +35,11 @@ export function useApiPageCenterElement({ path }: useApiPageCenterElement.Args):
     }, []);
 
     useEffect(() => {
-        const unsubscribe = registerNavigateToPathListener(path, handleIsSelected);
+        const unsubscribe = registerNavigateToPathListener(slug, handleIsSelected);
         return unsubscribe;
-    }, [handleIsSelected, path, registerNavigateToPathListener]);
+    }, [handleIsSelected, slug, registerNavigateToPathListener]);
 
-    const isSelected = useIsPathSelected(path);
+    const isSelected = useIsSlugSelected(slug);
     useLayoutEffect(() => {
         if (isSelected) {
             handleIsSelected();

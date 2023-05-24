@@ -1,25 +1,24 @@
 import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
 import { useCallback } from "react";
-import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { useIsPathSelected } from "../docs-context/useIsPathSelected";
+import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 import { SidebarItemLayout } from "./SidebarItemLayout";
 
 export declare namespace NavigatingSidebarItem {
     export interface Props {
         title: JSX.Element | string;
-        path: ResolvedUrlPath;
+        slug: string;
     }
 }
 
-export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ title, path }) => {
+export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ title, slug }) => {
     const { navigateToPath } = useDocsContext();
     const handleClick = useCallback(() => {
-        navigateToPath(path);
-    }, [navigateToPath, path]);
+        navigateToPath(slug);
+    }, [navigateToPath, slug]);
 
-    const isSelected = useIsPathSelected(path);
+    const isSelected = useIsSlugSelected(slug);
 
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
