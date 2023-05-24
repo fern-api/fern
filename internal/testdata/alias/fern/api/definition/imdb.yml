@@ -25,7 +25,18 @@ types:
     properties:
       id: uuid
       name: string
+      stringAlias: String
 
   Bar:
     properties:
       foo: Foo
+
+  Union:
+    union:
+      fooAlias: FooAlias
+      barAlias:
+        key: barAlias
+        type: BarAlias
+      doubleAlias:
+        key: doubleAlias
+        type: Double

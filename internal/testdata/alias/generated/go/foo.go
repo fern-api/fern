@@ -5,6 +5,7 @@ import (
 )
 
 type Foo struct {
-	Id   uuid.UUID `json:"id"`
-	Name string    `json:"name"`
+	Id          uuid.UUID `json:"id"`
+	Name        string    `json:"name"`
+	StringAlias String    `json:"stringAlias"`
 }
