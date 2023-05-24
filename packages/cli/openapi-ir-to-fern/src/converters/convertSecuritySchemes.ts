@@ -45,6 +45,7 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
                 header: securityScheme.headerName,
                 name: "apiKey",
                 type: "string",
+                prefix: securityScheme.prefix ?? undefined,
             };
             if (auth == null) {
                 auth = id;

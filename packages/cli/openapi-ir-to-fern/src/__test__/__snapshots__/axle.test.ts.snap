@@ -764,6 +764,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
       "apiKeyAuth": {
         "header": "x-access-token",
         "name": "apiKey",
+        "prefix": undefined,
         "type": "string",
       },
     },

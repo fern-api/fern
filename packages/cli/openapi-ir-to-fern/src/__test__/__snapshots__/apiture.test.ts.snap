@@ -3141,6 +3141,7 @@ Note: This operation requires an identity challenge if the financial institution
       "apiKey": {
         "header": "API-Key",
         "name": "apiKey",
+        "prefix": undefined,
         "type": "string",
       },
     },

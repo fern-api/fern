@@ -8376,6 +8376,7 @@ the same customer, dimension, and time, but a different quantity.",
       "BearerTokenAuth": {
         "header": "Authorization",
         "name": "apiKey",
+        "prefix": undefined,
         "type": "string",
       },
     },
