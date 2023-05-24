@@ -2,7 +2,6 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { SeparatedElements } from "../commons/SeparatedElements";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
-import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
 import { Endpoint } from "./endpoints/Endpoint";
 import { SectionSeparator } from "./section-separator/SectionSeparator";
 import { ApiSubpackage } from "./subpackages/ApiSubpackage";
@@ -10,7 +9,6 @@ import { doesSubpackageHaveEndpointsRecursive } from "./subpackages/doesSubpacka
 
 export declare namespace ApiPackageContents {
     export interface Props {
-        path: ResolvedUrlPath.Api | ResolvedUrlPath.ApiSubpackage;
         package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
     }

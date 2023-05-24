@@ -13,14 +13,16 @@ export interface DocsContextValue {
     resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
     resolveFile: (fileId: FernRegistryDocsRead.FileId) => FernRegistryDocsRead.Url;
 
-    navigateToPath: (path: ResolvedUrlPath) => void;
-    registerNavigateToPathListener: (path: ResolvedUrlPath, listener: () => void) => () => void;
+    navigateToPath: (slug: string) => void;
+    registerNavigateToPathListener: (slug: string, listener: () => void) => () => void;
 
     selectedPath: ResolvedUrlPath | undefined;
-    setSelectedPath: (path: ResolvedUrlPath) => void;
+    setSelectedPath: (slug: string) => void;
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
     resolvedPathFromUrl: ResolvedUrlPath | undefined;
+    nextPath: ResolvedUrlPath | undefined;
+    previousPath: ResolvedUrlPath | undefined;
 }
 
 export interface Anchor {

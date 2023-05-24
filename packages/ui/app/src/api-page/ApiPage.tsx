@@ -1,27 +1,22 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
-import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
+import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
+import { PageMargins } from "../page-margins/PageMargins";
 import { ApiPageContextProvider } from "./api-page-context/ApiPageContextProvider";
 import { ApiPackageContents } from "./ApiPackageContents";
 
 export const ApiPage: React.FC = () => {
-    const { apiDefinition, apiSection, apiSlug } = useApiDefinitionContext();
-
-    const path = useMemo(
-        (): ResolvedUrlPath.Api => ({
-            type: "api",
-            apiSection,
-            slug: apiSlug,
-        }),
-        [apiSection, apiSlug]
-    );
+    const { apiDefinition, apiSlug } = useApiDefinitionContext();
 
     const [containerRef, setContainerRef] = useState<HTMLDivElement | null>(null);
 
     return (
         <ApiPageContextProvider containerRef={containerRef ?? undefined}>
             <div ref={setContainerRef} className="min-h-0 overflow-y-auto pb-36">
-                <ApiPackageContents package={apiDefinition.rootPackage} slug={apiSlug} path={path} />
+                <ApiPackageContents package={apiDefinition.rootPackage} slug={apiSlug} />
+                <PageMargins>
+                    <BottomNavigationButtons />
+                </PageMargins>
             </div>
         </ApiPageContextProvider>
     );

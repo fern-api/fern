@@ -4,7 +4,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { PropsWithChildren, useCallback, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DocsContext, DocsContextValue } from "./DocsContext";
-import { ResolvedUrlPath, UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
+import { UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
@@ -17,8 +17,19 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
 
     const location = useLocation();
     const resolvedPathFromUrl = useMemo(
-        () => urlPathResolver.resolvePath(removeLeadingAndTrailingSlashes(location.pathname)),
+        () => urlPathResolver.resolveSlug(removeLeadingAndTrailingSlashes(location.pathname)),
         [location.pathname, urlPathResolver]
+    );
+
+    const nextPath = useMemo(
+        () => (resolvedPathFromUrl != null ? urlPathResolver.getNextNavigatableItem(resolvedPathFromUrl) : undefined),
+        [resolvedPathFromUrl, urlPathResolver]
+    );
+
+    const previousPath = useMemo(
+        () =>
+            resolvedPathFromUrl != null ? urlPathResolver.getPreviousNavigatableItem(resolvedPathFromUrl) : undefined,
+        [resolvedPathFromUrl, urlPathResolver]
     );
 
     const resolveApi = useCallback(
@@ -56,11 +67,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
 
     const navigateToPathListeners = useRef<Record<string, (() => void)[]>>({});
 
-    const registerNavigateToPathListener = useCallback((path: ResolvedUrlPath, listener: () => void) => {
-        const listenersForPath = (navigateToPathListeners.current[path.slug] ??= []);
+    const registerNavigateToPathListener = useCallback((slug: string, listener: () => void) => {
+        const listenersForPath = (navigateToPathListeners.current[slug] ??= []);
         listenersForPath.push(listener);
         return () => {
-            const listeners = navigateToPathListeners.current[path.slug];
+            const listeners = navigateToPathListeners.current[slug];
             if (listeners != null) {
                 const indexOfListenerToDelete = listeners.indexOf(listener);
                 if (indexOfListenerToDelete !== -1) {
@@ -76,7 +87,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
     const navigate = useNavigate();
     const [justNavigated, setJustNavigated] = useState(false);
     const navigateToPath = useCallback(
-        (path: ResolvedUrlPath) => {
+        (slug: string) => {
+            const path = urlPathResolver.resolveSlugOrThrow(slug);
             setJustNavigated(true);
             setSelectedPath(path);
             navigate(path.slug);
@@ -90,19 +102,20 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
                 setJustNavigated(false);
             }, 500);
         },
-        [navigate]
+        [navigate, urlPathResolver]
     );
 
     const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
 
     const setSelectedPathAndUpdateUrl = useCallback(
-        (path: ResolvedUrlPath) => {
+        (slug: string) => {
             if (!justNavigated) {
+                const path = urlPathResolver.resolveSlugOrThrow(slug);
                 setSelectedPath(path);
-                navigate(path.slug);
+                navigate(slug, { replace: true });
             }
         },
-        [justNavigated, navigate]
+        [justNavigated, navigate, urlPathResolver]
     );
 
     const contextValue = useCallback(
@@ -111,22 +124,26 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             resolvePage,
             resolveFile,
             docsDefinition,
-            resolvedPathFromUrl,
             registerNavigateToPathListener,
             navigateToPath,
             selectedPath,
             setSelectedPath: setSelectedPathAndUpdateUrl,
+            resolvedPathFromUrl,
+            nextPath,
+            previousPath,
         }),
         [
             resolveApi,
             resolvePage,
             resolveFile,
             docsDefinition,
-            resolvedPathFromUrl,
             registerNavigateToPathListener,
             navigateToPath,
             selectedPath,
             setSelectedPathAndUpdateUrl,
+            resolvedPathFromUrl,
+            nextPath,
+            previousPath,
         ]
     );
 

@@ -39,7 +39,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
         [setHoveredResponsePropertyPath]
     );
 
-    const { isInVerticalCenter, setTargetRef } = useApiPageCenterElement({ path });
+    const { isInVerticalCenter, setTargetRef } = useApiPageCenterElement({ slug: path.slug });
     const { setSelectedPath } = useDocsContext();
     const { containerRef: apiPageContainerRef } = useApiPageContext();
     useEffect(() => {
@@ -48,13 +48,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
         }
 
         const handler = () => {
-            setSelectedPath(path);
+            setSelectedPath(path.slug);
         };
         apiPageContainerRef?.addEventListener("scroll", handler, false);
         return () => {
             apiPageContainerRef?.removeEventListener("scroll", handler);
         };
-    }, [apiPageContainerRef, isInVerticalCenter, path, setSelectedPath]);
+    }, [apiPageContainerRef, isInVerticalCenter, path.slug, setSelectedPath]);
 
     return (
         <PageMargins>

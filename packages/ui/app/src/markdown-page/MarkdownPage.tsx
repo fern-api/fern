@@ -1,4 +1,5 @@
 import { Markdown } from "../api-page/markdown/Markdown";
+import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
 import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
@@ -15,6 +16,7 @@ export const MarkdownPage: React.FC<MarkdownPage.Props> = ({ path }) => {
         <div className="flex flex-col items-center overflow-y-auto pb-10">
             <div className="w-[700px]">
                 <Markdown>{resolvePage(path.page.id).markdown}</Markdown>
+                <BottomNavigationButtons />
             </div>
         </div>
     );
