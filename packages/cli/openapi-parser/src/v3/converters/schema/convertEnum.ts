@@ -32,7 +32,7 @@ export function convertEnum({
             nameOverride: fernEnumExtension?.name ?? fernEnumName ?? enumVarName,
             generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
-            description: fernEnumExtension?.docs,
+            description: fernEnumExtension?.description,
         };
     });
     return wrapEnum({
