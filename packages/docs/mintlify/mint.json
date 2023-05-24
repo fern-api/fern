@@ -60,7 +60,7 @@
     },
     {
       "group": "Using OpenAPI",
-      "pages": ["spec/openapi"]
+      "pages": ["spec/openapi", "spec/extensions"]
     },
     {
       "group": "Compiler",
