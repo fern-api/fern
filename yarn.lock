@@ -3551,9 +3551,6 @@ __metadata:
     "@fern-api/docs": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
     "@fern-api/docs-deploy": "workspace:*"
-    "@fern-api/editor-app": "workspace:*"
-    "@fern-api/editor-fe-bundle": "workspace:*"
-    "@fern-api/editor-item-id-generator": "workspace:*"
     "@fern-api/ete-tests": "workspace:*"
     "@fern-api/fe-bundle": "workspace:*"
     "@fern-api/fonts": "workspace:*"
@@ -3587,8 +3584,6 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/theme": "workspace:*"
     "@fern-api/toaster": "workspace:*"
-    "@fern-api/transaction-generator": "workspace:*"
-    "@fern-api/transaction-resolver": "workspace:*"
     "@fern-api/ui": "workspace:*"
     "@fern-api/validator": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
@@ -3819,106 +3814,6 @@ __metadata:
     prism-react-renderer: ^1.3.5
     react: ^18.2.0
     react-dom: ^18.2.0
-  languageName: unknown
-  linkType: soft
-
-"@fern-api/editor-app@workspace:*, @fern-api/editor-app@workspace:packages/editor/ui/app":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/editor-app@workspace:packages/editor/ui/app"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@blueprintjs/core": ^4.11.5
-    "@blueprintjs/icons": ^4.4.0
-    "@blueprintjs/popover2": ^1.8.0
-    "@blueprintjs/select": ^4.4.2
-    "@emotion/react": ^11.9.3
-    "@emotion/styled": ^11.9.3
-    "@fern-api/common-components": "workspace:*"
-    "@fern-api/core-utils": "workspace:*"
-    "@fern-api/editor-item-id-generator": "workspace:*"
-    "@fern-api/fonts": "workspace:*"
-    "@fern-api/loadable": "workspace:*"
-    "@fern-api/react-commons": "workspace:*"
-    "@fern-api/routing-utils": "workspace:*"
-    "@fern-api/split-view": "workspace:*"
-    "@fern-api/theme": "workspace:*"
-    "@fern-api/transaction-generator": "workspace:*"
-    "@fern-api/transaction-resolver": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.38
-    "@fontsource/actor": ^4.5.9
-    "@fontsource/roboto-mono": ^4.5.8
-    "@tanstack/react-query": ^4.29.7
-    "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    "@types/uuid": ^9.0.0
-    classnames: ^2.3.1
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.4.0
-    lodash-es: ^4.17.21
-    normalize.css: ^8.0.1
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    react-router-dom: ^6.4.3
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    uuid: ^9.0.0
-    vite: ^4.3.8
-  languageName: unknown
-  linkType: soft
-
-"@fern-api/editor-fe-bundle@workspace:*, @fern-api/editor-fe-bundle@workspace:packages/editor/ui/fe-bundle":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/editor-fe-bundle@workspace:packages/editor/ui/fe-bundle"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-api/editor-app": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/react": ^18.0.20
-    "@types/react-dom": ^18.0.6
-    "@vitejs/plugin-react": ^2.0.0
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.4.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    sass: ^1.54.0
-    stylelint: ^14.14.0
-    typescript: 4.6.4
-    vite: ^4.3.8
-    vite-plugin-checker: ^0.5.5
-  languageName: unknown
-  linkType: soft
-
-"@fern-api/editor-item-id-generator@workspace:*, @fern-api/editor-item-id-generator@workspace:packages/editor/id-generator":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/editor-item-id-generator@workspace:packages/editor/id-generator"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.38
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/uuid": ^9.0.0
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.4.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    typescript: 4.6.4
-    uuid: ^9.0.0
   languageName: unknown
   linkType: soft
 
@@ -4808,51 +4703,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/transaction-generator@workspace:*, @fern-api/transaction-generator@workspace:packages/editor/transaction-generator":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/transaction-generator@workspace:packages/editor/transaction-generator"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-fern/api-editor-sdk": 0.0.38
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/uuid": ^9.0.0
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.4.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    typescript: 4.6.4
-    uuid: ^9.0.0
-  languageName: unknown
-  linkType: soft
-
-"@fern-api/transaction-resolver@workspace:*, @fern-api/transaction-resolver@workspace:packages/editor/transaction-resolver":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/transaction-resolver@workspace:packages/editor/transaction-resolver"
-  dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
-    "@fern-api/editor-item-id-generator": "workspace:*"
-    "@fern-api/transaction-generator": "workspace:*"
-    "@fern-fern/api-editor-sdk": 0.0.38
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    "@types/uuid": ^9.0.0
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    immer: ^9.0.15
-    jest: ^29.4.0
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    typescript: 4.6.4
-    uuid: ^9.0.0
-  languageName: unknown
-  linkType: soft
-
 "@fern-api/ui@workspace:*, @fern-api/ui@workspace:packages/ui/app":
   version: 0.0.0-use.local
   resolution: "@fern-api/ui@workspace:packages/ui/app"
@@ -5068,17 +4918,6 @@ __metadata:
     zod: ^3.14.3
   languageName: unknown
   linkType: soft
-
-"@fern-fern/api-editor-sdk@npm:0.0.38":
-  version: 0.0.38
-  resolution: "@fern-fern/api-editor-sdk@npm:0.0.38"
-  dependencies:
-    "@types/url-join": 4.0.1
-    axios: ^0.27.2
-    url-join: 4.0.1
-  checksum: 75de3992f27618322b19d81d468de3e3da803c33d94e6b6cf080ba0b1c94e659fc6241dce84399b85c2325de1e445c2221b0ff574f26abfbf972df575cb8f22f
-  languageName: node
-  linkType: hard
 
 "@fern-fern/docs-config@npm:0.0.8":
   version: 0.0.8
@@ -5310,13 +5149,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/actor@npm:^4.5.9":
-  version: 4.5.9
-  resolution: "@fontsource/actor@npm:4.5.9"
-  checksum: f4e263d58dd885ae727de8fe3f472a02a0486dcf51e03a1287948e4c443ef0d94500dfc1f65c29096a7e97235ac69dc40947f95e4e1d58049cad4fc34860b409
-  languageName: node
-  linkType: hard
-
 "@fontsource/ibm-plex-mono@npm:^4.5.13":
   version: 4.5.13
   resolution: "@fontsource/ibm-plex-mono@npm:4.5.13"
@@ -5328,13 +5160,6 @@ __metadata:
   version: 4.5.15
   resolution: "@fontsource/inter@npm:4.5.15"
   checksum: d4330957c0a23a6c6a47f6f628b89c5603deec6305f28458fd3277bb652913dc77b31ac454bba96beeaecddef87eaf4b60befa2aad040ebb8c22c39ee33a2cf1
-  languageName: node
-  linkType: hard
-
-"@fontsource/roboto-mono@npm:^4.5.8":
-  version: 4.5.8
-  resolution: "@fontsource/roboto-mono@npm:4.5.8"
-  checksum: 0912b468ae5285d992f81f27c1b59dabf7a7a0a6ab050b5af38947985ba7fe776de8050b89361aa7c3c4730def2567cb305e83bd631d1a4c12791dda7faab21e
   languageName: node
   linkType: hard
 
