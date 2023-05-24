@@ -2,7 +2,6 @@ package generator
 
 import (
 	"bytes"
-	"errors"
 	"fmt"
 	"go/format"
 	"go/parser"
@@ -319,7 +318,25 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 }
 
 func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTypeDeclaration) error {
-	return errors.New("unimplemented")
+	// TODO: How are discriminated unions represented on the wire? Are they equivalent to their
+	// underlying value with no other value?
+	//
+	// Should we still use the standard union strategy, i.e. a struct with exactly one non-empty value?
+	// For primitives, we would have to use the PascalCase-equivalent of their name, e.g.
+	//
+	// type UndiscriminatedUnion struct {
+	//   Foo *Foo
+	//   String string
+	// }
+	//
+	// func (u *UndiscriminatedUnion) UnmarshalJSON(data []byte) error {
+	//   // We can't switch on a discriminant here, so the best we can do is to just try
+	//   // and unmarshal it into every possible form until it's successful. This is error
+	//   // prone in the presence of property collisions though.
+	// }
+	t.writer.P("type ", t.typeName, " struct {}")
+	t.writer.P()
+	return nil
 }
 
 // visitObjectProperties writes all of this object's properties, and recursively calls itself with

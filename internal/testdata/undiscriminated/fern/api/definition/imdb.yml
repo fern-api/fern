@@ -1,0 +1,21 @@
+# Simple test for generating an undiscriminated union.
+types:
+  Union:
+    discriminated: false
+    union:
+      - Foo
+      - Bar
+      - Baz
+      - string
+
+  Foo:
+    properties:
+      name: string
+
+  Bar:
+    properties:
+      name: string
+  
+  Baz:
+    properties:
+      id: string
