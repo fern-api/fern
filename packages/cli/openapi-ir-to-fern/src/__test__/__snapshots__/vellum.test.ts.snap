@@ -913,6 +913,7 @@ Used to retrieve a model version given its ID.
       "apiKeyAuth": {
         "header": "X_API_KEY",
         "name": "apiKey",
+        "prefix": undefined,
         "type": "string",
       },
     },
