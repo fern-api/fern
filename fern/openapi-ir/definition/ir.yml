@@ -109,6 +109,7 @@ types:
   HeaderSecurityScheme:
     properties:
       headerName: string
+      prefix: optional<string>
 
   QuerySecurityScheme:
     properties:

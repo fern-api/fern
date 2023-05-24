@@ -2534,6 +2534,7 @@ Upload a document to be indexed and used for search.
       "securitySchemes": {
         "apiKeyAuth": {
           "headerName": "X_API_KEY",
+          "prefix": undefined,
           "type": "header",
         },
       },

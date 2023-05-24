@@ -1,6 +1,8 @@
 import { SecurityScheme } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIExtension } from "../extensions/extensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
+import { getExtension } from "../extensions/getExtension";
 import { isReferenceObject } from "../utils/isReferenceObject";
 
 export function convertSecurityScheme(
@@ -14,8 +16,10 @@ export function convertSecurityScheme(
 
 function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObject): SecurityScheme | undefined {
     if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
+        const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
         return SecurityScheme.header({
             headerName: securityScheme.name,
+            prefix: bearerFormat != null ? "Bearer" : undefined,
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
         return SecurityScheme.bearer();

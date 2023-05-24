@@ -5,7 +5,6 @@ import { useApiDefinitionContext } from "../../api-context/useApiDefinitionConte
 import { PageMargins } from "../../page-margins/PageMargins";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { doesSubpackageHaveEndpointsRecursive } from "./doesSubpackageHaveEndpointsRecursive";
 import { SubpackageTitle } from "./SubpackageTitlte";
 
 export declare namespace ApiSubpackage {
@@ -21,14 +20,6 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
     const subpackage = resolveSubpackageById(subpackageId);
 
     const { setTargetRef } = useApiPageCenterElement({ slug });
-
-    const hasEndpointsInTree = useMemo(
-        () => doesSubpackageHaveEndpointsRecursive(subpackageId, resolveSubpackageById),
-        [resolveSubpackageById, subpackageId]
-    );
-    if (!hasEndpointsInTree) {
-        return null;
-    }
 
     return (
         <>
