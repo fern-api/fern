@@ -1,0 +1,160 @@
+---
+title: "Using extensions"
+description: "Improve the quality of your generated SDKs by levearging fern's OpenAPI extensions."
+---
+
+Fern supports a wide-variety of OpenAPI extensions so that you can customize your SDK beyond the defaults.
+
+## SDK Method Names
+
+By default, Fern uses the `tag` and `operationId` fields to generate the SDK method. So an endpoint with a
+tag `users` and operationId `users_create` will generate an SDK that reads `client.users.create()`.
+
+If you would rather explicitly set the values you can leverage the extensions `x-fern-sdk-group-name` and
+`x-fern-sdk-method-name`.
+
+The following OpenAPI will generate a sdk that reads `client.users.create()`.
+
+```yaml openapi.yaml
+paths:
+  /users
+    post:
+      x-fern-sdk-group-name: users
+      x-fern-sdk-method-name: create
+```
+
+If you omit the `x-fern-sdk-group-name` extension, then the generated SDK method will live at the top of the client.
+For example, the following OpenAPI will generate an sdk that reads `client.create_user()`.
+
+```yaml openapi.yaml
+paths:
+  /users:
+    post:
+      x-fern-sdk-method-name: create_user
+```
+
+## Enum Descriptions
+
+OpenAPI doesn't natively support adding descriptions to enum values. To do this in Fern you can use the `x-fern-enum`
+extension.
+
+In the example below, we've added some descriptions to a couple of enum values. These descriptions will
+propagate into the generated SDK and docs website.
+
+```openapi.yml
+components:
+  schemas:
+    CardSuit:
+      enum:
+        - clubs
+        - diamonds
+        - hearts
+        - spades
+      x-fern-enum: # <------
+        clubs:
+          description: Some docs about clubs
+        spades:
+          description: Some docs about spades
+```
+
+There are occasions when the enum strings are not code-friendly
+(i.e. do not start with a letter & only contain alphanumeric characters and hyphens).
+If this is the case, [fern check](/compiler/cli-reference#`fern check`) will flag this. To fix, you can specify
+code friendly names in the `x-fern-enum` extension. See below:
+
+```openapi.yml
+components:
+  schemas:
+    CardSuit:
+      enum:
+        - "(lub5" # <----- This enum value is not code-friendly
+        - diamonds
+        - hearts
+        - Spades
+      x-fern-enum:
+        "(lub5":
+          name: Clubs # <------ Code-friendly name
+          description: Some docs about clubs
+        spades:
+          description: Some docs about spades
+```
+
+## Customizing Schema Names
+
+OpenAPI allows you to define inlined schemas that do not have names.
+
+```yaml openapi.yml
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        name:
+          type: string
+        cast:
+          type: array
+          items:
+            type: object # <---------- Inline Type
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              age:
+                type: integer
+```
+
+When Fern generates an SDK for this OpenAPI, we will automatically generate names for all the inlined types.
+Tye corresponding TypeScript code fro the OpenAPI above is something like:
+
+```typescript
+export interface Movie {
+    name?: string;
+    cast?: CastItem[]
+}
+
+export interface CastItem  { # <----- Auto-generated name
+    firstName?: string;
+    lastName?: string;
+    age?: integer;
+}
+```
+
+If you want to override the generated name, you can use the extension `x-fern-type-name`. For example,
+
+```yaml openapi.yml
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        name:
+          type: string
+        cast:
+          type: array
+          items:
+            type: object
+            x-fern-type-name: Person # <----------
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              age:
+                type: integer
+```
+
+would replace `CastItem` with `Person` and the generated code would read more idiomatically:
+
+```typescript
+export interface Movie {
+    name?: string;
+    cast?: Person[]
+}
+
+export interface Person  { # <----- Overridden name
+    firstName?: string;
+    lastName?: string;
+    age?: integer;
+}
+```

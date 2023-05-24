@@ -1,38 +1,35 @@
 import { VALID_NAME_REGEX } from "@fern-api/validator";
 import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { camelCase, upperFirst } from "lodash-es";
-import { FernEnumConfig } from "../../extensions/extensions";
+import { FernEnumConfig } from "../../extensions/getFernEnum";
 
 export function convertEnum({
     nameOverride,
     generatedName,
-    fernEnumConfig,
+    fernEnum,
     enumVarNames,
-    enumNames,
     enumValues,
     description,
     wrapAsNullable,
 }: {
     nameOverride: string | undefined;
     generatedName: string;
-    fernEnumConfig: FernEnumConfig | undefined;
+    fernEnum: FernEnumConfig | undefined;
     enumVarNames: string[] | undefined;
-    enumNames: Record<string, string> | undefined;
     enumValues: string[];
     description: string | undefined;
     wrapAsNullable: boolean;
 }): Schema {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const values = enumValues.map((value, index) => {
-        const fernEnumExtension = fernEnumConfig?.[value];
+        const fernEnumValue = fernEnum?.[value];
         const enumVarName = strippedEnumVarNames[index];
-        const fernEnumName = enumNames?.[value];
         const valueIsValidName = VALID_NAME_REGEX.test(value);
         return {
-            nameOverride: fernEnumExtension?.name ?? fernEnumName ?? enumVarName,
+            nameOverride: fernEnumValue?.name ?? enumVarName,
             generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
             value,
-            description: fernEnumExtension?.description,
+            description: fernEnumValue?.description,
         };
     });
     return wrapEnum({

@@ -2,7 +2,10 @@ import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/opena
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
-import { FernEnumConfig } from "../extensions/extensions";
+import { OpenAPIExtension } from "../extensions/extensions";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions";
+import { getExtension } from "../extensions/getExtension";
+import { getFernEnum } from "../extensions/getFernEnum";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
@@ -56,8 +59,7 @@ function convertSchemaObject(
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[]
 ): Schema {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const nameOverride = (schema as any)["x-fern-type-name"] as string | undefined;
+    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
 
@@ -80,12 +82,8 @@ function convertSchemaObject(
         return convertEnum({
             nameOverride,
             generatedName,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            fernEnumConfig: (schema as any)["x-fern-enum"] as FernEnumConfig | undefined,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            enumNames: (schema as any)["x-enum-names"] as Record<string, string> | undefined,
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            enumVarNames: (schema as any)["x-enum-varnames"] as string[] | undefined,
+            fernEnum: getFernEnum(schema),
+            enumVarNames: getExtension<string[]>(schema, [OpenAPIExtension.ENUM_VAR_NAMES]),
             enumValues: schema.enum,
             description,
             wrapAsNullable,
@@ -248,8 +246,7 @@ export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string
 }
 
 export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, breadcrumbs: string[]): ReferencedSchema {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const nameOverride = (schema as any)["x-fern-type-name"] as string | undefined;
+    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     return Schema.reference({
         // TODO(dsinghvi): references may contain files
