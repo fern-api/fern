@@ -132,9 +132,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             }
 
             return ts.factory.createAwaitExpression(
-                ts.factory.createCallExpression(referenceToFetcher, undefined, [
-                    ts.factory.createObjectLiteralExpression(properties, true),
-                ])
+                ts.factory.createCallExpression(
+                    referenceToFetcher,
+                    args.responseType === "blob" ? [ts.factory.createTypeReferenceNode("Blob")] : undefined,
+                    [ts.factory.createObjectLiteralExpression(properties, true)]
+                )
             );
         },
     };

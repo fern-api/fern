@@ -2,10 +2,7 @@ import { default as URLSearchParams } from "@ungap/url-search-params";
 import axios, { AxiosAdapter, AxiosError } from "axios";
 import { APIResponse } from "./APIResponse";
 
-export interface FetchFunction {
-    (args: Fetcher.Args & { responseType?: "json" }): Promise<APIResponse<unknown, Fetcher.Error>>;
-    (args: Fetcher.Args & { responseType: "blob" }): Promise<APIResponse<Blob, Fetcher.Error>>;
-}
+export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
 export declare namespace Fetcher {
     export interface Args {
@@ -46,9 +43,7 @@ export declare namespace Fetcher {
     }
 }
 
-function fetcherImpl(args: Fetcher.Args & { responseType?: "json" }): Promise<APIResponse<unknown, Fetcher.Error>>;
-function fetcherImpl(args: Fetcher.Args & { responseType: "blob" }): Promise<APIResponse<Blob, Fetcher.Error>>;
-async function fetcherImpl(args: Fetcher.Args): Promise<APIResponse<unknown, Fetcher.Error>> {
+async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     const headers: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
         headers["Content-Type"] = args.contentType;
@@ -84,7 +79,9 @@ async function fetcherImpl(args: Fetcher.Args): Promise<APIResponse<unknown, Fet
         });
 
         let body: unknown;
-        if (response.data != null && response.data.length > 0) {
+        if (args.responseType === "blob") {
+            body = response.data;
+        } else if (response.data != null && response.data.length > 0) {
             try {
                 body = JSON.parse(response.data) ?? undefined;
             } catch {
@@ -102,7 +99,7 @@ async function fetcherImpl(args: Fetcher.Args): Promise<APIResponse<unknown, Fet
         if (response.status >= 200 && response.status < 400) {
             return {
                 ok: true,
-                body,
+                body: body as R,
             };
         } else {
             return {
