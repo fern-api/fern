@@ -2567,7 +2567,7 @@ Note: This operation requires an identity challenge if the financial institution
             {
               "conflict": {
                 "accountFields": {
-                  "differentSchema": false,
+                  "differentSchema": true,
                 },
               },
               "key": "id",
@@ -2587,7 +2587,7 @@ Note: This operation requires an identity challenge if the financial institution
             {
               "conflict": {
                 "accountFields": {
-                  "differentSchema": false,
+                  "differentSchema": true,
                 },
               },
               "key": "label",
@@ -2606,7 +2606,7 @@ Note: This operation requires an identity challenge if the financial institution
             {
               "conflict": {
                 "accountFields": {
-                  "differentSchema": false,
+                  "differentSchema": true,
                 },
               },
               "key": "nickname",
@@ -2626,7 +2626,7 @@ Note: This operation requires an identity challenge if the financial institution
             {
               "conflict": {
                 "accountFields": {
-                  "differentSchema": false,
+                  "differentSchema": true,
                 },
               },
               "key": "maskedNumber",
@@ -2658,7 +2658,7 @@ Note: This operation requires an identity challenge if the financial institution
             {
               "conflict": {
                 "accountFields": {
-                  "differentSchema": false,
+                  "differentSchema": true,
                 },
               },
               "key": "product",
@@ -2678,7 +2678,7 @@ Note: This operation requires an identity challenge if the financial institution
             {
               "conflict": {
                 "accountFields": {
-                  "differentSchema": false,
+                  "differentSchema": true,
                 },
               },
               "key": "location",
@@ -2956,7 +2956,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             {
               "conflict": {
                 "abstractPagedBody": {
-                  "differentSchema": false,
+                  "differentSchema": true,
                 },
               },
               "key": "nextPage_url",
@@ -3842,7 +3842,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             {
               "conflict": {
                 "abstractPagedBody": {
-                  "differentSchema": false,
+                  "differentSchema": true,
                 },
               },
               "key": "nextPage_url",

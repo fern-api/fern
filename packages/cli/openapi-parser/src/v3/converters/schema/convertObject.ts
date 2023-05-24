@@ -64,7 +64,12 @@ export function convertObject({
 
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = allRequired.includes(propertyName);
-        const schema = convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]);
+        const schema = isRequired
+            ? convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName])
+            : Schema.optional({
+                  description: undefined,
+                  value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]),
+              });
 
         const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
         for (const parent of parents) {
@@ -78,12 +83,7 @@ export function convertObject({
 
         return {
             key: propertyName,
-            schema: isRequired
-                ? schema
-                : Schema.optional({
-                      description: undefined,
-                      value: schema,
-                  }),
+            schema,
             conflict: conflicts,
         };
     });
