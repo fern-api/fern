@@ -3,5 +3,5 @@ import "@fontsource/ibm-plex-mono";
 import "@fontsource/inter";
 
 export function useAreFernFontsReady(): boolean {
-    return useAreFontsReady(["Inter", "IBM Plex Mono"]);
+    return useAreFontsReady(["Inter", "IBM Plex Mono", "Berkeley Mono Trial"]);
 }
