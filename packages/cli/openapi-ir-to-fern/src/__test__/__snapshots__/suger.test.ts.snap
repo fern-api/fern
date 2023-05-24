@@ -75,10 +75,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Monthly",
               "value": "Monthly",
             },
             {
+              "docs": undefined,
               "name": "Annual",
               "value": "Annual",
             },
@@ -113,14 +115,17 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "CustomerSupport",
               "value": "CustomerSupport",
             },
             {
+              "docs": undefined,
               "name": "Engineering",
               "value": "Engineering",
             },
             {
+              "docs": undefined,
               "name": "ChannelManager",
               "value": "ChannelManager",
             },
@@ -203,18 +208,22 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Disabled",
               "value": "Disabled",
             },
             {
+              "docs": undefined,
               "name": "Enabled",
               "value": "Enabled",
             },
             {
+              "docs": undefined,
               "name": "StopSelling",
               "value": "StopSelling",
             },
             {
+              "docs": undefined,
               "name": "Terminated",
               "value": "Terminated",
             },
@@ -377,10 +386,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "cspCustomer",
               "value": "cspCustomer",
             },
             {
+              "docs": undefined,
               "name": "billingGroup",
               "value": "billingGroup",
             },
@@ -435,10 +446,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "percentage",
               "value": "percentage",
             },
             {
+              "docs": undefined,
               "name": "absolute",
               "value": "absolute",
             },
@@ -448,10 +461,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": "The type of the plan, FLAT_RATE or PER_USER.",
           "enum": [
             {
+              "docs": undefined,
               "name": "FLAT_RATE",
               "value": "FLAT_RATE",
             },
             {
+              "docs": undefined,
               "name": "PER_USER",
               "value": "PER_USER",
             },
@@ -461,10 +476,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "customerPromotion",
               "value": "customerPromotion",
             },
             {
+              "docs": undefined,
               "name": "cspPromotion",
               "value": "cspPromotion",
             },
@@ -487,18 +504,22 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "draft",
               "value": "draft",
             },
             {
+              "docs": undefined,
               "name": "live",
               "value": "live",
             },
             {
+              "docs": undefined,
               "name": "withdrawn",
               "value": "withdrawn",
             },
             {
+              "docs": undefined,
               "name": "deleted",
               "value": "deleted",
             },
@@ -508,10 +529,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "pendingAcceptance",
               "value": "pendingAcceptance",
             },
             {
+              "docs": undefined,
               "name": "accepted",
               "value": "accepted",
             },
@@ -534,18 +557,22 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "day",
               "value": "day",
             },
             {
+              "docs": undefined,
               "name": "week",
               "value": "week",
             },
             {
+              "docs": undefined,
               "name": "month",
               "value": "month",
             },
             {
+              "docs": undefined,
               "name": "year",
               "value": "year",
             },
@@ -580,54 +607,67 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "businessValidationError",
               "value": "businessValidationError",
             },
             {
+              "docs": undefined,
               "name": "collectionLimitExceeded",
               "value": "collectionLimitExceeded",
             },
             {
+              "docs": undefined,
               "name": "invalidId",
               "value": "invalidId",
             },
             {
+              "docs": undefined,
               "name": "invalidEntityStatus",
               "value": "invalidEntityStatus",
             },
             {
+              "docs": undefined,
               "name": "invalidRequest",
               "value": "invalidRequest",
             },
             {
+              "docs": undefined,
               "name": "invalidResource",
               "value": "invalidResource",
             },
             {
+              "docs": undefined,
               "name": "invalidState",
               "value": "invalidState",
             },
             {
+              "docs": undefined,
               "name": "notDeployed",
               "value": "notDeployed",
             },
             {
+              "docs": undefined,
               "name": "notSupported",
               "value": "notSupported",
             },
             {
+              "docs": undefined,
               "name": "operationCanceled",
               "value": "operationCanceled",
             },
             {
+              "docs": undefined,
               "name": "productLocked",
               "value": "productLocked",
             },
             {
+              "docs": undefined,
               "name": "resourceNotFound",
               "value": "resourceNotFound",
             },
             {
+              "docs": undefined,
               "name": "schemaValidationError",
               "value": "schemaValidationError",
             },
@@ -637,10 +677,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "informational",
               "value": "informational",
             },
             {
+              "docs": undefined,
               "name": "warning",
               "value": "warning",
             },
@@ -693,10 +735,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": "default "usd"",
           "enum": [
             {
+              "docs": undefined,
               "name": "perMarket",
               "value": "perMarket",
             },
             {
+              "docs": undefined,
               "name": "usd",
               "value": "usd",
             },
@@ -786,10 +830,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": "default "usd"",
           "enum": [
             {
+              "docs": undefined,
               "name": "perMarket",
               "value": "perMarket",
             },
             {
+              "docs": undefined,
               "name": "usd",
               "value": "usd",
             },
@@ -812,10 +858,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Month",
               "value": "Month",
             },
             {
+              "docs": undefined,
               "name": "Year",
               "value": "Year",
             },
@@ -846,14 +894,17 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Flat",
               "value": "Flat",
             },
             {
+              "docs": undefined,
               "name": "Recurring",
               "value": "Recurring",
             },
             {
+              "docs": undefined,
               "name": "Usage",
               "value": "Usage",
             },
@@ -888,10 +939,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "sharedcore",
               "value": "sharedcore",
             },
             {
+              "docs": undefined,
               "name": "transactions",
               "value": "transactions",
             },
@@ -1073,10 +1126,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Public",
               "value": "Public",
             },
             {
+              "docs": undefined,
               "name": "Private",
               "value": "Private",
             },
@@ -1200,14 +1255,17 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ListingAsset",
               "value": "ListingAsset",
             },
             {
+              "docs": undefined,
               "name": "ListingImage",
               "value": "ListingImage",
             },
             {
+              "docs": undefined,
               "name": "ListingVideo",
               "value": "ListingVideo",
             },
@@ -1217,22 +1275,27 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "PendingUpload",
               "value": "PendingUpload",
             },
             {
+              "docs": undefined,
               "name": "Uploaded",
               "value": "Uploaded",
             },
             {
+              "docs": undefined,
               "name": "InProcessing",
               "value": "InProcessing",
             },
             {
+              "docs": undefined,
               "name": "Processed",
               "value": "Processed",
             },
             {
+              "docs": undefined,
               "name": "ProcessFailed",
               "value": "ProcessFailed",
             },
@@ -1242,6 +1305,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AzureListing",
               "value": "AzureListing",
             },
@@ -1280,6 +1344,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AzureSoftwareAsAServicePackageConfiguration",
               "value": "AzureSoftwareAsAServicePackageConfiguration",
             },
@@ -1399,14 +1464,17 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "free",
               "value": "free",
             },
             {
+              "docs": undefined,
               "name": "FreeTrial",
               "value": "free-trial",
             },
             {
+              "docs": undefined,
               "name": "ContactMe",
               "value": "contact-me",
             },
@@ -1416,6 +1484,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AzureProductSetup",
               "value": "AzureProductSetup",
             },
@@ -1425,10 +1494,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ListingOnly",
               "value": "ListingOnly",
             },
             {
+              "docs": undefined,
               "name": "ListAndSell",
               "value": "ListAndSell",
             },
@@ -1491,6 +1562,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Submission",
               "value": "Submission",
             },
@@ -1500,10 +1572,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Inprogress",
               "value": "Inprogress",
             },
             {
+              "docs": undefined,
               "name": "Published",
               "value": "Published",
             },
@@ -1513,34 +1587,42 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "InDraft",
               "value": "InDraft",
             },
             {
+              "docs": undefined,
               "name": "Submitted",
               "value": "Submitted",
             },
             {
+              "docs": undefined,
               "name": "Failed",
               "value": "Failed",
             },
             {
+              "docs": undefined,
               "name": "FailedInCertification",
               "value": "FailedInCertification",
             },
             {
+              "docs": undefined,
               "name": "ReadyToPublish",
               "value": "ReadyToPublish",
             },
             {
+              "docs": undefined,
               "name": "Publishing",
               "value": "Publishing",
             },
             {
+              "docs": undefined,
               "name": "Published",
               "value": "Published",
             },
             {
+              "docs": undefined,
               "name": "InStore",
               "value": "InStore",
             },
@@ -1661,10 +1743,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AzureSkuVariant",
               "value": "AzureSkuVariant",
             },
             {
+              "docs": undefined,
               "name": "AzureTestDriveVariant",
               "value": "AzureTestDriveVariant",
             },
@@ -1674,10 +1758,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "InActive",
               "value": "InActive",
             },
             {
+              "docs": undefined,
               "name": "Active",
               "value": "Active",
             },
@@ -1708,14 +1794,17 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Minute",
               "value": "Minute",
             },
             {
+              "docs": undefined,
               "name": "Days",
               "value": "Days",
             },
             {
+              "docs": undefined,
               "name": "Months",
               "value": "Months",
             },
@@ -1725,18 +1814,22 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "NoTrial",
               "value": "NoTrial",
             },
             {
+              "docs": undefined,
               "name": "TimedAccess",
               "value": "TimedAccess",
             },
             {
+              "docs": undefined,
               "name": "TimedUsage",
               "value": "TimedUsage",
             },
             {
+              "docs": undefined,
               "name": "Unlimited",
               "value": "Unlimited",
             },
@@ -1785,14 +1878,17 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -1802,10 +1898,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
             {
+              "docs": undefined,
               "name": "CRM",
               "value": "CRM",
             },
@@ -1815,14 +1913,17 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -1832,10 +1933,12 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
             {
+              "docs": undefined,
               "name": "CRM",
               "value": "CRM",
             },
@@ -1989,38 +2092,47 @@ This member is required.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Accepted",
               "value": "Accepted",
             },
             {
+              "docs": undefined,
               "name": "Expired",
               "value": "Expired",
             },
             {
+              "docs": undefined,
               "name": "Duplicate",
               "value": "Duplicate",
             },
             {
+              "docs": undefined,
               "name": "Error",
               "value": "Error",
             },
             {
+              "docs": undefined,
               "name": "ResourceNotFound",
               "value": "ResourceNotFound",
             },
             {
+              "docs": undefined,
               "name": "ResourceNotAuthorized",
               "value": "ResourceNotAuthorized",
             },
             {
+              "docs": undefined,
               "name": "InvalidDimension",
               "value": "InvalidDimension",
             },
             {
+              "docs": undefined,
               "name": "InvalidQuantity",
               "value": "InvalidQuantity",
             },
             {
+              "docs": undefined,
               "name": "BadArgument",
               "value": "BadArgument",
             },
@@ -2333,14 +2445,17 @@ This member is required.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -2350,14 +2465,17 @@ This member is required.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -2367,14 +2485,17 @@ This member is required.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -2384,14 +2505,17 @@ This member is required.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -2401,14 +2525,17 @@ This member is required.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -2873,14 +3000,17 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "UNKNOWN",
               "value": "UNKNOWN",
             },
             {
+              "docs": undefined,
               "name": "CONFIRMED",
               "value": "CONFIRMED",
             },
             {
+              "docs": undefined,
               "name": "PENDING_CONFIRMATION",
               "value": "PENDING_CONFIRMATION",
             },
@@ -3083,14 +3213,17 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Read",
               "value": "Read",
             },
             {
+              "docs": undefined,
               "name": "Update",
               "value": "Update",
             },
             {
+              "docs": undefined,
               "name": "Delete",
               "value": "Delete",
             },
@@ -3100,10 +3233,12 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "None",
               "value": "None",
             },
             {
+              "docs": undefined,
               "name": "Csp",
               "value": "Csp",
             },
@@ -3113,10 +3248,12 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "None",
               "value": "None",
             },
             {
+              "docs": undefined,
               "name": "DryRun",
               "value": "DryRun",
             },
@@ -3126,22 +3263,27 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "NotStarted",
               "value": "NotStarted",
             },
             {
+              "docs": undefined,
               "name": "PendingFulfillmentStart",
               "value": "PendingFulfillmentStart",
             },
             {
+              "docs": undefined,
               "name": "Subscribed",
               "value": "Subscribed",
             },
             {
+              "docs": undefined,
               "name": "Suspended",
               "value": "Suspended",
             },
             {
+              "docs": undefined,
               "name": "Unsubscribed",
               "value": "Unsubscribed",
             },
@@ -3258,14 +3400,17 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "DAY",
               "value": "DAY",
             },
             {
+              "docs": undefined,
               "name": "MONTH",
               "value": "MONTH",
             },
             {
+              "docs": undefined,
               "name": "YEAR",
               "value": "YEAR",
             },
@@ -3275,10 +3420,12 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "FLAT_RATE",
               "value": "FLAT_RATE",
             },
             {
+              "docs": undefined,
               "name": "PER_USER",
               "value": "PER_USER",
             },
@@ -3342,14 +3489,17 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -3359,6 +3509,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
@@ -3454,26 +3605,32 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Unknown",
               "value": "",
             },
             {
+              "docs": undefined,
               "name": "AutoRenew",
               "value": "AutoRenew",
             },
             {
+              "docs": undefined,
               "name": "ManualRenew",
               "value": "ManualRenew",
             },
             {
+              "docs": undefined,
               "name": "PlanChange",
               "value": "PlanChange",
             },
             {
+              "docs": undefined,
               "name": "QuantityChange",
               "value": "QuantityChange",
             },
             {
+              "docs": undefined,
               "name": "Signup",
               "value": "Signup",
             },
@@ -3504,26 +3661,32 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ORGANIZATION",
               "value": "ORGANIZATION",
             },
             {
+              "docs": undefined,
               "name": "PRODUCT",
               "value": "PRODUCT",
             },
             {
+              "docs": undefined,
               "name": "OFFER",
               "value": "OFFER",
             },
             {
+              "docs": undefined,
               "name": "ENTITLEMENT",
               "value": "ENTITLEMENT",
             },
             {
+              "docs": undefined,
               "name": "ENTITLEMENT_TERM",
               "value": "ENTITLEMENT_TERM",
             },
             {
+              "docs": undefined,
               "name": "INTEGRATION",
               "value": "INTEGRATION",
             },
@@ -3533,26 +3696,32 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "UNKNOWN",
               "value": "",
             },
             {
+              "docs": undefined,
               "name": "SCMP",
               "value": "SCMP",
             },
             {
+              "docs": undefined,
               "name": "ECMP",
               "value": "ECMP",
             },
             {
+              "docs": undefined,
               "name": "CUSTOM",
               "value": "CUSTOM",
             },
             {
+              "docs": undefined,
               "name": "ISV",
               "value": "ISV",
             },
             {
+              "docs": undefined,
               "name": "CURRENT",
               "value": "CURRENT",
             },
@@ -3600,6 +3769,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "BillingIntegratedManagedService",
               "value": "BillingIntegratedManagedService",
             },
@@ -3696,18 +3866,22 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "FREE",
               "value": "FREE",
             },
             {
+              "docs": undefined,
               "name": "SUBSCRIPTION",
               "value": "SUBSCRIPTION",
             },
             {
+              "docs": undefined,
               "name": "USAGE",
               "value": "USAGE",
             },
             {
+              "docs": undefined,
               "name": "SUBSCRIPTION_PLUS_USAGE",
               "value": "SUBSCRIPTION_PLUS_USAGE",
             },
@@ -3734,6 +3908,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ONE_YEAR",
               "value": "ONE_YEAR",
             },
@@ -3743,6 +3918,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "TAX_CATEGORY_UNSPECIFIED",
               "value": "TAX_CATEGORY_UNSPECIFIED",
             },
@@ -3790,6 +3966,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "TAX_CATEGORY_UNSPECIFIED",
               "value": "TAX_CATEGORY_UNSPECIFIED",
             },
@@ -4088,34 +4265,42 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "STATE_UNSPECIFIED",
               "value": "ENTITLEMENT_STATE_UNSPECIFIED",
             },
             {
+              "docs": undefined,
               "name": "ACTIVATION_REQUESTED",
               "value": "ENTITLEMENT_ACTIVATION_REQUESTED",
             },
             {
+              "docs": undefined,
               "name": "ACTIVE",
               "value": "ENTITLEMENT_ACTIVE",
             },
             {
+              "docs": undefined,
               "name": "PENDING_CANCELLATION",
               "value": "ENTITLEMENT_PENDING_CANCELLATION",
             },
             {
+              "docs": undefined,
               "name": "CANCELLED",
               "value": "ENTITLEMENT_CANCELLED",
             },
             {
+              "docs": undefined,
               "name": "PENDING_PLAN_CHANGE",
               "value": "ENTITLEMENT_PENDING_PLAN_CHANGE",
             },
             {
+              "docs": undefined,
               "name": "PENDING_PLAN_CHANGE_APPROVAL",
               "value": "ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL",
             },
             {
+              "docs": undefined,
               "name": "SUSPENDED",
               "value": "ENTITLEMENT_SUSPENDED",
             },
@@ -4187,18 +4372,22 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "STATE_UNSPECIFIED",
               "value": "STATE_UNSPECIFIED",
             },
             {
+              "docs": undefined,
               "name": "PENDING",
               "value": "PENDING",
             },
             {
+              "docs": undefined,
               "name": "APPROVED",
               "value": "APPROVED",
             },
             {
+              "docs": undefined,
               "name": "REJECTED",
               "value": "REJECTED",
             },
@@ -4208,10 +4397,12 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "UNSPECIFIED",
               "value": "ACCOUNT_STATE_UNSPECIFIED",
             },
             {
+              "docs": undefined,
               "name": "ACTIVE",
               "value": "ACCOUNT_ACTIVE",
             },
@@ -4254,6 +4445,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MarketplacesGoogleCloud",
               "value": "marketplaces/google-cloud",
             },
@@ -4284,6 +4476,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "PURCHASE_MODE_PUBLIC",
               "value": "PURCHASE_MODE_PUBLIC",
             },
@@ -4306,14 +4499,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": "Required.",
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -4323,6 +4519,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": "Required.",
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
@@ -4411,14 +4608,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -4469,14 +4669,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -4486,6 +4689,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
@@ -4495,14 +4699,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "CREATED",
               "value": "CREATED",
             },
             {
+              "docs": undefined,
               "name": "VERIFIED",
               "value": "VERIFIED",
             },
             {
+              "docs": undefined,
               "name": "NOT_VERIFIED",
               "value": "NOT_VERIFIED",
             },
@@ -4839,46 +5046,57 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ACCEPT",
               "value": "ACCEPT",
             },
             {
+              "docs": undefined,
               "name": "CREATE",
               "value": "CREATE",
             },
             {
+              "docs": undefined,
               "name": "DELETE",
               "value": "DELETE",
             },
             {
+              "docs": undefined,
               "name": "CANCEL",
               "value": "CANCEL",
             },
             {
+              "docs": undefined,
               "name": "PENDING_CANCEL",
               "value": "PENDING_CANCEL",
             },
             {
+              "docs": undefined,
               "name": "EXPIRE",
               "value": "EXPIRE",
             },
             {
+              "docs": undefined,
               "name": "REINSTATE",
               "value": "REINSTATE",
             },
             {
+              "docs": undefined,
               "name": "SUSPEND",
               "value": "SUSPEND",
             },
             {
+              "docs": undefined,
               "name": "UPDATE",
               "value": "UPDATE",
             },
             {
+              "docs": undefined,
               "name": "NOTIFY_CONTACTS",
               "value": "NOTIFY_CONTACTS",
             },
             {
+              "docs": undefined,
               "name": "TEST",
               "value": "TEST",
             },
@@ -4888,22 +5106,27 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "UNKNOWN",
               "value": "",
             },
             {
+              "docs": undefined,
               "name": "SCHEDULED",
               "value": "SCHEDULED",
             },
             {
+              "docs": undefined,
               "name": "PENDING",
               "value": "PENDING",
             },
             {
+              "docs": undefined,
               "name": "DONE",
               "value": "DONE",
             },
             {
+              "docs": undefined,
               "name": "FAILED",
               "value": "FAILED",
             },
@@ -4990,10 +5213,12 @@ This field is present only if the product has usage-based billing configured.",
           "docs": "The default visibility of offer is PRIVATE.",
           "enum": [
             {
+              "docs": undefined,
               "name": "PRIVATE",
               "value": "PRIVATE",
             },
             {
+              "docs": undefined,
               "name": "PUBLIC",
               "value": "PUBLIC",
             },
@@ -5061,6 +5286,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "OperationType_TemporalWorkflow",
               "value": "TemporalWorkflow",
             },
@@ -5296,14 +5522,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "InvoicedAmount",
               "value": "InvoicedAmount",
             },
             {
+              "docs": undefined,
               "name": "CollectableAmount",
               "value": "CollectableAmount",
             },
             {
+              "docs": undefined,
               "name": "DisbursedAmount",
               "value": "DisbursedAmount",
             },
@@ -5433,14 +5662,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -5450,6 +5682,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
@@ -5497,30 +5730,37 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "UNSPECIFIED",
               "value": "VALUE_TYPE_UNSPECIFIED",
             },
             {
+              "docs": undefined,
               "name": "BOOL",
               "value": "BOOL",
             },
             {
+              "docs": undefined,
               "name": "INT64",
               "value": "INT64",
             },
             {
+              "docs": undefined,
               "name": "DOUBLE",
               "value": "DOUBLE",
             },
             {
+              "docs": undefined,
               "name": "STRING",
               "value": "STRING",
             },
             {
+              "docs": undefined,
               "name": "DISTRIBUTION",
               "value": "DISTRIBUTION",
             },
             {
+              "docs": undefined,
               "name": "MONEY",
               "value": "MONEY",
             },
@@ -5611,14 +5851,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -5628,6 +5871,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
@@ -5637,22 +5881,27 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ACTIVE",
               "value": "ACTIVE",
             },
             {
+              "docs": undefined,
               "name": "CANCELLED",
               "value": "CANCELLED",
             },
             {
+              "docs": undefined,
               "name": "SUSPENDED",
               "value": "SUSPENDED",
             },
             {
+              "docs": undefined,
               "name": "PENDING_START",
               "value": "PENDING_START",
             },
             {
+              "docs": undefined,
               "name": "UNKNOWN",
               "value": "UNKNOWN",
             },
@@ -5735,14 +5984,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -5752,6 +6004,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
@@ -5834,34 +6087,42 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "DEFAULT",
               "value": "DEFAULT",
             },
             {
+              "docs": undefined,
               "name": "CONTRACT",
               "value": "CONTRACT",
             },
             {
+              "docs": undefined,
               "name": "SUBSCRIPTION",
               "value": "SUBSCRIPTION",
             },
             {
+              "docs": undefined,
               "name": "FREE_TRIAL",
               "value": "FREE_TRIAL",
             },
             {
+              "docs": undefined,
               "name": "FLAT_RATE",
               "value": "FLAT_RATE",
             },
             {
+              "docs": undefined,
               "name": "PER_USER",
               "value": "PER_USER",
             },
             {
+              "docs": undefined,
               "name": "PRIVATE",
               "value": "PRIVATE",
             },
             {
+              "docs": undefined,
               "name": "UNKNOWN",
               "value": "UNKNOWN",
             },
@@ -5871,14 +6132,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -5888,6 +6152,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
@@ -5897,42 +6162,52 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ACCEPTED",
               "value": "ACCEPTED",
             },
             {
+              "docs": undefined,
               "name": "PENDING_CREATE",
               "value": "PENDING_CREATE",
             },
             {
+              "docs": undefined,
               "name": "CREATE_FAILED",
               "value": "CREATE_FAILED",
             },
             {
+              "docs": undefined,
               "name": "CREATE_SUCCESS",
               "value": "CREATE_SUCCESS",
             },
             {
+              "docs": undefined,
               "name": "DRAFT",
               "value": "DRAFT",
             },
             {
+              "docs": undefined,
               "name": "EXPIRED",
               "value": "EXPIRED",
             },
             {
+              "docs": undefined,
               "name": "PENDING_ACCEPTANCE",
               "value": "PENDING_ACCEPTANCE",
             },
             {
+              "docs": undefined,
               "name": "PENDING_CANCEL",
               "value": "PENDING_CANCEL",
             },
             {
+              "docs": undefined,
               "name": "CANCEL_FAILED",
               "value": "CANCEL_FAILED",
             },
             {
+              "docs": undefined,
               "name": "CANCEL_SUCCESS",
               "value": "CANCEL_SUCCESS",
             },
@@ -6003,14 +6278,17 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -6020,26 +6298,32 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "UNKNOWN",
               "value": "UNKNOWN",
             },
             {
+              "docs": undefined,
               "name": "SUBSCRIPTION",
               "value": "SUBSCRIPTION",
             },
             {
+              "docs": undefined,
               "name": "CONTRACT",
               "value": "CONTRACT",
             },
             {
+              "docs": undefined,
               "name": "FLAT_RATE",
               "value": "FLAT_RATE",
             },
             {
+              "docs": undefined,
               "name": "PER_USER",
               "value": "PER_USER",
             },
             {
+              "docs": undefined,
               "name": "USAGE_BASED",
               "value": "USAGE_BASED",
             },
@@ -6049,6 +6333,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
@@ -6273,14 +6558,17 @@ the same customer, dimension, and time, but a different quantity.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Success",
               "value": "Success",
             },
             {
+              "docs": undefined,
               "name": "CustomerNotSubscribed",
               "value": "CustomerNotSubscribed",
             },
             {
+              "docs": undefined,
               "name": "DuplicateRecord",
               "value": "DuplicateRecord",
             },
@@ -6290,14 +6578,17 @@ the same customer, dimension, and time, but a different quantity.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -6307,10 +6598,12 @@ the same customer, dimension, and time, but a different quantity.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
             {
+              "docs": undefined,
               "name": "CRM",
               "value": "CRM",
             },
@@ -6320,14 +6613,17 @@ the same customer, dimension, and time, but a different quantity.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWS",
               "value": "AWS",
             },
             {
+              "docs": undefined,
               "name": "AZURE",
               "value": "AZURE",
             },
             {
+              "docs": undefined,
               "name": "GCP",
               "value": "GCP",
             },
@@ -6337,10 +6633,12 @@ the same customer, dimension, and time, but a different quantity.",
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "MARKETPLACE",
               "value": "MARKETPLACE",
             },
             {
+              "docs": undefined,
               "name": "CRM",
               "value": "CRM",
             },

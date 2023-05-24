@@ -219,14 +219,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "LENGTH",
               "value": "LENGTH",
             },
             {
+              "docs": undefined,
               "name": "STOP",
               "value": "STOP",
             },
             {
+              "docs": undefined,
               "name": "UNKNOWN",
               "value": "UNKNOWN",
             },
@@ -307,22 +310,27 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "AWAITING_PROCESSING",
               "value": "AWAITING_PROCESSING",
             },
             {
+              "docs": undefined,
               "name": "QUEUED",
               "value": "QUEUED",
             },
             {
+              "docs": undefined,
               "name": "INDEXING",
               "value": "INDEXING",
             },
             {
+              "docs": undefined,
               "name": "INDEXED",
               "value": "INDEXED",
             },
             {
+              "docs": undefined,
               "name": "FAILED",
               "value": "FAILED",
             },
@@ -332,10 +340,12 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ALL",
               "value": "ALL",
             },
             {
+              "docs": undefined,
               "name": "NONE",
               "value": "NONE",
             },
@@ -345,10 +355,12 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "GENERATE",
               "value": "GENERATE",
             },
             {
+              "docs": undefined,
               "name": "CLASSIFY",
               "value": "CLASSIFY",
             },
@@ -530,18 +542,22 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "QUEUED",
               "value": "QUEUED",
             },
             {
+              "docs": undefined,
               "name": "PROCESSING",
               "value": "PROCESSING",
             },
             {
+              "docs": undefined,
               "name": "PROCESSED",
               "value": "PROCESSED",
             },
             {
+              "docs": undefined,
               "name": "FAILED",
               "value": "FAILED",
             },
@@ -551,14 +567,17 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "OPENAI",
               "value": "OPENAI",
             },
             {
+              "docs": undefined,
               "name": "COHERE",
               "value": "COHERE",
             },
             {
+              "docs": undefined,
               "name": "ANTHROPIC",
               "value": "ANTHROPIC",
             },
@@ -696,6 +715,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "ACTIVE",
               "value": "ACTIVE",
             },

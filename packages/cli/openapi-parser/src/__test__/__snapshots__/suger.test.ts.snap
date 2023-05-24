@@ -1184,16 +1184,19 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -1212,11 +1215,13 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "MARKETPLACE",
                     "nameOverride": undefined,
                     "value": "MARKETPLACE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "CRM",
                     "nameOverride": undefined,
                     "value": "CRM",
@@ -1284,16 +1289,19 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -1312,11 +1320,13 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "MARKETPLACE",
                     "nameOverride": undefined,
                     "value": "MARKETPLACE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "CRM",
                     "nameOverride": undefined,
                     "value": "CRM",
@@ -1394,16 +1404,19 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -1422,11 +1435,13 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "MARKETPLACE",
                     "nameOverride": undefined,
                     "value": "MARKETPLACE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "CRM",
                     "nameOverride": undefined,
                     "value": "CRM",
@@ -1492,16 +1507,19 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -1520,11 +1538,13 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "MARKETPLACE",
                     "nameOverride": undefined,
                     "value": "MARKETPLACE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "CRM",
                     "nameOverride": undefined,
                     "value": "CRM",
@@ -2058,16 +2078,19 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -2150,16 +2173,19 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -2230,16 +2256,19 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -2311,16 +2340,19 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -2494,16 +2526,19 @@ exports[`open api parser suger parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -4188,11 +4223,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "Monthly",
                       "nameOverride": undefined,
                       "value": "Monthly",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Annual",
                       "nameOverride": undefined,
                       "value": "Annual",
@@ -4268,16 +4305,19 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "CustomerSupport",
                       "nameOverride": undefined,
                       "value": "CustomerSupport",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Engineering",
                       "nameOverride": undefined,
                       "value": "Engineering",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "ChannelManager",
                       "nameOverride": undefined,
                       "value": "ChannelManager",
@@ -4526,21 +4566,25 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "Disabled",
                       "nameOverride": undefined,
                       "value": "Disabled",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Enabled",
                       "nameOverride": undefined,
                       "value": "Enabled",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "StopSelling",
                       "nameOverride": undefined,
                       "value": "StopSelling",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Terminated",
                       "nameOverride": undefined,
                       "value": "Terminated",
@@ -4839,11 +4883,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "customerPromotion",
                       "nameOverride": undefined,
                       "value": "customerPromotion",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "cspPromotion",
                       "nameOverride": undefined,
                       "value": "cspPromotion",
@@ -4895,21 +4941,25 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "draft",
                       "nameOverride": undefined,
                       "value": "draft",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "live",
                       "nameOverride": undefined,
                       "value": "live",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "withdrawn",
                       "nameOverride": undefined,
                       "value": "withdrawn",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "deleted",
                       "nameOverride": undefined,
                       "value": "deleted",
@@ -4931,11 +4981,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "pendingAcceptance",
                       "nameOverride": undefined,
                       "value": "pendingAcceptance",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "accepted",
                       "nameOverride": undefined,
                       "value": "accepted",
@@ -5145,11 +5197,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "cspCustomer",
                       "nameOverride": undefined,
                       "value": "cspCustomer",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "billingGroup",
                       "nameOverride": undefined,
                       "value": "billingGroup",
@@ -5195,11 +5249,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "percentage",
                       "nameOverride": undefined,
                       "value": "percentage",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "absolute",
                       "nameOverride": undefined,
                       "value": "absolute",
@@ -5267,11 +5323,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "FLAT_RATE",
                       "nameOverride": undefined,
                       "value": "FLAT_RATE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "PER_USER",
                       "nameOverride": undefined,
                       "value": "PER_USER",
@@ -5402,21 +5460,25 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "day",
                       "nameOverride": undefined,
                       "value": "day",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "week",
                       "nameOverride": undefined,
                       "value": "week",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "month",
                       "nameOverride": undefined,
                       "value": "month",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "year",
                       "nameOverride": undefined,
                       "value": "year",
@@ -5477,66 +5539,79 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "businessValidationError",
                       "nameOverride": undefined,
                       "value": "businessValidationError",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "collectionLimitExceeded",
                       "nameOverride": undefined,
                       "value": "collectionLimitExceeded",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "invalidId",
                       "nameOverride": undefined,
                       "value": "invalidId",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "invalidEntityStatus",
                       "nameOverride": undefined,
                       "value": "invalidEntityStatus",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "invalidRequest",
                       "nameOverride": undefined,
                       "value": "invalidRequest",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "invalidResource",
                       "nameOverride": undefined,
                       "value": "invalidResource",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "invalidState",
                       "nameOverride": undefined,
                       "value": "invalidState",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "notDeployed",
                       "nameOverride": undefined,
                       "value": "notDeployed",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "notSupported",
                       "nameOverride": undefined,
                       "value": "notSupported",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "operationCanceled",
                       "nameOverride": undefined,
                       "value": "operationCanceled",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "productLocked",
                       "nameOverride": undefined,
                       "value": "productLocked",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "resourceNotFound",
                       "nameOverride": undefined,
                       "value": "resourceNotFound",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "schemaValidationError",
                       "nameOverride": undefined,
                       "value": "schemaValidationError",
@@ -5558,11 +5633,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "informational",
                       "nameOverride": undefined,
                       "value": "informational",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "warning",
                       "nameOverride": undefined,
                       "value": "warning",
@@ -5727,11 +5804,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "perMarket",
                       "nameOverride": undefined,
                       "value": "perMarket",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "usd",
                       "nameOverride": undefined,
                       "value": "usd",
@@ -5923,11 +6002,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "perMarket",
                       "nameOverride": undefined,
                       "value": "perMarket",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "usd",
                       "nameOverride": undefined,
                       "value": "usd",
@@ -6054,11 +6135,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "Month",
                       "nameOverride": undefined,
                       "value": "Month",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Year",
                       "nameOverride": undefined,
                       "value": "Year",
@@ -6120,16 +6203,19 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "Flat",
                       "nameOverride": undefined,
                       "value": "Flat",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Recurring",
                       "nameOverride": undefined,
                       "value": "Recurring",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Usage",
                       "nameOverride": undefined,
                       "value": "Usage",
@@ -6226,11 +6312,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "sharedcore",
                       "nameOverride": undefined,
                       "value": "sharedcore",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "transactions",
                       "nameOverride": undefined,
                       "value": "transactions",
@@ -6960,11 +7048,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "Public",
                       "nameOverride": undefined,
                       "value": "Public",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Private",
                       "nameOverride": undefined,
                       "value": "Private",
@@ -7198,6 +7288,7 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AzureListing",
                       "nameOverride": undefined,
                       "value": "AzureListing",
@@ -7378,16 +7469,19 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "ListingAsset",
                       "nameOverride": undefined,
                       "value": "ListingAsset",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "ListingImage",
                       "nameOverride": undefined,
                       "value": "ListingImage",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "ListingVideo",
                       "nameOverride": undefined,
                       "value": "ListingVideo",
@@ -7409,26 +7503,31 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "PendingUpload",
                       "nameOverride": undefined,
                       "value": "PendingUpload",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Uploaded",
                       "nameOverride": undefined,
                       "value": "Uploaded",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "InProcessing",
                       "nameOverride": undefined,
                       "value": "InProcessing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Processed",
                       "nameOverride": undefined,
                       "value": "Processed",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "ProcessFailed",
                       "nameOverride": undefined,
                       "value": "ProcessFailed",
@@ -7549,6 +7648,7 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AzureSoftwareAsAServicePackageConfiguration",
                       "nameOverride": undefined,
                       "value": "AzureSoftwareAsAServicePackageConfiguration",
@@ -7896,16 +7996,19 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "free",
                       "nameOverride": undefined,
                       "value": "free",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "FreeTrial",
                       "nameOverride": undefined,
                       "value": "free-trial",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "ContactMe",
                       "nameOverride": undefined,
                       "value": "contact-me",
@@ -7962,6 +8065,7 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AzureProductSetup",
                       "nameOverride": undefined,
                       "value": "AzureProductSetup",
@@ -7983,11 +8087,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "ListingOnly",
                       "nameOverride": undefined,
                       "value": "ListingOnly",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "ListAndSell",
                       "nameOverride": undefined,
                       "value": "ListAndSell",
@@ -8139,6 +8245,7 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "Submission",
                       "nameOverride": undefined,
                       "value": "Submission",
@@ -8180,11 +8287,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "Inprogress",
                       "nameOverride": undefined,
                       "value": "Inprogress",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Published",
                       "nameOverride": undefined,
                       "value": "Published",
@@ -8206,41 +8315,49 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "InDraft",
                       "nameOverride": undefined,
                       "value": "InDraft",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Submitted",
                       "nameOverride": undefined,
                       "value": "Submitted",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Failed",
                       "nameOverride": undefined,
                       "value": "Failed",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "FailedInCertification",
                       "nameOverride": undefined,
                       "value": "FailedInCertification",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "ReadyToPublish",
                       "nameOverride": undefined,
                       "value": "ReadyToPublish",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Publishing",
                       "nameOverride": undefined,
                       "value": "Publishing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Published",
                       "nameOverride": undefined,
                       "value": "Published",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "InStore",
                       "nameOverride": undefined,
                       "value": "InStore",
@@ -8480,11 +8597,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AzureSkuVariant",
                       "nameOverride": undefined,
                       "value": "AzureSkuVariant",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "AzureTestDriveVariant",
                       "nameOverride": undefined,
                       "value": "AzureTestDriveVariant",
@@ -8506,11 +8625,13 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "InActive",
                       "nameOverride": undefined,
                       "value": "InActive",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Active",
                       "nameOverride": undefined,
                       "value": "Active",
@@ -8785,16 +8906,19 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "Minute",
                       "nameOverride": undefined,
                       "value": "Minute",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Days",
                       "nameOverride": undefined,
                       "value": "Days",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Months",
                       "nameOverride": undefined,
                       "value": "Months",
@@ -8816,21 +8940,25 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "NoTrial",
                       "nameOverride": undefined,
                       "value": "NoTrial",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "TimedAccess",
                       "nameOverride": undefined,
                       "value": "TimedAccess",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "TimedUsage",
                       "nameOverride": undefined,
                       "value": "TimedUsage",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Unlimited",
                       "nameOverride": undefined,
                       "value": "Unlimited",
@@ -9450,46 +9578,55 @@ This member is required.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "Accepted",
               "nameOverride": "Accepted",
               "value": "Accepted",
             },
             {
+              "description": undefined,
               "generatedName": "Expired",
               "nameOverride": "Expired",
               "value": "Expired",
             },
             {
+              "description": undefined,
               "generatedName": "Duplicate",
               "nameOverride": "Duplicate",
               "value": "Duplicate",
             },
             {
+              "description": undefined,
               "generatedName": "Error",
               "nameOverride": "Error",
               "value": "Error",
             },
             {
+              "description": undefined,
               "generatedName": "ResourceNotFound",
               "nameOverride": "ResourceNotFound",
               "value": "ResourceNotFound",
             },
             {
+              "description": undefined,
               "generatedName": "ResourceNotAuthorized",
               "nameOverride": "ResourceNotAuthorized",
               "value": "ResourceNotAuthorized",
             },
             {
+              "description": undefined,
               "generatedName": "InvalidDimension",
               "nameOverride": "InvalidDimension",
               "value": "InvalidDimension",
             },
             {
+              "description": undefined,
               "generatedName": "InvalidQuantity",
               "nameOverride": "InvalidQuantity",
               "value": "InvalidQuantity",
             },
             {
+              "description": undefined,
               "generatedName": "BadArgument",
               "nameOverride": "BadArgument",
               "value": "BadArgument",
@@ -12327,16 +12464,19 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "UNKNOWN",
               "nameOverride": "UNKNOWN",
               "value": "UNKNOWN",
             },
             {
+              "description": undefined,
               "generatedName": "CONFIRMED",
               "nameOverride": "CONFIRMED",
               "value": "CONFIRMED",
             },
             {
+              "description": undefined,
               "generatedName": "PENDING_CONFIRMATION",
               "nameOverride": "PENDING_CONFIRMATION",
               "value": "PENDING_CONFIRMATION",
@@ -12719,16 +12859,19 @@ in the google.rpc.Status.details field, or localized by the client.",
                     "type": "enum",
                     "values": [
                       {
+                        "description": undefined,
                         "generatedName": "Read",
                         "nameOverride": undefined,
                         "value": "Read",
                       },
                       {
+                        "description": undefined,
                         "generatedName": "Update",
                         "nameOverride": undefined,
                         "value": "Update",
                       },
                       {
+                        "description": undefined,
                         "generatedName": "Delete",
                         "nameOverride": undefined,
                         "value": "Delete",
@@ -12979,11 +13122,13 @@ in the google.rpc.Status.details field, or localized by the client.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "None",
                       "nameOverride": undefined,
                       "value": "None",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "Csp",
                       "nameOverride": undefined,
                       "value": "Csp",
@@ -13020,11 +13165,13 @@ in the google.rpc.Status.details field, or localized by the client.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "None",
                       "nameOverride": undefined,
                       "value": "None",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "DryRun",
                       "nameOverride": undefined,
                       "value": "DryRun",
@@ -13074,26 +13221,31 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "NotStarted",
               "nameOverride": "NotStarted",
               "value": "NotStarted",
             },
             {
+              "description": undefined,
               "generatedName": "PendingFulfillmentStart",
               "nameOverride": "PendingFulfillmentStart",
               "value": "PendingFulfillmentStart",
             },
             {
+              "description": undefined,
               "generatedName": "Subscribed",
               "nameOverride": "Subscribed",
               "value": "Subscribed",
             },
             {
+              "description": undefined,
               "generatedName": "Suspended",
               "nameOverride": "Suspended",
               "value": "Suspended",
             },
             {
+              "description": undefined,
               "generatedName": "Unsubscribed",
               "nameOverride": "Unsubscribed",
               "value": "Unsubscribed",
@@ -13488,16 +13640,19 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "DAY",
               "nameOverride": "DAY",
               "value": "DAY",
             },
             {
+              "description": undefined,
               "generatedName": "MONTH",
               "nameOverride": "MONTH",
               "value": "MONTH",
             },
             {
+              "description": undefined,
               "generatedName": "YEAR",
               "nameOverride": "YEAR",
               "value": "YEAR",
@@ -13511,11 +13666,13 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "FLAT_RATE",
               "nameOverride": "FLAT_RATE",
               "value": "FLAT_RATE",
             },
             {
+              "description": undefined,
               "generatedName": "PER_USER",
               "nameOverride": "PER_USER",
               "value": "PER_USER",
@@ -13759,16 +13916,19 @@ in the google.rpc.Status.details field, or localized by the client.",
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -13786,6 +13946,7 @@ in the google.rpc.Status.details field, or localized by the client.",
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "MARKETPLACE",
                     "nameOverride": undefined,
                     "value": "MARKETPLACE",
@@ -14223,31 +14384,37 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "",
               "nameOverride": "Unknown",
               "value": "",
             },
             {
+              "description": undefined,
               "generatedName": "AutoRenew",
               "nameOverride": "AutoRenew",
               "value": "AutoRenew",
             },
             {
+              "description": undefined,
               "generatedName": "ManualRenew",
               "nameOverride": "ManualRenew",
               "value": "ManualRenew",
             },
             {
+              "description": undefined,
               "generatedName": "PlanChange",
               "nameOverride": "PlanChange",
               "value": "PlanChange",
             },
             {
+              "description": undefined,
               "generatedName": "QuantityChange",
               "nameOverride": "QuantityChange",
               "value": "QuantityChange",
             },
             {
+              "description": undefined,
               "generatedName": "Signup",
               "nameOverride": "Signup",
               "value": "Signup",
@@ -14342,31 +14509,37 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "ORGANIZATION",
               "nameOverride": "ORGANIZATION",
               "value": "ORGANIZATION",
             },
             {
+              "description": undefined,
               "generatedName": "PRODUCT",
               "nameOverride": "PRODUCT",
               "value": "PRODUCT",
             },
             {
+              "description": undefined,
               "generatedName": "OFFER",
               "nameOverride": "OFFER",
               "value": "OFFER",
             },
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT",
               "nameOverride": "ENTITLEMENT",
               "value": "ENTITLEMENT",
             },
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT_TERM",
               "nameOverride": "ENTITLEMENT_TERM",
               "value": "ENTITLEMENT_TERM",
             },
             {
+              "description": undefined,
               "generatedName": "INTEGRATION",
               "nameOverride": "INTEGRATION",
               "value": "INTEGRATION",
@@ -14380,31 +14553,37 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "",
               "nameOverride": "UNKNOWN",
               "value": "",
             },
             {
+              "description": undefined,
               "generatedName": "SCMP",
               "nameOverride": "SCMP",
               "value": "SCMP",
             },
             {
+              "description": undefined,
               "generatedName": "ECMP",
               "nameOverride": "ECMP",
               "value": "ECMP",
             },
             {
+              "description": undefined,
               "generatedName": "CUSTOM",
               "nameOverride": "CUSTOM",
               "value": "CUSTOM",
             },
             {
+              "description": undefined,
               "generatedName": "ISV",
               "nameOverride": "ISV",
               "value": "ISV",
             },
             {
+              "description": undefined,
               "generatedName": "CURRENT",
               "nameOverride": "CURRENT",
               "value": "CURRENT",
@@ -14500,6 +14679,7 @@ in the google.rpc.Status.details field, or localized by the client.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "BillingIntegratedManagedService",
                       "nameOverride": undefined,
                       "value": "BillingIntegratedManagedService",
@@ -14871,21 +15051,25 @@ in the google.rpc.Status.details field, or localized by the client.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "FREE",
               "nameOverride": "FREE",
               "value": "FREE",
             },
             {
+              "description": undefined,
               "generatedName": "SUBSCRIPTION",
               "nameOverride": "SUBSCRIPTION",
               "value": "SUBSCRIPTION",
             },
             {
+              "description": undefined,
               "generatedName": "USAGE",
               "nameOverride": "USAGE",
               "value": "USAGE",
             },
             {
+              "description": undefined,
               "generatedName": "SUBSCRIPTION_PLUS_USAGE",
               "nameOverride": "SUBSCRIPTION_PLUS_USAGE",
               "value": "SUBSCRIPTION_PLUS_USAGE",
@@ -14911,6 +15095,7 @@ in the google.rpc.Status.details field, or localized by the client.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "ONE_YEAR",
                       "nameOverride": undefined,
                       "value": "ONE_YEAR",
@@ -14948,6 +15133,7 @@ in the google.rpc.Status.details field, or localized by the client.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "TAX_CATEGORY_UNSPECIFIED",
                       "nameOverride": undefined,
                       "value": "TAX_CATEGORY_UNSPECIFIED",
@@ -15083,6 +15269,7 @@ in the google.rpc.Status.details field, or localized by the client.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "TAX_CATEGORY_UNSPECIFIED",
                       "nameOverride": undefined,
                       "value": "TAX_CATEGORY_UNSPECIFIED",
@@ -16106,41 +16293,49 @@ This field is present only if the product has usage-based billing configured.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT_STATE_UNSPECIFIED",
               "nameOverride": "STATE_UNSPECIFIED",
               "value": "ENTITLEMENT_STATE_UNSPECIFIED",
             },
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT_ACTIVATION_REQUESTED",
               "nameOverride": "ACTIVATION_REQUESTED",
               "value": "ENTITLEMENT_ACTIVATION_REQUESTED",
             },
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT_ACTIVE",
               "nameOverride": "ACTIVE",
               "value": "ENTITLEMENT_ACTIVE",
             },
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT_PENDING_CANCELLATION",
               "nameOverride": "PENDING_CANCELLATION",
               "value": "ENTITLEMENT_PENDING_CANCELLATION",
             },
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT_CANCELLED",
               "nameOverride": "CANCELLED",
               "value": "ENTITLEMENT_CANCELLED",
             },
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT_PENDING_PLAN_CHANGE",
               "nameOverride": "PENDING_PLAN_CHANGE",
               "value": "ENTITLEMENT_PENDING_PLAN_CHANGE",
             },
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL",
               "nameOverride": "PENDING_PLAN_CHANGE_APPROVAL",
               "value": "ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL",
             },
             {
+              "description": undefined,
               "generatedName": "ENTITLEMENT_SUSPENDED",
               "nameOverride": "SUSPENDED",
               "value": "ENTITLEMENT_SUSPENDED",
@@ -16379,21 +16574,25 @@ This field is present only if the product has usage-based billing configured.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "STATE_UNSPECIFIED",
               "nameOverride": "STATE_UNSPECIFIED",
               "value": "STATE_UNSPECIFIED",
             },
             {
+              "description": undefined,
               "generatedName": "PENDING",
               "nameOverride": "PENDING",
               "value": "PENDING",
             },
             {
+              "description": undefined,
               "generatedName": "APPROVED",
               "nameOverride": "APPROVED",
               "value": "APPROVED",
             },
             {
+              "description": undefined,
               "generatedName": "REJECTED",
               "nameOverride": "REJECTED",
               "value": "REJECTED",
@@ -16407,11 +16606,13 @@ This field is present only if the product has usage-based billing configured.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "ACCOUNT_STATE_UNSPECIFIED",
               "nameOverride": "UNSPECIFIED",
               "value": "ACCOUNT_STATE_UNSPECIFIED",
             },
             {
+              "description": undefined,
               "generatedName": "ACCOUNT_ACTIVE",
               "nameOverride": "ACTIVE",
               "value": "ACCOUNT_ACTIVE",
@@ -16483,6 +16684,7 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "MarketplacesGoogleCloud",
                       "nameOverride": undefined,
                       "value": "marketplaces/google-cloud",
@@ -16590,6 +16792,7 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "PURCHASE_MODE_PUBLIC",
                       "nameOverride": undefined,
                       "value": "PURCHASE_MODE_PUBLIC",
@@ -16758,16 +16961,19 @@ This field is present only if the product has usage-based billing configured.",
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -16812,6 +17018,7 @@ This field is present only if the product has usage-based billing configured.",
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "MARKETPLACE",
                     "nameOverride": undefined,
                     "value": "MARKETPLACE",
@@ -17117,16 +17324,19 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AWS",
                       "nameOverride": undefined,
                       "value": "AWS",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "AZURE",
                       "nameOverride": undefined,
                       "value": "AZURE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "GCP",
                       "nameOverride": undefined,
                       "value": "GCP",
@@ -17248,16 +17458,19 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AWS",
                       "nameOverride": undefined,
                       "value": "AWS",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "AZURE",
                       "nameOverride": undefined,
                       "value": "AZURE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "GCP",
                       "nameOverride": undefined,
                       "value": "GCP",
@@ -17279,6 +17492,7 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "MARKETPLACE",
                       "nameOverride": undefined,
                       "value": "MARKETPLACE",
@@ -17300,16 +17514,19 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "CREATED",
                       "nameOverride": undefined,
                       "value": "CREATED",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "VERIFIED",
                       "nameOverride": undefined,
                       "value": "VERIFIED",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "NOT_VERIFIED",
                       "nameOverride": undefined,
                       "value": "NOT_VERIFIED",
@@ -18539,56 +18756,67 @@ This field is present only if the product has usage-based billing configured.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "ACCEPT",
               "nameOverride": "ACCEPT",
               "value": "ACCEPT",
             },
             {
+              "description": undefined,
               "generatedName": "CREATE",
               "nameOverride": "CREATE",
               "value": "CREATE",
             },
             {
+              "description": undefined,
               "generatedName": "DELETE",
               "nameOverride": "DELETE",
               "value": "DELETE",
             },
             {
+              "description": undefined,
               "generatedName": "CANCEL",
               "nameOverride": "CANCEL",
               "value": "CANCEL",
             },
             {
+              "description": undefined,
               "generatedName": "PENDING_CANCEL",
               "nameOverride": "PENDING_CANCEL",
               "value": "PENDING_CANCEL",
             },
             {
+              "description": undefined,
               "generatedName": "EXPIRE",
               "nameOverride": "EXPIRE",
               "value": "EXPIRE",
             },
             {
+              "description": undefined,
               "generatedName": "REINSTATE",
               "nameOverride": "REINSTATE",
               "value": "REINSTATE",
             },
             {
+              "description": undefined,
               "generatedName": "SUSPEND",
               "nameOverride": "SUSPEND",
               "value": "SUSPEND",
             },
             {
+              "description": undefined,
               "generatedName": "UPDATE",
               "nameOverride": "UPDATE",
               "value": "UPDATE",
             },
             {
+              "description": undefined,
               "generatedName": "NOTIFY_CONTACTS",
               "nameOverride": "NOTIFY_CONTACTS",
               "value": "NOTIFY_CONTACTS",
             },
             {
+              "description": undefined,
               "generatedName": "TEST",
               "nameOverride": "TEST",
               "value": "TEST",
@@ -18602,26 +18830,31 @@ This field is present only if the product has usage-based billing configured.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "",
               "nameOverride": "UNKNOWN",
               "value": "",
             },
             {
+              "description": undefined,
               "generatedName": "SCHEDULED",
               "nameOverride": "SCHEDULED",
               "value": "SCHEDULED",
             },
             {
+              "description": undefined,
               "generatedName": "PENDING",
               "nameOverride": "PENDING",
               "value": "PENDING",
             },
             {
+              "description": undefined,
               "generatedName": "DONE",
               "nameOverride": "DONE",
               "value": "DONE",
             },
             {
+              "description": undefined,
               "generatedName": "FAILED",
               "nameOverride": "FAILED",
               "value": "FAILED",
@@ -18940,11 +19173,13 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "PRIVATE",
                       "nameOverride": undefined,
                       "value": "PRIVATE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "PUBLIC",
                       "nameOverride": undefined,
                       "value": "PUBLIC",
@@ -19172,6 +19407,7 @@ This field is present only if the product has usage-based billing configured.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "TemporalWorkflow",
               "nameOverride": "OperationType_TemporalWorkflow",
               "value": "TemporalWorkflow",
@@ -20024,16 +20260,19 @@ This field is present only if the product has usage-based billing configured.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "InvoicedAmount",
               "nameOverride": "InvoicedAmount",
               "value": "InvoicedAmount",
             },
             {
+              "description": undefined,
               "generatedName": "CollectableAmount",
               "nameOverride": "CollectableAmount",
               "value": "CollectableAmount",
             },
             {
+              "description": undefined,
               "generatedName": "DisbursedAmount",
               "nameOverride": "DisbursedAmount",
               "value": "DisbursedAmount",
@@ -20496,16 +20735,19 @@ This field is present only if the product has usage-based billing configured.",
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "AWS",
                     "nameOverride": undefined,
                     "value": "AWS",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "AZURE",
                     "nameOverride": undefined,
                     "value": "AZURE",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "GCP",
                     "nameOverride": undefined,
                     "value": "GCP",
@@ -20523,6 +20765,7 @@ This field is present only if the product has usage-based billing configured.",
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "MARKETPLACE",
                     "nameOverride": undefined,
                     "value": "MARKETPLACE",
@@ -20710,36 +20953,43 @@ This field is present only if the product has usage-based billing configured.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "VALUE_TYPE_UNSPECIFIED",
               "nameOverride": "UNSPECIFIED",
               "value": "VALUE_TYPE_UNSPECIFIED",
             },
             {
+              "description": undefined,
               "generatedName": "BOOL",
               "nameOverride": "BOOL",
               "value": "BOOL",
             },
             {
+              "description": undefined,
               "generatedName": "INT64",
               "nameOverride": "INT64",
               "value": "INT64",
             },
             {
+              "description": undefined,
               "generatedName": "DOUBLE",
               "nameOverride": "DOUBLE",
               "value": "DOUBLE",
             },
             {
+              "description": undefined,
               "generatedName": "STRING",
               "nameOverride": "STRING",
               "value": "STRING",
             },
             {
+              "description": undefined,
               "generatedName": "DISTRIBUTION",
               "nameOverride": "DISTRIBUTION",
               "value": "DISTRIBUTION",
             },
             {
+              "description": undefined,
               "generatedName": "MONEY",
               "nameOverride": "MONEY",
               "value": "MONEY",
@@ -20961,16 +21211,19 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AWS",
                       "nameOverride": undefined,
                       "value": "AWS",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "AZURE",
                       "nameOverride": undefined,
                       "value": "AZURE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "GCP",
                       "nameOverride": undefined,
                       "value": "GCP",
@@ -21007,6 +21260,7 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "MARKETPLACE",
                       "nameOverride": undefined,
                       "value": "MARKETPLACE",
@@ -21043,26 +21297,31 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "ACTIVE",
                       "nameOverride": undefined,
                       "value": "ACTIVE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "CANCELLED",
                       "nameOverride": undefined,
                       "value": "CANCELLED",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "SUSPENDED",
                       "nameOverride": undefined,
                       "value": "SUSPENDED",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "PENDING_START",
                       "nameOverride": undefined,
                       "value": "PENDING_START",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "UNKNOWN",
                       "nameOverride": undefined,
                       "value": "UNKNOWN",
@@ -21275,16 +21534,19 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AWS",
                       "nameOverride": undefined,
                       "value": "AWS",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "AZURE",
                       "nameOverride": undefined,
                       "value": "AZURE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "GCP",
                       "nameOverride": undefined,
                       "value": "GCP",
@@ -21321,6 +21583,7 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "MARKETPLACE",
                       "nameOverride": undefined,
                       "value": "MARKETPLACE",
@@ -21563,41 +21826,49 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "DEFAULT",
                       "nameOverride": undefined,
                       "value": "DEFAULT",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "CONTRACT",
                       "nameOverride": undefined,
                       "value": "CONTRACT",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "SUBSCRIPTION",
                       "nameOverride": undefined,
                       "value": "SUBSCRIPTION",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "FREE_TRIAL",
                       "nameOverride": undefined,
                       "value": "FREE_TRIAL",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "FLAT_RATE",
                       "nameOverride": undefined,
                       "value": "FLAT_RATE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "PER_USER",
                       "nameOverride": undefined,
                       "value": "PER_USER",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "PRIVATE",
                       "nameOverride": undefined,
                       "value": "PRIVATE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "UNKNOWN",
                       "nameOverride": undefined,
                       "value": "UNKNOWN",
@@ -21634,16 +21905,19 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AWS",
                       "nameOverride": undefined,
                       "value": "AWS",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "AZURE",
                       "nameOverride": undefined,
                       "value": "AZURE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "GCP",
                       "nameOverride": undefined,
                       "value": "GCP",
@@ -21680,6 +21954,7 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "MARKETPLACE",
                       "nameOverride": undefined,
                       "value": "MARKETPLACE",
@@ -21701,51 +21976,61 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "ACCEPTED",
                       "nameOverride": undefined,
                       "value": "ACCEPTED",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "PENDING_CREATE",
                       "nameOverride": undefined,
                       "value": "PENDING_CREATE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "CREATE_FAILED",
                       "nameOverride": undefined,
                       "value": "CREATE_FAILED",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "CREATE_SUCCESS",
                       "nameOverride": undefined,
                       "value": "CREATE_SUCCESS",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "DRAFT",
                       "nameOverride": undefined,
                       "value": "DRAFT",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "EXPIRED",
                       "nameOverride": undefined,
                       "value": "EXPIRED",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "PENDING_ACCEPTANCE",
                       "nameOverride": undefined,
                       "value": "PENDING_ACCEPTANCE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "PENDING_CANCEL",
                       "nameOverride": undefined,
                       "value": "PENDING_CANCEL",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "CANCEL_FAILED",
                       "nameOverride": undefined,
                       "value": "CANCEL_FAILED",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "CANCEL_SUCCESS",
                       "nameOverride": undefined,
                       "value": "CANCEL_SUCCESS",
@@ -21927,16 +22212,19 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "AWS",
                       "nameOverride": undefined,
                       "value": "AWS",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "AZURE",
                       "nameOverride": undefined,
                       "value": "AZURE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "GCP",
                       "nameOverride": undefined,
                       "value": "GCP",
@@ -21958,31 +22246,37 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "UNKNOWN",
                       "nameOverride": undefined,
                       "value": "UNKNOWN",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "SUBSCRIPTION",
                       "nameOverride": undefined,
                       "value": "SUBSCRIPTION",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "CONTRACT",
                       "nameOverride": undefined,
                       "value": "CONTRACT",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "FLAT_RATE",
                       "nameOverride": undefined,
                       "value": "FLAT_RATE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "PER_USER",
                       "nameOverride": undefined,
                       "value": "PER_USER",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "USAGE_BASED",
                       "nameOverride": undefined,
                       "value": "USAGE_BASED",
@@ -22004,6 +22298,7 @@ This field is present only if the product has usage-based billing configured.",
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "MARKETPLACE",
                       "nameOverride": undefined,
                       "value": "MARKETPLACE",
@@ -22637,16 +22932,19 @@ the same customer, dimension, and time, but a different quantity.",
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "Success",
               "nameOverride": "Success",
               "value": "Success",
             },
             {
+              "description": undefined,
               "generatedName": "CustomerNotSubscribed",
               "nameOverride": "CustomerNotSubscribed",
               "value": "CustomerNotSubscribed",
             },
             {
+              "description": undefined,
               "generatedName": "DuplicateRecord",
               "nameOverride": "DuplicateRecord",
               "value": "DuplicateRecord",

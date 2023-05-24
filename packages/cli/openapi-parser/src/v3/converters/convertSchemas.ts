@@ -2,6 +2,7 @@ import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/opena
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
+import { FernEnumConfig } from "../extensions/extensions";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
@@ -79,6 +80,8 @@ function convertSchemaObject(
         return convertEnum({
             nameOverride,
             generatedName,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            fernEnumConfig: (schema as any)["x-fern-enum"] as FernEnumConfig | undefined,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             enumNames: (schema as any)["x-enum-names"] as Record<string, string> | undefined,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

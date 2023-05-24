@@ -253,10 +253,12 @@ authentication connection.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "disable",
               "value": "disable",
             },
             {
+              "docs": undefined,
               "name": "enable",
               "value": "enable",
             },
@@ -268,22 +270,27 @@ for each authentication connection will depend on the type value.
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "google_apps",
               "value": "google_apps",
             },
             {
+              "docs": undefined,
               "name": "oidc",
               "value": "oidc",
             },
             {
+              "docs": undefined,
               "name": "samlp",
               "value": "samlp",
             },
             {
+              "docs": undefined,
               "name": "social",
               "value": "social",
             },
             {
+              "docs": undefined,
               "name": "waad",
               "value": "waad",
             },
@@ -335,10 +342,12 @@ token. Only applicable for application access tokens.
           "docs": "Specifies the process of obtaining a token.",
           "enum": [
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthGrantTypeTokenIssue",
               "value": "urn:devrev:params:oauth:grant-type:token-issue",
             },
             {
+              "docs": undefined,
               "name": "UrnIetfParamsOauthGrantTypeTokenExchange",
               "value": "urn:ietf:params:oauth:grant-type:token-exchange",
             },
@@ -348,38 +357,47 @@ token. Only applicable for application access tokens.
           "docs": "The type of the requested token.",
           "enum": [
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeAat",
               "value": "urn:devrev:params:oauth:token-type:aat",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeAatPublic",
               "value": "urn:devrev:params:oauth:token-type:aat:public",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeDev",
               "value": "urn:devrev:params:oauth:token-type:dev",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypePat",
               "value": "urn:devrev:params:oauth:token-type:pat",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeRev",
               "value": "urn:devrev:params:oauth:token-type:rev",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeSession",
               "value": "urn:devrev:params:oauth:token-type:session",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeSessionDev0",
               "value": "urn:devrev:params:oauth:token-type:session:dev0",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeSys",
               "value": "urn:devrev:params:oauth:token-type:sys",
             },
             {
+              "docs": undefined,
               "name": "UrnIetfParamsOauthTokenTypeJwt",
               "value": "urn:ietf:params:oauth:token-type:jwt",
             },
@@ -389,14 +407,17 @@ token. Only applicable for application access tokens.
           "docs": "The status of the token.",
           "enum": [
             {
+              "docs": undefined,
               "name": "active",
               "value": "active",
             },
             {
+              "docs": undefined,
               "name": "expired",
               "value": "expired",
             },
             {
+              "docs": undefined,
               "name": "revoked",
               "value": "revoked",
             },
@@ -406,30 +427,37 @@ token. Only applicable for application access tokens.
           "docs": "The type of the subject token.",
           "enum": [
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
               "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeJwtDev",
               "value": "urn:devrev:params:oauth:token-type:jwt:dev",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeRevinfo",
               "value": "urn:devrev:params:oauth:token-type:revinfo",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeSysu",
               "value": "urn:devrev:params:oauth:token-type:sysu",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeUserinfo",
               "value": "urn:devrev:params:oauth:token-type:userinfo",
             },
             {
+              "docs": undefined,
               "name": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
               "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
             },
             {
+              "docs": undefined,
               "name": "UrnIetfParamsOauthTokenTypeJwt",
               "value": "urn:ietf:params:oauth:token-type:jwt",
             },
@@ -440,6 +468,7 @@ token. Only applicable for application access tokens.
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "bearer",
               "value": "bearer",
             },
@@ -616,18 +645,22 @@ authentication connections have different configuration parameters.
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "google_apps",
               "value": "google_apps",
             },
             {
+              "docs": undefined,
               "name": "oidc",
               "value": "oidc",
             },
             {
+              "docs": undefined,
               "name": "samlp",
               "value": "samlp",
             },
             {
+              "docs": undefined,
               "name": "waad",
               "value": "waad",
             },
@@ -718,22 +751,27 @@ that can be updated.
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "google_apps",
               "value": "google_apps",
             },
             {
+              "docs": undefined,
               "name": "none",
               "value": "none",
             },
             {
+              "docs": undefined,
               "name": "oidc",
               "value": "oidc",
             },
             {
+              "docs": undefined,
               "name": "samlp",
               "value": "samlp",
             },
             {
+              "docs": undefined,
               "name": "waad",
               "value": "waad",
             },
@@ -855,22 +893,27 @@ sort order. If not set, then no prior elements exist.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "bad_request",
               "value": "bad_request",
             },
             {
+              "docs": undefined,
               "name": "invalid_enum_value",
               "value": "invalid_enum_value",
             },
             {
+              "docs": undefined,
               "name": "missing_required_field",
               "value": "missing_required_field",
             },
             {
+              "docs": undefined,
               "name": "parse_error",
               "value": "parse_error",
             },
             {
+              "docs": undefined,
               "name": "value_not_permitted",
               "value": "value_not_permitted",
             },
@@ -914,6 +957,7 @@ sort order. If not set, then no prior elements exist.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "forbidden",
               "value": "forbidden",
             },
@@ -941,6 +985,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "internal_error",
               "value": "internal_error",
             },
@@ -962,6 +1007,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "not_found",
               "value": "not_found",
             },
@@ -983,6 +1029,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "service_unavailable",
               "value": "service_unavailable",
             },
@@ -1009,6 +1056,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "too_many_requests",
               "value": "too_many_requests",
             },
@@ -1030,6 +1078,7 @@ inquiry.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "unauthenticated",
               "value": "unauthenticated",
             },
@@ -1225,18 +1274,22 @@ inquiry.
           "docs": "Priority of the work based upon impact and criticality.",
           "enum": [
             {
+              "docs": undefined,
               "name": "p0",
               "value": "p0",
             },
             {
+              "docs": undefined,
               "name": "p1",
               "value": "p1",
             },
             {
+              "docs": undefined,
               "name": "p2",
               "value": "p2",
             },
             {
+              "docs": undefined,
               "name": "p3",
               "value": "p3",
             },
@@ -1251,10 +1304,12 @@ always be returned in the specified sort-by order.
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "after",
               "value": "after",
             },
             {
+              "docs": undefined,
               "name": "before",
               "value": "before",
             },
@@ -1289,14 +1344,17 @@ always be returned in the specified sort-by order.
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "production",
               "value": "production",
             },
             {
+              "docs": undefined,
               "name": "staging",
               "value": "staging",
             },
             {
+              "docs": undefined,
               "name": "test",
               "value": "test",
             },
@@ -1317,6 +1375,7 @@ always be returned in the specified sort-by order.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "rev_org",
               "value": "rev_org",
             },
@@ -1412,18 +1471,22 @@ always be returned in the specified sort-by order.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "capability",
               "value": "capability",
             },
             {
+              "docs": undefined,
               "name": "enhancement",
               "value": "enhancement",
             },
             {
+              "docs": undefined,
               "name": "feature",
               "value": "feature",
             },
             {
+              "docs": undefined,
               "name": "product",
               "value": "product",
             },
@@ -1901,18 +1964,22 @@ sort order. If not set, then no prior elements exist.
           "docs": "Severity of the ticket.",
           "enum": [
             {
+              "docs": undefined,
               "name": "blocker",
               "value": "blocker",
             },
             {
+              "docs": undefined,
               "name": "high",
               "value": "high",
             },
             {
+              "docs": undefined,
               "name": "low",
               "value": "low",
             },
             {
+              "docs": undefined,
               "name": "medium",
               "value": "medium",
             },
@@ -1948,10 +2015,12 @@ will appear in the response.
           "docs": "The type of the body to use for the comment.",
           "enum": [
             {
+              "docs": undefined,
               "name": "snap_kit",
               "value": "snap_kit",
             },
             {
+              "docs": undefined,
               "name": "text",
               "value": "text",
             },
@@ -2002,6 +2071,7 @@ will appear in the response.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "timeline_comment",
               "value": "timeline_comment",
             },
@@ -2109,6 +2179,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "timeline_comment",
               "value": "timeline_comment",
             },
@@ -2142,6 +2213,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "timeline_comment",
               "value": "timeline_comment",
             },
@@ -2154,6 +2226,7 @@ default visibility.
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "private",
               "value": "private",
             },
@@ -2225,22 +2298,27 @@ default visibility.
           "docs": "State of the user.",
           "enum": [
             {
+              "docs": undefined,
               "name": "active",
               "value": "active",
             },
             {
+              "docs": undefined,
               "name": "deactivated",
               "value": "deactivated",
             },
             {
+              "docs": undefined,
               "name": "locked",
               "value": "locked",
             },
             {
+              "docs": undefined,
               "name": "shadow",
               "value": "shadow",
             },
             {
+              "docs": undefined,
               "name": "unassigned",
               "value": "unassigned",
             },
@@ -2269,14 +2347,17 @@ default visibility.
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "dev_user",
               "value": "dev_user",
             },
             {
+              "docs": undefined,
               "name": "rev_user",
               "value": "rev_user",
             },
             {
+              "docs": undefined,
               "name": "sys_user",
               "value": "sys_user",
             },
@@ -2422,78 +2503,97 @@ be set for other request types.
           "docs": "The event types that the webhook will receive.",
           "enum": [
             {
+              "docs": undefined,
               "name": "part_created",
               "value": "part_created",
             },
             {
+              "docs": undefined,
               "name": "part_deleted",
               "value": "part_deleted",
             },
             {
+              "docs": undefined,
               "name": "part_updated",
               "value": "part_updated",
             },
             {
+              "docs": undefined,
               "name": "rev_org_created",
               "value": "rev_org_created",
             },
             {
+              "docs": undefined,
               "name": "rev_org_deleted",
               "value": "rev_org_deleted",
             },
             {
+              "docs": undefined,
               "name": "rev_org_updated",
               "value": "rev_org_updated",
             },
             {
+              "docs": undefined,
               "name": "tag_created",
               "value": "tag_created",
             },
             {
+              "docs": undefined,
               "name": "tag_deleted",
               "value": "tag_deleted",
             },
             {
+              "docs": undefined,
               "name": "tag_updated",
               "value": "tag_updated",
             },
             {
+              "docs": undefined,
               "name": "timeline_entry_created",
               "value": "timeline_entry_created",
             },
             {
+              "docs": undefined,
               "name": "timeline_entry_deleted",
               "value": "timeline_entry_deleted",
             },
             {
+              "docs": undefined,
               "name": "timeline_entry_updated",
               "value": "timeline_entry_updated",
             },
             {
+              "docs": undefined,
               "name": "verify",
               "value": "verify",
             },
             {
+              "docs": undefined,
               "name": "webhook_created",
               "value": "webhook_created",
             },
             {
+              "docs": undefined,
               "name": "webhook_deleted",
               "value": "webhook_deleted",
             },
             {
+              "docs": undefined,
               "name": "webhook_updated",
               "value": "webhook_updated",
             },
             {
+              "docs": undefined,
               "name": "work_created",
               "value": "work_created",
             },
             {
+              "docs": undefined,
               "name": "work_deleted",
               "value": "work_deleted",
             },
             {
+              "docs": undefined,
               "name": "work_updated",
               "value": "work_updated",
             },
@@ -2512,14 +2612,17 @@ be set for other request types.
           "docs": "The status of the webhook.",
           "enum": [
             {
+              "docs": undefined,
               "name": "active",
               "value": "active",
             },
             {
+              "docs": undefined,
               "name": "inactive",
               "value": "inactive",
             },
             {
+              "docs": undefined,
               "name": "unverified",
               "value": "unverified",
             },
@@ -2556,10 +2659,12 @@ be set for other request types.
           "docs": "The action to update the webhook's status.",
           "enum": [
             {
+              "docs": undefined,
               "name": "activate",
               "value": "activate",
             },
             {
+              "docs": undefined,
               "name": "deactivate",
               "value": "deactivate",
             },
@@ -2663,10 +2768,12 @@ event types. Note this is mutually exclusive with 'add' and
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "issue",
               "value": "issue",
             },
             {
+              "docs": undefined,
               "name": "ticket",
               "value": "ticket",
             },

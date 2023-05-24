@@ -110,11 +110,13 @@ Transfers support recurring schedules, such as repeating every week or every mon
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "internal",
                       "nameOverride": undefined,
                       "value": "internal",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "external",
                       "nameOverride": undefined,
                       "value": "external",
@@ -2287,36 +2289,43 @@ Note: This operation requires an identity challenge if the financial institution
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "billPay",
               "nameOverride": undefined,
               "value": "billPay",
             },
             {
+              "description": undefined,
               "generatedName": "transferFrom",
               "nameOverride": undefined,
               "value": "transferFrom",
             },
             {
+              "description": undefined,
               "generatedName": "transferTo",
               "nameOverride": undefined,
               "value": "transferTo",
             },
             {
+              "description": undefined,
               "generatedName": "mobileCheckDeposit",
               "nameOverride": undefined,
               "value": "mobileCheckDeposit",
             },
             {
+              "description": undefined,
               "generatedName": "view",
               "nameOverride": undefined,
               "value": "view",
             },
             {
+              "description": undefined,
               "generatedName": "viewCards",
               "nameOverride": undefined,
               "value": "viewCards",
             },
             {
+              "description": undefined,
               "generatedName": "manageCards",
               "nameOverride": undefined,
               "value": "manageCards",
@@ -2775,16 +2784,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "internal",
               "nameOverride": undefined,
               "value": "internal",
             },
             {
+              "description": undefined,
               "generatedName": "external",
               "nameOverride": undefined,
               "value": "external",
             },
             {
+              "description": undefined,
               "generatedName": "outside",
               "nameOverride": undefined,
               "value": "outside",
@@ -3010,21 +3022,25 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "early",
               "nameOverride": undefined,
               "value": "early",
             },
             {
+              "description": undefined,
               "generatedName": "normal",
               "nameOverride": undefined,
               "value": "normal",
             },
             {
+              "description": undefined,
               "generatedName": "float",
               "nameOverride": undefined,
               "value": "float",
             },
             {
+              "description": undefined,
               "generatedName": "sameDay",
               "nameOverride": undefined,
               "value": "sameDay",
@@ -3080,51 +3096,61 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "arc",
               "nameOverride": undefined,
               "value": "arc",
             },
             {
+              "description": undefined,
               "generatedName": "boc",
               "nameOverride": undefined,
               "value": "boc",
             },
             {
+              "description": undefined,
               "generatedName": "ccd",
               "nameOverride": undefined,
               "value": "ccd",
             },
             {
+              "description": undefined,
               "generatedName": "cie",
               "nameOverride": undefined,
               "value": "cie",
             },
             {
+              "description": undefined,
               "generatedName": "ctx",
               "nameOverride": undefined,
               "value": "ctx",
             },
             {
+              "description": undefined,
               "generatedName": "pop",
               "nameOverride": undefined,
               "value": "pop",
             },
             {
+              "description": undefined,
               "generatedName": "ppd",
               "nameOverride": undefined,
               "value": "ppd",
             },
             {
+              "description": undefined,
               "generatedName": "rck",
               "nameOverride": undefined,
               "value": "rck",
             },
             {
+              "description": undefined,
               "generatedName": "tel",
               "nameOverride": undefined,
               "value": "tel",
             },
             {
+              "description": undefined,
               "generatedName": "web",
               "nameOverride": undefined,
               "value": "web",
@@ -3523,26 +3549,31 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "sms",
               "nameOverride": undefined,
               "value": "sms",
             },
             {
+              "description": undefined,
               "generatedName": "email",
               "nameOverride": undefined,
               "value": "email",
             },
             {
+              "description": undefined,
               "generatedName": "voice",
               "nameOverride": undefined,
               "value": "voice",
             },
             {
+              "description": undefined,
               "generatedName": "securityQuestions",
               "nameOverride": undefined,
               "value": "securityQuestions",
             },
             {
+              "description": undefined,
               "generatedName": "authenticatorToken",
               "nameOverride": undefined,
               "value": "authenticatorToken",
@@ -3709,36 +3740,43 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "ach",
               "nameOverride": undefined,
               "value": "ach",
             },
             {
+              "description": undefined,
               "generatedName": "sameDayAch",
               "nameOverride": undefined,
               "value": "sameDayAch",
             },
             {
+              "description": undefined,
               "generatedName": "domesticWireTransfer",
               "nameOverride": undefined,
               "value": "domesticWireTransfer",
             },
             {
+              "description": undefined,
               "generatedName": "internationalWireTransfer",
               "nameOverride": undefined,
               "value": "internationalWireTransfer",
             },
             {
+              "description": undefined,
               "generatedName": "internalTransfer",
               "nameOverride": undefined,
               "value": "internalTransfer",
             },
             {
+              "description": undefined,
               "generatedName": "externalTransfer",
               "nameOverride": undefined,
               "value": "externalTransfer",
             },
             {
+              "description": undefined,
               "generatedName": "billPay",
               "nameOverride": undefined,
               "value": "billPay",
@@ -3892,16 +3930,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "instant",
               "nameOverride": undefined,
               "value": "instant",
             },
             {
+              "description": undefined,
               "generatedName": "microDeposits",
               "nameOverride": undefined,
               "value": "microDeposits",
             },
             {
+              "description": undefined,
               "generatedName": "manual",
               "nameOverride": undefined,
               "value": "manual",
@@ -4079,16 +4120,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "abaRoutingNumber",
               "nameOverride": undefined,
               "value": "abaRoutingNumber",
             },
             {
+              "description": undefined,
               "generatedName": "swiftBicCode",
               "nameOverride": undefined,
               "value": "swiftBicCode",
             },
             {
+              "description": undefined,
               "generatedName": "ibanAccountNumber",
               "nameOverride": undefined,
               "value": "ibanAccountNumber",
@@ -4633,31 +4677,37 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "savings",
               "nameOverride": undefined,
               "value": "savings",
             },
             {
+              "description": undefined,
               "generatedName": "checking",
               "nameOverride": undefined,
               "value": "checking",
             },
             {
+              "description": undefined,
               "generatedName": "cd",
               "nameOverride": undefined,
               "value": "cd",
             },
             {
+              "description": undefined,
               "generatedName": "ira",
               "nameOverride": undefined,
               "value": "ira",
             },
             {
+              "description": undefined,
               "generatedName": "loan",
               "nameOverride": undefined,
               "value": "loan",
             },
             {
+              "description": undefined,
               "generatedName": "creditCard",
               "nameOverride": undefined,
               "value": "creditCard",
@@ -4965,11 +5015,13 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "credit",
               "nameOverride": undefined,
               "value": "credit",
             },
             {
+              "description": undefined,
               "generatedName": "debit",
               "nameOverride": undefined,
               "value": "debit",
@@ -5338,11 +5390,13 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "check",
               "nameOverride": undefined,
               "value": "check",
             },
             {
+              "description": undefined,
               "generatedName": "other",
               "nameOverride": undefined,
               "value": "other",
@@ -5380,16 +5434,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "balance",
               "nameOverride": undefined,
               "value": "balance",
             },
             {
+              "description": undefined,
               "generatedName": "debit",
               "nameOverride": undefined,
               "value": "debit",
             },
             {
+              "description": undefined,
               "generatedName": "credit",
               "nameOverride": undefined,
               "value": "credit",
@@ -5643,31 +5700,37 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "pastDate",
               "nameOverride": undefined,
               "value": "pastDate",
             },
             {
+              "description": undefined,
               "generatedName": "pastCutoffTime",
               "nameOverride": undefined,
               "value": "pastCutoffTime",
             },
             {
+              "description": undefined,
               "generatedName": "riskRestricted",
               "nameOverride": undefined,
               "value": "riskRestricted",
             },
             {
+              "description": undefined,
               "generatedName": "holiday",
               "nameOverride": undefined,
               "value": "holiday",
             },
             {
+              "description": undefined,
               "generatedName": "closure",
               "nameOverride": undefined,
               "value": "closure",
             },
             {
+              "description": undefined,
               "generatedName": "other",
               "nameOverride": undefined,
               "value": "other",
@@ -5871,66 +5934,79 @@ The response may include dates prior to requested the start date, as that is use
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "once",
               "nameOverride": undefined,
               "value": "once",
             },
             {
+              "description": undefined,
               "generatedName": "occasional",
               "nameOverride": undefined,
               "value": "occasional",
             },
             {
+              "description": undefined,
               "generatedName": "daily",
               "nameOverride": undefined,
               "value": "daily",
             },
             {
+              "description": undefined,
               "generatedName": "weekly",
               "nameOverride": undefined,
               "value": "weekly",
             },
             {
+              "description": undefined,
               "generatedName": "biweekly",
               "nameOverride": undefined,
               "value": "biweekly",
             },
             {
+              "description": undefined,
               "generatedName": "semimonthly",
               "nameOverride": undefined,
               "value": "semimonthly",
             },
             {
+              "description": undefined,
               "generatedName": "monthly",
               "nameOverride": undefined,
               "value": "monthly",
             },
             {
+              "description": undefined,
               "generatedName": "monthlyFirstDay",
               "nameOverride": undefined,
               "value": "monthlyFirstDay",
             },
             {
+              "description": undefined,
               "generatedName": "monthlyLastDay",
               "nameOverride": undefined,
               "value": "monthlyLastDay",
             },
             {
+              "description": undefined,
               "generatedName": "bimonthly",
               "nameOverride": undefined,
               "value": "bimonthly",
             },
             {
+              "description": undefined,
               "generatedName": "quarterly",
               "nameOverride": undefined,
               "value": "quarterly",
             },
             {
+              "description": undefined,
               "generatedName": "semiyearly",
               "nameOverride": undefined,
               "value": "semiyearly",
             },
             {
+              "description": undefined,
               "generatedName": "yearly",
               "nameOverride": undefined,
               "value": "yearly",
@@ -6146,11 +6222,13 @@ The response may include dates prior to requested the start date, as that is use
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "fixed",
               "nameOverride": undefined,
               "value": "fixed",
             },
             {
+              "description": undefined,
               "generatedName": "variable",
               "nameOverride": undefined,
               "value": "variable",
@@ -6288,16 +6366,19 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "debit",
               "nameOverride": undefined,
               "value": "debit",
             },
             {
+              "description": undefined,
               "generatedName": "credit",
               "nameOverride": undefined,
               "value": "credit",
             },
             {
+              "description": undefined,
               "generatedName": "both",
               "nameOverride": undefined,
               "value": "both",
@@ -6416,36 +6497,43 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "unscheduled",
               "nameOverride": undefined,
               "value": "unscheduled",
             },
             {
+              "description": undefined,
               "generatedName": "pendingApproval",
               "nameOverride": undefined,
               "value": "pendingApproval",
             },
             {
+              "description": undefined,
               "generatedName": "scheduled",
               "nameOverride": undefined,
               "value": "scheduled",
             },
             {
+              "description": undefined,
               "generatedName": "processing",
               "nameOverride": undefined,
               "value": "processing",
             },
             {
+              "description": undefined,
               "generatedName": "processed",
               "nameOverride": undefined,
               "value": "processed",
             },
             {
+              "description": undefined,
               "generatedName": "failed",
               "nameOverride": undefined,
               "value": "failed",
             },
             {
+              "description": undefined,
               "generatedName": "other",
               "nameOverride": undefined,
               "value": "other",
@@ -6493,31 +6581,37 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "internal",
               "nameOverride": undefined,
               "value": "internal",
             },
             {
+              "description": undefined,
               "generatedName": "ach",
               "nameOverride": undefined,
               "value": "ach",
             },
             {
+              "description": undefined,
               "generatedName": "achDebit",
               "nameOverride": undefined,
               "value": "achDebit",
             },
             {
+              "description": undefined,
               "generatedName": "achCredit",
               "nameOverride": undefined,
               "value": "achCredit",
             },
             {
+              "description": undefined,
               "generatedName": "domesticWireTransfer",
               "nameOverride": undefined,
               "value": "domesticWireTransfer",
             },
             {
+              "description": undefined,
               "generatedName": "internationalWireTransfer",
               "nameOverride": undefined,
               "value": "internationalWireTransfer",

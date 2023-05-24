@@ -205,6 +205,7 @@ export function convertEnumToTypeDeclaration(schema: EnumSchema): TypeDeclaratio
                 return {
                     name: enumValue.nameOverride ?? enumValue.generatedName,
                     value: enumValue.value,
+                    docs: enumValue.description ?? undefined,
                 };
             }),
         },

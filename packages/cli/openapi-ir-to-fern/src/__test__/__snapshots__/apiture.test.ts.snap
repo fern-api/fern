@@ -131,30 +131,37 @@ exports[`open api parser apiture simple 1`] = `
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "billPay",
               "value": "billPay",
             },
             {
+              "docs": undefined,
               "name": "transferFrom",
               "value": "transferFrom",
             },
             {
+              "docs": undefined,
               "name": "transferTo",
               "value": "transferTo",
             },
             {
+              "docs": undefined,
               "name": "mobileCheckDeposit",
               "value": "mobileCheckDeposit",
             },
             {
+              "docs": undefined,
               "name": "view",
               "value": "view",
             },
             {
+              "docs": undefined,
               "name": "viewCards",
               "value": "viewCards",
             },
             {
+              "docs": undefined,
               "name": "manageCards",
               "value": "manageCards",
             },
@@ -296,14 +303,17 @@ exports[`open api parser apiture simple 1`] = `
 Account transfers are only allowed between \`internal\` and \`external\` accounts. All accounts are considered when calculating total cash balance.",
           "enum": [
             {
+              "docs": undefined,
               "name": "internal",
               "value": "internal",
             },
             {
+              "docs": undefined,
               "name": "external",
               "value": "external",
             },
             {
+              "docs": undefined,
               "name": "outside",
               "value": "outside",
             },
@@ -375,10 +385,12 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "internal",
               "value": "internal",
             },
             {
+              "docs": undefined,
               "name": "external",
               "value": "external",
             },
@@ -416,18 +428,22 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "early",
               "value": "early",
             },
             {
+              "docs": undefined,
               "name": "normal",
               "value": "normal",
             },
             {
+              "docs": undefined,
               "name": "float",
               "value": "float",
             },
             {
+              "docs": undefined,
               "name": "sameDay",
               "value": "sameDay",
             },
@@ -479,42 +495,52 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "arc",
               "value": "arc",
             },
             {
+              "docs": undefined,
               "name": "boc",
               "value": "boc",
             },
             {
+              "docs": undefined,
               "name": "ccd",
               "value": "ccd",
             },
             {
+              "docs": undefined,
               "name": "cie",
               "value": "cie",
             },
             {
+              "docs": undefined,
               "name": "ctx",
               "value": "ctx",
             },
             {
+              "docs": undefined,
               "name": "pop",
               "value": "pop",
             },
             {
+              "docs": undefined,
               "name": "ppd",
               "value": "ppd",
             },
             {
+              "docs": undefined,
               "name": "rck",
               "value": "rck",
             },
             {
+              "docs": undefined,
               "name": "tel",
               "value": "tel",
             },
             {
+              "docs": undefined,
               "name": "web",
               "value": "web",
             },
@@ -660,22 +686,27 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "sms",
               "value": "sms",
             },
             {
+              "docs": undefined,
               "name": "email",
               "value": "email",
             },
             {
+              "docs": undefined,
               "name": "voice",
               "value": "voice",
             },
             {
+              "docs": undefined,
               "name": "securityQuestions",
               "value": "securityQuestions",
             },
             {
+              "docs": undefined,
               "name": "authenticatorToken",
               "value": "authenticatorToken",
             },
@@ -759,30 +790,37 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "ach",
               "value": "ach",
             },
             {
+              "docs": undefined,
               "name": "sameDayAch",
               "value": "sameDayAch",
             },
             {
+              "docs": undefined,
               "name": "domesticWireTransfer",
               "value": "domesticWireTransfer",
             },
             {
+              "docs": undefined,
               "name": "internationalWireTransfer",
               "value": "internationalWireTransfer",
             },
             {
+              "docs": undefined,
               "name": "internalTransfer",
               "value": "internalTransfer",
             },
             {
+              "docs": undefined,
               "name": "externalTransfer",
               "value": "externalTransfer",
             },
             {
+              "docs": undefined,
               "name": "billPay",
               "value": "billPay",
             },
@@ -858,14 +896,17 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "instant",
               "value": "instant",
             },
             {
+              "docs": undefined,
               "name": "microDeposits",
               "value": "microDeposits",
             },
             {
+              "docs": undefined,
               "name": "manual",
               "value": "manual",
             },
@@ -947,14 +988,17 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "abaRoutingNumber",
               "value": "abaRoutingNumber",
             },
             {
+              "docs": undefined,
               "name": "swiftBicCode",
               "value": "swiftBicCode",
             },
             {
+              "docs": undefined,
               "name": "ibanAccountNumber",
               "value": "ibanAccountNumber",
             },
@@ -1134,26 +1178,32 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "savings",
               "value": "savings",
             },
             {
+              "docs": undefined,
               "name": "checking",
               "value": "checking",
             },
             {
+              "docs": undefined,
               "name": "cd",
               "value": "cd",
             },
             {
+              "docs": undefined,
               "name": "ira",
               "value": "ira",
             },
             {
+              "docs": undefined,
               "name": "loan",
               "value": "loan",
             },
             {
+              "docs": undefined,
               "name": "creditCard",
               "value": "creditCard",
             },
@@ -1273,10 +1323,12 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "credit",
               "value": "credit",
             },
             {
+              "docs": undefined,
               "name": "debit",
               "value": "debit",
             },
@@ -1409,10 +1461,12 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "check",
               "value": "check",
             },
             {
+              "docs": undefined,
               "name": "other",
               "value": "other",
             },
@@ -1446,14 +1500,17 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "balance",
               "value": "balance",
             },
             {
+              "docs": undefined,
               "name": "debit",
               "value": "debit",
             },
             {
+              "docs": undefined,
               "name": "credit",
               "value": "credit",
             },
@@ -1565,26 +1622,32 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "pastDate",
               "value": "pastDate",
             },
             {
+              "docs": undefined,
               "name": "pastCutoffTime",
               "value": "pastCutoffTime",
             },
             {
+              "docs": undefined,
               "name": "riskRestricted",
               "value": "riskRestricted",
             },
             {
+              "docs": undefined,
               "name": "holiday",
               "value": "holiday",
             },
             {
+              "docs": undefined,
               "name": "closure",
               "value": "closure",
             },
             {
+              "docs": undefined,
               "name": "other",
               "value": "other",
             },
@@ -1696,54 +1759,67 @@ The response may include dates prior to requested the start date, as that is use
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "once",
               "value": "once",
             },
             {
+              "docs": undefined,
               "name": "occasional",
               "value": "occasional",
             },
             {
+              "docs": undefined,
               "name": "daily",
               "value": "daily",
             },
             {
+              "docs": undefined,
               "name": "weekly",
               "value": "weekly",
             },
             {
+              "docs": undefined,
               "name": "biweekly",
               "value": "biweekly",
             },
             {
+              "docs": undefined,
               "name": "semimonthly",
               "value": "semimonthly",
             },
             {
+              "docs": undefined,
               "name": "monthly",
               "value": "monthly",
             },
             {
+              "docs": undefined,
               "name": "monthlyFirstDay",
               "value": "monthlyFirstDay",
             },
             {
+              "docs": undefined,
               "name": "monthlyLastDay",
               "value": "monthlyLastDay",
             },
             {
+              "docs": undefined,
               "name": "bimonthly",
               "value": "bimonthly",
             },
             {
+              "docs": undefined,
               "name": "quarterly",
               "value": "quarterly",
             },
             {
+              "docs": undefined,
               "name": "semiyearly",
               "value": "semiyearly",
             },
             {
+              "docs": undefined,
               "name": "yearly",
               "value": "yearly",
             },
@@ -1818,10 +1894,12 @@ The response may include dates prior to requested the start date, as that is use
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "fixed",
               "value": "fixed",
             },
             {
+              "docs": undefined,
               "name": "variable",
               "value": "variable",
             },
@@ -1886,14 +1964,17 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "debit",
               "value": "debit",
             },
             {
+              "docs": undefined,
               "name": "credit",
               "value": "credit",
             },
             {
+              "docs": undefined,
               "name": "both",
               "value": "both",
             },
@@ -1968,30 +2049,37 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "unscheduled",
               "value": "unscheduled",
             },
             {
+              "docs": undefined,
               "name": "pendingApproval",
               "value": "pendingApproval",
             },
             {
+              "docs": undefined,
               "name": "scheduled",
               "value": "scheduled",
             },
             {
+              "docs": undefined,
               "name": "processing",
               "value": "processing",
             },
             {
+              "docs": undefined,
               "name": "processed",
               "value": "processed",
             },
             {
+              "docs": undefined,
               "name": "failed",
               "value": "failed",
             },
             {
+              "docs": undefined,
               "name": "other",
               "value": "other",
             },
@@ -2035,26 +2123,32 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 ",
           "enum": [
             {
+              "docs": undefined,
               "name": "internal",
               "value": "internal",
             },
             {
+              "docs": undefined,
               "name": "ach",
               "value": "ach",
             },
             {
+              "docs": undefined,
               "name": "achDebit",
               "value": "achDebit",
             },
             {
+              "docs": undefined,
               "name": "achCredit",
               "value": "achCredit",
             },
             {
+              "docs": undefined,
               "name": "domesticWireTransfer",
               "value": "domesticWireTransfer",
             },
             {
+              "docs": undefined,
               "name": "internationalWireTransfer",
               "value": "internationalWireTransfer",
             },

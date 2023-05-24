@@ -61,6 +61,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "active",
               "value": "active",
             },
@@ -254,18 +255,22 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "created",
               "value": "created",
             },
             {
+              "docs": undefined,
               "name": "running",
               "value": "running",
             },
             {
+              "docs": undefined,
               "name": "succeeded",
               "value": "succeeded",
             },
             {
+              "docs": undefined,
               "name": "failed",
               "value": "failed",
             },
@@ -289,14 +294,17 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "public",
               "value": "public",
             },
             {
+              "docs": undefined,
               "name": "private",
               "value": "private",
             },
             {
+              "docs": undefined,
               "name": "local",
               "value": "local",
             },
@@ -421,14 +429,17 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "private",
               "value": "private",
             },
             {
+              "docs": undefined,
               "name": "public",
               "value": "public",
             },
             {
+              "docs": undefined,
               "name": "local",
               "value": "local",
             },
@@ -465,18 +476,22 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "cpu",
               "value": "cpu",
             },
             {
+              "docs": undefined,
               "name": "memory",
               "value": "memory",
             },
             {
+              "docs": undefined,
               "name": "rate_egress",
               "value": "rate_egress",
             },
             {
+              "docs": undefined,
               "name": "total_egress",
               "value": "total_egress",
             },
@@ -532,18 +547,22 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "tiny",
               "value": "tiny",
             },
             {
+              "docs": undefined,
               "name": "small",
               "value": "small",
             },
             {
+              "docs": undefined,
               "name": "medium",
               "value": "medium",
             },
             {
+              "docs": undefined,
               "name": "large",
               "value": "large",
             },
@@ -667,42 +686,52 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "Seattle",
               "value": "Seattle",
             },
             {
+              "docs": undefined,
               "name": "Washington_DC",
               "value": "Washington_DC",
             },
             {
+              "docs": undefined,
               "name": "Chicago",
               "value": "Chicago",
             },
             {
+              "docs": undefined,
               "name": "London",
               "value": "London",
             },
             {
+              "docs": undefined,
               "name": "Frankfurt",
               "value": "Frankfurt",
             },
             {
+              "docs": undefined,
               "name": "Mumbai",
               "value": "Mumbai",
             },
             {
+              "docs": undefined,
               "name": "Singapore",
               "value": "Singapore",
             },
             {
+              "docs": undefined,
               "name": "Tokyo",
               "value": "Tokyo",
             },
             {
+              "docs": undefined,
               "name": "Sydney",
               "value": "Sydney",
             },
             {
+              "docs": undefined,
               "name": "Sao_Paulo",
               "value": "Sao_Paulo",
             },
@@ -766,18 +795,22 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "scheduling",
               "value": "scheduling",
             },
             {
+              "docs": undefined,
               "name": "active",
               "value": "active",
             },
             {
+              "docs": undefined,
               "name": "suspended",
               "value": "suspended",
             },
             {
+              "docs": undefined,
               "name": "destroyed",
               "value": "destroyed",
             },
@@ -804,6 +837,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "starting",
               "value": "starting",
             },
@@ -817,14 +851,17 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "enum": [
             {
+              "docs": undefined,
               "name": "tcp",
               "value": "tcp",
             },
             {
+              "docs": undefined,
               "name": "udp",
               "value": "udp",
             },
             {
+              "docs": undefined,
               "name": "tls",
               "value": "tls",
             },

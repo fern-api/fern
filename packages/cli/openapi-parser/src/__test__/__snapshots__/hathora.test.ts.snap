@@ -1878,16 +1878,19 @@ exports[`open api parser hathora parse open api 1`] = `
                     "type": "enum",
                     "values": [
                       {
+                        "description": undefined,
                         "generatedName": "public",
                         "nameOverride": undefined,
                         "value": "public",
                       },
                       {
+                        "description": undefined,
                         "generatedName": "private",
                         "nameOverride": undefined,
                         "value": "private",
                       },
                       {
+                        "description": undefined,
                         "generatedName": "local",
                         "nameOverride": undefined,
                         "value": "local",
@@ -3299,6 +3302,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "active",
                     "nameOverride": undefined,
                     "value": "active",
@@ -3638,21 +3642,25 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "created",
                     "nameOverride": undefined,
                     "value": "created",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "running",
                     "nameOverride": undefined,
                     "value": "running",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "succeeded",
                     "nameOverride": undefined,
                     "value": "succeeded",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "failed",
                     "nameOverride": undefined,
                     "value": "failed",
@@ -4115,16 +4123,19 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "private",
                     "nameOverride": undefined,
                     "value": "private",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "public",
                     "nameOverride": undefined,
                     "value": "public",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "local",
                     "nameOverride": undefined,
                     "value": "local",
@@ -4178,21 +4189,25 @@ exports[`open api parser hathora parse open api 1`] = `
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "cpu",
               "nameOverride": undefined,
               "value": "cpu",
             },
             {
+              "description": undefined,
               "generatedName": "memory",
               "nameOverride": undefined,
               "value": "memory",
             },
             {
+              "description": undefined,
               "generatedName": "rate_egress",
               "nameOverride": undefined,
               "value": "rate_egress",
             },
             {
+              "description": undefined,
               "generatedName": "total_egress",
               "nameOverride": undefined,
               "value": "total_egress",
@@ -4321,21 +4336,25 @@ exports[`open api parser hathora parse open api 1`] = `
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "tiny",
               "nameOverride": undefined,
               "value": "tiny",
             },
             {
+              "description": undefined,
               "generatedName": "small",
               "nameOverride": undefined,
               "value": "small",
             },
             {
+              "description": undefined,
               "generatedName": "medium",
               "nameOverride": undefined,
               "value": "medium",
             },
             {
+              "description": undefined,
               "generatedName": "large",
               "nameOverride": undefined,
               "value": "large",
@@ -4703,51 +4722,61 @@ exports[`open api parser hathora parse open api 1`] = `
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "Seattle",
               "nameOverride": undefined,
               "value": "Seattle",
             },
             {
+              "description": undefined,
               "generatedName": "Washington_DC",
               "nameOverride": undefined,
               "value": "Washington_DC",
             },
             {
+              "description": undefined,
               "generatedName": "Chicago",
               "nameOverride": undefined,
               "value": "Chicago",
             },
             {
+              "description": undefined,
               "generatedName": "London",
               "nameOverride": undefined,
               "value": "London",
             },
             {
+              "description": undefined,
               "generatedName": "Frankfurt",
               "nameOverride": undefined,
               "value": "Frankfurt",
             },
             {
+              "description": undefined,
               "generatedName": "Mumbai",
               "nameOverride": undefined,
               "value": "Mumbai",
             },
             {
+              "description": undefined,
               "generatedName": "Singapore",
               "nameOverride": undefined,
               "value": "Singapore",
             },
             {
+              "description": undefined,
               "generatedName": "Tokyo",
               "nameOverride": undefined,
               "value": "Tokyo",
             },
             {
+              "description": undefined,
               "generatedName": "Sydney",
               "nameOverride": undefined,
               "value": "Sydney",
             },
             {
+              "description": undefined,
               "generatedName": "Sao_Paulo",
               "nameOverride": undefined,
               "value": "Sao_Paulo",
@@ -4911,21 +4940,25 @@ exports[`open api parser hathora parse open api 1`] = `
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "scheduling",
               "nameOverride": undefined,
               "value": "scheduling",
             },
             {
+              "description": undefined,
               "generatedName": "active",
               "nameOverride": undefined,
               "value": "active",
             },
             {
+              "description": undefined,
               "generatedName": "suspended",
               "nameOverride": undefined,
               "value": "suspended",
             },
             {
+              "description": undefined,
               "generatedName": "destroyed",
               "nameOverride": undefined,
               "value": "destroyed",
@@ -4956,6 +4989,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "starting",
                     "nameOverride": undefined,
                     "value": "starting",
@@ -4985,16 +5019,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "tcp",
               "nameOverride": undefined,
               "value": "tcp",
             },
             {
+              "description": undefined,
               "generatedName": "udp",
               "nameOverride": undefined,
               "value": "udp",
             },
             {
+              "description": undefined,
               "generatedName": "tls",
               "nameOverride": undefined,
               "value": "tls",

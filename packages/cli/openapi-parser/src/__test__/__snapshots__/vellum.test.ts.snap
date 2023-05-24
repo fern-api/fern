@@ -736,16 +736,19 @@ Upload a document to be indexed and used for search.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "LENGTH",
               "nameOverride": undefined,
               "value": "LENGTH",
             },
             {
+              "description": undefined,
               "generatedName": "STOP",
               "nameOverride": undefined,
               "value": "STOP",
             },
             {
+              "description": undefined,
               "generatedName": "UNKNOWN",
               "nameOverride": undefined,
               "value": "UNKNOWN",
@@ -1044,26 +1047,31 @@ Upload a document to be indexed and used for search.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "AWAITING_PROCESSING",
               "nameOverride": undefined,
               "value": "AWAITING_PROCESSING",
             },
             {
+              "description": undefined,
               "generatedName": "QUEUED",
               "nameOverride": undefined,
               "value": "QUEUED",
             },
             {
+              "description": undefined,
               "generatedName": "INDEXING",
               "nameOverride": undefined,
               "value": "INDEXING",
             },
             {
+              "description": undefined,
               "generatedName": "INDEXED",
               "nameOverride": undefined,
               "value": "INDEXED",
             },
             {
+              "description": undefined,
               "generatedName": "FAILED",
               "nameOverride": undefined,
               "value": "FAILED",
@@ -1077,11 +1085,13 @@ Upload a document to be indexed and used for search.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "ALL",
               "nameOverride": undefined,
               "value": "ALL",
             },
             {
+              "description": undefined,
               "generatedName": "NONE",
               "nameOverride": undefined,
               "value": "NONE",
@@ -1095,11 +1105,13 @@ Upload a document to be indexed and used for search.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "GENERATE",
               "nameOverride": undefined,
               "value": "GENERATE",
             },
             {
+              "description": undefined,
               "generatedName": "CLASSIFY",
               "nameOverride": undefined,
               "value": "CLASSIFY",
@@ -1650,21 +1662,25 @@ Upload a document to be indexed and used for search.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "QUEUED",
               "nameOverride": undefined,
               "value": "QUEUED",
             },
             {
+              "description": undefined,
               "generatedName": "PROCESSING",
               "nameOverride": undefined,
               "value": "PROCESSING",
             },
             {
+              "description": undefined,
               "generatedName": "PROCESSED",
               "nameOverride": undefined,
               "value": "PROCESSED",
             },
             {
+              "description": undefined,
               "generatedName": "FAILED",
               "nameOverride": undefined,
               "value": "FAILED",
@@ -1678,16 +1694,19 @@ Upload a document to be indexed and used for search.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "OPENAI",
               "nameOverride": undefined,
               "value": "OPENAI",
             },
             {
+              "description": undefined,
               "generatedName": "COHERE",
               "nameOverride": undefined,
               "value": "COHERE",
             },
             {
+              "description": undefined,
               "generatedName": "ANTHROPIC",
               "nameOverride": undefined,
               "value": "ANTHROPIC",
@@ -2181,6 +2200,7 @@ Upload a document to be indexed and used for search.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "ACTIVE",
               "nameOverride": undefined,
               "value": "ACTIVE",
