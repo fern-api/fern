@@ -2238,9 +2238,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "name": "AccountsListAccountBalancesRequest",
               "query-parameters": {
                 "accounts": {
-                  "allow-multiple": undefined,
+                  "allow-multiple": true,
                   "docs": "The unique account identifiers of one or more internal accounts. (Internal accounts are those with \`location\` value of \`internal\`.) If omitted, this operation uses the accounts for which the customer has view permissions but is limited to at most 1000 accounts. Note: The account IDs are unrelated to the account number.",
-                  "type": "optional<root.accountIds>",
+                  "type": "optional<root.resourceId>",
                 },
                 "retryCount": {
                   "allow-multiple": undefined,
