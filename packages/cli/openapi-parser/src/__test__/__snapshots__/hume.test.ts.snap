@@ -479,146 +479,175 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "zh",
               "nameOverride": undefined,
               "value": "zh",
             },
             {
+              "description": undefined,
               "generatedName": "da",
               "nameOverride": undefined,
               "value": "da",
             },
             {
+              "description": undefined,
               "generatedName": "nl",
               "nameOverride": undefined,
               "value": "nl",
             },
             {
+              "description": undefined,
               "generatedName": "en",
               "nameOverride": undefined,
               "value": "en",
             },
             {
+              "description": undefined,
               "generatedName": "EnAu",
               "nameOverride": undefined,
               "value": "en-AU",
             },
             {
+              "description": undefined,
               "generatedName": "EnIn",
               "nameOverride": undefined,
               "value": "en-IN",
             },
             {
+              "description": undefined,
               "generatedName": "EnNz",
               "nameOverride": undefined,
               "value": "en-NZ",
             },
             {
+              "description": undefined,
               "generatedName": "EnGb",
               "nameOverride": undefined,
               "value": "en-GB",
             },
             {
+              "description": undefined,
               "generatedName": "fr",
               "nameOverride": undefined,
               "value": "fr",
             },
             {
+              "description": undefined,
               "generatedName": "FrCa",
               "nameOverride": undefined,
               "value": "fr-CA",
             },
             {
+              "description": undefined,
               "generatedName": "de",
               "nameOverride": undefined,
               "value": "de",
             },
             {
+              "description": undefined,
               "generatedName": "hi",
               "nameOverride": undefined,
               "value": "hi",
             },
             {
+              "description": undefined,
               "generatedName": "HiLatn",
               "nameOverride": undefined,
               "value": "hi-Latn",
             },
             {
+              "description": undefined,
               "generatedName": "id",
               "nameOverride": undefined,
               "value": "id",
             },
             {
+              "description": undefined,
               "generatedName": "it",
               "nameOverride": undefined,
               "value": "it",
             },
             {
+              "description": undefined,
               "generatedName": "ja",
               "nameOverride": undefined,
               "value": "ja",
             },
             {
+              "description": undefined,
               "generatedName": "ko",
               "nameOverride": undefined,
               "value": "ko",
             },
             {
+              "description": undefined,
               "generatedName": "no",
               "nameOverride": undefined,
               "value": "no",
             },
             {
+              "description": undefined,
               "generatedName": "pl",
               "nameOverride": undefined,
               "value": "pl",
             },
             {
+              "description": undefined,
               "generatedName": "pt",
               "nameOverride": undefined,
               "value": "pt",
             },
             {
+              "description": undefined,
               "generatedName": "PtBr",
               "nameOverride": undefined,
               "value": "pt-BR",
             },
             {
+              "description": undefined,
               "generatedName": "PtPt",
               "nameOverride": undefined,
               "value": "pt-PT",
             },
             {
+              "description": undefined,
               "generatedName": "ru",
               "nameOverride": undefined,
               "value": "ru",
             },
             {
+              "description": undefined,
               "generatedName": "es",
               "nameOverride": undefined,
               "value": "es",
             },
             {
+              "description": undefined,
               "generatedName": "Es419",
               "nameOverride": undefined,
               "value": "es-419",
             },
             {
+              "description": undefined,
               "generatedName": "sv",
               "nameOverride": undefined,
               "value": "sv",
             },
             {
+              "description": undefined,
               "generatedName": "ta",
               "nameOverride": undefined,
               "value": "ta",
             },
             {
+              "description": undefined,
               "generatedName": "tr",
               "nameOverride": undefined,
               "value": "tr",
             },
             {
+              "description": undefined,
               "generatedName": "uk",
               "nameOverride": undefined,
               "value": "uk",
@@ -833,11 +862,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "asc",
               "nameOverride": undefined,
               "value": "asc",
             },
             {
+              "description": undefined,
               "generatedName": "desc",
               "nameOverride": undefined,
               "value": "desc",
@@ -1308,21 +1339,25 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "word",
               "nameOverride": undefined,
               "value": "word",
             },
             {
+              "description": undefined,
               "generatedName": "sentence",
               "nameOverride": undefined,
               "value": "sentence",
             },
             {
+              "description": undefined,
               "generatedName": "utterance",
               "nameOverride": undefined,
               "value": "utterance",
             },
             {
+              "description": undefined,
               "generatedName": "conversational_turn",
               "nameOverride": undefined,
               "value": "conversational_turn",
@@ -2895,16 +2930,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "created",
               "nameOverride": undefined,
               "value": "created",
             },
             {
+              "description": undefined,
               "generatedName": "started",
               "nameOverride": undefined,
               "value": "started",
             },
             {
+              "description": undefined,
               "generatedName": "ended",
               "nameOverride": undefined,
               "value": "ended",
@@ -3176,21 +3214,25 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "QUEUED",
               "nameOverride": undefined,
               "value": "QUEUED",
             },
             {
+              "description": undefined,
               "generatedName": "IN_PROGRESS",
               "nameOverride": undefined,
               "value": "IN_PROGRESS",
             },
             {
+              "description": undefined,
               "generatedName": "COMPLETED",
               "nameOverride": undefined,
               "value": "COMPLETED",
             },
             {
+              "description": undefined,
               "generatedName": "FAILED",
               "nameOverride": undefined,
               "value": "FAILED",
@@ -3347,11 +3389,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "created_before",
               "nameOverride": undefined,
               "value": "created_before",
             },
             {
+              "description": undefined,
               "generatedName": "created_after",
               "nameOverride": undefined,
               "value": "created_after",

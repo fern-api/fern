@@ -80,6 +80,7 @@ function convertSchemaObject(
         return convertEnum({
             nameOverride,
             generatedName,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             fernEnumConfig: (schema as any)["x-fern-enum"] as FernEnumConfig | undefined,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             enumNames: (schema as any)["x-enum-names"] as Record<string, string> | undefined,

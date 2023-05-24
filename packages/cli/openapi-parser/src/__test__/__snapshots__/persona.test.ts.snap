@@ -43754,11 +43754,13 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
                                     "type": "enum",
                                     "values": [
                                       {
+                                        "description": undefined,
                                         "generatedName": "entity",
                                         "nameOverride": undefined,
                                         "value": "entity",
                                       },
                                       {
+                                        "description": undefined,
                                         "generatedName": "media",
                                         "nameOverride": undefined,
                                         "value": "media",

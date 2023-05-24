@@ -4124,11 +4124,13 @@ authentication connection.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "disable",
               "nameOverride": undefined,
               "value": "disable",
             },
             {
+              "description": undefined,
               "generatedName": "enable",
               "nameOverride": undefined,
               "value": "enable",
@@ -4144,26 +4146,31 @@ for each authentication connection will depend on the type value.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "google_apps",
               "nameOverride": undefined,
               "value": "google_apps",
             },
             {
+              "description": undefined,
               "generatedName": "oidc",
               "nameOverride": undefined,
               "value": "oidc",
             },
             {
+              "description": undefined,
               "generatedName": "samlp",
               "nameOverride": undefined,
               "value": "samlp",
             },
             {
+              "description": undefined,
               "generatedName": "social",
               "nameOverride": undefined,
               "value": "social",
             },
             {
+              "description": undefined,
               "generatedName": "waad",
               "nameOverride": undefined,
               "value": "waad",
@@ -4323,11 +4330,13 @@ token. Only applicable for application access tokens.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthGrantTypeTokenIssue",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:grant-type:token-issue",
             },
             {
+              "description": undefined,
               "generatedName": "UrnIetfParamsOauthGrantTypeTokenExchange",
               "nameOverride": undefined,
               "value": "urn:ietf:params:oauth:grant-type:token-exchange",
@@ -4341,46 +4350,55 @@ token. Only applicable for application access tokens.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeAat",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:aat",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeAatPublic",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:aat:public",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeDev",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:dev",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypePat",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:pat",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeRev",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:rev",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeSession",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:session",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeSessionDev0",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:session:dev0",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeSys",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:sys",
             },
             {
+              "description": undefined,
               "generatedName": "UrnIetfParamsOauthTokenTypeJwt",
               "nameOverride": undefined,
               "value": "urn:ietf:params:oauth:token-type:jwt",
@@ -4394,16 +4412,19 @@ token. Only applicable for application access tokens.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "active",
               "nameOverride": undefined,
               "value": "active",
             },
             {
+              "description": undefined,
               "generatedName": "expired",
               "nameOverride": undefined,
               "value": "expired",
             },
             {
+              "description": undefined,
               "generatedName": "revoked",
               "nameOverride": undefined,
               "value": "revoked",
@@ -4417,36 +4438,43 @@ token. Only applicable for application access tokens.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeJwtAuth0",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:jwt:auth0",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeJwtDev",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:jwt:dev",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeRevinfo",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:revinfo",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeSysu",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:sysu",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeUserinfo",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:userinfo",
             },
             {
+              "description": undefined,
               "generatedName": "UrnDevrevParamsOauthTokenTypeUserinfoProfile",
               "nameOverride": undefined,
               "value": "urn:devrev:params:oauth:token-type:userinfo:profile",
             },
             {
+              "description": undefined,
               "generatedName": "UrnIetfParamsOauthTokenTypeJwt",
               "nameOverride": undefined,
               "value": "urn:ietf:params:oauth:token-type:jwt",
@@ -4461,6 +4489,7 @@ token. Only applicable for application access tokens.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "bearer",
               "nameOverride": undefined,
               "value": "bearer",
@@ -5169,21 +5198,25 @@ authentication connections have different configuration parameters.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "google_apps",
               "nameOverride": undefined,
               "value": "google_apps",
             },
             {
+              "description": undefined,
               "generatedName": "oidc",
               "nameOverride": undefined,
               "value": "oidc",
             },
             {
+              "description": undefined,
               "generatedName": "samlp",
               "nameOverride": undefined,
               "value": "samlp",
             },
             {
+              "description": undefined,
               "generatedName": "waad",
               "nameOverride": undefined,
               "value": "waad",
@@ -5425,26 +5458,31 @@ that can be updated.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "google_apps",
               "nameOverride": undefined,
               "value": "google_apps",
             },
             {
+              "description": undefined,
               "generatedName": "none",
               "nameOverride": undefined,
               "value": "none",
             },
             {
+              "description": undefined,
               "generatedName": "oidc",
               "nameOverride": undefined,
               "value": "oidc",
             },
             {
+              "description": undefined,
               "generatedName": "samlp",
               "nameOverride": undefined,
               "value": "samlp",
             },
             {
+              "description": undefined,
               "generatedName": "waad",
               "nameOverride": undefined,
               "value": "waad",
@@ -5775,26 +5813,31 @@ sort order. If not set, then no prior elements exist.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "bad_request",
               "nameOverride": undefined,
               "value": "bad_request",
             },
             {
+              "description": undefined,
               "generatedName": "invalid_enum_value",
               "nameOverride": undefined,
               "value": "invalid_enum_value",
             },
             {
+              "description": undefined,
               "generatedName": "missing_required_field",
               "nameOverride": undefined,
               "value": "missing_required_field",
             },
             {
+              "description": undefined,
               "generatedName": "parse_error",
               "nameOverride": undefined,
               "value": "parse_error",
             },
             {
+              "description": undefined,
               "generatedName": "value_not_permitted",
               "nameOverride": undefined,
               "value": "value_not_permitted",
@@ -5907,6 +5950,7 @@ sort order. If not set, then no prior elements exist.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "forbidden",
               "nameOverride": undefined,
               "value": "forbidden",
@@ -5977,6 +6021,7 @@ inquiry.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "internal_error",
               "nameOverride": undefined,
               "value": "internal_error",
@@ -6030,6 +6075,7 @@ inquiry.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "not_found",
               "nameOverride": undefined,
               "value": "not_found",
@@ -6083,6 +6129,7 @@ inquiry.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "service_unavailable",
               "nameOverride": undefined,
               "value": "service_unavailable",
@@ -6152,6 +6199,7 @@ inquiry.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "too_many_requests",
               "nameOverride": undefined,
               "value": "too_many_requests",
@@ -6195,6 +6243,7 @@ inquiry.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "unauthenticated",
               "nameOverride": undefined,
               "value": "unauthenticated",
@@ -6658,21 +6707,25 @@ inquiry.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "p0",
               "nameOverride": undefined,
               "value": "p0",
             },
             {
+              "description": undefined,
               "generatedName": "p1",
               "nameOverride": undefined,
               "value": "p1",
             },
             {
+              "description": undefined,
               "generatedName": "p2",
               "nameOverride": undefined,
               "value": "p2",
             },
             {
+              "description": undefined,
               "generatedName": "p3",
               "nameOverride": undefined,
               "value": "p3",
@@ -6691,11 +6744,13 @@ always be returned in the specified sort-by order.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "after",
               "nameOverride": undefined,
               "value": "after",
             },
             {
+              "description": undefined,
               "generatedName": "before",
               "nameOverride": undefined,
               "value": "before",
@@ -6776,16 +6831,19 @@ always be returned in the specified sort-by order.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "production",
               "nameOverride": undefined,
               "value": "production",
             },
             {
+              "description": undefined,
               "generatedName": "staging",
               "nameOverride": undefined,
               "value": "staging",
             },
             {
+              "description": undefined,
               "generatedName": "test",
               "nameOverride": undefined,
               "value": "test",
@@ -6820,6 +6878,7 @@ always be returned in the specified sort-by order.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "rev_org",
               "nameOverride": undefined,
               "value": "rev_org",
@@ -7052,21 +7111,25 @@ always be returned in the specified sort-by order.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "capability",
               "nameOverride": undefined,
               "value": "capability",
             },
             {
+              "description": undefined,
               "generatedName": "enhancement",
               "nameOverride": undefined,
               "value": "enhancement",
             },
             {
+              "description": undefined,
               "generatedName": "feature",
               "nameOverride": undefined,
               "value": "feature",
             },
             {
+              "description": undefined,
               "generatedName": "product",
               "nameOverride": undefined,
               "value": "product",
@@ -8745,21 +8808,25 @@ tags.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "blocker",
               "nameOverride": undefined,
               "value": "blocker",
             },
             {
+              "description": undefined,
               "generatedName": "high",
               "nameOverride": undefined,
               "value": "high",
             },
             {
+              "description": undefined,
               "generatedName": "low",
               "nameOverride": undefined,
               "value": "low",
             },
             {
+              "description": undefined,
               "generatedName": "medium",
               "nameOverride": undefined,
               "value": "medium",
@@ -8862,11 +8929,13 @@ will appear in the response.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "snap_kit",
               "nameOverride": undefined,
               "value": "snap_kit",
             },
             {
+              "description": undefined,
               "generatedName": "text",
               "nameOverride": undefined,
               "value": "text",
@@ -9004,6 +9073,7 @@ will appear in the response.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "timeline_comment",
               "nameOverride": undefined,
               "value": "timeline_comment",
@@ -9295,6 +9365,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "timeline_comment",
               "nameOverride": undefined,
               "value": "timeline_comment",
@@ -9358,6 +9429,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "timeline_comment",
               "nameOverride": undefined,
               "value": "timeline_comment",
@@ -9374,6 +9446,7 @@ default visibility.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "private",
               "nameOverride": undefined,
               "value": "private",
@@ -9598,26 +9671,31 @@ default visibility.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "active",
               "nameOverride": undefined,
               "value": "active",
             },
             {
+              "description": undefined,
               "generatedName": "deactivated",
               "nameOverride": undefined,
               "value": "deactivated",
             },
             {
+              "description": undefined,
               "generatedName": "locked",
               "nameOverride": undefined,
               "value": "locked",
             },
             {
+              "description": undefined,
               "generatedName": "shadow",
               "nameOverride": undefined,
               "value": "shadow",
             },
             {
+              "description": undefined,
               "generatedName": "unassigned",
               "nameOverride": undefined,
               "value": "unassigned",
@@ -9668,16 +9746,19 @@ default visibility.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "dev_user",
               "nameOverride": undefined,
               "value": "dev_user",
             },
             {
+              "description": undefined,
               "generatedName": "rev_user",
               "nameOverride": undefined,
               "value": "rev_user",
             },
             {
+              "description": undefined,
               "generatedName": "sys_user",
               "nameOverride": undefined,
               "value": "sys_user",
@@ -10159,96 +10240,115 @@ be set for other request types.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "part_created",
               "nameOverride": undefined,
               "value": "part_created",
             },
             {
+              "description": undefined,
               "generatedName": "part_deleted",
               "nameOverride": undefined,
               "value": "part_deleted",
             },
             {
+              "description": undefined,
               "generatedName": "part_updated",
               "nameOverride": undefined,
               "value": "part_updated",
             },
             {
+              "description": undefined,
               "generatedName": "rev_org_created",
               "nameOverride": undefined,
               "value": "rev_org_created",
             },
             {
+              "description": undefined,
               "generatedName": "rev_org_deleted",
               "nameOverride": undefined,
               "value": "rev_org_deleted",
             },
             {
+              "description": undefined,
               "generatedName": "rev_org_updated",
               "nameOverride": undefined,
               "value": "rev_org_updated",
             },
             {
+              "description": undefined,
               "generatedName": "tag_created",
               "nameOverride": undefined,
               "value": "tag_created",
             },
             {
+              "description": undefined,
               "generatedName": "tag_deleted",
               "nameOverride": undefined,
               "value": "tag_deleted",
             },
             {
+              "description": undefined,
               "generatedName": "tag_updated",
               "nameOverride": undefined,
               "value": "tag_updated",
             },
             {
+              "description": undefined,
               "generatedName": "timeline_entry_created",
               "nameOverride": undefined,
               "value": "timeline_entry_created",
             },
             {
+              "description": undefined,
               "generatedName": "timeline_entry_deleted",
               "nameOverride": undefined,
               "value": "timeline_entry_deleted",
             },
             {
+              "description": undefined,
               "generatedName": "timeline_entry_updated",
               "nameOverride": undefined,
               "value": "timeline_entry_updated",
             },
             {
+              "description": undefined,
               "generatedName": "verify",
               "nameOverride": undefined,
               "value": "verify",
             },
             {
+              "description": undefined,
               "generatedName": "webhook_created",
               "nameOverride": undefined,
               "value": "webhook_created",
             },
             {
+              "description": undefined,
               "generatedName": "webhook_deleted",
               "nameOverride": undefined,
               "value": "webhook_deleted",
             },
             {
+              "description": undefined,
               "generatedName": "webhook_updated",
               "nameOverride": undefined,
               "value": "webhook_updated",
             },
             {
+              "description": undefined,
               "generatedName": "work_created",
               "nameOverride": undefined,
               "value": "work_created",
             },
             {
+              "description": undefined,
               "generatedName": "work_deleted",
               "nameOverride": undefined,
               "value": "work_deleted",
             },
             {
+              "description": undefined,
               "generatedName": "work_updated",
               "nameOverride": undefined,
               "value": "work_updated",
@@ -10282,16 +10382,19 @@ be set for other request types.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "active",
               "nameOverride": undefined,
               "value": "active",
             },
             {
+              "description": undefined,
               "generatedName": "inactive",
               "nameOverride": undefined,
               "value": "inactive",
             },
             {
+              "description": undefined,
               "generatedName": "unverified",
               "nameOverride": undefined,
               "value": "unverified",
@@ -10461,11 +10564,13 @@ response.
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "activate",
               "nameOverride": undefined,
               "value": "activate",
             },
             {
+              "description": undefined,
               "generatedName": "deactivate",
               "nameOverride": undefined,
               "value": "deactivate",
@@ -10864,11 +10969,13 @@ event types. Note this is mutually exclusive with 'add' and
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "issue",
               "nameOverride": undefined,
               "value": "issue",
             },
             {
+              "description": undefined,
               "generatedName": "ticket",
               "nameOverride": undefined,
               "value": "ticket",

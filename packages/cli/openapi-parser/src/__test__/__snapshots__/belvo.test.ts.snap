@@ -12561,11 +12561,13 @@ For example:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "ACTIVE",
                       "nameOverride": undefined,
                       "value": "ACTIVE",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "INACTIVE",
                       "nameOverride": undefined,
                       "value": "INACTIVE",
@@ -12590,11 +12592,13 @@ For example:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "created_at",
                       "nameOverride": "Ascending",
                       "value": "created_at",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "CreatedAt",
                       "nameOverride": "Descending",
                       "value": "-created_at",
@@ -17895,16 +17899,19 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "type": "enum",
                 "values": [
                   {
+                    "description": undefined,
                     "generatedName": "PENDING",
                     "nameOverride": undefined,
                     "value": "PENDING",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "SUCCEEDED",
                     "nameOverride": undefined,
                     "value": "SUCCEEDED",
                   },
                   {
+                    "description": undefined,
                     "generatedName": "FAILED",
                     "nameOverride": undefined,
                     "value": "FAILED",
@@ -20970,11 +20977,13 @@ We return one of the following enum values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "INDIVIDUAL",
               "nameOverride": undefined,
               "value": "INDIVIDUAL",
             },
             {
+              "description": undefined,
               "generatedName": "BUSINESS",
               "nameOverride": undefined,
               "value": "BUSINESS",
@@ -20988,6 +20997,7 @@ We return one of the following enum values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "BUSINESS",
               "nameOverride": undefined,
               "value": "BUSINESS",
@@ -21005,16 +21015,19 @@ We return one of the following enum values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "CHECKINGS",
               "nameOverride": undefined,
               "value": "CHECKINGS",
             },
             {
+              "description": undefined,
               "generatedName": "SAVINGS",
               "nameOverride": undefined,
               "value": "SAVINGS",
             },
             {
+              "description": undefined,
               "generatedName": "SALARY",
               "nameOverride": undefined,
               "value": "SALARY",
@@ -21033,21 +21046,25 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "CHECKING_ACCOUNT",
               "nameOverride": undefined,
               "value": "CHECKING_ACCOUNT",
             },
             {
+              "description": undefined,
               "generatedName": "CREDIT_CARD",
               "nameOverride": undefined,
               "value": "CREDIT_CARD",
             },
             {
+              "description": undefined,
               "generatedName": "LOAN_ACCOUNT",
               "nameOverride": undefined,
               "value": "LOAN_ACCOUNT",
             },
             {
+              "description": undefined,
               "generatedName": "SAVINGS_ACCOUNT",
               "nameOverride": undefined,
               "value": "SAVINGS_ACCOUNT",
@@ -21065,11 +21082,13 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "INDIVIDUAL",
               "nameOverride": undefined,
               "value": "INDIVIDUAL",
             },
             {
+              "description": undefined,
               "generatedName": "BUSINESS",
               "nameOverride": undefined,
               "value": "BUSINESS",
@@ -21313,11 +21332,13 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "INFLOW",
               "nameOverride": undefined,
               "value": "INFLOW",
             },
             {
+              "description": undefined,
               "generatedName": "OUTFLOW",
               "nameOverride": undefined,
               "value": "OUTFLOW",
@@ -21334,11 +21355,13 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "CPF",
               "nameOverride": undefined,
               "value": "CPF",
             },
             {
+              "description": undefined,
               "generatedName": "CNPJ",
               "nameOverride": undefined,
               "value": "CNPJ",
@@ -21355,26 +21378,31 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "CC",
               "nameOverride": undefined,
               "value": "CC",
             },
             {
+              "description": undefined,
               "generatedName": "PP",
               "nameOverride": undefined,
               "value": "PP",
             },
             {
+              "description": undefined,
               "generatedName": "CE",
               "nameOverride": undefined,
               "value": "CE",
             },
             {
+              "description": undefined,
               "generatedName": "TI",
               "nameOverride": undefined,
               "value": "TI",
             },
             {
+              "description": undefined,
               "generatedName": "NIT",
               "nameOverride": undefined,
               "value": "NIT",
@@ -21395,11 +21423,13 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "INDIVIDUAL",
               "nameOverride": undefined,
               "value": "INDIVIDUAL",
             },
             {
+              "description": undefined,
               "generatedName": "BUSINESS",
               "nameOverride": undefined,
               "value": "BUSINESS",
@@ -21424,11 +21454,13 @@ Can be either:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "NSS",
                 "nameOverride": undefined,
                 "value": "NSS",
               },
               {
+                "description": undefined,
                 "generatedName": "CURP",
                 "nameOverride": undefined,
                 "value": "CURP",
@@ -21448,11 +21480,13 @@ Can be either:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "EMPLOYED",
                 "nameOverride": undefined,
                 "value": "EMPLOYED",
               },
               {
+                "description": undefined,
                 "generatedName": "UNEMPLOYED",
                 "nameOverride": undefined,
                 "value": "UNEMPLOYED",
@@ -21475,31 +21509,37 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "DISMISSED_RESIGNED",
               "nameOverride": undefined,
               "value": "DISMISSED_RESIGNED",
             },
             {
+              "description": undefined,
               "generatedName": "SALARY_MODIFICATION",
               "nameOverride": undefined,
               "value": "SALARY_MODIFICATION",
             },
             {
+              "description": undefined,
               "generatedName": "HIRED",
               "nameOverride": undefined,
               "value": "HIRED",
             },
             {
+              "description": undefined,
               "generatedName": "VOLUNTARY_CONTRIBUTION",
               "nameOverride": undefined,
               "value": "VOLUNTARY_CONTRIBUTION",
             },
             {
+              "description": undefined,
               "generatedName": "ABSENCE",
               "nameOverride": undefined,
               "value": "ABSENCE",
             },
             {
+              "description": undefined,
               "generatedName": "SICK_LEAVE",
               "nameOverride": undefined,
               "value": "SICK_LEAVE",
@@ -21520,16 +21560,19 @@ You can send through one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "HIGH",
               "nameOverride": undefined,
               "value": "HIGH",
             },
             {
+              "description": undefined,
               "generatedName": "MEDIUM",
               "nameOverride": undefined,
               "value": "MEDIUM",
             },
             {
+              "description": undefined,
               "generatedName": "LOW",
               "nameOverride": undefined,
               "value": "LOW",
@@ -21547,6 +21590,7 @@ We return one of the following enum values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "BANK",
               "nameOverride": undefined,
               "value": "BANK",
@@ -21567,16 +21611,19 @@ We return one of the following enum values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "HIGH",
               "nameOverride": undefined,
               "value": "HIGH",
             },
             {
+              "description": undefined,
               "generatedName": "MEDIUM",
               "nameOverride": undefined,
               "value": "MEDIUM",
             },
             {
+              "description": undefined,
               "generatedName": "LOW",
               "nameOverride": undefined,
               "value": "LOW",
@@ -21599,26 +21646,31 @@ We return one of the following enum values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "MONTHLY",
               "nameOverride": undefined,
               "value": "MONTHLY",
             },
             {
+              "description": undefined,
               "generatedName": "FORTNIGHTLY",
               "nameOverride": undefined,
               "value": "FORTNIGHTLY",
             },
             {
+              "description": undefined,
               "generatedName": "WEEKLY",
               "nameOverride": undefined,
               "value": "WEEKLY",
             },
             {
+              "description": undefined,
               "generatedName": "IRREGULAR",
               "nameOverride": undefined,
               "value": "IRREGULAR",
             },
             {
+              "description": undefined,
               "generatedName": "SINGLE",
               "nameOverride": undefined,
               "value": "SINGLE",
@@ -21646,51 +21698,61 @@ We return one of the following enum values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "SALARY",
               "nameOverride": undefined,
               "value": "SALARY",
             },
             {
+              "description": undefined,
               "generatedName": "GOVERNMENT",
               "nameOverride": undefined,
               "value": "GOVERNMENT",
             },
             {
+              "description": undefined,
               "generatedName": "INTEREST",
               "nameOverride": undefined,
               "value": "INTEREST",
             },
             {
+              "description": undefined,
               "generatedName": "RENT",
               "nameOverride": undefined,
               "value": "RENT",
             },
             {
+              "description": undefined,
               "generatedName": "RETIREMENT",
               "nameOverride": undefined,
               "value": "RETIREMENT",
             },
             {
+              "description": undefined,
               "generatedName": "FREELANCE",
               "nameOverride": undefined,
               "value": "FREELANCE",
             },
             {
+              "description": undefined,
               "generatedName": "ALTERNATIVE_INCOME",
               "nameOverride": undefined,
               "value": "ALTERNATIVE_INCOME",
             },
             {
+              "description": undefined,
               "generatedName": "TRANSFER",
               "nameOverride": undefined,
               "value": "TRANSFER",
             },
             {
+              "description": undefined,
               "generatedName": "DEPOSIT",
               "nameOverride": undefined,
               "value": "DEPOSIT",
             },
             {
+              "description": undefined,
               "generatedName": "UNKNOWN",
               "nameOverride": undefined,
               "value": "UNKNOWN",
@@ -21707,11 +21769,13 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "CHECKING_ACCOUNT",
               "nameOverride": undefined,
               "value": "CHECKING_ACCOUNT",
             },
             {
+              "description": undefined,
               "generatedName": "SAVINGS_ACCOUNT",
               "nameOverride": undefined,
               "value": "SAVINGS_ACCOUNT",
@@ -21727,6 +21791,7 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "INDIVIDUAL",
               "nameOverride": undefined,
               "value": "INDIVIDUAL",
@@ -21749,6 +21814,7 @@ Can be either:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "INFLOW",
                 "nameOverride": undefined,
                 "value": "INFLOW",
@@ -21767,11 +21833,13 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "credentials",
               "nameOverride": undefined,
               "value": "credentials",
             },
             {
+              "description": undefined,
               "generatedName": "openbanking",
               "nameOverride": undefined,
               "value": "openbanking",
@@ -21786,11 +21854,13 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "healthy",
               "nameOverride": undefined,
               "value": "healthy",
             },
             {
+              "description": undefined,
               "generatedName": "down",
               "nameOverride": undefined,
               "value": "down",
@@ -21809,16 +21879,19 @@ Can be either:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "bank",
               "nameOverride": undefined,
               "value": "bank",
             },
             {
+              "description": undefined,
               "generatedName": "fiscal",
               "nameOverride": undefined,
               "value": "fiscal",
             },
             {
+              "description": undefined,
               "generatedName": "employment",
               "nameOverride": undefined,
               "value": "employment",
@@ -21843,36 +21916,43 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "BOND",
               "nameOverride": undefined,
               "value": "BOND",
             },
             {
+              "description": undefined,
               "generatedName": "DEPOSIT",
               "nameOverride": undefined,
               "value": "DEPOSIT",
             },
             {
+              "description": undefined,
               "generatedName": "ETF",
               "nameOverride": undefined,
               "value": "ETF",
             },
             {
+              "description": undefined,
               "generatedName": "FUND",
               "nameOverride": undefined,
               "value": "FUND",
             },
             {
+              "description": undefined,
               "generatedName": "OTHER",
               "nameOverride": undefined,
               "value": "OTHER",
             },
             {
+              "description": undefined,
               "generatedName": "PENSION",
               "nameOverride": undefined,
               "value": "PENSION",
             },
             {
+              "description": undefined,
               "generatedName": "STOCK",
               "nameOverride": undefined,
               "value": "STOCK",
@@ -21894,21 +21974,25 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "FIXED_INCOME",
               "nameOverride": undefined,
               "value": "FIXED_INCOME",
             },
             {
+              "description": undefined,
               "generatedName": "OTHER",
               "nameOverride": undefined,
               "value": "OTHER",
             },
             {
+              "description": undefined,
               "generatedName": "PENSION",
               "nameOverride": undefined,
               "value": "PENSION",
             },
             {
+              "description": undefined,
               "generatedName": "VARIABLE_INCOME",
               "nameOverride": undefined,
               "value": "VARIABLE_INCOME",
@@ -21933,51 +22017,61 @@ You can send through one or more of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "SALARY",
               "nameOverride": undefined,
               "value": "SALARY",
             },
             {
+              "description": undefined,
               "generatedName": "GOVERNMENT",
               "nameOverride": undefined,
               "value": "GOVERNMENT",
             },
             {
+              "description": undefined,
               "generatedName": "INTEREST",
               "nameOverride": undefined,
               "value": "INTEREST",
             },
             {
+              "description": undefined,
               "generatedName": "RENT",
               "nameOverride": undefined,
               "value": "RENT",
             },
             {
+              "description": undefined,
               "generatedName": "RETIREMENT",
               "nameOverride": undefined,
               "value": "RETIREMENT",
             },
             {
+              "description": undefined,
               "generatedName": "FREELANCE",
               "nameOverride": undefined,
               "value": "FREELANCE",
             },
             {
+              "description": undefined,
               "generatedName": "ALTERNATIVE_INCOME",
               "nameOverride": undefined,
               "value": "ALTERNATIVE_INCOME",
             },
             {
+              "description": undefined,
               "generatedName": "TRANSFER",
               "nameOverride": undefined,
               "value": "TRANSFER",
             },
             {
+              "description": undefined,
               "generatedName": "DEPOSIT",
               "nameOverride": undefined,
               "value": "DEPOSIT",
             },
             {
+              "description": undefined,
               "generatedName": "UNKNOWN",
               "nameOverride": undefined,
               "value": "UNKNOWN",
@@ -22004,6 +22098,7 @@ For Colombia's DIAN, we return one of the following values:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "FacturaElectronicaDeVenta",
                 "nameOverride": undefined,
                 "value": "Factura Electrónica de Venta",
@@ -22064,26 +22159,31 @@ For Mexico's SAT, we return one of the following values:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "Egreso",
                 "nameOverride": undefined,
                 "value": "Egreso",
               },
               {
+                "description": undefined,
                 "generatedName": "Ingreso",
                 "nameOverride": undefined,
                 "value": "Ingreso",
               },
               {
+                "description": undefined,
                 "generatedName": "Nomina",
                 "nameOverride": undefined,
                 "value": "Nómina",
               },
               {
+                "description": undefined,
                 "generatedName": "Pago",
                 "nameOverride": undefined,
                 "value": "Pago",
               },
               {
+                "description": undefined,
                 "generatedName": "Traslado",
                 "nameOverride": undefined,
                 "value": "Traslado",
@@ -22136,11 +22236,13 @@ For more information, see our [Links](https://developers.belvo.com/docs/links-an
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "single",
               "nameOverride": undefined,
               "value": "single",
             },
             {
+              "description": undefined,
               "generatedName": "recurrent",
               "nameOverride": undefined,
               "value": "recurrent",
@@ -22210,21 +22312,25 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "valid",
               "nameOverride": undefined,
               "value": "valid",
             },
             {
+              "description": undefined,
               "generatedName": "invalid",
               "nameOverride": undefined,
               "value": "invalid",
             },
             {
+              "description": undefined,
               "generatedName": "unconfirmed",
               "nameOverride": undefined,
               "value": "unconfirmed",
             },
             {
+              "description": undefined,
               "generatedName": "token_required",
               "nameOverride": undefined,
               "value": "token_required",
@@ -22243,16 +22349,19 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "OPERATION_FEE",
               "nameOverride": undefined,
               "value": "OPERATION_FEE",
             },
             {
+              "description": undefined,
               "generatedName": "INSURANCE_FEE",
               "nameOverride": undefined,
               "value": "INSURANCE_FEE",
             },
             {
+              "description": undefined,
               "generatedName": "OTHERS",
               "nameOverride": undefined,
               "value": "OTHERS",
@@ -22277,11 +22386,13 @@ We return one of the following values:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "MONTHLY",
                 "nameOverride": undefined,
                 "value": "MONTHLY",
               },
               {
+                "description": undefined,
                 "generatedName": "YEARLY",
                 "nameOverride": undefined,
                 "value": "YEARLY",
@@ -22296,11 +22407,13 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "INDIVIDUAL",
               "nameOverride": undefined,
               "value": "INDIVIDUAL",
             },
             {
+              "description": undefined,
               "generatedName": "BUSINESS",
               "nameOverride": undefined,
               "value": "BUSINESS",
@@ -22315,26 +22428,31 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "REQUIRES_PAYMENT_METHOD",
               "nameOverride": undefined,
               "value": "REQUIRES_PAYMENT_METHOD",
             },
             {
+              "description": undefined,
               "generatedName": "REQUIRES_ACTION",
               "nameOverride": undefined,
               "value": "REQUIRES_ACTION",
             },
             {
+              "description": undefined,
               "generatedName": "SUCCEEDED",
               "nameOverride": undefined,
               "value": "SUCCEEDED",
             },
             {
+              "description": undefined,
               "generatedName": "PROCESSING",
               "nameOverride": undefined,
               "value": "PROCESSING",
             },
             {
+              "description": undefined,
               "generatedName": "FAILED",
               "nameOverride": undefined,
               "value": "FAILED",
@@ -22351,11 +22469,13 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "open_finance",
               "nameOverride": undefined,
               "value": "open_finance",
             },
             {
+              "description": undefined,
               "generatedName": "pse",
               "nameOverride": undefined,
               "value": "pse",
@@ -22374,11 +22494,13 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "belvo",
               "nameOverride": undefined,
               "value": "belvo",
             },
             {
+              "description": undefined,
               "generatedName": "payments_way",
               "nameOverride": undefined,
               "value": "payments_way",
@@ -22397,11 +22519,13 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "ACTIVE",
               "nameOverride": undefined,
               "value": "ACTIVE",
             },
             {
+              "description": undefined,
               "generatedName": "INACTIVE",
               "nameOverride": undefined,
               "value": "INACTIVE",
@@ -22418,11 +22542,13 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "INFLOW",
               "nameOverride": undefined,
               "value": "INFLOW",
             },
             {
+              "description": undefined,
               "generatedName": "OUTFLOW",
               "nameOverride": undefined,
               "value": "OUTFLOW",
@@ -22441,11 +22567,13 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "BRA",
               "nameOverride": undefined,
               "value": "BRA",
             },
             {
+              "description": undefined,
               "generatedName": "COL",
               "nameOverride": undefined,
               "value": "COL",
@@ -22463,11 +22591,13 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "BRL",
               "nameOverride": undefined,
               "value": "BRL",
             },
             {
+              "description": undefined,
               "generatedName": "COP",
               "nameOverride": undefined,
               "value": "COP",
@@ -22488,6 +22618,7 @@ We return one of the following values:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "TRANSACTION_FEE",
                 "nameOverride": undefined,
                 "value": "TRANSACTION_FEE",
@@ -22515,21 +22646,25 @@ We return one of the following values:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "APPROVED",
                 "nameOverride": undefined,
                 "value": "APPROVED",
               },
               {
+                "description": undefined,
                 "generatedName": "CANCELLED",
                 "nameOverride": undefined,
                 "value": "CANCELLED",
               },
               {
+                "description": undefined,
                 "generatedName": "REVERTED",
                 "nameOverride": undefined,
                 "value": "REVERTED",
               },
               {
+                "description": undefined,
                 "generatedName": "UNCATEGORIZED",
                 "nameOverride": undefined,
                 "value": "UNCATEGORIZED",
@@ -22585,31 +22720,37 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "BillsUtilities",
               "nameOverride": undefined,
               "value": "Bills & Utilities",
             },
             {
+              "description": undefined,
               "generatedName": "CreditsLoans",
               "nameOverride": undefined,
               "value": "Credits & Loans",
             },
             {
+              "description": undefined,
               "generatedName": "Insurance",
               "nameOverride": undefined,
               "value": "Insurance",
             },
             {
+              "description": undefined,
               "generatedName": "OnlinePlatformsLeisure",
               "nameOverride": undefined,
               "value": "Online Platforms & Leisure",
             },
             {
+              "description": undefined,
               "generatedName": "TransportTravel",
               "nameOverride": undefined,
               "value": "Transport & Travel",
             },
             {
+              "description": undefined,
               "generatedName": "Taxes",
               "nameOverride": undefined,
               "value": "Taxes",
@@ -22627,6 +22768,7 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "MONTHLY",
               "nameOverride": undefined,
               "value": "MONTHLY",
@@ -22651,11 +22793,13 @@ We return one of the following values:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "SUBSCRIPTION",
                 "nameOverride": undefined,
                 "value": "SUBSCRIPTION",
               },
               {
+                "description": undefined,
                 "generatedName": "REGULAR",
                 "nameOverride": undefined,
                 "value": "REGULAR",
@@ -22673,16 +22817,19 @@ We return one of the following values:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "POSITIVE",
                 "nameOverride": undefined,
                 "value": "POSITIVE",
               },
               {
+                "description": undefined,
                 "generatedName": "NEGATIVE",
                 "nameOverride": undefined,
                 "value": "NEGATIVE",
               },
               {
+                "description": undefined,
                 "generatedName": "NO_OBLIGATIONS",
                 "nameOverride": undefined,
                 "value": "NO_OBLIGATIONS",
@@ -22706,11 +22853,13 @@ We return one of the following values:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "PAID",
                 "nameOverride": undefined,
                 "value": "PAID",
               },
               {
+                "description": undefined,
                 "generatedName": "PROVISIONED",
                 "nameOverride": undefined,
                 "value": "PROVISIONED",
@@ -22734,11 +22883,13 @@ We return one of the following values:
             "type": "enum",
             "values": [
               {
+                "description": undefined,
                 "generatedName": "NATIONAL",
                 "nameOverride": undefined,
                 "value": "NATIONAL",
               },
               {
+                "description": undefined,
                 "generatedName": "FOREIGN",
                 "nameOverride": undefined,
                 "value": "FOREIGN",
@@ -22757,11 +22908,13 @@ We return one of the following values:
           "type": "enum",
           "values": [
             {
+              "description": undefined,
               "generatedName": "OUTFLOW",
               "nameOverride": undefined,
               "value": "OUTFLOW",
             },
             {
+              "description": undefined,
               "generatedName": "INFLOW",
               "nameOverride": undefined,
               "value": "INFLOW",
@@ -31202,31 +31355,37 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "open_finance_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "open_finance_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_succeeded",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_failed",
@@ -31291,46 +31450,55 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_credentials_required",
                       "nameOverride": undefined,
                       "value": "pse_display_credentials_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "pse_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_token_required",
                       "nameOverride": undefined,
                       "value": "pse_display_token_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_customer_bank_accounts",
                       "nameOverride": undefined,
                       "value": "pse_display_customer_bank_accounts",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "pse_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_failed",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_succeeded",
@@ -31395,46 +31563,55 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_credentials_required",
                       "nameOverride": undefined,
                       "value": "pse_display_credentials_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "pse_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_token_required",
                       "nameOverride": undefined,
                       "value": "pse_display_token_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_customer_bank_accounts",
                       "nameOverride": undefined,
                       "value": "pse_display_customer_bank_accounts",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "pse_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_failed",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_succeeded",
@@ -31499,46 +31676,55 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_credentials_required",
                       "nameOverride": undefined,
                       "value": "pse_display_credentials_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "pse_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_token_required",
                       "nameOverride": undefined,
                       "value": "pse_display_token_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_customer_bank_accounts",
                       "nameOverride": undefined,
                       "value": "pse_display_customer_bank_accounts",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "pse_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_failed",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_succeeded",
@@ -31603,46 +31789,55 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_credentials_required",
                       "nameOverride": undefined,
                       "value": "pse_display_credentials_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "pse_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_token_required",
                       "nameOverride": undefined,
                       "value": "pse_display_token_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_customer_bank_accounts",
                       "nameOverride": undefined,
                       "value": "pse_display_customer_bank_accounts",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "pse_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_failed",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_succeeded",
@@ -31707,31 +31902,37 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "open_finance_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "open_finance_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_succeeded",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_failed",
@@ -31796,31 +31997,37 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "open_finance_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "open_finance_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_succeeded",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_failed",
@@ -31885,46 +32092,55 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_credentials_required",
                       "nameOverride": undefined,
                       "value": "pse_display_credentials_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "pse_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_token_required",
                       "nameOverride": undefined,
                       "value": "pse_display_token_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_customer_bank_accounts",
                       "nameOverride": undefined,
                       "value": "pse_display_customer_bank_accounts",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "pse_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_failed",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_succeeded",
@@ -31989,31 +32205,37 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "open_finance_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "open_finance_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_succeeded",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_failed",
@@ -32078,31 +32300,37 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "open_finance_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "open_finance_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_succeeded",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_failed",
@@ -32167,46 +32395,55 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_credentials_required",
                       "nameOverride": undefined,
                       "value": "pse_display_credentials_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "pse_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_token_required",
                       "nameOverride": undefined,
                       "value": "pse_display_token_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_customer_bank_accounts",
                       "nameOverride": undefined,
                       "value": "pse_display_customer_bank_accounts",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "pse_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_failed",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "pse_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "pse_display_payment_succeeded",
@@ -32274,31 +32511,37 @@ For \`login_error\` errors, the description can be one of the following:
                   "type": "enum",
                   "values": [
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_method_information",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_method_information",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_confirmation_required",
                       "nameOverride": undefined,
                       "value": "open_finance_display_confirmation_required",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_needs_redirect",
                       "nameOverride": undefined,
                       "value": "open_finance_display_needs_redirect",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_processing",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_processing",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_succeeded",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_succeeded",
                     },
                     {
+                      "description": undefined,
                       "generatedName": "open_finance_display_payment_failed",
                       "nameOverride": undefined,
                       "value": "open_finance_display_payment_failed",
