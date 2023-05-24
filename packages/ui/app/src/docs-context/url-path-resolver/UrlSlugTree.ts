@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { noop, size } from "lodash-es";
+import { resolveSubpackage } from "../../api-context/ApiDefinitionContextProvider";
 import { doesSubpackageHaveEndpointsRecursive } from "../../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
 import { joinUrlSlugs } from "../joinUrlSlugs";
 
@@ -420,21 +421,6 @@ export declare namespace UrlSlugTreeNode {
 export interface UrlSlugNeighbors {
     previousNavigatableItem: UrlSlugTreeNode | undefined;
     nextNavigatableItem: UrlSlugTreeNode | undefined;
-}
-
-function resolveSubpackage(
-    apiDefinition: FernRegistryApiRead.ApiDefinition,
-    subpackageId: FernRegistryApiRead.SubpackageId
-): FernRegistryApiRead.ApiDefinitionSubpackage {
-    const subpackage = apiDefinition.subpackages[subpackageId];
-    if (subpackage == null) {
-        throw new Error("Subpackage does not exist: " + subpackageId);
-    }
-    if (subpackage.pointsTo != null) {
-        return resolveSubpackage(apiDefinition, subpackage.pointsTo);
-    } else {
-        return subpackage;
-    }
 }
 
 function getIndexOfFirstNavigatableItem(nodes: UrlSlugTreeNode[], { startingAt }: { startingAt: number }): number {

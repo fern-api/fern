@@ -21,20 +21,7 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
 
     const resolveSubpackageById = useCallback(
         (subpackageId: FernRegistryApiRead.SubpackageId): FernRegistryApiRead.ApiDefinitionSubpackage => {
-            const subpackage = apiDefinition.subpackages[subpackageId];
-            if (subpackage == null) {
-                throw new Error("Subpackage does not exist");
-            }
-            if (subpackage.pointsTo != null) {
-                const resolvedSubpackage = resolveSubpackageById(subpackage.pointsTo);
-                return {
-                    ...resolvedSubpackage,
-                    name: subpackage.name,
-                    urlSlug: subpackage.urlSlug,
-                };
-            } else {
-                return subpackage;
-            }
+            return resolveSubpackage(apiDefinition, subpackageId);
         },
         [apiDefinition]
     );
@@ -63,3 +50,23 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
 
     return <ApiDefinitionContext.Provider value={contextValue}>{children}</ApiDefinitionContext.Provider>;
 };
+
+export function resolveSubpackage(
+    apiDefinition: FernRegistryApiRead.ApiDefinition,
+    subpackageId: FernRegistryApiRead.SubpackageId
+): FernRegistryApiRead.ApiDefinitionSubpackage {
+    const subpackage = apiDefinition.subpackages[subpackageId];
+    if (subpackage == null) {
+        throw new Error("Subpackage does not exist");
+    }
+    if (subpackage.pointsTo != null) {
+        const resolvedSubpackage = resolveSubpackage(apiDefinition, subpackage.pointsTo);
+        return {
+            ...resolvedSubpackage,
+            name: subpackage.name,
+            urlSlug: subpackage.urlSlug,
+        };
+    } else {
+        return subpackage;
+    }
+}

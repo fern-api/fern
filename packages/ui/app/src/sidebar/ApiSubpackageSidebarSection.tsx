@@ -2,7 +2,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import { useMemo } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
-import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitlte";
+import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
 import { ApiSubpackageSidebarSectionContents } from "./ApiSubpackageSidebarSectionContents";
 import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 import { SidebarGroup } from "./SidebarGroup";
