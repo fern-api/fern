@@ -264,9 +264,9 @@ function convertToEndpoint({
               })
             : undefined;
 
-    // if request has query params and body is not an object, then use `Body`
+    // if request has query params or headers and body is not an object, then use `Body`
     if (
-        convertedParameters.queryParameters.length > 0 &&
+        (convertedParameters.queryParameters.length > 0 || convertedParameters.headers.length > 0) &&
         convertedRequest != null &&
         convertedRequest.type === "json" &&
         convertedRequest.schema.type !== "object" &&
