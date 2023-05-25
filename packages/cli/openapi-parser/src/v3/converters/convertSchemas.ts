@@ -10,7 +10,7 @@ import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditionalProperties";
 import { convertArray } from "./schema/convertArray";
-import { convertDiscriminatedOneOf } from "./schema/convertDiscriminatedOneOf";
+import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./schema/convertDiscriminatedOneOf";
 import { convertEnum } from "./schema/convertEnum";
 import { convertNumber } from "./schema/convertNumber";
 import { convertObject } from "./schema/convertObject";
@@ -23,7 +23,8 @@ export function convertSchema(
     wrapAsNullable: boolean,
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[],
-    referencedAsRequest = false
+    referencedAsRequest = false,
+    propertiesToExclude: Set<string> = new Set()
 ): Schema {
     if (isReferenceObject(schema)) {
         if (!referencedAsRequest) {
@@ -33,7 +34,7 @@ export function convertSchema(
         }
         return convertReferenceObject(schema, wrapAsNullable, breadcrumbs);
     } else {
-        return convertSchemaObject(schema, wrapAsNullable, context, breadcrumbs);
+        return convertSchemaObject(schema, wrapAsNullable, context, breadcrumbs, propertiesToExclude);
     }
 }
 
@@ -53,11 +54,12 @@ export function convertReferenceObject(
     }
 }
 
-function convertSchemaObject(
+export function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject,
     wrapAsNullable: boolean,
     context: AbstractOpenAPIV3ParserContext,
-    breadcrumbs: string[]
+    breadcrumbs: string[],
+    propertiesToExclude: Set<string> = new Set()
 ): Schema {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
@@ -169,6 +171,21 @@ function convertSchemaObject(
             const convertedSchema = convertSchema(schema.oneOf[0], wrapAsNullable, context, breadcrumbs);
             return maybeInjectDescription(convertedSchema, description);
         } else if (schema.oneOf.length > 1) {
+            const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
+            if (maybeDiscriminant != null) {
+                return convertDiscriminatedOneOfWithVariants({
+                    nameOverride,
+                    generatedName,
+                    breadcrumbs,
+                    properties: schema.properties ?? {},
+                    required: schema.required,
+                    description,
+                    wrapAsNullable,
+                    discriminant: maybeDiscriminant.discriminant,
+                    variants: maybeDiscriminant.schemas,
+                    context,
+                });
+            }
             return convertUndiscriminatedOneOf({
                 nameOverride,
                 generatedName,
@@ -216,6 +233,7 @@ function convertSchemaObject(
             wrapAsNullable,
             allOf: schema.allOf ?? [],
             context,
+            propertiesToExclude,
         });
     }
 
@@ -351,4 +369,69 @@ export function wrapPrimitive({
         schema: primitive,
         description,
     });
+}
+
+interface DiscriminantProperty {
+    discriminant: string;
+    schemas: Record<string, OpenAPIV3.SchemaObject>;
+}
+
+function getDiscriminant({
+    schemas,
+    context,
+}: {
+    schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
+    context: AbstractOpenAPIV3ParserContext;
+}): undefined | DiscriminantProperty {
+    const discriminantToVariants: Record<string, Record<string, OpenAPIV3.SchemaObject>> = {};
+    for (const schema of schemas) {
+        if (isReferenceObject(schema)) {
+            return undefined;
+        }
+        const possibleDiscriminants = getPossibleDiscriminants({ schema, context });
+        for (const [property, value] of Object.entries(possibleDiscriminants)) {
+            const variants = discriminantToVariants[property];
+            if (variants != null) {
+                variants[value] = schema;
+            } else {
+                discriminantToVariants[property] = {
+                    value: schema,
+                };
+            }
+        }
+    }
+    for (const [discriminant, variants] of Object.entries(discriminantToVariants)) {
+        if (Object.keys(variants).length === schemas.length) {
+            return {
+                discriminant,
+                schemas: variants,
+            };
+        }
+    }
+    return undefined;
+}
+
+function getPossibleDiscriminants({
+    schema,
+    context,
+}: {
+    schema: OpenAPIV3.SchemaObject;
+    context: AbstractOpenAPIV3ParserContext;
+}): Record<string, string> {
+    const possibleDiscrimimants: Record<string, string> = {};
+    for (const [propertyName, propertySchema] of Object.entries(schema.properties ?? {})) {
+        const resolvedPropertySchema = isReferenceObject(propertySchema)
+            ? context.resolveSchemaReference(propertySchema)
+            : schema;
+        if (
+            resolvedPropertySchema.type === "string" &&
+            resolvedPropertySchema.enum != null &&
+            isListOfStrings(resolvedPropertySchema.enum) &&
+            resolvedPropertySchema.enum.length === 1 &&
+            resolvedPropertySchema.enum[0] != null
+        ) {
+            possibleDiscrimimants[propertyName] = resolvedPropertySchema.enum[0];
+        }
+    }
+    return possibleDiscrimimants;
 }

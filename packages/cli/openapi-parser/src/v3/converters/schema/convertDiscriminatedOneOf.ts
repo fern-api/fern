@@ -1,7 +1,7 @@
 import { CommonProperty, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { convertReferenceObject, convertSchema } from "../convertSchemas";
+import { convertReferenceObject, convertSchema, convertSchemaObject } from "../convertSchemas";
 
 export function convertDiscriminatedOneOf({
     nameOverride,
@@ -35,6 +35,64 @@ export function convertDiscriminatedOneOf({
                 [schema]
             );
             return [discriminantValue, subtypeReference];
+        })
+    );
+    const convertedProperties = Object.entries(properties)
+        .filter(([propertyName]) => {
+            return propertyName !== discriminant;
+        })
+        .map(([propertyName, propertySchema]) => {
+            const isRequired = required != null && required.includes(propertyName);
+            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName]);
+            return {
+                key: propertyName,
+                schema,
+            };
+        });
+    return wrapDiscriminantedOneOf({
+        nameOverride,
+        generatedName,
+        wrapAsNullable,
+        properties: convertedProperties,
+        description,
+        discriminant,
+        subtypes: unionSubTypes,
+    });
+}
+
+export function convertDiscriminatedOneOfWithVariants({
+    nameOverride,
+    generatedName,
+    breadcrumbs,
+    properties,
+    description,
+    required,
+    wrapAsNullable,
+    discriminant,
+    variants,
+    context,
+}: {
+    nameOverride: string | undefined;
+    generatedName: string;
+    breadcrumbs: string[];
+    properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
+    description: string | undefined;
+    required: string[] | undefined;
+    wrapAsNullable: boolean;
+    discriminant: string;
+    variants: Record<string, OpenAPIV3.SchemaObject>;
+    context: AbstractOpenAPIV3ParserContext;
+}): Schema {
+    const unionSubTypes = Object.fromEntries(
+        Object.entries(variants).map(([discriminantValue, schema]) => {
+            const variantSchema = convertSchemaObject(
+                schema,
+                false,
+                context,
+                [...breadcrumbs, discriminantValue],
+                new Set([discriminant])
+            );
+            return [discriminantValue, variantSchema];
         })
     );
     const convertedProperties = Object.entries(properties)
