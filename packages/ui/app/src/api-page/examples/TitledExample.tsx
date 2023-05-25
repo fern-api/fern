@@ -10,7 +10,7 @@ export declare namespace TitledExample {
         titleRightContent?: JSX.Element;
         actions?: JSX.Element;
         className?: string;
-        exampleJson: unknown;
+        copyableExample: unknown;
     }>;
 }
 
@@ -19,10 +19,13 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     titleRightContent,
     className,
     actions,
-    exampleJson,
+    copyableExample,
     children,
 }) => {
-    const exampleAsString = useMemo(() => JSON.stringify(exampleJson, undefined, 2), [exampleJson]);
+    const exampleAsString = useMemo(
+        () => (typeof copyableExample === "string" ? copyableExample : JSON.stringify(copyableExample, undefined, 2)),
+        [copyableExample]
+    );
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(exampleAsString);
 
     return (
@@ -32,7 +35,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className
             )}
         >
-            <div className="flex items-center justify-between px-2 py-1 bg-[#969CEE]/30">
+            <div className="flex items-center justify-between pl-3 pr-2 py-1 bg-[#969CEE]/30">
                 <div className="flex items-center gap-2">
                     <div className="font-bold uppercase text-[#A7A7B0]">{title}</div>
                     {titleRightContent}
