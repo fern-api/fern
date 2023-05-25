@@ -1709,7 +1709,7 @@ Note: This operation requires an identity challenge if the financial institution
             "schema": {
               "description": undefined,
               "file": undefined,
-              "generatedName": "TransfersCreateTransferRequest",
+              "generatedName": "TransfersCreateTransferRequestBody",
               "nameOverride": undefined,
               "schema": "newTransfer",
               "type": "reference",
@@ -1849,7 +1849,7 @@ Note: This operation requires an identity challenge if the financial institution
             "schema": {
               "description": undefined,
               "file": undefined,
-              "generatedName": "TransfersPatchTransferRequest",
+              "generatedName": "TransfersPatchTransferRequestBody",
               "nameOverride": undefined,
               "schema": "transferPatch",
               "type": "reference",

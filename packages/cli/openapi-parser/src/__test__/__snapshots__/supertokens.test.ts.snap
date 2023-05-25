@@ -1941,13 +1941,13 @@ exports[`open api parser supertokens parse open api 1`] = `
             "schema": {
               "oneOf": {
                 "description": undefined,
-                "generatedName": "PasswordlessTryUseCodeRequest",
+                "generatedName": "PasswordlessTryUseCodeRequestBody",
                 "nameOverride": undefined,
                 "schemas": [
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "PasswordlessTryUseCodeRequestPasswordlessTryUseCodeRequest",
+                    "generatedName": "PasswordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -1956,7 +1956,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessTryUseCodeRequestPasswordlessTryUseCodeRequestPreAuthSessionId",
+                          "generatedName": "PasswordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyPreAuthSessionId",
                           "nameOverride": undefined,
                           "schema": "preAuthSessionId",
                           "type": "reference",
@@ -1968,7 +1968,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessTryUseCodeRequestPasswordlessTryUseCodeRequestLinkCode",
+                          "generatedName": "PasswordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyLinkCode",
                           "nameOverride": undefined,
                           "schema": "linkCode",
                           "type": "reference",
@@ -1980,7 +1980,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "PasswordlessTryUseCodeRequestPasswordlessTryUseCodeRequest",
+                    "generatedName": "PasswordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -1989,7 +1989,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessTryUseCodeRequestPasswordlessTryUseCodeRequestPreAuthSessionId",
+                          "generatedName": "PasswordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyPreAuthSessionId",
                           "nameOverride": undefined,
                           "schema": "preAuthSessionId",
                           "type": "reference",
@@ -2001,7 +2001,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessTryUseCodeRequestPasswordlessTryUseCodeRequestDeviceId",
+                          "generatedName": "PasswordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyDeviceId",
                           "nameOverride": undefined,
                           "schema": "deviceId",
                           "type": "reference",
@@ -2013,7 +2013,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessTryUseCodeRequestPasswordlessTryUseCodeRequestUserInputCode",
+                          "generatedName": "PasswordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyUserInputCode",
                           "nameOverride": undefined,
                           "schema": "userInputCode",
                           "type": "reference",
@@ -2276,13 +2276,13 @@ Passing the optional deviceId signifies a resend code flow.
             "schema": {
               "oneOf": {
                 "description": undefined,
-                "generatedName": "PasswordlessStartSignInRequest",
+                "generatedName": "PasswordlessStartSignInRequestBody",
                 "nameOverride": undefined,
                 "schemas": [
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "PasswordlessStartSignInRequestPasswordlessStartSignInRequest",
+                    "generatedName": "PasswordlessStartSignInRequestBodyPasswordlessStartSignInRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -2291,7 +2291,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessStartSignInRequestPasswordlessStartSignInRequestEmail",
+                          "generatedName": "PasswordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyEmail",
                           "nameOverride": undefined,
                           "schema": "email",
                           "type": "reference",
@@ -2306,7 +2306,7 @@ Passing the optional deviceId signifies a resend code flow.
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "PasswordlessStartSignInRequestPasswordlessStartSignInRequestUserInputCode",
+                            "generatedName": "PasswordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyUserInputCode",
                             "nameOverride": undefined,
                             "schema": "userInputCode",
                             "type": "reference",
@@ -2319,7 +2319,7 @@ Passing the optional deviceId signifies a resend code flow.
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "PasswordlessStartSignInRequestPasswordlessStartSignInRequest",
+                    "generatedName": "PasswordlessStartSignInRequestBodyPasswordlessStartSignInRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -2328,7 +2328,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessStartSignInRequestPasswordlessStartSignInRequestPhoneNumber",
+                          "generatedName": "PasswordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyPhoneNumber",
                           "nameOverride": undefined,
                           "schema": "phoneNumber",
                           "type": "reference",
@@ -2343,7 +2343,7 @@ Passing the optional deviceId signifies a resend code flow.
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "PasswordlessStartSignInRequestPasswordlessStartSignInRequestUserInputCode",
+                            "generatedName": "PasswordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyUserInputCode",
                             "nameOverride": undefined,
                             "schema": "userInputCode",
                             "type": "reference",
@@ -2356,7 +2356,7 @@ Passing the optional deviceId signifies a resend code flow.
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "PasswordlessStartSignInRequestPasswordlessStartSignInRequest",
+                    "generatedName": "PasswordlessStartSignInRequestBodyPasswordlessStartSignInRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -2365,7 +2365,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessStartSignInRequestPasswordlessStartSignInRequestDeviceId",
+                          "generatedName": "PasswordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyDeviceId",
                           "nameOverride": undefined,
                           "schema": "deviceId",
                           "type": "reference",
@@ -2380,7 +2380,7 @@ Passing the optional deviceId signifies a resend code flow.
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "PasswordlessStartSignInRequestPasswordlessStartSignInRequestUserInputCode",
+                            "generatedName": "PasswordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyUserInputCode",
                             "nameOverride": undefined,
                             "schema": "userInputCode",
                             "type": "reference",
@@ -3108,13 +3108,13 @@ Passing the optional deviceId signifies a resend code flow.
             "schema": {
               "oneOf": {
                 "description": undefined,
-                "generatedName": "PasswordlessRevokeAllCodesOfUserRequest",
+                "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBody",
                 "nameOverride": undefined,
                 "schemas": [
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "PasswordlessRevokeAllCodesOfUserRequestPasswordlessRevokeAllCodesOfUserRequest",
+                    "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyPasswordlessRevokeAllCodesOfUserRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -3123,7 +3123,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessRevokeAllCodesOfUserRequestPasswordlessRevokeAllCodesOfUserRequestEmail",
+                          "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyPasswordlessRevokeAllCodesOfUserRequestBodyEmail",
                           "nameOverride": undefined,
                           "schema": "email",
                           "type": "reference",
@@ -3135,7 +3135,7 @@ Passing the optional deviceId signifies a resend code flow.
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "PasswordlessRevokeAllCodesOfUserRequestPasswordlessRevokeAllCodesOfUserRequest",
+                    "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyPasswordlessRevokeAllCodesOfUserRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -3144,7 +3144,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "schema": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PasswordlessRevokeAllCodesOfUserRequestPasswordlessRevokeAllCodesOfUserRequestPhoneNumber",
+                          "generatedName": "PasswordlessRevokeAllCodesOfUserRequestBodyPasswordlessRevokeAllCodesOfUserRequestBodyPhoneNumber",
                           "nameOverride": undefined,
                           "schema": "phoneNumber",
                           "type": "reference",
@@ -6149,7 +6149,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "schema": {
               "description": undefined,
               "file": undefined,
-              "generatedName": "EmailVerificationVerifyTokenRequest",
+              "generatedName": "EmailVerificationVerifyTokenRequestBody",
               "nameOverride": undefined,
               "schema": "emailVerificationVerifyTokenRequest",
               "type": "reference",
@@ -6283,7 +6283,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "schema": {
               "description": undefined,
               "file": undefined,
-              "generatedName": "EmailVerificationVerifyTokenRemoveRequest",
+              "generatedName": "EmailVerificationVerifyTokenRemoveRequestBody",
               "nameOverride": undefined,
               "schema": "emailVerificationVerifyTokenRequest",
               "type": "reference",
@@ -6740,7 +6740,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "schema": {
               "description": undefined,
               "file": undefined,
-              "generatedName": "EmailVerificationVerifyRemoveRequest",
+              "generatedName": "EmailVerificationVerifyRemoveRequestBody",
               "nameOverride": undefined,
               "schema": "emailVerificationVerifyTokenRequest",
               "type": "reference",
@@ -9282,13 +9282,13 @@ e.g.:
             "schema": {
               "oneOf": {
                 "description": undefined,
-                "generatedName": "DeleteSessionRequest",
+                "generatedName": "DeleteSessionRequestBody",
                 "nameOverride": undefined,
                 "schemas": [
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "DeleteSessionRequestDeleteSessionRequest",
+                    "generatedName": "DeleteSessionRequestBodyDeleteSessionRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -9300,7 +9300,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "DeleteSessionRequestDeleteSessionRequestSessionHandles",
+                            "generatedName": "DeleteSessionRequestBodyDeleteSessionRequestBodySessionHandles",
                             "nameOverride": undefined,
                             "schema": "sessionHandles",
                             "type": "reference",
@@ -9313,7 +9313,7 @@ e.g.:
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "DeleteSessionRequestDeleteSessionRequest",
+                    "generatedName": "DeleteSessionRequestBodyDeleteSessionRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -9325,7 +9325,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "DeleteSessionRequestDeleteSessionRequestUserId",
+                            "generatedName": "DeleteSessionRequestBodyDeleteSessionRequestBodyUserId",
                             "nameOverride": undefined,
                             "schema": "userId",
                             "type": "reference",
@@ -11509,13 +11509,13 @@ e.g.:
             "schema": {
               "oneOf": {
                 "description": undefined,
-                "generatedName": "UpdateDashboardUserRequest",
+                "generatedName": "UpdateDashboardUserRequestBody",
                 "nameOverride": undefined,
                 "schemas": [
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "UpdateDashboardUserRequestUpdateDashboardUserRequest",
+                    "generatedName": "UpdateDashboardUserRequestBodyUpdateDashboardUserRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
@@ -11569,7 +11569,7 @@ e.g.:
                   {
                     "allOf": [],
                     "description": undefined,
-                    "generatedName": "UpdateDashboardUserRequestUpdateDashboardUserRequest",
+                    "generatedName": "UpdateDashboardUserRequestBodyUpdateDashboardUserRequestBody",
                     "nameOverride": undefined,
                     "properties": [
                       {
