@@ -57,7 +57,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     return (
         <div
             className={classNames(
-                "flex items-center border border-[#969CEE]/50 text-[#969CEE] py-2 rounded gap-2 hover:bg-[#969CEE]/10 cursor-pointer",
+                "flex items-center border border-[#969CEE]/50 text-[#969CEE] py-2 rounded gap-2 hover:bg-accentHighlight cursor-pointer",
                 visitDirection({
                     previous: "pl-3 pr-4",
                     next: "pl-4 pr-3",

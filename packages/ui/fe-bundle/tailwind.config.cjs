@@ -10,6 +10,13 @@ module.exports = {
     ],
     theme: {
         extend: {},
+        colors: ({ colors }) => {
+            return {
+                ...colors,
+                accentPrimary: "rgb(var(--accent-primary))",
+                accentHighlight: "rgba(var(--accent-primary), 10%)",
+            };
+        },
     },
     plugins: [require("@tailwindcss/typography")],
 };
