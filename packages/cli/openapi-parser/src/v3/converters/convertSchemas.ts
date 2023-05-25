@@ -395,7 +395,7 @@ function getDiscriminant({
                 variants[value] = schema;
             } else {
                 discriminantToVariants[property] = {
-                    value: schema,
+                    [value]: schema,
                 };
             }
         }
@@ -422,7 +422,7 @@ function getPossibleDiscriminants({
     for (const [propertyName, propertySchema] of Object.entries(schema.properties ?? {})) {
         const resolvedPropertySchema = isReferenceObject(propertySchema)
             ? context.resolveSchemaReference(propertySchema)
-            : schema;
+            : propertySchema;
         if (
             resolvedPropertySchema.type === "string" &&
             resolvedPropertySchema.enum != null &&
