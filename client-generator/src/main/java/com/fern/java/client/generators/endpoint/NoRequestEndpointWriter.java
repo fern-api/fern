@@ -21,6 +21,7 @@ import com.fern.irV12.model.http.HttpService;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -28,7 +29,6 @@ import com.squareup.javapoet.ParameterSpec;
 import java.util.Collections;
 import java.util.List;
 import okhttp3.Headers;
-import okhttp3.HttpUrl;
 import okhttp3.Request;
 
 public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
@@ -52,26 +52,13 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
     }
 
     @Override
-    public List<ParameterSpec> additionalParameters() {
+    public List<EnrichedObjectProperty> getQueryParams() {
         return Collections.emptyList();
     }
 
     @Override
-    public CodeBlock getInitializeHttpUrlCodeBlock(
-            FieldSpec clientOptionsMember, GeneratedClientOptions clientOptions, List<ParameterSpec> pathParameters) {
-
-        CodeBlock.Builder httpUrlInitBuilder = CodeBlock.builder()
-                .add(
-                        "$T $L = $T.parse(this.$L.$N().$L()).newBuilder()\n",
-                        HttpUrl.class,
-                        HTTP_URL_NAME,
-                        HttpUrl.class,
-                        clientOptionsMember.name,
-                        clientOptions.environment(),
-                        getEnvironmentToUrlMethod().name)
-                .indent();
-        addPathToHttpUrl(httpUrlInitBuilder);
-        return httpUrlInitBuilder.add(".build();\n").unindent().build();
+    public List<ParameterSpec> additionalParameters() {
+        return Collections.emptyList();
     }
 
     @Override
@@ -80,11 +67,14 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedClientOptions clientOptions,
             HttpEndpoint httpEndpoint,
             GeneratedObjectMapper generatedObjectMapper,
+            CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
         CodeBlock.Builder builder = CodeBlock.builder()
                 .add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
                 .indent()
-                .add(".url($L)\n", AbstractEndpointWriter.HTTP_URL_NAME)
+                .add(".url(")
+                .add(inlineableHttpUrl)
+                .add(")\n")
                 .add(".method($S, null)\n", httpEndpoint.getMethod().toString())
                 .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers());
         if (sendContentType) {

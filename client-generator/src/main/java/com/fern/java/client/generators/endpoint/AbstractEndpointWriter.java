@@ -19,7 +19,6 @@ package com.fern.java.client.generators.endpoint;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.irV12.model.environment.EnvironmentBaseUrlId;
 import com.fern.irV12.model.http.HttpEndpoint;
-import com.fern.irV12.model.http.HttpPathPart;
 import com.fern.irV12.model.http.HttpService;
 import com.fern.irV12.model.http.PathParameter;
 import com.fern.java.client.ClientGeneratorContext;
@@ -27,8 +26,10 @@ import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
+import com.fern.java.client.generators.endpoint.HttpUrlBuilder.InlineableHttpUrl;
+import com.fern.java.client.generators.endpoint.HttpUrlBuilder.UnInlineableHttpUrl;
+import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedObjectMapper;
-import com.google.common.base.Functions;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -94,15 +95,37 @@ public abstract class AbstractEndpointWriter {
         endpointMethodBuilder.addParameters(additionalParameters());
 
         // Step 3: Get http client initializer
-        CodeBlock httpClientInitializer =
-                getInitializeHttpUrlCodeBlock(clientOptionsField, generatedClientOptions, pathParameters);
-        endpointMethodBuilder.addCode(httpClientInitializer);
+        HttpUrlBuilder httpUrlBuilder = new HttpUrlBuilder(
+                HTTP_URL_NAME,
+                REQUEST_NAME,
+                CodeBlock.of(
+                        "this.$L.$N().$L()",
+                        clientOptionsField.name,
+                        generatedClientOptions.environment(),
+                        getEnvironmentToUrlMethod().name),
+                httpEndpoint,
+                httpService,
+                convertPathParametersToSpecMap(httpService.getPathParameters()),
+                convertPathParametersToSpecMap(httpEndpoint.getPathParameters()));
+        HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(getQueryParams());
+        CodeBlock inlineableHttpUrlBlock = null;
+        if (generatedHttpUrl instanceof HttpUrlBuilder.InlineableHttpUrl) {
+            inlineableHttpUrlBlock = ((InlineableHttpUrl) generatedHttpUrl).value();
+        } else if (generatedHttpUrl instanceof HttpUrlBuilder.UnInlineableHttpUrl) {
+            endpointMethodBuilder.addCode(((UnInlineableHttpUrl) generatedHttpUrl).initialization());
+            inlineableHttpUrlBlock = ((UnInlineableHttpUrl) generatedHttpUrl).inlinableBuild();
+        }
 
         // Step 4: Get request initializer
         boolean sendContentType = httpEndpoint.getRequestBody().isPresent()
                 || httpEndpoint.getResponse().isPresent();
         CodeBlock requestInitializer = getInitializeRequestCodeBlock(
-                clientOptionsField, generatedClientOptions, httpEndpoint, generatedObjectMapper, sendContentType);
+                clientOptionsField,
+                generatedClientOptions,
+                httpEndpoint,
+                generatedObjectMapper,
+                inlineableHttpUrlBlock,
+                sendContentType);
         endpointMethodBuilder.addCode(requestInitializer);
 
         // Step 5: Make http request and handle responses
@@ -111,16 +134,16 @@ public abstract class AbstractEndpointWriter {
         return endpointMethodBuilder.build();
     }
 
-    public abstract List<ParameterSpec> additionalParameters();
+    public abstract List<EnrichedObjectProperty> getQueryParams();
 
-    public abstract CodeBlock getInitializeHttpUrlCodeBlock(
-            FieldSpec clientOptionsMember, GeneratedClientOptions clientOptions, List<ParameterSpec> pathParameters);
+    public abstract List<ParameterSpec> additionalParameters();
 
     public abstract CodeBlock getInitializeRequestCodeBlock(
             FieldSpec clientOptionsMember,
             GeneratedClientOptions clientOptions,
             HttpEndpoint endpoint,
             GeneratedObjectMapper objectMapper,
+            CodeBlock inlineableHttpUrl,
             boolean sendContentType);
 
     public final CodeBlock getResponseParserCodeBlock() {
@@ -171,57 +194,6 @@ public abstract class AbstractEndpointWriter {
         return httpResponseBuilder.build();
     }
 
-    protected final void addPathToHttpUrl(CodeBlock.Builder builder) {
-        String basePathHead =
-                stripLeadingAndTrailingSlash(httpService.getBasePath().getHead());
-        if (!basePathHead.isEmpty()) {
-            builder.add(".addPathSegments($S)\n", basePathHead);
-        }
-        Map<String, PathParameter> servicePathParameters = httpService.getPathParameters().stream()
-                .collect(Collectors.toMap(
-                        pathParameter -> pathParameter.getName().getOriginalName(), Functions.identity()));
-        for (HttpPathPart httpPathPart : httpService.getBasePath().getParts()) {
-            PathParameter pathParameter = servicePathParameters.get(httpPathPart.getPathParameter());
-            ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
-            builder.add(".addPathSegment($L)\n", stringify(poetPathParameter.name, poetPathParameter.type));
-            String pathTail = stripLeadingAndTrailingSlash(httpPathPart.getTail());
-            if (!pathTail.isEmpty()) {
-                builder.add(".addPathSegments($S)\n", pathTail);
-            }
-        }
-
-        Map<String, PathParameter> endpointPathParameters = httpEndpoint.getPathParameters().stream()
-                .collect(Collectors.toMap(
-                        pathParameter -> pathParameter.getName().getOriginalName(), Functions.identity()));
-        if (!httpEndpoint.getPath().getHead().isBlank()
-                && !httpEndpoint.getPath().getHead().equals("/")) {
-            builder.add(
-                    ".addPathSegment($S)\n",
-                    stripLeadingAndTrailingSlash(httpEndpoint.getPath().getHead()));
-        }
-        for (HttpPathPart httpPathPart : httpEndpoint.getPath().getParts()) {
-            PathParameter pathParameter = endpointPathParameters.get(httpPathPart.getPathParameter());
-            ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
-            builder.add(".addPathSegment($L)\n", stringify(poetPathParameter.name, poetPathParameter.type));
-
-            String pathTail = stripLeadingAndTrailingSlash(httpPathPart.getTail());
-            if (!pathTail.isEmpty()) {
-                builder.add(".addPathSegments($S)\n", pathTail);
-            }
-        }
-    }
-
-    private static String stripLeadingAndTrailingSlash(String value) {
-        String result = value;
-        if (value.startsWith("/")) {
-            result = result.substring(1);
-        }
-        if (value.endsWith("/")) {
-            result = result.substring(0, value.length() - 1);
-        }
-        return result;
-    }
-
     protected final MethodSpec getEnvironmentToUrlMethod() {
         if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
             return ((SingleUrlEnvironmentClass) generatedEnvironmentsClass.info()).getUrlMethod();
@@ -244,6 +216,12 @@ public abstract class AbstractEndpointWriter {
             pathParameterSpecs.add(convertPathParameter(pathParameter));
         });
         return pathParameterSpecs;
+    }
+
+    private Map<String, ParameterSpec> convertPathParametersToSpecMap(List<PathParameter> pathParameters) {
+        return pathParameters.stream()
+                .collect(Collectors.toMap(
+                        pathParameter -> pathParameter.getName().getOriginalName(), this::convertPathParameter));
     }
 
     private ParameterSpec convertPathParameter(PathParameter pathParameter) {

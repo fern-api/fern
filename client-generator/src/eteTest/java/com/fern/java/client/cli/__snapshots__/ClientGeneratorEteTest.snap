@@ -583,14 +583,13 @@ public final class AuthClientImpl implements AuthClient {
 
   @Override
   public void getAuth() {
-    HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("auth")
-            .build();
     Request _request =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("auth")
+                    .build())
             .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .build();
@@ -779,12 +778,6 @@ public final class BlogClientImpl implements BlogClient {
 
   @Override
   public void createPost(CreatePostRequest request) {
-    HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("posts")
-            .addPathSegment("create");
-    HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("title", request.getTitle());
     _requestBodyProperties.put("author", request.getAuthor());
@@ -804,7 +797,12 @@ public final class BlogClientImpl implements BlogClient {
     }
     Request.Builder _requestBuilder =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("posts")
+                    .addPathSegments("create")
+                    .build())
             .method("POST", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json");
@@ -822,17 +820,16 @@ public final class BlogClientImpl implements BlogClient {
 
   @Override
   public BlogPost getPost(String postId, GetPostRequest request) {
-    HttpUrl.Builder _httpUrlBuilder =
+    HttpUrl.Builder _httpUrl =
         HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
             .addPathSegments("posts")
             .addPathSegment(postId);
-    _httpUrlBuilder.addQueryParameter("dummy", request.getDummy());
-    HttpUrl _httpUrl = _httpUrlBuilder.build();
+    _httpUrl.addQueryParameter("dummy", request.getDummy());
     RequestBody _requestBody = null;
     Request.Builder _requestBuilder =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(_httpUrl.build())
             .method("GET", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json");
@@ -850,14 +847,13 @@ public final class BlogClientImpl implements BlogClient {
 
   @Override
   public List<BlogPost> getAll() {
-    HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("posts")
-            .build();
     Request _request =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("posts")
+                    .build())
             .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json")
@@ -2032,11 +2028,6 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
 
   @Override
   public void getDummy(String request) {
-    HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("dummy")
-            .build();
     RequestBody _requestBody;
     try {
       _requestBody =
@@ -2048,7 +2039,11 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
     }
     Request _request =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("dummy")
+                    .build())
             .method("POST", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json")
@@ -2066,15 +2061,14 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
 
   @Override
   public void health() {
-    HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("dummy")
-            .addPathSegment("health")
-            .build();
     Request _request =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("dummy")
+                    .addPathSegments("health")
+                    .build())
             .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .build();
@@ -2199,15 +2193,6 @@ public final class DeviceClientImpl implements DeviceClient {
 
   @Override
   public Device add(String appId, String userId, Device request) {
-    HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("v1/apps")
-            .addPathSegment(appId)
-            .addPathSegments("users/")
-            .addPathSegment(userId)
-            .addPathSegments("devices")
-            .build();
     RequestBody _requestBody;
     try {
       _requestBody =
@@ -2219,7 +2204,15 @@ public final class DeviceClientImpl implements DeviceClient {
     }
     Request _request =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("v1/apps")
+                    .addPathSegment(appId)
+                    .addPathSegments("users")
+                    .addPathSegment(userId)
+                    .addPathSegments("devices")
+                    .build())
             .method("POST", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json")
@@ -2237,16 +2230,6 @@ public final class DeviceClientImpl implements DeviceClient {
 
   @Override
   public Device update(String appId, String userId, String deviceId, Device request) {
-    HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("v1/apps")
-            .addPathSegment(appId)
-            .addPathSegments("users/")
-            .addPathSegment(userId)
-            .addPathSegments("devices/")
-            .addPathSegment(deviceId)
-            .build();
     RequestBody _requestBody;
     try {
       _requestBody =
@@ -2258,7 +2241,16 @@ public final class DeviceClientImpl implements DeviceClient {
     }
     Request _request =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("v1/apps")
+                    .addPathSegment(appId)
+                    .addPathSegments("users")
+                    .addPathSegment(userId)
+                    .addPathSegments("devices")
+                    .addPathSegment(deviceId)
+                    .build())
             .method("PUT", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json")
@@ -2276,19 +2268,18 @@ public final class DeviceClientImpl implements DeviceClient {
 
   @Override
   public void delete(String appId, String userId, String deviceId) {
-    HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("v1/apps")
-            .addPathSegment(appId)
-            .addPathSegments("users/")
-            .addPathSegment(userId)
-            .addPathSegments("devices/")
-            .addPathSegment(deviceId)
-            .build();
     Request _request =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("v1/apps")
+                    .addPathSegment(appId)
+                    .addPathSegments("users")
+                    .addPathSegment(userId)
+                    .addPathSegments("devices")
+                    .addPathSegment(deviceId)
+                    .build())
             .method("DELETE", null)
             .headers(Headers.of(clientOptions.headers()))
             .build();
@@ -2305,19 +2296,18 @@ public final class DeviceClientImpl implements DeviceClient {
 
   @Override
   public Device getDevice(String appId, String userId, String deviceId) {
-    HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("v1/apps")
-            .addPathSegment(appId)
-            .addPathSegments("users/")
-            .addPathSegment(userId)
-            .addPathSegments("devices/")
-            .addPathSegment(deviceId)
-            .build();
     Request _request =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("v1/apps")
+                    .addPathSegment(appId)
+                    .addPathSegments("users")
+                    .addPathSegment(userId)
+                    .addPathSegments("devices")
+                    .addPathSegment(deviceId)
+                    .build())
             .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json")
@@ -2840,13 +2830,6 @@ public final class EventClientImpl implements EventClient {
 
   @Override
   public SendEventResponse send(String appId, SendEventRequest request) {
-    HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("v1/apps")
-            .addPathSegment(appId)
-            .addPathSegments("events/send");
-    HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("event", request.getEvent());
     _requestBodyProperties.put("data", request.getData());
@@ -2864,7 +2847,13 @@ public final class EventClientImpl implements EventClient {
     }
     Request.Builder _requestBuilder =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("v1/apps")
+                    .addPathSegment(appId)
+                    .addPathSegments("events/send")
+                    .build())
             .method("POST", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json");
@@ -2886,13 +2875,6 @@ public final class EventClientImpl implements EventClient {
 
   @Override
   public SendEventResponse sendBulk(String appId, BulkSendEventRequest request) {
-    HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("v1/apps")
-            .addPathSegment(appId)
-            .addPathSegments("events/bulk_send");
-    HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("event", request.getEvent());
     _requestBodyProperties.put("batch", request.getBatch());
@@ -2907,7 +2889,13 @@ public final class EventClientImpl implements EventClient {
     }
     Request.Builder _requestBuilder =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("v1/apps")
+                    .addPathSegment(appId)
+                    .addPathSegments("events/bulk_send")
+                    .build())
             .method("POST", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json");
@@ -6665,13 +6653,6 @@ public final class UserClientImpl implements UserClient {
 
   @Override
   public RavenUser createOrUpdate(String appId, CreateUserRequest request) {
-    HttpUrl.Builder _httpUrlBuilder =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("v1/apps")
-            .addPathSegment(appId)
-            .addPathSegments("users");
-    HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("user_id", request.getUserId());
     _requestBodyProperties.put("mobile", request.getMobile());
@@ -6688,7 +6669,13 @@ public final class UserClientImpl implements UserClient {
     }
     Request.Builder _requestBuilder =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("v1/apps")
+                    .addPathSegment(appId)
+                    .addPathSegments("users")
+                    .build())
             .method("POST", _requestBody)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json");
@@ -6706,17 +6693,16 @@ public final class UserClientImpl implements UserClient {
 
   @Override
   public RavenUser get(String appId, String userId) {
-    HttpUrl _httpUrl =
-        HttpUrl.parse(this.clientOptions.environment().getUrl())
-            .newBuilder()
-            .addPathSegments("v1/apps")
-            .addPathSegment(appId)
-            .addPathSegments("users/")
-            .addPathSegment(userId)
-            .build();
     Request _request =
         new Request.Builder()
-            .url(_httpUrl)
+            .url(
+                HttpUrl.parse(this.clientOptions.environment().getUrl())
+                    .newBuilder()
+                    .addPathSegments("v1/apps")
+                    .addPathSegment(appId)
+                    .addPathSegments("users")
+                    .addPathSegment(userId)
+                    .build())
             .method("GET", null)
             .headers(Headers.of(clientOptions.headers()))
             .addHeader("Content-Type", "application/json")

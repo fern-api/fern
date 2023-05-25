@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import okhttp3.Headers;
-import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
@@ -79,58 +78,15 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     }
 
     @Override
+    public List<EnrichedObjectProperty> getQueryParams() {
+        return generatedWrappedRequest.queryParams();
+    }
+
+    @Override
     public List<ParameterSpec> additionalParameters() {
         return Collections.singletonList(
                 ParameterSpec.builder(generatedWrappedRequest.getClassName(), requestParameterName)
                         .build());
-    }
-
-    @Override
-    public CodeBlock getInitializeHttpUrlCodeBlock(
-            FieldSpec clientOptionsMember, GeneratedClientOptions clientOptions, List<ParameterSpec> pathParameters) {
-        CodeBlock.Builder httpUrlBuilder = CodeBlock.builder()
-                .add(
-                        "$T $L = $T.parse(this.$L.$N().$L()).newBuilder()\n",
-                        HttpUrl.Builder.class,
-                        HTTP_URL_BUILDER_NAME,
-                        HttpUrl.class,
-                        clientOptionsMember.name,
-                        clientOptions.environment(),
-                        getEnvironmentToUrlMethod().name)
-                .indent();
-        addPathToHttpUrl(httpUrlBuilder);
-        httpUrlBuilder.add(";");
-
-        for (EnrichedObjectProperty queryParam : generatedWrappedRequest.queryParams()) {
-            if (typeNameIsOptional(queryParam.poetTypeName())) {
-                httpUrlBuilder
-                        .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, queryParam.getterProperty())
-                        .addStatement(
-                                "$L.addQueryParameter($S, $L)",
-                                AbstractEndpointWriter.HTTP_URL_BUILDER_NAME,
-                                queryParam.wireKey().get(),
-                                stringify(
-                                        CodeBlock.of("$L.$N().get()", "request", queryParam.getterProperty())
-                                                .toString(),
-                                        queryParam.poetTypeName()))
-                        .endControlFlow();
-            } else {
-                httpUrlBuilder.addStatement(
-                        "$L.addQueryParameter($S, $L)",
-                        AbstractEndpointWriter.HTTP_URL_BUILDER_NAME,
-                        queryParam.wireKey().get(),
-                        stringify(
-                                CodeBlock.of("$L.$N()", "request", queryParam.getterProperty())
-                                        .toString(),
-                                queryParam.poetTypeName()));
-            }
-        }
-        httpUrlBuilder.addStatement(
-                "$T $L = $L.build()\n",
-                HttpUrl.class,
-                AbstractEndpointWriter.HTTP_URL_NAME,
-                AbstractEndpointWriter.HTTP_URL_BUILDER_NAME);
-        return httpUrlBuilder.build();
     }
 
     @Override
@@ -139,6 +95,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedClientOptions clientOptions,
             HttpEndpoint httpEndpoint,
             GeneratedObjectMapper generatedObjectMapper,
+            CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
         CodeBlock.Builder requestInitializerBuilder = CodeBlock.builder();
         if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
@@ -195,7 +152,9 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         AbstractEndpointWriter.REQUEST_BUILDER_NAME,
                         Request.class)
                 .indent()
-                .add(".url($L)\n", AbstractEndpointWriter.HTTP_URL_NAME)
+                .add(".url(")
+                .add(inlineableHttpUrl)
+                .add(")\n")
                 .add(
                         ".method($S, $L)\n",
                         httpEndpoint.getMethod().toString(),
