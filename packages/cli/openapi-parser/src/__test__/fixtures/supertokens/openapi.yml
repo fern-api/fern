@@ -1,0 +1,4881 @@
+openapi: 3.0.0
+info:
+  description: This is the API exposed by the SuperTokens Core. To be consumed by your backend only.
+  version: 2.21.1
+  title: Core Driver Interface
+  contact:
+    email: team@supertokens.io
+tags:
+  - name: EmailPassword Recipe
+  - name: ThirdParty Recipe
+  - name: Passwordless Recipe
+  - name: EmailVerification Recipe
+  - name: User Metadata Recipe
+  - name: User Roles Recipe
+  - name: UserIdMapping Recipe
+  - name: Session Recipe
+  - name: Core
+  - name: Dashboard Recipe
+  - name: Totp Recipe
+
+paths:
+  /recipe/totp/device:
+    post:
+      tags:
+        - Totp Recipe
+      operationId: createTotpDevice
+      description: |
+        Add a TOTP device for a user and enable TOTP if not already enabled.
+      parameters:
+        - $ref: "#/components/parameters/totpRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                deviceName:
+                  type: string
+                  example: "My Authy App"
+                skew:
+                  type: number
+                  example: 0
+                period:
+                  type: number
+                  example: 30
+              required:
+                - userId
+                - deviceName
+                - skew
+                - period
+
+      responses:
+        "200":
+          description: Indicates success with the status and secret properties
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      secret:
+                        type: string
+                        example: "JBSWY3DPEHPK3PXP"
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["DEVICE_ALREADY_EXISTS_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Totp Recipe
+      operationId: updateTotpDeviceName
+      description: |
+        Update the name of a TOTP device for a user.
+      parameters:
+        - $ref: "#/components/parameters/totpRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                existingDeviceName:
+                  type: string
+                  example: "My Authy App"
+                newDeviceName:
+                  type: string
+                  example: "A better name for my TOTP device"
+              required:
+                - userId
+                - existingDeviceName
+                - newDeviceName
+
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["TOTP_NOT_ENABLED_ERROR"]
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNKNOWN_DEVICE_ERROR"]
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["DEVICE_ALREADY_EXISTS_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/totp/device/list:
+    get:
+      tags:
+        - Totp Recipe
+      operationId: getTotpDevices
+      description: |
+        Retrieve a list of TOTP devices for a user.
+      parameters:
+        - $ref: "#/components/parameters/totpRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: userId
+          schema:
+            type: string
+          required: true
+
+      responses:
+        "200":
+          description: Retrives all TOTP devices
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      devices:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                            period:
+                              type: number
+                            skew:
+                              type: number
+                            verified:
+                              type: boolean
+                    required:
+                      - status
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["TOTP_NOT_ENABLED_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/totp/device/remove:
+    post:
+      tags:
+        - Totp Recipe
+      operationId: removeTotpDevice
+      description: |
+        Remove a TOTP device for a user. If all devices are removed, TOTP is disabled for the user.
+      parameters:
+        - $ref: "#/components/parameters/totpRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                deviceName:
+                  type: string
+                  example: "My Authy App"
+              required:
+                - userId
+                - deviceName
+
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      didDeviceExist:
+                        type: boolean
+                        example: true
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["TOTP_NOT_ENABLED_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/totp/verify:
+    post:
+      tags:
+        - Totp Recipe
+      operationId: verifyTotpCode
+      description: |
+        Check if a TOTP code is valid against any of the TOTP devices for a user.
+      parameters:
+        - $ref: "#/components/parameters/totpRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                totp:
+                  type: string
+                  example: "123456"
+                allowUnverifiedDevices:
+                  type: boolean
+                  example: false
+              required:
+                - userId
+                - totp
+                - allowUnverifiedDevices
+
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["TOTP_NOT_ENABLED_ERROR"]
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["INVALID_TOTP_ERROR"]
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["LIMIT_REACHED_ERROR"]
+                      retryAfterMs:
+                        type: number
+                        example: 90000
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/totp/device/verify:
+    post:
+      tags:
+        - Totp Recipe
+      operationId: verifyTotpDevice
+      description: |
+        Mark a TOTP device as verified if the given TOTP code is valid for that device.
+      parameters:
+        - $ref: "#/components/parameters/totpRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                deviceName:
+                  type: string
+                  example: "My Authy App"
+                totp:
+                  type: string
+                  example: "123456"
+              required:
+                - userId
+                - deviceName
+                - totp
+
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      wasAlreadyVerified:
+                        type: boolean
+                        example: false
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["TOTP_NOT_ENABLED_ERROR"]
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNKNOWN_DEVICE_ERROR"]
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["INVALID_TOTP_ERROR"]
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["LIMIT_REACHED_ERROR"]
+                      retryAfterMs:
+                        type: number
+                        example: 90000
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/userid/map:
+    post:
+      tags:
+        - UserIdMapping Recipe
+      operationId: userIdMappingCreateMapping
+      description: |
+        Create a mapping between a SuperTokens userId and an external userId.
+      parameters:
+        - $ref: "#/components/parameters/userIdMappingRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                superTokensUserId:
+                  $ref: "#/components/schemas/userId"
+                externalUserId:
+                  type: string
+                  example: "externalId"
+                externalUserIdInfo:
+                  type: string
+                  example: "Info about external userId"
+                force:
+                  type: boolean
+              required:
+                - superTokensUserId
+                - externalUserId
+
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNKNOWN_SUPERTOKENS_USER_ID_ERROR"]
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["USER_ID_MAPPING_ALREADY_EXISTS_ERROR"]
+                      doesSuperTokensUserIdExist:
+                        type: boolean
+                      doesExternalUserIdExist:
+                        type: boolean
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+    get:
+      tags:
+        - UserIdMapping Recipe
+      operationId: userIdMappingGetMapping
+      description: |
+        Retrieve a UserIdMapping
+      parameters:
+        - $ref: "#/components/parameters/userIdMappingRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: userId
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: userIdType
+          schema:
+            type: string
+            enum: ["SUPERTOKENS", "EXTERNAL", "ANY"]
+
+      responses:
+        "200":
+          description: Retrives a userId mapping
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      superTokensUserId:
+                        $ref: "#/components/schemas/userId"
+                      externalUserId:
+                        type: string
+                        example: "externalId"
+                      externalUserIdInfo:
+                        type: string
+                        example: "Info about external userId"
+                    required:
+                      - status
+                      - superTokensUserId
+                      - externalUserId
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNKNOWN_MAPPING_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/userid/map/remove:
+    post:
+      tags:
+        - UserIdMapping Recipe
+      operationId: userIdMappingRemoveMapping
+      description: |
+        Delete a mapping between a SuperTokens userId and an external userId.
+      parameters:
+        - $ref: "#/components/parameters/userIdMappingRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                userIdType:
+                  type: string
+                  enum: ["SUPERTOKENS", "EXTERNAL", "ANY"]
+                force:
+                  type: boolean
+
+              required:
+                - userId
+
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  didMappingExist:
+                    type: boolean
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/userid/external-user-id-info:
+    put:
+      tags:
+        - UserIdMapping Recipe
+      operationId: userIdMappingUpateExternalUserIdInfo
+      description: |
+        Update or delete externalUserIdInfo
+      parameters:
+        - $ref: "#/components/parameters/userIdMappingRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                userIdType:
+                  type: string
+                  enum: ["SUPERTOKENS", "EXTERNAL", "ANY"]
+                externalUserIdInfo:
+                  type: string
+                  example: "new external userId info"
+                  nullable: true
+              required:
+                - userId
+                - externalUserIdInfo
+
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNKNOWN_MAPPING_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/signinup/code/consume:
+    post:
+      tags:
+        - Passwordless Recipe
+      operationId: passwordlessTryUseCode
+      description: |
+        Tries to consume the passed userInputCode+deviceId combo or the linkCode to sign the user in
+      parameters:
+        - $ref: "#/components/parameters/passwordlessRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  properties:
+                    preAuthSessionId:
+                      $ref: "#/components/schemas/preAuthSessionId"
+                    linkCode:
+                      $ref: "#/components/schemas/linkCode"
+                  required:
+                    - preAuthSessionId
+                    - linkCode
+                - type: object
+                  properties:
+                    preAuthSessionId:
+                      $ref: "#/components/schemas/preAuthSessionId"
+                    deviceId:
+                      $ref: "#/components/schemas/deviceId"
+                    userInputCode:
+                      $ref: "#/components/schemas/userInputCode"
+                  required:
+                    - preAuthSessionId
+                    - deviceId
+                    - userInputCode
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      createdNewUser:
+                        type: boolean
+                        example: true
+                      user:
+                        $ref: "#/components/schemas/passwordlessUser"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["INCORRECT_USER_INPUT_CODE_ERROR", "EXPIRED_USER_INPUT_CODE_ERROR"]
+                      failedCodeInputAttemptCount:
+                        type: number
+                        example: 2
+                      maximumCodeInputAttempts:
+                        type: number
+                        example: 5
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["RESTART_FLOW_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/signinup/code:
+    post:
+      tags:
+        - Passwordless Recipe
+      operationId: passwordlessStartSignIn
+      description: |
+        Starts a sign in process by requesting a linkCode and a deviceId + userInputCode combination the user can use to sign in.
+        Passing the optional deviceId signifies a resend code flow.
+      parameters:
+        - $ref: "#/components/parameters/passwordlessRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  properties:
+                    email:
+                      $ref: "#/components/schemas/email"
+                    userInputCode:
+                      $ref: "#/components/schemas/userInputCode"
+                  example:
+                    email: "test@example.com"
+                  required:
+                    - email
+                - type: object
+                  properties:
+                    phoneNumber:
+                      $ref: "#/components/schemas/phoneNumber"
+                    userInputCode:
+                      $ref: "#/components/schemas/userInputCode"
+                  required:
+                    - phoneNumber
+                - type: object
+                  properties:
+                    deviceId:
+                      $ref: "#/components/schemas/deviceId"
+                    userInputCode:
+                      $ref: "#/components/schemas/userInputCode"
+                  required:
+                    - deviceId
+      responses:
+        "200":
+          description: Starts the passwordless login process
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+
+                      preAuthSessionId:
+                        $ref: "#/components/schemas/preAuthSessionId"
+
+                      codeId:
+                        $ref: "#/components/schemas/codeId"
+
+                      deviceId:
+                        $ref: "#/components/schemas/deviceId"
+
+                      userInputCode:
+                        $ref: "#/components/schemas/userInputCode"
+
+                      linkCode:
+                        $ref: "#/components/schemas/linkCode"
+
+                      timeCreated:
+                        $ref: "#/components/schemas/timeCreated"
+
+                      codeLifetime:
+                        $ref: "#/components/schemas/codeLifetime"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["RESTART_FLOW_ERROR", "USER_INPUT_CODE_ALREADY_USED_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/signinup/code/remove:
+    post:
+      tags:
+        - Passwordless Recipe
+      operationId: passwordlessRevokeCode
+      description: |
+        Revokes a code by id
+      parameters:
+        - $ref: "#/components/parameters/passwordlessRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                codeId:
+                  $ref: "#/components/schemas/codeId"
+              required:
+                - codeId
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/signinup/codes:
+    get:
+      tags:
+        - Passwordless Recipe
+      operationId: passwordlessListCodes
+      description: |
+        Lists all active passwordless codes of the user
+      parameters:
+        - $ref: "#/components/parameters/passwordlessRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: email
+          description: Use this parameter to get information about all devices associated with an email (without the other query params)
+          schema:
+            type: string
+        - in: query
+          name: phoneNumber
+          description: Use this parameter to get information about all devices associated with a phoneNumber (without the other query params)
+          schema:
+            $ref: "#/components/schemas/phoneNumber"
+        - in: query
+          name: deviceId
+          description: Use this parameter to get information about a single device (without the other query params)
+          schema:
+            $ref: "#/components/schemas/deviceId"
+        - in: query
+          name: preAuthSessionId
+          description: Use this parameter to get information about a single device (without the other query params)
+          schema:
+            $ref: "#/components/schemas/preAuthSessionId"
+      responses:
+        "200":
+          description: List of all active passwordless codes of the user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        preAuthSessionId:
+                          $ref: "#/components/schemas/preAuthSessionId"
+                        failedCodeInputAttemptCount:
+                          type: number
+                          example: 2
+                        email:
+                          $ref: "#/components/schemas/email"
+                        phoneNumber:
+                          $ref: "#/components/schemas/phoneNumber"
+                        codes:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              codeId:
+                                $ref: "#/components/schemas/codeId"
+                              timeCreated:
+                                $ref: "#/components/schemas/timeCreated"
+                              codeLifetime:
+                                $ref: "#/components/schemas/codeLifetime"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/signinup/codes/remove:
+    post:
+      tags:
+        - Passwordless Recipe
+      operationId: passwordlessRevokeAllCodesOfUser
+      description: |
+        Revokes all codes issued for the user
+      parameters:
+        - $ref: "#/components/parameters/passwordlessRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  properties:
+                    email:
+                      $ref: "#/components/schemas/email"
+                  required:
+                    - email
+                - type: object
+                  properties:
+                    phoneNumber:
+                      $ref: "#/components/schemas/phoneNumber"
+                  required:
+                    - phoneNumber
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user⠀⠀:
+    get:
+      tags:
+        - Passwordless Recipe
+      operationId: passwordlessGetUser
+      description: |
+        Get a user's information.
+        Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
+
+      parameters:
+        - $ref: "#/components/parameters/passwordlessRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/userId"
+        - in: query
+          name: email
+          description: Use exactly one of phoneNumber, email or userId
+          schema:
+            $ref: "#/components/schemas/email"
+        - in: query
+          name: phoneNumber
+          description: Use exactly one of phoneNumber, email or userId
+          schema:
+            $ref: "#/components/schemas/phoneNumber"
+      responses:
+        "200":
+          description: Get a user's information.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      user:
+                        $ref: "#/components/schemas/passwordlessUser"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNKNOWN_USER_ID_ERROR", "UNKNOWN_EMAIL_ERROR", "UNKNOWN_PHONE_NUMBER_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Passwordless Recipe
+      operationId: passwordlessPutUser
+      description: |
+        Update a user's information. 
+        If the email or phoneNumber is set to null the previous value will be deleted. If they are not set (i.e., undefined/missing from the request), they are left as-is.
+      parameters:
+        - $ref: "#/components/parameters/passwordlessRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                email:
+                  allOf:
+                    - $ref: "#/components/schemas/email"
+                    - nullable: true
+                phoneNumber:
+                  allOf:
+                    - $ref: "#/components/schemas/phoneNumber"
+                    - nullable: true
+              required:
+                - userId
+
+      responses:
+        "200":
+          description: update user's information
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    enum:
+                      ["OK", "UNKNOWN_USER_ID_ERROR", "EMAIL_ALREADY_EXISTS_ERROR", "PHONE_NUMBER_ALREADY_EXISTS_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/signin:
+    post:
+      tags:
+        - EmailPassword Recipe
+      operationId: emailPasswordSignin
+      description: |
+        Signin a user with email ID and password
+      parameters:
+        - $ref: "#/components/parameters/rid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  $ref: "#/components/schemas/email"
+                password:
+                  $ref: "#/components/schemas/password"
+      responses:
+        "200":
+          description: signin response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      user:
+                        $ref: "#/components/schemas/user"
+                  - $ref: "#/components/schemas/wrongCredentialsResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/signup:
+    post:
+      tags:
+        - EmailPassword Recipe
+      operationId: emailPasswordSignup
+      description: |
+        Signup a user with email ID and password
+      parameters:
+        - $ref: "#/components/parameters/rid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  $ref: "#/components/schemas/email"
+                password:
+                  $ref: "#/components/schemas/password"
+      responses:
+        "200":
+          description: signup response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      user:
+                        $ref: "#/components/schemas/user"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["EMAIL_ALREADY_EXISTS_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user:
+    get:
+      tags:
+        - EmailPassword Recipe
+      operationId: emailPasswordGetUser
+      description: |
+        Get a user's information
+      parameters:
+        - $ref: "#/components/parameters/rid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: email
+          description: use either email or userId, not both
+          schema:
+            $ref: "#/components/schemas/email"
+        - in: query
+          name: userId
+          description: use either email or userId, not both
+          schema:
+            $ref: "#/components/schemas/userId"
+
+      responses:
+        "200":
+          description: get user's information
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      user:
+                        $ref: "#/components/schemas/user"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNKNOWN_USER_ID_ERROR", "UNKNOWN_EMAIL_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - EmailPassword Recipe
+      operationId: emailPasswordPutUser
+      description: |
+        Update a user's information
+      parameters:
+        - $ref: "#/components/parameters/rid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                email:
+                  $ref: "#/components/schemas/email"
+                password:
+                  $ref: "#/components/schemas/password"
+
+      responses:
+        "200":
+          description: update user's information
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    enum: ["OK", "UNKNOWN_USER_ID_ERROR", "EMAIL_ALREADY_EXISTS_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/password/reset/token:
+    post:
+      tags:
+        - EmailPassword Recipe
+      operationId: emailPasswordGetPasswordResetToken
+      description: |
+        Generate a new reset password token for this user
+      parameters:
+        - $ref: "#/components/parameters/rid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+      responses:
+        "200":
+          description: Generate a new reset password token for this user
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      token:
+                        $ref: "#/components/schemas/token"
+                  - $ref: "#/components/schemas/unknownUserIdResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/users:
+    get:
+      deprecated: true
+      tags:
+        - EmailPassword Recipe
+      operationId: emailPasswordGetUsers
+      description: |
+        User Pagination API
+      parameters:
+        - $ref: "#/components/parameters/rid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/paginationToken"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/timeJoinedOrder"
+      responses:
+        "200":
+          description: get user's information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  users:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/user"
+                  nextPaginationToken:
+                    $ref: "#/components/schemas/paginationToken"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/password/reset:
+    post:
+      tags:
+        - EmailPassword Recipe
+      operationId: emailPasswordGetPasswordReset
+      description: |
+        Reset a password using password reset token
+      parameters:
+        - $ref: "#/components/parameters/rid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                method:
+                  type: string
+                  enum:
+                    - token
+                token:
+                  $ref: "#/components/schemas/token"
+                newPassword:
+                  type: string
+                  example: newpassword123
+      responses:
+        "200":
+          description: Reset a password using password reset token
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      userId:
+                        $ref: "#/components/schemas/userId"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["RESET_PASSWORD_INVALID_TOKEN_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/users/count:
+    get:
+      deprecated: true
+      tags:
+        - EmailPassword Recipe
+      operationId: emailPasswordGetUserCount
+      description: |
+        Get number of users
+      parameters:
+        - $ref: "#/components/parameters/rid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      responses:
+        "200":
+          description: Get number of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  count:
+                    type: number
+                    example: 10
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/passwordhash/import:
+    post:
+      tags:
+        - EmailPassword Recipe
+      operationId: userImport
+      description: |
+        Import a user with email ID and password hash
+      parameters:
+        - $ref: "#/components/parameters/rid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  $ref: "#/components/schemas/email"
+                passwordHash:
+                  type: string
+                  example: "passwordHash"
+                hashingAlgorithm:
+                  type: string
+                  enum: ["argon2", "bcrypt", "firebase_scrypt"]
+
+      responses:
+        "200":
+          description: import user response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  user:
+                    $ref: "#/components/schemas/user"
+                  didUserAlreadyExist:
+                    type: boolean
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/signinup:
+    post:
+      tags:
+        - ThirdParty Recipe
+      operationId: thirdPartySigninup
+      description: |
+        Signin/up a user
+      parameters:
+        - $ref: "#/components/parameters/thirdPartyRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                thirdPartyId:
+                  $ref: "#/components/schemas/thirdPartyId"
+                thirdPartyUserId:
+                  $ref: "#/components/schemas/thirdPartyUserId"
+                email:
+                  $ref: "#/components/schemas/thirdPartyEmail"
+      responses:
+        "200":
+          description: Signin/up a user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  createdNewUser:
+                    type: boolean
+                    example: true
+                  user:
+                    $ref: "#/components/schemas/thirdPartyUser"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user⠀:
+    get:
+      tags:
+        - ThirdParty Recipe
+      operationId: thirdPartyGetUser
+      description: |
+        Get a user's information.
+        Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
+
+      parameters:
+        - $ref: "#/components/parameters/thirdPartyRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/userId"
+        - in: query
+          name: thirdPartyId
+          description: Either use userId or thirdPartyId and thirdPartyUserId
+          schema:
+            $ref: "#/components/schemas/thirdPartyId"
+        - in: query
+          name: thirdPartyUserId
+          description: Either use userId or thirdPartyId and thirdPartyUserId
+          schema:
+            $ref: "#/components/schemas/thirdPartyUserId"
+      responses:
+        "200":
+          description: Get a user's information.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      user:
+                        $ref: "#/components/schemas/thirdPartyUser"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNKNOWN_USER_ID_ERROR", "UNKNOWN_THIRD_PARTY_USER_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/users/by-email:
+    get:
+      operationId: thirdPartyGetUsersByEmail
+      tags:
+        - ThirdParty Recipe
+      description: |
+        Get all users accounts associated with given email
+
+      parameters:
+        - $ref: "#/components/parameters/thirdPartyRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: email
+          required: true
+          description: User's email
+          schema:
+            type: string
+            example: john.doe@example.com
+
+      responses:
+        "200":
+          description: Get all users associated with given email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  users:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/thirdPartyUser"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/users⠀:
+    get:
+      deprecated: true
+      tags:
+        - ThirdParty Recipe
+      operationId: thirdPartyGetUsers
+      description: |
+        Get User Pagination data.
+        Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
+      parameters:
+        - $ref: "#/components/parameters/thirdPartyRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/paginationToken"
+        - $ref: "#/components/parameters/timeJoinedOrder"
+        - $ref: "#/components/parameters/limit"
+      responses:
+        "200":
+          description: Get user's information.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  user:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/thirdPartyUser"
+                  nextPaginationToken:
+                    $ref: "#/components/schemas/paginationToken"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/users/count⠀:
+    get:
+      deprecated: true
+      tags:
+        - ThirdParty Recipe
+      operationId: thirdPartyGetUserCount
+      description: |
+        Get number of users.
+        Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec
+      parameters:
+        - $ref: "#/components/parameters/thirdPartyRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      responses:
+        "200":
+          description: Get number of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  count:
+                    type: number
+                    example: 10
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  # /recipe/user/email/revoke/token:
+  #   post:
+  #     tags:
+  #       - EmailVerification Recipe
+  #     operationId: emailVerificationRevokeToken
+  #     description: |
+  #       Revoke a generated email verification token
+  #     parameters:
+  #       - $ref: '#/components/parameters/emailVerificationRid'
+  #       - $ref: '#/components/parameters/api-key'
+  #       - $ref: '#/components/parameters/cdi-version'
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: '#/components/schemas/emailVerificationRevokeTokenRequest'
+  #     responses:
+  #       '200':
+  #         $ref: '#/components/responses/emailVerificationRevokeToken'
+  #       '400':
+  #         $ref: '#/components/responses/400'
+  #       '401':
+  #         $ref: '#/components/responses/401'
+  #       '404':
+  #         $ref: '#/components/responses/404'
+  #       '500':
+  #         $ref: '#/components/responses/500'
+
+  /recipe/user/email/verify/token:
+    post:
+      tags:
+        - EmailVerification Recipe
+      operationId: emailVerificationVerifyToken
+      description: |
+        Generate a new email verification token for this user
+      parameters:
+        - $ref: "#/components/parameters/emailVerificationRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/emailVerificationVerifyTokenRequest"
+      responses:
+        "200":
+          description: Generate a new email verification token for this user
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      token:
+                        $ref: "#/components/schemas/token"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["EMAIL_ALREADY_VERIFIED_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/email/verify/token/remove:
+    post:
+      tags:
+        - EmailVerification Recipe
+      operationId: emailVerificationVerifyTokenRemove
+      description: |
+        Remove all unused email verification tokens for this user
+      parameters:
+        - $ref: "#/components/parameters/emailVerificationRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/emailVerificationVerifyTokenRequest"
+      responses:
+        "200":
+          description: OK response
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    enum: ["OK"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/email/verify:
+    post:
+      tags:
+        - EmailVerification Recipe
+      operationId: emailVerificationVerify
+      description: |
+        Verify an email
+      parameters:
+        - $ref: "#/components/parameters/emailVerificationRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                method:
+                  type: string
+                  enum:
+                    - token
+                token:
+                  $ref: "#/components/schemas/token"
+
+      responses:
+        "200":
+          description: Verify an email
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      userId:
+                        $ref: "#/components/schemas/userId"
+                      email:
+                        $ref: "#/components/schemas/email"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["EMAIL_VERIFICATION_INVALID_TOKEN_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+    get:
+      tags:
+        - EmailVerification Recipe
+      operationId: emailVerificationVerifyGet
+      description: |
+        Check if an email is verified
+      parameters:
+        - $ref: "#/components/parameters/emailVerificationRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/email"
+      responses:
+        "200":
+          description: Verify an email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  isVerified:
+                    $ref: "#/components/schemas/isVerified"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/email/verify/remove:
+    post:
+      tags:
+        - EmailVerification Recipe
+      operationId: emailVerificationVerifyRemove
+      description: |
+        Unverify an email
+      parameters:
+        - $ref: "#/components/parameters/emailVerificationRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/emailVerificationVerifyTokenRequest"
+
+      responses:
+        "200":
+          description: OK response
+          content:
+            application/json:
+              schema:
+                properties:
+                  status:
+                    type: string
+                    enum: ["OK"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/metadata:
+    get:
+      tags:
+        - User Metadata Recipe
+      operationId: userMetadataRead
+      description: |
+        Gets the stored metadata object of the user
+      parameters:
+        - $ref: "#/components/parameters/userMetadataRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/userIdRequired"
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  metadata:
+                    $ref: "#/components/schemas/userMetadata"
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+    put:
+      tags:
+        - User Metadata Recipe
+      operationId: userMetadataUpdate
+      description: |
+        Updates the metadata object stored about the user by doing a shallow merge of the stored and the update JSONs
+        and removing properties set to null on the root level of the update object. The merged object is then reserialized and stored.
+
+        e.g.:
+          - stored: `{ "preferences": { "theme":"dark" }, "notifications": { "email": true }, "todos": ["example"] }`
+
+          - update: `{ "notifications": { "sms": true }, "todos": null }`
+
+          - result: `{ "preferences": { "theme":"dark" }, "notifications": { "sms": true } }`
+
+      parameters:
+        - $ref: "#/components/parameters/userMetadataRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                metadataUpdate:
+                  $ref: "#/components/schemas/userMetadataUpdate"
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  metadata:
+                    $ref: "#/components/schemas/userMetadata"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/metadata/remove:
+    post:
+      tags:
+        - User Metadata Recipe
+      operationId: userMetadataDelete
+      description: |
+        Removes the entire metadata JSON stored about the user.
+
+      parameters:
+        - $ref: "#/components/parameters/userMetadataRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/role:
+    put:
+      tags:
+        - User Roles Recipe
+      operationId: addUserRole
+      description: |
+        Creates a User Role mapping
+
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                role:
+                  $ref: "#/components/schemas/role"
+              required: [userId, role]
+
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      didUserAlreadyHaveRole:
+                        type: boolean
+                        example: true
+                  - $ref: "#/components/schemas/unknownRoleResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/role/remove:
+    post:
+      tags:
+        - User Roles Recipe
+      operationId: removeUserRole
+      description: |
+        Removes a User Role mapping
+
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                role:
+                  $ref: "#/components/schemas/role"
+              required: [userId, role]
+
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      didUserHaveRole:
+                        type: boolean
+                        example: true
+                  - $ref: "#/components/schemas/unknownRoleResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/user/roles:
+    get:
+      tags:
+        - User Roles Recipe
+      operationId: getUserRoles
+      description: |
+        Retrive the roles associated with the user.
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/userIdRequired"
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  roles:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/role"
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/role/users:
+    get:
+      tags:
+        - User Roles Recipe
+      operationId: getRoleUsers
+      description: |
+        Retrive the users associated with the role.
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/roleRequired"
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      users:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/userId"
+                  - $ref: "#/components/schemas/unknownRoleResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/role:
+    put:
+      tags:
+        - User Roles Recipe
+      operationId: putRole
+      description: |
+        Creates a role with permissions, can also be used to add permissions to a role
+
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                role:
+                  $ref: "#/components/schemas/role"
+                permissions:
+                  type: array
+                  items:
+                    type: string
+                    example: permission
+              required: [role]
+
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  createdNewRole:
+                    type: boolean
+                    example: true
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/role/permissions:
+    get:
+      tags:
+        - User Roles Recipe
+      operationId: getRolePermissions
+      description: |
+        Retrive the permissions associated with a role
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/roleRequired"
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      permissions:
+                        type: array
+                        items:
+                          type: string
+                          example: permission
+                  - $ref: "#/components/schemas/unknownRoleResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/role/permissions/remove:
+    post:
+      tags:
+        - User Roles Recipe
+      operationId: removeRolePermissions
+      description: |
+        Removes permissions mapped to a role, if no permissions are passed all permissions mapped to the role are removed
+
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                role:
+                  $ref: "#/components/schemas/role"
+                permissions:
+                  type: array
+                  items:
+                    type: string
+                    example: permission
+              required: [role]
+
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                  - $ref: "#/components/schemas/unknownRoleResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/permission/roles:
+    get:
+      tags:
+        - User Roles Recipe
+      operationId: getPermissionRoles
+      description: |
+        Retrive the roles associated with the permission
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/permissionRequired"
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  roles:
+                    type: array
+                    items:
+                      type: string
+                      example: admin
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/role/remove:
+    post:
+      tags:
+        - User Roles Recipe
+      operationId: removeRole
+      description: |
+        Deletes a role
+
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                role:
+                  $ref: "#/components/schemas/role"
+              required: [role]
+
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  didRoleExist:
+                    type: boolean
+                    example: true
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/roles:
+    get:
+      tags:
+        - User Roles Recipe
+      operationId: getRoles
+      description: |
+        Retrive all created roles
+      parameters:
+        - $ref: "#/components/parameters/userRolesRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      responses:
+        "200":
+          description: "The operation was successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  roles:
+                    type: array
+                    items:
+                      type: string
+                      example: admin
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/session:
+    post:
+      tags:
+        - Session Recipe
+      operationId: createNewSession
+      description: |
+        Create a new Session
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+                userDataInJWT:
+                  $ref: "#/components/schemas/userDataInJWT"
+                userDataInDatabase:
+                  $ref: "#/components/schemas/userDataInDatabase"
+                enableAntiCsrf:
+                  $ref: "#/components/schemas/enableAntiCsrf"
+                useDynamicSigningKey:
+                  type: boolean
+                  description: Decides if the token should be signed with a dynamic or static key, defaults to true
+                  example: false
+      responses:
+        "200":
+          description: Create a new Session
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  session:
+                    $ref: "#/components/schemas/session"
+                  accessToken:
+                    $ref: "#/components/schemas/cookieInfo"
+                  refreshToken:
+                    $ref: "#/components/schemas/cookieInfo"
+                  antiCsrfToken:
+                    $ref: "#/components/schemas/token"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+    get:
+      tags:
+        - Session Recipe
+      operationId: getSessionInfo
+      description: |
+        Get user and session information for a given session handle
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: sessionHandle
+          schema:
+            $ref: "#/components/schemas/handle"
+      responses:
+        "200":
+          description: Get user and session information for a given session handle
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      userDataInDatabase:
+                        $ref: "#/components/schemas/userDataInDatabase"
+                      userDataInJWT:
+                        $ref: "#/components/schemas/userDataInJWT"
+                      userId:
+                        $ref: "#/components/schemas/userId"
+                      expiry:
+                        $ref: "#/components/schemas/expiry"
+                      timeCreated:
+                        $ref: "#/components/schemas/timeCreated"
+                      sessionHandle:
+                        $ref: "#/components/schemas/handle"
+                  - $ref: "#/components/schemas/unauthorisedMessageResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/session/remove:
+    post:
+      tags:
+        - Session Recipe
+      operationId: deleteSession
+      description: |
+        Delete a sesion
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  properties:
+                    sessionHandles:
+                      $ref: "#/components/schemas/sessionHandles"
+                - type: object
+                  properties:
+                    userId:
+                      $ref: "#/components/schemas/userId"
+
+      responses:
+        "200":
+          description: Delete a session
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  sessionHandlesRevoked:
+                    $ref: "#/components/schemas/sessionHandles"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/session/verify:
+    post:
+      tags:
+        - Session Recipe
+      operationId: verifySession
+      description: |
+        Verify a Session
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  $ref: "#/components/schemas/token"
+                enableAntiCsrf:
+                  $ref: "#/components/schemas/enableAntiCsrf"
+                doAntiCsrfCheck:
+                  type: boolean
+                  example: false
+                checkDatabase:
+                  type: boolean
+                  description: Decides if we always check if the session exists in the DB or just do token validation, defaults to false.
+                  example: false
+                antiCsrfToken:
+                  $ref: "#/components/schemas/token"
+      responses:
+        "200":
+          description: Verify a session
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      session:
+                        $ref: "#/components/schemas/session"
+                      accessToken:
+                        $ref: "#/components/schemas/cookieInfo"
+                  - $ref: "#/components/schemas/unauthorisedMessageResponse"
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/tryRefreshTokenResponse"
+                      message:
+                        $ref: "#/components/schemas/message"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/session/refresh:
+    post:
+      tags:
+        - Session Recipe
+      operationId: refreshSession
+      description: |
+        Refresh a Session
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  $ref: "#/components/schemas/token"
+                enableAntiCsrf:
+                  $ref: "#/components/schemas/enableAntiCsrf"
+                antiCsrfToken:
+                  $ref: "#/components/schemas/token"
+              required: [refreshToken, enableAntiCsrf]
+      responses:
+        "200":
+          description: Refresh a session
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      session:
+                        $ref: "#/components/schemas/session"
+                      accessToken:
+                        $ref: "#/components/schemas/cookieInfo"
+                      refreshToken:
+                        $ref: "#/components/schemas/cookieInfo"
+                      antiCsrfToken:
+                        $ref: "#/components/schemas/token"
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/tokenTheftResponse"
+                      session:
+                        type: object
+                        properties:
+                          handle:
+                            $ref: "#/components/schemas/handle"
+                          userId:
+                            $ref: "#/components/schemas/userId"
+                  - $ref: "#/components/schemas/unauthorisedMessageResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/session/user:
+    get:
+      tags:
+        - Session Recipe
+      operationId: getUserSessionHandles
+      description: |
+        Get session handles for a user
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "200":
+          description: Get user Session Handles
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  sessionHandles:
+                    $ref: "#/components/schemas/sessionHandles"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/session/regenerate:
+    post:
+      tags:
+        - Session Recipe
+      operationId: regenerateSession
+      description: |
+        Regenerate a session
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken:
+                  $ref: "#/components/schemas/token"
+                userDataInJWT:
+                  $ref: "#/components/schemas/userDataInJWT"
+      responses:
+        "200":
+          description: Regenerate user session
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      session:
+                        $ref: "#/components/schemas/session"
+                      accessToken:
+                        $ref: "#/components/schemas/cookieInfo"
+                  - $ref: "#/components/schemas/unauthorisedMessageResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/session/data:
+    get:
+      deprecated: true
+      tags:
+        - Session Recipe
+      operationId: getSessionData
+      description: |
+        Get session data
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: sessionHandle
+          description: Users session handle
+          schema:
+            $ref: "#/components/schemas/handle"
+      responses:
+        "200":
+          description: Get Session Data
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      userDataInDatabase:
+                        $ref: "#/components/schemas/userDataInDatabase"
+                  - $ref: "#/components/schemas/unauthorisedMessageResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+    put:
+      tags:
+        - Session Recipe
+      operationId: putSessionData
+      description: |
+        Change session data
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionHandle:
+                  $ref: "#/components/schemas/handle"
+                userDataInDatabase:
+                  $ref: "#/components/schemas/userDataInDatabase"
+      responses:
+        "200":
+          description: Change Session Data
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/statusOKResponse"
+                  - $ref: "#/components/schemas/unauthorisedMessageResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/jwt:
+    post:
+      tags:
+        - JWT Recipe
+      operationId: createSignedJWT
+      description: |
+        Create a signed JWT
+      parameters:
+        - $ref: "#/components/parameters/jwtRID"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payload:
+                  $ref: "#/components/schemas/createJWTPayload"
+                algorithm:
+                  $ref: "#/components/schemas/createJWTAlgorithm"
+                jwksDomain:
+                  $ref: "#/components/schemas/jwksDomain"
+                validity:
+                  $ref: "#/components/schemas/jwtValidity"
+                useStaticSigningKey:
+                  type: boolean
+                  description: Decides if the token should be signed with a dynamic or static key, defaults to true
+                  example: true
+
+      responses:
+        "200":
+          description: Create a signed JWT
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      jwt:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNSUPPORTED_ALGORITHM_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /.well-known/jwks.jsonx:
+    get:
+      tags:
+        - Core
+      operationId: retrieveJwks
+      description: |
+        Retrieve JWKs for JWT verification, containing both static and dynamic keys.
+      responses:
+        "200":
+          description: Retrieve JWKs for JWT verification, containing both static and dynamic keys.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  keys:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/jwk"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/jwt/data:
+    get:
+      deprecated: true
+      tags:
+        - Session Recipe
+      operationId: getJWTData
+      description: |
+        Get JWT data for a session
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: sessionHandle
+          description: Users session handle
+          schema:
+            $ref: "#/components/schemas/handle"
+      responses:
+        "200":
+          description: Get JWT Data
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      userDataInJWT:
+                        $ref: "#/components/schemas/userDataInJWT"
+                  - $ref: "#/components/schemas/unauthorisedMessageResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+    put:
+      tags:
+        - Session Recipe
+      operationId: putJWTData
+      description: |
+        Change JWT data for a session
+      parameters:
+        - $ref: "#/components/parameters/sessionRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionHandle:
+                  $ref: "#/components/schemas/handle"
+                userDataInJWT:
+                  $ref: "#/components/schemas/userDataInJWT"
+      responses:
+        "200":
+          description: Change JWT Data for a session
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/statusOKResponse"
+                  - $ref: "#/components/schemas/unauthorisedMessageResponse"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/dashboard/user:
+    post:
+      tags:
+        - Dashboard Recipe
+      operationId: createDashboardUser
+      description: |
+        Create a dashboard user
+      parameters:
+        - $ref: "#/components/parameters/dashboardRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: test@example.com
+                password:
+                  type: string
+                  example: password@123
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["OK"]
+                      user:
+                        type: object
+                        properties:
+                          userId:
+                            type: string
+                            example: "example-userid"
+                          email:
+                            type: string
+                            example: "test@example.com"
+                          timeCreated:
+                            type: number
+                            example: 1231321231
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["EMAIL_ALREADY_EXISTS_ERROR"]
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["PASSWORD_WEAK_ERROR"]
+                      message:
+                        type: string
+                        example: "Your password must have at least 8 characters"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["INVALID_EMAIL_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "402":
+          description: Indicates ayment required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: ["USER_LIMIT_REACHED_ERROR"]
+                  message:
+                    type: string
+                    example: "You have reached the free limit for creating users, please purchase the dashboard feature to create new users"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Dashboard Recipe
+      operationId: updateDashboardUser
+      description: |
+        Update a user's email or password
+      parameters:
+        - $ref: "#/components/parameters/dashboardRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - type: object
+                  properties:
+                    email:
+                      type: string
+                      example: test@example.com
+                    newPassword:
+                      type: string
+                      example: password@123
+                    newEmail:
+                      type: string
+                      example: test2@example.com
+                - type: object
+                  properties:
+                    userId:
+                      type: string
+                      example: "ue21r-fw32r3-d121-d1"
+                    newPassword:
+                      type: string
+                      example: "password@123"
+                    newEmail:
+                      type: string
+                      example: test2@example.com
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["OK"]
+                      user:
+                        type: object
+                        properties:
+                          userId:
+                            type: string
+                            example: "r23r-f235th54-g3413gf-r32dr2"
+                          email:
+                            type: string
+                            example: "test@example.com"
+                          timeCreated:
+                            type: number
+                            example: 391238234792
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["EMAIL_ALREADY_EXISTS_ERROR"]
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["PASSWORD_WEAK_ERROR"]
+                      message:
+                        type: string
+                        example: "Your password must have at least 8 characters"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["INVALID_EMAIL_ERROR"]
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["UNKNOWN_USER_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+    delete:
+      tags:
+        - Dashboard Recipe
+      operationId: deleteDashboardUser
+      description: |
+        Delete a dashboard user with their userId or email
+      parameters:
+        - $ref: "#/components/parameters/dashboardRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: email
+          schema:
+            type: string
+            example: "test@example.com"
+          required: false
+
+        - in: query
+          name: userId
+          schema:
+            type: string
+            example: "ue1231-f32f290f2-f23r23f-323f2"
+          required: false
+
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  didUserExist:
+                    type: boolean
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/dashboard/users:
+    get:
+      tags:
+        - Dashboard Recipe
+      operationId: getAllDashboardUsers
+      description: |
+        Get a list of call the dashboard users
+      parameters:
+        - $ref: "#/components/parameters/dashboardRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      responses:
+        "200":
+          description: get a list of dashboard users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: ["OK"]
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        email:
+                          type: string
+                          example: "test@example.com"
+                        userId:
+                          type: string
+                          example: "uf2323-f223r233-f23-f23-f2f32"
+                        timeCreated:
+                          type: number
+                          example: 16382348324
+                        isSuspended:
+                          type: boolean
+                          example: false
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/dashboard/session/verify:
+    post:
+      tags:
+        - Dashboard Recipe
+      operationId: verifyDashboardUserSession
+      description: |
+        Verify a Dashboard user's sessionId
+      parameters:
+        - $ref: "#/components/parameters/dashboardRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sessionId:
+                  type: string
+                  example: "rf32f-f32342f-32f-323r2f3-23"
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["OK"]
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["USER_SUSPENDED_ERROR"]
+                      message:
+                        type: string
+                        example: "You have crossed the free dashboard user limit. Please purchase the dashboard feature or login with a valid user account"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["INVAlID_SESSION_ERROR"]
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/dashboard/session:
+    delete:
+      tags:
+        - Dashboard Recipe
+      operationId: RevokeDashboardUsersSession
+      description: |
+        Revoke a Dashboard user's session
+      parameters:
+        - $ref: "#/components/parameters/dashboardRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: sessionId
+          schema:
+            type: string
+            example: "ue1231-f32f290f2-f23r23f-323f2"
+
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/dashboard/signin:
+    post:
+      tags:
+        - Dashboard Recipe
+      operationId: signInDashboardUser
+      description: |
+        Signin a Dashboard user
+      parameters:
+        - $ref: "#/components/parameters/dashboardRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: test@example.com
+                password:
+                  type: string
+                  example: password@123
+      responses:
+        "200":
+          description: Indicates success with the status property
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["OK"]
+                      sessionId:
+                        type: string
+                        example:
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["USER_SUSPENDED_ERROR"]
+                      message:
+                        type: string
+                        example: "You have crossed the free dashboard user limit. Please purchase the dashboard feature or login with a valid user account"
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["INVAlID_CREDENTIALS_ERROR"]
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /recipe/dashboard/user/sessions:
+    get:
+      tags:
+        - Dashboard Recipe
+      operationId: getAllSessionsForDashboardUser
+      description: |
+        Get a list of the sessions for the dashboard user
+      parameters:
+        - $ref: "#/components/parameters/dashboardRid"
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: userId
+          schema:
+            type: string
+            example: "ue1231-f32f290f2-f23r23f-323f2"
+          required: false
+      responses:
+        "200":
+          description: get a list of sessions for dashboard user
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sessions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        userId:
+                          $ref: "#/components/schemas/userId"
+                        sessionId:
+                          type: string
+                          example: "fni29f-f23f23-f2fq32qt-h35evf"
+                        timeCreated:
+                          type: number
+                          example: 16382348324
+                        expiry:
+                          type: number
+                          example: 16382348324
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /apiversion:
+    get:
+      tags:
+        - Core
+      operationId: getApiVersion
+      description: |
+        Get a list of compatible CDI versions
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+      responses:
+        "200":
+          description: get api version
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  versions:
+                    type: array
+                    items:
+                      type: string
+                      example: ["2.13"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /config:
+    get:
+      tags:
+        - Core
+      operationId: getConfig
+      description: |
+        Get path to the loaded config file
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: pid
+          schema:
+            type: string
+            example: 21307
+
+      responses:
+        "200":
+          description: get api version
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      path:
+                        type: string
+                        example: /usr/lib/supertokens/config.yaml
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["NOT_ALLOWED"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /:
+    get:
+      tags:
+        - Core
+      operationId: getHelloOnRootPath
+      description: |
+        Return a simple hello message
+      responses:
+        "200":
+          $ref: "#/components/responses/hello"
+        "500":
+          $ref: "#/components/responses/500"
+
+  /hello:
+    get:
+      tags:
+        - Core
+      operationId: getHello
+      description: |
+        Return a simple hello message
+      responses:
+        "200":
+          $ref: "#/components/responses/hello"
+        "500":
+          $ref: "#/components/responses/500"
+    put:
+      tags:
+        - Core
+      operationId: putHello
+      description: |
+        Return a simple hello message
+      responses:
+        "200":
+          $ref: "#/components/responses/hello"
+        "500":
+          $ref: "#/components/responses/500"
+
+    post:
+      tags:
+        - Core
+      operationId: postHello
+      description: |
+        Return a simple hello message
+      responses:
+        "200":
+          $ref: "#/components/responses/hello"
+        "500":
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - Core
+      operationId: deleteHello
+      description: |
+        Return a simple hello message
+      responses:
+        "200":
+          $ref: "#/components/responses/hello"
+        "500":
+          $ref: "#/components/responses/500"
+
+  /telemetry:
+    get:
+      tags:
+        - Core
+      operationId: getTelemetry
+      description: |
+        Returns the telemetryID if it exists
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      responses:
+        "200":
+          description: Returns the telemetryID if it exists
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      exists:
+                        type: boolean
+                        enum: [true]
+                      telemetryId:
+                        type: string
+                        example: 99c87c72-1807-22d-9b39-7a88f95re56c
+                  - type: object
+                    properties:
+                      exists:
+                        type: boolean
+                        example: [false]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /users/count:
+    get:
+      tags:
+        - Core
+      operationId: getUsersCount
+      description: |
+        Get number of users.
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/includeRecipeIds"
+      responses:
+        "200":
+          description: Get number of users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  count:
+                    type: number
+                    example: 1000000
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /users/count/active:
+    get:
+      tags:
+        - Core
+      operationId: getActiveUsersCount
+      description: |
+        Get number of active users.
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - in: query
+          name: since
+          schema:
+            type: number
+            example: 1679875200000
+          required: true
+      responses:
+        "200":
+          description: Get number of active users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  count:
+                    type: number
+                    example: 100000
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /users:
+    get:
+      tags:
+        - Core
+      operationId: getUsers
+      description: |
+        User Pagination
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+        - $ref: "#/components/parameters/includeRecipeIds"
+        - $ref: "#/components/parameters/paginationToken"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/timeJoinedOrder"
+        - in: query
+          name: email
+          schema:
+            type: string
+            example: "test@example.com"
+          required: false
+        - in: query
+          name: phone
+          schema:
+            type: number
+            example: +911234567890
+          required: false
+        - in: query
+          name: recipe
+          schema:
+            type: string
+            example: "emailpassword"
+          required: false
+        - in: query
+          name: provider
+          schema:
+            type: string
+            example: "google"
+          required: false
+      responses:
+        "200":
+          description: User Pagination
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        recipeId:
+                          type: string
+                          enum: ["emailpassword", "thirdparty", "passwordless"]
+                        user:
+                          anyOf:
+                            - $ref: "#/components/schemas/user"
+                            - $ref: "#/components/schemas/thirdPartyUser"
+                            - $ref: "#/components/schemas/passwordlessUser"
+                      required: [recipeId, user]
+                      additionalProperties: false
+                  nextPaginationToken:
+                    $ref: "#/components/schemas/paginationToken"
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /user/remove:
+    post:
+      tags:
+        - Core
+      operationId: deleteUser
+      description: |
+        Delete user
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  $ref: "#/components/schemas/userId"
+      responses:
+        "200":
+          description: Returns OK if the operation succeeded (even if the user didn't exist before the call)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+
+  /user/search/tags:
+    get:
+      tags:
+        - Core
+      operationId: getSearchTags
+      description: |
+        Retrieve available tags for search
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+
+      responses:
+        "200":
+          description: Returns available tags for search
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  tags:
+                    type: array
+                    items:
+                      type: string
+                      example: ["email", "phone", "provider"]
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /ee/featureflag:
+    get:
+      tags:
+        - Core
+      operationId: getFeatureFlag
+      description: |
+        Get a list of the enabled enterprise features
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      responses:
+        "200":
+          description: The operation was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+                  features:
+                    type: array
+                    items:
+                      type: string
+                    example: ["feature_1", "feature_2"]
+                  usageStats:
+                    type: object
+
+        "400":
+          $ref: "#/components/responses/400"
+
+        "401":
+          $ref: "#/components/responses/401"
+
+        "404":
+          $ref: "#/components/responses/404"
+
+        "500":
+          $ref: "#/components/responses/500"
+
+  /ee/license:
+    put:
+      tags:
+        - Core
+      operationId: setLicense
+      description: |
+        Set or sync license key
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                licenseKey:
+                  type: string
+                  example: "eyJhbGciOiJIUzI1NiIsIn..."
+      responses:
+        "200":
+          description: The operation was successful
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["MISSING_EE_FOLDER_ERROR"]
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["INVALID_LICENSE_KEY_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+
+    delete:
+      tags:
+        - Core
+      operationId: deleteLicense
+      description: |
+        Delete license key
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+
+      responses:
+        "200":
+          description: The operation was successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    $ref: "#/components/schemas/statusOK"
+
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+
+    get:
+      tags:
+        - Core
+      operationId: getLicense
+      description: |
+        Retrieve license key
+      parameters:
+        - $ref: "#/components/parameters/api-key"
+        - $ref: "#/components/parameters/cdi-version"
+
+      responses:
+        "200":
+          description: The operation was successful
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      status:
+                        $ref: "#/components/schemas/statusOK"
+                      licenseKey:
+                        type: string
+                        example: "eyJhbGciOiJIUzI1NiIsIn..."
+
+                  - type: object
+                    properties:
+                      status:
+                        type: string
+                        enum: ["NO_LICENSE_KEY_FOUND_ERROR"]
+
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+
+components:
+  parameters:
+    rid:
+      name: rid
+      in: header
+      example: emailpassword
+      required: false
+      schema:
+        type: string
+    api-key:
+      name: api-key
+      in: header
+      example: ajs30Nlbs0DjvsdFIne934n8NVee5n
+      required: false
+      schema:
+        type: string
+
+    thirdPartyRid:
+      name: rid
+      in: header
+      example: thirdparty
+      required: false
+      schema:
+        type: string
+
+    passwordlessRid:
+      name: rid
+      in: header
+      example: passwordless
+      required: false
+      schema:
+        type: string
+
+    emailVerificationRid:
+      name: rid
+      in: header
+      example: emailverification
+      required: false
+      schema:
+        type: string
+
+    userMetadataRid:
+      name: rid
+      in: header
+      example: usermetadata
+      required: false
+      schema:
+        type: string
+
+    userRolesRid:
+      name: rid
+      in: header
+      example: userroles
+      required: false
+      schema:
+        type: string
+
+    sessionRid:
+      name: rid
+      in: header
+      example: session
+      required: false
+      schema:
+        type: string
+
+    jwtRID:
+      name: rid
+      in: header
+      example: jwt
+      required: false
+      schema:
+        type: string
+
+    userIdMappingRid:
+      name: rid
+      in: header
+      example: useridmapping
+      required: false
+      schema:
+        type: string
+
+    dashboardRid:
+      name: rid
+      in: header
+      example: dashboard
+      required: false
+      schema:
+        type: string
+
+    totpRid:
+      name: rid
+      in: header
+      example: totp
+      required: false
+      schema:
+        type: string
+
+    cdi-version:
+      name: cdi-version
+      in: header
+      description: X.Y of the X.Y.Z CDI version.
+      example: 2.19
+      schema:
+        type: string
+
+    paginationToken:
+      name: paginationToken
+      in: query
+      example: ZmE3YTA4NDEtY...MjM5MTgwMzIyMzE=
+      schema:
+        type: string
+
+    limit:
+      name: limit
+      in: query
+      example: 1
+      schema:
+        type: number
+
+    timeJoinedOrder:
+      name: timeJoinedOrder
+      in: query
+      schema:
+        type: string
+        enum: ["ASC", "DESC"]
+
+    email:
+      name: email
+      in: query
+      required: false
+      schema:
+        type: string
+        example: johndoe@gmail.com
+
+    userId:
+      name: userId
+      in: query
+      required: false
+      schema:
+        type: string
+        example: fa7a0841-b533-4478-9253-0fde890c576
+
+    userIdRequired:
+      name: userId
+      in: query
+      required: true
+      schema:
+        type: string
+        example: fa7a0841-b533-4478-9253-0fde890c576
+
+    roleRequired:
+      name: role
+      in: query
+      required: true
+      schema:
+        type: string
+        example: admin
+
+    permissionRequired:
+      name: permission
+      in: query
+      required: true
+      schema:
+        type: string
+        example: permission
+
+    includeRecipeIds:
+      name: includeRecipeIds
+      in: query
+      required: false
+      description: The param should take an array of comma seperated strings
+      schema:
+        type: string
+        example: val1,val2,val3..
+
+  responses:
+    500:
+      description: error code 500
+      content:
+        text/plain:
+          schema:
+            $ref: "#/components/schemas/internalError"
+    404:
+      description: error code 404
+      content:
+        text/plain:
+          schema:
+            $ref: "#/components/schemas/notFound"
+    405:
+      description: error code 405
+      content:
+        text/plain:
+          schema:
+            $ref: "#/components/schemas/methodNotSupported"
+    400:
+      description: error code 400
+      content:
+        text/plain:
+          schema:
+            $ref: "#/components/schemas/invalidJSON"
+    401:
+      description: error code 401
+      content:
+        text/plain:
+          schema:
+            $ref: "#/components/schemas/requestUnauthorised"
+
+    hello:
+      description: return a simple hello message
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/helloResponse"
+
+  schemas:
+    token:
+      type: string
+      example: ZTRiOTBjNz...jI5MTZlODkxw
+
+    emailVerificationVerifyTokenRequest:
+      type: object
+      properties:
+        userId:
+          $ref: "#/components/schemas/userId"
+        email:
+          $ref: "#/components/schemas/email"
+
+    thirdPartyId:
+      type: string
+      example: google
+
+    thirdPartyUserId:
+      type: string
+      example: 106347997792363865062
+
+    thirdPartyEmail:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/email"
+
+    isVerified:
+      type: boolean
+      example: true
+
+    email:
+      type: string
+      example: johndoe@gmail.com
+
+    password:
+      type: string
+      example: password123
+
+    userId:
+      type: string
+      example: fa7a0841-b533-4478-95533-0fde890c3483
+
+    role:
+      type: string
+      example: admin
+
+    timeJoined:
+      type: number
+      example: 1623918032231
+
+    paginationToken:
+      type: string
+      example: ZmE3YTA4ND...OzE2MjM5MTgwMzIyMzE=
+
+    phoneNumber:
+      type: string
+      example: "+14155552671"
+
+    user:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/userId"
+        email:
+          $ref: "#/components/schemas/email"
+        timeJoined:
+          $ref: "#/components/schemas/timeJoined"
+
+    passwordlessUser:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/userId"
+        email:
+          $ref: "#/components/schemas/email"
+        phoneNumber:
+          $ref: "#/components/schemas/phoneNumber"
+        timeJoined:
+          $ref: "#/components/schemas/timeJoined"
+
+    thirdPartyUser:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/userId"
+        timeJoined:
+          $ref: "#/components/schemas/timeJoined"
+        email:
+          $ref: "#/components/schemas/email"
+        thirdParty:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/thirdPartyId"
+            userId:
+              $ref: "#/components/schemas/thirdPartyUserId"
+
+    codeId:
+      type: string
+      description: Uniquely identifies a code
+      example: QZ0Mx9zG9cfqNXmPI0I/67r9bpKghUBDQZeMMbayi+I=
+
+    deviceId:
+      type: string
+      description: A random identifier that should be stored on the device that started the sign in process.
+      example: TU/52WOcktSv99zqaAZuWJG9BSoS0aRLfCbep8rFEwk=
+
+    preAuthSessionId:
+      type: string
+      description: A random identifier that can be used to identify the login attempt/device.
+      example: kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=
+
+    userInputCode:
+      type: string
+      description: This can be used to authenticate the user when paired with the deviceId
+      example: 456123
+
+    linkCode:
+      type: string
+      description: URL-safe string that can be used to authenticate the user, without the deviceId
+      example: b10lbT_SnDC4flA6Fn7pE5TtG5k5NfigLef4QMBeGA8
+
+    codeLifetime:
+      type: number
+      description: The maximum lifetime of the code in milliseconds
+      example: 900000
+
+    statusOK:
+      type: string
+      enum:
+        - OK
+
+    userMetadata:
+      type: object
+      description: should be a JSON object (not a JSON literal nor an array)
+      example: { "preferences": { "theme": "dark" }, "notifications": { "email": true }, "todos": ["example"] }
+
+    userMetadataUpdate:
+      type: object
+      description: should be a JSON object (not a JSON literal nor an array)
+      example: { "notifications": { "sms": true }, "todos": null }
+
+    userDataInJWT:
+      type: object
+      description: should be a JSON object (not a JSON literal nor an array)
+      example: { "test": 123 }
+
+    userDataInDatabase:
+      type: object
+      description: should be a JSON object (not a JSON literal nor an array)
+      example: { "test": 123 }
+
+    enableAntiCsrf:
+      type: boolean
+      example: false
+
+    handle:
+      type: string
+      example: 68en6gd6-865b-4af6-ba00-96e5c153257d
+
+    message:
+      type: string
+      example: Error Message
+
+    session:
+      type: object
+      properties:
+        handle:
+          $ref: "#/components/schemas/handle"
+        userId:
+          $ref: "#/components/schemas/userId"
+        userDataInJWT:
+          $ref: "#/components/schemas/userDataInJWT"
+
+    cookieInfo:
+      type: object
+      properties:
+        token:
+          $ref: "#/components/schemas/token"
+        expiry:
+          $ref: "#/components/schemas/expiry"
+        createdTime:
+          $ref: "#/components/schemas/timeCreated"
+
+    expiry:
+      type: number
+      example: 1637262633029
+
+    timeCreated:
+      type: number
+      example: 1637262633029
+
+    sessionHandles:
+      type: array
+      items:
+        $ref: "#/components/schemas/handle"
+
+    createJWTPayload:
+      type: object
+      description: The payload of the JWT, should be a JSON object.
+      example: { "custom-claim": "" }
+
+    createJWTAlgorithm:
+      type: string
+      description: The algorithm to use when creating the JWT.
+      enum: ["RS256"]
+
+    jwksDomain:
+      type: string
+      description: This is used as the value for the issuer claim in the JWT payload.
+      example: https://api.test.com/
+    jwtValidity:
+      type: number
+      description: Duration in seconds, used to calculate JWT expiry
+      example: 86400
+    jwk:
+      type: object
+      description: A JWK that can be used to verify a JWT
+      properties:
+        alg:
+          $ref: "#/components/schemas/createJWTAlgorithm"
+        kty:
+          type: string
+          example: RSA
+        use:
+          type: string
+          example: sig
+        kid:
+          type: string
+          description: Unique identifier for the JWK
+        x5c:
+          type: array
+          description: X.509 Certificate Chain
+          items:
+            type: string
+
+    unauthorisedMessageResponse:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/unauthorisedResponse"
+        message:
+          $ref: "#/components/schemas/message"
+
+    helloResponse:
+      type: string
+      enum: ["Hello"]
+
+    statusOKResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["OK"]
+
+    wrongCredentialsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["WRONG_CREDENTIALS_ERROR"]
+
+    unknownUserIdResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["UNKNOWN_USER_ID_ERROR"]
+
+    unknownRoleResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: ["UNKNOWN_ROLE_ERROR"]
+
+    tokenTheftResponse:
+      type: string
+      enum: ["TOKEN_THEFT_DETECTED"]
+
+    unauthorisedResponse:
+      type: string
+      enum: ["UNAUTHORISED"]
+
+    tryRefreshTokenResponse:
+      type: string
+      enum: ["TRY_REFRESH_TOKEN"]
+
+    internalError:
+      type: string
+      enum:
+        - Internal Error
+
+    notFound:
+      type: string
+      enum:
+        - Not Found
+
+    methodNotSupported:
+      type: string
+      enum:
+        - Method not supported
+
+    invalidJSON:
+      type: string
+
+    requestUnauthorised:
+      type: string
+      enum:
+        - Invalid API key
