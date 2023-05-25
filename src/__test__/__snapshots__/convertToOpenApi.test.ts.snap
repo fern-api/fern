@@ -342,6 +342,7 @@ components:
     OptionalString:
       title: OptionalString
       type: string
+      nullable: true
     AliasOfNestedType:
       title: AliasOfNestedType
       $ref: '#/components/schemas/folderNestedType'

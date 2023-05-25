@@ -313,7 +313,10 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             };
         },
         optional: (optionalType) => {
-            return convertTypeReference(optionalType);
+            return { 
+                ...convertTypeReference(optionalType),
+                nullable: true,
+            };
         },
         literal: () => {
             throw new Error("Literals are not supported");
