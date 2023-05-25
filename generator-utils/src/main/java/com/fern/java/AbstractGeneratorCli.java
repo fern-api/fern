@@ -158,6 +158,7 @@ public abstract class AbstractGeneratorCli<T extends CustomConfig, K extends Dow
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
 
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
+        runCommandBlocking(new String[] {"gradle", "spotlessApply"}, outputDirectory, Collections.emptyMap());
     }
 
     public abstract void runInGithubModeHook(
