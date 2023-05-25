@@ -27,6 +27,7 @@ export function convertObject({
     wrapAsNullable,
     allOf,
     context,
+    propertiesToExclude,
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -37,6 +38,7 @@ export function convertObject({
     wrapAsNullable: boolean;
     allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
     context: AbstractOpenAPIV3ParserContext;
+    propertiesToExclude: Set<string>;
 }): Schema {
     let allRequired = [...(required ?? [])];
     let propertiesToConvert = { ...properties };
@@ -92,7 +94,9 @@ export function convertObject({
         nameOverride,
         generatedName,
         wrapAsNullable,
-        properties: convertedProperties,
+        properties: convertedProperties.filter((objectProperty) => {
+            return !propertiesToExclude.has(objectProperty.key);
+        }),
         description,
         allOf: parents.map((parent) => parent.convertedSchema),
     });
