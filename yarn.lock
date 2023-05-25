@@ -4552,7 +4552,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.1920
-    "@fern-fern/registry-node": ^0.0.598
+    "@fern-fern/registry-node": ^0.0.668
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -4588,7 +4588,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.193
     "@fern-fern/ir-model": 0.0.1920
-    "@fern-fern/registry-node": ^0.0.598
+    "@fern-fern/registry-node": ^0.0.668
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -4698,7 +4698,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/registry-node": ^0.0.598
+    "@fern-fern/registry-node": ^0.0.668
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -5297,16 +5297,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-node@npm:^0.0.598":
-  version: 0.0.598
-  resolution: "@fern-fern/registry-node@npm:0.0.598"
+"@fern-fern/registry-node@npm:^0.0.668":
+  version: 0.0.668
+  resolution: "@fern-fern/registry-node@npm:0.0.668"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: a927ebb253156eeca948890cb5a3fbe043d51b26f69b1531d0bf4104d4a5d1351f4c07a2280e20afb1ef7eb986b00b227586398a9b4b55932b1e6bb8f12ea8e0
+  checksum: 75526290359a10ec53fedf87b8f570d731af5b883ad7a66011f93340792093114e9177a336eeb0e427190066240d4913ae9595bf0d9a34deb7855c593aef2ea2
   languageName: node
   linkType: hard
 
