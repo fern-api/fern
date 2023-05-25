@@ -783,7 +783,7 @@ public final class BlogClientImpl implements BlogClient {
         HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
             .addPathSegments("posts")
-            .addPathSegment("/create");
+            .addPathSegment("create");
     HttpUrl _httpUrl = _httpUrlBuilder.build();
     Map<String, Object> _requestBodyProperties = new HashMap<>();
     _requestBodyProperties.put("title", request.getTitle());
@@ -2070,7 +2070,7 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
         HttpUrl.parse(this.clientOptions.environment().getUrl())
             .newBuilder()
             .addPathSegments("dummy")
-            .addPathSegment("/health")
+            .addPathSegment("health")
             .build();
     Request _request =
         new Request.Builder()

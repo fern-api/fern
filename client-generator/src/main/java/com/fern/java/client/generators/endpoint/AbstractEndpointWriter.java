@@ -172,7 +172,8 @@ public abstract class AbstractEndpointWriter {
     }
 
     protected final void addPathToHttpUrl(CodeBlock.Builder builder) {
-        String basePathHead = stripLeadingSlash(httpService.getBasePath().getHead());
+        String basePathHead =
+                stripLeadingAndTrailingSlash(httpService.getBasePath().getHead());
         if (!basePathHead.isEmpty()) {
             builder.add(".addPathSegments($S)\n", basePathHead);
         }
@@ -183,7 +184,7 @@ public abstract class AbstractEndpointWriter {
             PathParameter pathParameter = servicePathParameters.get(httpPathPart.getPathParameter());
             ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
             builder.add(".addPathSegment($L)\n", stringify(poetPathParameter.name, poetPathParameter.type));
-            String pathTail = stripLeadingSlash(httpPathPart.getTail());
+            String pathTail = stripLeadingAndTrailingSlash(httpPathPart.getTail());
             if (!pathTail.isEmpty()) {
                 builder.add(".addPathSegments($S)\n", pathTail);
             }
@@ -194,25 +195,31 @@ public abstract class AbstractEndpointWriter {
                         pathParameter -> pathParameter.getName().getOriginalName(), Functions.identity()));
         if (!httpEndpoint.getPath().getHead().isBlank()
                 && !httpEndpoint.getPath().getHead().equals("/")) {
-            builder.add(".addPathSegment($S)\n", httpEndpoint.getPath().getHead());
+            builder.add(
+                    ".addPathSegment($S)\n",
+                    stripLeadingAndTrailingSlash(httpEndpoint.getPath().getHead()));
         }
         for (HttpPathPart httpPathPart : httpEndpoint.getPath().getParts()) {
             PathParameter pathParameter = endpointPathParameters.get(httpPathPart.getPathParameter());
             ParameterSpec poetPathParameter = convertPathParameter(pathParameter);
             builder.add(".addPathSegment($L)\n", stringify(poetPathParameter.name, poetPathParameter.type));
 
-            String pathTail = stripLeadingSlash(httpPathPart.getTail());
+            String pathTail = stripLeadingAndTrailingSlash(httpPathPart.getTail());
             if (!pathTail.isEmpty()) {
                 builder.add(".addPathSegments($S)\n", pathTail);
             }
         }
     }
 
-    private static String stripLeadingSlash(String value) {
+    private static String stripLeadingAndTrailingSlash(String value) {
+        String result = value;
         if (value.startsWith("/")) {
-            return value.substring(1);
+            result = result.substring(1);
         }
-        return value;
+        if (value.endsWith("/")) {
+            result = result.substring(0, value.length() - 1);
+        }
+        return result;
     }
 
     protected final MethodSpec getEnvironmentToUrlMethod() {

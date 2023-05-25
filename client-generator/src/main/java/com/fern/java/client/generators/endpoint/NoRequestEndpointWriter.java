@@ -71,7 +71,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                         getEnvironmentToUrlMethod().name)
                 .indent();
         addPathToHttpUrl(httpUrlInitBuilder);
-        return httpUrlInitBuilder.add(".build();").unindent().build();
+        return httpUrlInitBuilder.add(".build();\n").unindent().build();
     }
 
     @Override
