@@ -3,9 +3,6 @@ import { IconNames } from "@blueprintjs/icons";
 import { assertNever } from "@fern-api/core-utils";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
-import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
-import { EndpointTitle } from "../api-page/endpoints/EndpointTitle";
-import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
 import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
 import { useDocsContext } from "../docs-context/useDocsContext";
 
@@ -48,16 +45,10 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
             case "page":
                 return path.page.title;
             case "api":
-                return path.apiSection.title;
             case "apiSubpackage":
-                return (
-                    <ApiDefinitionContextProvider apiSection={path.apiSection} apiSlug={path.apiSlug}>
-                        <SubpackageTitle subpackage={path.subpackage} />
-                    </ApiDefinitionContextProvider>
-                );
             case "endpoint":
             case "topLevelEndpoint":
-                return <EndpointTitle endpoint={path.endpoint} />;
+                return path.apiSection.title;
             default:
                 assertNever(path);
         }
