@@ -10576,14 +10576,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ]],\
       ["@tanstack/react-query", [\
         ["npm:4.29.7", {\
-          "packageLocation": "./.yarn/unplugged/@tanstack-react-query-virtual-f338592691/node_modules/@tanstack/react-query/",\
+          "packageLocation": "./.yarn/cache/@tanstack-react-query-npm-4.29.7-915f204251-9db2fb78e1.zip/node_modules/@tanstack/react-query/",\
           "packageDependencies": [\
             ["@tanstack/react-query", "npm:4.29.7"]\
           ],\
           "linkType": "SOFT"\
         }],\
         ["virtual:129d072ff07144f3875d4c6add9e4230c25614c39672c88ee9b9ec0448c45142c45ca41224f3e912cddfc9be1bd46a1cdf184b18005acb64cfe1c161f4cf5f86#npm:4.29.7", {\
-          "packageLocation": "./.yarn/unplugged/@tanstack-react-query-virtual-a517ffaeca/node_modules/@tanstack/react-query/",\
+          "packageLocation": "./.yarn/__virtual__/@tanstack-react-query-virtual-a517ffaeca/0/cache/@tanstack-react-query-npm-4.29.7-915f204251-9db2fb78e1.zip/node_modules/@tanstack/react-query/",\
           "packageDependencies": [\
             ["@tanstack/react-query", "virtual:129d072ff07144f3875d4c6add9e4230c25614c39672c88ee9b9ec0448c45142c45ca41224f3e912cddfc9be1bd46a1cdf184b18005acb64cfe1c161f4cf5f86#npm:4.29.7"],\
             ["@tanstack/query-core", "npm:4.29.7"],\
@@ -10606,7 +10606,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }],\
         ["virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.29.7", {\
-          "packageLocation": "./.yarn/unplugged/@tanstack-react-query-virtual-f338592691/node_modules/@tanstack/react-query/",\
+          "packageLocation": "./.yarn/__virtual__/@tanstack-react-query-virtual-f338592691/0/cache/@tanstack-react-query-npm-4.29.7-915f204251-9db2fb78e1.zip/node_modules/@tanstack/react-query/",\
           "packageDependencies": [\
             ["@tanstack/react-query", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.29.7"],\
             ["@tanstack/query-core", "npm:4.29.7"],\

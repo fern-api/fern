@@ -80,9 +80,6 @@
   },
   "packageManager": "yarn@3.5.1",
   "dependenciesMeta": {
-    "@tanstack/react-query@4.29.7": {
-      "unplugged": true
-    },
     "jsonc-parser@2.2.1": {
       "unplugged": true
     },
