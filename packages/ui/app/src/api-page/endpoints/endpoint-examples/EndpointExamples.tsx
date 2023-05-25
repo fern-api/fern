@@ -1,7 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useMemo } from "react";
 import { DefinitionItemExamples } from "../../examples/DefinitionItemExamples";
-import { DummyEndpointExamples } from "./DummyEndpointExamples";
 import { EndpointExample } from "./EndpointExample";
 
 export declare namespace EndpointExamples {
@@ -19,8 +18,9 @@ export const EndpointExamples: React.FC<EndpointExamples.Props> = ({ endpoint })
         }));
     }, [endpoint]);
 
+    // backend always returns at least one example
     if (examples.length === 0) {
-        return <DummyEndpointExamples endpoint={endpoint} />;
+        return null;
     }
 
     return <DefinitionItemExamples examples={examples} />;

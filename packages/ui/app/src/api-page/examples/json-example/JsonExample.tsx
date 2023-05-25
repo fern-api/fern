@@ -1,8 +1,7 @@
-import classNames from "classnames";
 import React, { useCallback } from "react";
+import { ExampleWrapper } from "../ExampleWrapper";
 import { JsonExampleContext, JsonExampleContextValue } from "./contexts/JsonExampleContext";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
-import styles from "./JsonExample.module.scss";
 import { JsonItemBottomLine } from "./JsonItemBottomLine";
 import { JsonItemMiddleLines } from "./JsonItemMiddleLines";
 import { JsonItemTopLine } from "./JsonItemTopLine";
@@ -24,13 +23,15 @@ export const JsonExample: React.FC<JsonExample.Props> = ({ json, selectedPropert
 
     return (
         <JsonExampleContext.Provider value={contextValue}>
-            <div
-                className={classNames(styles.code, "leading-relaxed bg-[#969CEE]/10 py-1 flex-1 overflow-auto text-xs")}
-            >
-                <JsonItemTopLine value={json} isNonLastItemInCollection={false} />
-                <JsonItemMiddleLines value={json} />
-                <JsonItemBottomLine value={json} isNonLastItemInCollection={false} />
-            </div>
+            <ExampleWrapper>
+                {({ style }) => (
+                    <div style={style}>
+                        <JsonItemTopLine value={json} isNonLastItemInCollection={false} />
+                        <JsonItemMiddleLines value={json} />
+                        <JsonItemBottomLine value={json} isNonLastItemInCollection={false} />
+                    </div>
+                )}
+            </ExampleWrapper>
         </JsonExampleContext.Provider>
     );
 };
