@@ -115,21 +115,31 @@ function convertHextoRgb(
     if (rgb != null) {
         return rgb;
     }
-    context.failAndThrow(`${key} should be of the format #FFFFFF`);
+    context.failAndThrow(`${key} should be a hex color of the format #FFFFFF`);
 }
 
 // https://stackoverflow.com/a/5624139/4238485
 function hexToRgb(hexString: string): FernRegistry.docs.v1.write.RgbColor | undefined {
     const result = HEX_COLOR_REGEX.exec(hexString);
     if (result != null) {
-        const [_, r, g, b] = result;
+        const [_, rAsString, gAsString, bAsString] = result;
+        const r = parseHexColorCode(rAsString);
+        const g = parseHexColorCode(gAsString);
+        const b = parseHexColorCode(bAsString);
         if (r != null && g != null && b != null) {
-            return {
-                r: parseInt(r, 16),
-                g: parseInt(g, 16),
-                b: parseInt(b, 16),
-            };
+            return { r, g, b };
         }
     }
     return undefined;
+}
+
+function parseHexColorCode(value: string | undefined): number | undefined {
+    if (value == null) {
+        return undefined;
+    }
+    const valueAsNumber = parseInt(value, 16);
+    if (isNaN(valueAsNumber)) {
+        return undefined;
+    }
+    return valueAsNumber;
 }
