@@ -30,9 +30,8 @@ class TestCaseImplementationReference_Implementation(TestCaseImplementation):
         allow_population_by_field_name = True
 
 
-TestCaseImplementationReference = typing_extensions.Annotated[
-    typing.Union[TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation],
-    pydantic.Field(discriminator="type"),
+TestCaseImplementationReference = typing.Union[
+    TestCaseImplementationReference_TemplateId, TestCaseImplementationReference_Implementation
 ]
 TestCaseImplementationReference_Implementation.update_forward_refs(
     ListType=ListType, MapType=MapType, VariableType=VariableType

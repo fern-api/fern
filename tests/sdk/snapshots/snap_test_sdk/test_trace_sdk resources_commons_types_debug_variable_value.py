@@ -117,23 +117,20 @@ class DebugVariableValue_GenericValue(GenericValue):
         allow_population_by_field_name = True
 
 
-DebugVariableValue = typing_extensions.Annotated[
-    typing.Union[
-        DebugVariableValue_IntegerValue,
-        DebugVariableValue_BooleanValue,
-        DebugVariableValue_DoubleValue,
-        DebugVariableValue_StringValue,
-        DebugVariableValue_CharValue,
-        DebugVariableValue_MapValue,
-        DebugVariableValue_ListValue,
-        DebugVariableValue_BinaryTreeNodeValue,
-        DebugVariableValue_SinglyLinkedListNodeValue,
-        DebugVariableValue_DoublyLinkedListNodeValue,
-        DebugVariableValue_UndefinedValue,
-        DebugVariableValue_NullValue,
-        DebugVariableValue_GenericValue,
-    ],
-    pydantic.Field(discriminator="type"),
+DebugVariableValue = typing.Union[
+    DebugVariableValue_IntegerValue,
+    DebugVariableValue_BooleanValue,
+    DebugVariableValue_DoubleValue,
+    DebugVariableValue_StringValue,
+    DebugVariableValue_CharValue,
+    DebugVariableValue_MapValue,
+    DebugVariableValue_ListValue,
+    DebugVariableValue_BinaryTreeNodeValue,
+    DebugVariableValue_SinglyLinkedListNodeValue,
+    DebugVariableValue_DoublyLinkedListNodeValue,
+    DebugVariableValue_UndefinedValue,
+    DebugVariableValue_NullValue,
+    DebugVariableValue_GenericValue,
 ]
 DebugVariableValue_MapValue.update_forward_refs(
     DebugKeyValuePairs=DebugKeyValuePairs, DebugMapValue=DebugMapValue, DebugVariableValue=DebugVariableValue

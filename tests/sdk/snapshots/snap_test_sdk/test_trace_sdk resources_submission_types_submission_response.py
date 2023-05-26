@@ -59,14 +59,11 @@ class SubmissionResponse_Terminated(TerminatedResponse):
         allow_population_by_field_name = True
 
 
-SubmissionResponse = typing_extensions.Annotated[
-    typing.Union[
-        SubmissionResponse_ServerInitialized,
-        SubmissionResponse_ProblemInitialized,
-        SubmissionResponse_WorkspaceInitialized,
-        SubmissionResponse_ServerErrored,
-        SubmissionResponse_CodeExecutionUpdate,
-        SubmissionResponse_Terminated,
-    ],
-    pydantic.Field(discriminator="type"),
+SubmissionResponse = typing.Union[
+    SubmissionResponse_ServerInitialized,
+    SubmissionResponse_ProblemInitialized,
+    SubmissionResponse_WorkspaceInitialized,
+    SubmissionResponse_ServerErrored,
+    SubmissionResponse_CodeExecutionUpdate,
+    SubmissionResponse_Terminated,
 ]

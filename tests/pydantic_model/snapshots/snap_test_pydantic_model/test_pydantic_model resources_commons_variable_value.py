@@ -76,20 +76,17 @@ class VariableValue_NullValue(pydantic.BaseModel):
     type: typing_extensions.Literal["nullValue"]
 
 
-VariableValue = typing_extensions.Annotated[
-    typing.Union[
-        VariableValue_IntegerValue,
-        VariableValue_BooleanValue,
-        VariableValue_DoubleValue,
-        VariableValue_StringValue,
-        VariableValue_CharValue,
-        VariableValue_MapValue,
-        VariableValue_ListValue,
-        VariableValue_BinaryTreeValue,
-        VariableValue_SinglyLinkedListValue,
-        VariableValue_DoublyLinkedListValue,
-        VariableValue_NullValue,
-    ],
-    pydantic.Field(discriminator="type"),
+VariableValue = typing.Union[
+    VariableValue_IntegerValue,
+    VariableValue_BooleanValue,
+    VariableValue_DoubleValue,
+    VariableValue_StringValue,
+    VariableValue_CharValue,
+    VariableValue_MapValue,
+    VariableValue_ListValue,
+    VariableValue_BinaryTreeValue,
+    VariableValue_SinglyLinkedListValue,
+    VariableValue_DoublyLinkedListValue,
+    VariableValue_NullValue,
 ]
 VariableValue_MapValue.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

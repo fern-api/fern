@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
 import typing_extensions
 
 from ......commons.list_type import ListType
@@ -28,8 +27,6 @@ class TestCaseFunction_Custom(VoidFunctionDefinition):
         allow_population_by_field_name = True
 
 
-TestCaseFunction = typing_extensions.Annotated[
-    typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom], pydantic.Field(discriminator="type")
-]
+TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]
 TestCaseFunction_WithActualResult.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
 TestCaseFunction_Custom.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

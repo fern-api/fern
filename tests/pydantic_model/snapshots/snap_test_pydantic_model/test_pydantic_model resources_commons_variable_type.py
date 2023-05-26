@@ -57,20 +57,17 @@ class VariableType_DoublyLinkedListType(pydantic.BaseModel):
     type: typing_extensions.Literal["doublyLinkedListType"]
 
 
-VariableType = typing_extensions.Annotated[
-    typing.Union[
-        VariableType_IntegerType,
-        VariableType_DoubleType,
-        VariableType_BooleanType,
-        VariableType_StringType,
-        VariableType_CharType,
-        VariableType_ListType,
-        VariableType_MapType,
-        VariableType_BinaryTreeType,
-        VariableType_SinglyLinkedListType,
-        VariableType_DoublyLinkedListType,
-    ],
-    pydantic.Field(discriminator="type"),
+VariableType = typing.Union[
+    VariableType_IntegerType,
+    VariableType_DoubleType,
+    VariableType_BooleanType,
+    VariableType_StringType,
+    VariableType_CharType,
+    VariableType_ListType,
+    VariableType_MapType,
+    VariableType_BinaryTreeType,
+    VariableType_SinglyLinkedListType,
+    VariableType_DoublyLinkedListType,
 ]
 VariableType_ListType.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
 VariableType_MapType.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

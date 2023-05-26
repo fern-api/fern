@@ -21,6 +21,4 @@ class CreateProblemResponse_Error(pydantic.BaseModel):
     value: CreateProblemError
 
 
-CreateProblemResponse = typing_extensions.Annotated[
-    typing.Union[CreateProblemResponse_Success, CreateProblemResponse_Error], pydantic.Field(discriminator="type")
-]
+CreateProblemResponse = typing.Union[CreateProblemResponse_Success, CreateProblemResponse_Error]

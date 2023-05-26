@@ -25,7 +25,6 @@ class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
     value: str
 
 
-ProblemDescriptionBoard = typing_extensions.Annotated[
-    typing.Union[ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId],
-    pydantic.Field(discriminator="type"),
+ProblemDescriptionBoard = typing.Union[
+    ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
 ]

@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
 import typing_extensions
 
 from ....commons.list_type import ListType
@@ -28,8 +27,5 @@ class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult)
         allow_population_by_field_name = True
 
 
-AssertCorrectnessCheck = typing_extensions.Annotated[
-    typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom],
-    pydantic.Field(discriminator="type"),
-]
+AssertCorrectnessCheck = typing.Union[AssertCorrectnessCheck_DeepEquality, AssertCorrectnessCheck_Custom]
 AssertCorrectnessCheck_Custom.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

@@ -34,11 +34,8 @@ class SubmissionStatusForTestCase_Traced(TracedTestCase):
         allow_population_by_field_name = True
 
 
-SubmissionStatusForTestCase = typing_extensions.Annotated[
-    typing.Union[
-        SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
-    ],
-    pydantic.Field(discriminator="type"),
+SubmissionStatusForTestCase = typing.Union[
+    SubmissionStatusForTestCase_Graded, SubmissionStatusForTestCase_GradedV2, SubmissionStatusForTestCase_Traced
 ]
 SubmissionStatusForTestCase_Graded.update_forward_refs(
     KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue

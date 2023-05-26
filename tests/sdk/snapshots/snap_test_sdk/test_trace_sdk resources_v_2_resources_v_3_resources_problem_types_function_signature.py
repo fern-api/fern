@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
 import typing_extensions
 
 from .......commons.types.list_type import ListType
@@ -39,9 +38,8 @@ class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakes
         allow_population_by_field_name = True
 
 
-FunctionSignature = typing_extensions.Annotated[
-    typing.Union[FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult],
-    pydantic.Field(discriminator="type"),
+FunctionSignature = typing.Union[
+    FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
 ]
 FunctionSignature_Void.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
 FunctionSignature_NonVoid.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

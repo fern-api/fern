@@ -27,7 +27,5 @@ class CustomFiles_Custom(pydantic.BaseModel):
     value: typing.Dict[Language, Files]
 
 
-CustomFiles = typing_extensions.Annotated[
-    typing.Union[CustomFiles_Basic, CustomFiles_Custom], pydantic.Field(discriminator="type")
-]
+CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]
 CustomFiles_Basic.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

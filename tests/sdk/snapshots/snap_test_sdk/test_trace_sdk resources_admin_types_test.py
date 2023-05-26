@@ -24,4 +24,4 @@ class Test_Or(pydantic.BaseModel):
         frozen = True
 
 
-Test = typing_extensions.Annotated[typing.Union[Test_And, Test_Or], pydantic.Field(discriminator="type")]
+Test = typing.Union[Test_And, Test_Or]

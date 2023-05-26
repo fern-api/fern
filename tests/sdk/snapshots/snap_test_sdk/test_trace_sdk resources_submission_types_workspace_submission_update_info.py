@@ -66,15 +66,12 @@ class WorkspaceSubmissionUpdateInfo_Finished(pydantic.BaseModel):
         frozen = True
 
 
-WorkspaceSubmissionUpdateInfo = typing_extensions.Annotated[
-    typing.Union[
-        WorkspaceSubmissionUpdateInfo_Running,
-        WorkspaceSubmissionUpdateInfo_Ran,
-        WorkspaceSubmissionUpdateInfo_Stopped,
-        WorkspaceSubmissionUpdateInfo_Traced,
-        WorkspaceSubmissionUpdateInfo_TracedV2,
-        WorkspaceSubmissionUpdateInfo_Errored,
-        WorkspaceSubmissionUpdateInfo_Finished,
-    ],
-    pydantic.Field(discriminator="type"),
+WorkspaceSubmissionUpdateInfo = typing.Union[
+    WorkspaceSubmissionUpdateInfo_Running,
+    WorkspaceSubmissionUpdateInfo_Ran,
+    WorkspaceSubmissionUpdateInfo_Stopped,
+    WorkspaceSubmissionUpdateInfo_Traced,
+    WorkspaceSubmissionUpdateInfo_TracedV2,
+    WorkspaceSubmissionUpdateInfo_Errored,
+    WorkspaceSubmissionUpdateInfo_Finished,
 ]

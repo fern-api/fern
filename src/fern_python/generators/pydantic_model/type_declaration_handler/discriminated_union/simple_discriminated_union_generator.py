@@ -3,7 +3,6 @@ from typing import List, Optional
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
-from fern_python.external_dependencies import Pydantic
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ...context import PydanticGeneratorContext
@@ -89,22 +88,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
 
         self._source_file.add_declaration(
             AST.TypeAliasDeclaration(
-                type_hint=AST.TypeHint.annotated(
-                    type=AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references)),
-                    annotation=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=Pydantic.Field,
-                            kwargs=[
-                                (
-                                    "discriminator",
-                                    AST.Expression(
-                                        f'"{self._get_discriminant_attr_name()}"',
-                                    ),
-                                )
-                            ],
-                        )
-                    ),
-                ),
+                type_hint=AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references)),
                 name=self._name.name.pascal_case.safe_name,
             ),
             should_export=True,

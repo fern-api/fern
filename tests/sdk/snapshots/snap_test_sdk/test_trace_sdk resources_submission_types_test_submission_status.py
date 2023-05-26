@@ -43,12 +43,9 @@ class TestSubmissionStatus_TestCaseIdToState(pydantic.BaseModel):
         frozen = True
 
 
-TestSubmissionStatus = typing_extensions.Annotated[
-    typing.Union[
-        TestSubmissionStatus_Stopped,
-        TestSubmissionStatus_Errored,
-        TestSubmissionStatus_Running,
-        TestSubmissionStatus_TestCaseIdToState,
-    ],
-    pydantic.Field(discriminator="type"),
+TestSubmissionStatus = typing.Union[
+    TestSubmissionStatus_Stopped,
+    TestSubmissionStatus_Errored,
+    TestSubmissionStatus_Running,
+    TestSubmissionStatus_TestCaseIdToState,
 ]

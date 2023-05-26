@@ -40,13 +40,10 @@ class WorkspaceSubmissionStatus_Traced(WorkspaceRunDetails):
         allow_population_by_field_name = True
 
 
-WorkspaceSubmissionStatus = typing_extensions.Annotated[
-    typing.Union[
-        WorkspaceSubmissionStatus_Stopped,
-        WorkspaceSubmissionStatus_Errored,
-        WorkspaceSubmissionStatus_Running,
-        WorkspaceSubmissionStatus_Ran,
-        WorkspaceSubmissionStatus_Traced,
-    ],
-    pydantic.Field(discriminator="type"),
+WorkspaceSubmissionStatus = typing.Union[
+    WorkspaceSubmissionStatus_Stopped,
+    WorkspaceSubmissionStatus_Errored,
+    WorkspaceSubmissionStatus_Running,
+    WorkspaceSubmissionStatus_Ran,
+    WorkspaceSubmissionStatus_Traced,
 ]

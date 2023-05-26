@@ -21,6 +21,4 @@ class ExceptionV2_Timeout(pydantic.BaseModel):
     type: typing_extensions.Literal["timeout"]
 
 
-ExceptionV2 = typing_extensions.Annotated[
-    typing.Union[ExceptionV2_Generic, ExceptionV2_Timeout], pydantic.Field(discriminator="type")
-]
+ExceptionV2 = typing.Union[ExceptionV2_Generic, ExceptionV2_Timeout]

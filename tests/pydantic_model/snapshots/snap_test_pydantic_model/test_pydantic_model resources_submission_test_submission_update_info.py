@@ -48,16 +48,13 @@ class TestSubmissionUpdateInfo_Finished(pydantic.BaseModel):
     type: typing_extensions.Literal["finished"]
 
 
-TestSubmissionUpdateInfo = typing_extensions.Annotated[
-    typing.Union[
-        TestSubmissionUpdateInfo_Running,
-        TestSubmissionUpdateInfo_Stopped,
-        TestSubmissionUpdateInfo_Errored,
-        TestSubmissionUpdateInfo_GradedTestCase,
-        TestSubmissionUpdateInfo_RecordedTestCase,
-        TestSubmissionUpdateInfo_Finished,
-    ],
-    pydantic.Field(discriminator="type"),
+TestSubmissionUpdateInfo = typing.Union[
+    TestSubmissionUpdateInfo_Running,
+    TestSubmissionUpdateInfo_Stopped,
+    TestSubmissionUpdateInfo_Errored,
+    TestSubmissionUpdateInfo_GradedTestCase,
+    TestSubmissionUpdateInfo_RecordedTestCase,
+    TestSubmissionUpdateInfo_Finished,
 ]
 TestSubmissionUpdateInfo_GradedTestCase.update_forward_refs(
     KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue

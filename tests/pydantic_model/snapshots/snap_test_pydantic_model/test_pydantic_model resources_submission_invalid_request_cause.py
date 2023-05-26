@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
 import typing_extensions
 
 from .custom_test_cases_unsupported import CustomTestCasesUnsupported
@@ -33,11 +32,8 @@ class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
         allow_population_by_field_name = True
 
 
-InvalidRequestCause = typing_extensions.Annotated[
-    typing.Union[
-        InvalidRequestCause_SubmissionIdNotFound,
-        InvalidRequestCause_CustomTestCasesUnsupported,
-        InvalidRequestCause_UnexpectedLanguage,
-    ],
-    pydantic.Field(discriminator="type"),
+InvalidRequestCause = typing.Union[
+    InvalidRequestCause_SubmissionIdNotFound,
+    InvalidRequestCause_CustomTestCasesUnsupported,
+    InvalidRequestCause_UnexpectedLanguage,
 ]

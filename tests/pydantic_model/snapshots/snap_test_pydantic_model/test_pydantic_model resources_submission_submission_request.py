@@ -45,13 +45,10 @@ class SubmissionRequest_Stop(StopRequest):
         allow_population_by_field_name = True
 
 
-SubmissionRequest = typing_extensions.Annotated[
-    typing.Union[
-        SubmissionRequest_InitializeProblemRequest,
-        SubmissionRequest_InitializeWorkspaceRequest,
-        SubmissionRequest_SubmitV2,
-        SubmissionRequest_WorkspaceSubmit,
-        SubmissionRequest_Stop,
-    ],
-    pydantic.Field(discriminator="type"),
+SubmissionRequest = typing.Union[
+    SubmissionRequest_InitializeProblemRequest,
+    SubmissionRequest_InitializeWorkspaceRequest,
+    SubmissionRequest_SubmitV2,
+    SubmissionRequest_WorkspaceSubmit,
+    SubmissionRequest_Stop,
 ]

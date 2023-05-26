@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
 import typing_extensions
 
 from .compile_error import CompileError
@@ -36,7 +35,4 @@ class ErrorInfo_InternalError(InternalError):
         allow_population_by_field_name = True
 
 
-ErrorInfo = typing_extensions.Annotated[
-    typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError],
-    pydantic.Field(discriminator="type"),
-]
+ErrorInfo = typing.Union[ErrorInfo_CompileError, ErrorInfo_RuntimeError, ErrorInfo_InternalError]

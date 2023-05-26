@@ -36,7 +36,4 @@ class ActualResult_ExceptionV2(pydantic.BaseModel):
         frozen = True
 
 
-ActualResult = typing_extensions.Annotated[
-    typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2],
-    pydantic.Field(discriminator="type"),
-]
+ActualResult = typing.Union[ActualResult_Value, ActualResult_Exception, ActualResult_ExceptionV2]

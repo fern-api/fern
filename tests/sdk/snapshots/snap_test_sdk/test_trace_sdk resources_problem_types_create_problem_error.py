@@ -18,6 +18,4 @@ class CreateProblemError_Generic(GenericCreateProblemError):
         allow_population_by_field_name = True
 
 
-CreateProblemError = typing_extensions.Annotated[
-    typing.Union[CreateProblemError_Generic], pydantic.Field(discriminator="error_type")
-]
+CreateProblemError = typing.Union[CreateProblemError_Generic]

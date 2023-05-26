@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
 import typing_extensions
 
 from ..commons.key_value_pair import KeyValuePair
@@ -100,21 +99,18 @@ class CodeExecutionUpdate_Finished(FinishedResponse):
         allow_population_by_field_name = True
 
 
-CodeExecutionUpdate = typing_extensions.Annotated[
-    typing.Union[
-        CodeExecutionUpdate_BuildingExecutor,
-        CodeExecutionUpdate_Running,
-        CodeExecutionUpdate_Errored,
-        CodeExecutionUpdate_Stopped,
-        CodeExecutionUpdate_Graded,
-        CodeExecutionUpdate_GradedV2,
-        CodeExecutionUpdate_WorkspaceRan,
-        CodeExecutionUpdate_Recording,
-        CodeExecutionUpdate_Recorded,
-        CodeExecutionUpdate_InvalidRequest,
-        CodeExecutionUpdate_Finished,
-    ],
-    pydantic.Field(discriminator="type"),
+CodeExecutionUpdate = typing.Union[
+    CodeExecutionUpdate_BuildingExecutor,
+    CodeExecutionUpdate_Running,
+    CodeExecutionUpdate_Errored,
+    CodeExecutionUpdate_Stopped,
+    CodeExecutionUpdate_Graded,
+    CodeExecutionUpdate_GradedV2,
+    CodeExecutionUpdate_WorkspaceRan,
+    CodeExecutionUpdate_Recording,
+    CodeExecutionUpdate_Recorded,
+    CodeExecutionUpdate_InvalidRequest,
+    CodeExecutionUpdate_Finished,
 ]
 CodeExecutionUpdate_Graded.update_forward_refs(
     KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue

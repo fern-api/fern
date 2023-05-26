@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
 import typing_extensions
 
 from ..commons.key_value_pair import KeyValuePair
@@ -31,9 +30,7 @@ class SubmissionStatusV2_Workspace(WorkspaceSubmissionStatusV2):
         allow_population_by_field_name = True
 
 
-SubmissionStatusV2 = typing_extensions.Annotated[
-    typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace], pydantic.Field(discriminator="type")
-]
+SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]
 SubmissionStatusV2_Test.update_forward_refs(
     KeyValuePair=KeyValuePair,
     ListType=ListType,

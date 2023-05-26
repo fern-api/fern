@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import typing
 
-import pydantic
 import typing_extensions
 
 from ..commons.key_value_pair import KeyValuePair
@@ -28,7 +27,5 @@ class TestCaseGrade_NonHidden(TestCaseNonHiddenGrade):
         allow_population_by_field_name = True
 
 
-TestCaseGrade = typing_extensions.Annotated[
-    typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden], pydantic.Field(discriminator="type")
-]
+TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]
 TestCaseGrade_NonHidden.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

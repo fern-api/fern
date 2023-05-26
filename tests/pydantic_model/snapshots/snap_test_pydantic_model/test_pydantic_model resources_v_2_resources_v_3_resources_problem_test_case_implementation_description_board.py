@@ -20,7 +20,6 @@ class TestCaseImplementationDescriptionBoard_ParamId(pydantic.BaseModel):
     value: ParameterId
 
 
-TestCaseImplementationDescriptionBoard = typing_extensions.Annotated[
-    typing.Union[TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId],
-    pydantic.Field(discriminator="type"),
+TestCaseImplementationDescriptionBoard = typing.Union[
+    TestCaseImplementationDescriptionBoard_Html, TestCaseImplementationDescriptionBoard_ParamId
 ]
