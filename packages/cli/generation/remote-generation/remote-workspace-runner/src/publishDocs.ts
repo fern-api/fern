@@ -168,7 +168,7 @@ async function convertDocsConfiguration({
                 )
             ),
         },
-        colors: {},
+        colors: docsDefinition.config.colors,
     };
 }
 

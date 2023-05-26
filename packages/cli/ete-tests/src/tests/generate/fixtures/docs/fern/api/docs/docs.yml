@@ -9,4 +9,5 @@ navigation:
         path: foo.md
   - api: API Reference
 
-colors: {}
+colors:
+  accentPrimary: "#ffffFF"
