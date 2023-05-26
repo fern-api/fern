@@ -21,6 +21,7 @@ import com.fern.irV12.model.environment.EnvironmentBaseUrlId;
 import com.fern.irV12.model.http.HttpEndpoint;
 import com.fern.irV12.model.http.HttpService;
 import com.fern.irV12.model.http.PathParameter;
+import com.fern.irV12.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -38,6 +39,7 @@ import com.squareup.javapoet.TypeName;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import okhttp3.Response;
@@ -46,9 +48,7 @@ public abstract class AbstractEndpointWriter {
 
     public static final String CONTENT_TYPE_HEADER = "Content-Type";
     public static final String APPLICATION_JSON_HEADER = "application/json";
-
     public static final String HTTP_URL_NAME = "_httpUrl";
-    public static final String HTTP_URL_BUILDER_NAME = "_httpUrlBuilder";
     public static final String REQUEST_NAME = "_request";
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
     public static final String REQUEST_BODY_NAME = "_requestBody";
@@ -95,7 +95,12 @@ public abstract class AbstractEndpointWriter {
         // Step 3: Get http client initializer
         HttpUrlBuilder httpUrlBuilder = new HttpUrlBuilder(
                 HTTP_URL_NAME,
-                REQUEST_NAME,
+                sdkRequest()
+                        .map(sdkRequest -> sdkRequest
+                                .getRequestParameterName()
+                                .getCamelCase()
+                                .getSafeName())
+                        .orElse(null),
                 CodeBlock.of(
                         "this.$L.$N().$L()",
                         clientOptionsField.name,
@@ -125,6 +130,8 @@ public abstract class AbstractEndpointWriter {
         endpointMethodBuilder.addCode(responseParser);
         return endpointMethodBuilder.build();
     }
+
+    public abstract Optional<SdkRequest> sdkRequest();
 
     public abstract List<EnrichedObjectProperty> getQueryParams();
 

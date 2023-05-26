@@ -78,6 +78,11 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     }
 
     @Override
+    public Optional<SdkRequest> sdkRequest() {
+        return Optional.of(this.sdkRequest);
+    }
+
+    @Override
     public List<EnrichedObjectProperty> getQueryParams() {
         return generatedWrappedRequest.queryParams();
     }

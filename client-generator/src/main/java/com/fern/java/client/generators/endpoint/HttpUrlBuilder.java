@@ -105,7 +105,7 @@ public final class HttpUrlBuilder {
                     PoetTypeNameStringifier.stringify(
                             CodeBlock.of(
                                             "$L.$N()" + (isOptional ? ".get()" : ""),
-                                            "request",
+                                            requestName,
                                             queryParamProperty.getterProperty())
                                     .toString(),
                             queryParamProperty.poetTypeName()));

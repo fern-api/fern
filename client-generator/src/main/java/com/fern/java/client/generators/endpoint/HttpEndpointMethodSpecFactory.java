@@ -80,7 +80,8 @@ public final class HttpEndpointMethodSpecFactory {
                             clientOptionsField,
                             generatedClientOptions,
                             generatedEnvironmentsClass,
-                            justRequestBody);
+                            justRequestBody,
+                            httpEndpoint.getSdkRequest().get());
                     return onlyRequestEndpointWriter.generate();
                 }
 

@@ -19,6 +19,7 @@ package com.fern.java.client.generators.endpoint;
 import com.fern.irV12.model.http.HttpEndpoint;
 import com.fern.irV12.model.http.HttpRequestBodyReference;
 import com.fern.irV12.model.http.HttpService;
+import com.fern.irV12.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -29,6 +30,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterSpec;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -37,6 +39,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
     private final ClientGeneratorContext clientGeneratorContext;
     private final HttpEndpoint httpEndpoint;
     private final HttpRequestBodyReference httpRequestBodyReference;
+    private final SdkRequest sdkRequest;
 
     public OnlyRequestEndpointWriter(
             HttpService httpService,
@@ -46,7 +49,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsField,
             GeneratedClientOptions generatedClientOptions,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
-            HttpRequestBodyReference httpRequestBodyReference) {
+            HttpRequestBodyReference httpRequestBodyReference,
+            SdkRequest sdkRequest) {
         super(
                 httpService,
                 httpEndpoint,
@@ -58,6 +62,12 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         this.clientGeneratorContext = clientGeneratorContext;
         this.httpEndpoint = httpEndpoint;
         this.httpRequestBodyReference = httpRequestBodyReference;
+        this.sdkRequest = sdkRequest;
+    }
+
+    @Override
+    public Optional<SdkRequest> sdkRequest() {
+        return Optional.of(this.sdkRequest);
     }
 
     @Override

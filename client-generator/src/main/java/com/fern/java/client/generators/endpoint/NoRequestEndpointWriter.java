@@ -18,6 +18,7 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fern.irV12.model.http.HttpEndpoint;
 import com.fern.irV12.model.http.HttpService;
+import com.fern.irV12.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -28,6 +29,7 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterSpec;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.Request;
 
@@ -49,6 +51,11 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 clientOptionsField,
                 generatedClientOptions,
                 generatedEnvironmentsClass);
+    }
+
+    @Override
+    public Optional<SdkRequest> sdkRequest() {
+        return Optional.empty();
     }
 
     @Override
