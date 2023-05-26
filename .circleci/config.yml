@@ -287,6 +287,24 @@ jobs:
           name: Publish docs (dev)
           command: yarn workspace @fern-api/fe-bundle deploy:staging
 
+  deploy-docs:
+    docker:
+      - image: cimg/node:lts
+    resource_class: large
+    steps:
+      - checkout
+      - run:
+          name: Set nodeLinker to node-modules
+          command: |
+            # without this, multiple versions of react-query are included
+            # in the bundle
+            yarn config set nodeLinker node-modules
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Publish docs (dev)
+          command: yarn workspace @fern-api/fe-bundle deploy:production
+
 workflows:
   version: 2
   build:
@@ -426,6 +444,24 @@ workflows:
             - eslint
             - test
             - ete-tests
+          context:
+            - aws
+            - github
+
+      - deploy-docs:
+          filters:
+            branches:
+              only: main
+          requires:
+            - check-release-is-allowed
+            - check
+            - organize-imports
+            - compile
+            - eslint
+            - test
+            - ete-tests
+            - live-test-dev
+            - live-test
           context:
             - aws
             - github
