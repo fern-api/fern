@@ -60,12 +60,14 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
         <PageMargins>
             <div className="flex-1 flex gap-24 min-w-0" ref={setTargetRef}>
                 <div className="flex-1 flex flex-col">
-                    <div className="pt-10 text-2xl font-bold">
+                    <div className="pt-10 text-3xl font-semibold">
                         <EndpointTitle endpoint={endpoint} />
                     </div>
                     <div className="mt-6">
-                        <div className="flex items-center gap-2 text-gray-500">
-                            <div className="font-bold text-base">GET</div>
+                        <div className="flex items-center gap-2 text-neutral-400">
+                            <div className="font-semibold uppercase px-2 py-1 bg-neutral-400/20 rounded ">
+                                {endpoint.method}
+                            </div>
                             <div className="flex">
                                 {endpoint.path.parts.map((part, index) => (
                                     <MonospaceText key={index}>

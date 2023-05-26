@@ -17,6 +17,11 @@ body {
     src: local("Berkeley Mono Trial"), url("./fonts/BerkeleyMonoTrial-Regular.otf") format("opentype");
 }
 
+@font-face {
+    font-family: Inter;
+    src: local("Inter"), url("./fonts/inter/Inter.ttf") format("truetype");
+}
+
 .app {
     flex: 1;
     display: flex;

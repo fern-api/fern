@@ -57,7 +57,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     return (
         <div
             className={classNames(
-                "flex items-center border border-[#969CEE]/50 text-[#969CEE] py-2 rounded gap-2 hover:bg-accentHighlight cursor-pointer",
+                "flex items-center text-[#969CEE] py-2 rounded gap-2 hover:bg-accentHighlight cursor-pointer",
                 visitDirection({
                     previous: "pl-3 pr-4",
                     next: "pl-4 pr-3",
@@ -69,7 +69,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
                 previous: iconElement,
                 next: null,
             })}
-            {text}
+            <div className="font-semibold">{text}</div>
             {visitDirection({
                 previous: null,
                 next: iconElement,
