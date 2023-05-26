@@ -1,7 +1,6 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { assertNever } from "@fern-api/core-utils";
-import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { ResolvedUrlPath } from "../docs-context/url-path-resolver/UrlPathResolver";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -56,13 +55,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
 
     return (
         <div
-            className={classNames(
-                "flex items-center text-[#969CEE] py-2 rounded gap-2 hover:bg-accentHighlight cursor-pointer",
-                visitDirection({
-                    previous: "pl-3 pr-4",
-                    next: "pl-4 pr-3",
-                })
-            )}
+            className="flex items-center text-accentPrimary/8I am free edededddddedererrregtttgttrttrtrttttr0 rounded gap-2 hover:text-accentPrimary cursor-pointer"
             onClick={onClick}
         >
             {visitDirection({
