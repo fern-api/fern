@@ -68,19 +68,22 @@ public final class HttpUrlBuilder {
         }
     }
 
-    private InlineableHttpUrl generateInlineableCodeBlock() {
+    private GeneratedHttpUrl generateInlineableCodeBlock() {
         CodeBlock.Builder codeBlock = CodeBlock.builder()
-                .add("$T.parse(", HttpUrl.class)
+                .add("$T $L = $T.parse(", HttpUrl.class, httpUrlname, HttpUrl.class)
                 .add(baseUrlReference)
                 .add(").newBuilder()\n")
                 .indent();
         addHttpPathToCodeBlock(codeBlock, httpService.getBasePath(), servicePathParameters, true);
         addHttpPathToCodeBlock(codeBlock, httpEndpoint.getPath(), endpointPathParameters, true);
-        codeBlock.add(".build()").unindent();
-        return InlineableHttpUrl.builder().value(codeBlock.build()).build();
+        codeBlock.add(".build();\n").unindent();
+        return GeneratedHttpUrl.builder()
+                .initialization(codeBlock.build())
+                .inlinableBuild(CodeBlock.of(httpUrlname))
+                .build();
     }
 
-    private UnInlineableHttpUrl generateUnInlineableCodeBlock(List<EnrichedObjectProperty> queryParamProperties) {
+    private GeneratedHttpUrl generateUnInlineableCodeBlock(List<EnrichedObjectProperty> queryParamProperties) {
         CodeBlock.Builder codeBlock = CodeBlock.builder()
                 .add("$T $L = $T.parse(", HttpUrl.Builder.class, httpUrlname, HttpUrl.class)
                 .add(baseUrlReference)
@@ -110,7 +113,7 @@ public final class HttpUrlBuilder {
                 codeBlock.endControlFlow();
             }
         });
-        return UnInlineableHttpUrl.builder()
+        return GeneratedHttpUrl.builder()
                 .initialization(codeBlock.build())
                 .inlinableBuild(CodeBlock.of("$L.build()", httpUrlname))
                 .build();
@@ -156,39 +159,15 @@ public final class HttpUrlBuilder {
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
     }
 
-    public interface GeneratedHttpUrl {}
-
     @Value.Immutable
     @StagedBuilderImmutablesStyle
-    public interface InlineableHttpUrl extends GeneratedHttpUrl {
-        CodeBlock value();
-
-        static ImmutableInlineableHttpUrl.ValueBuildStage builder() {
-            return ImmutableInlineableHttpUrl.builder();
-        }
-    }
-
-    /**
-     * Will produce a result that looks something like this:
-     * <pre>
-     * HttpUrl.Builder httpUrl = HttpUrl.newBuilder()
-     *   .pathItem("my")
-     *   .pathItem("url");
-     * if (request.page.isPresent()) {
-     *  httpUrl.addQueryParameter("my-query-param", request.page.get());
-     * }
-     * </pre>
-     * The inlineable build will be {@code httpUrl.build()}`
-     */
-    @Value.Immutable
-    @StagedBuilderImmutablesStyle
-    public interface UnInlineableHttpUrl extends GeneratedHttpUrl {
+    public interface GeneratedHttpUrl {
         CodeBlock initialization();
 
         CodeBlock inlinableBuild();
 
-        static ImmutableUnInlineableHttpUrl.InitializationBuildStage builder() {
-            return ImmutableUnInlineableHttpUrl.builder();
+        static ImmutableGeneratedHttpUrl.InitializationBuildStage builder() {
+            return ImmutableGeneratedHttpUrl.builder();
         }
     }
 }

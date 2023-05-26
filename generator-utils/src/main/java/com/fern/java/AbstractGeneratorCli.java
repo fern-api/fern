@@ -255,7 +255,7 @@ public abstract class AbstractGeneratorCli<T extends CustomConfig, K extends Dow
                         .artifact(mavenCoordinate.getArtifact())
                         .build()))
                 .addAllDependencies(getBuildGradleDependencies())
-                .addCustomBlocks("spotless {\n" + "    java {\n" + "        googleJavaFormat()\n" + "    }\n" + "}\n")
+                .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n")
                 .build();
         addGeneratedFile(buildGradle);

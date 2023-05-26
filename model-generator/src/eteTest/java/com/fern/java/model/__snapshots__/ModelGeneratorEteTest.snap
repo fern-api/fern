@@ -289,13 +289,12 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 public final class ObjectMappers {
-  public static final ObjectMapper JSON_MAPPER =
-      JsonMapper.builder()
-          .addModule(new Jdk8Module())
-          .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-          .build();
+    public static final ObjectMapper JSON_MAPPER = JsonMapper.builder()
+            .addModule(new Jdk8Module())
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .build();
 
-  private ObjectMappers() {}
+    private ObjectMappers() {}
 }
 
 ]
@@ -308,40 +307,40 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class Age {
-  private final int value;
+    private final int value;
 
-  private Age(int value) {
-    this.value = value;
-  }
+    private Age(int value) {
+        this.value = value;
+    }
 
-  @JsonValue
-  public int get() {
-    return this.value;
-  }
+    @JsonValue
+    public int get() {
+        return this.value;
+    }
 
-  @Override
-  public boolean equals(Object other) {
-    return this == other || (other instanceof Age && this.value == ((Age) other).value);
-  }
+    @Override
+    public boolean equals(Object other) {
+        return this == other || (other instanceof Age && this.value == ((Age) other).value);
+    }
 
-  @Override
-  public int hashCode() {
-    return Integer.hashCode(value);
-  }
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(value);
+    }
 
-  @Override
-  public String toString() {
-    return Integer.toString(value);
-  }
+    @Override
+    public String toString() {
+        return Integer.toString(value);
+    }
 
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static Age of(int value) {
-    return new Age(value);
-  }
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static Age of(int value) {
+        return new Age(value);
+    }
 
-  public static Age valueOf(String value) {
-    return of(Integer.parseInt(value));
-  }
+    public static Age valueOf(String value) {
+        return of(Integer.parseInt(value));
+    }
 }
 
 ]
@@ -361,166 +360,163 @@ import java.util.Objects;
 import java.util.Optional;
 
 public final class Author {
-  private final Value value;
+    private final Value value;
 
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  private Author(Value value) {
-    this.value = value;
-  }
-
-  public <T> T visit(Visitor<T> visitor) {
-    return value.visit(visitor);
-  }
-
-  public static Author anonymous() {
-    return new Author(new AnonymousValue());
-  }
-
-  public static Author name(String value) {
-    return new Author(new NameValue(value));
-  }
-
-  public boolean isAnonymous() {
-    return value instanceof AnonymousValue;
-  }
-
-  public boolean isName() {
-    return value instanceof NameValue;
-  }
-
-  public boolean _isUnknown() {
-    return value instanceof _UnknownValue;
-  }
-
-  public Optional<String> getName() {
-    if (isName()) {
-      return Optional.of(((NameValue) value).value);
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    private Author(Value value) {
+        this.value = value;
     }
-    return Optional.empty();
-  }
 
-  public Optional<Object> _getUnknown() {
-    if (_isUnknown()) {
-      return Optional.of(((_UnknownValue) value).value);
-    }
-    return Optional.empty();
-  }
-
-  @JsonValue
-  private Value getValue() {
-    return this.value;
-  }
-
-  public interface Visitor<T> {
-    T visitAnonymous();
-
-    T visitName(String name);
-
-    T _visitUnknown(Object unknownType);
-  }
-
-  @JsonTypeInfo(
-      use = JsonTypeInfo.Id.NAME,
-      property = "type",
-      visible = true,
-      defaultImpl = _UnknownValue.class)
-  @JsonSubTypes({@JsonSubTypes.Type(AnonymousValue.class), @JsonSubTypes.Type(NameValue.class)})
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  private interface Value {
-    <T> T visit(Visitor<T> visitor);
-  }
-
-  @JsonTypeName("anonymous")
-  private static final class AnonymousValue implements Value {
-    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    private AnonymousValue() {}
-
-    @Override
     public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitAnonymous();
+        return value.visit(visitor);
     }
 
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof AnonymousValue;
+    public static Author anonymous() {
+        return new Author(new AnonymousValue());
     }
 
-    @Override
-    public String toString() {
-      return "Author{" + "}";
-    }
-  }
-
-  @JsonTypeName("name")
-  private static final class NameValue implements Value {
-    @JsonProperty("value")
-    private String value;
-
-    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    private NameValue(@JsonProperty("value") String value) {
-      this.value = value;
+    public static Author name(String value) {
+        return new Author(new NameValue(value));
     }
 
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor.visitName(value);
+    public boolean isAnonymous() {
+        return value instanceof AnonymousValue;
     }
 
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof NameValue && equalTo((NameValue) other);
+    public boolean isName() {
+        return value instanceof NameValue;
     }
 
-    private boolean equalTo(NameValue other) {
-      return value.equals(other.value);
+    public boolean _isUnknown() {
+        return value instanceof _UnknownValue;
     }
 
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.value);
+    public Optional<String> getName() {
+        if (isName()) {
+            return Optional.of(((NameValue) value).value);
+        }
+        return Optional.empty();
     }
 
-    @Override
-    public String toString() {
-      return "Author{" + "value: " + value + "}";
-    }
-  }
-
-  private static final class _UnknownValue implements Value {
-    private String type;
-
-    @JsonValue private Object value;
-
-    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
-    private _UnknownValue(@JsonProperty("value") Object value) {}
-
-    @Override
-    public <T> T visit(Visitor<T> visitor) {
-      return visitor._visitUnknown(value);
+    public Optional<Object> _getUnknown() {
+        if (_isUnknown()) {
+            return Optional.of(((_UnknownValue) value).value);
+        }
+        return Optional.empty();
     }
 
-    @Override
-    public boolean equals(Object other) {
-      if (this == other) return true;
-      return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
+    @JsonValue
+    private Value getValue() {
+        return this.value;
     }
 
-    private boolean equalTo(_UnknownValue other) {
-      return type.equals(other.type) && value.equals(other.value);
+    public interface Visitor<T> {
+        T visitAnonymous();
+
+        T visitName(String name);
+
+        T _visitUnknown(Object unknownType);
     }
 
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.type, this.value);
+    @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
+    @JsonSubTypes({@JsonSubTypes.Type(AnonymousValue.class), @JsonSubTypes.Type(NameValue.class)})
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    private interface Value {
+        <T> T visit(Visitor<T> visitor);
     }
 
-    @Override
-    public String toString() {
-      return "Author{" + "type: " + type + ", value: " + value + "}";
+    @JsonTypeName("anonymous")
+    private static final class AnonymousValue implements Value {
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private AnonymousValue() {}
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitAnonymous();
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof AnonymousValue;
+        }
+
+        @Override
+        public String toString() {
+            return "Author{" + "}";
+        }
     }
-  }
+
+    @JsonTypeName("name")
+    private static final class NameValue implements Value {
+        @JsonProperty("value")
+        private String value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private NameValue(@JsonProperty("value") String value) {
+            this.value = value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitName(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof NameValue && equalTo((NameValue) other);
+        }
+
+        private boolean equalTo(NameValue other) {
+            return value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Author{" + "value: " + value + "}";
+        }
+    }
+
+    private static final class _UnknownValue implements Value {
+        private String type;
+
+        @JsonValue
+        private Object value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private _UnknownValue(@JsonProperty("value") Object value) {}
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor._visitUnknown(value);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof _UnknownValue && equalTo((_UnknownValue) other);
+        }
+
+        private boolean equalTo(_UnknownValue other) {
+            return type.equals(other.type) && value.equals(other.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(this.type, this.value);
+        }
+
+        @Override
+        public String toString() {
+            return "Author{" + "type: " + type + ", value: " + value + "}";
+        }
+    }
 }
 
 ]
@@ -537,184 +533,174 @@ import java.util.Objects;
 
 @JsonDeserialize(builder = BlogPost.Builder.class)
 public final class BlogPost {
-  private final PostId id;
+    private final PostId id;
 
-  private final PostType type;
+    private final PostType type;
 
-  private final String title;
+    private final String title;
 
-  private final Author author;
+    private final Author author;
 
-  private final String content;
+    private final String content;
 
-  private int _cachedHashCode;
+    private int _cachedHashCode;
 
-  BlogPost(PostId id, PostType type, String title, Author author, String content) {
-    this.id = id;
-    this.type = type;
-    this.title = title;
-    this.author = author;
-    this.content = content;
-  }
-
-  @JsonProperty("id")
-  public PostId getId() {
-    return id;
-  }
-
-  @JsonProperty("type")
-  public PostType getType() {
-    return type;
-  }
-
-  @JsonProperty("title")
-  public String getTitle() {
-    return title;
-  }
-
-  @JsonProperty("author")
-  public Author getAuthor() {
-    return author;
-  }
-
-  @JsonProperty("content")
-  public String getContent() {
-    return content;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof BlogPost && equalTo((BlogPost) other);
-  }
-
-  private boolean equalTo(BlogPost other) {
-    return id.equals(other.id)
-        && type.equals(other.type)
-        && title.equals(other.title)
-        && author.equals(other.author)
-        && content.equals(other.content);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.id, this.type, this.title, this.author, this.content);
+    BlogPost(PostId id, PostType type, String title, Author author, String content) {
+        this.id = id;
+        this.type = type;
+        this.title = title;
+        this.author = author;
+        this.content = content;
     }
-    return _cachedHashCode;
-  }
 
-  @Override
-  public String toString() {
-    return "BlogPost{"
-        + "id: "
-        + id
-        + ", type: "
-        + type
-        + ", title: "
-        + title
-        + ", author: "
-        + author
-        + ", content: "
-        + content
-        + "}";
-  }
+    @JsonProperty("id")
+    public PostId getId() {
+        return id;
+    }
 
-  public static IdStage builder() {
-    return new Builder();
-  }
+    @JsonProperty("type")
+    public PostType getType() {
+        return type;
+    }
 
-  public interface IdStage {
-    TypeStage id(PostId id);
+    @JsonProperty("title")
+    public String getTitle() {
+        return title;
+    }
 
-    Builder from(BlogPost other);
-  }
+    @JsonProperty("author")
+    public Author getAuthor() {
+        return author;
+    }
 
-  public interface TypeStage {
-    TitleStage type(PostType type);
-  }
-
-  public interface TitleStage {
-    AuthorStage title(String title);
-  }
-
-  public interface AuthorStage {
-    ContentStage author(Author author);
-  }
-
-  public interface ContentStage {
-    _FinalStage content(String content);
-  }
-
-  public interface _FinalStage {
-    BlogPost build();
-  }
-
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder
-      implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
-    private PostId id;
-
-    private PostType type;
-
-    private String title;
-
-    private Author author;
-
-    private String content;
-
-    private Builder() {}
-
-    @Override
-    public Builder from(BlogPost other) {
-      id(other.getId());
-      type(other.getType());
-      title(other.getTitle());
-      author(other.getAuthor());
-      content(other.getContent());
-      return this;
+    @JsonProperty("content")
+    public String getContent() {
+        return content;
     }
 
     @Override
-    @JsonSetter("id")
-    public TypeStage id(PostId id) {
-      this.id = id;
-      return this;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof BlogPost && equalTo((BlogPost) other);
+    }
+
+    private boolean equalTo(BlogPost other) {
+        return id.equals(other.id)
+                && type.equals(other.type)
+                && title.equals(other.title)
+                && author.equals(other.author)
+                && content.equals(other.content);
     }
 
     @Override
-    @JsonSetter("type")
-    public TitleStage type(PostType type) {
-      this.type = type;
-      return this;
+    public int hashCode() {
+        if (_cachedHashCode == 0) {
+            _cachedHashCode = Objects.hash(this.id, this.type, this.title, this.author, this.content);
+        }
+        return _cachedHashCode;
     }
 
     @Override
-    @JsonSetter("title")
-    public AuthorStage title(String title) {
-      this.title = title;
-      return this;
+    public String toString() {
+        return "BlogPost{" + "id: " + id + ", type: " + type + ", title: " + title + ", author: " + author
+                + ", content: " + content + "}";
     }
 
-    @Override
-    @JsonSetter("author")
-    public ContentStage author(Author author) {
-      this.author = author;
-      return this;
+    public static IdStage builder() {
+        return new Builder();
     }
 
-    @Override
-    @JsonSetter("content")
-    public _FinalStage content(String content) {
-      this.content = content;
-      return this;
+    public interface IdStage {
+        TypeStage id(PostId id);
+
+        Builder from(BlogPost other);
     }
 
-    @Override
-    public BlogPost build() {
-      return new BlogPost(id, type, title, author, content);
+    public interface TypeStage {
+        TitleStage type(PostType type);
     }
-  }
+
+    public interface TitleStage {
+        AuthorStage title(String title);
+    }
+
+    public interface AuthorStage {
+        ContentStage author(Author author);
+    }
+
+    public interface ContentStage {
+        _FinalStage content(String content);
+    }
+
+    public interface _FinalStage {
+        BlogPost build();
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static final class Builder
+            implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
+        private PostId id;
+
+        private PostType type;
+
+        private String title;
+
+        private Author author;
+
+        private String content;
+
+        private Builder() {}
+
+        @Override
+        public Builder from(BlogPost other) {
+            id(other.getId());
+            type(other.getType());
+            title(other.getTitle());
+            author(other.getAuthor());
+            content(other.getContent());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("id")
+        public TypeStage id(PostId id) {
+            this.id = id;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("type")
+        public TitleStage type(PostType type) {
+            this.type = type;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("title")
+        public AuthorStage title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("author")
+        public ContentStage author(Author author) {
+            this.author = author;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("content")
+        public _FinalStage content(String content) {
+            this.content = content;
+            return this;
+        }
+
+        @Override
+        public BlogPost build() {
+            return new BlogPost(id, type, title, author, content);
+        }
+    }
 }
 
 ]
@@ -731,102 +717,102 @@ import java.util.Objects;
 
 @JsonDeserialize(builder = GeneratorIdAndVersion.Builder.class)
 public final class GeneratorIdAndVersion {
-  private final String id;
+    private final String id;
 
-  private final String version;
+    private final String version;
 
-  private int _cachedHashCode;
+    private int _cachedHashCode;
 
-  GeneratorIdAndVersion(String id, String version) {
-    this.id = id;
-    this.version = version;
-  }
-
-  @JsonProperty("id")
-  public String getId() {
-    return id;
-  }
-
-  @JsonProperty("version")
-  public String getVersion() {
-    return version;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof GeneratorIdAndVersion && equalTo((GeneratorIdAndVersion) other);
-  }
-
-  private boolean equalTo(GeneratorIdAndVersion other) {
-    return id.equals(other.id) && version.equals(other.version);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.id, this.version);
+    GeneratorIdAndVersion(String id, String version) {
+        this.id = id;
+        this.version = version;
     }
-    return _cachedHashCode;
-  }
 
-  @Override
-  public String toString() {
-    return "GeneratorIdAndVersion{" + "id: " + id + ", version: " + version + "}";
-  }
+    @JsonProperty("id")
+    public String getId() {
+        return id;
+    }
 
-  public static IdStage builder() {
-    return new Builder();
-  }
-
-  public interface IdStage {
-    VersionStage id(String id);
-
-    Builder from(GeneratorIdAndVersion other);
-  }
-
-  public interface VersionStage {
-    _FinalStage version(String version);
-  }
-
-  public interface _FinalStage {
-    GeneratorIdAndVersion build();
-  }
-
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder implements IdStage, VersionStage, _FinalStage {
-    private String id;
-
-    private String version;
-
-    private Builder() {}
-
-    @Override
-    public Builder from(GeneratorIdAndVersion other) {
-      id(other.getId());
-      version(other.getVersion());
-      return this;
+    @JsonProperty("version")
+    public String getVersion() {
+        return version;
     }
 
     @Override
-    @JsonSetter("id")
-    public VersionStage id(String id) {
-      this.id = id;
-      return this;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof GeneratorIdAndVersion && equalTo((GeneratorIdAndVersion) other);
+    }
+
+    private boolean equalTo(GeneratorIdAndVersion other) {
+        return id.equals(other.id) && version.equals(other.version);
     }
 
     @Override
-    @JsonSetter("version")
-    public _FinalStage version(String version) {
-      this.version = version;
-      return this;
+    public int hashCode() {
+        if (_cachedHashCode == 0) {
+            _cachedHashCode = Objects.hash(this.id, this.version);
+        }
+        return _cachedHashCode;
     }
 
     @Override
-    public GeneratorIdAndVersion build() {
-      return new GeneratorIdAndVersion(id, version);
+    public String toString() {
+        return "GeneratorIdAndVersion{" + "id: " + id + ", version: " + version + "}";
     }
-  }
+
+    public static IdStage builder() {
+        return new Builder();
+    }
+
+    public interface IdStage {
+        VersionStage id(String id);
+
+        Builder from(GeneratorIdAndVersion other);
+    }
+
+    public interface VersionStage {
+        _FinalStage version(String version);
+    }
+
+    public interface _FinalStage {
+        GeneratorIdAndVersion build();
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static final class Builder implements IdStage, VersionStage, _FinalStage {
+        private String id;
+
+        private String version;
+
+        private Builder() {}
+
+        @Override
+        public Builder from(GeneratorIdAndVersion other) {
+            id(other.getId());
+            version(other.getVersion());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("id")
+        public VersionStage id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        @Override
+        @JsonSetter("version")
+        public _FinalStage version(String version) {
+            this.version = version;
+            return this;
+        }
+
+        @Override
+        public GeneratorIdAndVersion build() {
+            return new GeneratorIdAndVersion(id, version);
+        }
+    }
 }
 
 ]
@@ -839,40 +825,40 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class PostId {
-  private final String value;
+    private final String value;
 
-  private PostId(String value) {
-    this.value = value;
-  }
+    private PostId(String value) {
+        this.value = value;
+    }
 
-  @JsonValue
-  public String get() {
-    return this.value;
-  }
+    @JsonValue
+    public String get() {
+        return this.value;
+    }
 
-  @Override
-  public boolean equals(Object other) {
-    return this == other || (other instanceof PostId && this.value.equals(((PostId) other).value));
-  }
+    @Override
+    public boolean equals(Object other) {
+        return this == other || (other instanceof PostId && this.value.equals(((PostId) other).value));
+    }
 
-  @Override
-  public int hashCode() {
-    return value.hashCode();
-  }
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 
-  @Override
-  public String toString() {
-    return value;
-  }
+    @Override
+    public String toString() {
+        return value;
+    }
 
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static PostId of(String value) {
-    return new PostId(value);
-  }
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static PostId of(String value) {
+        return new PostId(value);
+    }
 
-  public static PostId valueOf(String value) {
-    return of(value);
-  }
+    public static PostId valueOf(String value) {
+        return of(value);
+    }
 }
 
 ]
@@ -889,80 +875,80 @@ import java.util.Objects;
 
 @JsonDeserialize(builder = PostNotFoundErrorBody.Builder.class)
 public final class PostNotFoundErrorBody {
-  private final PostId id;
+    private final PostId id;
 
-  private int _cachedHashCode;
+    private int _cachedHashCode;
 
-  PostNotFoundErrorBody(PostId id) {
-    this.id = id;
-  }
-
-  @JsonProperty("id")
-  public PostId getId() {
-    return id;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof PostNotFoundErrorBody && equalTo((PostNotFoundErrorBody) other);
-  }
-
-  private boolean equalTo(PostNotFoundErrorBody other) {
-    return id.equals(other.id);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.id);
+    PostNotFoundErrorBody(PostId id) {
+        this.id = id;
     }
-    return _cachedHashCode;
-  }
 
-  @Override
-  public String toString() {
-    return "PostNotFoundErrorBody{" + "id: " + id + "}";
-  }
-
-  public static IdStage builder() {
-    return new Builder();
-  }
-
-  public interface IdStage {
-    _FinalStage id(PostId id);
-
-    Builder from(PostNotFoundErrorBody other);
-  }
-
-  public interface _FinalStage {
-    PostNotFoundErrorBody build();
-  }
-
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder implements IdStage, _FinalStage {
-    private PostId id;
-
-    private Builder() {}
-
-    @Override
-    public Builder from(PostNotFoundErrorBody other) {
-      id(other.getId());
-      return this;
+    @JsonProperty("id")
+    public PostId getId() {
+        return id;
     }
 
     @Override
-    @JsonSetter("id")
-    public _FinalStage id(PostId id) {
-      this.id = id;
-      return this;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof PostNotFoundErrorBody && equalTo((PostNotFoundErrorBody) other);
+    }
+
+    private boolean equalTo(PostNotFoundErrorBody other) {
+        return id.equals(other.id);
     }
 
     @Override
-    public PostNotFoundErrorBody build() {
-      return new PostNotFoundErrorBody(id);
+    public int hashCode() {
+        if (_cachedHashCode == 0) {
+            _cachedHashCode = Objects.hash(this.id);
+        }
+        return _cachedHashCode;
     }
-  }
+
+    @Override
+    public String toString() {
+        return "PostNotFoundErrorBody{" + "id: " + id + "}";
+    }
+
+    public static IdStage builder() {
+        return new Builder();
+    }
+
+    public interface IdStage {
+        _FinalStage id(PostId id);
+
+        Builder from(PostNotFoundErrorBody other);
+    }
+
+    public interface _FinalStage {
+        PostNotFoundErrorBody build();
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static final class Builder implements IdStage, _FinalStage {
+        private PostId id;
+
+        private Builder() {}
+
+        @Override
+        public Builder from(PostNotFoundErrorBody other) {
+            id(other.getId());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("id")
+        public _FinalStage id(PostId id) {
+            this.id = id;
+            return this;
+        }
+
+        @Override
+        public PostNotFoundErrorBody build() {
+            return new PostNotFoundErrorBody(id);
+        }
+    }
 }
 
 ]
@@ -974,23 +960,23 @@ package com.fern.basic.model.blog;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PostType {
-  LONG("LONG"),
+    LONG("LONG"),
 
-  SHORT("SHORT"),
+    SHORT("SHORT"),
 
-  MEDIUM("med.med");
+    MEDIUM("med.med");
 
-  private final String value;
+    private final String value;
 
-  PostType(String value) {
-    this.value = value;
-  }
+    PostType(String value) {
+        this.value = value;
+    }
 
-  @JsonValue
-  @Override
-  public String toString() {
-    return this.value;
-  }
+    @JsonValue
+    @Override
+    public String toString() {
+        return this.value;
+    }
 }
 
 ]
@@ -1007,80 +993,80 @@ import java.util.Objects;
 
 @JsonDeserialize(builder = UnauthorizedErrorBody.Builder.class)
 public final class UnauthorizedErrorBody {
-  private final String reason;
+    private final String reason;
 
-  private int _cachedHashCode;
+    private int _cachedHashCode;
 
-  UnauthorizedErrorBody(String reason) {
-    this.reason = reason;
-  }
-
-  @JsonProperty("reason")
-  public String getReason() {
-    return reason;
-  }
-
-  @Override
-  public boolean equals(Object other) {
-    if (this == other) return true;
-    return other instanceof UnauthorizedErrorBody && equalTo((UnauthorizedErrorBody) other);
-  }
-
-  private boolean equalTo(UnauthorizedErrorBody other) {
-    return reason.equals(other.reason);
-  }
-
-  @Override
-  public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.reason);
+    UnauthorizedErrorBody(String reason) {
+        this.reason = reason;
     }
-    return _cachedHashCode;
-  }
 
-  @Override
-  public String toString() {
-    return "UnauthorizedErrorBody{" + "reason: " + reason + "}";
-  }
-
-  public static ReasonStage builder() {
-    return new Builder();
-  }
-
-  public interface ReasonStage {
-    _FinalStage reason(String reason);
-
-    Builder from(UnauthorizedErrorBody other);
-  }
-
-  public interface _FinalStage {
-    UnauthorizedErrorBody build();
-  }
-
-  @JsonIgnoreProperties(ignoreUnknown = true)
-  public static final class Builder implements ReasonStage, _FinalStage {
-    private String reason;
-
-    private Builder() {}
-
-    @Override
-    public Builder from(UnauthorizedErrorBody other) {
-      reason(other.getReason());
-      return this;
+    @JsonProperty("reason")
+    public String getReason() {
+        return reason;
     }
 
     @Override
-    @JsonSetter("reason")
-    public _FinalStage reason(String reason) {
-      this.reason = reason;
-      return this;
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UnauthorizedErrorBody && equalTo((UnauthorizedErrorBody) other);
+    }
+
+    private boolean equalTo(UnauthorizedErrorBody other) {
+        return reason.equals(other.reason);
     }
 
     @Override
-    public UnauthorizedErrorBody build() {
-      return new UnauthorizedErrorBody(reason);
+    public int hashCode() {
+        if (_cachedHashCode == 0) {
+            _cachedHashCode = Objects.hash(this.reason);
+        }
+        return _cachedHashCode;
     }
-  }
+
+    @Override
+    public String toString() {
+        return "UnauthorizedErrorBody{" + "reason: " + reason + "}";
+    }
+
+    public static ReasonStage builder() {
+        return new Builder();
+    }
+
+    public interface ReasonStage {
+        _FinalStage reason(String reason);
+
+        Builder from(UnauthorizedErrorBody other);
+    }
+
+    public interface _FinalStage {
+        UnauthorizedErrorBody build();
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static final class Builder implements ReasonStage, _FinalStage {
+        private String reason;
+
+        private Builder() {}
+
+        @Override
+        public Builder from(UnauthorizedErrorBody other) {
+            reason(other.getReason());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("reason")
+        public _FinalStage reason(String reason) {
+            this.reason = reason;
+            return this;
+        }
+
+        @Override
+        public UnauthorizedErrorBody build() {
+            return new UnauthorizedErrorBody(reason);
+        }
+    }
 }
 
 ]
@@ -1093,41 +1079,40 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public final class DummyId {
-  private final String value;
+    private final String value;
 
-  private DummyId(String value) {
-    this.value = value;
-  }
+    private DummyId(String value) {
+        this.value = value;
+    }
 
-  @JsonValue
-  public String get() {
-    return this.value;
-  }
+    @JsonValue
+    public String get() {
+        return this.value;
+    }
 
-  @Override
-  public boolean equals(Object other) {
-    return this == other
-        || (other instanceof DummyId && this.value.equals(((DummyId) other).value));
-  }
+    @Override
+    public boolean equals(Object other) {
+        return this == other || (other instanceof DummyId && this.value.equals(((DummyId) other).value));
+    }
 
-  @Override
-  public int hashCode() {
-    return value.hashCode();
-  }
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 
-  @Override
-  public String toString() {
-    return value;
-  }
+    @Override
+    public String toString() {
+        return value;
+    }
 
-  @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
-  public static DummyId of(String value) {
-    return new DummyId(value);
-  }
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static DummyId of(String value) {
+        return new DummyId(value);
+    }
 
-  public static DummyId valueOf(String value) {
-    return of(value);
-  }
+    public static DummyId valueOf(String value) {
+        return of(value);
+    }
 }
 
 ]

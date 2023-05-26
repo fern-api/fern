@@ -26,8 +26,6 @@ import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
-import com.fern.java.client.generators.endpoint.HttpUrlBuilder.InlineableHttpUrl;
-import com.fern.java.client.generators.endpoint.HttpUrlBuilder.UnInlineableHttpUrl;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
@@ -108,13 +106,7 @@ public abstract class AbstractEndpointWriter {
                 convertPathParametersToSpecMap(httpService.getPathParameters()),
                 convertPathParametersToSpecMap(httpEndpoint.getPathParameters()));
         HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(getQueryParams());
-        CodeBlock inlineableHttpUrlBlock = null;
-        if (generatedHttpUrl instanceof HttpUrlBuilder.InlineableHttpUrl) {
-            inlineableHttpUrlBlock = ((InlineableHttpUrl) generatedHttpUrl).value();
-        } else if (generatedHttpUrl instanceof HttpUrlBuilder.UnInlineableHttpUrl) {
-            endpointMethodBuilder.addCode(((UnInlineableHttpUrl) generatedHttpUrl).initialization());
-            inlineableHttpUrlBlock = ((UnInlineableHttpUrl) generatedHttpUrl).inlinableBuild();
-        }
+        endpointMethodBuilder.addCode(generatedHttpUrl.initialization());
 
         // Step 4: Get request initializer
         boolean sendContentType = httpEndpoint.getRequestBody().isPresent()
@@ -124,7 +116,7 @@ public abstract class AbstractEndpointWriter {
                 generatedClientOptions,
                 httpEndpoint,
                 generatedObjectMapper,
-                inlineableHttpUrlBlock,
+                generatedHttpUrl.inlinableBuild(),
                 sendContentType);
         endpointMethodBuilder.addCode(requestInitializer);
 
