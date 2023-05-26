@@ -1,10 +1,11 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { FernRegistry } from "@fern-fern/registry-node";
 
 export interface DocsConfiguration {
     navigation: DocsNavigationConfiguration;
     logo: LogoReference | undefined;
-    colors: ColorsConfiguration;
+    colors: FernRegistry.docs.v1.write.ColorsConfig;
 }
 
 export type LogoReference = LogoReference.Url | LogoReference.File;
@@ -46,6 +47,3 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
     }
 }
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface ColorsConfiguration {}
