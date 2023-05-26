@@ -451,7 +451,9 @@ workflows:
       - deploy-docs:
           filters:
             branches:
-              only: main
+              ignore: /.*/
+            tags:
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
           requires:
             - check-release-is-allowed
             - check
