@@ -7,6 +7,7 @@ import {
     ProjectConfigSchema,
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
+import { createVenusService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
@@ -42,7 +43,14 @@ export async function initialize({
                     context.logger.info(`${chalk.green(`Created organization ${chalk.bold(organization)}`)}`);
                 }
             } else {
-                organization = token.value;
+                const venus = createVenusService({ token: token.value });
+                const response = await venus.organization.getMyOrganizationFromScopedToken();
+                if (response.ok) {
+                    organization = response.body.organizationId;
+                } else {
+                    context.failAndThrow("Unathorized. FERN_TOKEN is invalid.");
+                    return;
+                }
             }
         }
 
