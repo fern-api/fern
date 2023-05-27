@@ -1,7 +1,7 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { MaybeLoadedDocs } from "./MaybeLoadedDocs";
 
-const docsDomainRegex = /^(.*)\.buildwithfern.com$/;
+const docsDomainRegex = /^([^.\s]+)/;
 const domain = import.meta.env.VITE_DOCS_DOMAIN ?? window.location.hostname.match(docsDomainRegex)?.[1];
 
 export const Docs: React.FC = () => {
