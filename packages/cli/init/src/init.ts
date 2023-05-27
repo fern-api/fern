@@ -30,18 +30,19 @@ export async function initialize({
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
             const token = await askToLogin(context);
-            if (token.type !== "user") {
-                return context.failAndThrow("You must be logged in to initialize Fern.");
-            }
-            const user = await getCurrentUser({ token, context });
-            organization = kebabCase(user.username);
-            const didCreateOrganization = await createOrganizationIfDoesNotExist({
-                organization,
-                token,
-                context,
-            });
-            if (didCreateOrganization) {
-                context.logger.info(`${chalk.green(`Created organization ${chalk.bold(organization)}`)}`);
+            if (token.type === "user") {
+                const user = await getCurrentUser({ token, context });
+                organization = kebabCase(user.username);
+                const didCreateOrganization = await createOrganizationIfDoesNotExist({
+                    organization,
+                    token,
+                    context,
+                });
+                if (didCreateOrganization) {
+                    context.logger.info(`${chalk.green(`Created organization ${chalk.bold(organization)}`)}`);
+                }
+            } else {
+                organization = token.value;
             }
         }
 
