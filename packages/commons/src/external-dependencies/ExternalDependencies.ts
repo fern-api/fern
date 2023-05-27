@@ -1,8 +1,9 @@
-import { Express } from "./express/Express";
-import { FormData } from "./form-data/FormData";
+import { Axios } from "./axios";
+import { Express } from "./express";
+import { FormData } from "./form-data";
 import { Fs } from "./fs";
 import { Stream } from "./stream";
-import { UrlJoin } from "./url-join/UrlJoin";
+import { UrlJoin } from "./url-join";
 import { URLSearchParams } from "./url-search-params";
 
 export interface ExternalDependencies {
@@ -12,4 +13,5 @@ export interface ExternalDependencies {
     fs: Fs;
     stream: Stream;
     URLSearchParams: URLSearchParams;
+    axios: Axios;
 }

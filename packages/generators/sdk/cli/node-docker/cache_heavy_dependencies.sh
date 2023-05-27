@@ -13,7 +13,7 @@ yarn add \
 @types/express@4.17.16 \
 @types/node@17.0.33 \
 @types/url-join@4.0.1 \
-axios@0.27.2 \
+axios@1.4.0 \
 esbuild@0.16.15 \
 express@4.18.2 \
 prettier@2.7.1 \

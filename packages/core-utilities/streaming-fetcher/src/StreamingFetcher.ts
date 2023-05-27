@@ -1,5 +1,5 @@
 import { default as URLSearchParams } from "@ungap/url-search-params";
-import axios, { AxiosAdapter, AxiosResponse } from "axios";
+import axios, { AxiosAdapter, AxiosProgressEvent, AxiosResponse } from "axios";
 import { Readable } from "stream";
 
 export type StreamingFetchFunction = (args: StreamingFetcher.Args) => Promise<Readable>;
@@ -14,8 +14,8 @@ export declare namespace StreamingFetcher {
         timeoutMs?: number;
         withCredentials?: boolean;
         adapter?: AxiosAdapter;
-        onUploadProgress?: (event: ProgressEvent) => void;
-        onDownloadProgress?: (event: ProgressEvent) => void;
+        onUploadProgress?: (event: AxiosProgressEvent) => void;
+        onDownloadProgress?: (event: AxiosProgressEvent) => void;
 
         onData?: (data: unknown) => void;
         onError?: (err: unknown) => void;
@@ -55,6 +55,7 @@ export const streamingFetcher: StreamingFetchFunction = async (args) => {
             maxBodyLength: Infinity,
             maxContentLength: Infinity,
             onUploadProgress: args.onUploadProgress,
+            onDownloadProgress: args.onDownloadProgress,
             signal: args.abortController?.signal,
             responseType: "stream",
             adapter: args.adapter,

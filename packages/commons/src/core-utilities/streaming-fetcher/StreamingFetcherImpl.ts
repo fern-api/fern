@@ -13,7 +13,7 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
         originalPathOnDocker: "/assets/streaming-fetcher" as const,
         pathInCoreUtilities: [{ nameOnDisk: "streaming-fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("axios", "0.27.2");
+            dependencyManager.addDependency("axios", "1.4.0");
             dependencyManager.addDependency("@ungap/url-search-params", "0.2.2");
         },
     };
