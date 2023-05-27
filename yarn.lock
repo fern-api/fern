@@ -3960,6 +3960,7 @@ __metadata:
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/login": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
