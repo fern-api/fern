@@ -2,4 +2,5 @@
 
 types:
   Foo: Bar
-  Bar: list<Foo>
+  Bar: Foo
+  Baz: string

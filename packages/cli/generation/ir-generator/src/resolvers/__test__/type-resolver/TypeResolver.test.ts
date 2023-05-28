@@ -29,15 +29,24 @@ describe("TypeResolver", () => {
         }
 
         const typeResolver = new TypeResolverImpl(parseResult.workspace);
-        const resolvedType = typeResolver.resolveType({
-            type: "Foo",
-            file: constructFernFileContext({
-                relativeFilepath: fooFilepath,
-                definitionFile: fooFile.contents,
-                casingsGenerator: constructCasingsGenerator(undefined),
-                rootApiFile: parseResult.workspace.definition.rootApiFile.contents,
-            }),
+        const fernFileContext = constructFernFileContext({
+            relativeFilepath: fooFilepath,
+            definitionFile: fooFile.contents,
+            casingsGenerator: constructCasingsGenerator(undefined),
+            rootApiFile: parseResult.workspace.definition.rootApiFile.contents,
         });
-        expect(resolvedType).toBeUndefined();
+
+        const resolvedFooType = typeResolver.resolveType({
+            type: "Foo",
+            file: fernFileContext,
+        });
+        expect(resolvedFooType).toBeUndefined();
+
+        // to make sure the file is being parsed correctly
+        const resolvedBazType = typeResolver.resolveType({
+            type: "Baz",
+            file: fernFileContext,
+        });
+        expect(resolvedBazType?._type).toBe("primitive");
     });
 });
