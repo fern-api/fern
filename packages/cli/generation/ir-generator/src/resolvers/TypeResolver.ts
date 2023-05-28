@@ -188,7 +188,7 @@ export class TypeResolverImpl implements TypeResolver {
                 if (
                     objectPath.some(
                         (pathItem) =>
-                            pathItem.file === newObjectPathItem.file && pathItem.typeName && newObjectPathItem.typeName
+                            pathItem.file === newObjectPathItem.file && pathItem.typeName === newObjectPathItem.typeName
                     )
                 ) {
                     return undefined;
