@@ -2,6 +2,7 @@ import { Button } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
 import { PropsWithChildren, useMemo } from "react";
+import styles from "./TitledExample.module.scss";
 import { useCopyToClipboard } from "./useCopyToClipboard";
 
 export declare namespace TitledExample {
@@ -35,7 +36,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className
             )}
         >
-            <div className="flex items-center justify-between pl-3 pr-2 py-1 bg-[#969CEE]/30">
+            <div className="flex items-center justify-between pl-3 pr-2 py-1 bg-accentPrimary/30">
                 <div className="flex items-center gap-2">
                     <div className="font-medium uppercase text-[#A7A7B0]">{title}</div>
                     {titleRightContent}
@@ -50,7 +51,17 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     />
                 </div>
             </div>
-            <div className="flex flex-1 min-h-0">{children}</div>
+            <div className="flex flex-1 min-h-0">
+                <div
+                    className={classNames(
+                        styles.code,
+                        className,
+                        "flex-1 leading-relaxed flex-1 overflow-auto text-xs p-2 bg-accentHighlight"
+                    )}
+                >
+                    {children}
+                </div>
+            </div>
         </div>
     );
 };

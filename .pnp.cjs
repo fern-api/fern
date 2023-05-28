@@ -8555,7 +8555,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/routing-utils", "workspace:packages/commons/react/routing-utils"],\
             ["@fern-api/split-view", "workspace:packages/commons/react/split-view"],\
             ["@fern-api/theme", "workspace:packages/commons/react/theme"],\
-            ["@fern-fern/registry-browser", "npm:0.0.677"],\
+            ["@fern-fern/registry-browser", "npm:0.0.714"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@tanstack/react-query", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.29.7"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -9016,10 +9016,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-browser", [\
-        ["npm:0.0.677", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.0.677-074311a3c7-adb86264da.zip/node_modules/@fern-fern/registry-browser/",\
+        ["npm:0.0.714", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.0.714-82e958c685-24654969f8.zip/node_modules/@fern-fern/registry-browser/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-browser", "npm:0.0.677"],\
+            ["@fern-fern/registry-browser", "npm:0.0.714"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\

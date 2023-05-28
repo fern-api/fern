@@ -18,7 +18,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ markdown }) =
                 {headings.map((heading, index) => (
                     <div
                         key={index}
-                        className="text-neutral-400 cursor-pointer hover:text-neutral-300"
+                        className="text-neutral-400 cursor-pointer hover:text-neutral-300 transition"
                         style={{ marginLeft: 8 * (heading.depth - minDepth) }}
                     >
                         {heading.text}

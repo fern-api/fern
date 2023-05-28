@@ -18,11 +18,12 @@ export const MarkdownPage: React.FC<MarkdownPage.Props> = ({ path }) => {
     const page = useMemo(() => resolvePage(path.page.id), [path.page.id, resolvePage]);
 
     return (
-        <div className="flex overflow-y-auto gap-20 px-20">
-            <div className="flex flex-col max-w-screen-md">
+        <div className="flex overflow-y-auto gap-20 px-20 pt-20">
+            <div className="w-[750px]">
                 <H1 className="mb-10">{path.page.title}</H1>
                 <Markdown>{page.markdown}</Markdown>
                 <BottomNavigationButtons />
+                <div className="h-20" />
             </div>
             <div className="sticky top-0 shrink-0">
                 <TableOfContents markdown={page.markdown} />

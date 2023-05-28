@@ -1,6 +1,5 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { ApiPage } from "../api-page/ApiPage";
@@ -12,16 +11,6 @@ import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
 export const DocsMainContent: React.FC = () => {
     const location = useLocation();
     const { resolvedPathFromUrl, docsDefinition } = useDocsContext();
-
-    useEffect(() => {
-        const root = document.querySelector<HTMLElement>(":root");
-        if (root == null) {
-            // eslint-disable-next-line no-console
-            console.error("Failed to load :root element");
-            return;
-        }
-        root.style.setProperty("--accent-primary", "150, 156, 238");
-    }, []);
 
     if (resolvedPathFromUrl == null) {
         if (location.pathname === "/") {
