@@ -37,7 +37,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
         >
             <div className="flex items-center justify-between pl-3 pr-2 py-1 bg-[#969CEE]/30">
                 <div className="flex items-center gap-2">
-                    <div className="font-bold uppercase text-[#A7A7B0]">{title}</div>
+                    <div className="font-medium uppercase text-[#A7A7B0]">{title}</div>
                     {titleRightContent}
                 </div>
                 <div className="flex gap-2">

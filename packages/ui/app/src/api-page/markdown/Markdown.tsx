@@ -23,11 +23,6 @@ export const Markdown: React.FC<Markdown.Props> = ({ children, className }) => {
             )}
             remarkPlugins={REMARK_PLUGINS}
             rehypePlugins={REHYPE_PLUGINS}
-            components={{
-                h2: () => {
-                    return <div>hi</div>;
-                },
-            }}
         >
             {children}
         </ReactMarkdown>

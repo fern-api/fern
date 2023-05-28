@@ -8560,6 +8560,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@tanstack/react-query", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.29.7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/marked", "npm:5.0.0"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-syntax-highlighter", "npm:15.5.6"],\
@@ -8568,6 +8569,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["lodash-es", "npm:4.17.21"],\
+            ["marked", "npm:5.0.3"],\
             ["normalize.css", "npm:8.0.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["posthog-js", "npm:1.50.0"],\
@@ -11184,6 +11186,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-lru-cache-npm-5.1.1-46aaa305fe-e1d6c0085f.zip/node_modules/@types/lru-cache/",\
           "packageDependencies": [\
             ["@types/lru-cache", "npm:5.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/marked", [\
+        ["npm:5.0.0", {\
+          "packageLocation": "./.yarn/cache/@types-marked-npm-5.0.0-87556995f9-4828a51186.zip/node_modules/@types/marked/",\
+          "packageDependencies": [\
+            ["@types/marked", "npm:5.0.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -21293,6 +21304,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/marked-npm-4.0.17-d85fa63152-33a3c43a20.zip/node_modules/marked/",\
           "packageDependencies": [\
             ["marked", "npm:4.0.17"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:5.0.3", {\
+          "packageLocation": "./.yarn/cache/marked-npm-5.0.3-abcd41d27b-5eeb6379b1.zip/node_modules/marked/",\
+          "packageDependencies": [\
+            ["marked", "npm:5.0.3"]\
           ],\
           "linkType": "HARD"\
         }]\
