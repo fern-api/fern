@@ -17,7 +17,7 @@ export interface ObjectPropertyWithPath {
 export type ObjectPropertyPath = ObjectPropertyPathPart[];
 
 export interface ObjectPropertyPathPart {
-    name: string;
+    reference: string;
     followedVia: "alias" | "extension";
 }
 
@@ -110,12 +110,12 @@ export function getAllPropertiesForObject({
                             path: [
                                 ...path,
                                 {
-                                    name: extension,
+                                    reference: extension,
                                     followedVia: "extension",
                                 },
                                 ...resolvedTypeOfExtension.objectPath.map(
-                                    (objectName): ObjectPropertyPathPart => ({
-                                        name: objectName,
+                                    (pathItem): ObjectPropertyPathPart => ({
+                                        reference: pathItem.reference,
                                         followedVia: "alias",
                                     })
                                 ),
@@ -182,7 +182,7 @@ function convertObjectPropertyPathToStrings(path: ObjectPropertyPath): string[] 
 }
 
 function convertObjectPropertyPathPartToString(part: ObjectPropertyPathPart): string {
-    return [getPrefixForObjectPropertyPathPart(part), part.name].join(" ");
+    return [getPrefixForObjectPropertyPathPart(part), part.reference].join(" ");
 }
 
 function getPrefixForObjectPropertyPathPart(part: ObjectPropertyPathPart): string {

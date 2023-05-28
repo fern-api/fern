@@ -3,7 +3,7 @@ types:
     properties:
       navigation: list<NavigationItem>
       logo: optional<string>
-      colors: ColorsConfiguration
+      colors: optional<ColorsConfiguration>
 
   NavigationItem:
     discriminated: false
@@ -28,4 +28,5 @@ types:
       audiences: optional<list<string>>
 
   ColorsConfiguration:
-    properties: {}
+    properties:
+      accentPrimary: optional<string>

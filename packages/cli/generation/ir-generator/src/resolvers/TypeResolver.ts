@@ -4,7 +4,7 @@ import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-model/types
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
-import { ResolvedType } from "./ResolvedType";
+import { ObjectPathItem, ResolvedType } from "./ResolvedType";
 
 export interface TypeResolver {
     resolveType: (args: { type: string; file: FernFileContext }) => ResolvedType | undefined;
@@ -12,14 +12,19 @@ export interface TypeResolver {
     getDeclarationOfNamedType: (args: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }) => { typeName: string; declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined;
-    getDeclarationOfNamedTypeOrThrow: (args: { referenceToNamedType: string; file: FernFileContext }) => {
-        typeName: string;
-        declaration: RawSchemas.TypeDeclarationSchema;
+    }) => RawTypeDeclarationInfo | undefined;
+    getDeclarationOfNamedTypeOrThrow: (args: {
+        referenceToNamedType: string;
         file: FernFileContext;
-    };
+    }) => RawTypeDeclarationInfo;
     resolveNamedType: (args: { referenceToNamedType: string; file: FernFileContext }) => ResolvedType | undefined;
     resolveNamedTypeOrThrow: (args: { referenceToNamedType: string; file: FernFileContext }) => ResolvedType;
+}
+
+export interface RawTypeDeclarationInfo {
+    typeName: string;
+    declaration: RawSchemas.TypeDeclarationSchema;
+    file: FernFileContext;
 }
 
 export class TypeResolverImpl implements TypeResolver {
@@ -39,7 +44,7 @@ export class TypeResolverImpl implements TypeResolver {
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }): { typeName: string; declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } {
+    }): RawTypeDeclarationInfo {
         const declaration = this.getDeclarationOfNamedType({ referenceToNamedType, file });
         if (declaration == null) {
             throw new Error("Cannot find declaration of type: " + referenceToNamedType);
@@ -53,7 +58,7 @@ export class TypeResolverImpl implements TypeResolver {
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-    }): { typeName: string; declaration: RawSchemas.TypeDeclarationSchema; file: FernFileContext } | undefined {
+    }): RawTypeDeclarationInfo | undefined {
         const parsedReference = parseReferenceToTypeName({
             reference: referenceToNamedType,
             referencedIn: file.relativeFilepath,
@@ -91,7 +96,7 @@ export class TypeResolverImpl implements TypeResolver {
     }: {
         type: string;
         file: FernFileContext;
-        objectPath?: string[];
+        objectPath?: ObjectPathItem[];
     }): ResolvedType | undefined {
         return recursivelyVisitRawTypeReference<ResolvedType | undefined>(type, {
             primitive: (primitive) => ({
@@ -164,12 +169,38 @@ export class TypeResolverImpl implements TypeResolver {
                 },
                 originalTypeReference: TypeReference.container(ContainerType.literal(Literal.string(literalValue))),
             }),
-            named: (referenceToNamedType) =>
-                this.resolveNamedType({
+            named: (referenceToNamedType) => {
+                const maybeDeclaration = this.getDeclarationOfNamedType({
                     referenceToNamedType,
                     file,
-                    objectPath: [...objectPath, referenceToNamedType],
-                }),
+                });
+                if (maybeDeclaration == null) {
+                    return undefined;
+                }
+
+                const newObjectPathItem: ObjectPathItem = {
+                    typeName: maybeDeclaration.typeName,
+                    file: maybeDeclaration.file.relativeFilepath,
+                    reference: referenceToNamedType,
+                };
+
+                // detect infinite loop
+                if (
+                    objectPath.some(
+                        (pathItem) =>
+                            pathItem.file === newObjectPathItem.file && pathItem.typeName === newObjectPathItem.typeName
+                    )
+                ) {
+                    return undefined;
+                }
+
+                return this.resolveNamedTypeFromDeclaration({
+                    referenceToNamedType,
+                    referencedIn: file,
+                    rawDeclaration: maybeDeclaration,
+                    objectPath: [...objectPath, newObjectPathItem],
+                });
+            },
         });
     }
 
@@ -190,11 +221,9 @@ export class TypeResolverImpl implements TypeResolver {
     public resolveNamedType({
         referenceToNamedType,
         file,
-        objectPath = [],
     }: {
         referenceToNamedType: string;
         file: FernFileContext;
-        objectPath?: string[];
     }): ResolvedType | undefined {
         const maybeDeclaration = this.getDeclarationOfNamedType({
             referenceToNamedType,
@@ -203,7 +232,25 @@ export class TypeResolverImpl implements TypeResolver {
         if (maybeDeclaration == null) {
             return undefined;
         }
-        const { declaration, file: fileOfResolvedDeclaration } = maybeDeclaration;
+        return this.resolveNamedTypeFromDeclaration({
+            referenceToNamedType,
+            referencedIn: file,
+            rawDeclaration: maybeDeclaration,
+        });
+    }
+
+    private resolveNamedTypeFromDeclaration({
+        referenceToNamedType,
+        referencedIn,
+        rawDeclaration,
+        objectPath = [],
+    }: {
+        referencedIn: FernFileContext;
+        referenceToNamedType: string;
+        rawDeclaration: RawTypeDeclarationInfo;
+        objectPath?: ObjectPathItem[];
+    }): ResolvedType | undefined {
+        const { declaration, file: fileOfResolvedDeclaration } = rawDeclaration;
 
         if (isRawAliasDefinition(declaration)) {
             return this.resolveType({
@@ -213,7 +260,7 @@ export class TypeResolverImpl implements TypeResolver {
             });
         }
 
-        const parsedTypeReference = parseInlineType({ type: referenceToNamedType, file });
+        const parsedTypeReference = parseInlineType({ type: referenceToNamedType, file: referencedIn });
         if (parsedTypeReference._type !== "named") {
             return undefined;
         }
@@ -225,18 +272,13 @@ export class TypeResolverImpl implements TypeResolver {
 
         return {
             _type: "named",
-            rawName: maybeDeclaration.typeName,
+            rawName: rawDeclaration.typeName,
             name: parsedTypeReference,
             declaration,
             filepath: fileOfResolvedDeclaration.relativeFilepath,
             objectPath,
             originalTypeReference: parsedTypeReference,
-            file: constructFernFileContext({
-                relativeFilepath: fileOfResolvedDeclaration.relativeFilepath,
-                definitionFile,
-                casingsGenerator: file.casingsGenerator,
-                rootApiFile: this.workspace.definition.rootApiFile.contents,
-            }),
+            file: fileOfResolvedDeclaration,
         };
     }
 }

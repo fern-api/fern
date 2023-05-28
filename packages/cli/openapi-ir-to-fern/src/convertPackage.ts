@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
-import { DefinitionFileSchema, RawSchemas, RootApiFileSchema } from "@fern-api/yaml-schema";
+import { DefinitionFileSchema, isRawAliasDefinition, RawSchemas, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
 import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
 import { ConvertedServices, convertToServices } from "./converters/convertToServices";
@@ -107,6 +107,16 @@ function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedSer
             continue;
         }
         const typeDeclaration = convertToTypeDeclaration(schema, openApiFile.schemas);
+        // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
+        if (isRawAliasDefinition(typeDeclaration.typeDeclaration)) {
+            const aliasType =
+                typeof typeDeclaration.typeDeclaration === "string"
+                    ? typeDeclaration.typeDeclaration
+                    : typeDeclaration.typeDeclaration.type;
+            if (typeDeclaration.name === aliasType) {
+                continue;
+            }
+        }
         types = {
             ...types,
             [typeDeclaration.name ?? schemaId]: typeDeclaration.typeDeclaration,

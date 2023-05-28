@@ -3,7 +3,7 @@
 </a>
 
 <div align="center">
-  <a href="https://docs.buildwithfern.com/intro" alt="documentation">Documentation</a>
+  <a href="https://www.buildwithfern.com/docs/intro" alt="documentation">Documentation</a>
   <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
   <a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Join the Discord</a>
 </div>
@@ -42,15 +42,15 @@ You can feed the generated OpenAPI into the endless list of tools that support O
 
 OpenAPI is a great tool for documenting APIs, but falls short for code generation use cases.
 
-Read [Fern vs. OpenAPI](https://docs.buildwithfern.com/comparison-with-openapi)
+Read [Fern vs. OpenAPI](https://buildwithfern.com/docs/comparison-with-openapi)
 for an in-depth comparison. **TL;DR: we differ from OpenAPI in these areas:**
 
-- [Simplicity](https://docs.buildwithfern.com/comparison-with-openapi#simplicity)
-- [New features in specification](https://docs.buildwithfern.com/comparison-with-openapi#new-features-in-specification)
-- [Quality of code generation](https://docs.buildwithfern.com/comparison-with-openapi#quality-of-code-generation)
-- [Focus on server-side API development](https://docs.buildwithfern.com/comparison-with-openapi#focus-on-server-side-api-development)
-- [Change management](https://docs.buildwithfern.com/comparison-with-openapi#change-management)
-- [Cloud-based code generation and publishing](https://docs.buildwithfern.com/comparison-with-openapi#cloud-based-code-generation-and-publishing)
+- [Simplicity](https://www.buildwithfern.com/docs/comparison-with-openapi#simplicity)
+- [New features in specification](https://www.buildwithfern.com/docs/comparison-with-openapi#new-features-in-specification)
+- [Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
+- [Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
+- [Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
+- [Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
 
 # Plant Store example
 
@@ -159,7 +159,7 @@ fern generate
 
 And voila! You just built and published a TypeScript SDK.
 
-**Next step:** define _your_ API in Fern. Check out our [docs](https://docs.buildwithfern.com/definition) to learn more.
+**Next step:** define _your_ API in Fern. Check out our [docs](https://www.buildwithfern.com/docs/definition) to learn more.
 
 # CLI reference
 
@@ -192,7 +192,7 @@ latest version.
 ### `fern add <generator>`
 
 `fern add` adds a new generator to your `generators.yml`. You can view the full
-list of supported generators in our [docs](https://docs.buildwithfern.com/compiler/generators).
+list of supported generators in our [docs](https://www.buildwithfern.com/docs/compiler/generators).
 
 ---
 
@@ -205,11 +205,11 @@ list of supported generators in our [docs](https://docs.buildwithfern.com/compil
 ### `fern register`
 
 _Advanced feature._ You can register your API so it can be depended on by other
-APIs. Read more in our [docs](https://docs.buildwithfern.com/advanced/depending-on-other-apis).
+APIs. Read more in our [docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis).
 
 # Documentation
 
-You can view our documentation [here](https://docs.buildwithfern.com).
+You can view our documentation [here](https://www.buildwithfern.com/docs).
 
 # Community
 

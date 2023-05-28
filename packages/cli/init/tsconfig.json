@@ -8,6 +8,7 @@
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },
     { "path": "../login" },
+    { "path": "../services" },
     { "path": "../task-context" },
     { "path": "../yaml/formatter" },
     { "path": "../yaml/yaml-schema" }

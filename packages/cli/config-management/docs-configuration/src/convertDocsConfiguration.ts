@@ -2,17 +2,13 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
-import {
-    ColorsConfiguration,
-    DocsConfiguration,
-    DocsNavigationConfiguration,
-    DocsNavigationItem,
-    LogoReference,
-} from "./DocsConfiguration";
+import { FernRegistry } from "@fern-fern/registry-node";
+import { DocsConfiguration, DocsNavigationConfiguration, DocsNavigationItem, LogoReference } from "./DocsConfiguration";
 
 export async function convertDocsConfiguration({
     rawDocsConfiguration,
     absolutePathOfConfiguration,
+    context,
 }: {
     rawDocsConfiguration: RawDocs.DocsConfiguration;
     absolutePathOfConfiguration: AbsoluteFilePath;
@@ -24,7 +20,7 @@ export async function convertDocsConfiguration({
             rawDocsConfiguration.logo != null
                 ? convertLogoReference(rawDocsConfiguration.logo, absolutePathOfConfiguration)
                 : undefined,
-        colors: convertColorsConfiguration(rawDocsConfiguration.colors),
+        colors: convertColorsConfiguration(rawDocsConfiguration.colors ?? {}, context),
     };
 }
 
@@ -95,6 +91,55 @@ function convertLogoReference(rawLogoReference: string, absolutePathOfConfigurat
     }
 }
 
-function convertColorsConfiguration(_rawConfig: RawDocs.ColorsConfiguration): ColorsConfiguration {
-    return {};
+function convertColorsConfiguration(
+    rawConfig: RawDocs.ColorsConfiguration,
+    context: TaskContext
+): FernRegistry.docs.v1.write.ColorsConfig {
+    return {
+        accentPrimary: convertHextoRgb(rawConfig, "accentPrimary", context),
+    };
+}
+
+const HEX_COLOR_REGEX = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
+
+function convertHextoRgb(
+    rawConfig: RawDocs.ColorsConfiguration,
+    key: keyof RawDocs.ColorsConfiguration,
+    context: TaskContext
+): FernRegistry.docs.v1.write.RgbColor | undefined {
+    const color = rawConfig[key];
+    if (color == null) {
+        return undefined;
+    }
+    const rgb = hexToRgb(color);
+    if (rgb != null) {
+        return rgb;
+    }
+    context.failAndThrow(`${key} should be a hex color of the format #FFFFFF`);
+}
+
+// https://stackoverflow.com/a/5624139/4238485
+function hexToRgb(hexString: string): FernRegistry.docs.v1.write.RgbColor | undefined {
+    const result = HEX_COLOR_REGEX.exec(hexString);
+    if (result != null) {
+        const [_, rAsString, gAsString, bAsString] = result;
+        const r = parseHexColorCode(rAsString);
+        const g = parseHexColorCode(gAsString);
+        const b = parseHexColorCode(bAsString);
+        if (r != null && g != null && b != null) {
+            return { r, g, b };
+        }
+    }
+    return undefined;
+}
+
+function parseHexColorCode(value: string | undefined): number | undefined {
+    if (value == null) {
+        return undefined;
+    }
+    const valueAsNumber = parseInt(value, 16);
+    if (isNaN(valueAsNumber)) {
+        return undefined;
+    }
+    return valueAsNumber;
 }
