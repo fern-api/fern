@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import classNames from "classnames";
-import { useContext, useEffect, useMemo, useRef } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { JsonExampleBreadcrumb } from "./contexts/JsonExampleBreadcrumb";
 import {
     JsonExampleBreadcumbsContext,
@@ -64,6 +64,21 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
         }
     }, [isSelected]);
 
+    const [isOverlayInView, setIsOverlayInView] = useState(false);
+    useEffect(() => {
+        if (isSelected) {
+            setIsOverlayInView(true);
+        } else {
+            setTimeout(
+                () => {
+                    setIsOverlayInView(false);
+                },
+                // tailwind transition time
+                150
+            );
+        }
+    }, [isSelected]);
+
     return (
         <div className="relative" ref={ref}>
             <JsonExampleLine>
@@ -83,7 +98,10 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
             <div
                 className={classNames(
                     "absolute inset-x-1 inset-y-0 border rounded transition",
-                    isSelected ? "bg-[#716FEC]/20 border-[#716FEC]" : "bg-transparent border-transparent"
+                    isSelected ? "bg-[#716FEC]/20 border-[#716FEC]" : "bg-transparent border-transparent",
+                    {
+                        invisible: !isOverlayInView,
+                    }
                 )}
             />
         </div>

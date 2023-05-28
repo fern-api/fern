@@ -10,7 +10,11 @@ export declare namespace NonClickableSidebarGroupTitle {
 export const NonClickableSidebarGroupTitle: React.FC<NonClickableSidebarGroupTitle.Props> = ({ title }) => {
     return (
         <SidebarItemLayout
-            title={<div className={classNames("uppercase", "text-white", "dark:text-white")}>{title}</div>}
+            title={
+                <div className={classNames("uppercase font-medium tracking-wide", "text-white", "dark:text-white")}>
+                    {title}
+                </div>
+            }
         />
     );
 };

@@ -25,7 +25,7 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
             return (
                 <Text
                     className={classNames("select-none transition", {
-                        "text-[#B1BCF1]": isSelected,
+                        "text-accentPrimary": isSelected,
                         "text-white": !isSelected && isHovering,
                     })}
                     ellipsize
