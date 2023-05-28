@@ -28,7 +28,7 @@ export declare namespace ResolvedType {
         filepath: RelativeFilePath;
         file: FernFileContext;
         // this is the breadcrumbs path to the final declaration, including intermediate aliases
-        objectPath: string[];
+        objectPath: ObjectPathItem[];
         originalTypeReference: TypeReference.Named;
     }
 
@@ -77,4 +77,11 @@ export declare namespace ResolvedContainerType {
         _type: "literal";
         literal: IrLiteral;
     }
+}
+
+export interface ObjectPathItem {
+    file: RelativeFilePath;
+    typeName: string;
+    // the original reference in the source file, could be `typeName` or `importedFile.typeName`
+    reference: string;
 }
