@@ -15,9 +15,9 @@ export const DefinitionItemExamplesLayout: React.FC<DefinitionItemExamplesLayout
 }) => {
     const hasTopContent = topLeftContent != null || topRightContent != null;
     return (
-        <div className="flex-1 flex flex-col min-w-0">
+        <div className="flex min-w-0 flex-1 flex-col">
             {hasTopContent && (
-                <div className="relative h-9 flex-shrink-0 mr-3">
+                <div className="relative mr-3 h-9 shrink-0">
                     <div
                         className={classNames(
                             "absolute flex items-center left-0 right-0 bottom-0 h-3 translate-y-1/2 gap-3",
@@ -26,7 +26,7 @@ export const DefinitionItemExamplesLayout: React.FC<DefinitionItemExamplesLayout
                         )}
                     >
                         {topLeftContent}
-                        <div className="flex-1 h-px bg-gray-300" />
+                        <div className="h-px flex-1 bg-gray-300" />
                         {topRightContent}
                     </div>
                 </div>

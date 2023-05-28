@@ -36,7 +36,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className
             )}
         >
-            <div className="flex items-center justify-between pl-3 pr-2 py-1 bg-accentPrimary/30">
+            <div className="bg-accentPrimary/30 flex items-center justify-between py-1 pl-3 pr-2">
                 <div className="flex items-center gap-2">
                     <div className="font-medium uppercase text-[#A7A7B0]">{title}</div>
                     {titleRightContent}
@@ -51,7 +51,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     />
                 </div>
             </div>
-            <div className="flex flex-1 min-h-0">
+            <div className="flex min-h-0 flex-1">
                 <div
                     className={classNames(
                         styles.code,

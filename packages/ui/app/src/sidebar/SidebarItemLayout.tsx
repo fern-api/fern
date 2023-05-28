@@ -43,7 +43,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({
             {...hoveringCallbacks}
         >
             {typeof title === "function" ? title({ isHovering }) : title}
-            {isSelected && <div className="w-1 bg-accentPrimary absolute top-0 right-0 bottom-0" />}
+            {isSelected && <div className="bg-accentPrimary absolute inset-y-0 right-0 w-1" />}
         </Text>
     );
 };

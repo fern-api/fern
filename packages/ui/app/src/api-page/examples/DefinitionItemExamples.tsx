@@ -20,10 +20,10 @@ export const DefinitionItemExamples: React.FC<DefinitionItemExamples.Props> = ({
     }
 
     return (
-        <div className="flex-1 flex flex-col min-h-0 min-w-0">
-            {example.name != null && <div className="text-lg font-semibold mb-1">{example.name}</div>}
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+            {example.name != null && <div className="mb-1 text-lg font-semibold">{example.name}</div>}
             {example.description != null && <Markdown>{example.description}</Markdown>}
-            <div className="flex flex-1 flex-col my-10 min-h-0">{example.render()}</div>
+            <div className="my-10 flex min-h-0 flex-1 flex-col">{example.render()}</div>
         </div>
     );
 };

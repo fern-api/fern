@@ -25,7 +25,7 @@ export const SidebarGroup: React.FC<SidebarGroup.Props> = ({ title, includeTopMa
             {title}
             <SidebarContext.Provider value={contextValue}>
                 <div className="flex">
-                    <div className="flex flex-1 flex-col min-w-0">{children}</div>
+                    <div className="flex min-w-0 flex-1 flex-col">{children}</div>
                 </div>
             </SidebarContext.Provider>
         </div>

@@ -16,7 +16,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
     const { hoveredResponsePropertyPath } = useEndpointContext();
 
     return (
-        <div className="flex-1 flex flex-col min-h-0 gap-6">
+        <div className="flex min-h-0 flex-1 flex-col gap-6">
             {example.requestBody != null && (
                 <TitledExample title="Request" copyableExample={example.codeExamples.nodeAxios}>
                     <SyntaxHighlightedCodeExample code={example.codeExamples.nodeAxios} language="javascript" />

@@ -18,7 +18,7 @@ export const MarkdownPage: React.FC<MarkdownPage.Props> = ({ path }) => {
     const page = useMemo(() => resolvePage(path.page.id), [path.page.id, resolvePage]);
 
     return (
-        <div className="flex overflow-y-auto gap-20 px-20 pt-20">
+        <div className="flex gap-20 overflow-y-auto px-20 pt-20">
             <div className="w-[750px]">
                 <H1 className="mb-10">{path.page.title}</H1>
                 <Markdown>{page.markdown}</Markdown>

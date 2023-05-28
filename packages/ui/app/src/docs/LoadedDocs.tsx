@@ -12,11 +12,11 @@ export const LoadedDocs: React.FC = () => {
     return (
         <div className={classNames("flex flex-col flex-1 min-h-0", "dark:bg-[#19181C]")}>
             <Header />
-            <div className="flex-1 flex min-h-0">
+            <div className="flex min-h-0 flex-1">
                 <div className="flex w-64">
                     <Sidebar />
                 </div>
-                <div className="flex flex-col flex-1 min-w-0">
+                <div className="flex min-w-0 flex-1 flex-col">
                     <DocsMainContent />
                 </div>
             </div>

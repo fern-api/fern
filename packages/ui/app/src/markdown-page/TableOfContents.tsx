@@ -13,12 +13,12 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ markdown }) =
 
     return (
         <div className="flex flex-col">
-            <div className="uppercase semibold mb-3">On this page</div>
+            <div className="semibold mb-3 uppercase">On this page</div>
             <div className="flex flex-col gap-3">
                 {headings.map((heading, index) => (
                     <div
                         key={index}
-                        className="text-neutral-400 cursor-pointer hover:text-neutral-300 transition"
+                        className="cursor-pointer text-neutral-400 transition hover:text-neutral-300"
                         style={{ marginLeft: 8 * (heading.depth - minDepth) }}
                     >
                         {heading.text}
