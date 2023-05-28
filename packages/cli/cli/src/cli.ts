@@ -172,7 +172,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     alias: "org",
                     type: "string",
                     description: "Organization name",
-                    hidden: true,
+                    hidden: false,
                 }),
         async (argv) => {
             let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
