@@ -113,7 +113,7 @@ function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedSer
                 typeof typeDeclaration.typeDeclaration === "string"
                     ? typeDeclaration.typeDeclaration
                     : typeDeclaration.typeDeclaration.type;
-            if (typeDeclaration.typeDeclaration === aliasType) {
+            if (typeDeclaration.name === aliasType) {
                 continue;
             }
         }
