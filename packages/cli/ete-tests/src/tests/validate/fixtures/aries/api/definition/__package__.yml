@@ -1,0 +1,3960 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  GetMatchingConnectionsRequestConnectionProtocol:
+    enum:
+      - name: Connections10
+        value: connections/1.0
+      - name: Didexchange10
+        value: didexchange/1.0
+
+  GetMatchingConnectionsRequestState:
+    enum:
+      - name: start
+        value: start
+      - name: error
+        value: error
+      - name: response
+        value: response
+      - name: request
+        value: request
+      - name: abandoned
+        value: abandoned
+      - name: init
+        value: init
+      - name: invitation
+        value: invitation
+      - name: active
+        value: active
+      - name: completed
+        value: completed
+
+  GetMatchingConnectionsRequestTheirRole:
+    enum:
+      - name: invitee
+        value: invitee
+      - name: requester
+        value: requester
+      - name: inviter
+        value: inviter
+      - name: responder
+        value: responder
+
+  CreateInvitationRequestMetadata:
+    docs: Optional metadata to attach to the connection created with the invitation
+    properties: {}
+
+  ConnectionMetadataSetRequestMetadata:
+    docs: Dictionary of metadata to set for connection.
+    properties: {}
+
+  GetMatchingCredExRecordsRequestRole:
+    enum:
+      - name: issuer
+        value: issuer
+      - name: holder
+        value: holder
+
+  GetMatchingCredExRecordsRequestState:
+    enum:
+      - name: proposal_sent
+        value: proposal_sent
+      - name: proposal_received
+        value: proposal_received
+      - name: offer_sent
+        value: offer_sent
+      - name: offer_received
+        value: offer_received
+      - name: request_sent
+        value: request_sent
+      - name: request_received
+        value: request_received
+      - name: credential_issued
+        value: credential_issued
+      - name: credential_received
+        value: credential_received
+      - name: credential_acked
+        value: credential_acked
+      - name: credential_revoked
+        value: credential_revoked
+      - name: abandoned
+        value: abandoned
+
+  V20CredExFree:
+    properties:
+      auto_remove:
+        docs: >-
+          Whether to remove the credential exchange record on completion
+          (overrides --preserve-exchange-records configuration setting)
+        type: optional<boolean>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      connection_id:
+        type: string
+        docs: Connection identifier
+      credential_preview:
+        type: optional<V20CredPreview>
+      filter:
+        type: V20CredBoundOfferRequestFilter
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      verification_method:
+        docs: For ld-proofs. Verification method for signing.
+        type: optional<string>
+
+  GetPublishedDidEndpointRequestEndpointType:
+    enum:
+      - name: Endpoint
+        value: Endpoint
+      - name: Profile
+        value: Profile
+      - name: LinkedDomains
+        value: LinkedDomains
+
+  RegisterNymRequestRole:
+    enum:
+      - name: STEWARD
+        value: STEWARD
+      - name: TRUSTEE
+        value: TRUSTEE
+      - name: ENDORSER
+        value: ENDORSER
+      - name: NETWORK_MONITOR
+        value: NETWORK_MONITOR
+      - name: reset
+        value: reset
+
+  GetKeylistsRequestRole:
+    enum:
+      - name: client
+        value: client
+      - name: server
+        value: server
+
+  KeylistQueryFilterRequestFilter:
+    docs: Filter for keylist query
+    properties: {}
+
+  GetMatchingMediationRecordsRequestState:
+    enum:
+      - name: request
+        value: request
+      - name: granted
+        value: granted
+      - name: denied
+        value: denied
+
+  CreateWalletRequestKeyManagementMode:
+    docs: Key management method to use for this wallet.
+    enum:
+      - name: managed
+        value: managed
+
+  CreateWalletRequestWalletDispatchType:
+    docs: >-
+      Webhook target dispatch type for this wallet.             default -
+      Dispatch only to webhooks associated with this wallet.             base -
+      Dispatch only to webhooks associated with the base wallet.            
+      both - Dispatch to both webhook targets.
+    enum:
+      - name: default
+        value: default
+      - name: both
+        value: both
+      - name: base
+        value: base
+
+  CreateWalletRequestWalletKeyDerivation:
+    docs: Key derivation
+    enum:
+      - name: ARGON2I_MOD
+        value: ARGON2I_MOD
+      - name: ARGON2I_INT
+        value: ARGON2I_INT
+      - name: RAW
+        value: RAW
+
+  CreateWalletRequestWalletType:
+    docs: Type of the wallet to create
+    enum:
+      - name: askar
+        value: askar
+      - name: in_memory
+        value: in_memory
+      - name: indy
+        value: indy
+
+  UpdateWalletRequestWalletDispatchType:
+    docs: >-
+      Webhook target dispatch type for this wallet.             default -
+      Dispatch only to webhooks associated with this wallet.             base -
+      Dispatch only to webhooks associated with the base wallet.            
+      both - Dispatch to both webhook targets.
+    enum:
+      - name: default
+        value: default
+      - name: both
+        value: both
+      - name: base
+        value: base
+
+  InvitationCreateRequestMetadata:
+    docs: Optional metadata to attach to the connection created with the invitation
+    properties: {}
+
+  InvitationMessage:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      accept:
+        docs: List of mime type in order of preference
+        type: optional<list<string>>
+      handshake_protocols:
+        type: optional<list<string>>
+      imageUrl:
+        docs: Optional image URL for out-of-band invitation
+        type: optional<string>
+      label:
+        docs: Optional label
+        type: optional<string>
+      requests~attach:
+        docs: Optional request attachment
+        type: optional<list<AttachDecorator>>
+      services:
+        type: optional<list<map<string, unknown>>>
+
+  GetMatchingPresExRecordsRequestRole:
+    enum:
+      - name: prover
+        value: prover
+      - name: verifier
+        value: verifier
+
+  GetMatchingPresExRecordsRequestState:
+    enum:
+      - name: proposal_sent
+        value: proposal_sent
+      - name: proposal_received
+        value: proposal_received
+      - name: request_sent
+        value: request_sent
+      - name: request_received
+        value: request_received
+      - name: presentation_sent
+        value: presentation_sent
+      - name: presentation_received
+        value: presentation_received
+      - name: verified
+        value: verified
+      - name: presentation_acked
+        value: presentation_acked
+      - name: abandoned
+        value: abandoned
+
+  IndyPresSpec:
+    properties:
+      requested_attributes:
+        docs: >-
+          Nested object mapping proof request attribute referents to
+          requested-attribute specifiers
+        type: map<string, IndyRequestedCredsRequestedAttr>
+      requested_predicates:
+        docs: >-
+          Nested object mapping proof request predicate referents to
+          requested-predicate specifiers
+        type: map<string, IndyRequestedCredsRequestedPred>
+      self_attested_attributes:
+        docs: Self-attested attributes to build into proof
+        type: map<string, string>
+      trace:
+        docs: Whether to trace event (default false)
+        type: optional<boolean>
+
+  PublishRevocations:
+    properties:
+      rrid2crid:
+        docs: Credential revocation ids by revocation registry id
+        type: optional<map<string, list<string>>>
+
+  GetCreatedRegistriesRequestState:
+    enum:
+      - name: init
+        value: init
+      - name: generated
+        value: generated
+      - name: posted
+        value: posted
+      - name: active
+        value: active
+      - name: full
+        value: full
+
+  SetRevocationRegistryStateRequestState:
+    enum:
+      - name: init
+        value: init
+      - name: generated
+        value: generated
+      - name: posted
+        value: posted
+      - name: active
+        value: active
+      - name: full
+        value: full
+
+  RevokeRequestNotifyVersion:
+    docs: Specify which version of the revocation notification should be sent
+    enum:
+      - name: v1_0
+        value: v1_0
+      - name: v2_0
+        value: v2_0
+
+  SetEndorserRoleForConnIdRequestTransactionMyJob:
+    enum:
+      - name: TRANSACTION_AUTHOR
+        value: TRANSACTION_AUTHOR
+      - name: TRANSACTION_ENDORSER
+        value: TRANSACTION_ENDORSER
+      - name: reset
+        value: reset
+
+  GetDidsRequestKeyType:
+    enum:
+      - name: ed25519
+        value: ed25519
+      - name: bls12381g2
+        value: bls12381g2
+
+  GetDidsRequestMethod:
+    enum:
+      - name: key
+        value: key
+      - name: sov
+        value: sov
+
+  GetDidsRequestPosture:
+    enum:
+      - name: public
+        value: public
+      - name: posted
+        value: posted
+      - name: wallet_only
+        value: wallet_only
+
+  DidEndpointWithTypeEndpointType:
+    docs: >-
+      Endpoint type to set (default 'Endpoint'); affects only public or posted
+      DIDs
+    enum:
+      - name: Endpoint
+        value: Endpoint
+      - name: Profile
+        value: Profile
+      - name: LinkedDomains
+        value: LinkedDomains
+
+  AmlRecord:
+    properties:
+      aml:
+        type: optional<map<string, string>>
+      amlContext:
+        type: optional<string>
+      version:
+        type: optional<string>
+
+  ActionMenuFetchResult:
+    properties:
+      result:
+        type: optional<ActionMenuFetchResultResult>
+
+  ActionMenuModulesResult:
+    type: map<string, unknown>
+
+  AdminConfig:
+    properties:
+      config:
+        docs: Configuration settings
+        type: optional<AdminConfigConfig>
+
+  AdminConfigConfig:
+    docs: Configuration settings
+    properties: {}
+
+  AdminModules:
+    properties:
+      result:
+        docs: List of admin modules
+        type: optional<list<string>>
+
+  AdminReset:
+    type: map<string, unknown>
+
+  AdminShutdown:
+    type: map<string, unknown>
+
+  AdminStatus:
+    properties:
+      conductor:
+        docs: Conductor statistics
+        type: optional<AdminStatusConductor>
+      label:
+        docs: Default label
+        type: optional<string>
+      timing:
+        docs: Timing results
+        type: optional<AdminStatusTiming>
+      version:
+        docs: Version code
+        type: optional<string>
+
+  AdminStatusConductor:
+    docs: Conductor statistics
+    properties: {}
+
+  AdminStatusTiming:
+    docs: Timing results
+    properties: {}
+
+  AdminStatusLiveliness:
+    properties:
+      alive:
+        docs: Liveliness status
+        type: optional<boolean>
+
+  AdminStatusReadiness:
+    properties:
+      ready:
+        docs: Readiness status
+        type: optional<boolean>
+
+  AttachDecorator:
+    properties:
+      "@id":
+        docs: Attachment identifier
+        type: optional<string>
+      byte_count:
+        docs: Byte count of data included by reference
+        type: optional<integer>
+      data:
+        type: AttachDecoratorData
+      description:
+        docs: Human-readable description of content
+        type: optional<string>
+      filename:
+        docs: File name
+        type: optional<string>
+      lastmod_time:
+        docs: Hint regarding last modification datetime, in ISO-8601 format
+        type: optional<string>
+      mime-type:
+        docs: MIME type
+        type: optional<string>
+
+  AttachDecoratorData:
+    properties:
+      base64:
+        docs: Base64-encoded data
+        type: optional<string>
+      json:
+        docs: JSON-serialized data
+        type: optional<map<string, unknown>>
+      jws:
+        type: optional<AttachDecoratorDataJws>
+      links:
+        docs: List of hypertext links to data
+        type: optional<list<string>>
+      sha256:
+        docs: SHA256 hash (binhex encoded) of content
+        type: optional<string>
+
+  AttachDecoratorData1Jws:
+    properties:
+      header:
+        type: AttachDecoratorDataJwsHeader
+      protected:
+        docs: protected JWS header
+        type: optional<string>
+      signature:
+        type: string
+        docs: signature
+
+  AttachDecoratorDataJws:
+    type: AttachDecoratorDataJws
+    docs: Detached Java Web Signature
+
+  AttachDecoratorDataJwsHeader:
+    properties:
+      kid:
+        type: string
+        docs: Key identifier, in W3C did:key or DID URL format
+
+  AttachmentDef:
+    properties:
+      id:
+        docs: Attachment identifier
+        type: optional<string>
+      type:
+        docs: Attachment type
+        type: optional<AttachmentDefType>
+
+  AttachmentDefType:
+    docs: Attachment type
+    enum:
+      - name: CredentialOffer
+        value: credential-offer
+      - name: PresentProof
+        value: present-proof
+
+  AttributeMimeTypesResult:
+    properties:
+      results:
+        type: optional<map<string, optional<string>>>
+
+  BasicMessageModuleResponse:
+    type: map<string, unknown>
+
+  ClaimFormat:
+    properties:
+      jwt:
+        type: optional<ClaimFormatJwt>
+      jwt_vc:
+        type: optional<ClaimFormatJwtVc>
+      jwt_vp:
+        type: optional<ClaimFormatJwtVp>
+      ldp:
+        type: optional<ClaimFormatLdp>
+      ldp_vc:
+        type: optional<ClaimFormatLdpVc>
+      ldp_vp:
+        type: optional<ClaimFormatLdpVp>
+
+  ClaimFormatJwt:
+    properties: {}
+
+  ClaimFormatJwtVc:
+    properties: {}
+
+  ClaimFormatJwtVp:
+    properties: {}
+
+  ClaimFormatLdp:
+    properties: {}
+
+  ClaimFormatLdpVc:
+    properties: {}
+
+  ClaimFormatLdpVp:
+    properties: {}
+
+  ConnRecord:
+    properties:
+      accept:
+        docs: "Connection acceptance: manual or auto"
+        type: optional<ConnRecordAccept>
+      alias:
+        docs: Optional alias to apply to connection for later use
+        type: optional<string>
+      connection_id:
+        docs: Connection identifier
+        type: optional<string>
+      connection_protocol:
+        docs: Connection protocol used
+        type: optional<ConnRecordConnectionProtocol>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      error_msg:
+        docs: Error message
+        type: optional<string>
+      inbound_connection_id:
+        docs: Inbound routing connection id to use
+        type: optional<string>
+      invitation_key:
+        docs: Public key for connection
+        type: optional<string>
+      invitation_mode:
+        docs: Invitation mode
+        type: optional<ConnRecordInvitationMode>
+      invitation_msg_id:
+        docs: ID of out-of-band invitation message
+        type: optional<string>
+      my_did:
+        docs: Our DID for connection
+        type: optional<string>
+      request_id:
+        docs: Connection request identifier
+        type: optional<string>
+      rfc23_state:
+        docs: State per RFC 23
+        type: optional<string>
+      routing_state:
+        docs: Routing state of connection
+        type: optional<ConnRecordRoutingState>
+      state:
+        docs: Current record state
+        type: optional<string>
+      their_did:
+        docs: Their DID for connection
+        type: optional<string>
+      their_label:
+        docs: Their label for connection
+        type: optional<string>
+      their_public_did:
+        docs: Other agent's public DID for connection
+        type: optional<string>
+      their_role:
+        docs: Their role in the connection protocol
+        type: optional<ConnRecordTheirRole>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  ConnRecordAccept:
+    docs: "Connection acceptance: manual or auto"
+    enum:
+      - name: manual
+        value: manual
+      - name: auto
+        value: auto
+
+  ConnRecordConnectionProtocol:
+    docs: Connection protocol used
+    enum:
+      - name: Connections10
+        value: connections/1.0
+      - name: Didexchange10
+        value: didexchange/1.0
+
+  ConnRecordInvitationMode:
+    docs: Invitation mode
+    enum:
+      - name: once
+        value: once
+      - name: multi
+        value: multi
+      - name: static
+        value: static
+
+  ConnRecordRoutingState:
+    docs: Routing state of connection
+    enum:
+      - name: none
+        value: none
+      - name: request
+        value: request
+      - name: active
+        value: active
+      - name: error
+        value: error
+
+  ConnRecordTheirRole:
+    docs: Their role in the connection protocol
+    enum:
+      - name: invitee
+        value: invitee
+      - name: requester
+        value: requester
+      - name: inviter
+        value: inviter
+      - name: responder
+        value: responder
+
+  ConnectionInvitation:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      did:
+        docs: DID for connection invitation
+        type: optional<string>
+      imageUrl:
+        docs: Optional image URL for connection invitation
+        type: optional<string>
+      label:
+        docs: Optional label for connection invitation
+        type: optional<string>
+      recipientKeys:
+        docs: List of recipient keys
+        type: optional<list<string>>
+      routingKeys:
+        docs: List of routing keys
+        type: optional<list<string>>
+      serviceEndpoint:
+        docs: Service endpoint at which to reach this agent
+        type: optional<string>
+
+  ConnectionList:
+    properties:
+      results:
+        docs: List of connection records
+        type: optional<list<ConnRecord>>
+
+  ConnectionMetadata:
+    properties:
+      results:
+        docs: Dictionary of metadata associated with connection.
+        type: optional<ConnectionMetadataResults>
+
+  ConnectionMetadataResults:
+    docs: Dictionary of metadata associated with connection.
+    properties: {}
+
+  ConnectionModuleResponse:
+    type: map<string, unknown>
+
+  ConnectionStaticResult:
+    properties:
+      my_did:
+        type: string
+        docs: Local DID
+      my_endpoint:
+        type: string
+        docs: My URL endpoint
+      my_verkey:
+        type: string
+        docs: My verification key
+      record:
+        type: ConnRecord
+      their_did:
+        type: string
+        docs: Remote DID
+      their_verkey:
+        type: string
+        docs: Remote verification key
+
+  Constraints:
+    properties:
+      fields:
+        type: optional<list<DifField>>
+      is_holder:
+        type: optional<list<DifHolder>>
+      limit_disclosure:
+        docs: LimitDisclosure
+        type: optional<string>
+      status_active:
+        type: optional<ConstraintsStatusActive>
+      status_revoked:
+        type: optional<ConstraintsStatusRevoked>
+      status_suspended:
+        type: optional<ConstraintsStatusSuspended>
+      subject_is_issuer:
+        docs: SubjectIsIssuer
+        type: optional<ConstraintsSubjectIsIssuer>
+
+  ConstraintsStatusActive:
+    enum:
+      - name: required
+        value: required
+      - name: allowed
+        value: allowed
+      - name: disallowed
+        value: disallowed
+
+  ConstraintsStatusRevoked:
+    enum:
+      - name: required
+        value: required
+      - name: allowed
+        value: allowed
+      - name: disallowed
+        value: disallowed
+
+  ConstraintsStatusSuspended:
+    enum:
+      - name: required
+        value: required
+      - name: allowed
+        value: allowed
+      - name: disallowed
+        value: disallowed
+
+  ConstraintsSubjectIsIssuer:
+    docs: SubjectIsIssuer
+    enum:
+      - name: required
+        value: required
+      - name: preferred
+        value: preferred
+
+  CreateWalletResponse:
+    properties:
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      key_management_mode:
+        type: CreateWalletResponseKeyManagementMode
+        docs: Mode regarding management of wallet key
+      settings:
+        docs: Settings for this wallet.
+        type: optional<CreateWalletResponseSettings>
+      state:
+        docs: Current record state
+        type: optional<string>
+      token:
+        docs: Authorization token to authenticate wallet requests
+        type: optional<string>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+      wallet_id:
+        type: string
+        docs: Wallet record ID
+
+  CreateWalletResponseKeyManagementMode:
+    docs: Mode regarding management of wallet key
+    enum:
+      - name: managed
+        value: managed
+      - name: unmanaged
+        value: unmanaged
+
+  CreateWalletResponseSettings:
+    docs: Settings for this wallet.
+    properties: {}
+
+  CreateWalletTokenResponse:
+    properties:
+      token:
+        docs: Authorization token to authenticate wallet requests
+        type: optional<string>
+
+  CredAttrSpec:
+    properties:
+      mime-type:
+        docs: "MIME type: omit for (null) default"
+        type: optional<string>
+      name:
+        type: string
+        docs: Attribute name
+      value:
+        type: string
+        docs: "Attribute value: base64-encode if MIME type is present"
+
+  CredDefValue:
+    properties:
+      primary:
+        type: optional<CredDefValuePrimary>
+      revocation:
+        type: optional<CredDefValueRevocation>
+
+  CredDefValuePrimary:
+    type: CredDefValuePrimary
+    docs: Primary value for credential definition
+
+  CredDefValueRevocation:
+    type: CredDefValueRevocation
+    docs: Revocation value for credential definition
+
+  CredInfoList:
+    properties:
+      results:
+        type: optional<list<IndyCredInfo>>
+
+  CredRevIndyRecordsResult:
+    properties:
+      rev_reg_delta:
+        docs: Indy revocation registry delta
+        type: optional<CredRevIndyRecordsResultRevRegDelta>
+
+  CredRevIndyRecordsResultRevRegDelta:
+    docs: Indy revocation registry delta
+    properties: {}
+
+  CredRevRecordDetailsResult:
+    properties:
+      results:
+        type: optional<list<IssuerCredRevRecord>>
+
+  CredRevRecordResult:
+    properties:
+      result:
+        type: optional<IssuerCredRevRecord>
+
+  CredRevokedResult:
+    properties:
+      revoked:
+        docs: Whether credential is revoked on the ledger
+        type: optional<boolean>
+
+  Credential:
+    properties:
+      "@context":
+        docs: The JSON-LD context of the credential
+        type: list<map<string, unknown>>
+      credentialSubject:
+        type: map<string, unknown>
+      expirationDate:
+        docs: The expiration date
+        type: optional<string>
+      id:
+        type: optional<string>
+      issuanceDate:
+        type: string
+        docs: The issuance date
+      issuer:
+        docs: >-
+          The JSON-LD Verifiable Credential Issuer. Either string of object with
+          id field.
+        type: map<string, unknown>
+      proof:
+        type: optional<CredentialProof>
+      type:
+        docs: The JSON-LD type of the credential
+        type: list<string>
+
+  CredentialDefinition:
+    properties:
+      id:
+        docs: Credential definition identifier
+        type: optional<string>
+      schemaId:
+        docs: Schema identifier within credential definition identifier
+        type: optional<string>
+      tag:
+        docs: Tag within credential definition identifier
+        type: optional<string>
+      type:
+        docs: "Signature type: CL for Camenisch-Lysyanskaya"
+        type: optional<map<string, unknown>>
+      value:
+        type: optional<CredentialDefinitionValue>
+      ver:
+        docs: Node protocol version
+        type: optional<string>
+
+  CredentialDefinitionGetResult:
+    properties:
+      credential_definition:
+        type: optional<CredentialDefinition>
+
+  CredentialDefinitionSendResult:
+    properties:
+      credential_definition_id:
+        docs: Credential definition identifier
+        type: optional<string>
+
+  CredentialDefinitionsCreatedResult:
+    properties:
+      credential_definition_ids:
+        type: optional<list<string>>
+
+  CredentialOffer:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      credential_preview:
+        type: optional<CredentialPreview>
+      offers~attach:
+        type: list<AttachDecorator>
+
+  CredentialPreview:
+    properties:
+      "@type":
+        docs: Message type identifier
+        type: optional<string>
+      attributes:
+        type: list<CredAttrSpec>
+
+  CredentialProposal:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      cred_def_id:
+        type: optional<string>
+      credential_proposal:
+        type: optional<CredentialPreview>
+      issuer_did:
+        type: optional<string>
+      schema_id:
+        type: optional<string>
+      schema_issuer_did:
+        type: optional<string>
+      schema_name:
+        type: optional<string>
+      schema_version:
+        type: optional<string>
+
+  CredentialStatusOptions:
+    properties:
+      type:
+        type: string
+        docs: >-
+          Credential status method type to use for the credential. Should match
+          status method registered in the Verifiable Credential Extension
+          Registry
+
+  Did:
+    properties:
+      did:
+        docs: DID of interest
+        type: optional<string>
+      key_type:
+        docs: Key type associated with the DID
+        type: optional<DidKeyType>
+      method:
+        docs: Did method associated with the DID
+        type: optional<string>
+      posture:
+        docs: >-
+          Whether DID is current public DID, posted to ledger but not current
+          public DID, or local to the wallet
+        type: optional<DidPosture>
+      verkey:
+        docs: Public verification key
+        type: optional<string>
+
+  DidKeyType:
+    docs: Key type associated with the DID
+    enum:
+      - name: ed25519
+        value: ed25519
+      - name: bls12381g2
+        value: bls12381g2
+
+  DidPosture:
+    docs: >-
+      Whether DID is current public DID, posted to ledger but not current public
+      DID, or local to the wallet
+    enum:
+      - name: public
+        value: public
+      - name: posted
+        value: posted
+      - name: wallet_only
+        value: wallet_only
+
+  DidCreateOptions:
+    type: DidCreateOptions
+    docs: To define a key type and/or a did depending on chosen DID method.
+
+  DidCreateOptionsKeyType:
+    docs: >-
+      Key type to use for the DID keypair. Validated with the chosen DID
+      method's supported key types.
+    enum:
+      - name: ed25519
+        value: ed25519
+      - name: bls12381g2
+        value: bls12381g2
+
+  DidEndpoint:
+    properties:
+      did:
+        type: string
+        docs: DID of interest
+      endpoint:
+        docs: Endpoint to set (omit to delete)
+        type: optional<string>
+
+  DidList:
+    properties:
+      results:
+        docs: DID list
+        type: optional<list<Did>>
+
+  DidResult:
+    properties:
+      result:
+        type: optional<Did>
+
+  DifField:
+    properties:
+      filter:
+        type: optional<Filter>
+      id:
+        docs: ID
+        type: optional<string>
+      path:
+        type: optional<list<string>>
+      predicate:
+        docs: Preference
+        type: optional<DifFieldPredicate>
+      purpose:
+        docs: Purpose
+        type: optional<string>
+
+  DifFieldPredicate:
+    docs: Preference
+    enum:
+      - name: required
+        value: required
+      - name: preferred
+        value: preferred
+
+  DifHolder:
+    properties:
+      directive:
+        docs: Preference
+        type: optional<DifHolderDirective>
+      field_id:
+        type: optional<list<string>>
+
+  DifHolderDirective:
+    docs: Preference
+    enum:
+      - name: required
+        value: required
+      - name: preferred
+        value: preferred
+
+  DifOptions:
+    properties:
+      challenge:
+        docs: Challenge protect against replay attack
+        type: optional<string>
+      domain:
+        docs: Domain protect against replay attack
+        type: optional<string>
+
+  DifPresSpec:
+    properties:
+      issuer_id:
+        docs: >-
+          Issuer identifier to sign the presentation, if different from current
+          public DID
+        type: optional<string>
+      presentation_definition:
+        type: optional<PresentationDefinition>
+      record_ids:
+        docs: >-
+          Mapping of input_descriptor id to list of stored W3C credential
+          record_id
+        type: optional<DifPresSpecRecordIds>
+      reveal_doc:
+        docs: >-
+          reveal doc [JSON-LD frame] dict used to derive the credential when
+          selective disclosure is required
+        type: optional<DifPresSpecRevealDoc>
+
+  DifPresSpecRecordIds:
+    docs: Mapping of input_descriptor id to list of stored W3C credential record_id
+    properties: {}
+
+  DifPresSpecRevealDoc:
+    docs: >-
+      reveal doc [JSON-LD frame] dict used to derive the credential when
+      selective disclosure is required
+    properties: {}
+
+  DifProofProposal:
+    properties:
+      input_descriptors:
+        type: optional<list<InputDescriptors>>
+      options:
+        type: optional<DifOptions>
+
+  DifProofRequest:
+    properties:
+      options:
+        type: optional<DifOptions>
+      presentation_definition:
+        type: PresentationDefinition
+
+  Disclose:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      protocols:
+        docs: List of protocol descriptors
+        type: list<ProtocolDescriptor>
+
+  Disclosures:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      disclosures:
+        docs: List of protocol or goal_code descriptors
+        type: list<map<string, unknown>>
+
+  Doc:
+    properties:
+      credential:
+        type: DocCredential
+        docs: Credential to sign
+      options:
+        type: DocOptions
+
+  DocCredential:
+    docs: Credential to sign
+    properties: {}
+
+  EndorserInfo:
+    properties:
+      endorser_did:
+        type: string
+        docs: Endorser DID
+      endorser_name:
+        docs: Endorser Name
+        type: optional<string>
+
+  EndpointsResult:
+    properties:
+      my_endpoint:
+        docs: My endpoint
+        type: optional<string>
+      their_endpoint:
+        docs: Their endpoint
+        type: optional<string>
+
+  Filter:
+    properties:
+      const:
+        docs: Const
+        type: optional<map<string, unknown>>
+      enum:
+        type: optional<list<map<string, unknown>>>
+      exclusiveMaximum:
+        docs: ExclusiveMaximum
+        type: optional<map<string, unknown>>
+      exclusiveMinimum:
+        docs: ExclusiveMinimum
+        type: optional<map<string, unknown>>
+      format:
+        docs: Format
+        type: optional<string>
+      maxLength:
+        docs: Max Length
+        type: optional<integer>
+      maximum:
+        docs: Maximum
+        type: optional<map<string, unknown>>
+      minLength:
+        docs: Min Length
+        type: optional<integer>
+      minimum:
+        docs: Minimum
+        type: optional<map<string, unknown>>
+      not:
+        docs: Not
+        type: optional<boolean>
+      pattern:
+        docs: Pattern
+        type: optional<string>
+      type:
+        docs: Type
+        type: optional<string>
+
+  Generated:
+    properties:
+      master_secret:
+        type: optional<string>
+      number:
+        type: optional<string>
+      remainder:
+        type: optional<string>
+
+  GetDidEndpointResponse:
+    properties:
+      endpoint:
+        docs: Full verification key
+        type: optional<string>
+
+  GetDidVerkeyResponse:
+    properties:
+      verkey:
+        docs: Full verification key
+        type: optional<string>
+
+  GetNymRoleResponse:
+    properties:
+      role:
+        docs: Ledger role
+        type: optional<GetNymRoleResponseRole>
+
+  GetNymRoleResponseRole:
+    docs: Ledger role
+    enum:
+      - name: STEWARD
+        value: STEWARD
+      - name: TRUSTEE
+        value: TRUSTEE
+      - name: ENDORSER
+        value: ENDORSER
+      - name: NETWORK_MONITOR
+        value: NETWORK_MONITOR
+      - name: USER
+        value: USER
+      - name: ROLE_REMOVE
+        value: ROLE_REMOVE
+
+  HolderModuleResponse:
+    type: map<string, unknown>
+
+  IndyAttrValue:
+    properties:
+      encoded:
+        type: string
+        docs: Attribute encoded value
+      raw:
+        type: string
+        docs: Attribute raw value
+
+  IndyCredAbstract:
+    properties:
+      cred_def_id:
+        type: string
+        docs: Credential definition identifier
+      key_correctness_proof:
+        type: IndyCredAbstractKeyCorrectnessProof
+      nonce:
+        type: string
+        docs: Nonce in credential abstract
+      schema_id:
+        type: string
+        docs: Schema identifier
+
+  IndyCredInfo:
+    properties:
+      attrs:
+        docs: Attribute names and value
+        type: optional<map<string, string>>
+      cred_def_id:
+        docs: Credential definition identifier
+        type: optional<string>
+      cred_rev_id:
+        docs: Credential revocation identifier
+        type: optional<string>
+      referent:
+        docs: Wallet referent
+        type: optional<string>
+      rev_reg_id:
+        docs: Revocation registry identifier
+        type: optional<string>
+      schema_id:
+        docs: Schema identifier
+        type: optional<string>
+
+  IndyCredPrecis:
+    properties:
+      cred_info:
+        type: optional<IndyCredPrecisCredInfo>
+      interval:
+        type: optional<IndyCredPrecisInterval>
+      presentation_referents:
+        type: optional<list<string>>
+
+  IndyCredRequest:
+    properties:
+      blinded_ms:
+        type: IndyCredRequestBlindedMs
+        docs: Blinded master secret
+      blinded_ms_correctness_proof:
+        type: IndyCredRequestBlindedMsCorrectnessProof
+        docs: Blinded master secret correctness proof
+      cred_def_id:
+        type: string
+        docs: Credential definition identifier
+      nonce:
+        type: string
+        docs: Nonce in credential request
+      prover_did:
+        type: string
+        docs: Prover DID
+
+  IndyCredRequestBlindedMs:
+    docs: Blinded master secret
+    properties: {}
+
+  IndyCredRequestBlindedMsCorrectnessProof:
+    docs: Blinded master secret correctness proof
+    properties: {}
+
+  IndyCredential:
+    properties:
+      cred_def_id:
+        type: string
+        docs: Credential definition identifier
+      rev_reg:
+        docs: Revocation registry state
+        type: optional<IndyCredentialRevReg>
+      rev_reg_id:
+        docs: Revocation registry identifier
+        type: optional<string>
+      schema_id:
+        type: string
+        docs: Schema identifier
+      signature:
+        type: IndyCredentialSignature
+        docs: Credential signature
+      signature_correctness_proof:
+        type: IndyCredentialSignatureCorrectnessProof
+        docs: Credential signature correctness proof
+      values:
+        docs: Credential attributes
+        type: map<string, IndyCredentialValuesValue>
+      witness:
+        docs: Witness for revocation proof
+        type: optional<IndyCredentialWitness>
+
+  IndyCredentialRevReg:
+    docs: Revocation registry state
+    properties: {}
+
+  IndyCredentialSignature:
+    docs: Credential signature
+    properties: {}
+
+  IndyCredentialSignatureCorrectnessProof:
+    docs: Credential signature correctness proof
+    properties: {}
+
+  IndyCredentialWitness:
+    docs: Witness for revocation proof
+    properties: {}
+
+  IndyEqProof:
+    properties:
+      a_prime:
+        type: optional<string>
+      e:
+        type: optional<string>
+      m:
+        type: optional<map<string, string>>
+      m2:
+        type: optional<string>
+      revealed_attrs:
+        type: optional<map<string, string>>
+      v:
+        type: optional<string>
+
+  IndyGeProof:
+    properties:
+      alpha:
+        type: optional<string>
+      mj:
+        type: optional<string>
+      predicate:
+        type: optional<IndyGeProofPred>
+      r:
+        type: optional<map<string, string>>
+      t:
+        type: optional<map<string, string>>
+      u:
+        type: optional<map<string, string>>
+
+  IndyGeProofPred:
+    properties:
+      attr_name:
+        docs: Attribute name, indy-canonicalized
+        type: optional<string>
+      p_type:
+        docs: Predicate type
+        type: optional<IndyGeProofPredPType>
+      value:
+        docs: Predicate threshold value
+        type: optional<integer>
+
+  IndyGeProofPredPType:
+    docs: Predicate type
+    enum:
+      - name: LT
+        value: LT
+      - name: LE
+        value: LE
+      - name: GE
+        value: GE
+      - name: GT
+        value: GT
+
+  IndyKeyCorrectnessProof:
+    properties:
+      c:
+        type: string
+        docs: c in key correctness proof
+      xr_cap:
+        docs: xr_cap in key correctness proof
+        type: list<list<string>>
+      xz_cap:
+        type: string
+        docs: xz_cap in key correctness proof
+
+  IndyNonRevocProof:
+    properties:
+      c_list:
+        type: optional<map<string, string>>
+      x_list:
+        type: optional<map<string, string>>
+
+  IndyNonRevocationInterval:
+    properties:
+      from:
+        docs: Earliest time of interest in non-revocation interval
+        type: optional<integer>
+      to:
+        docs: Latest time of interest in non-revocation interval
+        type: optional<integer>
+
+  IndyPresAttrSpec:
+    properties:
+      cred_def_id:
+        type: optional<string>
+      mime-type:
+        docs: MIME type (default null)
+        type: optional<string>
+      name:
+        type: string
+        docs: Attribute name
+      referent:
+        docs: Credential referent
+        type: optional<string>
+      value:
+        docs: Attribute value
+        type: optional<string>
+
+  IndyPresPredSpec:
+    properties:
+      cred_def_id:
+        docs: Credential definition identifier
+        type: optional<string>
+      name:
+        type: string
+        docs: Attribute name
+      predicate:
+        type: IndyPresPredSpecPredicate
+        docs: Predicate type ('<', '<=', '>=', or '>')
+      threshold:
+        type: integer
+        docs: Threshold value
+
+  IndyPresPredSpecPredicate:
+    docs: Predicate type ('<', '<=', '>=', or '>')
+    enum:
+      - name: ""
+        value: <
+      - name: ""
+        value: <=
+      - name: ""
+        value: ">="
+      - name: ""
+        value: ">"
+
+  IndyPresPreview:
+    properties:
+      "@type":
+        docs: Message type identifier
+        type: optional<string>
+      attributes:
+        type: list<IndyPresAttrSpec>
+      predicates:
+        type: list<IndyPresPredSpec>
+
+  IndyPrimaryProof:
+    properties:
+      eq_proof:
+        type: optional<IndyPrimaryProof_eq_proof>
+      ge_proofs:
+        docs: Indy GE proofs
+        type: optional<list<IndyGeProof>>
+
+  IndyProof:
+    properties:
+      identifiers:
+        docs: Indy proof.identifiers content
+        type: optional<list<IndyProofIdentifier>>
+      proof:
+        type: optional<IndyProofProof>
+      requested_proof:
+        type: optional<IndyProofRequestedProof>
+
+  IndyProofIdentifier:
+    properties:
+      cred_def_id:
+        docs: Credential definition identifier
+        type: optional<string>
+      rev_reg_id:
+        docs: Revocation registry identifier
+        type: optional<string>
+      schema_id:
+        docs: Schema identifier
+        type: optional<string>
+      timestamp:
+        docs: Timestamp epoch
+        type: optional<integer>
+
+  IndyProofProof:
+    type: IndyProofProof
+    docs: Indy proof.proof content
+
+  IndyProofProofAggregatedProof:
+    type: IndyProofProofAggregatedProof
+    docs: Indy proof aggregated proof
+
+  IndyProofProofProofsProof:
+    properties:
+      non_revoc_proof:
+        type: optional<IndyProofProofProofsProof_non_revoc_proof>
+      primary_proof:
+        type: optional<IndyProofProofProofsProofPrimaryProof>
+
+  IndyProofReqAttrSpec:
+    properties:
+      name:
+        docs: Attribute name
+        type: optional<string>
+      names:
+        docs: Attribute name group
+        type: optional<list<string>>
+      non_revoked:
+        type: optional<IndyProofReqAttrSpec_non_revoked>
+      restrictions:
+        docs: >-
+          If present, credential must satisfy one of given restrictions: specify
+          schema_id, schema_issuer_did, schema_name, schema_version, issuer_did,
+          cred_def_id, and/or attr::<attribute-name>::value where
+          <attribute-name> represents a credential attribute name
+        type: optional<list<map<string, string>>>
+
+  IndyProofReqAttrSpecNonRevoked:
+    type: IndyProofReqAttrSpecNonRevoked
+
+  IndyProofReqPredSpec:
+    properties:
+      name:
+        type: string
+        docs: Attribute name
+      non_revoked:
+        type: optional<IndyProofReqPredSpec_non_revoked>
+      p_type:
+        type: IndyProofReqPredSpecPType
+        docs: Predicate type ('<', '<=', '>=', or '>')
+      p_value:
+        type: integer
+        docs: Threshold value
+      restrictions:
+        docs: >-
+          If present, credential must satisfy one of given restrictions: specify
+          schema_id, schema_issuer_did, schema_name, schema_version, issuer_did,
+          cred_def_id, and/or attr::<attribute-name>::value where
+          <attribute-name> represents a credential attribute name
+        type: optional<list<map<string, string>>>
+
+  IndyProofReqPredSpecPType:
+    docs: Predicate type ('<', '<=', '>=', or '>')
+    enum:
+      - name: ""
+        value: <
+      - name: ""
+        value: <=
+      - name: ""
+        value: ">="
+      - name: ""
+        value: ">"
+
+  IndyProofReqPredSpecNonRevoked:
+    type: IndyProofReqPredSpecNonRevoked
+
+  IndyProofRequest:
+    properties:
+      name:
+        docs: Proof request name
+        type: optional<string>
+      non_revoked:
+        type: optional<IndyProofRequest_non_revoked>
+      nonce:
+        docs: Nonce
+        type: optional<string>
+      requested_attributes:
+        docs: Requested attribute specifications of proof request
+        type: map<string, IndyProofReqAttrSpec>
+      requested_predicates:
+        docs: Requested predicate specifications of proof request
+        type: map<string, IndyProofReqPredSpec>
+      version:
+        docs: Proof request version
+        type: optional<string>
+
+  IndyProofRequestNonRevoked:
+    type: IndyProofRequestNonRevoked
+
+  IndyProofRequestedProof:
+    type: IndyProofRequestedProof
+    docs: Indy proof.requested_proof content
+
+  IndyProofRequestedProofSelfAttestedAttrs:
+    docs: Proof requested proof self-attested attributes
+    properties: {}
+
+  IndyProofRequestedProofUnrevealedAttrs:
+    docs: Unrevealed attributes
+    properties: {}
+
+  IndyProofRequestedProofPredicate:
+    properties:
+      sub_proof_index:
+        docs: Sub-proof index
+        type: optional<integer>
+
+  IndyProofRequestedProofRevealedAttr:
+    properties:
+      encoded:
+        docs: Encoded value
+        type: optional<string>
+      raw:
+        docs: Raw value
+        type: optional<string>
+      sub_proof_index:
+        docs: Sub-proof index
+        type: optional<integer>
+
+  IndyProofRequestedProofRevealedAttrGroup:
+    properties:
+      sub_proof_index:
+        docs: Sub-proof index
+        type: optional<integer>
+      values:
+        docs: Indy proof requested proof revealed attr groups group value
+        type: optional<map<string, RawEncoded>>
+
+  IndyRequestedCredsRequestedAttr:
+    properties:
+      cred_id:
+        type: string
+        docs: Wallet credential identifier (typically but not necessarily a UUID)
+      revealed:
+        docs: Whether to reveal attribute in proof (default true)
+        type: optional<boolean>
+
+  IndyRequestedCredsRequestedPred:
+    properties:
+      cred_id:
+        type: string
+        docs: Wallet credential identifier (typically but not necessarily a UUID)
+      timestamp:
+        docs: Epoch timestamp of interest for non-revocation proof
+        type: optional<integer>
+
+  IndyRevRegDef:
+    properties:
+      credDefId:
+        docs: Credential definition identifier
+        type: optional<string>
+      id:
+        docs: Indy revocation registry identifier
+        type: optional<string>
+      revocDefType:
+        docs: Revocation registry type (specify CL_ACCUM)
+        type: optional<IndyRevRegDefRevocDefType>
+      tag:
+        docs: Revocation registry tag
+        type: optional<string>
+      value:
+        type: optional<IndyRevRegDefValue>
+      ver:
+        docs: Version of revocation registry definition
+        type: optional<string>
+
+  IndyRevRegDefRevocDefType:
+    docs: Revocation registry type (specify CL_ACCUM)
+    enum:
+      - name: CL_ACCUM
+        value: CL_ACCUM
+
+  IndyRevRegDefValue:
+    type: IndyRevRegDefValue
+    docs: Revocation registry definition value
+
+  IndyRevRegDefValueIssuanceType:
+    docs: Issuance type
+    enum:
+      - name: ISSUANCE_ON_DEMAND
+        value: ISSUANCE_ON_DEMAND
+      - name: ISSUANCE_BY_DEFAULT
+        value: ISSUANCE_BY_DEFAULT
+
+  IndyRevRegDefValuePublicKeys:
+    type: IndyRevRegDefValuePublicKeys
+    docs: Public keys
+
+  IndyRevRegDefValuePublicKeysAccumKey:
+    properties:
+      z:
+        docs: Value for z
+        type: optional<string>
+
+  IndyRevRegEntry:
+    properties:
+      value:
+        type: optional<IndyRevRegEntryValue>
+      ver:
+        docs: Version of revocation registry entry
+        type: optional<string>
+
+  IndyRevRegEntryValue:
+    type: IndyRevRegEntryValue
+    docs: Revocation registry entry value
+
+  InputDescriptors:
+    properties:
+      constraints:
+        type: optional<Constraints>
+      group:
+        type: optional<list<string>>
+      id:
+        docs: ID
+        type: optional<string>
+      metadata:
+        docs: Metadata dictionary
+        type: optional<InputDescriptorsMetadata>
+      name:
+        docs: Name
+        type: optional<string>
+      purpose:
+        docs: Purpose
+        type: optional<string>
+      schema:
+        type: optional<InputDescriptorsSchema>
+
+  InputDescriptorsMetadata:
+    docs: Metadata dictionary
+    properties: {}
+
+  IntroModuleResponse:
+    type: map<string, unknown>
+
+  InvitationRecord:
+    properties:
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      invi_msg_id:
+        docs: Invitation message identifier
+        type: optional<string>
+      invitation:
+        type: optional<InvitationRecordInvitation>
+      invitation_id:
+        docs: Invitation record identifier
+        type: optional<string>
+      invitation_url:
+        docs: Invitation message URL
+        type: optional<string>
+      oob_id:
+        docs: Out of band record identifier
+        type: optional<string>
+      state:
+        docs: Out of band message exchange state
+        type: optional<string>
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  InvitationResult:
+    properties:
+      connection_id:
+        docs: Connection identifier
+        type: optional<string>
+      invitation:
+        type: optional<ConnectionInvitation>
+      invitation_url:
+        docs: Invitation URL
+        type: optional<string>
+
+  IssueCredentialModuleResponse:
+    type: map<string, unknown>
+
+  IssuerCredRevRecord:
+    properties:
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      cred_def_id:
+        docs: Credential definition identifier
+        type: optional<string>
+      cred_ex_id:
+        docs: Credential exchange record identifier at credential issue
+        type: optional<string>
+      cred_ex_version:
+        docs: Credential exchange version
+        type: optional<string>
+      cred_rev_id:
+        docs: Credential revocation identifier
+        type: optional<string>
+      record_id:
+        docs: Issuer credential revocation record identifier
+        type: optional<string>
+      rev_reg_id:
+        docs: Revocation registry identifier
+        type: optional<string>
+      state:
+        docs: Issue credential revocation record state
+        type: optional<string>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  IssuerRevRegRecord:
+    properties:
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      cred_def_id:
+        docs: Credential definition identifier
+        type: optional<string>
+      error_msg:
+        docs: Error message
+        type: optional<string>
+      issuer_did:
+        docs: Issuer DID
+        type: optional<string>
+      max_cred_num:
+        docs: Maximum number of credentials for revocation registry
+        type: optional<integer>
+      pending_pub:
+        docs: >-
+          Credential revocation identifier for credential revoked and pending
+          publication to ledger
+        type: optional<list<string>>
+      record_id:
+        docs: Issuer revocation registry record identifier
+        type: optional<string>
+      revoc_def_type:
+        docs: Revocation registry type (specify CL_ACCUM)
+        type: optional<IssuerRevRegRecordRevocDefType>
+      revoc_reg_def:
+        type: optional<IssuerRevRegRecordRevocRegDef>
+      revoc_reg_entry:
+        type: optional<IssuerRevRegRecordRevocRegEntry>
+      revoc_reg_id:
+        docs: Revocation registry identifier
+        type: optional<string>
+      state:
+        docs: Issue revocation registry record state
+        type: optional<string>
+      tag:
+        docs: Tag within issuer revocation registry identifier
+        type: optional<string>
+      tails_hash:
+        docs: Tails hash
+        type: optional<string>
+      tails_local_path:
+        docs: Local path to tails file
+        type: optional<string>
+      tails_public_uri:
+        docs: Public URI for tails file
+        type: optional<string>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  IssuerRevRegRecordRevocDefType:
+    docs: Revocation registry type (specify CL_ACCUM)
+    enum:
+      - name: CL_ACCUM
+        value: CL_ACCUM
+
+  Keylist:
+    properties:
+      results:
+        docs: List of keylist records
+        type: optional<list<RouteRecord>>
+
+  KeylistQuery:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      filter:
+        docs: Query dictionary object
+        type: optional<KeylistQueryFilter>
+      paginate:
+        type: optional<KeylistQueryPaginate>
+
+  KeylistQueryFilter:
+    docs: Query dictionary object
+    properties: {}
+
+  KeylistQueryPaginate:
+    type: KeylistQueryPaginate
+    docs: Pagination info
+
+  KeylistUpdate:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      updates:
+        docs: List of update rules
+        type: optional<list<KeylistUpdateRule>>
+
+  KeylistUpdateRule:
+    properties:
+      action:
+        type: KeylistUpdateRuleAction
+        docs: Action for specific key
+      recipient_key:
+        type: string
+        docs: Key to remove or add
+
+  KeylistUpdateRuleAction:
+    docs: Action for specific key
+    enum:
+      - name: add
+        value: add
+      - name: remove
+        value: remove
+
+  LdProofVcDetail:
+    properties:
+      credential:
+        type: LdProofVcDetailCredential
+      options:
+        type: LdProofVcDetailOptions
+
+  LdProofVcDetailOptions:
+    type: LdProofVcDetailOptions
+    docs: Options for specifying how the linked data proof is created.
+
+  LedgerConfigInstance:
+    properties:
+      genesis_file:
+        docs: genesis_file
+        type: optional<string>
+      genesis_transactions:
+        docs: genesis_transactions
+        type: optional<string>
+      genesis_url:
+        docs: genesis_url
+        type: optional<string>
+      id:
+        docs: ledger_id
+        type: optional<string>
+      is_production:
+        docs: is_production
+        type: optional<boolean>
+
+  LedgerConfigList:
+    properties:
+      ledger_config_list:
+        type: list<LedgerConfigInstance>
+
+  LedgerModulesResult:
+    type: map<string, unknown>
+
+  LinkedDataProof:
+    properties:
+      challenge:
+        docs: >-
+          Associates a challenge with a proof, for use with a proofPurpose such
+          as authentication
+        type: optional<string>
+      created:
+        type: string
+        docs: >-
+          The string value of an ISO8601 combined date and time string generated
+          by the Signature Algorithm
+      domain:
+        docs: A string value specifying the restricted domain of the signature.
+        type: optional<string>
+      jws:
+        docs: Associates a Detached Json Web Signature with a proof
+        type: optional<string>
+      nonce:
+        docs: The nonce
+        type: optional<string>
+      proofPurpose:
+        type: string
+        docs: Proof purpose
+      proofValue:
+        docs: The proof value of a proof
+        type: optional<string>
+      type:
+        type: string
+        docs: >-
+          Identifies the digital signature suite that was used to create the
+          signature
+      verificationMethod:
+        type: string
+        docs: Information used for proof verification
+
+  MediationDeny:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      mediator_terms:
+        type: optional<list<string>>
+      recipient_terms:
+        type: optional<list<string>>
+
+  MediationGrant:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      endpoint:
+        docs: endpoint on which messages destined for the recipient are received.
+        type: optional<string>
+      routing_keys:
+        type: optional<list<string>>
+
+  MediationList:
+    properties:
+      results:
+        docs: List of mediation records
+        type: optional<list<MediationRecord>>
+
+  MediationRecord:
+    properties:
+      connection_id:
+        type: string
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      endpoint:
+        type: optional<string>
+      mediation_id:
+        type: optional<string>
+      mediator_terms:
+        type: optional<list<string>>
+      recipient_terms:
+        type: optional<list<string>>
+      role:
+        type: string
+      routing_keys:
+        type: optional<list<string>>
+      state:
+        docs: Current record state
+        type: optional<string>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  Menu:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      description:
+        docs: Introductory text for the menu
+        type: optional<string>
+      errormsg:
+        docs: An optional error message to display in menu header
+        type: optional<string>
+      options:
+        docs: List of menu options
+        type: list<MenuOption>
+      title:
+        docs: Menu title
+        type: optional<string>
+
+  MenuForm:
+    properties:
+      description:
+        docs: Additional descriptive text for menu form
+        type: optional<string>
+      params:
+        docs: List of form parameters
+        type: optional<list<MenuFormParam>>
+      submit-label:
+        docs: Alternative label for form submit button
+        type: optional<string>
+      title:
+        docs: Menu form title
+        type: optional<string>
+
+  MenuFormParam:
+    properties:
+      default:
+        docs: Default parameter value
+        type: optional<string>
+      description:
+        docs: Additional descriptive text for menu form parameter
+        type: optional<string>
+      name:
+        type: string
+        docs: Menu parameter name
+      required:
+        docs: Whether parameter is required
+        type: optional<boolean>
+      title:
+        type: string
+        docs: Menu parameter title
+      type:
+        docs: Menu form parameter input type
+        type: optional<string>
+
+  MenuJson:
+    properties:
+      description:
+        docs: Introductory text for the menu
+        type: optional<string>
+      errormsg:
+        docs: Optional error message to display in menu header
+        type: optional<string>
+      options:
+        docs: List of menu options
+        type: list<MenuOption>
+      title:
+        docs: Menu title
+        type: optional<string>
+
+  MenuOption:
+    properties:
+      description:
+        docs: Additional descriptive text for menu option
+        type: optional<string>
+      disabled:
+        docs: Whether to show option as disabled
+        type: optional<boolean>
+      form:
+        type: optional<MenuForm>
+      name:
+        type: string
+        docs: Menu option name (unique identifier)
+      title:
+        type: string
+        docs: Menu option title
+
+  MultitenantModuleResponse:
+    type: map<string, unknown>
+
+  OobRecord:
+    properties:
+      attach_thread_id:
+        docs: Connection record identifier
+        type: optional<string>
+      connection_id:
+        docs: Connection record identifier
+        type: optional<string>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      invi_msg_id:
+        type: string
+        docs: Invitation message identifier
+      invitation:
+        type: InvitationRecordInvitation
+      oob_id:
+        type: string
+        docs: Oob record identifier
+      our_recipient_key:
+        docs: Recipient key used for oob invitation
+        type: optional<string>
+      role:
+        docs: OOB Role
+        type: optional<OobRecordRole>
+      state:
+        type: OobRecordState
+        docs: Out of band message exchange state
+      their_service:
+        type: optional<ServiceDecorator>
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  OobRecordRole:
+    docs: OOB Role
+    enum:
+      - name: sender
+        value: sender
+      - name: receiver
+        value: receiver
+
+  OobRecordState:
+    docs: Out of band message exchange state
+    enum:
+      - name: initial
+        value: initial
+      - name: PrepareResponse
+        value: prepare-response
+      - name: AwaitResponse
+        value: await-response
+      - name: ReuseNotAccepted
+        value: reuse-not-accepted
+      - name: ReuseAccepted
+        value: reuse-accepted
+      - name: done
+        value: done
+      - name: deleted
+        value: deleted
+
+  PingRequestResponse:
+    properties:
+      thread_id:
+        docs: Thread ID of the ping message
+        type: optional<string>
+
+  PresentationDefinition:
+    properties:
+      format:
+        type: optional<ClaimFormat>
+      id:
+        docs: Unique Resource Identifier
+        type: optional<string>
+      input_descriptors:
+        type: optional<list<InputDescriptors>>
+      name:
+        docs: >-
+          Human-friendly name that describes what the presentation definition
+          pertains to
+        type: optional<string>
+      purpose:
+        docs: >-
+          Describes the purpose for which the Presentation Definition's inputs
+          are being requested
+        type: optional<string>
+      submission_requirements:
+        type: optional<list<SubmissionRequirements>>
+
+  PresentationProposal:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      presentation_proposal:
+        type: IndyPresPreview
+
+  PresentationRequest:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      request_presentations~attach:
+        type: list<AttachDecorator>
+
+  ProtocolDescriptor:
+    properties:
+      pid:
+        type: string
+      roles:
+        docs: List of roles
+        type: optional<list<string>>
+
+  Queries:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      queries:
+        type: optional<list<QueryItem>>
+
+  Query:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        type: optional<string>
+      query:
+        type: string
+
+  QueryItem:
+    properties:
+      feature-type:
+        type: QueryItemFeatureType
+        docs: feature type
+      match:
+        type: string
+        docs: match
+
+  QueryItemFeatureType:
+    docs: feature type
+    enum:
+      - name: protocol
+        value: protocol
+      - name: GoalCode
+        value: goal-code
+
+  RawEncoded:
+    properties:
+      encoded:
+        docs: Encoded value
+        type: optional<string>
+      raw:
+        docs: Raw value
+        type: optional<string>
+
+  ResolutionResult:
+    properties:
+      did_document:
+        type: ResolutionResultDidDocument
+        docs: DID Document
+      metadata:
+        type: ResolutionResultMetadata
+        docs: Resolution metadata
+
+  ResolutionResultDidDocument:
+    docs: DID Document
+    properties: {}
+
+  ResolutionResultMetadata:
+    docs: Resolution metadata
+    properties: {}
+
+  RevRegIssuedResult:
+    properties:
+      result:
+        docs: Number of credentials issued against revocation registry
+        type: optional<integer>
+
+  RevRegResult:
+    properties:
+      result:
+        type: optional<IssuerRevRegRecord>
+
+  RevRegWalletUpdatedResult:
+    properties:
+      accum_calculated:
+        docs: Calculated accumulator for phantom revocations
+        type: optional<RevRegWalletUpdatedResultAccumCalculated>
+      accum_fixed:
+        docs: Applied ledger transaction to fix revocations
+        type: optional<RevRegWalletUpdatedResultAccumFixed>
+      rev_reg_delta:
+        docs: Indy revocation registry delta
+        type: optional<RevRegWalletUpdatedResultRevRegDelta>
+
+  RevRegWalletUpdatedResultAccumCalculated:
+    docs: Calculated accumulator for phantom revocations
+    properties: {}
+
+  RevRegWalletUpdatedResultAccumFixed:
+    docs: Applied ledger transaction to fix revocations
+    properties: {}
+
+  RevRegWalletUpdatedResultRevRegDelta:
+    docs: Indy revocation registry delta
+    properties: {}
+
+  RevRegsCreated:
+    properties:
+      rev_reg_ids:
+        type: optional<list<string>>
+
+  RevocationModuleResponse:
+    type: map<string, unknown>
+
+  RouteRecord:
+    properties:
+      connection_id:
+        type: optional<string>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      recipient_key:
+        type: string
+      record_id:
+        type: optional<string>
+      role:
+        type: optional<string>
+      state:
+        docs: Current record state
+        type: optional<string>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+      wallet_id:
+        type: optional<string>
+
+  Schema:
+    properties:
+      attrNames:
+        docs: Schema attribute names
+        type: optional<list<string>>
+      id:
+        docs: Schema identifier
+        type: optional<string>
+      name:
+        docs: Schema name
+        type: optional<string>
+      seqNo:
+        docs: Schema sequence number
+        type: optional<integer>
+      ver:
+        docs: Node protocol version
+        type: optional<string>
+      version:
+        docs: Schema version
+        type: optional<string>
+
+  SchemaGetResult:
+    properties:
+      schema:
+        type: optional<Schema>
+
+  SchemaInputDescriptor:
+    properties:
+      required:
+        docs: Required
+        type: optional<boolean>
+      uri:
+        docs: URI
+        type: optional<string>
+
+  SchemaSendResult:
+    properties:
+      schema:
+        type: optional<SchemaSendResultSchema>
+      schema_id:
+        type: string
+        docs: Schema identifier
+
+  SchemasCreatedResult:
+    properties:
+      schema_ids:
+        type: optional<list<string>>
+
+  SchemasInputDescriptorFilter:
+    properties:
+      oneof_filter:
+        docs: oneOf
+        type: optional<boolean>
+      uri_groups:
+        type: optional<list<list<SchemaInputDescriptor>>>
+
+  ServiceDecorator:
+    properties:
+      recipientKeys:
+        docs: List of recipient keys
+        type: list<string>
+      routingKeys:
+        docs: List of routing keys
+        type: optional<list<string>>
+      serviceEndpoint:
+        type: string
+        docs: Service endpoint at which to reach this agent
+
+  SignResponse:
+    properties:
+      error:
+        docs: Error text
+        type: optional<string>
+      signed_doc:
+        docs: Signed document
+        type: optional<SignResponseSignedDoc>
+
+  SignResponseSignedDoc:
+    docs: Signed document
+    properties: {}
+
+  SignatureOptions:
+    properties:
+      challenge:
+        type: optional<string>
+      domain:
+        type: optional<string>
+      proofPurpose:
+        type: string
+      type:
+        type: optional<string>
+      verificationMethod:
+        type: string
+
+  SignedDoc:
+    properties:
+      proof:
+        type: SignedDocProof
+
+  SubmissionRequirements:
+    properties:
+      count:
+        docs: Count Value
+        type: optional<integer>
+      from:
+        docs: From
+        type: optional<string>
+      from_nested:
+        type: optional<list<SubmissionRequirements>>
+      max:
+        docs: Max Value
+        type: optional<integer>
+      min:
+        docs: Min Value
+        type: optional<integer>
+      name:
+        docs: Name
+        type: optional<string>
+      purpose:
+        docs: Purpose
+        type: optional<string>
+      rule:
+        docs: Selection
+        type: optional<SubmissionRequirementsRule>
+
+  SubmissionRequirementsRule:
+    docs: Selection
+    enum:
+      - name: all
+        value: all
+      - name: pick
+        value: pick
+
+  TaaAcceptance:
+    properties:
+      mechanism:
+        type: optional<string>
+      time:
+        type: optional<integer>
+
+  TaaInfo:
+    properties:
+      aml_record:
+        type: optional<AmlRecord>
+      taa_accepted:
+        type: optional<TaaAcceptance>
+      taa_record:
+        type: optional<TaaRecord>
+      taa_required:
+        type: optional<boolean>
+
+  TaaRecord:
+    properties:
+      digest:
+        type: optional<string>
+      text:
+        type: optional<string>
+      version:
+        type: optional<string>
+
+  TaaResult:
+    properties:
+      result:
+        type: optional<TaaInfo>
+
+  TailsDeleteResponse:
+    properties:
+      message:
+        type: optional<string>
+
+  TransactionJobs:
+    properties:
+      transaction_my_job:
+        docs: My transaction related job
+        type: optional<TransactionJobsTransactionMyJob>
+      transaction_their_job:
+        docs: Their transaction related job
+        type: optional<TransactionJobsTransactionTheirJob>
+
+  TransactionJobsTransactionMyJob:
+    docs: My transaction related job
+    enum:
+      - name: TRANSACTION_AUTHOR
+        value: TRANSACTION_AUTHOR
+      - name: TRANSACTION_ENDORSER
+        value: TRANSACTION_ENDORSER
+      - name: reset
+        value: reset
+
+  TransactionJobsTransactionTheirJob:
+    docs: Their transaction related job
+    enum:
+      - name: TRANSACTION_AUTHOR
+        value: TRANSACTION_AUTHOR
+      - name: TRANSACTION_ENDORSER
+        value: TRANSACTION_ENDORSER
+      - name: reset
+        value: reset
+
+  TransactionList:
+    properties:
+      results:
+        docs: List of transaction records
+        type: optional<list<TransactionRecord>>
+
+  TransactionRecord:
+    properties:
+      _type:
+        docs: Transaction type
+        type: optional<string>
+      connection_id:
+        docs: The connection identifier for thie particular transaction record
+        type: optional<string>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      endorser_write_txn:
+        docs: If True, Endorser will write the transaction after endorsing it
+        type: optional<boolean>
+      formats:
+        type: optional<list<map<string, string>>>
+      messages_attach:
+        type: optional<list<TransactionRecordMessagesAttachItem>>
+      meta_data:
+        type: optional<TransactionRecordMetaData>
+      signature_request:
+        type: optional<list<TransactionRecordSignatureRequestItem>>
+      signature_response:
+        type: optional<list<TransactionRecordSignatureResponseItem>>
+      state:
+        docs: Current record state
+        type: optional<string>
+      thread_id:
+        docs: Thread Identifier
+        type: optional<string>
+      timing:
+        type: optional<TransactionRecordTiming>
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      transaction_id:
+        docs: Transaction identifier
+        type: optional<string>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  TransactionRecordMessagesAttachItem:
+    properties: {}
+
+  TransactionRecordMetaData:
+    properties: {}
+
+  TransactionRecordSignatureRequestItem:
+    properties: {}
+
+  TransactionRecordSignatureResponseItem:
+    properties: {}
+
+  TransactionRecordTiming:
+    properties: {}
+
+  TxnOrCredentialDefinitionSendResult:
+    properties:
+      sent:
+        type: optional<CredentialDefinitionSendResult>
+      txn:
+        type: optional<TxnOrCredentialDefinitionSendResultTxn>
+
+  TxnOrPublishRevocationsResult:
+    properties:
+      sent:
+        type: optional<PublishRevocations>
+      txn:
+        type: optional<TxnOrPublishRevocationsResultTxn>
+
+  TxnOrRegisterLedgerNymResponse:
+    properties:
+      success:
+        docs: Success of nym registration operation
+        type: optional<boolean>
+      txn:
+        type: optional<TxnOrRegisterLedgerNymResponseTxn>
+
+  TxnOrRevRegResult:
+    properties:
+      sent:
+        type: optional<RevRegResult>
+      txn:
+        type: optional<TxnOrRevRegResultTxn>
+
+  TxnOrSchemaSendResult:
+    properties:
+      sent:
+        type: optional<TxnOrSchemaSendResultSent>
+      txn:
+        type: optional<TxnOrSchemaSendResultTxn>
+
+  V10CredentialExchange:
+    properties:
+      auto_issue:
+        docs: Issuer choice to issue to request in this credential exchange
+        type: optional<boolean>
+      auto_offer:
+        docs: Holder choice to accept offer in this credential exchange
+        type: optional<boolean>
+      auto_remove:
+        docs: Issuer choice to remove this credential exchange record when complete
+        type: optional<boolean>
+      connection_id:
+        docs: Connection identifier
+        type: optional<string>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      credential:
+        type: optional<V10CredentialExchangeCredential>
+      credential_definition_id:
+        docs: Credential definition identifier
+        type: optional<string>
+      credential_exchange_id:
+        docs: Credential exchange identifier
+        type: optional<string>
+      credential_id:
+        docs: Credential identifier
+        type: optional<string>
+      credential_offer:
+        type: optional<V10CredentialExchangeCredentialOffer>
+      credential_offer_dict:
+        type: optional<V10CredentialExchangeCredentialOfferDict>
+      credential_proposal_dict:
+        type: optional<V10CredentialExchangeCredentialProposalDict>
+      credential_request:
+        type: optional<V10CredentialExchangeCredentialRequest>
+      credential_request_metadata:
+        docs: (Indy) credential request metadata
+        type: optional<V10CredentialExchangeCredentialRequestMetadata>
+      error_msg:
+        docs: Error message
+        type: optional<string>
+      initiator:
+        docs: "Issue-credential exchange initiator: self or external"
+        type: optional<V10CredentialExchangeInitiator>
+      parent_thread_id:
+        docs: Parent thread identifier
+        type: optional<string>
+      raw_credential:
+        type: optional<V10CredentialExchangeRawCredential>
+      revoc_reg_id:
+        docs: Revocation registry identifier
+        type: optional<string>
+      revocation_id:
+        docs: Credential identifier within revocation registry
+        type: optional<string>
+      role:
+        docs: "Issue-credential exchange role: holder or issuer"
+        type: optional<V10CredentialExchangeRole>
+      schema_id:
+        docs: Schema identifier
+        type: optional<string>
+      state:
+        docs: Issue-credential exchange state
+        type: optional<string>
+      thread_id:
+        docs: Thread identifier
+        type: optional<string>
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  V10CredentialExchangeCredentialRequestMetadata:
+    docs: (Indy) credential request metadata
+    properties: {}
+
+  V10CredentialExchangeInitiator:
+    docs: "Issue-credential exchange initiator: self or external"
+    enum:
+      - name: self
+        value: self
+      - name: external
+        value: external
+
+  V10CredentialExchangeRole:
+    docs: "Issue-credential exchange role: holder or issuer"
+    enum:
+      - name: holder
+        value: holder
+      - name: issuer
+        value: issuer
+
+  V10CredentialExchangeListResult:
+    properties:
+      results:
+        docs: Aries#0036 v1.0 credential exchange records
+        type: optional<list<V10CredentialExchange>>
+
+  V10DiscoveryExchangeListResult:
+    properties:
+      results:
+        type: optional<list<V10DiscoveryExchangeListResultResultsInner>>
+
+  V10DiscoveryRecord:
+    properties:
+      connection_id:
+        docs: Connection identifier
+        type: optional<string>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      disclose:
+        type: optional<V10DiscoveryRecordDisclose>
+      discovery_exchange_id:
+        docs: Credential exchange identifier
+        type: optional<string>
+      query_msg:
+        type: optional<V10DiscoveryRecordQueryMsg>
+      state:
+        docs: Current record state
+        type: optional<string>
+      thread_id:
+        docs: Thread identifier
+        type: optional<string>
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  V10PresentProofModuleResponse:
+    type: map<string, unknown>
+
+  V10PresentationExchange:
+    properties:
+      auto_present:
+        docs: Prover choice to auto-present proof as verifier requests
+        type: optional<boolean>
+      auto_verify:
+        docs: Verifier choice to auto-verify proof presentation
+        type: optional<boolean>
+      connection_id:
+        docs: Connection identifier
+        type: optional<string>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      error_msg:
+        docs: Error message
+        type: optional<string>
+      initiator:
+        docs: "Present-proof exchange initiator: self or external"
+        type: optional<V10PresentationExchangeInitiator>
+      presentation:
+        type: optional<V10PresentationExchangePresentation>
+      presentation_exchange_id:
+        docs: Presentation exchange identifier
+        type: optional<string>
+      presentation_proposal_dict:
+        type: optional<V10PresentationExchangePresentationProposalDict>
+      presentation_request:
+        type: optional<V10PresentationExchangePresentationRequest>
+      presentation_request_dict:
+        type: optional<V10PresentationExchangePresentationRequestDict>
+      role:
+        docs: "Present-proof exchange role: prover or verifier"
+        type: optional<V10PresentationExchangeRole>
+      state:
+        docs: Present-proof exchange state
+        type: optional<string>
+      thread_id:
+        docs: Thread identifier
+        type: optional<string>
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+      verified:
+        docs: "Whether presentation is verified: true or false"
+        type: optional<V10PresentationExchangeVerified>
+      verified_msgs:
+        type: optional<list<string>>
+
+  V10PresentationExchangeInitiator:
+    docs: "Present-proof exchange initiator: self or external"
+    enum:
+      - name: self
+        value: self
+      - name: external
+        value: external
+
+  V10PresentationExchangeRole:
+    docs: "Present-proof exchange role: prover or verifier"
+    enum:
+      - name: prover
+        value: prover
+      - name: verifier
+        value: verifier
+
+  V10PresentationExchangeVerified:
+    docs: "Whether presentation is verified: true or false"
+    enum:
+      - name: "true"
+        value: "true"
+      - name: "false"
+        value: "false"
+
+  V10PresentationExchangeList:
+    properties:
+      results:
+        docs: Aries RFC 37 v1.0 presentation exchange records
+        type: optional<list<V10PresentationExchange>>
+
+  V20CredAttrSpec:
+    properties:
+      mime-type:
+        docs: "MIME type: omit for (null) default"
+        type: optional<string>
+      name:
+        type: string
+        docs: Attribute name
+      value:
+        type: string
+        docs: "Attribute value: base64-encode if MIME type is present"
+
+  V20CredExRecord:
+    properties:
+      auto_issue:
+        docs: Issuer choice to issue to request in this credential exchange
+        type: optional<boolean>
+      auto_offer:
+        docs: Holder choice to accept offer in this credential exchange
+        type: optional<boolean>
+      auto_remove:
+        docs: Issuer choice to remove this credential exchange record when complete
+        type: optional<boolean>
+      by_format:
+        type: optional<V20CredExRecordByFormat>
+      connection_id:
+        docs: Connection identifier
+        type: optional<string>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      cred_ex_id:
+        docs: Credential exchange identifier
+        type: optional<string>
+      cred_issue:
+        type: optional<V20CredExRecordCredIssue>
+      cred_offer:
+        type: optional<V20CredExRecordCredOffer>
+      cred_preview:
+        type: optional<V20CredExRecordCredPreview>
+      cred_proposal:
+        type: optional<V20CredExRecordCredProposal>
+      cred_request:
+        type: optional<V20CredExRecordCredRequest>
+      error_msg:
+        docs: Error message
+        type: optional<string>
+      initiator:
+        docs: "Issue-credential exchange initiator: self or external"
+        type: optional<V20CredExRecordInitiator>
+      parent_thread_id:
+        docs: Parent thread identifier
+        type: optional<string>
+      role:
+        docs: "Issue-credential exchange role: holder or issuer"
+        type: optional<V20CredExRecordRole>
+      state:
+        docs: Issue-credential exchange state
+        type: optional<V20CredExRecordState>
+      thread_id:
+        docs: Thread identifier
+        type: optional<string>
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  V20CredExRecordInitiator:
+    docs: "Issue-credential exchange initiator: self or external"
+    enum:
+      - name: self
+        value: self
+      - name: external
+        value: external
+
+  V20CredExRecordRole:
+    docs: "Issue-credential exchange role: holder or issuer"
+    enum:
+      - name: issuer
+        value: issuer
+      - name: holder
+        value: holder
+
+  V20CredExRecordState:
+    docs: Issue-credential exchange state
+    enum:
+      - name: ProposalSent
+        value: proposal-sent
+      - name: ProposalReceived
+        value: proposal-received
+      - name: OfferSent
+        value: offer-sent
+      - name: OfferReceived
+        value: offer-received
+      - name: RequestSent
+        value: request-sent
+      - name: RequestReceived
+        value: request-received
+      - name: CredentialIssued
+        value: credential-issued
+      - name: CredentialReceived
+        value: credential-received
+      - name: done
+        value: done
+      - name: CredentialRevoked
+        value: credential-revoked
+      - name: abandoned
+        value: abandoned
+      - name: deleted
+        value: deleted
+
+  V20CredExRecordByFormat:
+    type: V20CredExRecordByFormat
+    docs: Attachment content by format for proposal, offer, request, and issue
+
+  V20CredExRecordByFormatCredIssue:
+    properties: {}
+
+  V20CredExRecordByFormatCredOffer:
+    properties: {}
+
+  V20CredExRecordByFormatCredProposal:
+    properties: {}
+
+  V20CredExRecordByFormatCredRequest:
+    properties: {}
+
+  V20CredExRecordDetail:
+    properties:
+      cred_ex_record:
+        type: optional<V20CredExRecordDetailCredExRecord>
+      indy:
+        type: optional<V20CredExRecordIndy>
+      ld_proof:
+        type: optional<V20CredExRecordLdProof>
+
+  V20CredExRecordIndy:
+    properties:
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      cred_ex_id:
+        docs: Corresponding v2.0 credential exchange record identifier
+        type: optional<string>
+      cred_ex_indy_id:
+        docs: Record identifier
+        type: optional<string>
+      cred_id_stored:
+        docs: Credential identifier stored in wallet
+        type: optional<string>
+      cred_request_metadata:
+        docs: Credential request metadata for indy holder
+        type: optional<V20CredExRecordIndyCredRequestMetadata>
+      cred_rev_id:
+        docs: Credential revocation identifier within revocation registry
+        type: optional<string>
+      rev_reg_id:
+        docs: Revocation registry identifier
+        type: optional<string>
+      state:
+        docs: Current record state
+        type: optional<string>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  V20CredExRecordIndyCredRequestMetadata:
+    docs: Credential request metadata for indy holder
+    properties: {}
+
+  V20CredExRecordLdProof:
+    properties:
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      cred_ex_id:
+        docs: Corresponding v2.0 credential exchange record identifier
+        type: optional<string>
+      cred_ex_ld_proof_id:
+        docs: Record identifier
+        type: optional<string>
+      cred_id_stored:
+        docs: Credential identifier stored in wallet
+        type: optional<string>
+      state:
+        docs: Current record state
+        type: optional<string>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  V20CredExRecordListResult:
+    properties:
+      results:
+        docs: Credential exchange records and corresponding detail records
+        type: optional<list<V20CredExRecordDetail>>
+
+  V20CredFilter:
+    properties:
+      indy:
+        type: optional<V20CredFilterIndy>
+      ld_proof:
+        type: optional<V20CredFilterLdProof>
+
+  V20CredFilterIndy:
+    type: V20CredFilterIndy
+    docs: Credential filter for indy
+
+  V20CredFilterLdProof:
+    type: LdProofVcDetail
+    docs: Credential filter for linked data proof
+
+  V20CredFormat:
+    properties:
+      attach_id:
+        type: string
+        docs: Attachment identifier
+      format:
+        type: string
+        docs: Attachment format specifier
+
+  V20CredIssue:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      credentials~attach:
+        docs: Credential attachments
+        type: list<AttachDecorator>
+      formats:
+        docs: Acceptable attachment formats
+        type: list<V20CredFormat>
+      replacement_id:
+        docs: Issuer-unique identifier to coordinate credential replacement
+        type: optional<string>
+
+  V20CredOffer:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      credential_preview:
+        type: optional<V20CredPreview>
+      formats:
+        docs: Acceptable credential formats
+        type: list<V20CredFormat>
+      offers~attach:
+        docs: Offer attachments
+        type: list<AttachDecorator>
+      replacement_id:
+        docs: Issuer-unique identifier to coordinate credential replacement
+        type: optional<string>
+
+  V20CredPreview:
+    properties:
+      "@type":
+        docs: Message type identifier
+        type: optional<string>
+      attributes:
+        type: list<V20CredAttrSpec>
+
+  V20CredProposal:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      credential_preview:
+        type: optional<V20CredProposalCredentialPreview>
+      filters~attach:
+        docs: Credential filter per acceptable format on corresponding identifier
+        type: list<AttachDecorator>
+      formats:
+        docs: Attachment formats
+        type: list<V20CredFormat>
+
+  V20CredRequest:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      formats:
+        docs: Acceptable attachment formats
+        type: list<V20CredFormat>
+      requests~attach:
+        docs: Request attachments
+        type: list<AttachDecorator>
+
+  V20DiscoveryExchangeListResult:
+    properties:
+      results:
+        type: optional<list<V20DiscoveryExchangeListResultResultsInner>>
+
+  V20DiscoveryExchangeResult:
+    properties:
+      results:
+        type: optional<V20DiscoveryExchangeListResultResultsInner>
+
+  V20DiscoveryRecord:
+    properties:
+      connection_id:
+        docs: Connection identifier
+        type: optional<string>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      disclosures:
+        type: optional<V20DiscoveryRecordDisclosures>
+      discovery_exchange_id:
+        docs: Credential exchange identifier
+        type: optional<string>
+      queries_msg:
+        type: optional<V20DiscoveryRecordQueriesMsg>
+      state:
+        docs: Current record state
+        type: optional<string>
+      thread_id:
+        docs: Thread identifier
+        type: optional<string>
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+
+  V20IssueCredentialModuleResponse:
+    type: map<string, unknown>
+
+  V20Pres:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      formats:
+        docs: Acceptable attachment formats
+        type: list<V20PresFormat>
+      presentations~attach:
+        type: list<AttachDecorator>
+
+  V20PresExRecord:
+    properties:
+      auto_present:
+        docs: Prover choice to auto-present proof as verifier requests
+        type: optional<boolean>
+      auto_verify:
+        docs: Verifier choice to auto-verify proof presentation
+        type: optional<boolean>
+      by_format:
+        type: optional<V20PresExRecordByFormat>
+      connection_id:
+        docs: Connection identifier
+        type: optional<string>
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      error_msg:
+        docs: Error message
+        type: optional<string>
+      initiator:
+        docs: "Present-proof exchange initiator: self or external"
+        type: optional<V20PresExRecordInitiator>
+      pres:
+        type: optional<V20PresExRecordPres>
+      pres_ex_id:
+        docs: Presentation exchange identifier
+        type: optional<string>
+      pres_proposal:
+        type: optional<V20PresExRecordPresProposal>
+      pres_request:
+        type: optional<V20PresExRecordPresRequest>
+      role:
+        docs: "Present-proof exchange role: prover or verifier"
+        type: optional<V20PresExRecordRole>
+      state:
+        docs: Present-proof exchange state
+        type: optional<V20PresExRecordState>
+      thread_id:
+        docs: Thread identifier
+        type: optional<string>
+      trace:
+        docs: Record trace information, based on agent configuration
+        type: optional<boolean>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+      verified:
+        docs: "Whether presentation is verified: 'true' or 'false'"
+        type: optional<V20PresExRecordVerified>
+      verified_msgs:
+        type: optional<list<string>>
+
+  V20PresExRecordInitiator:
+    docs: "Present-proof exchange initiator: self or external"
+    enum:
+      - name: self
+        value: self
+      - name: external
+        value: external
+
+  V20PresExRecordRole:
+    docs: "Present-proof exchange role: prover or verifier"
+    enum:
+      - name: prover
+        value: prover
+      - name: verifier
+        value: verifier
+
+  V20PresExRecordState:
+    docs: Present-proof exchange state
+    enum:
+      - name: ProposalSent
+        value: proposal-sent
+      - name: ProposalReceived
+        value: proposal-received
+      - name: RequestSent
+        value: request-sent
+      - name: RequestReceived
+        value: request-received
+      - name: PresentationSent
+        value: presentation-sent
+      - name: PresentationReceived
+        value: presentation-received
+      - name: done
+        value: done
+      - name: abandoned
+        value: abandoned
+      - name: deleted
+        value: deleted
+
+  V20PresExRecordVerified:
+    docs: "Whether presentation is verified: 'true' or 'false'"
+    enum:
+      - name: "true"
+        value: "true"
+      - name: "false"
+        value: "false"
+
+  V20PresExRecordByFormat:
+    type: V20PresExRecordByFormat
+    docs: Attachment content by format for proposal, request, and presentation
+
+  V20PresExRecordByFormatPres:
+    properties: {}
+
+  V20PresExRecordByFormatPresProposal:
+    properties: {}
+
+  V20PresExRecordByFormatPresRequest:
+    properties: {}
+
+  V20PresExRecordList:
+    properties:
+      results:
+        docs: Presentation exchange records
+        type: optional<list<V20PresExRecord>>
+
+  V20PresFormat:
+    properties:
+      attach_id:
+        type: string
+        docs: Attachment identifier
+      format:
+        type: string
+        docs: Attachment format specifier
+
+  V20PresProposal:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      formats:
+        type: list<V20PresFormat>
+      proposals~attach:
+        docs: Attachment per acceptable format on corresponding identifier
+        type: list<AttachDecorator>
+
+  V20PresProposalByFormat:
+    properties:
+      dif:
+        type: optional<V20PresProposalByFormatDif>
+      indy:
+        type: optional<V20PresProposalByFormatIndy>
+
+  V20PresRequest:
+    properties:
+      "@id":
+        docs: Message identifier
+        type: optional<string>
+      "@type":
+        docs: Message type
+        type: optional<string>
+      comment:
+        docs: Human-readable comment
+        type: optional<string>
+      formats:
+        type: list<V20PresFormat>
+      request_presentations~attach:
+        docs: Attachment per acceptable format on corresponding identifier
+        type: list<AttachDecorator>
+      will_confirm:
+        docs: Whether verifier will send confirmation ack
+        type: optional<boolean>
+
+  V20PresRequestByFormat:
+    properties:
+      dif:
+        type: optional<V20PresRequestByFormatDif>
+      indy:
+        type: optional<V20PresRequestByFormatIndy>
+
+  V20PresentProofModuleResponse:
+    type: map<string, unknown>
+
+  VcRecord:
+    properties:
+      contexts:
+        type: optional<list<string>>
+      cred_tags:
+        type: optional<map<string, string>>
+      cred_value:
+        docs: (JSON-serializable) credential value
+        type: optional<VcRecordCredValue>
+      expanded_types:
+        type: optional<list<string>>
+      given_id:
+        docs: Credential identifier
+        type: optional<string>
+      issuer_id:
+        docs: Issuer identifier
+        type: optional<string>
+      proof_types:
+        type: optional<list<string>>
+      record_id:
+        docs: Record identifier
+        type: optional<string>
+      schema_ids:
+        type: optional<list<string>>
+      subject_ids:
+        type: optional<list<string>>
+
+  VcRecordCredValue:
+    docs: (JSON-serializable) credential value
+    properties: {}
+
+  VcRecordList:
+    properties:
+      results:
+        type: optional<list<VcRecord>>
+
+  VerifyResponse:
+    properties:
+      error:
+        docs: Error text
+        type: optional<string>
+      valid:
+        type: boolean
+
+  WalletList:
+    properties:
+      results:
+        docs: List of wallet records
+        type: optional<list<WalletRecord>>
+
+  WalletModuleResponse:
+    type: map<string, unknown>
+
+  WalletRecord:
+    properties:
+      created_at:
+        docs: Time of record creation
+        type: optional<string>
+      key_management_mode:
+        type: WalletRecordKeyManagementMode
+        docs: Mode regarding management of wallet key
+      settings:
+        docs: Settings for this wallet.
+        type: optional<WalletRecordSettings>
+      state:
+        docs: Current record state
+        type: optional<string>
+      updated_at:
+        docs: Time of last record update
+        type: optional<string>
+      wallet_id:
+        type: string
+        docs: Wallet record ID
+
+  WalletRecordKeyManagementMode:
+    docs: Mode regarding management of wallet key
+    enum:
+      - name: managed
+        value: managed
+      - name: unmanaged
+        value: unmanaged
+
+  WalletRecordSettings:
+    docs: Settings for this wallet.
+    properties: {}
+
+  WriteLedgerRequest:
+    properties:
+      ledger_id:
+        type: optional<string>
+
+  ActionMenuFetchResultResult:
+    type: Menu
+    docs: Action menu
+
+  CredentialProof:
+    type: LinkedDataProof
+    docs: The proof of the credential
+
+  CredentialDefinitionValue:
+    type: CredDefValue
+    docs: Credential definition primary and revocation values
+
+  DidxRequestDidDocAttach:
+    type: AttachDecorator
+    docs: As signed attachment, DID Doc associated with DID
+
+  DocOptions:
+    type: SignatureOptions
+    docs: Signature options
+
+  IndyCredAbstractKeyCorrectnessProof:
+    type: IndyKeyCorrectnessProof
+    docs: Key correctness proof
+
+  IndyCredPrecisCredInfo:
+    type: IndyCredInfo
+    docs: Credential info
+
+  IndyCredPrecisInterval:
+    type: IndyNonRevocationInterval
+    docs: Non-revocation interval from presentation request
+
+  IndyCredentialValuesValue:
+    type: IndyAttrValue
+    docs: Attribute value
+
+  IndyPrimaryProofEqProof:
+    type: IndyEqProof
+
+  IndyProofProofProofsProofNonRevocProof:
+    type: IndyNonRevocProof
+
+  IndyProofProofProofsProofPrimaryProof:
+    type: IndyPrimaryProof
+    docs: Indy primary proof
+
+  InputDescriptorsSchema:
+    type: SchemasInputDescriptorFilter
+    docs: Accepts a list of schema or a dict containing filters like oneof_filter.
+
+  InvitationRecordInvitation:
+    type: InvitationMessage
+    docs: Out of band invitation message
+
+  IssuerRevRegRecordRevocRegDef:
+    type: IndyRevRegDef
+    docs: Revocation registry definition
+
+  IssuerRevRegRecordRevocRegEntry:
+    type: IndyRevRegEntry
+    docs: Revocation registry entry
+
+  LdProofVcDetailCredential:
+    type: Credential
+    docs: Detail of the JSON-LD Credential to be issued
+
+  LdProofVcDetailOptionsCredentialStatus:
+    type: CredentialStatusOptions
+    docs: >-
+      The credential status mechanism to use for the credential. Omitting the
+      property indicates the issued credential will not include a credential
+      status
+
+  SchemaSendResultSchema:
+    type: Schema
+    docs: Schema definition
+
+  SendMenuMenu:
+    type: MenuJson
+    docs: Menu to send to connection
+
+  SignedDocProof:
+    type: SignatureOptions
+    docs: Linked data proof
+
+  TxnOrCredentialDefinitionSendResultTxn:
+    type: TransactionRecord
+    docs: Credential definition transaction to endorse
+
+  TxnOrPublishRevocationsResultTxn:
+    type: TransactionRecord
+    docs: Revocation registry revocations transaction to endorse
+
+  TxnOrRegisterLedgerNymResponseTxn:
+    type: TransactionRecord
+    docs: DID transaction to endorse
+
+  TxnOrRevRegResultTxn:
+    type: TransactionRecord
+    docs: Revocation registry definition transaction to endorse
+
+  TxnOrSchemaSendResultSent:
+    type: SchemaSendResult
+    docs: Content sent
+
+  TxnOrSchemaSendResultTxn:
+    type: TransactionRecord
+    docs: Schema transaction to endorse
+
+  V10CredentialBoundOfferRequestCounterProposal:
+    type: CredentialProposal
+    docs: Optional counter-proposal
+
+  V10CredentialExchangeCredential:
+    type: IndyCredInfo
+    docs: Credential as stored
+
+  V10CredentialExchangeCredentialOffer:
+    type: IndyCredAbstract
+    docs: (Indy) credential offer
+
+  V10CredentialExchangeCredentialOfferDict:
+    type: CredentialOffer
+    docs: Credential offer message
+
+  V10CredentialExchangeCredentialProposalDict:
+    type: CredentialProposal
+    docs: Credential proposal message
+
+  V10CredentialExchangeCredentialRequest:
+    type: IndyCredRequest
+    docs: (Indy) credential request
+
+  V10CredentialExchangeRawCredential:
+    type: IndyCredential
+    docs: Credential as received, prior to storage in holder wallet
+
+  V10DiscoveryExchangeListResultResultsInner:
+    type: V10DiscoveryRecord
+    docs: Discover Features v1.0 exchange record
+
+  V10DiscoveryRecordDisclose:
+    type: Disclose
+    docs: Disclose message
+
+  V10DiscoveryRecordQueryMsg:
+    type: Query
+    docs: Query message
+
+  V10PresentationExchangePresentation:
+    type: IndyProof
+    docs: (Indy) presentation (also known as proof)
+
+  V10PresentationExchangePresentationProposalDict:
+    type: PresentationProposal
+    docs: Presentation proposal message
+
+  V10PresentationExchangePresentationRequest:
+    type: IndyProofRequest
+    docs: (Indy) presentation request (also known as proof request)
+
+  V10PresentationExchangePresentationRequestDict:
+    type: PresentationRequest
+    docs: Presentation request message
+
+  V20CredBoundOfferRequestCounterPreview:
+    type: V20CredPreview
+    docs: Optional content for counter-proposal
+
+  V20CredBoundOfferRequestFilter:
+    type: V20CredFilter
+    docs: Credential specification criteria by format
+
+  V20CredExRecordCredIssue:
+    type: V20CredIssue
+    docs: Serialized credential issue message
+
+  V20CredExRecordCredOffer:
+    type: V20CredOffer
+    docs: Credential offer message
+
+  V20CredExRecordCredPreview:
+    type: V20CredPreview
+    docs: Credential preview from credential proposal
+
+  V20CredExRecordCredProposal:
+    type: V20CredProposal
+    docs: Credential proposal message
+
+  V20CredExRecordCredRequest:
+    type: V20CredRequest
+    docs: Serialized credential request message
+
+  V20CredExRecordDetailCredExRecord:
+    type: V20CredExRecord
+    docs: Credential exchange record
+
+  V20CredProposalCredentialPreview:
+    type: V20CredPreview
+    docs: Credential preview
+
+  V20CredRequestFreeFilter:
+    type: V20CredFilterLdProof
+    docs: Credential specification criteria by format
+
+  V20DiscoveryExchangeListResultResultsInner:
+    type: V20DiscoveryRecord
+    docs: Discover Features v2.0 exchange record
+
+  V20DiscoveryRecordDisclosures:
+    type: Disclosures
+    docs: Disclosures message
+
+  V20DiscoveryRecordQueriesMsg:
+    type: Queries
+    docs: Queries message
+
+  V20PresExRecordPres:
+    type: V20Pres
+    docs: Presentation message
+
+  V20PresExRecordPresProposal:
+    type: V20PresProposal
+    docs: Presentation proposal message
+
+  V20PresExRecordPresRequest:
+    type: V20PresRequest
+    docs: Presentation request message
+
+  V20PresProposalByFormatDif:
+    type: DifProofProposal
+    docs: Presentation proposal for DIF
+
+  V20PresProposalByFormatIndy:
+    type: IndyProofRequest
+    docs: Presentation proposal for indy
+
+  V20PresRequestByFormatDif:
+    type: DifProofRequest
+    docs: Presentation request for DIF
+
+  V20PresRequestByFormatIndy:
+    type: IndyProofRequest
+    docs: Presentation request for indy
+
+  V20PresSpecByFormatRequestDif:
+    type: DifPresSpec
+    docs: >-
+      Optional Presentation specification for DIF, overrides the
+      PresentionExchange record's PresRequest
+
+  V20PresSpecByFormatRequestIndy:
+    type: IndyPresSpec
+    docs: Presentation specification for indy
+
+  VerifyRequestDoc:
+    type: SignedDoc
+    docs: Signed document
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    endorse-transaction:
+      path: /transactions/{tran_id}/endorse
+      method: POST
+      auth: true
+      path-parameters:
+        tran_id:
+          docs: Transaction identifier
+          type: string
+      request:
+        name: EndorseTransactionRequest
+        query-parameters:
+          endorser_did:
+            docs: Endorser DID
+            type: optional<string>
+      response:
+        docs: ""
+        type: TransactionRecord
+      errors: []
+
+errors: {}

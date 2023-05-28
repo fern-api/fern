@@ -1,0 +1,13 @@
+name: api
+display-name: Aries Cloud Agent
+error-discrimination:
+  strategy: status-code
+auth: AuthorizationHeader
+auth-schemes:
+  AuthorizationHeader:
+    header: Authorization
+    name: apiKey
+    type: string
+default-environment: default
+environments:
+  default: /
