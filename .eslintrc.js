@@ -28,9 +28,6 @@ module.exports = {
         react: {
             version: "^18.2.0",
         },
-        tailwind: {
-            config: "/Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/fe-bundle/tailwind.config.cjs",
-        },
     },
     parser: "@typescript-eslint/parser",
     parserOptions: {
