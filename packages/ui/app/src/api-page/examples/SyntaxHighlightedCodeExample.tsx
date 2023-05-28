@@ -12,7 +12,6 @@ export declare namespace SyntaxHighlightedCodeExample {
 
 export const SyntaxHighlightedCodeExample: React.FC<SyntaxHighlightedCodeExample.Props> = ({ code, language }) => {
     const isDarkTheme = useIsDarkTheme();
-
     return (
         <ExampleWrapper>
             {({ style }) => (

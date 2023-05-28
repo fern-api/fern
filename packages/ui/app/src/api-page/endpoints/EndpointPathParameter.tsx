@@ -11,8 +11,7 @@ export const EndpointPathParameter: React.FC<EndpointPathParameter.Props> = ({ p
         <span
             className={classNames(
                 "rounded-sm px-1 mx-px whitespace-nowrap",
-                "bg-[#323246] text-[#969CEE]",
-                "dark:bg-[#323246] dark:text-[#969CEE]"
+                "dark:bg-accentHighlight dark:text-accentPrimary"
             )}
         >
             :{pathParameter}

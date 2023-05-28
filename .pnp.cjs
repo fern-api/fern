@@ -8559,7 +8559,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/theme", "workspace:packages/commons/react/theme"],\
             ["@fern-fern/registry-browser", "npm:0.0.677"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
-            ["@fontsource/inter", "npm:4.5.15"],\
             ["@tanstack/react-query", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.29.7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -9049,15 +9048,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fontsource-ibm-plex-mono-npm-4.5.13-80f69c13fa-f927619557.zip/node_modules/@fontsource/ibm-plex-mono/",\
           "packageDependencies": [\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fontsource/inter", [\
-        ["npm:4.5.15", {\
-          "packageLocation": "./.yarn/cache/@fontsource-inter-npm-4.5.15-a518d50eb1-d4330957c0.zip/node_modules/@fontsource/inter/",\
-          "packageDependencies": [\
-            ["@fontsource/inter", "npm:4.5.15"]\
           ],\
           "linkType": "HARD"\
         }]\

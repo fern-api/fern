@@ -4728,7 +4728,6 @@ __metadata:
     "@fern-api/theme": "workspace:*"
     "@fern-fern/registry-browser": 0.0.677
     "@fontsource/ibm-plex-mono": ^4.5.13
-    "@fontsource/inter": ^4.5.11
     "@tanstack/react-query": ^4.29.7
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -5155,13 +5154,6 @@ __metadata:
   version: 4.5.13
   resolution: "@fontsource/ibm-plex-mono@npm:4.5.13"
   checksum: f9276195578ba8f90f10499c9430e1fee9bd6b101b55fdb3a6f23e57ada8a290f363ec450c1966d0413e9111b2b6e081f58e3428dd764f2a9ccb81648ffbbc85
-  languageName: node
-  linkType: hard
-
-"@fontsource/inter@npm:^4.5.11":
-  version: 4.5.15
-  resolution: "@fontsource/inter@npm:4.5.15"
-  checksum: d4330957c0a23a6c6a47f6f628b89c5603deec6305f28458fd3277bb652913dc77b31ac454bba96beeaecddef87eaf4b60befa2aad040ebb8c22c39ee33a2cf1
   languageName: node
   linkType: hard
 

@@ -13,7 +13,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, titleR
     return (
         <div className="flex flex-col">
             <div className="flex items-center gap-3 mb-3">
-                <div className="text-lg">{title}</div>
+                <div className="text-lg font-semibold">{title}</div>
                 {titleRightText != null && (
                     <div className="text-gray-400 text-xs">
                         <MonospaceText>{titleRightText}</MonospaceText>
