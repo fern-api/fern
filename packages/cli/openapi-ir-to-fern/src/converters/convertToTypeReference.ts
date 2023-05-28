@@ -254,7 +254,7 @@ export function convertObjectToTypeReference({
     schemas: Record<SchemaId, Schema>;
 }): TypeReference {
     const objectTypeDeclaration = convertObjectToTypeDeclaration({ schema, schemas });
-    return {
+    const res = {
         typeReference: {
             type:
                 prefix != null
@@ -267,6 +267,7 @@ export function convertObjectToTypeReference({
             ...objectTypeDeclaration.additionalTypeDeclarations,
         },
     };
+    return res;
 }
 
 export function convertOneOfToTypeReference({
@@ -294,7 +295,7 @@ export function convertOneOfToTypeReference({
     };
 }
 
-function getSchemaName(schema: Schema) {
+function getSchemaName(schema: Schema): string | undefined {
     if (schema.type === "object") {
         return schema.nameOverride ?? schema.generatedName;
     } else if (schema.type === "enum") {
@@ -303,6 +304,8 @@ function getSchemaName(schema: Schema) {
         return schema.oneOf.nameOverride ?? schema.oneOf.generatedName;
     } else if (schema.type === "reference") {
         return schema.nameOverride ?? schema.generatedName;
+    } else if (schema.type === "nullable") {
+        return getSchemaName(schema.value);
     }
     return undefined;
 }
