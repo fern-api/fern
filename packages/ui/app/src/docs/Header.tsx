@@ -20,13 +20,13 @@ export const Header: React.FC = () => {
                 )}
             </div>
             <div className="flex items-center gap-10">
-                <div className="text-accentPrimary/80 hover:text-accentPrimary transition cursor-pointer">
+                <div className="text-accentPrimary/80 hover:text-accentPrimary cursor-pointer transition">
                     All products
                 </div>
-                <div className="text-accentPrimary/80 hover:text-accentPrimary transition cursor-pointer">
+                <div className="text-accentPrimary/80 hover:text-accentPrimary cursor-pointer transition">
                     Help center
                 </div>
-                <div className="rounded-lg border border-accentPrimary bg-accentHighlight text-accentPrimary py-2 px-4 cursor-pointer hover:bg-accentPrimary/20 transition">
+                <div className="border-accentPrimary bg-accentHighlight text-accentPrimary hover:bg-accentPrimary/20 cursor-pointer rounded-lg border px-4 py-2 transition">
                     Schedule demo
                 </div>
             </div>

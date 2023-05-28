@@ -29,7 +29,7 @@ module.exports = {
             version: "^18.2.0",
         },
         tailwind: {
-            config: "packages/ui/fe-bundle/tailwind.config.cjs",
+            config: "/Users/zachkirsch/Dropbox/Mac/Documents/fern/packages/ui/fe-bundle/tailwind.config.cjs",
         },
     },
     parser: "@typescript-eslint/parser",
@@ -115,5 +115,6 @@ module.exports = {
         "react/prop-types": "off",
         "@typescript-eslint/await-thenable": "error",
         "@blueprintjs/classes-constants": "off",
+        "tailwindcss/no-custom-classname": ["off"],
     },
 };

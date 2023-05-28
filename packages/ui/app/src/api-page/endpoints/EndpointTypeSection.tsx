@@ -15,7 +15,7 @@ export declare namespace EndpointTypeSection {
 export const EndpointTypeSection: React.FC<EndpointTypeSection.Props> = ({ httpBody, verb, onHoverProperty }) => {
     return (
         <div className="flex flex-col">
-            {httpBody.description != null && <div className="text-gray-500 mb-2">{httpBody.description}</div>}
+            {httpBody.description != null && <div className="mb-2 text-gray-500">{httpBody.description}</div>}
             <div className="mb-5 text-neutral-400">
                 {`This endpoint ${verb} `}
                 {httpBody.type._visit<JSX.Element | string>({
