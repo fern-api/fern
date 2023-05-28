@@ -1,5 +1,4 @@
 import React, { useCallback } from "react";
-import { ExampleWrapper } from "../ExampleWrapper";
 import { JsonExampleContext, JsonExampleContextValue } from "./contexts/JsonExampleContext";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
 import { JsonItemBottomLine } from "./JsonItemBottomLine";
@@ -23,15 +22,9 @@ export const JsonExample: React.FC<JsonExample.Props> = ({ json, selectedPropert
 
     return (
         <JsonExampleContext.Provider value={contextValue}>
-            <ExampleWrapper>
-                {({ style }) => (
-                    <div style={style}>
-                        <JsonItemTopLine value={json} isNonLastItemInCollection={false} />
-                        <JsonItemMiddleLines value={json} />
-                        <JsonItemBottomLine value={json} isNonLastItemInCollection={false} />
-                    </div>
-                )}
-            </ExampleWrapper>
+            <JsonItemTopLine value={json} isNonLastItemInCollection={false} />
+            <JsonItemMiddleLines value={json} />
+            <JsonItemBottomLine value={json} isNonLastItemInCollection={false} />
         </JsonExampleContext.Provider>
     );
 };

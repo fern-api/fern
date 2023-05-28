@@ -4733,11 +4733,12 @@ __metadata:
     "@fern-api/routing-utils": "workspace:*"
     "@fern-api/split-view": "workspace:*"
     "@fern-api/theme": "workspace:*"
-    "@fern-fern/registry-browser": 0.0.677
+    "@fern-fern/registry-browser": 0.0.714
     "@fontsource/ibm-plex-mono": ^4.5.13
     "@tanstack/react-query": ^4.29.7
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
+    "@types/marked": ^5.0.0
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     "@types/react-syntax-highlighter": ^15.5.6
@@ -4746,6 +4747,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.4.0
     lodash-es: ^4.17.21
+    marked: ^5.0.3
     normalize.css: ^8.0.1
     organize-imports-cli: ^0.10.0
     posthog-js: ^1.50.0
@@ -5131,16 +5133,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.0.677":
-  version: 0.0.677
-  resolution: "@fern-fern/registry-browser@npm:0.0.677"
+"@fern-fern/registry-browser@npm:0.0.714":
+  version: 0.0.714
+  resolution: "@fern-fern/registry-browser@npm:0.0.714"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: adb86264daf37b147acb8ce6291608f24e67985b245eedc8ba430112384eb344b7ccda635ebbdc8d3617222b7a533b298b712b0a7b31cbf7362b2aeb2f260411
+  checksum: 24654969f818ae876b5e7685539301f54d6772010eefc9aa8d0da180b089f7b65cb7e0a7c38c1c71cbc815ab4880289bdabe8cebf4ea4473cea5b4cc79a837b3
   languageName: node
   linkType: hard
 
@@ -6821,6 +6823,13 @@ __metadata:
   version: 5.1.1
   resolution: "@types/lru-cache@npm:5.1.1"
   checksum: e1d6c0085f61b16ec5b3073ec76ad1be4844ea036561c3f145fc19f71f084b58a6eb600b14128aa95809d057d28f1d147c910186ae51219f58366ffd2ff2e118
+  languageName: node
+  linkType: hard
+
+"@types/marked@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "@types/marked@npm:5.0.0"
+  checksum: 4828a51186074ac18bd04e2f84aff17e97ec72b227f9f4be0cedff6de6fe0fec016250bc22b2ae5d40d7cf0e6de1853df5d437f2dfe983cd96928763c75e6e47
   languageName: node
   linkType: hard
 
@@ -15464,6 +15473,15 @@ env-cmd@toddbluhm/env-cmd:
   bin:
     marked: bin/marked
   checksum: c5a461b8081ee8f672197bf6503c49eba3906614eefea29f3188f5dac06a7fca45a0c2d97ed5d0910a1c96696c827f062ae5cc0b37c9a0acdaafb2acb1467a2f
+  languageName: node
+  linkType: hard
+
+"marked@npm:^5.0.3":
+  version: 5.0.3
+  resolution: "marked@npm:5.0.3"
+  bin:
+    marked: bin/marked.js
+  checksum: 5eeb6379b1e2a340b7c024d7cf22e0a1ffc08e05618072428327262a4d6df0228aca7eb281319d1b17722eb723f2c25e5b0ffc17e2bf957e315068b9ede56117
   languageName: node
   linkType: hard
 

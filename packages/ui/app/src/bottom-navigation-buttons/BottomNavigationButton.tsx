@@ -55,7 +55,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
 
     return (
         <div
-            className="flex items-center text-accentPrimary/8I am free edededddddedererrregtttgttrttrtrttttr0 rounded gap-2 hover:text-accentPrimary cursor-pointer"
+            className="flex items-center text-accentPrimary/80 rounded gap-2 hover:text-accentPrimary transition cursor-pointer"
             onClick={onClick}
         >
             {visitDirection({
