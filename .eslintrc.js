@@ -4,7 +4,15 @@ module.exports = {
         browser: true,
         es2021: true,
     },
-    plugins: ["@typescript-eslint", "jest", "@blueprintjs", "deprecation", "import", "react"],
+    plugins: [
+        "@typescript-eslint",
+        "jest",
+        "@blueprintjs",
+        "deprecation",
+        "import",
+        "react",
+        "eslint-plugin-tailwindcss",
+    ],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -14,10 +22,14 @@ module.exports = {
         "plugin:@blueprintjs/recommended",
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
+        "plugin:tailwindcss/recommended",
     ],
     settings: {
         react: {
             version: "^18.2.0",
+        },
+        tailwind: {
+            config: "packages/ui/fe-bundle/tailwind.config.cjs",
         },
     },
     parser: "@typescript-eslint/parser",
