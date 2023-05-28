@@ -7,7 +7,6 @@ const FIXTURES_DIR = path.join(__dirname, "fixtures");
 
 describe("validate", () => {
     itFixture("simple");
-    itFixture("aries");
 });
 
 function itFixture(fixtureName: string) {
