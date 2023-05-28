@@ -194,7 +194,7 @@ export class TypeResolverImpl implements TypeResolver {
                     return undefined;
                 }
 
-                return this.resolveNamedType2({
+                return this.resolveNamedTypeFromDeclaration({
                     referenceToNamedType,
                     referencedIn: file,
                     rawDeclaration: maybeDeclaration,
@@ -232,14 +232,14 @@ export class TypeResolverImpl implements TypeResolver {
         if (maybeDeclaration == null) {
             return undefined;
         }
-        return this.resolveNamedType2({
+        return this.resolveNamedTypeFromDeclaration({
             referenceToNamedType,
             referencedIn: file,
             rawDeclaration: maybeDeclaration,
         });
     }
 
-    private resolveNamedType2({
+    private resolveNamedTypeFromDeclaration({
         referenceToNamedType,
         referencedIn,
         rawDeclaration,
