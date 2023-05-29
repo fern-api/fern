@@ -23,6 +23,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
     );
 
     const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
+    // handle redirects
     useEffect(() => {
         if (selectedPath == null && resolvedPathFromUrl != null) {
             setSelectedPath(resolvedPathFromUrl);
