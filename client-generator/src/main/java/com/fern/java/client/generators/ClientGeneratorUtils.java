@@ -47,7 +47,6 @@ import javax.lang.model.element.Modifier;
 public final class ClientGeneratorUtils {
 
     private final ClientGeneratorContext generatorContext;
-    private final TypeSpec.Builder interfaceBuilder;
     private final TypeSpec.Builder implBuilder;
     private final FieldSpec clientOptionsField;
     private final IPackage fernPackage;
@@ -59,7 +58,6 @@ public final class ClientGeneratorUtils {
     private final List<GeneratedWrappedRequest> generatedWrappedRequests = new ArrayList<>();
 
     public ClientGeneratorUtils(
-            ClassName clientInterfaceName,
             ClassName clientImplName,
             ClientGeneratorContext clientGeneratorContext,
             GeneratedClientOptions generatedClientOptions,
@@ -70,13 +68,11 @@ public final class ClientGeneratorUtils {
             IPackage fernPackage) {
         this.generatorContext = clientGeneratorContext;
         this.clientOptionsField = FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
-                .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
                 .build();
         this.fernPackage = fernPackage;
-        this.interfaceBuilder = TypeSpec.interfaceBuilder(clientInterfaceName).addModifiers(Modifier.PUBLIC);
         this.implBuilder = TypeSpec.classBuilder(clientImplName)
-                .addSuperinterface(clientInterfaceName)
-                .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
+                .addModifiers(Modifier.PUBLIC)
                 .addField(clientOptionsField);
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.generatedSuppliersFile = generatedSuppliersFile;
@@ -107,14 +103,7 @@ public final class ClientGeneratorUtils {
                         generatedEnvironmentsClass,
                         allGeneratedInterfaces);
                 MethodSpec endpointMethodSpec = httpEndpointMethodSpecFactory.create();
-                implBuilder.addMethod(endpointMethodSpec.toBuilder()
-                        .addAnnotation(Override.class)
-                        .build());
-                interfaceBuilder.addMethod(MethodSpec.methodBuilder(endpointMethodSpec.name)
-                        .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
-                        .addParameters(endpointMethodSpec.parameters)
-                        .returns(endpointMethodSpec.returnType)
-                        .build());
+                implBuilder.addMethod(endpointMethodSpec.toBuilder().build());
                 generatedWrappedRequests.addAll(httpEndpointMethodSpecFactory.getGeneratedWrappedRequests());
             }
         }
@@ -124,14 +113,12 @@ public final class ClientGeneratorUtils {
             if (!subpackage.getHasEndpointsInTree()) {
                 continue;
             }
-            ClassName subpackageClientInterface =
-                    generatorContext.getPoetClassNameFactory().getClientInterfaceClassName(subpackage);
             ClassName subpackageClientImpl =
-                    generatorContext.getPoetClassNameFactory().getClientImplClassName(subpackage);
+                    generatorContext.getPoetClassNameFactory().getClientClassName(subpackage);
             FieldSpec clientSupplierField = FieldSpec.builder(
-                            ParameterizedTypeName.get(ClassName.get(Supplier.class), subpackageClientInterface),
+                            ParameterizedTypeName.get(ClassName.get(Supplier.class), subpackageClientImpl),
                             subpackage.getName().getCamelCase().getUnsafeName() + "Client")
-                    .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                    .addModifiers(Modifier.PROTECTED, Modifier.FINAL)
                     .build();
             implBuilder.addField(clientSupplierField);
             clientImplConstructor.addStatement(
@@ -141,17 +128,12 @@ public final class ClientGeneratorUtils {
                     SuppliersGenerator.MEMOIZE_METHOD_NAME,
                     subpackageClientImpl,
                     clientOptionsField.name);
-
-            interfaceBuilder.addMethod(getBaseSubpackageMethod(subpackage, subpackageClientInterface)
-                    .addModifiers(Modifier.ABSTRACT)
-                    .build());
-            implBuilder.addMethod(getBaseSubpackageMethod(subpackage, subpackageClientInterface)
-                    .addAnnotation(Override.class)
+            implBuilder.addMethod(getBaseSubpackageMethod(subpackage, subpackageClientImpl)
                     .addStatement("return this.$L.get()", clientSupplierField.name)
                     .build());
         }
         implBuilder.addMethod(clientImplConstructor.build());
-        return new Result(interfaceBuilder, implBuilder, generatedWrappedRequests);
+        return new Result(implBuilder, generatedWrappedRequests);
     }
 
     private MethodSpec.Builder getBaseSubpackageMethod(Subpackage subpackage, ClassName subpackageClientInterface) {
@@ -161,21 +143,12 @@ public final class ClientGeneratorUtils {
     }
 
     public static final class Result {
-        private final TypeSpec.Builder clientInterface;
         private final TypeSpec.Builder clientImpl;
         private final List<GeneratedWrappedRequest> generatedWrappedRequests;
 
-        public Result(
-                TypeSpec.Builder interfaceBuilder,
-                TypeSpec.Builder implBuilder,
-                List<GeneratedWrappedRequest> generatedWrappedRequests) {
-            this.clientInterface = interfaceBuilder;
+        public Result(TypeSpec.Builder implBuilder, List<GeneratedWrappedRequest> generatedWrappedRequests) {
             this.clientImpl = implBuilder;
             this.generatedWrappedRequests = generatedWrappedRequests;
-        }
-
-        public Builder getClientInterface() {
-            return clientInterface;
         }
 
         public Builder getClientImpl() {

@@ -51,8 +51,6 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final GeneratedJavaFile generatedSuppliersFile;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
-    private final ClassName interfaceClassName;
-    private final ClassName implClassName;
     private final ClassName builderName;
 
     public RootClientGenerator(
@@ -72,17 +70,13 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         this.generatedSuppliersFile = generatedSuppliersFile;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
-        this.interfaceClassName = className;
-        this.implClassName =
-                generatorContext.getPoetClassNameFactory().getRootClassName(getRootClientImplName(generatorContext));
         this.builderName = ClassName.get(className.packageName(), className.simpleName() + "Builder");
     }
 
     @Override
     public GeneratedRootClient generateFile() {
         ClientGeneratorUtils clientGeneratorUtils = new ClientGeneratorUtils(
-                interfaceClassName,
-                implClassName,
+                className,
                 clientGeneratorContext,
                 generatedClientOptions,
                 generatedObjectMapper,
@@ -94,7 +88,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         TypeSpec builderTypeSpec = getClientBuilder();
 
-        result.getClientInterface()
+        result.getClientImpl()
                 .addMethod(MethodSpec.methodBuilder("builder")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .returns(builderName)
@@ -102,17 +96,9 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                         .build());
 
         return GeneratedRootClient.builder()
-                .className(interfaceClassName)
+                .className(className)
                 .javaFile(JavaFile.builder(
-                                interfaceClassName.packageName(),
-                                result.getClientInterface().build())
-                        .build())
-                .clientImpl(GeneratedJavaFile.builder()
-                        .className(implClassName)
-                        .javaFile(JavaFile.builder(
-                                        implClassName.packageName(),
-                                        result.getClientImpl().build())
-                                .build())
+                                className.packageName(), result.getClientImpl().build())
                         .build())
                 .builderClass(GeneratedJavaFile.builder()
                         .className(builderName)
@@ -190,7 +176,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         MethodSpec buildMethod = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
-                .returns(interfaceClassName)
+                .returns(className)
                 .build();
         typeSpecBuilder.addMethod(buildMethod.toBuilder()
                 .addStatement(
@@ -198,14 +184,10 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                         CLIENT_OPTIONS_BUILDER_NAME,
                         generatedClientOptions.environment(),
                         environmentField)
-                .addStatement("return new $T($L.build())", implClassName, CLIENT_OPTIONS_BUILDER_NAME)
+                .addStatement("return new $T($L.build())", className, CLIENT_OPTIONS_BUILDER_NAME)
                 .build());
 
         return typeSpecBuilder.build();
-    }
-
-    private static String getRootClientImplName(AbstractGeneratorContext<?> generatorContext) {
-        return getRootClientName(generatorContext) + "Impl";
     }
 
     private static String getRootClientName(AbstractGeneratorContext<?> generatorContext) {
@@ -217,16 +199,6 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                         generatorContext.getGeneratorConfig().getOrganization())
                 + CasingUtils.convertKebabCaseToUpperCamelCase(
                         generatorContext.getGeneratorConfig().getWorkspaceName());
-    }
-
-    private static class ClientBuilders {
-        private final TypeSpec interfaceTypeSpec;
-        private final TypeSpec implTypeSpec;
-
-        private ClientBuilders(TypeSpec interfaceTypeSpec, TypeSpec implTypeSpec) {
-            this.interfaceTypeSpec = interfaceTypeSpec;
-            this.implTypeSpec = implTypeSpec;
-        }
     }
 
     private class AuthSchemeHandler implements AuthScheme.Visitor<Void> {

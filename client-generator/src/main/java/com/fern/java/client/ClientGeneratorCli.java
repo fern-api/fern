@@ -142,7 +142,6 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                     generatedTypes.getInterfaces());
             GeneratedClient generatedClient = httpServiceClientGenerator.generateFile();
             this.addGeneratedFile(generatedClient);
-            this.addGeneratedFile(generatedClient.clientImpl());
             generatedClient.wrappedRequests().forEach(this::addGeneratedFile);
         });
 
@@ -157,7 +156,6 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                 generatedTypes.getInterfaces());
         GeneratedRootClient generatedRootClient = rootClientGenerator.generateFile();
         this.addGeneratedFile(generatedRootClient);
-        this.addGeneratedFile(generatedRootClient.clientImpl());
         this.addGeneratedFile(generatedRootClient.builderClass());
         generatedRootClient.wrappedRequests().forEach(this::addGeneratedFile);
 

@@ -28,7 +28,6 @@ import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
-import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import java.util.Map;
 
@@ -39,8 +38,6 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final GeneratedJavaFile generatedSuppliersFile;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
-    private final ClassName interfaceClassName;
-    private final ClassName implClassName;
     private final Subpackage subpackage;
 
     public SubpackageClientGenerator(
@@ -52,25 +49,20 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
             GeneratedJavaFile generatedSuppliersFile,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
-        super(
-                clientGeneratorContext.getPoetClassNameFactory().getClientInterfaceClassName(subpackage),
-                generatorContext);
+        super(clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage), generatorContext);
         this.generatedObjectMapper = generatedObjectMapper;
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedClientOptions = generatedClientOptions;
         this.generatedSuppliersFile = generatedSuppliersFile;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
-        this.interfaceClassName = className;
-        this.implClassName = clientGeneratorContext.getPoetClassNameFactory().getClientImplClassName(subpackage);
         this.subpackage = subpackage;
     }
 
     @Override
     public GeneratedClient generateFile() {
         ClientGeneratorUtils clientGeneratorUtils = new ClientGeneratorUtils(
-                interfaceClassName,
-                implClassName,
+                className,
                 clientGeneratorContext,
                 generatedClientOptions,
                 generatedObjectMapper,
@@ -80,17 +72,9 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
                 subpackage);
         Result result = clientGeneratorUtils.buildClients();
         return GeneratedClient.builder()
-                .className(interfaceClassName)
+                .className(className)
                 .javaFile(JavaFile.builder(
-                                interfaceClassName.packageName(),
-                                result.getClientInterface().build())
-                        .build())
-                .clientImpl(GeneratedJavaFile.builder()
-                        .className(implClassName)
-                        .javaFile(JavaFile.builder(
-                                        implClassName.packageName(),
-                                        result.getClientImpl().build())
-                                .build())
+                                className.packageName(), result.getClientImpl().build())
                         .build())
                 .addAllWrappedRequests(result.getGeneratedWrappedRequests())
                 .build();

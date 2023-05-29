@@ -283,21 +283,50 @@ exec "$JAVACMD" "$@"
 basic[src/main/java/com/fern/basic/FernFernClient.java]=[
 package com.fern.basic;
 
+import com.fern.basic.core.ClientOptions;
+import com.fern.basic.core.Suppliers;
 import com.fern.basic.resources.auth.AuthClient;
 import com.fern.basic.resources.blog.BlogClient;
 import com.fern.basic.resources.dummyservice.DummyServiceClient;
 import com.fern.basic.resources.raven.RavenClient;
+import java.util.function.Supplier;
 
-public interface FernFernClient {
-    AuthClient auth();
+public class FernFernClient {
+    protected final ClientOptions clientOptions;
 
-    BlogClient blog();
+    protected final Supplier<AuthClient> authClient;
 
-    DummyServiceClient dummyService();
+    protected final Supplier<BlogClient> blogClient;
 
-    RavenClient raven();
+    protected final Supplier<DummyServiceClient> dummyServiceClient;
 
-    static FernFernClientBuilder builder() {
+    protected final Supplier<RavenClient> ravenClient;
+
+    public FernFernClient(ClientOptions clientOptions) {
+        this.clientOptions = clientOptions;
+        this.authClient = Suppliers.memoize(() -> new AuthClient(clientOptions));
+        this.blogClient = Suppliers.memoize(() -> new BlogClient(clientOptions));
+        this.dummyServiceClient = Suppliers.memoize(() -> new DummyServiceClient(clientOptions));
+        this.ravenClient = Suppliers.memoize(() -> new RavenClient(clientOptions));
+    }
+
+    public AuthClient auth() {
+        return this.authClient.get();
+    }
+
+    public BlogClient blog() {
+        return this.blogClient.get();
+    }
+
+    public DummyServiceClient dummyService() {
+        return this.dummyServiceClient.get();
+    }
+
+    public RavenClient raven() {
+        return this.ravenClient.get();
+    }
+
+    public static FernFernClientBuilder builder() {
         return new FernFernClientBuilder();
     }
 }
@@ -338,65 +367,7 @@ public final class FernFernClientBuilder {
 
     public FernFernClient build() {
         clientOptionsBuilder.environment(this.environment);
-        return new FernFernClientImpl(clientOptionsBuilder.build());
-    }
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/FernFernClientImpl.java]=[
-package com.fern.basic;
-
-import com.fern.basic.core.ClientOptions;
-import com.fern.basic.core.Suppliers;
-import com.fern.basic.resources.auth.AuthClient;
-import com.fern.basic.resources.auth.AuthClientImpl;
-import com.fern.basic.resources.blog.BlogClient;
-import com.fern.basic.resources.blog.BlogClientImpl;
-import com.fern.basic.resources.dummyservice.DummyServiceClient;
-import com.fern.basic.resources.dummyservice.DummyServiceClientImpl;
-import com.fern.basic.resources.raven.RavenClient;
-import com.fern.basic.resources.raven.RavenClientImpl;
-import java.util.function.Supplier;
-
-public final class FernFernClientImpl implements FernFernClient {
-    private final ClientOptions clientOptions;
-
-    private final Supplier<AuthClient> authClient;
-
-    private final Supplier<BlogClient> blogClient;
-
-    private final Supplier<DummyServiceClient> dummyServiceClient;
-
-    private final Supplier<RavenClient> ravenClient;
-
-    public FernFernClientImpl(ClientOptions clientOptions) {
-        this.clientOptions = clientOptions;
-        this.authClient = Suppliers.memoize(() -> new AuthClientImpl(clientOptions));
-        this.blogClient = Suppliers.memoize(() -> new BlogClientImpl(clientOptions));
-        this.dummyServiceClient = Suppliers.memoize(() -> new DummyServiceClientImpl(clientOptions));
-        this.ravenClient = Suppliers.memoize(() -> new RavenClientImpl(clientOptions));
-    }
-
-    @Override
-    public AuthClient auth() {
-        return this.authClient.get();
-    }
-
-    @Override
-    public BlogClient blog() {
-        return this.blogClient.get();
-    }
-
-    @Override
-    public DummyServiceClient dummyService() {
-        return this.dummyServiceClient.get();
-    }
-
-    @Override
-    public RavenClient raven() {
-        return this.ravenClient.get();
+        return new FernFernClient(clientOptionsBuilder.build());
     }
 }
 
@@ -556,30 +527,19 @@ public final class Suppliers {
 basic[src/main/java/com/fern/basic/resources/auth/AuthClient.java]=[
 package com.fern.basic.resources.auth;
 
-public interface AuthClient {
-    void getAuth();
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/auth/AuthClientImpl.java]=[
-package com.fern.basic.resources.auth;
-
 import com.fern.basic.core.ClientOptions;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public final class AuthClientImpl implements AuthClient {
-    private final ClientOptions clientOptions;
+public class AuthClient {
+    protected final ClientOptions clientOptions;
 
-    public AuthClientImpl(ClientOptions clientOptions) {
+    public AuthClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
     }
 
-    @Override
     public void getAuth() {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -730,25 +690,6 @@ public final class PropertyValue {
 basic[src/main/java/com/fern/basic/resources/blog/BlogClient.java]=[
 package com.fern.basic.resources.blog;
 
-import com.fern.basic.resources.blog.requests.CreatePostRequest;
-import com.fern.basic.resources.blog.requests.GetPostRequest;
-import com.fern.basic.resources.blog.types.BlogPost;
-import java.util.List;
-
-public interface BlogClient {
-    void createPost(CreatePostRequest request);
-
-    BlogPost getPost(String postId, GetPostRequest request);
-
-    List<BlogPost> getAll();
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/blog/BlogClientImpl.java]=[
-package com.fern.basic.resources.blog;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.ObjectMappers;
@@ -765,14 +706,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public final class BlogClientImpl implements BlogClient {
-    private final ClientOptions clientOptions;
+public class BlogClient {
+    protected final ClientOptions clientOptions;
 
-    public BlogClientImpl(ClientOptions clientOptions) {
+    public BlogClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
     }
 
-    @Override
     public void createPost(CreatePostRequest request) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -812,7 +752,6 @@ public final class BlogClientImpl implements BlogClient {
         }
     }
 
-    @Override
     public BlogPost getPost(String postId, GetPostRequest request) {
         HttpUrl.Builder _httpUrl = HttpUrl.parse(
                         this.clientOptions.environment().getUrl())
@@ -838,7 +777,6 @@ public final class BlogClientImpl implements BlogClient {
         }
     }
 
-    @Override
     public List<BlogPost> getAll() {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -1952,18 +1890,6 @@ public final class UnauthorizedErrorBody {
 basic[src/main/java/com/fern/basic/resources/dummyservice/DummyServiceClient.java]=[
 package com.fern.basic.resources.dummyservice;
 
-public interface DummyServiceClient {
-    void getDummy(String request);
-
-    void health();
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/dummyservice/DummyServiceClientImpl.java]=[
-package com.fern.basic.resources.dummyservice;
-
 import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.ObjectMappers;
 import okhttp3.Headers;
@@ -1973,14 +1899,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public final class DummyServiceClientImpl implements DummyServiceClient {
-    private final ClientOptions clientOptions;
+public class DummyServiceClient {
+    protected final ClientOptions clientOptions;
 
-    public DummyServiceClientImpl(ClientOptions clientOptions) {
+    public DummyServiceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
     }
 
-    @Override
     public void getDummy(String request) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -2010,7 +1935,6 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
         }
     }
 
-    @Override
     public void health() {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -2040,61 +1964,37 @@ public final class DummyServiceClientImpl implements DummyServiceClient {
 basic[src/main/java/com/fern/basic/resources/raven/RavenClient.java]=[
 package com.fern.basic.resources.raven;
 
-import com.fern.basic.resources.raven.device.DeviceClient;
-import com.fern.basic.resources.raven.event.EventClient;
-import com.fern.basic.resources.raven.user.UserClient;
-
-public interface RavenClient {
-    DeviceClient device();
-
-    EventClient event();
-
-    UserClient user();
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/RavenClientImpl.java]=[
-package com.fern.basic.resources.raven;
-
 import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.Suppliers;
 import com.fern.basic.resources.raven.device.DeviceClient;
-import com.fern.basic.resources.raven.device.DeviceClientImpl;
 import com.fern.basic.resources.raven.event.EventClient;
-import com.fern.basic.resources.raven.event.EventClientImpl;
 import com.fern.basic.resources.raven.user.UserClient;
-import com.fern.basic.resources.raven.user.UserClientImpl;
 import java.util.function.Supplier;
 
-public final class RavenClientImpl implements RavenClient {
-    private final ClientOptions clientOptions;
+public class RavenClient {
+    protected final ClientOptions clientOptions;
 
-    private final Supplier<DeviceClient> deviceClient;
+    protected final Supplier<DeviceClient> deviceClient;
 
-    private final Supplier<EventClient> eventClient;
+    protected final Supplier<EventClient> eventClient;
 
-    private final Supplier<UserClient> userClient;
+    protected final Supplier<UserClient> userClient;
 
-    public RavenClientImpl(ClientOptions clientOptions) {
+    public RavenClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.deviceClient = Suppliers.memoize(() -> new DeviceClientImpl(clientOptions));
-        this.eventClient = Suppliers.memoize(() -> new EventClientImpl(clientOptions));
-        this.userClient = Suppliers.memoize(() -> new UserClientImpl(clientOptions));
+        this.deviceClient = Suppliers.memoize(() -> new DeviceClient(clientOptions));
+        this.eventClient = Suppliers.memoize(() -> new EventClient(clientOptions));
+        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
     }
 
-    @Override
     public DeviceClient device() {
         return this.deviceClient.get();
     }
 
-    @Override
     public EventClient event() {
         return this.eventClient.get();
     }
 
-    @Override
     public UserClient user() {
         return this.userClient.get();
     }
@@ -2104,24 +2004,6 @@ public final class RavenClientImpl implements RavenClient {
 
 
 basic[src/main/java/com/fern/basic/resources/raven/device/DeviceClient.java]=[
-package com.fern.basic.resources.raven.device;
-
-import com.fern.basic.resources.raven.device.types.Device;
-
-public interface DeviceClient {
-    Device add(String appId, String userId, Device request);
-
-    Device update(String appId, String userId, String deviceId, Device request);
-
-    void delete(String appId, String userId, String deviceId);
-
-    Device getDevice(String appId, String userId, String deviceId);
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/device/DeviceClientImpl.java]=[
 package com.fern.basic.resources.raven.device;
 
 import com.fern.basic.core.ClientOptions;
@@ -2134,14 +2016,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public final class DeviceClientImpl implements DeviceClient {
-    private final ClientOptions clientOptions;
+public class DeviceClient {
+    protected final ClientOptions clientOptions;
 
-    public DeviceClientImpl(ClientOptions clientOptions) {
+    public DeviceClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
     }
 
-    @Override
     public Device add(String appId, String userId, Device request) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -2175,7 +2056,6 @@ public final class DeviceClientImpl implements DeviceClient {
         }
     }
 
-    @Override
     public Device update(String appId, String userId, String deviceId, Device request) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -2210,7 +2090,6 @@ public final class DeviceClientImpl implements DeviceClient {
         }
     }
 
-    @Override
     public void delete(String appId, String userId, String deviceId) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -2237,7 +2116,6 @@ public final class DeviceClientImpl implements DeviceClient {
         }
     }
 
-    @Override
     public Device getDevice(String appId, String userId, String deviceId) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -2709,22 +2587,6 @@ public enum Platform {
 basic[src/main/java/com/fern/basic/resources/raven/event/EventClient.java]=[
 package com.fern.basic.resources.raven.event;
 
-import com.fern.basic.resources.raven.event.requests.BulkSendEventRequest;
-import com.fern.basic.resources.raven.event.requests.SendEventRequest;
-import com.fern.basic.resources.raven.event.types.SendEventResponse;
-
-public interface EventClient {
-    SendEventResponse send(String appId, SendEventRequest request);
-
-    SendEventResponse sendBulk(String appId, BulkSendEventRequest request);
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/event/EventClientImpl.java]=[
-package com.fern.basic.resources.raven.event;
-
 import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.ObjectMappers;
 import com.fern.basic.resources.raven.event.requests.BulkSendEventRequest;
@@ -2739,14 +2601,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public final class EventClientImpl implements EventClient {
-    private final ClientOptions clientOptions;
+public class EventClient {
+    protected final ClientOptions clientOptions;
 
-    public EventClientImpl(ClientOptions clientOptions) {
+    public EventClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
     }
 
-    @Override
     public SendEventResponse send(String appId, SendEventRequest request) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -2789,7 +2650,6 @@ public final class EventClientImpl implements EventClient {
         }
     }
 
-    @Override
     public SendEventResponse sendBulk(String appId, BulkSendEventRequest request) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -6400,21 +6260,6 @@ public final class WhatsappOverride implements IChannelOverride {
 basic[src/main/java/com/fern/basic/resources/raven/user/UserClient.java]=[
 package com.fern.basic.resources.raven.user;
 
-import com.fern.basic.resources.raven.user.requests.CreateUserRequest;
-import com.fern.basic.resources.raven.user.types.RavenUser;
-
-public interface UserClient {
-    RavenUser createOrUpdate(String appId, CreateUserRequest request);
-
-    RavenUser get(String appId, String userId);
-}
-
-]
-
-
-basic[src/main/java/com/fern/basic/resources/raven/user/UserClientImpl.java]=[
-package com.fern.basic.resources.raven.user;
-
 import com.fern.basic.core.ClientOptions;
 import com.fern.basic.core.ObjectMappers;
 import com.fern.basic.resources.raven.user.requests.CreateUserRequest;
@@ -6428,14 +6273,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public final class UserClientImpl implements UserClient {
-    private final ClientOptions clientOptions;
+public class UserClient {
+    protected final ClientOptions clientOptions;
 
-    public UserClientImpl(ClientOptions clientOptions) {
+    public UserClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
     }
 
-    @Override
     public RavenUser createOrUpdate(String appId, CreateUserRequest request) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -6473,7 +6317,6 @@ public final class UserClientImpl implements UserClient {
         }
     }
 
-    @Override
     public RavenUser get(String appId, String userId) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

@@ -25,8 +25,6 @@ import org.immutables.value.Value;
 @StagedBuilderImmutablesStyle
 public abstract class GeneratedRootClient extends AbstractGeneratedJavaFile {
 
-    public abstract AbstractGeneratedJavaFile clientImpl();
-
     public abstract AbstractGeneratedJavaFile builderClass();
 
     public abstract List<GeneratedWrappedRequest> wrappedRequests();

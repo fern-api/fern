@@ -39,14 +39,9 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                 errorDeclaration.getName().getName().getPascalCase().getSafeName());
     }
 
-    public ClassName getClientInterfaceClassName(Subpackage subpackage) {
+    public ClassName getClientClassName(Subpackage subpackage) {
         String packageName = getResourcesPackage(Optional.of(subpackage.getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, getClientName(subpackage.getFernFilepath()));
-    }
-
-    public ClassName getClientImplClassName(Subpackage subpackage) {
-        String packageName = getResourcesPackage(Optional.of(subpackage.getFernFilepath()), Optional.empty());
-        return ClassName.get(packageName, getClientImplName(subpackage.getFernFilepath()));
     }
 
     public ClassName getRequestWrapperBodyClassName(HttpService httpService, SdkRequestWrapper sdkRequestWrapper) {
@@ -54,10 +49,6 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                 getResourcesPackage(Optional.of(httpService.getName().getFernFilepath()), Optional.of("requests"));
         return ClassName.get(
                 packageName, sdkRequestWrapper.getWrapperName().getPascalCase().getSafeName());
-    }
-
-    private static String getClientImplName(FernFilepath fernFilepath) {
-        return getClientName(fernFilepath) + "Impl";
     }
 
     private static String getClientName(FernFilepath fernFilepath) {
