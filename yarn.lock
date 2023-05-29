@@ -2935,7 +2935,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/docs-config": 0.0.11
-    "@fern-fern/registry-node": ^0.0.715
+    "@fern-fern/registry-node": ^0.0.754
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
@@ -3603,7 +3603,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.1920
-    "@fern-fern/registry-node": ^0.0.715
+    "@fern-fern/registry-node": ^0.0.754
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3639,7 +3639,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.193
     "@fern-fern/ir-model": 0.0.1920
-    "@fern-fern/registry-node": ^0.0.715
+    "@fern-fern/registry-node": ^0.0.754
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -3749,7 +3749,7 @@ __metadata:
     "@babel/preset-typescript": ^7.18.6
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/registry-node": ^0.0.715
+    "@fern-fern/registry-node": ^0.0.754
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -4293,16 +4293,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-node@npm:^0.0.715":
-  version: 0.0.715
-  resolution: "@fern-fern/registry-node@npm:0.0.715"
+"@fern-fern/registry-node@npm:^0.0.754":
+  version: 0.0.754
+  resolution: "@fern-fern/registry-node@npm:0.0.754"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 5634c8e8f2e84f2810466e0e0b2a5927670198f1aefcbc7cf70876d38a3d893918cdf7784f62b22f05caf2f8c36ab68de7fdab8476560f3690ed48a8779bd8e2
+  checksum: 610d672504fed0d6fdb014c2570bbdfbcaa142fca4bd60bf289a08b63b9eb09b884c59dfe3ec424d6f16ba3b9366633a9976ce97c344cfac3af04cd42e3a2c9e
   languageName: node
   linkType: hard
 
