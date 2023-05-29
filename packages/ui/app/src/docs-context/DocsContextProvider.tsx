@@ -1,10 +1,11 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { PropsWithChildren, useCallback, useMemo, useRef, useState } from "react";
+import { PropsWithChildren, useCallback, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DocsContext, DocsContextValue } from "./DocsContext";
 import { UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
+import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
@@ -66,30 +67,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [docsDefinition.files]
     );
 
-    const navigateToPathListeners = useRef<Record<string, (() => void)[]>>({});
-
-    const registerNavigateToPathListener = useCallback(
-        (slug: string, listener: () => void) => {
-            const listenersForPath = (navigateToPathListeners.current[slug] ??= []);
-            listenersForPath.push(listener);
-            if (slug === selectedPath?.slug) {
-                listener();
-            }
-            return () => {
-                const listeners = navigateToPathListeners.current[slug];
-                if (listeners != null) {
-                    const indexOfListenerToDelete = listeners.indexOf(listener);
-                    if (indexOfListenerToDelete !== -1) {
-                        // eslint-disable-next-line no-console
-                        console.warn("Failed to deregister navigateToPath listener.");
-                    } else {
-                        listeners.splice(indexOfListenerToDelete, 1);
-                    }
-                }
-            };
-        },
-        [selectedPath?.slug]
-    );
+    const navigateToPathListeners = useSlugListeners({ selectedSlug: selectedPath?.slug });
 
     const navigate = useNavigate();
     const [justNavigated, setJustNavigated] = useState(false);
@@ -99,62 +77,27 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             setJustNavigated(true);
             setSelectedPath(path);
             navigate(path.slug);
-            const listeners = navigateToPathListeners.current[path.slug];
-            if (listeners != null) {
-                for (const listener of listeners) {
-                    setTimeout(listener, 0);
-                }
-            }
+            navigateToPathListeners.invokeListeners(slug);
             setTimeout(() => {
                 setJustNavigated(false);
             }, 500);
         },
-        [navigate, urlPathResolver]
+        [navigate, navigateToPathListeners, urlPathResolver]
     );
 
-    const scrollToPathListeners = useRef<Record<string, (() => void)[]>>({});
+    const scrollToPathListeners = useSlugListeners({ selectedSlug: selectedPath?.slug });
 
     const onScrollToPath = useCallback(
         (slug: string) => {
             if (justNavigated || slug === selectedPath?.slug) {
                 return;
             }
-
             const path = urlPathResolver.resolveSlugOrThrow(slug);
             setSelectedPath(path);
             navigate(slug, { replace: true });
-
-            const listeners = scrollToPathListeners.current[path.slug];
-            if (listeners != null) {
-                for (const listener of listeners) {
-                    setTimeout(listener, 0);
-                }
-            }
+            scrollToPathListeners.invokeListeners(slug);
         },
-        [justNavigated, navigate, selectedPath?.slug, urlPathResolver]
-    );
-
-    const registerScrolledToPathListener = useCallback(
-        (slug: string, listener: () => void) => {
-            const listenersForPath = (scrollToPathListeners.current[slug] ??= []);
-            listenersForPath.push(listener);
-            if (slug === selectedPath?.slug) {
-                listener();
-            }
-            return () => {
-                const listeners = scrollToPathListeners.current[slug];
-                if (listeners != null) {
-                    const indexOfListenerToDelete = listeners.indexOf(listener);
-                    if (indexOfListenerToDelete !== -1) {
-                        // eslint-disable-next-line no-console
-                        console.warn("Failed to deregister scrollToPath listener.");
-                    } else {
-                        listeners.splice(indexOfListenerToDelete, 1);
-                    }
-                }
-            };
-        },
-        [selectedPath?.slug]
+        [justNavigated, navigate, scrollToPathListeners, selectedPath?.slug, urlPathResolver]
     );
 
     const contextValue = useCallback(
@@ -163,28 +106,28 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             resolvePage,
             resolveFile,
             docsDefinition,
-            registerNavigateToPathListener,
+            registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
             selectedPath,
             onScrollToPath,
-            registerScrolledToPathListener,
+            registerScrolledToPathListener: scrollToPathListeners.registerListener,
             resolvedPathFromUrl,
             nextPath,
             previousPath,
         }),
         [
-            resolveApi,
-            resolvePage,
-            resolveFile,
             docsDefinition,
-            registerNavigateToPathListener,
             navigateToPath,
-            selectedPath,
-            onScrollToPath,
-            registerScrolledToPathListener,
-            resolvedPathFromUrl,
+            navigateToPathListeners.registerListener,
             nextPath,
+            onScrollToPath,
             previousPath,
+            resolveApi,
+            resolveFile,
+            resolvePage,
+            resolvedPathFromUrl,
+            scrollToPathListeners.registerListener,
+            selectedPath,
         ]
     );
 
