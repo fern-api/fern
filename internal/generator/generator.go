@@ -44,6 +44,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation) ([]*File, error)
 		writer := newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
+			g.config.ImportPath,
 			ir.Types,
 		)
 		if err := writer.WriteType(irType); err != nil {

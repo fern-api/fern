@@ -44,6 +44,10 @@ func run(configFilename string) error {
 	if err != nil {
 		return err
 	}
+	customConfig, err := customConfigFromConfig(config)
+	if err != nil {
+		return err
+	}
 	outputMode, err := outputModeFromConfig(config)
 	if err != nil {
 		return err
@@ -52,7 +56,7 @@ func run(configFilename string) error {
 	if err != nil {
 		return err
 	}
-	generatorConfig, err := generator.NewConfig(config.DryRun, config.IrFilepath)
+	generatorConfig, err := generator.NewConfig(config.DryRun, config.IrFilepath, customConfig.ImportPath)
 	if err != nil {
 		return err
 	}
@@ -82,6 +86,44 @@ func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
 		return nil, fmt.Errorf("failed to unmarshal generator configuration: %v", err)
 	}
 	return config, nil
+}
+
+type customConfig struct {
+	ImportPath string
+}
+
+func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, error) {
+	if c.CustomConfig == nil {
+		return &customConfig{}, nil
+	}
+	customConfigMap, ok := c.CustomConfig.(map[string]any)
+	if !ok {
+		return nil, fmt.Errorf("expected custom configuration to be an object, but found %T", c.CustomConfig)
+	}
+	if len(customConfigMap) == 0 {
+		return &customConfig{}, nil
+	}
+	value, ok := customConfigMap["importPath"]
+	if ok {
+		importPath, ok := value.(string)
+		if !ok {
+			return nil, fmt.Errorf("importPath configuration must be a string, but found %T", value)
+		}
+		if len(customConfigMap) == 1 {
+			return &customConfig{
+				ImportPath: importPath,
+			}, nil
+		}
+	}
+	// More keys were configured than are supported.
+	var keys []string
+	for key := range customConfigMap {
+		if key == "importPath" {
+			continue
+		}
+		keys = append(keys, key)
+	}
+	return nil, fmt.Errorf("custom configuration includes unsupported fields %v", keys)
 }
 
 func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, error) {
