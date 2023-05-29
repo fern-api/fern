@@ -85,11 +85,11 @@ function convertPathParameterKey(irPathParameterKey: string): FernRegistry.api.v
     return FernRegistry.api.v1.register.PathParameterKey(irPathParameterKey);
 }
 
-function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.api.v1.register.HttpBody {
+function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.api.v1.register.HttpRequest {
     return {
-        type: Ir.http.HttpRequestBody._visit<FernRegistry.api.v1.register.HttpBodyShape>(irRequest, {
+        type: Ir.http.HttpRequestBody._visit<FernRegistry.api.v1.register.HttpRequestBodyShape>(irRequest, {
             inlinedRequestBody: (inlinedRequestBody) => {
-                return FernRegistry.api.v1.register.HttpBodyShape.object({
+                return FernRegistry.api.v1.register.HttpRequestBodyShape.object({
                     extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
                     properties: inlinedRequestBody.properties.map(
                         (property): FernRegistry.api.v1.register.ObjectProperty => ({
@@ -101,13 +101,11 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
                 });
             },
             reference: (reference) => {
-                return FernRegistry.api.v1.register.HttpBodyShape.reference(
+                return FernRegistry.api.v1.register.HttpRequestBodyShape.reference(
                     convertTypeReference(reference.requestBodyType)
                 );
             },
-            fileUpload: () => {
-                throw new Error("File upload is not supported: " + irRequest.type);
-            },
+            fileUpload: () => FernRegistry.api.v1.register.HttpRequestBodyShape.fileUpload(),
             _unknown: () => {
                 throw new Error("Unknown HttpRequestBody: " + irRequest.type);
             },
@@ -115,21 +113,18 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
     };
 }
 
-function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.register.HttpBody {
-    return Ir.http.HttpResponse._visit(irResponse, {
-        fileDownload: () => {
-            throw new Error("File download is not supported for registration.");
-        },
-        json: (jsonResponse) => convertResponseBody(jsonResponse.responseBodyType),
-        _unknown: () => {
-            throw new Error("Unknown HttpResponse: " + irResponse.type);
-        },
-    });
-}
-
-function convertResponseBody(irResponse: Ir.types.TypeReference): FernRegistry.api.v1.register.HttpBody {
+function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.register.HttpResponse {
     return {
-        type: FernRegistry.api.v1.register.HttpBodyShape.reference(convertTypeReference(irResponse)),
+        type: Ir.http.HttpResponse._visit<FernRegistry.api.v1.register.HttpResponseBodyShape>(irResponse, {
+            fileDownload: () => FernRegistry.api.v1.register.HttpResponseBodyShape.fileDownload(),
+            json: (jsonResponse) =>
+                FernRegistry.api.v1.register.HttpResponseBodyShape.reference(
+                    convertTypeReference(jsonResponse.responseBodyType)
+                ),
+            _unknown: () => {
+                throw new Error("Unknown HttpResponse: " + irResponse.type);
+            },
+        }),
     };
 }
 
