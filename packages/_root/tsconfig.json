@@ -49,7 +49,6 @@
     { "path": "../commons/react/theme" },
     { "path": "../commons/react/toaster" },
     { "path": "../demo-setup" },
-    { "path": "../docs" },
     { "path": "../scripts" },
     { "path": "../ui/app" },
     { "path": "../ui/deploy" },

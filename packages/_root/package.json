@@ -36,7 +36,6 @@
     "@fern-api/demo-setup": "workspace:*",
     "@fern-api/dependencies-configuration": "workspace:*",
     "@fern-api/docker-utils": "workspace:*",
-    "@fern-api/docs": "workspace:*",
     "@fern-api/docs-configuration": "workspace:*",
     "@fern-api/docs-deploy": "workspace:*",
     "@fern-api/ete-tests": "workspace:*",
