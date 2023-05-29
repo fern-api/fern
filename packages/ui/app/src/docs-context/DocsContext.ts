@@ -17,7 +17,8 @@ export interface DocsContextValue {
     registerNavigateToPathListener: (slug: string, listener: () => void) => () => void;
 
     selectedPath: ResolvedUrlPath | undefined;
-    setSelectedPath: (slug: string) => void;
+    onScrollToPath: (slug: string) => void;
+    registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
     resolvedPathFromUrl: ResolvedUrlPath | undefined;

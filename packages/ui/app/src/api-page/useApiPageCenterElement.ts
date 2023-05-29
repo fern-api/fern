@@ -15,7 +15,7 @@ export declare namespace useApiPageCenterElement {
 }
 
 export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { registerNavigateToPathListener, setSelectedPath } = useDocsContext();
+    const { registerNavigateToPathListener, onScrollToPath } = useDocsContext();
 
     const targetRef = useRef<HTMLElement | null>(null);
     const [localIsInVerticalCenter, setLocalIsInVerticalCenter] = useState(false);
@@ -24,10 +24,10 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
         (newIsInVerticalCenter: boolean) => {
             setLocalIsInVerticalCenter(newIsInVerticalCenter);
             if (newIsInVerticalCenter) {
-                setSelectedPath(slug);
+                onScrollToPath(slug);
             }
         },
-        [slug, setSelectedPath]
+        [onScrollToPath, slug]
     );
 
     const handleIsSelected = useCallback(() => {

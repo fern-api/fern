@@ -20,6 +20,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         () => urlPathResolver.resolveSlug(removeLeadingAndTrailingSlashes(location.pathname)),
         [location.pathname, urlPathResolver]
     );
+    const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
 
     const nextPath = useMemo(
         () => (resolvedPathFromUrl != null ? urlPathResolver.getNextNavigatableItem(resolvedPathFromUrl) : undefined),
@@ -67,22 +68,28 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
 
     const navigateToPathListeners = useRef<Record<string, (() => void)[]>>({});
 
-    const registerNavigateToPathListener = useCallback((slug: string, listener: () => void) => {
-        const listenersForPath = (navigateToPathListeners.current[slug] ??= []);
-        listenersForPath.push(listener);
-        return () => {
-            const listeners = navigateToPathListeners.current[slug];
-            if (listeners != null) {
-                const indexOfListenerToDelete = listeners.indexOf(listener);
-                if (indexOfListenerToDelete !== -1) {
-                    // eslint-disable-next-line no-console
-                    console.warn("Failed to hash change listener for deregistration.");
-                } else {
-                    listeners.splice(indexOfListenerToDelete, 1);
-                }
+    const registerNavigateToPathListener = useCallback(
+        (slug: string, listener: () => void) => {
+            const listenersForPath = (navigateToPathListeners.current[slug] ??= []);
+            listenersForPath.push(listener);
+            if (slug === selectedPath?.slug) {
+                listener();
             }
-        };
-    }, []);
+            return () => {
+                const listeners = navigateToPathListeners.current[slug];
+                if (listeners != null) {
+                    const indexOfListenerToDelete = listeners.indexOf(listener);
+                    if (indexOfListenerToDelete !== -1) {
+                        // eslint-disable-next-line no-console
+                        console.warn("Failed to deregister navigateToPath listener.");
+                    } else {
+                        listeners.splice(indexOfListenerToDelete, 1);
+                    }
+                }
+            };
+        },
+        [selectedPath?.slug]
+    );
 
     const navigate = useNavigate();
     const [justNavigated, setJustNavigated] = useState(false);
@@ -105,17 +112,49 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [navigate, urlPathResolver]
     );
 
-    const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
+    const scrollToPathListeners = useRef<Record<string, (() => void)[]>>({});
 
-    const setSelectedPathAndUpdateUrl = useCallback(
+    const onScrollToPath = useCallback(
         (slug: string) => {
-            if (!justNavigated) {
-                const path = urlPathResolver.resolveSlugOrThrow(slug);
-                setSelectedPath(path);
-                navigate(slug, { replace: true });
+            if (justNavigated || slug === selectedPath?.slug) {
+                return;
+            }
+
+            const path = urlPathResolver.resolveSlugOrThrow(slug);
+            setSelectedPath(path);
+            navigate(slug, { replace: true });
+
+            const listeners = scrollToPathListeners.current[path.slug];
+            if (listeners != null) {
+                for (const listener of listeners) {
+                    setTimeout(listener, 0);
+                }
             }
         },
-        [justNavigated, navigate, urlPathResolver]
+        [justNavigated, navigate, selectedPath?.slug, urlPathResolver]
+    );
+
+    const registerScrolledToPathListener = useCallback(
+        (slug: string, listener: () => void) => {
+            const listenersForPath = (scrollToPathListeners.current[slug] ??= []);
+            listenersForPath.push(listener);
+            if (slug === selectedPath?.slug) {
+                listener();
+            }
+            return () => {
+                const listeners = scrollToPathListeners.current[slug];
+                if (listeners != null) {
+                    const indexOfListenerToDelete = listeners.indexOf(listener);
+                    if (indexOfListenerToDelete !== -1) {
+                        // eslint-disable-next-line no-console
+                        console.warn("Failed to deregister scrollToPath listener.");
+                    } else {
+                        listeners.splice(indexOfListenerToDelete, 1);
+                    }
+                }
+            };
+        },
+        [selectedPath?.slug]
     );
 
     const contextValue = useCallback(
@@ -127,7 +166,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             registerNavigateToPathListener,
             navigateToPath,
             selectedPath,
-            setSelectedPath: setSelectedPathAndUpdateUrl,
+            onScrollToPath,
+            registerScrolledToPathListener,
             resolvedPathFromUrl,
             nextPath,
             previousPath,
@@ -140,7 +180,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             registerNavigateToPathListener,
             navigateToPath,
             selectedPath,
-            setSelectedPathAndUpdateUrl,
+            onScrollToPath,
+            registerScrolledToPathListener,
             resolvedPathFromUrl,
             nextPath,
             previousPath,
