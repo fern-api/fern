@@ -58,9 +58,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
 
     return (
         <PageMargins>
-            <div className="flex min-w-0 flex-1 gap-24" ref={setTargetRef}>
+            <div className="flex min-w-0 flex-1 gap-20" ref={setTargetRef}>
                 <div className="flex flex-1 flex-col">
-                    <div className="pt-10 text-3xl font-semibold">
+                    <div className="pt-10 text-2xl font-semibold">
                         <EndpointTitle endpoint={endpoint} />
                     </div>
                     <div className="mt-6">

@@ -23,7 +23,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
     return (
         <>
             <PageMargins>
-                <H2 elementRef={setTargetRef} key="title">
+                <H2 elementRef={setTargetRef} className="pt-20">
                     <SubpackageTitle subpackage={subpackage} />
                 </H2>
             </PageMargins>
