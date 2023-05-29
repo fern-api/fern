@@ -76,6 +76,31 @@ func (x *Union) UnmarshalJSON(data []byte) error {
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, x)
 }
 
+func (x Union) MarshalJSON() ([]byte, error) {
+	switch x.typeName {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.typeName, x)
+	case "Foo":
+		return json.Marshal(x.Foo)
+	case "Bar":
+		return json.Marshal(x.Bar)
+	case "Baz":
+		return json.Marshal(x.Baz)
+	case "String":
+		return json.Marshal(x.String)
+	case "IntegerOptional":
+		return json.Marshal(x.IntegerOptional)
+	case "StringBooleanMap":
+		return json.Marshal(x.StringBooleanMap)
+	case "StringList":
+		return json.Marshal(x.StringList)
+	case "StringListList":
+		return json.Marshal(x.StringListList)
+	case "DoubleSet":
+		return json.Marshal(x.DoubleSet)
+	}
+}
+
 type UnionVisitor interface {
 	VisitFoo(*Foo) error
 	VisitBar(*Bar) error

@@ -361,6 +361,11 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
+	// TODO: Implement the json.Marshaler interface.
+	t.writer.P("func (x ", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("}")
+	t.writer.P()
+
 	// Generate the Visitor interface.
 	t.writer.P("type ", t.typeName, "Visitor interface {")
 	for _, unionType := range union.Types {
@@ -441,6 +446,21 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		t.writer.P("}")
 	}
 	t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, x)`)
+	t.writer.P("}")
+	t.writer.P()
+
+	t.writer.P("func (x ", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("switch x.typeName {")
+	for i, member := range members {
+		if i == 0 {
+			// Implement the default case first.
+			t.writer.P("default:")
+			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", x.typeName, x)")
+		}
+		t.writer.P("case \"", member.field, "\":")
+		t.writer.P("return json.Marshal(x.", member.field, ")")
+	}
+	t.writer.P("}")
 	t.writer.P("}")
 	t.writer.P()
 
@@ -762,7 +782,6 @@ func primitiveToGoType(primitive ir.PrimitiveType) string {
 		return "bool"
 	case ir.PrimitiveTypeLong:
 		return "int64"
-	// TODO: We'll need to add some special handling for [un]marshaling Date[Time] to and from time.Time.
 	case ir.PrimitiveTypeDateTime:
 		return "time.Time"
 	case ir.PrimitiveTypeDate:
