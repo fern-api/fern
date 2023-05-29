@@ -7,7 +7,7 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Setup generator (i.e. `fern-go` binary)
 - [x] Generate basic types (e.g. types, enums, and built-in types)
 - [x] Generate unions, visitors, unmarshalers, etc
-- [] Generate undiscriminated unions
+- [x] Generate undiscriminated unions
 - [] Handle object aliases (i.e. in `json.Unmarshaler`)
 - [x] Generate the IR
 - [x] Bootstrap the generator (i.e. Replace the manually-written IR with the generated IR)
