@@ -2,6 +2,7 @@ import { Endpoint, EndpointSdkName, HttpMethod, Schema } from "@fern-fern/openap
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "../DummyOpenAPIV3ParserContext";
+import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getExtension } from "../extensions/getExtension";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
@@ -296,6 +297,7 @@ function convertToEndpoint({
     });
     return {
         summary: operation.summary,
+        internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
         operationId:
             operation.operationId != null && suffix != null
                 ? operation.operationId + "_" + suffix

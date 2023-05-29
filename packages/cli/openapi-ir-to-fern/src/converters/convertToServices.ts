@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
+import { EXTERNAL_AUDIENCE } from "../convertPackage";
 import { Environment } from "../getEnvironment";
 import { convertEndpoint } from "./convertEndpoint";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
@@ -49,7 +50,14 @@ export function convertToServices({
                 ...convertedEndpoint.additionalTypeDeclarations,
             };
             schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
-            service.endpoints[endpointId] = convertedEndpoint.value;
+            let endpointDefinition = convertedEndpoint.value;
+            if (openApiFile.hasEndpointsMarkedInternal && (endpoint.internal == null || endpoint.internal)) {
+                endpointDefinition = {
+                    ...endpointDefinition,
+                    audiences: [EXTERNAL_AUDIENCE],
+                };
+            }
+            service.endpoints[endpointId] = endpointDefinition;
         }
     }
     return {
