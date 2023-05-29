@@ -12,8 +12,7 @@ type Literal struct {
 
 func (x *Literal) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type   string `json:"type"`
-		String string `json:"string"`
+		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -21,7 +20,13 @@ func (x *Literal) UnmarshalJSON(data []byte) error {
 	x.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "string":
-		x.String = unmarshaler.String
+		var valueUnmarshaler struct {
+			String string `json:"string"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.String = valueUnmarshaler.String
 	}
 	return nil
 }

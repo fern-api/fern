@@ -15,9 +15,7 @@ type TypeReference struct {
 
 func (x *TypeReference) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type      string         `json:"_type"`
-		Container *ContainerType `json:"container"`
-		Primitive PrimitiveType  `json:"primitive"`
+		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -25,7 +23,13 @@ func (x *TypeReference) UnmarshalJSON(data []byte) error {
 	x.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "container":
-		x.Container = unmarshaler.Container
+		var valueUnmarshaler struct {
+			Container *ContainerType `json:"container"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Container = valueUnmarshaler.Container
 	case "named":
 		value := new(DeclaredTypeName)
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -33,7 +37,13 @@ func (x *TypeReference) UnmarshalJSON(data []byte) error {
 		}
 		x.Named = value
 	case "primitive":
-		x.Primitive = unmarshaler.Primitive
+		var valueUnmarshaler struct {
+			Primitive PrimitiveType `json:"primitive"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Primitive = valueUnmarshaler.Primitive
 	case "unknown":
 		value := make(map[string]any)
 		if err := json.Unmarshal(data, &value); err != nil {

@@ -16,11 +16,7 @@ type ContainerType struct {
 
 func (x *ContainerType) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type     string         `json:"_type"`
-		List     *TypeReference `json:"list"`
-		Optional *TypeReference `json:"optional"`
-		Set      *TypeReference `json:"set"`
-		Literal  *Literal       `json:"literal"`
+		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -28,7 +24,13 @@ func (x *ContainerType) UnmarshalJSON(data []byte) error {
 	x.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "list":
-		x.List = unmarshaler.List
+		var valueUnmarshaler struct {
+			List *TypeReference `json:"list"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.List = valueUnmarshaler.List
 	case "map":
 		value := new(MapType)
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -36,11 +38,29 @@ func (x *ContainerType) UnmarshalJSON(data []byte) error {
 		}
 		x.Map = value
 	case "optional":
-		x.Optional = unmarshaler.Optional
+		var valueUnmarshaler struct {
+			Optional *TypeReference `json:"optional"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Optional = valueUnmarshaler.Optional
 	case "set":
-		x.Set = unmarshaler.Set
+		var valueUnmarshaler struct {
+			Set *TypeReference `json:"set"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Set = valueUnmarshaler.Set
 	case "literal":
-		x.Literal = unmarshaler.Literal
+		var valueUnmarshaler struct {
+			Literal *Literal `json:"literal"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Literal = valueUnmarshaler.Literal
 	}
 	return nil
 }
