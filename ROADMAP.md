@@ -19,6 +19,7 @@ The following outlines a roadmap for the development of the Go generator.
 - [] Generate a basic `go.mod`, `go.sum`, etc (similar to Fern's Typescript generator's `package.json`)
 - [] Add unsafe words to the Fern compiler (i.e. Go keywords).
 - [] Add integration tests (i.e. with hard-coded `ir.json` files and fixtures)
+- [] Polish (e.g. better method recevier identifiers)
 - [] API review
 
 ## Client

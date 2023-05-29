@@ -3,6 +3,99 @@
 The following describes a variety of design considerations for the
 Go model generator.
 
+## Import Paths
+
+Unlike other languages, Go _requires_ a somewhat absolute import path.
+To be clear, import statements like `../../api` are not allowed. This
+ends up creating a common challenge for Go code generators - the implementation
+must know where to base the relative import paths from.
+
+The base import path is configured in the `go.mod` file, which acts like
+`package.json` (it's the "root" of the module), like so:
+
+```
+module github.com/fern-api/fern-go
+
+go 1.19
+```
+
+With this `module` statement, all of the Go packages defined within the module
+are imported with that prefix like so:
+
+```go
+package example
+
+import "github.com/fern-api/fern-go/internal/generator"
+
+func Run() error {
+  g, err := generator.New(nil)
+  if err != nil {
+    return err
+  }
+  // ...
+}
+```
+
+When Fern is configured to generate code locally, it can write its output anywhere
+on the local filesystem. It's common (and expected) for users to write something
+along the lines of the following:
+
+```yaml
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-go-model
+        version: latest
+        output:
+          location: local-file-system
+          path: ../../generated/go
+```
+
+This presents a challenge - how does the generator know how to stich together the
+configured Go `module` path, and Fern's relative output location? There are ways
+to programmatically resolve the `module` path within the generator (at runtime),
+but it's not always a reliable identifier (the user might write the generated
+output to a separate location altogether).
+
+Instead, a somewhat clunky, yet simple, solution is to require the user to explicitly
+specify the import path whenever they have Fern definitions that require cross-package
+imports like so:
+
+```yaml
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-go-model
+        version: latest
+        config:
+          importPath: github.com/fern-api/fern-go/internal/testdata/packages/generated/go
+        output:
+          location: local-file-system
+          path: ../../generated/go
+```
+
+For SDKs consumed from a GitHub repository, the solution is a little simpler. The
+import path is simply the same name as the GitHub repository because all of the code
+exists under that namespace, starting from the root of the repository. For example,
+
+```yaml
+default-group: github
+groups:
+  github:
+    generators:
+      - name: fernapi/fern-go-model
+        version: latest
+        config:
+          importPath: github.com/stripe-api/stripe-go
+        output:
+          ...
+```
+
+Note that a `config.importPath` setting is _not_ required if the user does not require
+any cross-package imports.
+
 ## Unions
 
 Unions are represented as a `struct`, where exactly one of its fields
