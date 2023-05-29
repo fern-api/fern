@@ -85,9 +85,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             setSelectedPath(path);
             navigate(path.slug);
             navigateToPathListeners.invokeListeners(slug);
-            setTimeout(() => {
+
+            const timeout = setTimeout(() => {
                 setJustNavigated(false);
             }, 500);
+            return () => {
+                clearTimeout(timeout);
+            };
         },
         [navigate, navigateToPathListeners, urlPathResolver]
     );

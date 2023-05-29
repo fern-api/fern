@@ -68,15 +68,19 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
     useEffect(() => {
         if (isSelected) {
             setIsOverlayInView(true);
-        } else {
-            setTimeout(
-                () => {
-                    setIsOverlayInView(false);
-                },
-                // tailwind transition time
-                150
-            );
+            return;
         }
+
+        const timeout = setTimeout(
+            () => {
+                setIsOverlayInView(false);
+            },
+            // tailwind transition time
+            150
+        );
+        return () => {
+            clearTimeout(timeout);
+        };
     }, [isSelected]);
 
     return (

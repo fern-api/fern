@@ -20,13 +20,26 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
 
     const isSelected = useIsSlugSelected(slug);
 
+    const [wasRecentlySelected, setWasRecentlySelected] = useState(isSelected);
+    useEffect(() => {
+        if (isSelected) {
+            setWasRecentlySelected(true);
+            return;
+        }
+
+        setTimeout(() => {
+            setWasRecentlySelected(false);
+        }, 0);
+    }, [isSelected]);
+
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
                 <Text
-                    className={classNames("select-none transition", {
+                    className={classNames("select-none", {
                         "text-accentPrimary": isSelected,
                         "text-white": !isSelected && isHovering,
+                        transition: !isSelected && !wasRecentlySelected,
                     })}
                     ellipsize
                 >
@@ -34,7 +47,7 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
                 </Text>
             );
         },
-        [isSelected, title]
+        [isSelected, title, wasRecentlySelected]
     );
 
     const [ref, setRef] = useState<HTMLElement | null>(null);
