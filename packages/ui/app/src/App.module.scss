@@ -1,7 +1,7 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
 body {
-    overscroll-behavior: none;
+    overscroll-behavior-y: none;
     font-family: Inter;
 
     :global {
@@ -19,7 +19,7 @@ body {
 
 @font-face {
     font-family: Inter;
-    src: local("Inter"), url("./fonts/inter/Inter.ttf") format("truetype");
+    src: local("Inter"), url("./fonts/Inter/Inter.ttf") format("truetype");
 }
 
 .app {

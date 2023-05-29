@@ -10,7 +10,7 @@ export const BottomNavigationButtons: React.FC = () => {
 
     return (
         <div className="flex flex-col">
-            <div className="h-px bg-[#A7A7B0]/20 mt-10 mb-6"></div>
+            <div className="mb-6 mt-10 h-px bg-[#A7A7B0]/20"></div>
             <div className="flex justify-between">
                 {previousPath ? <BottomNavigationButton path={previousPath} direction="previous" /> : <div />}
                 {nextPath ? <BottomNavigationButton path={nextPath} direction="next" /> : <div />}

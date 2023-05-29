@@ -58,14 +58,14 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
 
     return (
         <PageMargins>
-            <div className="flex-1 flex gap-24 min-w-0" ref={setTargetRef}>
-                <div className="flex-1 flex flex-col">
-                    <div className="pt-10 text-3xl font-semibold">
+            <div className="flex min-w-0 flex-1 gap-20" ref={setTargetRef}>
+                <div className="flex flex-1 flex-col">
+                    <div className="pt-10 text-2xl font-semibold">
                         <EndpointTitle endpoint={endpoint} />
                     </div>
                     <div className="mt-6">
                         <div className="flex items-center gap-2 text-neutral-400">
-                            <div className="font-semibold uppercase px-2 py-1 bg-neutral-400/20 rounded ">
+                            <div className="rounded bg-neutral-400/20 px-2 py-1 font-semibold uppercase ">
                                 {endpoint.method}
                             </div>
                             <div className="flex">
@@ -88,7 +88,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
                             <Markdown>{endpoint.description}</Markdown>
                         </div>
                     )}
-                    <div className="flex mt-8">
+                    <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
                             {endpoint.path.pathParameters.length > 0 && (
                                 <PathParametersSection pathParameters={endpoint.path.pathParameters} />

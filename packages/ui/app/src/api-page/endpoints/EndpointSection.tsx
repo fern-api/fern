@@ -12,10 +12,10 @@ export declare namespace EndpointSection {
 export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, titleRightText, description, children }) => {
     return (
         <div className="flex flex-col">
-            <div className="flex items-center gap-3 mb-3">
+            <div className="mb-3 flex items-center gap-3">
                 <div className="text-lg font-semibold">{title}</div>
                 {titleRightText != null && (
-                    <div className="text-gray-400 text-xs">
+                    <div className="text-xs text-gray-400">
                         <MonospaceText>{titleRightText}</MonospaceText>
                     </div>
                 )}
