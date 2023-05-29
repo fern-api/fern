@@ -797,7 +797,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": "FileObject",
+            "name": undefined,
             "properties": [
               {
                 "description": undefined,
@@ -865,7 +865,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": "FileObject",
+            "name": undefined,
             "properties": [
               {
                 "description": undefined,
@@ -1986,7 +1986,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": "MilestoneToCreateFormWithFile",
+            "name": undefined,
             "properties": [],
             "type": "multipart",
           },
@@ -3243,7 +3243,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": "TimesheetToCreateContainerWithFile",
+            "name": undefined,
             "properties": [],
             "type": "multipart",
           },
@@ -3995,7 +3995,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": "InvoiceAdjustmentToCreateWithFile",
+            "name": undefined,
             "properties": [],
             "type": "multipart",
           },

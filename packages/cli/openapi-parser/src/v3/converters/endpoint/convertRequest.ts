@@ -34,7 +34,10 @@ export function convertRequest({
               };
 
         return Request.multipart({
-            name: resolvedMultipartSchema.id,
+            name:
+                isReferenceObject(multipartSchema) && context.getNumberOfOccurrencesForRef(multipartSchema) === 1
+                    ? resolvedMultipartSchema.id
+                    : undefined,
             description: undefined,
             properties: Object.entries(resolvedMultipartSchema.schema.properties ?? {}).map(([key, definition]) => {
                 if (!isReferenceObject(definition) && definition.type === "string" && definition.format === "binary") {

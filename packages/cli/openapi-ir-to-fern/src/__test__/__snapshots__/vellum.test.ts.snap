@@ -764,6 +764,31 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
+        "UploadDocumentRequestBodyRequest": {
+          "docs": undefined,
+          "properties": {
+            "add_to_index_names": {
+              "docs": "Optionally include the names of all indexes that you'd like this document to be included in",
+              "type": "optional<list<string>>",
+            },
+            "contents": {
+              "docs": "The file contents of the document.",
+              "type": "string",
+            },
+            "external_id": {
+              "docs": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+              "type": "optional<string>",
+            },
+            "keywords": {
+              "docs": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+              "type": "optional<list<string>>",
+            },
+            "label": {
+              "docs": "A human-friendly name for this document. Typically the filename.",
+              "type": "string",
+            },
+          },
+        },
         "UploadDocumentResponse": {
           "docs": undefined,
           "properties": {
@@ -861,7 +886,7 @@ Upload a document to be indexed and used for search.
                 },
               },
               "headers": undefined,
-              "name": "UploadDocumentRequestBodyRequest",
+              "name": "DocumentsUploadRequest",
               "query-parameters": undefined,
             },
             "response": {
