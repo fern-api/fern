@@ -28,6 +28,7 @@ types:
       description: optional<string>
       servers: list<Server>
       tags: list<Tag>
+      hasEndpointsMarkedInternal: boolean
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>
       errors: map<StatusCode, HttpError>
@@ -119,6 +120,7 @@ types:
     extends: WithDescription
     properties:
       authed: boolean
+      internal: optional<boolean>
       method: HttpMethod
       path:
         type: string

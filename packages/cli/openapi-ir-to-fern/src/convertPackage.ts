@@ -14,6 +14,8 @@ export const ROOT_PREFIX = "root";
 
 export const PRODUCTION_ENVIRONMENT = "Production";
 
+export const EXTERNAL_AUDIENCE = "external";
+
 export interface ConvertedPackage {
     rootApiFile: RootApiFileSchema;
     definitionFiles: Record<RelativeFilePath, DefinitionFileSchema>;
@@ -95,6 +97,10 @@ function getRootApiFile(openApiFile: OpenAPIFile, environment: Environment | und
                 ];
             })
         );
+    }
+
+    if (openApiFile.hasEndpointsMarkedInternal) {
+        rootApiFile.audiences = [EXTERNAL_AUDIENCE];
     }
 
     return rootApiFile;
