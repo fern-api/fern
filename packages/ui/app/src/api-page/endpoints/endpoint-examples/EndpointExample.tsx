@@ -17,11 +17,9 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
 
     return (
         <div className="flex min-h-0 flex-1 flex-col gap-6">
-            {example.requestBody != null && (
-                <TitledExample title="Request" copyableExample={example.codeExamples.nodeAxios}>
-                    <SyntaxHighlightedCodeExample code={example.codeExamples.nodeAxios} language="javascript" />
-                </TitledExample>
-            )}
+            <TitledExample title="Request" copyableExample={example.codeExamples.nodeAxios}>
+                <SyntaxHighlightedCodeExample code={example.codeExamples.nodeAxios} language="javascript" />
+            </TitledExample>
             {example.responseBody != null && (
                 <TitledExample
                     title="Response"
