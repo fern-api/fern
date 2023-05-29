@@ -65,6 +65,7 @@ func (f *fileWriter) File() (*File, error) {
 	}
 	header.P(")")
 
+	fmt.Println(string(append(header.buffer.Bytes(), f.buffer.Bytes()...)))
 	formatted, err := removeUnusedImports(f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
 	if err != nil {
 		return nil, err
@@ -338,30 +339,54 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 }
 
 func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTypeDeclaration) error {
+	// member represents a single undiscriminated union member.
+	//
+	// We define a separate struct here so that we can collect
+	// all of the relevant information upfront, and traverse it
+	// multiple times seamlessly (and in the order they're specified).
+	type member struct {
+		typeName string
+		field    string
+		value    string
+	}
+	var members []*member
+	for _, unionMember := range union.Members {
+		var typeName string
+		if unionMember.Type.Named != nil {
+			typeName = unionMember.Type.Named.TypeId
+		}
+		members = append(
+			members,
+			&member{
+				typeName: typeName,
+				field:    typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types),
+				value:    typeReferenceToGoType(unionMember.Type, t.writer.types),
+			},
+		)
+	}
+
 	// Write the union type definition.
 	t.writer.P("type ", t.typeName, " struct {")
-	for _, member := range union.Members {
-		field := typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types)
-		value := typeReferenceToGoType(member.Type, t.writer.types)
-		t.writer.P(field, " ", value)
-
+	t.writer.P("typeName string")
+	for _, member := range members {
+		t.writer.P(member.field, " ", member.value)
 	}
 	t.writer.P("}")
 	t.writer.P()
 
 	// Implement the json.Unmarshaler interface.
 	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
-	for _, member := range union.Members {
-		field := typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types)
-		value := typeReferenceToGoType(member.Type, t.writer.types)
-		format := "var " + field + " %s"
-		if member.Type.Named != nil && isPointer(t.writer.types[member.Type.Named.TypeId]) {
-			format = field + " := new(%s)"
+	for _, member := range members {
+		value := member.value
+		format := "var " + member.field + " %s"
+		if member.typeName != "" && isPointer(t.writer.types[member.typeName]) {
+			format = member.field + " := new(%s)"
 			value = strings.TrimLeft(value, "*")
 		}
 		t.writer.P(fmt.Sprintf(format, value))
-		t.writer.P("if err := json.Unmarshal(data, &", field, "); err == nil {")
-		t.writer.P("x.", field, " = ", field)
+		t.writer.P("if err := json.Unmarshal(data, &", member.field, "); err == nil {")
+		t.writer.P("x.typeName = \"", member.field, "\"")
+		t.writer.P("x.", member.field, " = ", member.field)
 		t.writer.P("return nil")
 		t.writer.P("}")
 	}
@@ -371,11 +396,25 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 
 	// Generate the Visitor interface.
 	t.writer.P("type ", t.typeName, "Visitor interface {")
-	for _, member := range union.Members {
-		field := typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types)
-		value := typeReferenceToGoType(member.Type, t.writer.types)
-		t.writer.P("Visit", field, "(", value, ") error")
+	for _, member := range members {
+		t.writer.P("Visit", member.field, "(", member.value, ") error")
 	}
+	t.writer.P("}")
+	t.writer.P()
+
+	// Generate the Accept method.
+	t.writer.P("func (x *", t.typeName, ") Accept(v ", t.typeName, "Visitor) error {")
+	t.writer.P("switch x.typeName {")
+	for i, member := range members {
+		if i == 0 {
+			// Implement the default case first.
+			t.writer.P("default:")
+			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", x.typeName, x)")
+		}
+		t.writer.P("case \"", member.field, "\":")
+		t.writer.P("return v.Visit", member.field, "(x.", member.field, ")")
+	}
+	t.writer.P("}")
 	t.writer.P("}")
 	t.writer.P()
 
