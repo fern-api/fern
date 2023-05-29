@@ -13,7 +13,7 @@ export declare namespace NavigatingSidebarItem {
 }
 
 export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ title, slug }) => {
-    const { navigateToPath } = useDocsContext();
+    const { navigateToPath, registerScrolledToPathListener } = useDocsContext();
     const handleClick = useCallback(() => {
         navigateToPath(slug);
     }, [navigateToPath, slug]);
@@ -50,5 +50,22 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
         [isSelected, title, wasRecentlySelected]
     );
 
-    return <SidebarItemLayout title={renderTitle} onClick={handleClick} isSelected={isSelected} />;
+    const [ref, setRef] = useState<HTMLElement | null>(null);
+    useEffect(() => {
+        if (ref == null) {
+            return;
+        }
+        const unsubscribe = registerScrolledToPathListener(slug, () => {
+            ref.scrollIntoView({
+                block: "center",
+            });
+        });
+        return unsubscribe;
+    }, [ref, registerScrolledToPathListener, slug]);
+
+    return (
+        <div ref={setRef}>
+            <SidebarItemLayout title={renderTitle} onClick={handleClick} isSelected={isSelected} />
+        </div>
+    );
 };
