@@ -1,10 +1,11 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { PropsWithChildren, useCallback, useMemo, useRef, useState } from "react";
+import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DocsContext, DocsContextValue } from "./DocsContext";
 import { UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
+import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
@@ -20,6 +21,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         () => urlPathResolver.resolveSlug(removeLeadingAndTrailingSlashes(location.pathname)),
         [location.pathname, urlPathResolver]
     );
+
+    const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
+    useEffect(() => {
+        if (selectedPath == null && resolvedPathFromUrl != null) {
+            setSelectedPath(resolvedPathFromUrl);
+        }
+    }, [resolvedPathFromUrl, selectedPath]);
 
     const nextPath = useMemo(
         () => (resolvedPathFromUrl != null ? urlPathResolver.getNextNavigatableItem(resolvedPathFromUrl) : undefined),
@@ -65,24 +73,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [docsDefinition.files]
     );
 
-    const navigateToPathListeners = useRef<Record<string, (() => void)[]>>({});
-
-    const registerNavigateToPathListener = useCallback((slug: string, listener: () => void) => {
-        const listenersForPath = (navigateToPathListeners.current[slug] ??= []);
-        listenersForPath.push(listener);
-        return () => {
-            const listeners = navigateToPathListeners.current[slug];
-            if (listeners != null) {
-                const indexOfListenerToDelete = listeners.indexOf(listener);
-                if (indexOfListenerToDelete !== -1) {
-                    // eslint-disable-next-line no-console
-                    console.warn("Failed to hash change listener for deregistration.");
-                } else {
-                    listeners.splice(indexOfListenerToDelete, 1);
-                }
-            }
-        };
-    }, []);
+    const navigateToPathListeners = useSlugListeners({ selectedSlug: selectedPath?.slug });
 
     const navigate = useNavigate();
     const [justNavigated, setJustNavigated] = useState(false);
@@ -92,30 +83,27 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             setJustNavigated(true);
             setSelectedPath(path);
             navigate(path.slug);
-            const listeners = navigateToPathListeners.current[path.slug];
-            if (listeners != null) {
-                for (const listener of listeners) {
-                    setTimeout(listener, 0);
-                }
-            }
+            navigateToPathListeners.invokeListeners(slug);
             setTimeout(() => {
                 setJustNavigated(false);
             }, 500);
         },
-        [navigate, urlPathResolver]
+        [navigate, navigateToPathListeners, urlPathResolver]
     );
 
-    const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
+    const scrollToPathListeners = useSlugListeners({ selectedSlug: selectedPath?.slug });
 
-    const setSelectedPathAndUpdateUrl = useCallback(
+    const onScrollToPath = useCallback(
         (slug: string) => {
-            if (!justNavigated) {
-                const path = urlPathResolver.resolveSlugOrThrow(slug);
-                setSelectedPath(path);
-                navigate(slug, { replace: true });
+            if (justNavigated || slug === selectedPath?.slug) {
+                return;
             }
+            const path = urlPathResolver.resolveSlugOrThrow(slug);
+            setSelectedPath(path);
+            navigate(slug, { replace: true });
+            scrollToPathListeners.invokeListeners(slug);
         },
-        [justNavigated, navigate, urlPathResolver]
+        [justNavigated, navigate, scrollToPathListeners, selectedPath?.slug, urlPathResolver]
     );
 
     const contextValue = useCallback(
@@ -124,26 +112,28 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             resolvePage,
             resolveFile,
             docsDefinition,
-            registerNavigateToPathListener,
+            registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
             selectedPath,
-            setSelectedPath: setSelectedPathAndUpdateUrl,
+            onScrollToPath,
+            registerScrolledToPathListener: scrollToPathListeners.registerListener,
             resolvedPathFromUrl,
             nextPath,
             previousPath,
         }),
         [
-            resolveApi,
-            resolvePage,
-            resolveFile,
             docsDefinition,
-            registerNavigateToPathListener,
             navigateToPath,
-            selectedPath,
-            setSelectedPathAndUpdateUrl,
-            resolvedPathFromUrl,
+            navigateToPathListeners.registerListener,
             nextPath,
+            onScrollToPath,
             previousPath,
+            resolveApi,
+            resolveFile,
+            resolvePage,
+            resolvedPathFromUrl,
+            scrollToPathListeners.registerListener,
+            selectedPath,
         ]
     );
 
