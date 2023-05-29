@@ -44,7 +44,8 @@ export async function runRemoteGenerationForWorkspace({
                     organization,
                     context,
                     workspace,
-                    audiences: generatorGroup.audiences,
+                    generatorGroup,
+                    version,
                 });
             })
         );
