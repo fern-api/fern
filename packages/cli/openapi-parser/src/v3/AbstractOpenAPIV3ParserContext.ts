@@ -7,6 +7,7 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
+export const REQUEST_BODY_REFERENCE_PREFIX = "#/components/requestBodies/";
 
 export abstract class AbstractOpenAPIV3ParserContext {
     public logger: Logger;
@@ -55,6 +56,25 @@ export abstract class AbstractOpenAPIV3ParserContext {
             return this.resolveParameterReference(resolvedParameter);
         }
         return resolvedParameter;
+    }
+
+    public resolveRequestBodyReference(requestBody: OpenAPIV3.ReferenceObject): OpenAPIV3.RequestBodyObject {
+        if (
+            this.document.components == null ||
+            this.document.components.responses == null ||
+            !requestBody.$ref.startsWith(REQUEST_BODY_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${requestBody.$ref}`);
+        }
+        const requestBodyKey = requestBody.$ref.substring(REQUEST_BODY_REFERENCE_PREFIX.length);
+        const resolvedRequestBody = this.document.components.requestBodies?.[requestBodyKey];
+        if (resolvedRequestBody == null) {
+            throw new Error(`${requestBody.$ref} is undefined`);
+        }
+        if (isReferenceObject(resolvedRequestBody)) {
+            return this.resolveRequestBodyReference(resolvedRequestBody);
+        }
+        return resolvedRequestBody;
     }
 
     public resolveResponseReference(response: OpenAPIV3.ReferenceObject): OpenAPIV3.ResponseObject {

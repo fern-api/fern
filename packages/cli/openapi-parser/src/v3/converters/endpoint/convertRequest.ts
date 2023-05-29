@@ -19,12 +19,12 @@ export function convertRequest({
     context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];
 }): Request | undefined {
-    if (isReferenceObject(requestBody)) {
-        throw new Error(`Converting referenced request body is unsupported: ${JSON.stringify(requestBody)}`);
-    }
+    const resolvedRequestBody = isReferenceObject(requestBody)
+        ? context.resolveRequestBodyReference(requestBody)
+        : requestBody;
 
     // convert as multipart request
-    const multipartSchema = requestBody.content[MULTIPART_CONTENT]?.schema;
+    const multipartSchema = resolvedRequestBody.content[MULTIPART_CONTENT]?.schema;
     if (multipartSchema != null) {
         const resolvedMultipartSchema = isReferenceObject(multipartSchema)
             ? resolveSchema(multipartSchema, document)
@@ -55,8 +55,8 @@ export function convertRequest({
 
     // otherwise, convert as json request.
     const requestBodySchema =
-        requestBody.content[APPLICATION_JSON_CONTENT]?.schema ??
-        requestBody.content[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
+        resolvedRequestBody.content[APPLICATION_JSON_CONTENT]?.schema ??
+        resolvedRequestBody.content[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
     if (requestBodySchema == null) {
         return undefined;
     }
