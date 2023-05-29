@@ -1,7 +1,7 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { PropsWithChildren, useCallback, useMemo, useState } from "react";
+import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DocsContext, DocsContextValue } from "./DocsContext";
 import { UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
@@ -21,7 +21,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         () => urlPathResolver.resolveSlug(removeLeadingAndTrailingSlashes(location.pathname)),
         [location.pathname, urlPathResolver]
     );
+
     const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
+    useEffect(() => {
+        if (selectedPath == null && resolvedPathFromUrl != null) {
+            setSelectedPath(resolvedPathFromUrl);
+        }
+    }, [resolvedPathFromUrl, selectedPath]);
 
     const nextPath = useMemo(
         () => (resolvedPathFromUrl != null ? urlPathResolver.getNextNavigatableItem(resolvedPathFromUrl) : undefined),
