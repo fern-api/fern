@@ -272,14 +272,6 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
 	}
-	// Include all of the types that need to be unmarshaled on the top level
-	// unmarshaler variable (the single property unions).
-	for _, unionType := range union.Types {
-		if unionType.Shape.PropertiesType == "singleProperty" {
-			typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types)
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.DiscriminantValue.Name.CamelCase.UnsafeName, "\"`")
-		}
-	}
 	t.writer.P("}")
 	t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
 	t.writer.P("return err")
@@ -296,11 +288,26 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P("switch unmarshaler.", discriminantName, " {")
 	for _, unionType := range union.Types {
 		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
-		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, unionType.DiscriminantValue.Name.PascalCase.UnsafeName, t.writer.types))
 		if unionType.Shape.PropertiesType == "singleProperty" {
-			// If the union is a single property, we don't need the json.Unmarshal step.
+			// If the union is a single property, we need a separate unmarshaler.
+			// We can't use the top-level unmarshaler because of potential property
+			// serde name conflicts, e.g.
+			//
+			//  type unmarshaler struct {
+			//    String string `json:"value"`
+			//    Boolean bool  `json:"value"`
+			//  }
+			t.writer.P("var valueUnmarshaler struct {")
+			typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types)
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.Shape.SingleProperty.Name.Name.CamelCase.UnsafeName, "\"`")
+			t.writer.P("}")
+			t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
+			t.writer.P("return err")
+			t.writer.P("}")
+			t.writer.P("x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
 			continue
 		}
+		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, unionType.DiscriminantValue.Name.PascalCase.UnsafeName, t.writer.types))
 		t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
 		t.writer.P("return err")
 		t.writer.P("}")

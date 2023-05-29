@@ -14,8 +14,6 @@ type Union struct {
 func (x *Union) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
-		Foo  *Foo   `json:"foo"`
-		Bar  *Bar   `json:"bar"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -23,9 +21,21 @@ func (x *Union) UnmarshalJSON(data []byte) error {
 	x.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "foo":
-		x.Foo = unmarshaler.Foo
+		var valueUnmarshaler struct {
+			Foo *Foo `json:"foo"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Foo = valueUnmarshaler.Foo
 	case "bar":
-		x.Bar = unmarshaler.Bar
+		var valueUnmarshaler struct {
+			Bar *Bar `json:"bar"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Bar = valueUnmarshaler.Bar
 	}
 	return nil
 }
