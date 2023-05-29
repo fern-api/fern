@@ -65,3 +65,15 @@ func (x *Union) UnmarshalJSON(data []byte) error {
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, x)
 }
+
+type UnionVisitor interface {
+	VisitFoo(*Foo) error
+	VisitBar(*Bar) error
+	VisitBaz(*Baz) error
+	VisitString(string) error
+	VisitIntegerOptional(*int) error
+	VisitStringBooleanMap(map[string]bool) error
+	VisitStringList([]string) error
+	VisitStringListList([][]string) error
+	VisitDoubleSet([]float64) error
+}

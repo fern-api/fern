@@ -369,6 +369,16 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P("}")
 	t.writer.P()
 
+	// Generate the Visitor interface.
+	t.writer.P("type ", t.typeName, "Visitor interface {")
+	for _, member := range union.Members {
+		field := typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types)
+		value := typeReferenceToGoType(member.Type, t.writer.types)
+		t.writer.P("Visit", field, "(", value, ") error")
+	}
+	t.writer.P("}")
+	t.writer.P()
+
 	return nil
 }
 
