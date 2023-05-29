@@ -1,6 +1,6 @@
 import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
 import { SidebarItemLayout } from "./SidebarItemLayout";
@@ -20,13 +20,26 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
 
     const isSelected = useIsSlugSelected(slug);
 
+    const [wasRecentlySelected, setWasRecentlySelected] = useState(isSelected);
+    useEffect(() => {
+        if (isSelected) {
+            setWasRecentlySelected(true);
+            return;
+        }
+
+        setTimeout(() => {
+            setWasRecentlySelected(false);
+        }, 0);
+    }, [isSelected]);
+
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
                 <Text
-                    className={classNames("select-none transition", {
+                    className={classNames("select-none", {
                         "text-accentPrimary": isSelected,
                         "text-white": !isSelected && isHovering,
+                        transition: !isSelected && !wasRecentlySelected,
                     })}
                     ellipsize
                 >
@@ -34,7 +47,7 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
                 </Text>
             );
         },
-        [isSelected, title]
+        [isSelected, title, wasRecentlySelected]
     );
 
     return <SidebarItemLayout title={renderTitle} onClick={handleClick} isSelected={isSelected} />;

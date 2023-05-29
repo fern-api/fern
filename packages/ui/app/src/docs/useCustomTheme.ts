@@ -2,9 +2,9 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { useEffect } from "react";
 
 const DEFAULT_ACCENT_PRIMARY: FernRegistryDocsRead.RgbColor = {
-    r: 16,
-    g: 23,
-    b: 41,
+    r: 129,
+    g: 140,
+    b: 248,
 };
 
 const CSS_VARIABLES = {

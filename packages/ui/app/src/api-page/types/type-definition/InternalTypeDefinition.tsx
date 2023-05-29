@@ -79,12 +79,18 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
     const [originalButtonWidth, setOriginalButtonWidth] = useState<number>();
     const [buttonRef, setButtonRef] = useState<HTMLDivElement | null>(null);
     useEffect(() => {
-        if (originalButtonWidth == null && buttonRef != null) {
-            // in case we're being expanded right now, wait for animation to finish
-            setTimeout(() => {
-                setOriginalButtonWidth(buttonRef.getBoundingClientRect().width);
-            }, 500);
+        if (originalButtonWidth != null || buttonRef == null) {
+            return;
         }
+
+        // in case we're being expanded right now, wait for animation to finish
+        const timeout = setTimeout(() => {
+            setOriginalButtonWidth(buttonRef.getBoundingClientRect().width);
+        }, 500);
+
+        return () => {
+            clearTimeout(timeout);
+        };
     }, [buttonRef, originalButtonWidth]);
 
     const contextValue = useTypeDefinitionContext();

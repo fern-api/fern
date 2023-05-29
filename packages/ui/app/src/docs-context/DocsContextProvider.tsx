@@ -98,9 +98,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
                     setTimeout(listener, 0);
                 }
             }
-            setTimeout(() => {
+
+            const timeout = setTimeout(() => {
                 setJustNavigated(false);
             }, 500);
+            return () => {
+                clearTimeout(timeout);
+            };
         },
         [navigate, urlPathResolver]
     );
