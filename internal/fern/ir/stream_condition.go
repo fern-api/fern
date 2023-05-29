@@ -13,9 +13,7 @@ type StreamCondition struct {
 
 func (x *StreamCondition) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type               string `json:"type"`
-		QueryParameterKey  string `json:"queryParameterKey"`
-		RequestPropertyKey string `json:"requestPropertyKey"`
+		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -23,9 +21,21 @@ func (x *StreamCondition) UnmarshalJSON(data []byte) error {
 	x.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "queryParameterKey":
-		x.QueryParameterKey = unmarshaler.QueryParameterKey
+		var valueUnmarshaler struct {
+			QueryParameterKey string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.QueryParameterKey = valueUnmarshaler.QueryParameterKey
 	case "requestPropertyKey":
-		x.RequestPropertyKey = unmarshaler.RequestPropertyKey
+		var valueUnmarshaler struct {
+			RequestPropertyKey string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.RequestPropertyKey = valueUnmarshaler.RequestPropertyKey
 	}
 	return nil
 }

@@ -17,10 +17,7 @@ type GeneratorUpdate struct {
 
 func (x *GeneratorUpdate) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type             string             `json:"_type"`
-		Publishing       *PackageCoordinate `json:"publishing"`
-		Published        *PackageCoordinate `json:"published"`
-		ExitStatusUpdate *ExitStatusUpdate  `json:"exitStatusUpdate"`
+		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -46,11 +43,29 @@ func (x *GeneratorUpdate) UnmarshalJSON(data []byte) error {
 		}
 		x.Log = value
 	case "publishing":
-		x.Publishing = unmarshaler.Publishing
+		var valueUnmarshaler struct {
+			Publishing *PackageCoordinate `json:"publishing"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Publishing = valueUnmarshaler.Publishing
 	case "published":
-		x.Published = unmarshaler.Published
+		var valueUnmarshaler struct {
+			Published *PackageCoordinate `json:"published"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Published = valueUnmarshaler.Published
 	case "exitStatusUpdate":
-		x.ExitStatusUpdate = unmarshaler.ExitStatusUpdate
+		var valueUnmarshaler struct {
+			ExitStatusUpdate *ExitStatusUpdate `json:"exitStatusUpdate"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.ExitStatusUpdate = valueUnmarshaler.ExitStatusUpdate
 	}
 	return nil
 }

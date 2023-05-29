@@ -65,7 +65,6 @@ func (f *fileWriter) File() (*File, error) {
 	}
 	header.P(")")
 
-	fmt.Println(string(append(header.buffer.Bytes(), f.buffer.Bytes()...)))
 	formatted, err := removeUnusedImports(f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
 	if err != nil {
 		return nil, err

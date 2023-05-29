@@ -21,15 +21,7 @@ type ExamplePrimitive struct {
 
 func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type     string    `json:"type"`
-		Integer  int       `json:"integer"`
-		Double   float64   `json:"double"`
-		String   string    `json:"string"`
-		Boolean  bool      `json:"boolean"`
-		Long     int64     `json:"long"`
-		Datetime time.Time `json:"datetime"`
-		Date     time.Time `json:"date"`
-		Uuid     uuid.UUID `json:"uuid"`
+		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -37,21 +29,69 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 	x.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "integer":
-		x.Integer = unmarshaler.Integer
+		var valueUnmarshaler struct {
+			Integer int `json:"integer"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Integer = valueUnmarshaler.Integer
 	case "double":
-		x.Double = unmarshaler.Double
+		var valueUnmarshaler struct {
+			Double float64 `json:"double"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Double = valueUnmarshaler.Double
 	case "string":
-		x.String = unmarshaler.String
+		var valueUnmarshaler struct {
+			String string `json:"string"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.String = valueUnmarshaler.String
 	case "boolean":
-		x.Boolean = unmarshaler.Boolean
+		var valueUnmarshaler struct {
+			Boolean bool `json:"boolean"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Boolean = valueUnmarshaler.Boolean
 	case "long":
-		x.Long = unmarshaler.Long
+		var valueUnmarshaler struct {
+			Long int64 `json:"long"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Long = valueUnmarshaler.Long
 	case "datetime":
-		x.Datetime = unmarshaler.Datetime
+		var valueUnmarshaler struct {
+			Datetime time.Time `json:"datetime"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Datetime = valueUnmarshaler.Datetime
 	case "date":
-		x.Date = unmarshaler.Date
+		var valueUnmarshaler struct {
+			Date time.Time `json:"date"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Date = valueUnmarshaler.Date
 	case "uuid":
-		x.Uuid = unmarshaler.Uuid
+		var valueUnmarshaler struct {
+			Uuid uuid.UUID `json:"uuid"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		x.Uuid = valueUnmarshaler.Uuid
 	}
 	return nil
 }
