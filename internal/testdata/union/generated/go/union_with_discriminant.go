@@ -40,6 +40,27 @@ func (x *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "foo":
+		var marshaler = struct {
+			Type string `json:"_type"`
+		}{
+			Type: x.Type,
+		}
+		return json.Marshal(marshaler)
+	case "bar":
+		var marshaler = struct {
+			Type string `json:"_type"`
+		}{
+			Type: x.Type,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type UnionWithDiscriminantVisitor interface {
 	VisitFoo(*Foo) error
 	VisitBar(*Bar) error

@@ -36,6 +36,27 @@ func (x *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x UnionWithUnknown) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "foo":
+		var marshaler = struct {
+			Type string `json:"type"`
+		}{
+			Type: x.Type,
+		}
+		return json.Marshal(marshaler)
+	case "unknown":
+		var marshaler = struct {
+			Type string `json:"type"`
+		}{
+			Type: x.Type,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type UnionWithUnknownVisitor interface {
 	VisitFoo(*Foo) error
 	VisitUnknown(any) error

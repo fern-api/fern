@@ -40,6 +40,27 @@ func (x *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x UnionWithPrimitive) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "boolean":
+		var marshaler = struct {
+			Type string `json:"type"`
+		}{
+			Type: x.Type,
+		}
+		return json.Marshal(marshaler)
+	case "string":
+		var marshaler = struct {
+			Type string `json:"type"`
+		}{
+			Type: x.Type,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type UnionWithPrimitiveVisitor interface {
 	VisitBoolean(bool) error
 	VisitString(string) error

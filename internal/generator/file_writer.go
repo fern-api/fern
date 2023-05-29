@@ -363,6 +363,35 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 
 	// TODO: Implement the json.Marshaler interface.
 	t.writer.P("func (x ", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("switch x.", discriminantName, " {")
+	for i, unionType := range union.Types {
+		if i == 0 {
+			// Implement the default case first.
+			t.writer.P("default:")
+			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", x.", discriminantName, ", x)")
+		}
+		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
+		t.writer.P("var marshaler = struct {")
+		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
+		// Include all of the extended and base properties.
+		for _, extend := range union.Extends {
+			propertyNames = append(propertyNames, t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)...)
+		}
+		for _, property := range union.BaseProperties {
+			propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
+		}
+		// Set all of the values in the marshaler.
+		t.writer.P("}{")
+		t.writer.P(discriminantName, ": x.", discriminantName, ",")
+		for _, propertyName := range propertyNames {
+			t.writer.P(propertyName, ": x.", propertyName, ",")
+		}
+		t.writer.P("}")
+		// TODO: Need to find a clean way to include the values when the union type is samePropertiesAsObject.
+		t.writer.P("return json.Marshal(marshaler)")
+	}
+	t.writer.P("}")
 	t.writer.P("}")
 	t.writer.P()
 
