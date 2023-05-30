@@ -56,7 +56,7 @@ export function convertToServices({
             };
             schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
             let endpointDefinition = convertedEndpoint.value;
-            if (openApiFile.hasEndpointsMarkedInternal && (endpoint.internal == null || endpoint.internal)) {
+            if (openApiFile.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)) {
                 endpointDefinition = {
                     ...endpointDefinition,
                     audiences: [EXTERNAL_AUDIENCE],
