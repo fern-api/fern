@@ -3,6 +3,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { noop, size } from "lodash-es";
 import { resolveSubpackage } from "../../api-context/ApiDefinitionContextProvider";
+import { areApiArtifactsNonEmpty } from "../../api-page/artifacts/areApiArtifactsNonEmpty";
 import { doesSubpackageHaveEndpointsRecursive } from "../../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
 import { joinUrlSlugs } from "../joinUrlSlugs";
 
@@ -85,6 +86,7 @@ export class UrlSlugTree {
             case "apiSubpackage":
             case "section":
                 return this.resolveSlugsRecursive({ slugs: remainingSlugs, children: child.children });
+            case "clientLibraries":
             case "page":
             case "topLevelEndpoint":
             case "endpoint":
@@ -167,34 +169,65 @@ export class UrlSlugTree {
         if (apiDefinition == null) {
             throw new Error("API definition does not exist: " + apiSection.api);
         }
+
         return {
             type: "api",
             apiSection,
             slug,
             apiSlug: slug,
-            children: {
-                ...this.constructSlugToApiSubpackageRecord({
-                    apiDefinition,
-                    apiSection,
-                    package_: apiDefinition.rootPackage,
-                    apiSlug: slug,
-                    slugInsideApi: "",
-                    isFirstItemInApi: apiDefinition.rootPackage.endpoints.length === 0,
-                }),
-                ...apiDefinition.rootPackage.endpoints.reduce<Record<UrlSlug, UrlSlugTreeNode.TopLevelEndpoint>>(
-                    (acc, topLevelEndpoint, index) => {
-                        acc[topLevelEndpoint.urlSlug] = this.constructTopLevelEndpointNode({
-                            apiSection,
-                            topLevelEndpoint,
-                            apiSlug: slug,
-                            isFirstItemInApi: index === 0,
-                        });
-                        return acc;
-                    },
-                    {}
-                ),
-            },
+            children: this.constructApiChildren({
+                apiSection,
+                slug,
+                apiDefinition,
+            }),
         };
+    }
+
+    private constructApiChildren({
+        apiSection,
+        slug,
+        apiDefinition,
+    }: {
+        apiSection: FernRegistryDocsRead.ApiSection;
+        slug: string;
+        apiDefinition: FernRegistryApiRead.ApiDefinition;
+    }): UrlSlugTreeNode.Api["children"] {
+        const children: UrlSlugTreeNode.Api["children"] = {};
+
+        if (apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts)) {
+            children["client-libraries"] = {
+                type: "clientLibraries",
+                apiSlug: slug,
+                apiSection,
+                slug: joinUrlSlugs(slug, "client-libraries"),
+                artifacts: apiSection.artifacts,
+            };
+        }
+
+        Object.assign(children, {
+            ...apiDefinition.rootPackage.endpoints.reduce<Record<UrlSlug, UrlSlugTreeNode.TopLevelEndpoint>>(
+                (acc, topLevelEndpoint, index) => {
+                    acc[topLevelEndpoint.urlSlug] = this.constructTopLevelEndpointNode({
+                        apiSection,
+                        topLevelEndpoint,
+                        apiSlug: slug,
+                        isFirstItemInApi: index === 0,
+                    });
+                    return acc;
+                },
+                {}
+            ),
+            ...this.constructSlugToApiSubpackageRecord({
+                apiDefinition,
+                apiSection,
+                package_: apiDefinition.rootPackage,
+                apiSlug: slug,
+                slugInsideApi: "",
+                isFirstItemInApi: apiDefinition.rootPackage.endpoints.length === 0,
+            }),
+        });
+
+        return children;
     }
 
     private constructSlugToApiSubpackageRecord({
@@ -347,6 +380,7 @@ export class UrlSlugTree {
                 case "apiSubpackage":
                     inOrder.push(...this.inOrderTraverse(Object.values(node.children)));
                     break;
+                case "clientLibraries":
                 case "page":
                 case "topLevelEndpoint":
                 case "endpoint":
@@ -366,6 +400,7 @@ export type UrlSlugTreeNode =
     | UrlSlugTreeNode.Section
     | UrlSlugTreeNode.Page
     | UrlSlugTreeNode.Api
+    | UrlSlugTreeNode.ClientLibraries
     | UrlSlugTreeNode.TopLevelEndpoint
     | UrlSlugTreeNode.ApiSubpackage
     | UrlSlugTreeNode.Endpoint;
@@ -384,20 +419,22 @@ export declare namespace UrlSlugTreeNode {
 
     export interface Api extends BaseNode, BaseApiNode {
         type: "api";
-        apiSection: FernRegistryDocsRead.ApiSection;
-        children: Record<UrlSlug, TopLevelEndpoint | ApiSubpackage>;
+        children: Record<UrlSlug, ClientLibraries | TopLevelEndpoint | ApiSubpackage>;
+    }
+
+    export interface ClientLibraries extends BaseNode, BaseApiNode {
+        type: "clientLibraries";
+        artifacts: FernRegistryDocsRead.ApiArtifacts;
     }
 
     export interface TopLevelEndpoint extends BaseNode, BaseApiNode {
         type: "topLevelEndpoint";
-        apiSection: FernRegistryDocsRead.ApiSection;
         endpoint: FernRegistryApiRead.EndpointDefinition;
         isFirstItemInApi: boolean;
     }
 
     export interface ApiSubpackage extends BaseNode, BaseApiNode {
         type: "apiSubpackage";
-        apiSection: FernRegistryDocsRead.ApiSection;
         subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         isFirstItemInApi: boolean;
         children: Record<UrlSlug, ApiSubpackage | Endpoint>;
@@ -405,7 +442,6 @@ export declare namespace UrlSlugTreeNode {
 
     export interface Endpoint extends BaseNode, BaseApiNode {
         type: "endpoint";
-        apiSection: FernRegistryDocsRead.ApiSection;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 
@@ -415,6 +451,7 @@ export declare namespace UrlSlugTreeNode {
 
     export interface BaseApiNode {
         apiSlug: string;
+        apiSection: FernRegistryDocsRead.ApiSection;
     }
 }
 
@@ -427,6 +464,8 @@ function getIndexOfFirstNavigatableItem(nodes: UrlSlugTreeNode[], { startingAt }
     for (const [i, node] of nodes.slice(startingAt).entries()) {
         switch (node.type) {
             case "page":
+                return startingAt + i;
+            case "clientLibraries":
                 return startingAt + i;
             case "topLevelEndpoint":
             case "apiSubpackage":
@@ -448,6 +487,7 @@ function getIndexOfFirstNavigatableItem(nodes: UrlSlugTreeNode[], { startingAt }
 function getApiSlug(node: UrlSlugTreeNode): string | undefined {
     switch (node.type) {
         case "api":
+        case "clientLibraries":
         case "endpoint":
         case "apiSubpackage":
         case "topLevelEndpoint":

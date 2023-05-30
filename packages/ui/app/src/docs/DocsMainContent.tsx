@@ -42,6 +42,7 @@ export const DocsMainContent: React.FC = () => {
                     <RedirectToFirstApiItem />
                 </ApiDefinitionContextProvider>
             );
+        case "clientLibraries":
         case "apiSubpackage":
         case "endpoint":
         case "topLevelEndpoint":

@@ -7,6 +7,7 @@ export type ResolvedUrlPath =
     | ResolvedUrlPath.Section
     | ResolvedUrlPath.Page
     | ResolvedUrlPath.Api
+    | ResolvedUrlPath.ClientLibraries
     | ResolvedUrlPath.TopLevelEndpoint
     | ResolvedUrlPath.ApiSubpackage
     | ResolvedUrlPath.Endpoint;
@@ -28,6 +29,14 @@ export declare namespace ResolvedUrlPath {
         type: "api";
         apiSection: FernRegistryDocsRead.ApiSection;
         slug: string;
+    }
+
+    export interface ClientLibraries {
+        type: "clientLibraries";
+        apiSection: FernRegistryDocsRead.ApiSection;
+        apiSlug: string;
+        slug: string;
+        artifacts: FernRegistryDocsRead.ApiArtifacts;
     }
 
     export interface TopLevelEndpoint {
@@ -97,6 +106,14 @@ export class UrlPathResolverImpl {
                     type: "api",
                     apiSection: node.apiSection,
                     slug: node.slug,
+                };
+            case "clientLibraries":
+                return {
+                    type: "clientLibraries",
+                    apiSection: node.apiSection,
+                    apiSlug: node.apiSlug,
+                    slug: node.slug,
+                    artifacts: node.artifacts,
                 };
             case "topLevelEndpoint":
                 return {
