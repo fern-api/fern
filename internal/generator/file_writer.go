@@ -381,14 +381,23 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
 			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
 		}
+		typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath)
+		switch unionType.Shape.PropertiesType {
+		case "singleProperty":
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.Shape.SingleProperty.Name.Name.CamelCase.UnsafeName, "\"`")
+		case "samePropertiesAsObject":
+			t.writer.P(typeName)
+		case "noProperties":
+			t.writer.P("Unknown any `json:\"unknown\"`")
+		}
 		// Set all of the values in the marshaler.
 		t.writer.P("}{")
 		t.writer.P(discriminantName, ": x.", discriminantName, ",")
 		for _, propertyName := range propertyNames {
 			t.writer.P(propertyName, ": x.", propertyName, ",")
 		}
+		t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ": x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ",")
 		t.writer.P("}")
-		// TODO: Need to find a clean way to include the values when the union type is samePropertiesAsObject.
 		t.writer.P("return json.Marshal(marshaler)")
 	}
 	t.writer.P("}")

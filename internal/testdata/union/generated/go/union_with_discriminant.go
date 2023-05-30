@@ -47,15 +47,19 @@ func (x UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 	case "foo":
 		var marshaler = struct {
 			Type string `json:"_type"`
+			Foo  *Foo   `json:"foo"`
 		}{
 			Type: x.Type,
+			Foo:  x.Foo,
 		}
 		return json.Marshal(marshaler)
 	case "bar":
 		var marshaler = struct {
 			Type string `json:"_type"`
+			Bar  *Bar   `json:"bar"`
 		}{
 			Type: x.Type,
+			Bar:  x.Bar,
 		}
 		return json.Marshal(marshaler)
 	}

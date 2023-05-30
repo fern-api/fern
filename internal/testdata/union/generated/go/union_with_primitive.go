@@ -46,16 +46,20 @@ func (x UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
 	case "boolean":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type    string `json:"type"`
+			Boolean bool   `json:"value"`
 		}{
-			Type: x.Type,
+			Type:    x.Type,
+			Boolean: x.Boolean,
 		}
 		return json.Marshal(marshaler)
 	case "string":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type   string `json:"type"`
+			String string `json:"value"`
 		}{
-			Type: x.Type,
+			Type:   x.Type,
+			String: x.String,
 		}
 		return json.Marshal(marshaler)
 	}

@@ -43,15 +43,19 @@ func (x UnionWithUnknown) MarshalJSON() ([]byte, error) {
 	case "foo":
 		var marshaler = struct {
 			Type string `json:"type"`
+			*Foo
 		}{
 			Type: x.Type,
+			Foo:  x.Foo,
 		}
 		return json.Marshal(marshaler)
 	case "unknown":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type    string `json:"type"`
+			Unknown any    `json:"unknown"`
 		}{
-			Type: x.Type,
+			Type:    x.Type,
+			Unknown: x.Unknown,
 		}
 		return json.Marshal(marshaler)
 	}
