@@ -43,7 +43,7 @@ func (g *Generator) Generate() ([]*File, error) {
 func (g *Generator) generate(ir *ir.IntermediateRepresentation) ([]*File, error) {
 	var files []*File
 	// First write all of the package-level documentation, if any (i.e. in a doc.go file).
-	if ir.RootPackage != nil && ir.RootPackage.Docs != nil || len(*ir.RootPackage.Docs) > 0 {
+	if ir.RootPackage != nil && ir.RootPackage.Docs != nil && len(*ir.RootPackage.Docs) > 0 {
 		fileInfo := fileInfoForPackage(ir.ApiName, ir.RootPackage.FernFilepath)
 		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil)
 		writer.WriteDocs(ir.RootPackage.Docs)
