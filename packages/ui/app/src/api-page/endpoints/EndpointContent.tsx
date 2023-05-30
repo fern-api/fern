@@ -2,7 +2,6 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import classNames from "classnames";
 import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { ResolvedUrlPath } from "../../docs-context/url-path-resolver/UrlPathResolver";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 import { PageMargins } from "../../page-margins/PageMargins";
 import { useApiPageContext } from "../api-page-context/useApiPageContext";
@@ -12,20 +11,21 @@ import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
 import { EndpointPathParameter } from "./EndpointPathParameter";
+import { EndpointRequestSection } from "./EndpointRequestSection";
+import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
 import { EndpointTitle } from "./EndpointTitle";
-import { EndpointTypeSection } from "./EndpointTypeSection";
 import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
 
 export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
-        path: ResolvedUrlPath.Endpoint | ResolvedUrlPath.TopLevelEndpoint;
+        slug: string;
     }
 }
 
-export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, path }) => {
+export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slug }) => {
     const isInitialMount = useRef(true);
     useLayoutEffect(() => {
         isInitialMount.current = false;
@@ -39,7 +39,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
         [setHoveredResponsePropertyPath]
     );
 
-    const { isInVerticalCenter, setTargetRef } = useApiPageCenterElement({ slug: path.slug });
+    const { isInVerticalCenter, setTargetRef } = useApiPageCenterElement({ slug });
     const { onScrollToPath } = useDocsContext();
     const { containerRef: apiPageContainerRef } = useApiPageContext();
     useEffect(() => {
@@ -48,13 +48,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
         }
 
         const handler = () => {
-            onScrollToPath(path.slug);
+            onScrollToPath(slug);
         };
         apiPageContainerRef?.addEventListener("scroll", handler, false);
         return () => {
             apiPageContainerRef?.removeEventListener("scroll", handler);
         };
-    }, [apiPageContainerRef, isInVerticalCenter, onScrollToPath, path.slug]);
+    }, [apiPageContainerRef, isInVerticalCenter, onScrollToPath, slug]);
 
     return (
         <PageMargins>
@@ -98,15 +98,14 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, pat
                             )}
                             {endpoint.request != null && (
                                 <EndpointSection title="Request">
-                                    <EndpointTypeSection httpBody={endpoint.request} verb="expects" />
+                                    <EndpointRequestSection httpRequest={endpoint.request} />
                                 </EndpointSection>
                             )}
                             {endpoint.response != null && (
                                 <EndpointSection title="Response">
-                                    <EndpointTypeSection
-                                        httpBody={endpoint.response}
+                                    <EndpointResponseSection
+                                        httpResponse={endpoint.response}
                                         onHoverProperty={onHoverResponseProperty}
-                                        verb="returns"
                                     />
                                 </EndpointSection>
                             )}

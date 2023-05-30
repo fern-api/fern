@@ -74,7 +74,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [docsDefinition.files]
     );
 
-    const navigateToPathListeners = useSlugListeners({ selectedSlug: selectedPath?.slug });
+    const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug: selectedPath?.slug });
 
     const navigate = useNavigate();
     const [justNavigated, setJustNavigated] = useState(false);
@@ -96,7 +96,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
         [navigate, navigateToPathListeners, urlPathResolver]
     );
 
-    const scrollToPathListeners = useSlugListeners({ selectedSlug: selectedPath?.slug });
+    const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug: selectedPath?.slug });
 
     const onScrollToPath = useCallback(
         (slug: string) => {

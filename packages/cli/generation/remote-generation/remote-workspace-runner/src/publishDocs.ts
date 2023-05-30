@@ -314,7 +314,7 @@ function constructArtifacts({
             continue;
         }
 
-        const { repo: githubRepoName } = generator.outputMode;
+        const githubRepoName = `${generator.outputMode.owner}/${generator.outputMode.repo}`;
         const sdk = generator.outputMode.publishInfo._visit<FernRegistry.docs.v1.write.PublishedSdk | undefined>({
             npm: (npm) =>
                 FernRegistry.docs.v1.write.PublishedSdk.npm({

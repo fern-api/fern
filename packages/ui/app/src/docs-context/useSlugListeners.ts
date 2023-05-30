@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 export declare namespace useSlugListeners {
     export interface Args {
@@ -11,7 +11,13 @@ export declare namespace useSlugListeners {
     }
 }
 
-export function useSlugListeners({ selectedSlug }: useSlugListeners.Args): useSlugListeners.Return {
+export function useSlugListeners(label: string, { selectedSlug }: useSlugListeners.Args): useSlugListeners.Return {
+    // so the callbacks are stable
+    const selectedSlugRef = useRef(selectedSlug);
+    useEffect(() => {
+        selectedSlugRef.current = selectedSlug;
+    }, [selectedSlug]);
+
     const listeners = useRef<Record<string, (() => void)[]>>({});
 
     const invokeListeners = useCallback((slug: string) => {
@@ -27,7 +33,7 @@ export function useSlugListeners({ selectedSlug }: useSlugListeners.Args): useSl
         (slug: string, listener: () => void) => {
             const listenersForPath = (listeners.current[slug] ??= []);
             listenersForPath.push(listener);
-            if (slug === selectedSlug) {
+            if (slug === selectedSlugRef.current) {
                 listener();
             }
             return () => {
@@ -36,14 +42,14 @@ export function useSlugListeners({ selectedSlug }: useSlugListeners.Args): useSl
                     const indexOfListenerToDelete = listenersForSlug.indexOf(listener);
                     if (indexOfListenerToDelete !== -1) {
                         // eslint-disable-next-line no-console
-                        console.warn("Failed to deregister listener.");
+                        console.warn(`Failed to deregister listener for ${label}.`);
                     } else {
                         listenersForSlug.splice(indexOfListenerToDelete, 1);
                     }
                 }
             };
         },
-        [selectedSlug]
+        [label]
     );
 
     return {
