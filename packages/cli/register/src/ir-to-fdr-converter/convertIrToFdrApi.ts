@@ -21,9 +21,10 @@ export function convertIrToFdrApi(ir: IntermediateRepresentation): FernRegistry.
 
     for (const [subpackageId, subpackage] of entries(ir.subpackages)) {
         const convertedSubpackageId = convertSubpackageId(subpackageId);
+        const service = subpackage.service != null ? ir.services[subpackage.service] : undefined;
         fdrApi.subpackages[convertedSubpackageId] = {
             subpackageId: convertedSubpackageId,
-            name: subpackage.name.originalName,
+            name: service?.displayName ?? subpackage.name.originalName,
             ...convertPackage(subpackage, ir),
         };
     }
