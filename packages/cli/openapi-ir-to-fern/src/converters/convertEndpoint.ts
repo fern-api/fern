@@ -66,6 +66,10 @@ export function convertEndpoint({
         convertedEndpoint["path-parameters"] = pathParameters;
     }
 
+    if (endpoint.summary != null) {
+        convertedEndpoint["display-name"] = endpoint.summary;
+    }
+
     const headers: Record<string, RawSchemas.HttpHeaderSchema> = {};
     const endpointSpecificHeaders = endpoint.headers.filter((header) => {
         return !globalHeaderNames.has(header.name);

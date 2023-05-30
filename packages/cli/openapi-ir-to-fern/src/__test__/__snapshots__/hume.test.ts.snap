@@ -13,6 +13,7 @@ exports[`open api parser hume simple 1`] = `
         "endpoints": {
           "startJob": {
             "auth": false,
+            "display-name": "Start Job",
             "docs": "Start a new batch job.",
             "errors": [],
             "method": "POST",
@@ -66,6 +67,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "endpoints": {
           "getJobArtifacts": {
             "auth": false,
+            "display-name": "Get Job Artifacts",
             "docs": "Get the artifacts ZIP of a completed job.",
             "errors": [],
             "method": "GET",
@@ -83,6 +85,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "getJobDetails": {
             "auth": false,
+            "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
             "errors": [],
             "method": "GET",
@@ -100,6 +103,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
           "getJobPredictions": {
             "auth": false,
+            "display-name": "Get Job Predictions",
             "docs": "Get the JSON predictions of a completed job.",
             "errors": [],
             "method": "GET",
@@ -128,6 +132,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "endpoints": {
           "listJobs": {
             "auth": false,
+            "display-name": "List Jobs",
             "docs": "Sort and filter jobs.",
             "errors": [],
             "method": "GET",

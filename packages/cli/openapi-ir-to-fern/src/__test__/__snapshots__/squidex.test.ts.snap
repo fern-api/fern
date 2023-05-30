@@ -4322,6 +4322,7 @@ exports[`open api parser squidex simple 1`] = `
         "endpoints": {
           "deleteApp": {
             "auth": true,
+            "display-name": "Delete the app.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4339,6 +4340,7 @@ exports[`open api parser squidex simple 1`] = `
           },
           "deleteClient": {
             "auth": true,
+            "display-name": "Revoke an app client.",
             "docs": "The application that uses this client credentials cannot access the API after it has been revoked.",
             "errors": [
               "root.BadRequestError",
@@ -4364,6 +4366,7 @@ exports[`open api parser squidex simple 1`] = `
           },
           "deleteContributor": {
             "auth": true,
+            "display-name": "Remove contributor.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4389,6 +4392,7 @@ exports[`open api parser squidex simple 1`] = `
           },
           "deleteImage": {
             "auth": true,
+            "display-name": "Remove the app image.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4410,6 +4414,7 @@ exports[`open api parser squidex simple 1`] = `
           },
           "deleteLanguage": {
             "auth": true,
+            "display-name": "Deletes an app language.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4435,6 +4440,7 @@ exports[`open api parser squidex simple 1`] = `
           },
           "deleteMyself": {
             "auth": true,
+            "display-name": "Remove yourself.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4456,6 +4462,7 @@ exports[`open api parser squidex simple 1`] = `
           },
           "deleteRole": {
             "auth": true,
+            "display-name": "Remove role from app.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4481,6 +4488,7 @@ exports[`open api parser squidex simple 1`] = `
           },
           "deleteWorkflow": {
             "auth": true,
+            "display-name": "Delete a workflow.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4506,6 +4514,7 @@ exports[`open api parser squidex simple 1`] = `
           },
           "getApp": {
             "auth": true,
+            "display-name": "Get an app by name.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -4526,6 +4535,7 @@ exports[`open api parser squidex simple 1`] = `
           },
           "getApps": {
             "auth": true,
+            "display-name": "Get your apps.",
             "docs": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
@@ -4540,6 +4550,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getAssetScripts": {
             "auth": true,
+            "display-name": "Get the app asset scripts.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -4560,6 +4571,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getClients": {
             "auth": true,
+            "display-name": "Get app clients.",
             "docs": "Gets all configured clients for the app with the specified name.",
             "errors": [
               "root.NotFoundError",
@@ -4580,6 +4592,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getContributors": {
             "auth": true,
+            "display-name": "Get app contributors.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -4600,6 +4613,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getImage": {
             "auth": true,
+            "display-name": "Get the app image.",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -4617,6 +4631,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getLanguages": {
             "auth": true,
+            "display-name": "Get app languages.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -4637,6 +4652,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getPermissions": {
             "auth": true,
+            "display-name": "Get app permissions.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -4657,6 +4673,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getRoles": {
             "auth": true,
+            "display-name": "Get app roles.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -4677,6 +4694,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getSettings": {
             "auth": true,
+            "display-name": "Get the app settings.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -4697,6 +4715,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getTeamApps": {
             "auth": true,
+            "display-name": "Get team apps.",
             "docs": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
@@ -4717,6 +4736,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "getWorkflows": {
             "auth": true,
+            "display-name": "Get app workflow.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -4737,6 +4757,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "postApp": {
             "auth": true,
+            "display-name": "Create a new app.",
             "docs": "You can only create an app when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new app automatically.",
             "errors": [
@@ -4770,6 +4791,7 @@ You will be assigned as owner of the new app automatically.",
           },
           "postClient": {
             "auth": true,
+            "display-name": "Create a new app client.",
             "docs": "Create a new client for the app with the specified name.
 The client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
             "errors": [
@@ -4805,6 +4827,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postContributor": {
             "auth": true,
+            "display-name": "Assign contributor to app.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4832,6 +4855,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postLanguage": {
             "auth": true,
+            "display-name": "Attaches an app language.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4866,6 +4890,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postRole": {
             "auth": true,
+            "display-name": "Add role to app.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4900,6 +4925,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postWorkflow": {
             "auth": true,
+            "display-name": "Create a workflow.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4934,6 +4960,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putApp": {
             "auth": true,
+            "display-name": "Update the app.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -4972,6 +4999,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putAppTeam": {
             "auth": true,
+            "display-name": "Transfer the app.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5006,6 +5034,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putAssetScripts": {
             "auth": true,
+            "display-name": "Update the app asset scripts.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5064,6 +5093,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putClient": {
             "auth": true,
+            "display-name": "Updates an app client.",
             "docs": "Only the display name can be changed, create a new client if necessary.",
             "errors": [
               "root.BadRequestError",
@@ -5118,6 +5148,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putLanguage": {
             "auth": true,
+            "display-name": "Updates an app language.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5164,6 +5195,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putRole": {
             "auth": true,
+            "display-name": "Update an app role.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5206,6 +5238,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putSettings": {
             "auth": true,
+            "display-name": "Update the app settings.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5252,6 +5285,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putWorkflow": {
             "auth": true,
+            "display-name": "Update a workflow.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5302,6 +5336,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "uploadImage": {
             "auth": true,
+            "display-name": "Upload the app image.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5344,6 +5379,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "bulkUpdateAssets": {
             "auth": true,
+            "display-name": "Bulk update assets.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5390,6 +5426,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteAsset": {
             "auth": true,
+            "display-name": "Delete an asset.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5426,6 +5463,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteAssetFolder": {
             "auth": true,
+            "display-name": "Delete an asset folder.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5447,6 +5485,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getAsset": {
             "auth": true,
+            "display-name": "Get an asset by id.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -5471,6 +5510,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getAssetContent": {
             "auth": true,
+            "display-name": "Get the asset content.",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -5563,6 +5603,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getAssetContentBySlug": {
             "auth": true,
+            "display-name": "Get the asset content.",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -5663,6 +5704,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getAssetFolders": {
             "auth": true,
+            "display-name": "Get asset folders.",
             "docs": "Get all asset folders for the app.",
             "errors": [
               "root.NotFoundError",
@@ -5698,6 +5740,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getAssets": {
             "auth": true,
+            "display-name": "Get assets.",
             "docs": "Get all assets for the app.",
             "errors": [
               "root.NotFoundError",
@@ -5758,6 +5801,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getAssetsPost": {
             "auth": true,
+            "display-name": "Get assets.",
             "docs": "Get all assets for the app.",
             "errors": [
               "root.BadRequestError",
@@ -5785,6 +5829,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getTags": {
             "auth": true,
+            "display-name": "Get assets tags.",
             "docs": "Get all tags for assets.",
             "errors": [
               "root.NotFoundError",
@@ -5805,6 +5850,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postAsset": {
             "auth": true,
+            "display-name": "Upload a new asset.",
             "docs": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
             "errors": [
               "root.BadRequestError",
@@ -5853,6 +5899,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postAssetFolder": {
             "auth": true,
+            "display-name": "Create an asset folder.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5891,6 +5938,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postUpsertAsset": {
             "auth": true,
+            "display-name": "Upsert an asset.",
             "docs": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
             "errors": [
               "root.BadRequestError",
@@ -5938,6 +5986,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putAsset": {
             "auth": true,
+            "display-name": "Update an asset.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -5992,6 +6041,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putAssetContent": {
             "auth": true,
+            "display-name": "Replace asset content.",
             "docs": "Use multipart request to upload an asset.",
             "errors": [
               "root.BadRequestError",
@@ -6028,6 +6078,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putAssetFolder": {
             "auth": true,
+            "display-name": "Update an asset folder.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6066,6 +6117,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putAssetFolderParent": {
             "auth": true,
+            "display-name": "Move an asset folder.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6104,6 +6156,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putAssetParent": {
             "auth": true,
+            "display-name": "Moves the asset.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6142,6 +6195,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putTag": {
             "auth": true,
+            "display-name": "Rename an asset tag.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6191,6 +6245,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "deleteBackup": {
             "auth": true,
+            "display-name": "Delete a backup.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6212,6 +6267,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getBackupContent": {
             "auth": true,
+            "display-name": "Get the backup content.",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -6233,6 +6289,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getBackupContentV2": {
             "auth": true,
+            "display-name": "Get the backup content.",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -6265,6 +6322,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getBackups": {
             "auth": true,
+            "display-name": "Get all backup jobs.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -6285,6 +6343,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getRestoreJob": {
             "auth": true,
+            "display-name": "Get current restore status.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -6298,6 +6357,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postBackup": {
             "auth": true,
+            "display-name": "Start a new backup.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6315,6 +6375,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postRestoreJob": {
             "auth": true,
+            "display-name": "Restore a backup.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6353,6 +6414,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "deleteComment": {
             "auth": true,
+            "display-name": "Delete a comment.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6378,6 +6440,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getComments": {
             "auth": true,
+            "display-name": "Get all comments.",
             "docs": "When passing in a version you can retrieve all updates since then.",
             "errors": [
               "root.NotFoundError",
@@ -6412,6 +6475,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getWatchingUsers": {
             "auth": true,
+            "display-name": "Get all watching users..",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -6436,6 +6500,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postComment": {
             "auth": true,
+            "display-name": "Create a new comment.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6467,6 +6532,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putComment": {
             "auth": true,
+            "display-name": "Update a comment.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -6509,6 +6575,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "bulkUpdateContents": {
             "auth": true,
+            "display-name": "Bulk update content items.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -6571,6 +6638,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "createDraft": {
             "auth": true,
+            "display-name": "Create a new draft version.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -6600,6 +6668,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteContent": {
             "auth": true,
+            "display-name": "Delete a content item.",
             "docs": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -6640,6 +6709,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteContentStatus": {
             "auth": true,
+            "display-name": "Cancel status change of a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -6669,6 +6739,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteVersion": {
             "auth": true,
+            "display-name": "Delete the draft version.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -6698,6 +6769,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getContent": {
             "auth": true,
+            "display-name": "Get a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.NotFoundError",
@@ -6736,6 +6808,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getContentValidity": {
             "auth": true,
+            "display-name": "Get a content item validity.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -6761,6 +6834,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getContentVersion": {
             "auth": true,
+            "display-name": "Get a content by version.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [],
             "method": "GET",
@@ -6790,6 +6864,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getContents": {
             "auth": true,
+            "display-name": "Queries contents.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.NotFoundError",
@@ -6829,6 +6904,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getContentsPost": {
             "auth": true,
+            "display-name": "Queries contents.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -6860,6 +6936,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getReferences": {
             "auth": true,
+            "display-name": "Get all references of a content.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.NotFoundError",
@@ -6898,6 +6975,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getReferencing": {
             "auth": true,
+            "display-name": "Get a referencing contents of a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.NotFoundError",
@@ -6936,6 +7014,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "patchContent": {
             "auth": true,
+            "display-name": "Patchs a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -6971,6 +7050,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postContent": {
             "auth": true,
+            "display-name": "Create a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -7020,6 +7100,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postContents": {
             "auth": true,
+            "display-name": "Import content items.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -7070,6 +7151,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postUpsertContent": {
             "auth": true,
+            "display-name": "Upsert a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -7123,6 +7205,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putContent": {
             "auth": true,
+            "display-name": "Update a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -7158,6 +7241,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putContentStatus": {
             "auth": true,
+            "display-name": "Change status of a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
             "errors": [
               "root.BadRequestError",
@@ -7219,6 +7303,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "getDump": {
             "auth": true,
+            "display-name": "Creates a dump and writes it into storage..",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -7229,6 +7314,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getGCDump": {
             "auth": true,
+            "display-name": "Creates a gc dump and writes it into storage.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -7250,6 +7336,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "getEventConsumers": {
             "auth": true,
+            "display-name": "Get event consumers.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -7263,6 +7350,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "resetEventConsumer": {
             "auth": true,
+            "display-name": "Reset an event consumer.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7284,6 +7372,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "startEventConsumer": {
             "auth": true,
+            "display-name": "Start an event consumer.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7305,6 +7394,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "stopEventConsumer": {
             "auth": true,
+            "display-name": "Stop an event consumer.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7337,6 +7427,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "getAppHistory": {
             "auth": true,
+            "display-name": "Get historical events.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -7367,6 +7458,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getTeamHistory": {
             "auth": true,
+            "display-name": "Get historical events for a team.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -7408,6 +7500,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "getLanguages": {
             "auth": true,
+            "display-name": "Get supported languages.",
             "docs": "Provide a list of supported language codes, following the ISO2Code standard.",
             "errors": [
               "root.InternalServerError",
@@ -7432,6 +7525,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "getNews": {
             "auth": true,
+            "display-name": "Get features since version.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -7466,6 +7560,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "deleteComment": {
             "auth": true,
+            "display-name": "Delete a notification.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7487,6 +7582,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getNotifications": {
             "auth": true,
+            "display-name": "Get all notifications.",
             "docs": "When passing in a version you can retrieve all updates since then.",
             "errors": [
               "root.InternalServerError",
@@ -7527,6 +7623,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "getAppPing": {
             "auth": true,
+            "display-name": "Get ping status.",
             "docs": "Can be used to test, if the Squidex API is alive and responding.",
             "errors": [
               "root.InternalServerError",
@@ -7542,6 +7639,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getInfo": {
             "auth": true,
+            "display-name": "Get API information.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -7555,6 +7653,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getPing": {
             "auth": true,
+            "display-name": "Get ping status of the API.",
             "docs": "Can be used to test, if the Squidex API is alive and responding.",
             "errors": [
               "root.InternalServerError",
@@ -7575,6 +7674,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "getPlans": {
             "auth": true,
+            "display-name": "Get app plan information.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -7595,6 +7695,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getTeamPlans": {
             "auth": true,
+            "display-name": "Get team plan information.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -7615,6 +7716,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putPlan": {
             "auth": true,
+            "display-name": "Change the app plan.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7642,6 +7744,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putTeamPlan": {
             "auth": true,
+            "display-name": "Change the team plan.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7680,6 +7783,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "deleteEvent": {
             "auth": true,
+            "display-name": "Cancels an event.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7701,6 +7805,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteEvents": {
             "auth": true,
+            "display-name": "Cancels all events.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7717,6 +7822,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteRule": {
             "auth": true,
+            "display-name": "Delete a rule.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7738,6 +7844,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteRuleEvents": {
             "auth": true,
+            "display-name": "Cancels all rule events.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7758,6 +7865,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteRuleRun": {
             "auth": true,
+            "display-name": "Cancel the current run.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7774,6 +7882,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "disableRule": {
             "auth": true,
+            "display-name": "Disable a rule.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7799,6 +7908,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "enableRule": {
             "auth": true,
+            "display-name": "Enable a rule.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7824,6 +7934,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getActions": {
             "auth": true,
+            "display-name": "Get supported rule actions.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -7837,6 +7948,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getEventSchema": {
             "auth": true,
+            "display-name": "Provide the json schema for the event with the specified name.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -7857,6 +7969,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getEventTypes": {
             "auth": true,
+            "display-name": "Provide a list of all event types that are used in rules.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -7870,6 +7983,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getEvents": {
             "auth": true,
+            "display-name": "Get rule events.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -7910,6 +8024,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getRules": {
             "auth": true,
+            "display-name": "Get rules.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -7930,6 +8045,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postRule": {
             "auth": true,
+            "display-name": "Create a new rule.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7957,6 +8073,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putEvent": {
             "auth": true,
+            "display-name": "Retry the event immediately.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7978,6 +8095,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putRule": {
             "auth": true,
+            "display-name": "Update a rule.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8028,6 +8146,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putRuleRun": {
             "auth": true,
+            "display-name": "Run a rule.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8058,6 +8177,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "simulateGET": {
             "auth": true,
+            "display-name": "Simulate a rule.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -8082,6 +8202,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "simulatePOST": {
             "auth": true,
+            "display-name": "Simulate a rule.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8109,6 +8230,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "triggerRule": {
             "auth": true,
+            "display-name": "Trigger a rule.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8141,6 +8263,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "deleteField": {
             "auth": true,
+            "display-name": "Delete a schema field.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8170,6 +8293,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteNestedField": {
             "auth": true,
+            "display-name": "Delete a nested field.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8203,6 +8327,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteSchema": {
             "auth": true,
+            "display-name": "Delete a schema.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8224,6 +8349,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "disableField": {
             "auth": true,
+            "display-name": "Disable a schema field.",
             "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
             "errors": [
               "root.BadRequestError",
@@ -8253,6 +8379,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "disableNestedField": {
             "auth": true,
+            "display-name": "Disable a nested field.",
             "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
             "errors": [
               "root.BadRequestError",
@@ -8286,6 +8413,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "enableField": {
             "auth": true,
+            "display-name": "Enable a schema field.",
             "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
             "errors": [
               "root.BadRequestError",
@@ -8315,6 +8443,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "enableNestedField": {
             "auth": true,
+            "display-name": "Enable a nested field.",
             "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
             "errors": [
               "root.BadRequestError",
@@ -8348,6 +8477,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getSchema": {
             "auth": true,
+            "display-name": "Get a schema by name.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -8372,6 +8502,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getSchemas": {
             "auth": true,
+            "display-name": "Get schemas.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -8392,6 +8523,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "hideField": {
             "auth": true,
+            "display-name": "Hide a schema field.",
             "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
             "errors": [
               "root.BadRequestError",
@@ -8421,6 +8553,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "hideNestedField": {
             "auth": true,
+            "display-name": "Hide a nested field.",
             "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
             "errors": [
               "root.BadRequestError",
@@ -8454,6 +8587,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "lockField": {
             "auth": true,
+            "display-name": "Lock a schema field.",
             "docs": "A locked field cannot be updated or deleted.",
             "errors": [
               "root.BadRequestError",
@@ -8483,6 +8617,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "lockNestedField": {
             "auth": true,
+            "display-name": "Lock a nested field.",
             "docs": "A locked field cannot be edited or deleted.",
             "errors": [
               "root.BadRequestError",
@@ -8516,6 +8651,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postField": {
             "auth": true,
+            "display-name": "Add a schema field.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8548,6 +8684,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postNestedField": {
             "auth": true,
+            "display-name": "Add a nested field.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8584,6 +8721,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "postSchema": {
             "auth": true,
+            "display-name": "Create a new schema.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8629,6 +8767,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "publishSchema": {
             "auth": true,
+            "display-name": "Publish a schema.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8654,6 +8793,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putCategory": {
             "auth": true,
+            "display-name": "Update a schema category.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8692,6 +8832,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putField": {
             "auth": true,
+            "display-name": "Update a schema field.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8727,6 +8868,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putNestedField": {
             "auth": true,
+            "display-name": "Update a nested field.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8766,6 +8908,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putNestedFieldOrdering": {
             "auth": true,
+            "display-name": "Reorder all nested fields.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8801,6 +8944,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putPreviewUrls": {
             "auth": true,
+            "display-name": "Update the preview urls.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8832,6 +8976,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putRules": {
             "auth": true,
+            "display-name": "Update the rules.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8870,6 +9015,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putSchema": {
             "auth": true,
+            "display-name": "Update a schema.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8932,6 +9078,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putSchemaFieldOrdering": {
             "auth": true,
+            "display-name": "Reorder all fields.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8963,6 +9110,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putSchemaSync": {
             "auth": true,
+            "display-name": "Synchronize a schema.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9008,6 +9156,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putSchemaUIFields": {
             "auth": true,
+            "display-name": "Configure UI fields.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9050,6 +9199,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "putScripts": {
             "auth": true,
+            "display-name": "Update the scripts.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9081,6 +9231,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "showField": {
             "auth": true,
+            "display-name": "Show a schema field.",
             "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
             "errors": [
               "root.BadRequestError",
@@ -9110,6 +9261,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "showNestedField": {
             "auth": true,
+            "display-name": "Show a nested field.",
             "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
             "errors": [
               "root.BadRequestError",
@@ -9143,6 +9295,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "unpublishSchema": {
             "auth": true,
+            "display-name": "Unpublish a schema.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9179,6 +9332,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "getSearchResults": {
             "auth": true,
+            "display-name": "Get search results.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9220,6 +9374,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "getCurrentStorageSize": {
             "auth": true,
+            "display-name": "Get total asset size.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9240,6 +9395,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getLog": {
             "auth": true,
+            "display-name": "Get api calls as log file.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9260,6 +9416,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getStorageSizes": {
             "auth": true,
+            "display-name": "Get asset usage by date.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9288,6 +9445,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getStorageSizesForTeam": {
             "auth": true,
+            "display-name": "Get asset usage by date for team.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9316,6 +9474,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getTeamCurrentStorageSizeForTeam": {
             "auth": true,
+            "display-name": "Get total asset size by team.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9336,6 +9495,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getUsages": {
             "auth": true,
+            "display-name": "Get api calls in date range.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9364,6 +9524,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getUsagesForTeam": {
             "auth": true,
+            "display-name": "Get api calls in date range for team.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9403,6 +9564,7 @@ The client secret is auto generated on the server and returned. The client does 
         "endpoints": {
           "deleteContributor": {
             "auth": true,
+            "display-name": "Remove contributor.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9428,6 +9590,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "deleteMyself": {
             "auth": true,
+            "display-name": "Remove yourself.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9449,6 +9612,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getContributors": {
             "auth": true,
+            "display-name": "Get team contributors.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9469,6 +9633,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getTeam": {
             "auth": true,
+            "display-name": "Get an team by name.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9489,6 +9654,7 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "getTeams": {
             "auth": true,
+            "display-name": "Get your teams.",
             "docs": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all teams, where you are assigned as a contributor.",
             "errors": [
@@ -9503,6 +9669,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
           },
           "postContributor": {
             "auth": true,
+            "display-name": "Assign contributor to team.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9530,6 +9697,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
           },
           "postTeam": {
             "auth": true,
+            "display-name": "Create a new team.",
             "docs": "You can only create an team when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new team automatically.",
             "errors": [
@@ -9559,6 +9727,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "putTeam": {
             "auth": true,
+            "display-name": "Update the team.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9604,6 +9773,7 @@ You will be assigned as owner of the new team automatically.",
         "endpoints": {
           "getTemplate": {
             "auth": true,
+            "display-name": "Get template details.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9624,6 +9794,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "getTemplates": {
             "auth": true,
+            "display-name": "Get all templates.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -9648,6 +9819,7 @@ You will be assigned as owner of the new team automatically.",
         "endpoints": {
           "postTranslation": {
             "auth": true,
+            "display-name": "Translate a text.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9700,6 +9872,7 @@ You will be assigned as owner of the new team automatically.",
         "endpoints": {
           "deleteUser": {
             "auth": true,
+            "display-name": "Delete a User.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9718,6 +9891,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "getUser": {
             "auth": true,
+            "display-name": "Get a user by ID.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9738,6 +9912,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "getUsers": {
             "auth": true,
+            "display-name": "Get users by query.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -9771,6 +9946,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "lockUser": {
             "auth": true,
+            "display-name": "Lock a user.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9793,6 +9969,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "postUser": {
             "auth": true,
+            "display-name": "Create a new user.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9832,6 +10009,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "putUser": {
             "auth": true,
+            "display-name": "Update a user.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9878,6 +10056,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "unlockUser": {
             "auth": true,
+            "display-name": "Unlock a user.",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -9911,6 +10090,7 @@ You will be assigned as owner of the new team automatically.",
         "endpoints": {
           "getUser": {
             "auth": true,
+            "display-name": "Get user by id.",
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -9931,6 +10111,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "getUserPicture": {
             "auth": true,
+            "display-name": "Get user picture by id.",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9948,6 +10129,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "getUserResources": {
             "auth": true,
+            "display-name": "Get the user resources.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
@@ -9961,6 +10143,7 @@ You will be assigned as owner of the new team automatically.",
           },
           "getUsers": {
             "auth": true,
+            "display-name": "Get users by query.",
             "docs": "Search the user by query that contains the email address or the part of the email address.",
             "errors": [
               "root.InternalServerError",
