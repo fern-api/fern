@@ -3,6 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { HttpError, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
+import { getReferenceOccurrences } from "./utils/getReferenceOccurrences";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
@@ -13,11 +14,17 @@ export abstract class AbstractOpenAPIV3ParserContext {
     public logger: Logger;
     public document: OpenAPIV3.Document;
     public taskContext: TaskContext;
+    public refOccurrences: Record<string, number>;
 
     constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
         this.document = document;
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
+        this.refOccurrences = getReferenceOccurrences(document);
+    }
+
+    public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
+        return this.refOccurrences[schema.$ref] ?? 0;
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
@@ -61,13 +68,13 @@ export abstract class AbstractOpenAPIV3ParserContext {
     public resolveRequestBodyReference(requestBody: OpenAPIV3.ReferenceObject): OpenAPIV3.RequestBodyObject {
         if (
             this.document.components == null ||
-            this.document.components.responses == null ||
+            this.document.components.requestBodies == null ||
             !requestBody.$ref.startsWith(REQUEST_BODY_REFERENCE_PREFIX)
         ) {
             throw new Error(`Failed to resolve ${requestBody.$ref}`);
         }
         const requestBodyKey = requestBody.$ref.substring(REQUEST_BODY_REFERENCE_PREFIX.length);
-        const resolvedRequestBody = this.document.components.requestBodies?.[requestBodyKey];
+        const resolvedRequestBody = this.document.components.requestBodies[requestBodyKey];
         if (resolvedRequestBody == null) {
             throw new Error(`${requestBody.$ref} is undefined`);
         }

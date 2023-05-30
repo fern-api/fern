@@ -3498,6 +3498,15 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "FileObject": {
+          "docs": "This is the file you will upload in a multi-part form.",
+          "properties": {
+            "file": {
+              "docs": "Upload the file you want to attach to this entry.",
+              "type": "optional<string>",
+            },
+          },
+        },
         "FileRefTypeEnum": {
           "docs": "type of files allowed when uploading attachments",
           "enum": [
@@ -6945,6 +6954,10 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "TimesheetToCreateContainerWithFile": {
+          "docs": undefined,
+          "type": "TimesheetToCreateWithFile",
+        },
         "TimesheetToCreateWithFile": {
           "docs": undefined,
           "extends": [
@@ -8071,7 +8084,7 @@ exports[`open api parser deel simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "FileObject",
+              "name": "AddContractDocumentRequest",
               "query-parameters": undefined,
             },
             "response": {
@@ -8224,7 +8237,7 @@ exports[`open api parser deel simple 1`] = `
                 },
               },
               "headers": undefined,
-              "name": "FileObject",
+              "name": "EditContractDocumentRequest",
               "query-parameters": undefined,
             },
             "response": {
@@ -10035,7 +10048,7 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {},
               },
               "headers": undefined,
-              "name": "TimesheetToCreateContainerWithFile",
+              "name": "CreateTimesheetRequest",
               "query-parameters": undefined,
             },
             "response": {

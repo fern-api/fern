@@ -4,9 +4,9 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
-const APPLICATION_JSON_CONTENT = "application/json";
-const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
-const MULTIPART_CONTENT = "multipart/form-data";
+export const APPLICATION_JSON_CONTENT = "application/json";
+export const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
+export const MULTIPART_CONTENT = "multipart/form-data";
 
 export function convertRequest({
     requestBody,
@@ -34,7 +34,10 @@ export function convertRequest({
               };
 
         return Request.multipart({
-            name: resolvedMultipartSchema.id,
+            name:
+                isReferenceObject(multipartSchema) && context.getNumberOfOccurrencesForRef(multipartSchema) === 1
+                    ? resolvedMultipartSchema.id
+                    : undefined,
             description: undefined,
             properties: Object.entries(resolvedMultipartSchema.schema.properties ?? {}).map(([key, definition]) => {
                 if (!isReferenceObject(definition) && definition.type === "string" && definition.format === "binary") {
