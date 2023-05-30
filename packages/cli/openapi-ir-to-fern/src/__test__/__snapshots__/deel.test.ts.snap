@@ -7415,6 +7415,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "End-points to retrieve paid invoices and reciepts.",
         "endpoints": {
           "GetPaymentsBreakDownById": {
             "audiences": [
@@ -7714,6 +7715,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
         "endpoints": {
           "addPremium": {
             "audiences": [
@@ -8083,6 +8085,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
         "endpoints": {
           "addContractDocument": {
             "audiences": [
@@ -8577,6 +8580,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Employee of Record (EOR).",
         "endpoints": {
           "createEorContract": {
             "audiences": [
@@ -8645,6 +8649,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "API end-points related to HRIS data.",
         "endpoints": {
           "createDirectEmployee": {
             "audiences": [
@@ -8683,6 +8688,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "The Invoices resource lets you create, amend and retrieve invoices related to Deel contracts.",
         "endpoints": {
           "createInvoiceAdjustment": {
             "audiences": [
@@ -9027,6 +9033,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Helper end-points for choosing options for other operations",
         "endpoints": {
           "getCountries": {
             "audiences": [
@@ -9168,6 +9175,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Helper end-points for managing milestones of Deel contracts",
         "endpoints": {
           "createMilestone": {
             "audiences": [
@@ -9387,6 +9395,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "End-points to manage off-cycle payments for a given contract",
         "endpoints": {
           "createOffCyclePayment": {
             "audiences": [
@@ -9496,6 +9505,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Helper end-points for additional information about your organizations",
         "endpoints": {
           "getAgreements": {
             "audiences": [
@@ -9610,6 +9620,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "End-points to manage tasks for a given contract",
         "endpoints": {
           "createContractPgoTak": {
             "audiences": [
@@ -9813,6 +9824,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Manage time off requests.",
         "endpoints": {
           "createEorTimeOffs": {
             "audiences": [
@@ -10028,6 +10040,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "The Invoices resource lets you create, amend and retrieve timesheets of Deel contracts.",
         "endpoints": {
           "createTimesheet": {
             "audiences": [

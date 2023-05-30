@@ -2552,7 +2552,7 @@ Upload a document to be indexed and used for search.
           "url": "https://api.vellum.ai",
         },
       ],
-      "tags": [],
+      "tags": {},
       "title": "Vellum Client API",
       "variables": {},
     },

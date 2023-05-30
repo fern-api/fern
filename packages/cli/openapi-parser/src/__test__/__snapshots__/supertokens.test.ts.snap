@@ -15715,7 +15715,52 @@ e.g.:
       },
       "securitySchemes": {},
       "servers": [],
-      "tags": [],
+      "tags": {
+        "Core": {
+          "description": undefined,
+          "id": "Core",
+        },
+        "Dashboard Recipe": {
+          "description": undefined,
+          "id": "Dashboard Recipe",
+        },
+        "EmailPassword Recipe": {
+          "description": undefined,
+          "id": "EmailPassword Recipe",
+        },
+        "EmailVerification Recipe": {
+          "description": undefined,
+          "id": "EmailVerification Recipe",
+        },
+        "Passwordless Recipe": {
+          "description": undefined,
+          "id": "Passwordless Recipe",
+        },
+        "Session Recipe": {
+          "description": undefined,
+          "id": "Session Recipe",
+        },
+        "ThirdParty Recipe": {
+          "description": undefined,
+          "id": "ThirdParty Recipe",
+        },
+        "Totp Recipe": {
+          "description": undefined,
+          "id": "Totp Recipe",
+        },
+        "User Metadata Recipe": {
+          "description": undefined,
+          "id": "User Metadata Recipe",
+        },
+        "User Roles Recipe": {
+          "description": undefined,
+          "id": "User Roles Recipe",
+        },
+        "UserIdMapping Recipe": {
+          "description": undefined,
+          "id": "UserIdMapping Recipe",
+        },
+      },
       "title": "Core Driver Interface",
       "variables": {},
     },

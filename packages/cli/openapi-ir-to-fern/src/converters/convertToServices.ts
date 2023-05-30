@@ -27,9 +27,14 @@ export function convertToServices({
     let schemaIdsToExclude: string[] = [];
     const services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema> = {};
     for (const endpoint of endpoints) {
-        const { endpointId, file } = getEndpointLocation(endpoint);
+        const { endpointId, file, tag } = getEndpointLocation(endpoint);
         if (!(file in services)) {
-            services[file] = getEmptyService();
+            const serviceTag = tag == null ? undefined : openApiFile.tags[tag];
+            const emptyService = getEmptyService();
+            if (serviceTag?.description != null) {
+                emptyService["display-name"] = serviceTag.description;
+            }
+            services[file] = emptyService;
         }
         const service = services[file];
         if (service != null) {

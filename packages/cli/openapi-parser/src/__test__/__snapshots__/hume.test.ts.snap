@@ -3460,7 +3460,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "url": "https://api.hume.ai",
         },
       ],
-      "tags": [],
+      "tags": {
+        "[1] Start Job": {
+          "description": undefined,
+          "id": "[1] Start Job",
+        },
+        "[2] Get Job Predictions": {
+          "description": undefined,
+          "id": "[2] Get Job Predictions",
+        },
+        "[3] List Jobs": {
+          "description": undefined,
+          "id": "[3] List Jobs",
+        },
+      },
       "title": "Hume AI Batch API",
       "variables": {},
     },

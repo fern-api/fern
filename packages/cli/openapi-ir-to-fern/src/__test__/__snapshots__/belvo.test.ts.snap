@@ -11405,6 +11405,83 @@ For \`session_expired\` errors, the description can be (among others):
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "An **account** is the representation of a bank account inside a financial institution. A user can have one or more accounts in an institution. 
+
+For example, one user (or link) can have a checking account, several credit cards, and a loan account.
+
+Querying for a user's account information is useful as you can get information regarding:
+
+- what types of accounts the user has
+- the balance for each account (savings, checking, credit card, loan, and so on)
+
+
+> 🚧 Scheduled field deprecation
+> 
+> Please note that we will soon be deprecating the following fields in our \`loan_data\` object:
+> 
+> - \`cutting_date\`
+> - \`cutting_day\`
+> - \`credit_limit\`: replaced by the \`principal\` field.
+> - \`interest_rate\`: replaced by the \`interest_rates\` object.
+> - \`last_payment_date\`
+> - \`last_period_balance\`: replaced by the \`outstanding_balance \` field.
+> - \`limit_day\`
+> - \`limit_date\`: replaced by the \`payment_day \` field.
+> - \`no_interest_payment\`
+> - \`payment_due_day\`
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field                         | Available Filters                      |
+| ----------------------------- | -------------------------------------- |
+| \`balance__available\`          | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`balance__current\`            | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`bank_product_id\`             | \`=\`                                    |
+| \`category\`                    | \`=\`, \`in\`                              |
+| \`created_at \`                 | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\`      |
+| \`currency\`                    | \`=\`\\*, \`in\`                            |
+| \`id\`                          | \`=\`, \`in\`                              |
+| \`institution\`                 | \`=\`, \`in\`                              |
+| \`internal_identification\`     | \`=\`                                    |
+| \`link\`                        | \`=\`, \`in\`                              |
+| \`name\`                        | \`=\`, \`icontains\`                       |
+| \`number\`                      | \`=\`, \`in\`                              |
+| \`public_identification_name\`  | \`=\`                                    |
+| \`public_identification_value\` | \`=\`                                    |
+| \`type\`                        | \`=\`, \`in\`                              |
+
+\`\`\`curl cURL
+## Filtering results to have savings accounts with a balance
+## between 5000 and 8000 Colombian pesos
+https://sandbox.belvo.com/api/accounts/?category=savings&balance__available__range=5000,8000&currency=COP
+\`\`\`
+\`\`\`javascript Node
+// Filtering results to have savings accounts with a balance
+// between 5000 and 8000 Colombian pesos
+client.accounts.list({
+  filters: {
+    category: "savings",
+    balance__available__range: "5000,8000",
+    currency: "COP"
+  }
+})
+\`\`\`
+\`\`\`python Python
+## Filtering results to have savings accounts with a balance
+## between 5000 and 8000 Colombian pesos
+client.Accounts.list(category="savings",balance__available__range="5000,8000",currency="COP")
+\`\`\`
+\`\`\`ruby Ruby
+## Filtering results to have savings accounts with a balance
+## between 5000 and 8000 Colombian pesos
+client.accounts.list(params: {
+  category: "savings",
+  balance__available__range: "5000,8000",
+  currency: "COP"
+})
+\`\`\`",
         "endpoints": {
           "DestroyAccount": {
             "auth": true,
@@ -11795,6 +11872,86 @@ For \`session_expired\` errors, the description can be (among others):
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "A **balance** represents the amount of funds available in a checking or savings account over a period of time.
+
+<ul>
+  <li>
+    If your Balance request is not for a checking or savings account, we return
+    an empty array.
+  </li>
+  <li>
+    If we cannot calculate the balance for a given day within your requested
+    period, the <code>balance</code> and <code>current_balance</code> fields
+    will return <code>null</code> for that day.
+  </li>
+</ul>
+
+> 📘 
+> 
+> Savings accounts that do not have any associated transactions (for example, some _poupança_ accounts in Brazil) will not contain accurate Balance information. We do not recommend using the Balance endpoint for these types of accounts. 
+> 
+> Savings accounts vary from institution to institution, so we recommend that you first use our [Retrieve transactions for a link](https://developers.belvo.com/reference/retrievetransactions) request, adding the \`account\` in the request body, to see if the Savings account has any associated transactions.
+
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field             | Available Filters                      |
+| ----------------- | -------------------------------------- |
+| \`account\`         | \`=\`, \`in\`                              |
+| \`account_type\`    | \`=\`, \`in\`                              |
+| \`balance\`         | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`currency\`        | \`=\`, \`in\`                              |
+| \`current_balance\` | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`id\`              | \`=\`, \`in\`                              |
+| \`institution\`     | \`=\`, \`in\`                              |
+| \`link\`            | \`=\`, \`in\`                              |
+| \`value_date\`      | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+
+\`\`\`curl cURL
+# Filtering results to have balances greater than 5000
+https://api.belvo.com/api/balances/?balance__gt=5000 
+
+# Filtering results to have balances greater than 5000 and in Brazilian Reis
+https://api.belvo.com/api/balances/?balance__gt=5000&currency=BRL
+\`\`\`
+\`\`\`javascript Node
+//  Filtering results to have balances greater than 5000
+client.balances.list({
+  filters: {
+    balance__gt: 5000
+  }
+})
+
+//  Filtering results to have balances greater than 5000 and in Brazilian Reis
+
+client.balances.list({
+  filters: {
+    balance__gt: 5000,
+    currency: "BRL"
+  }
+})
+\`\`\`
+\`\`\`python Python
+# Filtering results to have balances greater than 5000
+client.Balances.list(balance__gt=5000)
+
+# Filtering results to have balances greater than 5000 and in Brazilian Reis
+client.Balances.list(balance__gt=5000, currency="BRL")
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results to have balances greater than 5000
+client.balances.list(params: {
+  balance__gt: 5000
+})
+
+# Filtering results to have balances greater than 5000 and in Brazilian Reis
+client.balances.list(params: {
+  balance__gt: 5000,
+  currency: "BRL"
+})
+\`\`\`",
         "endpoints": {
           "DestroyBalance": {
             "auth": true,
@@ -12126,6 +12283,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "To receive inflow payments to your organization's bank account, you must register the bank accounts (individual and business) using Belvo's Payments API.
+
+- **Individual** bank accounts must be created for each payer (your customer).
+- **Business** bank accounts need to be created for the beneficiary of the payment (your organization).
+",
         "endpoints": {
           "CreateBankAccount": {
             "auth": true,
@@ -12272,6 +12434,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Our Categorization resource provides you with categorized information for a transaction. You’ll need to send a POST Categorize Transactions request with raw transactional information (such as amount, description, and holder information) to which Belvo:
+- assigns a standardized category to each transaction
+- provides additional information about the merchant involved in the transaction (name, logo, website URL)",
         "endpoints": {
           "CategorizeTransactions": {
             "auth": true,
@@ -12322,6 +12487,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "A **customer** is the payer that's going to push funds into your bank account. You need to create a customer in order to receive inflow payments to your organization's bank account.
+",
         "endpoints": {
           "CreateCustomer": {
             "auth": true,
@@ -12448,6 +12615,20 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "# Employment Records
+
+Our employment records resource lets you get a comprehensive view of your user’s current social security contributions and employment history.
+
+With Belvo's employment records resource, you can access information about your user's current social security contributions and employment history. For the each user, we return the:
+
+- personal data
+- work history
+- historical and current daily base salary
+- and more!
+
+At the moment, the employment records resource is available for:
+
+- 🇲🇽 Mexico (IMSS)",
         "endpoints": {
           "DestroyEmploymentRecord": {
             "auth": true,
@@ -12602,6 +12783,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Verify your users' income and forecast their future income potential with Belvo. Your only need to send trough a your raw transaction data and Belvo returns:
+
+- insights into your user’s multiple sources of income
+- a stability score that reflects the consistency and regularity of your user’s income history
+- a confidence level for future income",
         "endpoints": {
           "VerifyIncome": {
             "auth": true,
@@ -12672,6 +12858,67 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Use the Incomes endpoint to gather insights on an account's income sources for the past 365 days. The endpoint is particularly useful when you want to verify a person's income.
+
+<div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
+    <strong>Info: </strong> The incomes resource is <b>only</b> available for Checking and Savings
+accounts associated with banking links.
+ </div>
+
+
+ ### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field        | Available Filters                 |
+| ------------ | --------------------------------- |
+| \`account\`    | \`=\`, \`in\`                         |
+| \`created_at\` | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`id\`         | \`=\`, \`in\`                         |
+
+\`\`\`curl cURL
+# Filtering results to have incomes from one link:
+https://sandbox.belvo.com/api/incomes/?link=link-id
+
+# Filtering results to have incomes from one link and from two of their accounts:
+https://sandbox.belvo.com/api/incomes/?link=link-id&account__in=account-id1,account-id2
+\`\`\`
+\`\`\`javascript Node
+// Filtering results to have incomes from one link:
+client.incomes.list({
+  filters: {
+    link: "link-id"
+  }
+})
+
+// Filtering results to have incomes from one link and from two of their accounts:
+
+client.incomes.list({
+  filters: {
+    link: "link-id",
+    account__in: "account-id1,account-id2"
+  }
+})
+\`\`\`
+\`\`\`python Python
+# Filtering results to have incomes from one link:
+client.Incomes.list(link="link-id")
+
+# Filtering results to have incomes from one link and from two of their accounts:
+client.Incomes.list(link="link-id", account__in="account-id1,account-id2")
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results to have incomes from one link:
+client.incomes.list(params: {
+  link: "link-id"
+})
+
+# Filtering results to have incomes from one link and from two of their accounts:
+client.incomes.list(params: {
+  link: "link-id",
+  account__in: "account-id1,account-id2"
+})
+\`\`\`",
         "endpoints": {
           "DestroyIncomes": {
             "auth": true,
@@ -12911,6 +13158,14 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "An **institution** is an entity that Belvo can access information from. It can be a:
+
+- bank institution, such as Banamex retail banking or HSBC business banking.
+- fiscal institution, such as the Servicio de Administración Tributaria (SAT) in Mexico.
+
+![](https://files.readme.io/69a4676-Banking__Tax.png)
+
+You can see a complete list of institutions by either consulting our [Institutions article](https://developers.belvo.com/docs/institution) or making a List request to this endpoint.",
         "endpoints": {
           "DetailInstitution": {
             "auth": true,
@@ -13053,6 +13308,52 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "At the moment we only support the following institutions and investment products:
+
+| Institution                     | Portfolio                         | Instruments                 |
+| ------------------------------- | --------------------------------- | --------------------------- |
+| Banco de Brazil Retail (Brazil) | \`FIXED_INCOME\`                    | \`DEPOSIT\`                   |
+| Banco Inter Retail (Brazil)     | \`FIXED_INCOME\`                    | \`DEPOSIT\`                   |
+| Bradesco Retail (Brazil)        | \`FIXED_INCOME\`, \`VARIABLE_INCOME\` | \`DEPOSIT\`, \`FUND\`           |
+| CaixaBank Retail (Brazil)       | \`FIXED_INCOME\`, \`VARIABLE_INCOME\` | \`DEPOSIT\`, \`FUND\`           |
+| Itau Retail (Brazil)            | \`FIXED_INCOME\`, \`VARIABLE_INCOME\` | \`DEPOSIT\`, \`FUND\`, \`STOCKS\` |
+| Santander Retail (Brazil)       | \`FIXED_INCOME\`, \`VARIABLE_INCOME\` | \`DEPOSIT\`, \`BOND\`, \`FUND\`   |
+
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field         | Available Filters                 |
+| ------------- | --------------------------------- |
+| \`created_at \` | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`link\`        | \`=\`, \`in\`                         |
+
+\`\`\`curl cURL
+# Filtering results so that you get the portfolios of one link:
+https://sandbox.belvo.com/investments/portfolios/?link=89c91f42-df34-4c5d-a4f1-6e1e40438af4
+
+\`\`\`
+\`\`\`javascript Node
+// Filtering results so that you get the portfolios of one link:
+client. investmentsPortfolios.list({
+  filters: {
+    link: "89c91f42-df34-4c5d-a4f1-6e1e40438af4"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results so that you get the portfolios of one link:
+client. InvestmentsPortfolios.list(link="89c91f42-df34-4c5d-a4f1-6e1e40438af4")
+
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results so that you get the portfolios of one link:
+client. investments_portfolio.list(params: {
+  link: "89c91f42-df34-4c5d-a4f1-6e1e40438af4"
+})
+\`\`\`",
         "endpoints": {
           "DestroyPortfolio": {
             "auth": true,
@@ -13264,6 +13565,73 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "An **invoice** is the representation of an electronic invoice, that can be received or sent, by a business or an individual and has been uploaded to the fiscal institution's website. Multiple INFLOW (invoice received) and OUTFLOW (invoice sent) invoices can be retrieved inside each link coming from a fiscal institution.
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field                    | Available Filters                      |
+| ------------------------ | -------------------------------------- |
+| \`created_at \`            | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\`      |
+| \`id\`                     | \`=\`, \`in\`                              |
+| \`invoice_date\`           | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`invoice_identification\` | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`link\`                   | \`=\`, \`in\`                              |
+| \`status\`                 | \`=\`, \`in\`                              |
+| \`total_amount\`           | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`type\`                   | \`=\`, \`in\`                              |
+
+\`\`\`curl cURL
+# Filtering results so that you get Tax Returns from one link:
+https://sandbox.belvo.com/api/invoices/?link=link-id
+
+# Filtering results so that you get Tax Returns from two links 
+# and are of type normal and their status is vigente:
+https://sandbox.belvo.com/api/invoices/?link__in=link-id1,link-id2&informacion_general__tipo_declaracion=Normal&status=vigente
+\`\`\`
+\`\`\`javascript Node
+//  Filtering results so that you get the Tax Returns from one link:
+client.invoices.list({
+  filters: {
+    link: "link-id"
+  }
+})
+
+//  Filtering results so that you get the Tax Returns from two links
+// and are of type normal and their status is vigente:
+client.invoices.list({
+  filters: {
+    link__in: "link-id-1, link-id-2",
+    informacion_general__tipo_declaracion: "Normal",
+    status: "vigente"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results so that you get the Tax Return from one link:
+client.invoices.list(link="link-id")
+
+# Filtering results so that you get the Tax Returns from two links
+# # and are of type normal and their status is vigente:
+client.invoices.list(link__in="link-id1,link-id2", informacion_general__tipo_declaracion="Normal", status="vigente")
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results so that you get the Tax Return from one link:
+client.invoices.list(params: {
+  link: "link-id"
+})
+
+
+# Filtering results so that you get the Tax Returns from two links
+# and are of type normal and their status is vigente:
+client.invoices.list(params: {
+  link__in: "link-id1, link-id1",
+  informacion_general__tipo_declaracion: "Normal",
+  status: "vigente"
+})
+\`\`\`",
         "endpoints": {
           "DestroyInvoice": {
             "auth": true,
@@ -13612,6 +13980,35 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "A **Link** is a set of credentials associated to an end-user's access to an **institution**.
+
+<div style="background-color:#f4f6f8; border-left: 6px solid #808080;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
+<strong>Example: </strong> The username and password combination used to log in to an online banking application would be a link.
+</div>
+
+You will need to register a **Link** before accessing information from that specific end-user, such as account or transaction details.
+
+<div style="background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
+<strong>Note: </strong> We recommend using our <a href="https://developers.belvo.com/docs/connect-widget" target="_blank">Connect Widget</a> to handle link creation and link status updates.
+</div>
+
+You have the possibility to register two types of links:
+
+### Recurrent links (default)
+
+With recurrent links, Belvo automatically refreshes information weekly and notifies you via [Webhooks](https://developers.belvo.com/docs/webhooks) so you always have up-to-date data. Then, when you receive the webhook, you can make GET requests to the List or Detail endpoints to instantly access up-to-date information, without needing to connect to the institution.
+
+<img src="https://files.readme.io/7b6c0d4-Recurrent_Link_FLow.png" alt="fiscal-endpoints" width="950">
+
+You can also make POST calls directly to the institution, as with single links, as soon as the link is created. However, we recommend you follow the flow described above (waiting for the webhook event) for a more optimal experience.
+
+### Single links
+
+Single links are used to perform ad hoc data access to accounts, owners, transactions, and so on. For example, you can use it when you want to do an underwriting process to assess risk before lending money.
+
+For single links, you have to perform POST calls to an institution **every time** you want to access fresh data.
+
+<img src="https://files.readme.io/eda7956-Single_Link_Flow.svg" alt="fiscal-endpoints" width="950">",
         "endpoints": {
           "ChangeLinkAccessMode": {
             "auth": true,
@@ -14189,6 +14586,52 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "An **owner** represents the person who has access to a Link and is the owner of all the accounts inside the Link.
+
+You can use this endpoint in order to get useful information about your client, such as:
+
+- their full name
+- key contact information
+- information about the ID document they used when opening the account
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field         | Available Filters                 |
+| ------------- | --------------------------------- |
+| \`created_at \` | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`email\`       | \`=\`                               |
+| \`id\`          | \`=\`, \`in\`                         |
+| \`link\`        | \`=\`, \`in\`                         |
+
+\`\`\`curl cURL
+# Filtering results so that you get the emails of one link:
+https://sandbox.belvo.com/api/owners/?email=filtering@belvo.com
+
+\`\`\`
+\`\`\`javascript Node
+// Filtering results so that you get the emails of one link:
+client.owners.list({
+  filters: {
+    email: "filtering@belvo.com"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results so that you get the emails of one link:
+client.Owners.list(email="filtering@belvo.com")
+
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results so that you get the emails of one link:
+client.owners.list(params: {
+  email: "filtering@belvo.com"
+})
+
+})
+\`\`\`",
         "endpoints": {
           "DestroyOwner": {
             "auth": true,
@@ -14419,6 +14862,8 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "A **payment institution** is an entity that Belvo can access information from. You can see a complete list of institutions available for payments by making a List request to this endpoint.
+",
         "endpoints": {
           "DetailPaymentInstitution": {
             "auth": true,
@@ -14513,6 +14958,11 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "
+A **payment intent** is a single point of access to create payments using any payment method offered by Belvo.
+
+A payment intent captures all payment information (such as the amount to be charged, the description of the payment, the provider, and so on) and guides your customers through the payment flow.
+",
         "endpoints": {
           "CreatePaymentIntent": {
             "auth": true,
@@ -14720,6 +15170,8 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "This is a Payment link.
+",
         "endpoints": {
           "CreatePaymentlink": {
             "auth": true,
@@ -14859,6 +15311,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Each time you receive an inflow payment from your customer, a **transaction** is created in the Belvo database.
+
+You can use the Payment Transactions resource in order to get useful information about a transaction as well as the specific charge associated with it.
+",
         "endpoints": {
           "DetailPaymentTransactions": {
             "auth": true,
@@ -15023,6 +15479,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Registering a webhook will let you know about any relevant updates that occur during the payment process. To set up a webhook, you need to make a [POST Register a new payment webhook](https://api.belvo.com/payments/webhooks/) request, providing some key details such as the name of the webhook and a URL where webhook events should be sent to.
+
+",
         "endpoints": {
           "DeletePaymentWebhooks": {
             "auth": true,
@@ -15129,6 +15588,12 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "With our receivable transactions resource, you can gain access to every transaction processed by the end user (business) conducted through a POS terminal. For each transaction, we return the:
+
+- gross and net amounts
+- type of card used
+- fees applied to the transaction
+- and more!",
         "endpoints": {
           "DestroyReceivableTransaction": {
             "auth": true,
@@ -15374,6 +15839,47 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Belvo's Recurring Expenses API allows you to identify a user's regular payments for subscription services, such as Netflix or gym memberships, as well as utility payments, such as electricity or phone bills. We return information for up to 365 days.
+
+<div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
+    <strong>Info: </strong> The recurring expenses resource is <b>only</b> available for Checking and Savings accounts associated with banking links.
+ </div>
+
+ ### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field     | Available Filters |
+| --------- | ----------------- |
+| \`account\` | \`=\`, \`in\`         |
+| \`id\`      | \`=\`, \`in\`         |
+| \`link\`    | \`=\`, \`in\`         |
+
+\`\`\`curl cURL
+# Filtering results so that you get the recurring expenses of one account:
+https://sandbox.belvo.com/api/recurring-expenses/?account=89c91f42-df34-4c5d-a4f1-6e1e40438af4
+
+\`\`\`
+\`\`\`javascript Node
+// Filtering results so that you get the recurring expenses of one account:
+client. recurringExpenses.list({
+  filters: {
+    account: "89c91f42-df34-4c5d-a4f1-6e1e40438af4"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results so that you get the recurring expenses of one account:
+client. RecurringExpenses.list(account="89c91f42-df34-4c5d-a4f1-6e1e40438af4")
+
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results so that you get the recurring expenses of one account:
+client. recurring_expenses.list(params: {
+  account: "89c91f42-df34-4c5d-a4f1-6e1e40438af4"
+})
+\`\`\`",
         "endpoints": {
           "DestroyRecurringExpense": {
             "auth": true,
@@ -15615,6 +16121,46 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Belvo's Risk Insights endpoint exposes a set of features that can be used to improve your company's credit risk and opportunity decisions. This set of features can be used as building blocks to create or iterate on your credit score using transactional banking data to improve the predictive power of your models. You can use these components as you require and make the most sense for your specific use case. 
+
+We take up to 90 days of transactional data from the user's checking, savings, loans, and credit card accounts to calculate the risk insights.
+
+If you need to know the currency of the account, do a GET Details to the Accounts endpoint (using the account ID you receive from in the accounts array of the response).
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field  | Available Filters |
+| ------ | ----------------- |
+| \`id\`   | \`=\`, \`in\`         |
+| \`link\` | \`=\`, \`in\`         |
+
+\`\`\`curl cURL
+# Filtering results so that you get the risk insights of one link:
+https://sandbox.belvo.com/api/risk-insights/?link=89c91f42-df34-4c5d-a4f1-6e1e40438af4
+
+\`\`\`
+\`\`\`javascript Node
+// Filtering results so that you get the risk insights of one link:
+client. riskInsights.list({
+  filters: {
+    account: "89c91f42-df34-4c5d-a4f1-6e1e40438af4"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results so that you get the risk insights of one link:
+client. RiskInsights.list(link="89c91f42-df34-4c5d-a4f1-6e1e40438af4")
+
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results so that you get the risk insights of one link:
+client. risk_insights.list(params: {
+  link: "89c91f42-df34-4c5d-a4f1-6e1e40438af4"
+})
+\`\`\`",
         "endpoints": {
           "DestroyRiskInsights": {
             "auth": true,
@@ -15815,6 +16361,33 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "# Get your Payments API keys
+
+In order to use Belvo's Payments API, you need to first request your secret keys (see the code example below):
+
+
+\`\`\`curl
+POST https://api.belvo.com/payments/secret-keys/
+Authorization: Basic username:password
+\`\`\`
+
+Where:
+
+- \`username\` is the username you use to log in to the Belvo dashboard (in plain text).
+- \`password\` is the password you use to log in to the Belvo dashboard (in plain text).
+
+
+If you have entered your credentials correctly, you will receive a **201 Response** with your secret keys:
+
+
+\`\`\`json
+{
+    "id": "Your Belvo secretID",
+    "password": "Your Belvo secretPassword"
+}
+
+\`\`\`
+",
         "endpoints": {
           "CreateSecretKeys": {
             "auth": true,
@@ -15866,6 +16439,60 @@ For example:
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "A **tax compliance status** indicates about whether a person or business is complying with their tax obligations at the moment of the request. The information is extracted from SAT's _Opinion de cumplimiento de Obligaciones Fiscales_ document.
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field         | Available Filters                 |
+| ------------- | --------------------------------- |
+| \`created_at \` | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`id\`          | \`=\`, \`in\`                         |
+| \`link\`        | \`=\`, \`in\`                         |
+
+\`\`\`curl cURL
+# Filtering results so that you get Tax Compliance Status from one link:
+https://api.belvo.com/api/tax-compliance-status/?link=link-id
+
+# Filtering results so that you get Tax Compliance Status from one link:
+https://api.belvo.com/api/tax-compliance-status/?link=link-id1,link-id2
+\`\`\`
+\`\`\`javascript Node
+//  Filtering results so that you get the Tax Compliance Status from one link:
+client.taxComplianceStatus.list({
+  filters: {
+    link: "link-id"
+  }
+})
+
+//  Filtering results so that you get the Tax Compliance Status from two links:
+client.taxComplianceStatus.list({
+  filters: {
+    link__in: "link-id-1, link-id-2"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results so that you get the Tax Compliance Status from one link:
+client.TaxComplianceStatus.list(link="link-id")
+
+# Filtering results so that you get the Tax Compliance Status from two links:
+client.TaxComplianceStatus.list(link__in="link-id1,link-id2")
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results so that you get the Tax Compliance Status from one link:
+client.tax_compliance_status.list(params: {
+  link: "link-id"
+})
+
+
+# Filtering results so that you get the Tax Compliance Status from two link:
+client.tax_compliance_status.list(params: {
+  link__in: "link-id1, link-id1"
+})
+\`\`\`",
         "endpoints": {
           "DestroyTaxComplianceStatus": {
             "auth": true,
@@ -16066,6 +16693,11 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Our Tax declarations endpoint lets you retrieve the electronic representation of the tax declaration document emitted by a country's tax authority.
+
+At the moment, the Tax Declaration resource is available for:
+
+- 🇨🇴 Colombia (DIAN)",
         "endpoints": {
           "DestroyTaxDeclaration": {
             "auth": true,
@@ -16306,6 +16938,67 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "A **tax retention** is the amount of money that the payer must deduct from the total amount of a purchase invoice, according to the fiscal institution’s regulations.
+
+With Belvo’s Tax Retentions resource, you can quickly and easily consult information regarding a user’s tax retentions over a given period or for a specific invoice. This is particularly useful when you want to aid your user in their tax returns as for each invoice you receive the:
+
+- invoice amount
+- amount that is exempt from taxation
+- total amount that is taxed
+- breakdown of all the taxes applied to the invoice
+
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field         | Available Filters                 |
+| ------------- | --------------------------------- |
+| \`created_at \` | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`link\`        | \`=\`, \`in\`                         |
+
+\`\`\`curl cURL
+# Filtering results so that you get Tax Retentions from one link:
+https://sandbox.belvo.com/api/tax-retentions/?link=link-id
+
+# Filtering results so that you get Tax Retentions from two links 
+https://api.belvo.com/api/tax-retentions/?link=link-id1,link-id2
+\`\`\`
+\`\`\`javascript Node
+//  Filtering results so that you get the Tax Retentions from one link:
+client.taxRetentions.list({
+  filters: {
+    link: "link-id"
+  }
+})
+
+//  Filtering results so that you get the Tax Retentions from two links:
+client.taxRetentions.list({
+  filters: {
+    link__in: "link-id-1, link-id-2"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results so that you get the Tax Retentions from one link:
+client.TaxRetentions.list(link="link-id")
+
+# Filtering results so that you get the Tax Retentions from two links:
+client.TaxRetentions.list(link__in="link-id1,link-id2")
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results so that you get the Tax Retentions from one link:
+client.tax_retentions.list(params: {
+  link: "link-id"
+})
+
+
+# Filtering results so that you get the Tax Retentions from two link:
+client.tax_retentions.list(params: {
+  link__in: "link-id1, link-id1"
+})
+\`\`\`",
         "endpoints": {
           "DestroyTaxRetention": {
             "auth": true,
@@ -16515,6 +17208,64 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "A **tax return** is the representation of the tax return document sent every year by a person or a business to the tax authority in the country.
+
+The tax return data structure will be different depending on if it is related to a person or a business (you will find examples for both in the endpoints below).
+
+### **🔦 Filterable fields**
+
+| Field                                   | Available Filters                      |
+| --------------------------------------- | -------------------------------------- |
+| \`created_at \`                           | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\`      |
+| \`id\`                                    | \`=\`, \`in\`                              |
+| \`ejercicio\`                             | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`tipo_declaracion\`                      | \`=\`, \`in\`                              |
+| \`link\`                                  | \`=\`, \`in\`                              |
+
+\`\`\`curl cURL
+# Filtering results so that you get Tax Returns from one link:
+https://api.belvo.com/api/tax-returns/?link=link-id
+
+# Filtering results so that you get Tax Returns from two links and are of type normal:
+https://api.belvo.com/api/tax-returns/?link__in=link-id1,link-id2&tipo_declaracion=Normal,
+\`\`\`
+\`\`\`javascript Node
+//  Filtering results so that you get the Tax Returns from one link:
+client.taxReturns.list({
+  filters: {
+    link: "link-id"
+  }
+})
+
+//  Filtering results so that you get the Tax Returns from two links and are of type normal:
+client.taxReturns.list({
+  filters: {
+    link__in: "link-id-1, link-id-2",
+    tipo_declaracion: "Normal"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results so that you get the Tax Return from one link:
+client.TaxReturns.list(link="link-id")
+
+# Filtering results so that you get the Tax Returns from two links and are of type normal:
+client.TaxReturns.list(link__in="link-id1,link-id2", tipo_declaracion: "Normal")
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results so that you get the Tax Return from one link:
+client.tax_returns.list(params: {
+  link: "link-id"
+})
+
+
+# Filtering results so that you get the Tax Returns from two links and are of type normal:
+client.tax_returns.list(params: {
+  link__in: "link-id1, link-id1",
+  tipo_declaracion: "Normal"
+})
+\`\`\`",
         "endpoints": {
           "DestroyTaxReturn": {
             "auth": true,
@@ -16741,6 +17492,46 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Our **Tax status** endpoint lets you retrieve information about a person's or business's tax situation, according to the country's tax authority. 
+
+- For SAT (Mexico), this information is extracted from the _Constancia de situación fiscal_ document.
+- For DIAN (Colombia), this information is extracted from the _Registro Único Tributario_ document.
+
+
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field         | Available Filters                 |
+| ------------- | --------------------------------- |
+| \`created_at \` | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`id\`          | \`=\`, \`in\`                         |
+| \`link\`        | \`=\`, \`in\`                         |
+
+\`\`\`curl cURL
+# Filtering results so that you get institutions from just one link:
+https://api.belvo.com/api/institutions/?link=link
+\`\`\`
+\`\`\`javascript Node
+//  Filtering results so that you get institutions from just one link:
+client.taxstatus.list({
+  filters: {
+    link: "link_id"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results so that you get institutions from just one link:
+client.TaxStatus.list(link="link")
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results so that you get institutions from just one link:
+client.tax_status.list(params: {
+  link: "link"
+})
+\`\`\`",
         "endpoints": {
           "DestroyTaxStatus": {
             "auth": true,
@@ -16941,6 +17732,77 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "A **transaction** contains the detailed information of each movement inside an account. For example, a purchase at a store or a restaurant.
+
+### **🔦 Filterable fields**
+
+Please see the table below for an alphabetized list of fields that you can filter your responses by. For more information on how to use filters, see our [Filtering responses](https://developers.belvo.com/docs/searching-and-filtering) article.
+
+| Field                         | Available Filters                      |
+| ----------------------------- | -------------------------------------- |
+| \`account\`                     | \`=\`, \`in\`                              |
+| \`account**balance**available\` | \`=\`, \`lt\`, \`lte\`, \`range\`              |
+| \`account**balance**current\`   | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`account_type\`                | \`=\`, \`in\`                              |
+| \`accounting_date\`             | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`amount\`                      | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+| \`credit_card_data__bill_name\` | \`=\`, \`in\`                              |
+| \`created_at \`                 | \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\`      |
+| \`currency\`                    | \`=\`, \`in\`                              |
+| \`id\`                          | \`=\`, \`in\`                              |
+| \`institution\`                 | \`=\`, \`in\`                              |
+| \`link\`                        | \`=\`, \`in\`                              |
+| \`reference\`                   | \`=\`, \`in\`                              |
+| \`status\`                      | \`=\`, \`in\`                              |
+| \`type\`                        | \`=\`, \`in\`                              |
+| \`value_date\`                  | \`=\`, \`gt\`, \`gte\`, \`lt\`, \`lte\`, \`range\` |
+
+\`\`\`curl cURL
+# Filtering results to have transactions just from one link
+https://api.belvo.com/api/transactions/?link=link_id
+
+# Filtering results to have transactions just form one link and between a date range
+https://api.belvo.com/api/transactions/?link=link_id&value_date__range=2020-10-01,2020-12-01
+
+\`\`\`
+\`\`\`javascript Node
+// Filtering results to have transactions just from one link
+
+client.transactions.list({
+  filters: {
+    link: "link_id"
+  }
+})
+
+// Filtering results to have transactions just form one link and between a date range
+client.transactions.list({
+  filters: {
+    link: "link_id",
+    value_date__range: "2020-10-01,2020-12-01"
+  }
+})
+
+\`\`\`
+\`\`\`python Python
+# Filtering results to have links just from two institutions
+client.Transactions.list(link="link_id")
+
+# Filtering results from one institution and a certain status
+client.Transactions.list(link="link_id", value_date__range="2020-10-01,2020-12-01")
+
+\`\`\`
+\`\`\`ruby Ruby
+# Filtering results to have links just from two institutions
+client.transactions.list(params: {
+  link: "link_id"
+})
+
+# Filtering results from one institution and a certain status
+client.transactions.list(params: {
+  link: "link_id",
+  value_date__range: "2020-10-01,2020-12-01"
+})
+\`\`\`",
         "endpoints": {
           "DestroyTransaction": {
             "auth": true,

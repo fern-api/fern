@@ -25721,7 +25721,68 @@ exports[`open api parser deel parse open api 1`] = `
           "url": "https://api-staging.letsdeel.com/rest/v1",
         },
       ],
-      "tags": [],
+      "tags": {
+        "Accounting": {
+          "description": "End-points to retrieve paid invoices and reciepts.",
+          "id": "Accounting",
+        },
+        "Contractors": {
+          "description": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
+          "id": "Contractors",
+        },
+        "Contracts": {
+          "description": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
+          "id": "Contracts",
+        },
+        "EOR": {
+          "description": "Employee of Record (EOR).",
+          "id": "EOR",
+        },
+        "Hris": {
+          "description": "API end-points related to HRIS data.",
+          "id": "Hris",
+        },
+        "Invoices": {
+          "description": "The Invoices resource lets you create, amend and retrieve invoices related to Deel contracts.",
+          "id": "Invoices",
+        },
+        "Legal Entities": {
+          "description": "The Legal Entities resource lets you manage your legal entities",
+          "id": "Legal Entities",
+        },
+        "Lookups": {
+          "description": "Helper end-points for choosing options for other operations",
+          "id": "Lookups",
+        },
+        "Milestones": {
+          "description": "Helper end-points for managing milestones of Deel contracts",
+          "id": "Milestones",
+        },
+        "Off-cycle Payments": {
+          "description": "End-points to manage off-cycle payments for a given contract",
+          "id": "Off-cycle Payments",
+        },
+        "Organizations": {
+          "description": "Helper end-points for additional information about your organizations",
+          "id": "Organizations",
+        },
+        "Tasks": {
+          "description": "End-points to manage tasks for a given contract",
+          "id": "Tasks",
+        },
+        "Teams": {
+          "description": "Helper end-points for additional information about your teams",
+          "id": "Teams",
+        },
+        "Time Off": {
+          "description": "Manage time off requests.",
+          "id": "Time Off",
+        },
+        "Timesheets": {
+          "description": "The Invoices resource lets you create, amend and retrieve timesheets of Deel contracts.",
+          "id": "Timesheets",
+        },
+      },
       "title": "Deel REST API",
       "variables": {},
     },

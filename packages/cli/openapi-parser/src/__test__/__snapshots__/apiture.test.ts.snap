@@ -6749,7 +6749,40 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "url": "https://api.apiture.com/banking",
         },
       ],
-      "tags": [],
+      "tags": {
+        "Account Joint Owners": {
+          "description": "Account Joint Owners",
+          "id": "Account Joint Owners",
+        },
+        "Accounts": {
+          "description": "Banking Accounts",
+          "id": "Accounts",
+        },
+        "Institutions": {
+          "description": "Banking Institutions",
+          "id": "Institutions",
+        },
+        "Overdraft Protection": {
+          "description": "Overdraft Protection Settings",
+          "id": "Overdraft Protection",
+        },
+        "Schedules": {
+          "description": "Schedules",
+          "id": "Schedules",
+        },
+        "Transaction Categories": {
+          "description": "Banking Account Transaction Categories",
+          "id": "Transaction Categories",
+        },
+        "Transactions": {
+          "description": "Banking Account Transactions",
+          "id": "Transactions",
+        },
+        "Transfers": {
+          "description": "Banking Transfers",
+          "id": "Transfers",
+        },
+      },
       "title": "Apiture Digital Banking",
       "variables": {},
     },

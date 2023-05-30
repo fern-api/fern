@@ -27,7 +27,7 @@ types:
       title: optional<string>
       description: optional<string>
       servers: list<Server>
-      tags: list<Tag>
+      tags: map<TagId, Tag>
       hasEndpointsMarkedInternal: boolean
       endpoints: list<Endpoint>
       schemas: map<SchemaId, Schema>

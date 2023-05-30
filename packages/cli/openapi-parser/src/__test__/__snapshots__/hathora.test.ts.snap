@@ -5099,7 +5099,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "url": "/",
         },
       ],
-      "tags": [],
+      "tags": {},
       "title": "Hathora Cloud API",
       "variables": {},
     },

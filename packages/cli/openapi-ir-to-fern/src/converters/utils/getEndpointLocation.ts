@@ -6,6 +6,7 @@ import { camelCase, isEqual } from "lodash-es";
 export interface EndpointLocation {
     file: RelativeFilePath;
     endpointId: string;
+    tag?: string;
 }
 
 export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
@@ -58,6 +59,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
             return {
                 file: RelativeFilePath.of(`${camelCasedTag}.yml`),
                 endpointId: operationId,
+                tag,
             };
         }
     }
@@ -69,5 +71,6 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     return {
         file: RelativeFilePath.of(camelCase(fileParts.join("_")) + ".yml"),
         endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
+        tag,
     };
 }
