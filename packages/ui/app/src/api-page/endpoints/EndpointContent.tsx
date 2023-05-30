@@ -65,7 +65,16 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                     </div>
                     <div className="mt-6">
                         <div className="flex items-center gap-2 text-neutral-400">
-                            <div className="rounded bg-neutral-400/20 px-2 py-1 font-semibold uppercase ">
+                            <div
+                                className={classNames("rounded px-2 py-1 font-semibold uppercase", {
+                                    "text-green-400 bg-green-500/20": endpoint.method === "GET",
+                                    "text-blue-300 bg-blue-500/20":
+                                        endpoint.method === "POST" ||
+                                        endpoint.method === "PUT" ||
+                                        endpoint.method === "PATCH",
+                                    "text-red-400 bg-red-500/20": endpoint.method === "DELETE",
+                                })}
+                            >
                                 {endpoint.method}
                             </div>
                             <div className="flex">

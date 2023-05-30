@@ -36,9 +36,9 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className
             )}
         >
-            <div className="bg-accentPrimary/30 flex items-center justify-between py-1 pl-3 pr-2">
+            <div className="flex items-center justify-between bg-[#969CEE]/30 py-1 pl-3 pr-2">
                 <div className="flex items-center gap-2">
-                    <div className="font-medium uppercase text-[#A7A7B0]">{title}</div>
+                    <div className="uppercase tracking-wide text-neutral-300">{title}</div>
                     {titleRightContent}
                 </div>
                 <div className="flex gap-2">
@@ -56,7 +56,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     className={classNames(
                         styles.code,
                         className,
-                        "flex-1 leading-relaxed overflow-auto text-xs p-2 bg-accentHighlight"
+                        "flex-1 leading-relaxed overflow-auto text-xs p-2 bg-[#969CEE]/10"
                     )}
                 >
                     {children}

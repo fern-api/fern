@@ -30,13 +30,17 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({
     return (
         <Text
             ellipsize
-            className={classNames(className, "flex shrink-0 items-center h-[30px] min-w-0 text-neutral-400", {
-                "cursor-pointer": isClickable,
-                "bg-accentHighlight relative": isSelected,
-            })}
+            className={classNames(
+                className,
+                "flex shrink-0 items-center h-[30px] min-w-0 text-neutral-400 font-medium",
+                {
+                    "cursor-pointer": isClickable,
+                    "bg-accentHighlight relative": isSelected,
+                }
+            )}
             style={{
-                paddingLeft: 24 + (sidebarContext != null ? 16 * sidebarContext.depth : 0),
-                paddingRight: 24,
+                paddingLeft: 12 + (sidebarContext != null ? 16 * sidebarContext.depth : 0),
+                paddingRight: 16,
             }}
             onClick={onClick}
             onDoubleClick={onDoubleClick}

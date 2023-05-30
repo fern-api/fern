@@ -102,7 +102,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
         [contextValue]
     );
 
-    if (collapsableContent == null) {
+    if (collapsableContent == null || collapsableContent.elements.length === 0) {
         return null;
     }
 
