@@ -56,6 +56,7 @@ service:
       path: /pets
       method: GET
       auth: false
+      display-name: List all pets
       request:
         name: ListPetsRequest
         query-parameters:
@@ -71,6 +72,7 @@ service:
       path: /pets
       method: POST
       auth: false
+      display-name: Create a pet
       errors: []
 
     showPetById:
@@ -81,6 +83,7 @@ service:
         petId:
           docs: The id of the pet to retrieve
           type: string
+      display-name: Info for a specific pet
       response:
         docs: Expected response to a valid request
         type: root.Pet
