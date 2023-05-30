@@ -1986,7 +1986,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": undefined,
+            "name": "MilestoneToCreateFormWithFile",
             "properties": [],
             "type": "multipart",
           },
@@ -3995,7 +3995,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": undefined,
+            "name": "InvoiceAdjustmentToCreateWithFile",
             "properties": [],
             "type": "multipart",
           },

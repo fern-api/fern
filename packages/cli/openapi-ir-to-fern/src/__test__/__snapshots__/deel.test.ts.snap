@@ -4481,14 +4481,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
-        "InvoiceAdjustmentToCreateWithFile": {
-          "docs": undefined,
-          "extends": [
-            "InvoiceAdjustmentToCreate",
-            "FileObject",
-          ],
-          "properties": {},
-        },
         "InvoiceAdjustmentToUpdate": {
           "docs": "Details of invoice adjustment to update.",
           "properties": {
@@ -5209,14 +5201,6 @@ exports[`open api parser deel simple 1`] = `
               "type": "MilestoneToCreate",
             },
           },
-        },
-        "MilestoneToCreateFormWithFile": {
-          "docs": undefined,
-          "extends": [
-            "MilestoneProperties",
-            "FileObject",
-          ],
-          "properties": {},
         },
         "MonthlyPayment": {
           "docs": "Monthly payment details for the user",
@@ -8719,7 +8703,7 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {},
               },
               "headers": undefined,
-              "name": "CreateInvoiceAdjustmentRequest",
+              "name": "InvoiceAdjustmentToCreateWithFile",
               "query-parameters": undefined,
             },
             "response": {
@@ -9210,7 +9194,7 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {},
               },
               "headers": undefined,
-              "name": "CreateMilestoneRequest",
+              "name": "MilestoneToCreateFormWithFile",
               "query-parameters": undefined,
             },
             "response": {

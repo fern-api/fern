@@ -367,7 +367,7 @@ Upload a document to be indexed and used for search.
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": undefined,
+            "name": "UploadDocumentRequestBodyRequest",
             "properties": [
               {
                 "description": undefined,

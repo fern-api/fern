@@ -4,9 +4,9 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
-const APPLICATION_JSON_CONTENT = "application/json";
-const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
-const MULTIPART_CONTENT = "multipart/form-data";
+export const APPLICATION_JSON_CONTENT = "application/json";
+export const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
+export const MULTIPART_CONTENT = "multipart/form-data";
 
 export function convertRequest({
     requestBody,
