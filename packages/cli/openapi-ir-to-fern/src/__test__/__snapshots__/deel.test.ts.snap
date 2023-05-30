@@ -7422,6 +7422,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Retrieve a payment breakdown",
             "docs": "Get a full breakdown of a payment made to Deel. Breakdown will include individual invoices and Deel fee as line items.",
             "errors": [
               "root.BadRequestError",
@@ -7449,6 +7450,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Download Deel invoice PDF",
             "docs": "Get a link to download the Deel billing invoice PDF.",
             "errors": [
               "root.BadRequestError",
@@ -7476,6 +7478,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Download invoice PDF",
             "docs": "Get link to download the invoice PDF.",
             "errors": [
               "root.BadRequestError",
@@ -7503,6 +7506,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Retrieve invoices",
             "docs": "Retrieve a list of paid invoices for your workforce.",
             "errors": [
               "root.BadRequestError",
@@ -7548,6 +7552,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Retrieve payment reciepts",
             "docs": "Retrieve a list of payments made to Deel.",
             "errors": [
               "root.BadRequestError",
@@ -7609,6 +7614,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Upload file to Deel",
             "docs": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
             "errors": [
               "root.UnauthorizedError",
@@ -7653,6 +7659,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Get my current profile",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7674,6 +7681,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Get people list",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7722,6 +7730,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Upgrade to Premium",
             "docs": "Add additional protection against misclassification by upgrading to Deel Premium.",
             "errors": [
               "root.UnauthorizedError",
@@ -7760,6 +7769,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Amend contract",
             "docs": "Amend payment details of a contract.",
             "errors": [
               "root.BadRequestError",
@@ -7800,6 +7810,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create a new contract",
             "docs": "Create a new Deel contract.",
             "errors": [
               "root.BadRequestError",
@@ -7834,6 +7845,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create a new contract (fixed-rate)",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7868,6 +7880,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create a new contract (milestone-based)",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7902,6 +7915,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create a new contract (task-based)",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7936,6 +7950,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create a new contract (time-based)",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -7970,6 +7985,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Preview a contract agreement",
             "docs": "Retrieve an IC contract agreement content in HTML. If no template is specified, the default or currently assigned template will be used. This endpoint does not support EOR and Global Payroll contract types.",
             "errors": [
               "root.BadRequestError",
@@ -8003,6 +8019,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Downgrade from Premium",
             "docs": "Remove Deel Premium from an existing contract.",
             "errors": [
               "root.BadRequestError",
@@ -8040,6 +8057,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Terminate contract",
             "docs": "Terminate an active contract.",
             "errors": [
               "root.BadRequestError",
@@ -8092,6 +8110,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Add documents",
             "docs": "Attach document to a contract. You can only add one document at a time. If you need to attach more documents please attach a Zip file.",
             "errors": [
               "root.BadRequestError",
@@ -8129,6 +8148,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Archive a contract",
             "docs": "Archive a terminated, cancelled or completed contract.",
             "errors": [
               "root.BadRequestError",
@@ -8155,6 +8175,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "External Id",
             "docs": "Add an external Id to a Deel contract. You can use this to add a Deel contract's refernece Id in your platform. External Id can be passed as a query parameter in List contract endpoint to find this conract later.",
             "errors": [
               "root.BadRequestError",
@@ -8195,6 +8216,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Calculate final payment",
             "docs": "Calculate the final payment due to the contractor when ending the contract.",
             "errors": [
               "root.UnauthorizedError",
@@ -8245,6 +8267,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Edit the file attached to contract document.",
             "docs": "Overwrite the file currently attached to contract document.",
             "errors": [
               "root.BadRequestError",
@@ -8282,6 +8305,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Find contract emails by ID",
             "docs": "Returns an array of alternate email objects",
             "errors": [
               "root.BadRequestError",
@@ -8308,6 +8332,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Retrieve a single contract",
             "docs": "Retrieve a single contract.",
             "errors": [
               "root.BadRequestError",
@@ -8335,6 +8360,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List of contracts",
             "docs": "Retrieve a list of contracts.",
             "errors": [
               "root.BadRequestError",
@@ -8416,6 +8442,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Get contract templates",
             "docs": "Retrieve a list of contract templates in your organization.",
             "errors": [
               "root.UnauthorizedError",
@@ -8436,6 +8463,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Send contract to worker",
             "docs": "Invite a worker to sign the contract. Worker will be notified via email.",
             "errors": [
               "root.BadRequestError",
@@ -8476,6 +8504,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Calculate first payment amount",
             "docs": "First payment is calculated from the number of working/calendar days between their start date and the start of the payment cycle.",
             "errors": [
               "root.UnauthorizedError",
@@ -8508,6 +8537,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Sign a contract",
             "docs": "Sign a contract as a client.",
             "errors": [
               "root.BadRequestError",
@@ -8548,6 +8578,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Remove invite",
             "docs": "Remove invite in order to re-invite a worker to sign the contract.",
             "errors": [
               "root.BadRequestError",
@@ -8587,6 +8618,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create an EOR contract",
             "docs": "Create an Employee of Record (EOR) contract quote. The endpoints creates a contract quote request. Deel will process the information and get back with a quote for this contract.",
             "errors": [
               "root.UnauthorizedError",
@@ -8619,6 +8651,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Retrieve country guide",
             "docs": "Retrieve the hiring guide data for a country. This data can be used to create Employee of Record (EOR) contract quotes.",
             "errors": [
               "root.UnauthorizedError",
@@ -8656,6 +8689,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": false,
+            "display-name": "Create a new Hris direct employee",
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
@@ -8695,6 +8729,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create an invoice adjustment",
             "docs": "Create an invoice adjustment using this endpoint. For example, you can add a bonus, commission, VAT %, deduction etc. to an invoice.",
             "errors": [
               "root.BadRequestError",
@@ -8724,6 +8759,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Review an invoice adjustment",
             "docs": "Review an invoice adjustment to approve or decline it.",
             "errors": [
               "root.BadRequestError",
@@ -8764,6 +8800,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Bulk review invoice adjustments",
             "docs": "Review multiple invoice adjustments to approve or decline a batch.",
             "errors": [
               "root.BadRequestError",
@@ -8798,6 +8835,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Delete an invoice adjustment",
             "docs": "Update an existing invoice adjustment.",
             "errors": [
               "root.BadRequestError",
@@ -8835,6 +8873,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List of invoice details",
             "docs": "Retrieve a list of invoice details. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
             "errors": [
               "root.BadRequestError",
@@ -8911,6 +8950,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Invoice details by contract",
             "docs": "Retrieve a list of invoice details for the given contract id.",
             "errors": [
               "root.BadRequestError",
@@ -8988,6 +9028,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Update an invoice adjustment",
             "docs": "Update an existing invoice adjustment. It is not possible to update VAT adjustments, we recommend you to delete the existing VAT adjust and create a new one.",
             "errors": [
               "root.BadRequestError",
@@ -9040,6 +9081,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Country list",
             "docs": "Retrieve a list of countries supported by Deel.",
             "errors": [
               "root.BadRequestError",
@@ -9061,6 +9103,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Currency list",
             "docs": "Retrieve the list of currencies used by Deel.",
             "errors": [
               "root.BadRequestError",
@@ -9082,6 +9125,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Job titles list",
             "docs": "Retrieve a list of pre-defined job titles in Deel platform.",
             "errors": [
               "root.BadRequestError",
@@ -9118,6 +9162,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Seniority levels",
             "docs": "Retrieve a list of pre-defined seniority level for roles in Deel platform.",
             "errors": [
               "root.BadRequestError",
@@ -9149,6 +9194,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Time-off types",
             "docs": "Retrieve a list of pre-defined time off types to register in Deel platform.",
             "errors": [
               "root.BadRequestError",
@@ -9182,6 +9228,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create a milestone",
             "docs": "Add a new milestone to contract.",
             "errors": [
               "root.BadRequestError",
@@ -9217,6 +9264,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Review a single milestone",
             "docs": "Review a milestone to approve or decline submitted work.",
             "errors": [
               "root.BadRequestError",
@@ -9261,6 +9309,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Review multiple milestones",
             "docs": "Review a batch of milestones to approve or reject submitted work.",
             "errors": [
               "root.BadRequestError",
@@ -9301,6 +9350,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Delete a milestone",
             "docs": "Delete a single milestone from a contract.",
             "errors": [
               "root.BadRequestError",
@@ -9332,6 +9382,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List of milestones by contract",
             "docs": "Retrieve a list of milestones found for a contract.",
             "errors": [
               "root.BadRequestError",
@@ -9359,6 +9410,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Retrieve a single milestone",
             "docs": "Retrieve a single milestone.",
             "errors": [
               "root.BadRequestError",
@@ -9402,6 +9454,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Add off-cycle payment",
             "docs": "Add a new invoice line-item for the purpose of off-cycle payment for a given contract.",
             "errors": [
               "root.BadRequestError",
@@ -9442,6 +9495,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Retrieve a single off-cycle payment",
             "docs": "Retrieve a single off-cycle payment.",
             "errors": [
               "root.BadRequestError",
@@ -9473,6 +9527,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List of off-cycle payments",
             "docs": "Retrieve a list of off-cycle payments for the given contract id.",
             "errors": [
               "root.BadRequestError",
@@ -9512,6 +9567,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Get agreements with Deel.",
             "docs": "This end-point returns a list of your agreements with Deel.",
             "errors": [
               "root.UnauthorizedError",
@@ -9552,6 +9608,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List of legal entities",
             "docs": "Retrieve a list of legal entities in your account.",
             "errors": [
               "root.BadRequestError",
@@ -9573,6 +9630,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Get current organization",
             "docs": "Retrieve the current organization details. Organization is automatically detected from the auth token.",
             "errors": [
               "root.BadRequestError",
@@ -9594,6 +9652,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Get team list",
             "docs": "Retrieve a list of teams in your organization.",
             "errors": [
               "root.BadRequestError",
@@ -9627,6 +9686,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create new task",
             "docs": "Create a new task for the contractor.",
             "errors": [
               "root.BadRequestError",
@@ -9667,6 +9727,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Review multiple tasks",
             "docs": "Review multiple tasks to approve or decline the submitted work.",
             "errors": [
               "root.BadRequestError",
@@ -9707,6 +9768,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Review a single task",
             "docs": "Review a single task to approve or decline the submitted work.",
             "errors": [
               "root.BadRequestError",
@@ -9751,6 +9813,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Delete task",
             "docs": "Delete task from the contract.",
             "errors": [
               "root.BadRequestError",
@@ -9792,6 +9855,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List of tasks",
             "docs": "Retrieve a list of tasks for a given contract.",
             "errors": [
               "root.BadRequestError",
@@ -9831,6 +9895,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Add a time off request",
             "docs": "Add a time off request for a full-time employee.",
             "errors": [
               "root.UnauthorizedError",
@@ -9862,6 +9927,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Cancel a time off request",
             "docs": "Cancel a time off request for an employee.",
             "errors": [
               "root.UnauthorizedError",
@@ -9891,6 +9957,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Edit a time off request",
             "docs": "Edit a time off request for a full-time employee.",
             "errors": [
               "root.UnauthorizedError",
@@ -9926,6 +9993,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": false,
+            "display-name": "List of time offs",
             "docs": "List of time offs for all employees in your organization.",
             "errors": [
               "root.UnauthorizedError",
@@ -9945,6 +10013,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List time off entitlements",
             "docs": "Retrieve a list of time off entitlements for a full-time employee.",
             "errors": [
               "root.UnauthorizedError",
@@ -9970,6 +10039,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List time off by contract",
             "docs": "Retrieve the list of time off requests by an employee.",
             "errors": [
               "root.UnauthorizedError",
@@ -9995,6 +10065,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Review a time off request",
             "docs": "Approve or decline an employee's time off request.",
             "errors": [
               "root.BadRequestError",
@@ -10047,6 +10118,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create a timesheet entry",
             "docs": "Submit work for a contractor.",
             "errors": [
               "root.BadRequestError",
@@ -10076,6 +10148,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Review a single timesheet",
             "docs": "Review a timesheet to approve or decline submitted work.",
             "errors": [
               "root.BadRequestError",
@@ -10116,6 +10189,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Review multiple timesheets",
             "docs": "Review a batch of timesheets to approve or reject submitted work.",
             "errors": [
               "root.BadRequestError",
@@ -10150,6 +10224,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Delete a timesheet entry",
             "docs": "Delete a single timesheet entry.",
             "errors": [
               "root.BadRequestError",
@@ -10187,6 +10262,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Retrieve a single timesheet entry",
             "docs": "Retrieve a single timesheet entry by Id.",
             "errors": [
               "root.BadRequestError",
@@ -10214,6 +10290,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List of timesheets",
             "docs": "Retrieve a list of timesheets in your Deel account. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
             "errors": [
               "root.BadRequestError",
@@ -10280,6 +10357,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List of timesheets by contract",
             "docs": "Retrieve a list of timesheets found for a contract.",
             "errors": [
               "root.BadRequestError",
@@ -10347,6 +10425,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Update a timesheet entry",
             "docs": "Update a single timesheet entry.",
             "errors": [
               "root.BadRequestError",
@@ -10398,6 +10477,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Delete a webhook",
             "docs": "Delete a webhook subscription.",
             "errors": [
               "root.BadRequestError",
@@ -10421,6 +10501,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Edit a webhook",
             "docs": "Edit a webhook subscription.",
             "errors": [
               "root.BadRequestError",
@@ -10481,6 +10562,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Retrieve a single webhook",
             "docs": "Retrieve a single webhook subscription.",
             "errors": [
               "root.BadRequestError",
@@ -10508,6 +10590,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "Create a webhook",
             "docs": "Create a new webhooks subscription.",
             "errors": [
               "root.BadRequestError",
@@ -10566,6 +10649,7 @@ exports[`open api parser deel simple 1`] = `
               "external",
             ],
             "auth": true,
+            "display-name": "List of webhooks",
             "docs": "Retrieve a list of webhook subscriptions.",
             "errors": [
               "root.BadRequestError",

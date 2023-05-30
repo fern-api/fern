@@ -6660,6 +6660,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetApiClientAccessToken": {
             "auth": false,
+            "display-name": "get api access token",
             "docs": "Get the Bearer Access Token by giving the Suger API Client ID & Client Secret.",
             "errors": [
               "root.InternalServerError",
@@ -6705,6 +6706,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetBuyer": {
             "auth": true,
+            "display-name": "get buyer",
             "docs": "get buyer by the given organization and buyer id",
             "errors": [
               "root.InternalServerError",
@@ -6728,6 +6730,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListBuyersByOrganization": {
             "auth": true,
+            "display-name": "list buyers by organization",
             "docs": "list all buyers by the given organization",
             "errors": [
               "root.InternalServerError",
@@ -6747,6 +6750,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "UpdateBuyerNameDescription": {
             "auth": true,
+            "display-name": "update buyer name and description",
             "docs": "update buyer name and description by the given organization and buyer id",
             "errors": [
               "root.InternalServerError",
@@ -6806,6 +6810,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "AddEntitlementCredit": {
             "auth": true,
+            "display-name": "add entitlement credit",
             "docs": "Add the credit amount to the given Entitlement. The credit amount is accumulated & saved in the current Entitlement Term of the gvien Entitlement.",
             "errors": [
               "root.BadRequestError",
@@ -6851,6 +6856,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetEntitlement": {
             "auth": true,
+            "display-name": "get entitlement",
             "docs": "Get the entitlement by ID",
             "errors": [
               "root.InternalServerError",
@@ -6874,6 +6880,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlements": {
             "auth": true,
+            "display-name": "list entitlements",
             "docs": "List all entitlements under the organization",
             "errors": [
               "root.InternalServerError",
@@ -6893,6 +6900,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementsByBuyer": {
             "auth": true,
+            "display-name": "list entitlements by buyer",
             "docs": "List all entitlements of the given buyer",
             "errors": [
               "root.InternalServerError",
@@ -6916,6 +6924,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementsByOffer": {
             "auth": true,
+            "display-name": "list entitlements by offer",
             "docs": "List all entitlements under the given offer",
             "errors": [
               "root.InternalServerError",
@@ -6939,6 +6948,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementsByPartner": {
             "auth": true,
+            "display-name": "list entitlements by partner",
             "docs": "List all entitlements under the given partner",
             "errors": [
               "root.InternalServerError",
@@ -6962,6 +6972,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementsByProduct": {
             "auth": true,
+            "display-name": "list entitlements by product",
             "docs": "List all entitlements under the given product",
             "errors": [
               "root.InternalServerError",
@@ -6985,6 +6996,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "UpdateEntitlementName": {
             "auth": true,
+            "display-name": "update entitlement name",
             "docs": "Update the name of the given Entitlement",
             "errors": [
               "root.InternalServerError",
@@ -7040,6 +7052,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetEntitlementTerm": {
             "auth": true,
+            "display-name": "get entitlement term",
             "docs": "Get the entitlement term by ID",
             "errors": [
               "root.InternalServerError",
@@ -7067,6 +7080,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListEntitlementTerms": {
             "auth": true,
+            "display-name": "list entitlement terms",
             "docs": "List all Entitlement Terms of the given Entitlement",
             "errors": [
               "root.InternalServerError",
@@ -7101,6 +7115,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "CreateIntegration": {
             "auth": true,
+            "display-name": "create integration",
             "docs": "For each organization, partner & service, there should be at most one integration.",
             "errors": [
               "root.BadRequestError",
@@ -7150,6 +7165,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "DeleteIntegration": {
             "auth": true,
+            "display-name": "delete integration",
             "docs": "delete the integration for the given orgId, partner and service.",
             "errors": [
               "root.InternalServerError",
@@ -7177,6 +7193,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetIntegration": {
             "auth": true,
+            "display-name": "get integration",
             "docs": "Get the integration for the given organization, partner & service.",
             "errors": [
               "root.NotFoundError",
@@ -7205,6 +7222,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListIntegrationsByOrganization": {
             "auth": true,
+            "display-name": "list integrations by organization",
             "docs": "List all integrations for the given organization.",
             "errors": [
               "root.InternalServerError",
@@ -7224,6 +7242,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "UpdateIntegration": {
             "auth": true,
+            "display-name": "update integration",
             "docs": "Update the given integration.",
             "errors": [
               "root.BadRequestError",
@@ -7277,6 +7296,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "VerifyIntegration": {
             "auth": true,
+            "display-name": "verify integration",
             "docs": "Verify the given integration, check whether it works correctly.",
             "errors": [
               "root.InternalServerError",
@@ -7315,6 +7335,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetUsageRecordGroup": {
             "auth": true,
+            "display-name": "get usageRecordGroup",
             "docs": "get UsageRecordGroup for the given organization and usageRecordGroup ID",
             "errors": [
               "root.InternalServerError",
@@ -7338,6 +7359,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetUsageRecordReport": {
             "auth": true,
+            "display-name": "get usageRecordReport",
             "docs": "get the usageRecordReport for a given organization and usageRecordReport ID.",
             "errors": [
               "root.InternalServerError",
@@ -7361,6 +7383,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordGroupsByEntitlement": {
             "auth": true,
+            "display-name": "list usageRecordGroups by entitlement",
             "docs": "list UsageRecordGroups for the given organization and entitlement",
             "errors": [
               "root.BadRequestError",
@@ -7410,6 +7433,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordGroupsByOrganization": {
             "auth": true,
+            "display-name": "list usageRecordGroups by organization",
             "docs": "list UsageRecordGroups under the given organization.",
             "errors": [
               "root.BadRequestError",
@@ -7455,6 +7479,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordGroupsByProduct": {
             "auth": true,
+            "display-name": "list usageRecordGroups by product",
             "docs": "list UsageRecordGroups for the given organization and product",
             "errors": [
               "root.BadRequestError",
@@ -7504,6 +7529,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordReportsByEntitlement": {
             "auth": true,
+            "display-name": "list usageRecordReports by entitlement",
             "docs": "List usageRecordReports for the given organization and entitlement. Filter by entitlementTermId if it is given.",
             "errors": [
               "root.BadRequestError",
@@ -7558,6 +7584,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordReportsByOrganization": {
             "auth": true,
+            "display-name": "list usageRecordReports by organization",
             "docs": "List usageRecordReports under the given organization",
             "errors": [
               "root.BadRequestError",
@@ -7603,6 +7630,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListUsageRecordReportsByProduct": {
             "auth": true,
+            "display-name": "list usageRecordReports by product",
             "docs": "List usageRecordReports for the given organization and product",
             "errors": [
               "root.BadRequestError",
@@ -7652,6 +7680,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ReportUsageRecordGroup": {
             "auth": true,
+            "display-name": "report usageRecordGroup",
             "docs": "It is recommended to provide the ID in the request body CreateUsageRecordGroupParams, so the report can be deduplicated. All duplicate report will return error code 409.",
             "errors": [
               "root.BadRequestError",
@@ -7717,6 +7746,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "CancelOffer": {
             "auth": true,
+            "display-name": "cancel offer",
             "docs": "Only the offer with status = "PENDING_ACCEPTANCE" or "PENDING_CANCEL" is allowed to cancel.",
             "errors": [
               "root.BadRequestError",
@@ -7741,6 +7771,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "CreateOffer": {
             "auth": true,
+            "display-name": "create offer",
             "docs": "Create a private offer under the given organization.",
             "errors": [
               "root.BadRequestError",
@@ -7767,6 +7798,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "CreateOrUpdateDraftOffer": {
             "auth": true,
+            "display-name": "create or update draft offer",
             "docs": "Create a new draft offer or update the existing draft offer. When updating draft offer, the offer.ID is required.",
             "errors": [
               "root.BadRequestError",
@@ -7793,6 +7825,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "DeleteOffer": {
             "auth": true,
+            "display-name": "delete offer",
             "docs": "Only the offer with status = "DRAFT" or "CREATE_FAILED" is allowed to be deleted.",
             "errors": [
               "root.InternalServerError",
@@ -7816,6 +7849,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetOffer": {
             "auth": true,
+            "display-name": "get offer",
             "docs": "Get the offer by the given offer ID.",
             "errors": [
               "root.InternalServerError",
@@ -7839,6 +7873,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListOffersByOrganization": {
             "auth": true,
+            "display-name": "list offers by organization",
             "docs": "List all offers under the given organization.",
             "errors": [
               "root.InternalServerError",
@@ -7858,6 +7893,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListOffersByPartner": {
             "auth": false,
+            "display-name": "list offers by partner",
             "docs": "List all offers under the given organization & cloud partner.",
             "errors": [
               "root.InternalServerError",
@@ -7891,6 +7927,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListOffersByProduct": {
             "auth": true,
+            "display-name": "list offers by product",
             "docs": "List all offers under the given organization & product.",
             "errors": [
               "root.InternalServerError",
@@ -7925,6 +7962,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "ListOperations": {
             "auth": true,
+            "display-name": "list operations",
             "docs": "List all long running operations under the given organization, offer, entitlement, crmOpportunity or partnerOpportunity. Only provide one filter on a request.",
             "errors": [
               "root.InternalServerError",
@@ -7980,6 +8018,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "DeleteProduct": {
             "auth": true,
+            "display-name": "delete product",
             "docs": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
             "errors": [
               "root.InternalServerError",
@@ -8003,6 +8042,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetProduct": {
             "auth": true,
+            "display-name": "get product",
             "docs": "get product by product id",
             "errors": [
               "root.InternalServerError",
@@ -8026,6 +8066,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListProductMeteringDimensions": {
             "auth": true,
+            "display-name": "list metering dimensions of product",
             "docs": "list all metering dimensions of the given product",
             "errors": [
               "root.InternalServerError",
@@ -8049,6 +8090,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListProductsByOrganization": {
             "auth": true,
+            "display-name": "list products by organization",
             "docs": "list all products under the given organization",
             "errors": [
               "root.InternalServerError",
@@ -8068,6 +8110,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListProductsByPartner": {
             "auth": true,
+            "display-name": "list products by partner",
             "docs": "list all products under the given organization and cloud partner",
             "errors": [
               "root.InternalServerError",
@@ -8091,6 +8134,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "UpdateProduct": {
             "auth": true,
+            "display-name": "update product",
             "docs": "currently only the Fulfillment URL is allowed to update via this API.",
             "errors": [
               "root.InternalServerError",
@@ -8146,6 +8190,7 @@ the same customer, dimension, and time, but a different quantity.",
         "endpoints": {
           "GetRevenueReport": {
             "auth": true,
+            "display-name": "get revenue report",
             "docs": "Get the revenue report of the given organization, product, entitlement, or buyer.",
             "errors": [
               "root.BadRequestError",
@@ -8203,6 +8248,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "GetUsageReport": {
             "auth": true,
+            "display-name": "get usage report",
             "docs": "get the daily usage report of the given entitlement, the default timespan is lifetime.",
             "errors": [
               "root.BadRequestError",
@@ -8240,6 +8286,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListRevenueRecordDetails": {
             "auth": true,
+            "display-name": "list revenue record details",
             "docs": "list the raw revenue record details for the given organization, product, entitlement, or buyer.",
             "errors": [
               "root.BadRequestError",
@@ -8304,6 +8351,7 @@ the same customer, dimension, and time, but a different quantity.",
           },
           "ListRevenueRecords": {
             "auth": true,
+            "display-name": "list revenue records",
             "docs": "list the revenue records for the given organization, product, entitlement, or buyer.",
             "errors": [
               "root.BadRequestError",

@@ -11409,6 +11409,7 @@ For \`session_expired\` errors, the description can be (among others):
         "endpoints": {
           "DestroyAccount": {
             "auth": true,
+            "display-name": "Delete an account",
             "docs": "Delete a specific account and all associated transactions, as well as owners, from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -11425,6 +11426,7 @@ For \`session_expired\` errors, the description can be (among others):
           },
           "DetailAccount": {
             "auth": true,
+            "display-name": "Get an account's details",
             "docs": "Get the details of a specific account.
 
   > 🚧 Scheduled field deprecation
@@ -11474,6 +11476,7 @@ For \`session_expired\` errors, the description can be (among others):
           },
           "ListAccounts": {
             "auth": true,
+            "display-name": "List all accounts",
             "docs": "Get a paginated list of all existing accounts in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -11688,6 +11691,7 @@ For \`session_expired\` errors, the description can be (among others):
           },
           "PatchAccounts": {
             "auth": true,
+            "display-name": "Complete an accounts request",
             "docs": "Used to resume an Account retrieve session that was paused because an MFA token was required by the institution.
 
   > 🚧 Scheduled field deprecation
@@ -11738,6 +11742,7 @@ For \`session_expired\` errors, the description can be (among others):
           },
           "RetrieveAccounts": {
             "auth": true,
+            "display-name": "Retrieve accounts for a link",
             "docs": "Retrieve accounts from an existing link.
 
   > 🚧 Scheduled field deprecation
@@ -11800,6 +11805,7 @@ For \`session_expired\` errors, the description can be (among others):
         "endpoints": {
           "DestroyBalance": {
             "auth": true,
+            "display-name": "Delete a balance",
             "docs": "Delete a specific balance from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -11816,6 +11822,7 @@ For \`session_expired\` errors, the description can be (among others):
           },
           "DetailBalance": {
             "auth": true,
+            "display-name": "Get a balance's details",
             "docs": "Get the details of a specific balance.",
             "errors": [
               "root.UnauthorizedError",
@@ -11851,6 +11858,7 @@ For \`session_expired\` errors, the description can be (among others):
           },
           "ListBalances": {
             "auth": true,
+            "display-name": "List all balances",
             "docs": "Get a paginated list of all existing balances in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -12018,6 +12026,7 @@ For \`session_expired\` errors, the description can be (among others):
           },
           "PatchBalances": {
             "auth": true,
+            "display-name": "Complete a balances request",
             "docs": "Used to resume a Balance retrieve session that was paused because an MFA token was required by the institution.",
             "errors": [
               "root.BadRequestError",
@@ -12054,6 +12063,7 @@ For \`session_expired\` errors, the description can be (among others):
           },
           "RetrieveBalances": {
             "auth": true,
+            "display-name": "Retrieve balances for a link",
             "docs": "Retrieve balances from one or more accounts for a specific link within a specified date range.",
             "errors": [
               "root.BadRequestError",
@@ -12132,6 +12142,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "CreateBankAccount": {
             "auth": true,
+            "display-name": "Create a new bank account",
             "docs": "Create a new bank account from which to send or request funds.",
             "errors": [
               "root.BadRequestError",
@@ -12154,6 +12165,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailBankAccount": {
             "auth": true,
+            "display-name": "Get details about a bank account",
             "docs": "Get the details about a specific bank account",
             "errors": [
               "root.UnauthorizedError",
@@ -12174,6 +12186,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListBankAccount": {
             "auth": true,
+            "display-name": "List all bank accounts",
             "docs": "List all bank accounts associated with your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -12279,6 +12292,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "CategorizeTransactions": {
             "auth": true,
+            "display-name": "Categorize transactions",
             "docs": "Send through your raw transaction data and receive enriched information for each of your transactions.
 
 <div style="background-color:#f4f6f8; border-left: 6px solid #5bc0de;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
@@ -12330,6 +12344,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "CreateCustomer": {
             "auth": true,
+            "display-name": "Create a new customer",
             "docs": "Create a new customer to send or request funds.",
             "errors": [
               "root.BadRequestError",
@@ -12351,6 +12366,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailCustomer": {
             "auth": true,
+            "display-name": "Get details about a customer",
             "docs": "Get the details about a specific customer",
             "errors": [
               "root.UnauthorizedError",
@@ -12371,6 +12387,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListCustomers": {
             "auth": true,
+            "display-name": "List all customers",
             "docs": "List all customers associated with your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -12457,6 +12474,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyEmploymentRecord": {
             "auth": true,
+            "display-name": "Delete an employment record",
             "docs": "Delete a specific employment record from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -12473,6 +12491,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailEmploymentRecord": {
             "auth": true,
+            "display-name": "Get an employment record's details",
             "docs": "Get the details of a specific employment record.",
             "errors": [
               "root.UnauthorizedError",
@@ -12508,6 +12527,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListEmploymentRecords": {
             "auth": true,
+            "display-name": "List all employment records",
             "docs": "Get a paginated list of all existing employment records in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -12549,6 +12569,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveEmploymentRecordDetails": {
             "auth": true,
+            "display-name": "Retrieve employment record details",
             "docs": "Retrieve employment record details for an individual.
 ",
             "errors": [
@@ -12612,6 +12633,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "VerifyIncome": {
             "auth": true,
+            "display-name": "Verify incomes",
             "docs": "Send through your raw data and receive enriched information for each of your user's income streams.
 
 <div style="background-color:#f4f6f8; border-left: 6px solid #5bc0de;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
@@ -12683,6 +12705,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyIncomes": {
             "auth": true,
+            "display-name": "Delete an income",
             "docs": "Delete a specific income from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -12699,6 +12722,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailIncome": {
             "auth": true,
+            "display-name": "Get an income's details",
             "docs": "Get the details of a specific income.",
             "errors": [
               "root.UnauthorizedError",
@@ -12734,6 +12758,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListIncomes": {
             "auth": true,
+            "display-name": "List all incomes",
             "docs": "Get a paginated list of all incomes in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -12801,6 +12826,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "PatchIncomes": {
             "auth": true,
+            "display-name": "Complete an incomes request",
             "docs": "Used to resume an Income retrieve session that was paused because an MFA token was required by the institution.",
             "errors": [
               "root.BadRequestError",
@@ -12837,6 +12863,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveIncome": {
             "auth": true,
+            "display-name": "Retrieve incomes for a link",
             "docs": "Retrieve income insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
             "errors": [
               "root.BadRequestError",
@@ -12923,6 +12950,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DetailInstitution": {
             "auth": true,
+            "display-name": "Get an institution's details",
             "docs": "Get the details of a specific institution.",
             "errors": [
               "root.UnauthorizedError",
@@ -12958,6 +12986,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListInstitutions": {
             "auth": true,
+            "display-name": "List all institutions",
             "docs": "Get a paginated list of all the institutions currently supported by Belvo. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -13066,6 +13095,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyPortfolio": {
             "auth": true,
+            "display-name": "Delete a portfolio",
             "docs": "Delete a specific investment portfolio and all associated instruments, transactions, and owners from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -13082,6 +13112,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailPortfolio": {
             "auth": true,
+            "display-name": "Get a portfolio's details",
             "docs": "Get the details of a specific portfolio.",
             "errors": [
               "root.UnauthorizedError",
@@ -13117,6 +13148,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListPortfolio": {
             "auth": true,
+            "display-name": "List all portfolios",
             "docs": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -13196,6 +13228,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "PatchPortfolio": {
             "auth": true,
+            "display-name": "Complete a portfolios request",
             "docs": "Used to resume a portfolio retrieve session that was paused because an MFA token was required by the institution.",
             "errors": [
               "root.BadRequestError",
@@ -13231,6 +13264,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrievePortfolio": {
             "auth": true,
+            "display-name": "Retrieve portfolios for a link",
             "docs": "Retrieve all portfolios for an existing link.",
             "errors": [
               "root.BadRequestError",
@@ -13278,6 +13312,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyInvoice": {
             "auth": true,
+            "display-name": "Delete an invoice",
             "docs": "Delete a specific invoice from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -13294,6 +13329,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailInvoice": {
             "auth": true,
+            "display-name": "Get an invoice's details",
             "docs": "Get the details of a specific invoice.",
             "errors": [
               "root.UnauthorizedError",
@@ -13329,6 +13365,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListInvoices": {
             "auth": true,
+            "display-name": "List all invoices",
             "docs": "Get a paginated list of all existing invoices in your Belvo account. By default, we return 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -13508,6 +13545,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "PatchInvoices": {
             "auth": true,
+            "display-name": "Complete an invoices request",
             "docs": "Used to resume an Invoice retrieve session that was paused because an MFA token was required by the institution.",
             "errors": [
               "root.BadRequestError",
@@ -13544,6 +13582,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveInvoices": {
             "auth": true,
+            "display-name": "Retrieve invoices for a link",
             "docs": "Retrieve invoice information from a specific fiscal link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> You can ask for up to **one** year (365 days) of invoices per request. If you need invoices for more than one year, just make another request. </div>
 ",
@@ -13627,6 +13666,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "ChangeLinkAccessMode": {
             "auth": true,
+            "display-name": "Change a link's access mode",
             "docs": "Change a link's access mode from \`single\` to \`recurrent\` or from \`recurrent\` to single.
 ℹ️ **Note**: When you change a link from \`single\`\` to \`recurrent\`, they will only be updated the next day at the scheduled interval.",
             "errors": [
@@ -13675,6 +13715,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DestroyLink": {
             "auth": true,
+            "display-name": "Delete a link",
             "docs": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
 # Deleting links in batches
 To delete links in bulk, we recommend looping through the list of links you want to delete and making the delete request.
@@ -13699,6 +13740,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           },
           "DetailLink": {
             "auth": true,
+            "display-name": "Get a link's details",
             "docs": "Get the details of a specific link.",
             "errors": [
               "root.UnauthorizedError",
@@ -13734,6 +13776,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           },
           "ListLinks": {
             "auth": true,
+            "display-name": "List all links",
             "docs": "Get a paginated list of all the existing links in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -13870,6 +13913,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           },
           "PatchLinks": {
             "auth": true,
+            "display-name": "Complete a links request",
             "docs": "Used to resume a Link register session that was paused because an MFA token was required by the institution.",
             "errors": [
               "root.BadRequestError",
@@ -13905,6 +13949,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           },
           "RegisterLink": {
             "auth": true,
+            "display-name": "Register a new link",
             "docs": "Register a new link with your Belvo account.
 
 <div style="background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
@@ -14073,6 +14118,7 @@ For a list of standards codes, see the table below.
           },
           "UpdateLink": {
             "auth": true,
+            "display-name": "Update a link's credentials",
             "docs": "Update the credentials of a specific link. If the successfully updated link is a recurrent one, we automatically trigger an update of the link. If we find fresh data, you'll [receive historical update](https://developers.belvo.com/docs/webhooks) webhooks.
 <div style="background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Note: </strong> We recommend using our <a href="https://developers.belvo.com/docs/connect-widget" target="_blank">Connect Widget</a> to handle updating <code>invalid</code> or <code>token_required</code> links. </div>
 ",
@@ -14205,6 +14251,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
         "endpoints": {
           "DestroyOwner": {
             "auth": true,
+            "display-name": "Delete an owner",
             "docs": "Delete a specific owner from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -14221,6 +14268,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
           },
           "DetailOwner": {
             "auth": true,
+            "display-name": "Get an owner's details",
             "docs": "Get the details of a specific owner.",
             "errors": [
               "root.UnauthorizedError",
@@ -14256,6 +14304,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
           },
           "ListOwners": {
             "auth": true,
+            "display-name": "List all owners",
             "docs": "Get a paginated list of all existing owners in your Belvo account. We return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -14352,6 +14401,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
           },
           "PatchOwners": {
             "auth": true,
+            "display-name": "Complete an owners request",
             "docs": "Used to resume an Owner retrieve session that was paused because an MFA token was required by the institution.",
             "errors": [
               "root.BadRequestError",
@@ -14388,6 +14438,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
           },
           "RetrieveOwners": {
             "auth": true,
+            "display-name": "Retrieve owners for a link",
             "docs": "Retrieve owner information from a specific link.",
             "errors": [
               "root.BadRequestError",
@@ -14436,6 +14487,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
         "endpoints": {
           "DetailPaymentInstitution": {
             "auth": true,
+            "display-name": "Get details about a payment institution",
             "docs": "Get the details about a specific payment institution",
             "errors": [
               "root.UnauthorizedError",
@@ -14456,6 +14508,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
           },
           "ListPaymentInstitutions": {
             "auth": true,
+            "display-name": "List all payment institutions",
             "docs": "List all available payment institutions.",
             "errors": [
               "root.UnauthorizedError",
@@ -14531,6 +14584,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
         "endpoints": {
           "CreatePaymentIntent": {
             "auth": true,
+            "display-name": "Create a new payment intent",
             "docs": "Create a payment intent.",
             "errors": [
               "root.BadRequestError",
@@ -14553,6 +14607,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
           },
           "DetailPaymentIntent": {
             "auth": true,
+            "display-name": "Get details about a payment intent",
             "docs": "Get the details about a specific payment intent.",
             "errors": [
               "root.UnauthorizedError",
@@ -14573,6 +14628,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
           },
           "ListPaymentIntents": {
             "auth": true,
+            "display-name": "List all payment intents",
             "docs": "List all payment intents associated with your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -14686,6 +14742,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
           },
           "PatchPaymentIntent": {
             "auth": true,
+            "display-name": "Complete a payment intent",
             "docs": "Complete a new payment intent.
 
 During the payment intent flow, you need to fill in the payment intent with required information about your customer (their institution, bank account, and login credentials). This is done by sending PATCH requests with the information that Belvo asked you display in each \`next_step\` object. If you need more information on how to complete a payment intent, check our <a href="https://developers.belvo.com/docs/colombia-pse#payment-intents" target="_blank">PSE payment initiation</a> guides for  🇨🇴 Colombia.",
@@ -14739,6 +14796,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "endpoints": {
           "CreatePaymentlink": {
             "auth": true,
+            "display-name": "Create a payment link",
             "docs": "Create a new payment link to start a hosted-widget payment.",
             "errors": [
               "root.BadRequestError",
@@ -14761,6 +14819,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "DetailCreatePaymentlink": {
             "auth": true,
+            "display-name": "Get details about a payment link",
             "docs": "Get the details about a payment link.",
             "errors": [
               "root.UnauthorizedError",
@@ -14783,6 +14842,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "ListPaymentLinks": {
             "auth": true,
+            "display-name": "List all payment links",
             "docs": "List all payment links associated with your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -14879,6 +14939,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "endpoints": {
           "DetailPaymentTransactions": {
             "auth": true,
+            "display-name": "Get details about a payment transaction",
             "docs": "Get the details about a specific payment transaction.",
             "errors": [
               "root.UnauthorizedError",
@@ -14899,6 +14960,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "ListPaymentTransactions": {
             "auth": true,
+            "display-name": "List all payment transactions",
             "docs": "List all payment transactions associated with your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -15044,6 +15106,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "endpoints": {
           "DeletePaymentWebhooks": {
             "auth": true,
+            "display-name": "Delete a payment webhook",
             "docs": "Delete a specific payment webhook from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -15060,6 +15123,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "DetailPaymentWebhooks": {
             "auth": true,
+            "display-name": "Get details about a payment webhook",
             "docs": "Get the details about a specific payment webhook.",
             "errors": [
               "root.UnauthorizedError",
@@ -15080,6 +15144,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "ListPaymentWebhooks": {
             "auth": true,
+            "display-name": "List all payment webhooks",
             "docs": "List all payment webhooks associated with your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -15093,6 +15158,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "RegisterPaymentWebhook": {
             "auth": true,
+            "display-name": "Register a new payment webhook",
             "docs": "Register a new payments webhook for your Belvo account.
 ",
             "errors": [
@@ -15151,6 +15217,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "endpoints": {
           "DestroyReceivableTransaction": {
             "auth": true,
+            "display-name": "Delete a receivable transaction",
             "docs": "Delete a specific receivable transaction from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -15167,6 +15234,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "DetailReceivableTransaction": {
             "auth": true,
+            "display-name": "Get a receivable transaction's details",
             "docs": "Get the details of a specific receivable transaction.",
             "errors": [
               "root.UnauthorizedError",
@@ -15202,6 +15270,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "ListReceivableTransactions": {
             "auth": true,
+            "display-name": "List all receivable transactions",
             "docs": "Get a paginated list of all the existing receivable transactions in your Belvo account. We return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -15324,6 +15393,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           },
           "RetrieveReceivableTransactions": {
             "auth": true,
+            "display-name": "Retrieve receivable transactions for a link",
             "docs": "Retrieve all receivable transactions for an existing link.",
             "errors": [
               "root.BadRequestError",
@@ -15397,6 +15467,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyRecurringExpense": {
             "auth": true,
+            "display-name": "Delete a recurring expense",
             "docs": "Delete a specific recurring expense from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -15413,6 +15484,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailRecurringExpense": {
             "auth": true,
+            "display-name": "Get a recurring expense's details",
             "docs": "Get the details of a specific recurring expense.",
             "errors": [
               "root.UnauthorizedError",
@@ -15448,6 +15520,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListRecurringExpenses": {
             "auth": true,
+            "display-name": "List all recurring expenses",
             "docs": "Get a paginated list of all recurring expenses in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -15525,6 +15598,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "PatchRecurringExpenses": {
             "auth": true,
+            "display-name": "Complete a recurring expenses request",
             "docs": "Used to resume an Recurring Expenses retrieve session that was paused because an MFA token was required by the institution.",
             "errors": [
               "root.BadRequestError",
@@ -15561,6 +15635,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveRecurringExpenses": {
             "auth": true,
+            "display-name": "Retrieve recurring expenses for a link",
             "docs": "Retrieve recurring expense insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
             "errors": [
               "root.BadRequestError",
@@ -15639,6 +15714,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyRiskInsights": {
             "auth": true,
+            "display-name": "Delete a risk insight",
             "docs": "Delete a specific risk insight from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -15655,6 +15731,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailRiskInsights": {
             "auth": true,
+            "display-name": "Get a risk insight's details",
             "docs": "Get the details of a specific risk insight.",
             "errors": [
               "root.UnauthorizedError",
@@ -15690,6 +15767,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListRiskInsights": {
             "auth": true,
+            "display-name": "List all risk insights",
             "docs": "Get a paginated list of all risk insight analyses in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -15754,6 +15832,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "PatchRiskInsights": {
             "auth": true,
+            "display-name": "Complete a risk insights request",
             "docs": "Used to resume an Risk insights retrieve session that was paused because an MFA token was required by the institution.",
             "errors": [
               "root.BadRequestError",
@@ -15790,6 +15869,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveRiskInsights": {
             "auth": true,
+            "display-name": "Retrieve risk insights for a link",
             "docs": "Request the risk insights for a given link ID.
 
 If you need to know the currency of the account, just do a GET Details to the accounts endpoint (using the ID you receive from the accounts response).",
@@ -15840,6 +15920,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         "endpoints": {
           "CreateSecretKeys": {
             "auth": true,
+            "display-name": "Request API keys",
             "docs": "Request API keys to use with Belvo's Payments API.
 
 You will need to send through the username and password (in plain text) you use to login to the Belvo dashboard in the Authorization header.
@@ -15864,6 +15945,7 @@ For example:
           },
           "ListSecretKeys": {
             "auth": true,
+            "display-name": "List all secret keys",
             "docs": "Get a paginated list of all existing secret keys in your Belvo account. We return up to 100 results per page.
 
 
@@ -15892,6 +15974,7 @@ For example:
         "endpoints": {
           "DestroyTaxComplianceStatus": {
             "auth": true,
+            "display-name": "Delete a tax compliance status",
             "docs": "Delete a specific Tax compliance status from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -15908,6 +15991,7 @@ For example:
           },
           "DetailTaxComplianceStatus": {
             "auth": true,
+            "display-name": "Get a tax compliance status's details",
             "docs": "Get the details of a specific Tax compliance status.",
             "errors": [
               "root.UnauthorizedError",
@@ -15943,6 +16027,7 @@ For example:
           },
           "ListTaxComplianceStatus": {
             "auth": true,
+            "display-name": "List all tax compliance statuses",
             "docs": "Get a paginated list of all existing Tax compliance statuses in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -16032,6 +16117,7 @@ For example:
           },
           "RetrieveTaxComplianceStatus": {
             "auth": true,
+            "display-name": "Retrieve tax compliance statuses for a link",
             "docs": "Retrieve the Tax compliance status information for a specific fiscal link.",
             "errors": [
               "root.BadRequestError",
@@ -16093,6 +16179,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyTaxDeclaration": {
             "auth": true,
+            "display-name": "Delete a tax declration",
             "docs": "Delete a specific Tax declaration from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -16109,6 +16196,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailTaxDeclaration": {
             "auth": true,
+            "display-name": "Get a tax declaration's details",
             "docs": "Get the details of a specific Tax declaration.",
             "errors": [
               "root.UnauthorizedError",
@@ -16144,6 +16232,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListTaxDeclarations": {
             "auth": true,
+            "display-name": "List all tax declarations",
             "docs": "Get a paginated list of all existing tax declarations in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -16263,6 +16352,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveTaxDeclarations": {
             "auth": true,
+            "display-name": "Retrieve tax declarations for a link",
             "docs": "Retrieve tax declaration information for a specific fiscal link.",
             "errors": [
               "root.BadRequestError",
@@ -16334,6 +16424,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyTaxRetention": {
             "auth": true,
+            "display-name": "Delete a tax retention",
             "docs": "Delete a specific tax retention from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -16350,6 +16441,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailTaxRetentions": {
             "auth": true,
+            "display-name": "Get a tax retention's details",
             "docs": "Get the details of a specific tax retention.",
             "errors": [
               "root.UnauthorizedError",
@@ -16385,6 +16477,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListTaxRetentions": {
             "auth": true,
+            "display-name": "List all tax retentions",
             "docs": "Get a paginated list of all existing tax retentions in your Belvo account. We return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -16464,6 +16557,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveTaxRetentions": {
             "auth": true,
+            "display-name": "Retrieve tax retentions for a link",
             "docs": "Retrieve tax retention information from a specific link. The maximum number of tax retentions that can be returned for a period is 500.",
             "errors": [
               "root.BadRequestError",
@@ -16544,6 +16638,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyTaxReturn": {
             "auth": true,
+            "display-name": "Delete a tax return",
             "docs": "Delete a specific tax return from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -16560,6 +16655,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailTaxReturn": {
             "auth": true,
+            "display-name": "Get a tax return's details",
             "docs": "Get the details of a specific tax return.",
             "errors": [
               "root.UnauthorizedError",
@@ -16595,6 +16691,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListTaxReturns": {
             "auth": true,
+            "display-name": "List all tax returns",
             "docs": "Get a paginated list of all existing tax returns in your Belvo account. By default, we return up to 100 results per page. The results will include a mix of both monthly and yearly tax returns.",
             "errors": [
               "root.UnauthorizedError",
@@ -16724,6 +16821,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveTaxReturns": {
             "auth": true,
+            "display-name": "Retrieve tax returns for a link",
             "docs": "Retrieve tax return information for a specific fiscal link.",
             "errors": [
               "root.BadRequestError",
@@ -16771,6 +16869,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyTaxStatus": {
             "auth": true,
+            "display-name": "Delete a tax status",
             "docs": "Delete a specific tax status from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -16787,6 +16886,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailTaxStatus": {
             "auth": true,
+            "display-name": "Get a tax status's details",
             "docs": "Get the details of a specific tax status.",
             "errors": [
               "root.UnauthorizedError",
@@ -16822,6 +16922,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListTaxStatus": {
             "auth": true,
+            "display-name": "List all tax statuses",
             "docs": "Get a paginated list of all existing tax status in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -16911,6 +17012,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveTaxStatus": {
             "auth": true,
+            "display-name": "Retrieve tax statuses for a link",
             "docs": "Retrieve tax status information for a specific fiscal link.",
             "errors": [
               "root.BadRequestError",
@@ -16972,6 +17074,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "endpoints": {
           "DestroyTransaction": {
             "auth": true,
+            "display-name": "Delete a transaction",
             "docs": "Delete a specific transaction from your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
@@ -16988,6 +17091,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "DetailTransaction": {
             "auth": true,
+            "display-name": "Get a transaction's details",
             "docs": "Get the details of a specific transaction.",
             "errors": [
               "root.UnauthorizedError",
@@ -17023,6 +17127,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "ListTransactions": {
             "auth": true,
+            "display-name": "List all transactions",
             "docs": "Get a paginated list of all existing transactions in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
@@ -17340,6 +17445,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "PatchTransactions": {
             "auth": true,
+            "display-name": "Complete a transactions request",
             "docs": "Used to resume a Transaction retrieve session that was paused because an MFA token was required by the institution.",
             "errors": [
               "root.BadRequestError",
@@ -17376,6 +17482,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "RetrieveTransactions": {
             "auth": true,
+            "display-name": "Retrieve transactions for a link",
             "docs": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
 If you try to access older information than what we can access, we will return all the data we can read within that date range. For example, if you request transactions for the last year and we can only access the last six months, we will return the information corresponding to these six months of data. </div>
@@ -17415,6 +17522,7 @@ If you try to access older information than what we can access, we will return a
           },
           "RetrieveTransactions_async": {
             "auth": true,
+            "display-name": "Retrieve transactions for a link",
             "docs": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
 If you try to access older information than what we can access, we will return all the data we can read within that date range. For example, if you request transactions for the last year and we can only access the last six months, we will return the information corresponding to these six months of data. </div>

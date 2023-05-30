@@ -11,6 +11,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "endorse-transaction": {
             "auth": true,
+            "display-name": "For Endorser to endorse a particular transaction record",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6487,6 +6488,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "close_menu_by_conn_id": {
             "auth": true,
+            "display-name": "Close the active menu associated with a connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6504,6 +6506,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "fetch_menu_by_conn_id": {
             "auth": true,
+            "display-name": "Fetch the active menu",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6521,6 +6524,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "perform_action_by_conn_id": {
             "auth": true,
+            "display-name": "Perform an action associated with the active menu",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6555,6 +6559,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "request_menu_by_conn_id": {
             "auth": true,
+            "display-name": "Request the active menu",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6572,6 +6577,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_menu_to_conn_id": {
             "auth": true,
+            "display-name": "Send an action menu to a connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6614,6 +6620,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "send_message": {
             "auth": true,
+            "display-name": "Send a basic message to a connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6656,6 +6663,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "accept_connection_invitation": {
             "auth": true,
+            "display-name": "Accept a stored connection invitation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6693,6 +6701,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "accept_connection_request": {
             "auth": true,
+            "display-name": "Accept a stored connection request",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6720,6 +6729,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "create_connection_invitation": {
             "auth": true,
+            "display-name": "Create a new connection invitation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6785,6 +6795,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "create_static_connection": {
             "auth": true,
+            "display-name": "Create a new static connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -6837,6 +6848,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "delete_connection_record": {
             "auth": true,
+            "display-name": "Remove an existing connection record",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -6854,6 +6866,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_connection_endpoint": {
             "auth": true,
+            "display-name": "Fetch connection remote endpoint",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -6871,6 +6884,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_connection_metadata": {
             "auth": true,
+            "display-name": "Fetch connection metadata",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -6898,6 +6912,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_connection_record": {
             "auth": true,
+            "display-name": "Fetch a single connection record",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -6915,6 +6930,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_matching_connections": {
             "auth": true,
+            "display-name": "Query agent-to-agent connections",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -6976,6 +6992,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "receive_connection_invitation": {
             "auth": true,
+            "display-name": "Receive a new connection invitation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7044,6 +7061,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "set_connection_metadata": {
             "auth": true,
+            "display-name": "Set connection metadata",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7074,6 +7092,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "set_inbound_connection": {
             "auth": true,
+            "display-name": "Assign another connection as the inbound connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7107,6 +7126,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "get_created_cred_defs": {
             "auth": true,
+            "display-name": "Search for matching credential definitions that agent originated",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7153,6 +7173,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_credential_definition": {
             "auth": true,
+            "display-name": "Gets a credential definition from the ledger",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7170,6 +7191,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "publish_credential_definition": {
             "auth": true,
+            "display-name": "Sends a credential definition to the ledger",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7217,6 +7239,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "write_credential_definition": {
             "auth": true,
+            "display-name": "Writes a credential definition non-secret record to the wallet",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7246,6 +7269,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "delete_credential_record": {
             "auth": true,
+            "display-name": "Remove credential from wallet by id",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -7263,6 +7287,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "delete_w3c_credential": {
             "auth": true,
+            "display-name": "Remove W3C credential from wallet by id",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -7280,6 +7305,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_credential_mime_types": {
             "auth": true,
+            "display-name": "Get attribute MIME types from wallet",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7297,6 +7323,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_credential_record": {
             "auth": true,
+            "display-name": "Fetch credential from wallet by id",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7314,6 +7341,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_credentials": {
             "auth": true,
+            "display-name": "Fetch credentials from wallet",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7345,6 +7373,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_revocation_status": {
             "auth": true,
+            "display-name": "Query credential revocation status by id",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7377,6 +7406,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_w3c_credential": {
             "auth": true,
+            "display-name": "Fetch W3C credential from wallet by id",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7394,6 +7424,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_w3c_credentials": {
             "auth": true,
+            "display-name": "Fetch W3C credentials from wallet",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7478,6 +7509,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "accept_didex_invitation": {
             "auth": true,
+            "display-name": "Accept a stored connection invitation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7510,6 +7542,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "accept_didex_request": {
             "auth": true,
+            "display-name": "Accept a stored connection request",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7542,6 +7575,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "create_didex_request": {
             "auth": true,
+            "display-name": "Create and send a request against public DID's implicit invitation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7588,6 +7622,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "receive_didex_request": {
             "auth": true,
+            "display-name": "Receive request against public DID's implicit invitation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7661,6 +7696,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "get_v10_feature_records": {
             "auth": true,
+            "display-name": "Discover Features records",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7682,6 +7718,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_v10_features_query": {
             "auth": true,
+            "display-name": "Query supported features",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7725,6 +7762,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "get_v20_feature_records": {
             "auth": true,
+            "display-name": "Discover Features v2.0 records",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7746,6 +7784,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_v20_features_queries": {
             "auth": true,
+            "display-name": "Query supported features",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7789,6 +7828,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "cancel_transaction_request": {
             "auth": true,
+            "display-name": "For Author to cancel a particular transaction request",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7806,6 +7846,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "create_transaction_request": {
             "auth": true,
+            "display-name": "For author to send a transaction request",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7841,6 +7882,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_transaction_list": {
             "auth": true,
+            "display-name": "Query transactions",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7852,6 +7894,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_transaction_record": {
             "auth": true,
+            "display-name": "Fetch a single transaction record",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -7869,6 +7912,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "publish_endorsed_transaction": {
             "auth": true,
+            "display-name": "For Author / Endorser to write an endorsed transaction to the ledger",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7886,6 +7930,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "refuse_transaction": {
             "auth": true,
+            "display-name": "For Endorser to refuse a particular transaction record",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7903,6 +7948,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "resend_transaction_request": {
             "auth": true,
+            "display-name": "For Author to resend a particular transaction request",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7920,6 +7966,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "set_endorser_info_for_conn_id": {
             "auth": true,
+            "display-name": "Set Endorser Info",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7952,6 +7999,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "set_endorser_role_for_conn_id": {
             "auth": true,
+            "display-name": "Set transaction jobs",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -7991,6 +8039,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "start_connection_introduction": {
             "auth": true,
+            "display-name": "Start an introduction between two connections",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8035,6 +8084,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "create_credential_record": {
             "auth": true,
+            "display-name": "Create a credential record without sending (generally for use with Out-Of-Band)",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8095,6 +8145,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "create_free_credential_offer": {
             "auth": true,
+            "display-name": "Create a credential offer, independent of any proposal or connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8139,6 +8190,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "delete_cred_ex_record": {
             "auth": true,
+            "display-name": "Remove an existing credential exchange record",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -8156,6 +8208,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_cred_ex_record": {
             "auth": true,
+            "display-name": "Fetch a single credential exchange record",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -8173,6 +8226,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_matching_cred_ex_records": {
             "auth": true,
+            "display-name": "Fetch all credential exchange records",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -8209,6 +8263,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "issue_credential_to_holder": {
             "auth": true,
+            "display-name": "Send holder a credential",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8239,6 +8294,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "report_cred_ex_problem": {
             "auth": true,
+            "display-name": "Send a problem report for credential exchange",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8269,6 +8325,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_credential_offer": {
             "auth": true,
+            "display-name": "Send holder a credential offer in reference to a proposal with preview",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8299,6 +8356,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_credential_request": {
             "auth": true,
+            "display-name": "Send issuer a credential request",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8316,6 +8374,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_free_credential": {
             "auth": true,
+            "display-name": "Send holder a credential, automating entire flow",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8380,6 +8439,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_free_credential_offer": {
             "auth": true,
+            "display-name": "Send holder a credential offer, independent of any proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8428,6 +8488,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_free_credential_proposal": {
             "auth": true,
+            "display-name": "Send issuer a credential proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8492,6 +8553,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "store_received_credential": {
             "auth": true,
+            "display-name": "Store a received credential",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8534,6 +8596,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "create_credential_record": {
             "auth": true,
+            "display-name": "Create a credential record without sending (generally for use with Out-Of-Band)",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8574,6 +8637,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "create_free_credential_offer": {
             "auth": true,
+            "display-name": "Create a credential offer, independent of any proposal or connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8618,6 +8682,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "delete_cred_ex_record": {
             "auth": true,
+            "display-name": "Remove an existing credential exchange record",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -8635,6 +8700,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_cred_ex_record": {
             "auth": true,
+            "display-name": "Fetch a single credential exchange record",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -8652,6 +8718,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_matching_cred_ex_records-v2": {
             "auth": true,
+            "display-name": "Fetch all credential exchange records",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -8688,6 +8755,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "issue_credential_to_holder": {
             "auth": true,
+            "display-name": "Send holder a credential",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8718,6 +8786,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "report_cred_ex_problem": {
             "auth": true,
+            "display-name": "Send a problem report for credential exchange",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8748,6 +8817,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_credential_offer": {
             "auth": true,
+            "display-name": "Send holder a credential offer in reference to a proposal with preview",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8782,6 +8852,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_credential_request": {
             "auth": true,
+            "display-name": "Send issuer a credential request",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8812,6 +8883,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_free_credential": {
             "auth": true,
+            "display-name": "Send holder a credential, automating entire flow",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8829,6 +8901,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_free_credential_offer": {
             "auth": true,
+            "display-name": "Send holder a credential offer, independent of any proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8877,6 +8950,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_free_credential_proposal": {
             "auth": true,
+            "display-name": "Send issuer a credential proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8894,6 +8968,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_free_credential_request": {
             "auth": true,
+            "display-name": "Send issuer a credential request not bound to an existing thread. Indy credentials cannot start at a request",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8938,6 +9013,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "store_received_credential": {
             "auth": true,
+            "display-name": "Store a received credential",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -8980,6 +9056,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "sign": {
             "auth": true,
+            "display-name": "Sign a JSON-LD structure and return it",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9008,6 +9085,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "verify": {
             "auth": true,
+            "display-name": "Verify a JSON-LD structure.",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9048,6 +9126,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "accept_taa": {
             "auth": true,
+            "display-name": "Accept the transaction author agreement",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9080,6 +9159,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_did_nym_role": {
             "auth": true,
+            "display-name": "Get the role from the NYM registration of a public DID.",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9101,6 +9181,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_did_verkey": {
             "auth": true,
+            "display-name": "Get the verkey for a DID from the ledger.",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9122,6 +9203,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_multiple_ledger_config": {
             "auth": true,
+            "display-name": "Fetch the multiple ledger configuration currently in use",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9133,6 +9215,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_published_did_endpoint": {
             "auth": true,
+            "display-name": "Get the endpoint for a DID from the ledger.",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9159,6 +9242,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_taa": {
             "auth": true,
+            "display-name": "Fetch the current transaction author agreement, if any",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9170,6 +9254,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_write_ledger": {
             "auth": true,
+            "display-name": "Fetch the current write ledger",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9181,6 +9266,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "register_nym": {
             "auth": true,
+            "display-name": "Send a NYM registration to the ledger.",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9227,6 +9313,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "rotate_public_did_keypair": {
             "auth": true,
+            "display-name": "Rotate key pair for public DID.",
             "docs": undefined,
             "errors": [],
             "method": "PATCH",
@@ -9250,6 +9337,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "clear_default_mediator": {
             "auth": true,
+            "display-name": "Clear default mediator",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -9261,6 +9349,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "delete_mediation_record": {
             "auth": true,
+            "display-name": "Delete mediation request by ID",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -9278,6 +9367,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "deny_mediation_request": {
             "auth": true,
+            "display-name": "Deny a stored mediation request",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9312,6 +9402,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_default_mediator": {
             "auth": true,
+            "display-name": "Get default mediator",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9323,6 +9414,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_keylists": {
             "auth": true,
+            "display-name": "Retrieve keylists by connection or role",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9349,6 +9441,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_matching_mediation_records": {
             "auth": true,
+            "display-name": "Query mediation requests, returns list of all mediation records",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9385,6 +9478,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_mediation_record": {
             "auth": true,
+            "display-name": "Retrieve mediation request record",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9402,6 +9496,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "grant_mediation_request": {
             "auth": true,
+            "display-name": "Grant received mediation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9419,6 +9514,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "request_mediation_for_connection": {
             "auth": true,
+            "display-name": "Request mediation from connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9453,6 +9549,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_keylist_query_to_mediator": {
             "auth": true,
+            "display-name": "Send keylist query to mediator",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9494,6 +9591,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_keylist_update_to_mediator": {
             "auth": true,
+            "display-name": "Send keylist update to mediator",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9524,6 +9622,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "set_default_mediator": {
             "auth": true,
+            "display-name": "Set default mediator",
             "docs": undefined,
             "errors": [],
             "method": "PUT",
@@ -9541,6 +9640,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "update_keylist_for_conn_id": {
             "auth": true,
+            "display-name": "Update keylist for a connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9583,6 +9683,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "create_wallet": {
             "auth": true,
+            "display-name": "Create a subwallet",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9639,6 +9740,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "delete_wallet": {
             "auth": true,
+            "display-name": "Remove a subwallet",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9669,6 +9771,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_auth_token": {
             "auth": true,
+            "display-name": "Get auth token for a subwallet",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9699,6 +9802,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_matching_wallets": {
             "auth": true,
+            "display-name": "Query subwallets",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9720,6 +9824,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_wallet_record": {
             "auth": true,
+            "display-name": "Get a single subwallet",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9737,6 +9842,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "update_wallet": {
             "auth": true,
+            "display-name": "Update a subwallet",
             "docs": undefined,
             "errors": [],
             "method": "PUT",
@@ -9791,6 +9897,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "create_oob_invitation": {
             "auth": true,
+            "display-name": "Create a new connection invitation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9858,6 +9965,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "receive_oob_invitation": {
             "auth": true,
+            "display-name": "Receive a new connection invitation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9910,6 +10018,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "create_free_proof_request": {
             "auth": true,
+            "display-name": "Creates a presentation request not bound to any proposal or connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -9946,6 +10055,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "delete_pres_ex_record": {
             "auth": true,
+            "display-name": "Remove an existing presentation exchange record",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -9963,6 +10073,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_matching_pres_ex_records": {
             "auth": true,
+            "display-name": "Fetch all present-proof exchange records",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -9999,6 +10110,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_pres_ex_credentials": {
             "auth": true,
+            "display-name": "Fetch credentials for a presentation request from wallet",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10041,6 +10153,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_pres_ex_record": {
             "auth": true,
+            "display-name": "Fetch a single presentation exchange record",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10058,6 +10171,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "report_pres_ex_problem": {
             "auth": true,
+            "display-name": "Send a problem report for presentation exchange",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10088,6 +10202,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_free_presentation_request": {
             "auth": true,
+            "display-name": "Sends a free presentation request not bound to any proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10128,6 +10243,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_presentation_proposal": {
             "auth": true,
+            "display-name": "Sends a presentation proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10168,6 +10284,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_proof_presentation": {
             "auth": true,
+            "display-name": "Sends a proof presentation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10191,6 +10308,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_proof_presentation_request": {
             "auth": true,
+            "display-name": "Sends a presentation request in reference to a proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10225,6 +10343,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "verify_received_presentation": {
             "auth": true,
+            "display-name": "Verify a received presentation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10254,6 +10373,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "create_proof_request": {
             "auth": true,
+            "display-name": "Creates a presentation request not bound to any proposal or connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10290,6 +10410,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "delete_pres_ex_record": {
             "auth": true,
+            "display-name": "Remove an existing presentation exchange record",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -10307,6 +10428,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_matching_pres_ex_records-v2": {
             "auth": true,
+            "display-name": "Fetch all present-proof exchange records",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10343,6 +10465,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_pres_ex_credentials-v2": {
             "auth": true,
+            "display-name": "Fetch credentials from wallet for presentation request",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10385,6 +10508,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_pres_ex_record": {
             "auth": true,
+            "display-name": "Fetch a single presentation exchange record",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10402,6 +10526,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "report_pres_ex_problem": {
             "auth": true,
+            "display-name": "Send a problem report for presentation exchange",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10432,6 +10557,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_free_presentation_request": {
             "auth": true,
+            "display-name": "Sends a free presentation request not bound to any proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10472,6 +10598,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_presentation_proposal": {
             "auth": true,
+            "display-name": "Sends a presentation proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10512,6 +10639,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_proof_presentation": {
             "auth": true,
+            "display-name": "Sends a proof presentation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10550,6 +10678,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "send_proof_presentation_request": {
             "auth": true,
+            "display-name": "Sends a presentation request in reference to a proposal",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10584,6 +10713,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "verify_received_presentation": {
             "auth": true,
+            "display-name": "Verify a received presentation",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10613,6 +10743,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "get_did_document": {
             "auth": true,
+            "display-name": "Retrieve doc for requested did",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10642,6 +10773,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "clear_pending_revocations": {
             "auth": true,
+            "display-name": "Clear pending revocations",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10666,6 +10798,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "create_revocation_registry": {
             "auth": true,
+            "display-name": "Creates a new revocation registry",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10694,6 +10827,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "delete_tails_file": {
             "auth": true,
+            "display-name": "Delete the tail files",
             "docs": undefined,
             "errors": [],
             "method": "DELETE",
@@ -10720,6 +10854,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "download_tails_file": {
             "auth": true,
+            "display-name": "Download tails file",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10737,6 +10872,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_active_registry_for_cred_def_id": {
             "auth": true,
+            "display-name": "Get current active revocation registry by credential definition id",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10754,6 +10890,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_created_registries": {
             "auth": true,
+            "display-name": "Search for matching revocation registries that current agent created",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10780,6 +10917,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_credential_revocation_record": {
             "auth": true,
+            "display-name": "Get credential revocation status",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10811,6 +10949,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_issued_credential_details": {
             "auth": true,
+            "display-name": "Get details of credentials issued against revocation registry",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10828,6 +10967,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_issued_credentials_count": {
             "auth": true,
+            "display-name": "Get number of credentials issued against revocation registry",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10845,6 +10985,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_published_credential_details": {
             "auth": true,
+            "display-name": "Get details of revoked credentials from ledger",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10862,6 +11003,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_revocation_registry": {
             "auth": true,
+            "display-name": "Get revocation registry by revocation registry id",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -10879,6 +11021,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "publish_revocation_registry_definition": {
             "auth": true,
+            "display-name": "Send revocation registry definition to ledger",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10911,6 +11054,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "publish_revocation_registry_entry": {
             "auth": true,
+            "display-name": "Send revocation registry entry to ledger",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10943,6 +11087,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "publish_revocations": {
             "auth": true,
+            "display-name": "Publish pending revocations to ledger",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -10960,6 +11105,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "revoke_issued_credential": {
             "auth": true,
+            "display-name": "Revoke an issued credential",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -11016,6 +11162,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "set_revocation_registry_state": {
             "auth": true,
+            "display-name": "Set revocation registry state manually",
             "docs": undefined,
             "errors": [],
             "method": "PATCH",
@@ -11043,6 +11190,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "update_revocation_entry_state": {
             "auth": true,
+            "display-name": "Fix revocation state in wallet and return number of updated entries",
             "docs": undefined,
             "errors": [],
             "method": "PUT",
@@ -11070,6 +11218,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "update_revocation_registry": {
             "auth": true,
+            "display-name": "Update revocation registry with new public URI to its tails file",
             "docs": undefined,
             "errors": [],
             "method": "PATCH",
@@ -11100,6 +11249,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "upload_tails_file": {
             "auth": true,
+            "display-name": "Upload local tails file to server",
             "docs": undefined,
             "errors": [],
             "method": "PUT",
@@ -11129,6 +11279,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "get_matching_created_schemas": {
             "auth": true,
+            "display-name": "Search for matching schema that agent originated",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11165,6 +11316,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_schema": {
             "auth": true,
+            "display-name": "Gets a schema from the ledger",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11182,6 +11334,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "publish_schema": {
             "auth": true,
+            "display-name": "Sends a schema to the ledger",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -11225,6 +11378,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "write_schema_record_to_wallet": {
             "auth": true,
+            "display-name": "Writes a schema non-secret record to the wallet",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -11253,6 +11407,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "get_config": {
             "auth": true,
+            "display-name": "Fetch the server configuration",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11264,6 +11419,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_liveliness": {
             "auth": true,
+            "display-name": "Liveliness check",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11275,6 +11431,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_loaded_plugins": {
             "auth": true,
+            "display-name": "Fetch the list of loaded plugins",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11286,6 +11443,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_readiness": {
             "auth": true,
+            "display-name": "Readiness check",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11297,6 +11455,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_status": {
             "auth": true,
+            "display-name": "Fetch the server status",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11308,6 +11467,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "reset_statistics": {
             "auth": true,
+            "display-name": "Reset statistics",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -11319,6 +11479,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "shutdown_server": {
             "auth": true,
+            "display-name": "Shut down server",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11342,6 +11503,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "send_ping": {
             "auth": true,
+            "display-name": "Send a trust ping to a connection",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -11384,6 +11546,7 @@ exports[`open api parser aries simple 1`] = `
         "endpoints": {
           "create_local_did": {
             "auth": true,
+            "display-name": "Create a local DID",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -11416,6 +11579,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_did_endpoint": {
             "auth": true,
+            "display-name": "Query DID endpoint in wallet",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11437,6 +11601,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_dids": {
             "auth": true,
+            "display-name": "List wallet DIDs",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11478,6 +11643,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "get_public_did": {
             "auth": true,
+            "display-name": "Fetch the current public DID",
             "docs": undefined,
             "errors": [],
             "method": "GET",
@@ -11489,6 +11655,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "rotate_keypair": {
             "auth": true,
+            "display-name": "Rotate keypair for a DID not posted to the ledger",
             "docs": undefined,
             "errors": [],
             "method": "PATCH",
@@ -11510,6 +11677,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "set_did_endpoint": {
             "auth": true,
+            "display-name": "Update endpoint in wallet and on ledger if posted to it",
             "docs": undefined,
             "errors": [],
             "method": "POST",
@@ -11553,6 +11721,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "set_public_did": {
             "auth": true,
+            "display-name": "Assign the current public DID",
             "docs": undefined,
             "errors": [],
             "method": "POST",
