@@ -56,6 +56,7 @@ export function convertObject({
                 convertedSchema: convertToReferencedSchema(allOfElement, [schemaId]),
                 properties: getAllProperties({ schema: allOfElement, context, breadcrumbs }),
             });
+            context.markSchemaAsReferencedByNonRequest(schemaId);
         } else {
             if (allOfElement.properties != null) {
                 allRequired = [...allRequired, ...(allOfElement.required ?? [])];

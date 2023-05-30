@@ -3317,6 +3317,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "OrgId",
         "PlanName",
         "TransportType",
+        "DeploymentConfig",
         "MetricValue",
         "Record_Partial_MetricName_.MetricValue-Array_",
         "RoomAllocationId",

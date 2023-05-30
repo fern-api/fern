@@ -3911,6 +3911,35 @@ exports[`open api parser deel simple 1`] = `
             },
           ],
         },
+        "HrisDirectEmployee": {
+          "docs": undefined,
+          "properties": {
+            "compensation": {
+              "docs": undefined,
+              "type": "HrisCompensation",
+            },
+            "contract": {
+              "docs": undefined,
+              "type": "HrisDirectEmployeeContract",
+            },
+            "employee_details": {
+              "docs": undefined,
+              "type": "HrisDirectEmployeeDetails",
+            },
+            "job_information": {
+              "docs": undefined,
+              "type": "HrisDirectEmployeeJobInformation",
+            },
+            "team_information": {
+              "docs": undefined,
+              "type": "HrisTeamInformation",
+            },
+            "vacation_info": {
+              "docs": undefined,
+              "type": "optional<HrisDirectEmployeeVacationInfo>",
+            },
+          },
+        },
         "HrisDirectEmployeeContainer": {
           "docs": undefined,
           "properties": {
@@ -8635,36 +8664,9 @@ exports[`open api parser deel simple 1`] = `
             "path": "/hris/direct-employees",
             "request": {
               "body": {
-                "properties": {
-                  "compensation": {
-                    "docs": undefined,
-                    "type": "root.HrisCompensation",
-                  },
-                  "contract": {
-                    "docs": undefined,
-                    "type": "root.HrisDirectEmployeeContract",
-                  },
-                  "employee_details": {
-                    "docs": undefined,
-                    "type": "root.HrisDirectEmployeeDetails",
-                  },
-                  "job_information": {
-                    "docs": undefined,
-                    "type": "root.HrisDirectEmployeeJobInformation",
-                  },
-                  "team_information": {
-                    "docs": undefined,
-                    "type": "root.HrisTeamInformation",
-                  },
-                  "vacation_info": {
-                    "docs": undefined,
-                    "type": "optional<root.HrisDirectEmployeeVacationInfo>",
-                  },
-                },
+                "docs": undefined,
+                "type": "root.HrisDirectEmployee",
               },
-              "headers": undefined,
-              "name": "HrisDirectEmployee",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "Hris direct employee object that was created or edited",

@@ -383,6 +383,10 @@ exports[`open api parser hume parse open api 1`] = `
         "Source",
         "Results",
         "Url",
+        "Completed",
+        "Failed",
+        "InProgress",
+        "Queued",
         "Bcp47Tag",
       ],
       "schemas": {
