@@ -1,0 +1,509 @@
+{
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "Api",
+            "safeName": "Api"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": []
+    },
+    "headers": [],
+    "types": {
+        "type_imdb:Type": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "Type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                },
+                "typeId": "type_imdb:Type"
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "one",
+                                "camelCase": {
+                                    "unsafeName": "one",
+                                    "safeName": "one"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "one",
+                                    "safeName": "one"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ONE",
+                                    "safeName": "ONE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "One",
+                                    "safeName": "One"
+                                }
+                            },
+                            "wireValue": "one"
+                        },
+                        "valueType": {
+                            "primitive": "INTEGER",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "two",
+                                "camelCase": {
+                                    "unsafeName": "two",
+                                    "safeName": "two"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "two",
+                                    "safeName": "two"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TWO",
+                                    "safeName": "TWO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Two",
+                                    "safeName": "Two"
+                                }
+                            },
+                            "wireValue": "two"
+                        },
+                        "valueType": {
+                            "primitive": "DOUBLE",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "three",
+                                "camelCase": {
+                                    "unsafeName": "three",
+                                    "safeName": "three"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "three",
+                                    "safeName": "three"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "THREE",
+                                    "safeName": "THREE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Three",
+                                    "safeName": "Three"
+                                }
+                            },
+                            "wireValue": "three"
+                        },
+                        "valueType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "four",
+                                "camelCase": {
+                                    "unsafeName": "four",
+                                    "safeName": "four"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "four",
+                                    "safeName": "four"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOUR",
+                                    "safeName": "FOUR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Four",
+                                    "safeName": "Four"
+                                }
+                            },
+                            "wireValue": "four"
+                        },
+                        "valueType": {
+                            "primitive": "BOOLEAN",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "five",
+                                "camelCase": {
+                                    "unsafeName": "five",
+                                    "safeName": "five"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "five",
+                                    "safeName": "five"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FIVE",
+                                    "safeName": "FIVE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Five",
+                                    "safeName": "Five"
+                                }
+                            },
+                            "wireValue": "five"
+                        },
+                        "valueType": {
+                            "primitive": "LONG",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "six",
+                                "camelCase": {
+                                    "unsafeName": "six",
+                                    "safeName": "six"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "six",
+                                    "safeName": "six"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SIX",
+                                    "safeName": "SIX"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Six",
+                                    "safeName": "Six"
+                                }
+                            },
+                            "wireValue": "six"
+                        },
+                        "valueType": {
+                            "primitive": "DATE_TIME",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "seven",
+                                "camelCase": {
+                                    "unsafeName": "seven",
+                                    "safeName": "seven"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "seven",
+                                    "safeName": "seven"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SEVEN",
+                                    "safeName": "SEVEN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Seven",
+                                    "safeName": "Seven"
+                                }
+                            },
+                            "wireValue": "seven"
+                        },
+                        "valueType": {
+                            "primitive": "DATE",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "eight",
+                                "camelCase": {
+                                    "unsafeName": "eight",
+                                    "safeName": "eight"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "eight",
+                                    "safeName": "eight"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EIGHT",
+                                    "safeName": "EIGHT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Eight",
+                                    "safeName": "Eight"
+                                }
+                            },
+                            "wireValue": "eight"
+                        },
+                        "valueType": {
+                            "primitive": "UUID",
+                            "_type": "primitive"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "nine",
+                                "camelCase": {
+                                    "unsafeName": "nine",
+                                    "safeName": "nine"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nine",
+                                    "safeName": "nine"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NINE",
+                                    "safeName": "NINE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Nine",
+                                    "safeName": "Nine"
+                                }
+                            },
+                            "wireValue": "nine"
+                        },
+                        "valueType": {
+                            "primitive": "BASE_64",
+                            "_type": "primitive"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [],
+            "examples": []
+        }
+    },
+    "errors": {},
+    "services": {},
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "pathParameters": [],
+    "variables": [],
+    "subpackages": {
+        "subpackage_imdb": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "types": [
+                "type_imdb:Type"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": false
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_imdb"
+        ],
+        "hasEndpointsInTree": false
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
+        }
+    }
+}

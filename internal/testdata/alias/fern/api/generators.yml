@@ -6,4 +6,4 @@ groups:
         version: latest
         output:
           location: local-file-system
-          path: ../../generated/go
+          path: ../../fixtures

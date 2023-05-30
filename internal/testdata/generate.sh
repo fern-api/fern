@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# Simple script to regenerate testdata.
-# This is temporary - it will be replaced
-# by proper, programmatic integration testing.
+# Simple script to regenerate fixture testdata.
 for dir in */ ; do
     pushd $dir
     fern generate --local

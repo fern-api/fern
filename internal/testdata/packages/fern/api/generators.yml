@@ -5,7 +5,7 @@ groups:
       - name: fernapi/fern-go-model
         version: latest
         config:
-          importPath: github.com/fern-api/fern-go/internal/testdata/packages/generated/go
+          importPath: github.com/fern-api/fern-go/internal/testdata/packages/fixtures
         output:
           location: local-file-system
-          path: ../../generated/go
+          path: ../../fixtures
