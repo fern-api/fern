@@ -1,12 +1,14 @@
 package main
 
 import (
+	"encoding/json"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
+	union "github.com/fern-api/fern-go/internal/testdata/union/fixtures"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -69,5 +71,43 @@ func TestRun(t *testing.T) {
 			assert.Equal(t, fixtureBytes, generatedBytes)
 		}
 		require.NoError(t, os.Chdir(wd))
+	}
+}
+
+// TestRoundTrip verifies that a variety of the generated types
+// can be round-tripped, i.e. serializing -> deserializing ->
+// serializing produces the same bytes.
+func TestRoundTrip(t *testing.T) {
+	tests := []struct {
+		desc        string
+		value       any
+		constructor func() any
+	}{
+		{
+			desc: "simple union",
+			value: &union.Union{
+				Type: "foo",
+				Foo: &union.Foo{
+					Name: "fern",
+				},
+			},
+			constructor: func() any {
+				return new(union.Union)
+			},
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.desc, func(t *testing.T) {
+			expectedBytes, err := json.Marshal(test.value)
+			require.NoError(t, err)
+
+			value := test.constructor()
+			require.NoError(t, json.Unmarshal(expectedBytes, &value))
+
+			actualBytes, err := json.Marshal(value)
+			require.NoError(t, err)
+
+			assert.Equal(t, expectedBytes, actualBytes)
+		})
 	}
 }
