@@ -346,6 +346,31 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
         },
+        "DeploymentConfig": {
+          "docs": undefined,
+          "properties": {
+            "containerPort": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "env": {
+              "docs": undefined,
+              "type": "list<DeploymentConfigEnvItem>",
+            },
+            "planName": {
+              "docs": undefined,
+              "type": "PlanName",
+            },
+            "roomsPerProcess": {
+              "docs": undefined,
+              "type": "integer",
+            },
+            "transportType": {
+              "docs": undefined,
+              "type": "TransportType",
+            },
+          },
+        },
         "DeploymentConfigEnvItem": {
           "docs": undefined,
           "properties": {
@@ -1223,32 +1248,9 @@ exports[`open api parser hathora simple 1`] = `
             },
             "request": {
               "body": {
-                "properties": {
-                  "containerPort": {
-                    "docs": undefined,
-                    "type": "integer",
-                  },
-                  "env": {
-                    "docs": undefined,
-                    "type": "list<root.DeploymentConfigEnvItem>",
-                  },
-                  "planName": {
-                    "docs": undefined,
-                    "type": "root.PlanName",
-                  },
-                  "roomsPerProcess": {
-                    "docs": undefined,
-                    "type": "integer",
-                  },
-                  "transportType": {
-                    "docs": undefined,
-                    "type": "root.TransportType",
-                  },
-                },
+                "docs": undefined,
+                "type": "root.DeploymentConfig",
               },
-              "headers": undefined,
-              "name": "DeploymentConfig",
-              "query-parameters": undefined,
             },
             "response": {
               "docs": "",
