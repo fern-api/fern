@@ -11405,6 +11405,7 @@ For \`session_expired\` errors, the description can be (among others):
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Accounts",
         "endpoints": {
           "DestroyAccount": {
             "auth": true,
@@ -11795,6 +11796,7 @@ For \`session_expired\` errors, the description can be (among others):
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Balances",
         "endpoints": {
           "DestroyBalance": {
             "auth": true,
@@ -12126,6 +12128,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Bank Accounts",
         "endpoints": {
           "CreateBankAccount": {
             "auth": true,
@@ -12272,6 +12275,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Categorization",
         "endpoints": {
           "CategorizeTransactions": {
             "auth": true,
@@ -12322,6 +12326,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Customers",
         "endpoints": {
           "CreateCustomer": {
             "auth": true,
@@ -12448,6 +12453,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Employment Records",
         "endpoints": {
           "DestroyEmploymentRecord": {
             "auth": true,
@@ -12602,6 +12608,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Income Verification",
         "endpoints": {
           "VerifyIncome": {
             "auth": true,
@@ -12672,6 +12679,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Incomes",
         "endpoints": {
           "DestroyIncomes": {
             "auth": true,
@@ -12911,6 +12919,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Institutions",
         "endpoints": {
           "DetailInstitution": {
             "auth": true,
@@ -13053,6 +13062,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Investment Portfolios",
         "endpoints": {
           "DestroyPortfolio": {
             "auth": true,
@@ -13264,6 +13274,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Invoices",
         "endpoints": {
           "DestroyInvoice": {
             "auth": true,
@@ -13612,6 +13623,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Links",
         "endpoints": {
           "ChangeLinkAccessMode": {
             "auth": true,
@@ -14189,6 +14201,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Owners",
         "endpoints": {
           "DestroyOwner": {
             "auth": true,
@@ -14419,6 +14432,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Payment Institutions",
         "endpoints": {
           "DetailPaymentInstitution": {
             "auth": true,
@@ -14513,6 +14527,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Payment Intents",
         "endpoints": {
           "CreatePaymentIntent": {
             "auth": true,
@@ -14720,6 +14735,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Payment Links",
         "endpoints": {
           "CreatePaymentlink": {
             "auth": true,
@@ -14859,6 +14875,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Payment Transactions",
         "endpoints": {
           "DetailPaymentTransactions": {
             "auth": true,
@@ -15023,6 +15040,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Payment Webhooks",
         "endpoints": {
           "DeletePaymentWebhooks": {
             "auth": true,
@@ -15129,6 +15147,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Receivable Transactions",
         "endpoints": {
           "DestroyReceivableTransaction": {
             "auth": true,
@@ -15374,6 +15393,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Recurring Expenses",
         "endpoints": {
           "DestroyRecurringExpense": {
             "auth": true,
@@ -15615,6 +15635,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Risk Insights",
         "endpoints": {
           "DestroyRiskInsights": {
             "auth": true,
@@ -15815,6 +15836,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Secret Keys",
         "endpoints": {
           "CreateSecretKeys": {
             "auth": true,
@@ -15866,6 +15888,7 @@ For example:
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Tax compliance status",
         "endpoints": {
           "DestroyTaxComplianceStatus": {
             "auth": true,
@@ -16066,6 +16089,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Tax declarations",
         "endpoints": {
           "DestroyTaxDeclaration": {
             "auth": true,
@@ -16306,6 +16330,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Tax retentions",
         "endpoints": {
           "DestroyTaxRetention": {
             "auth": true,
@@ -16515,6 +16540,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Tax returns",
         "endpoints": {
           "DestroyTaxReturn": {
             "auth": true,
@@ -16741,6 +16767,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Tax status",
         "endpoints": {
           "DestroyTaxStatus": {
             "auth": true,
@@ -16941,6 +16968,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Transactions",
         "endpoints": {
           "DestroyTransaction": {
             "auth": true,

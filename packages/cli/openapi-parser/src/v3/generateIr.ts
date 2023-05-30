@@ -23,7 +23,11 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         title: openApi.info.title,
         description: openApi.info.description,
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
-        tags: [],
+        tags: Object.fromEntries(
+            (openApi.tags ?? []).map((tag) => {
+                return [tag.name, { id: tag.name, description: tag.description }];
+            })
+        ),
         endpoints,
         schemas: Object.fromEntries(
             Object.entries(openApi.components?.schemas ?? {}).map(([key, schema]) => {

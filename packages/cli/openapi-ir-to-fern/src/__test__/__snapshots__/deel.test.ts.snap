@@ -7415,6 +7415,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Accounting",
         "endpoints": {
           "GetPaymentsBreakDownById": {
             "audiences": [
@@ -7714,6 +7715,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Contractors",
         "endpoints": {
           "addPremium": {
             "audiences": [
@@ -8083,6 +8085,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Contracts",
         "endpoints": {
           "addContractDocument": {
             "audiences": [
@@ -8577,6 +8580,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "EOR",
         "endpoints": {
           "createEorContract": {
             "audiences": [
@@ -8645,6 +8649,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Hris",
         "endpoints": {
           "createDirectEmployee": {
             "audiences": [
@@ -8683,6 +8688,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Invoices",
         "endpoints": {
           "createInvoiceAdjustment": {
             "audiences": [
@@ -9027,6 +9033,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Lookups",
         "endpoints": {
           "getCountries": {
             "audiences": [
@@ -9168,6 +9175,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Milestones",
         "endpoints": {
           "createMilestone": {
             "audiences": [
@@ -9387,6 +9395,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Off-cycle Payments",
         "endpoints": {
           "createOffCyclePayment": {
             "audiences": [
@@ -9496,6 +9505,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Organizations",
         "endpoints": {
           "getAgreements": {
             "audiences": [
@@ -9610,6 +9620,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Tasks",
         "endpoints": {
           "createContractPgoTak": {
             "audiences": [
@@ -9813,6 +9824,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Time Off",
         "endpoints": {
           "createEorTimeOffs": {
             "audiences": [
@@ -10028,6 +10040,7 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Timesheets",
         "endpoints": {
           "createTimesheet": {
             "audiences": [

@@ -6483,6 +6483,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "action-menu",
         "endpoints": {
           "close_menu_by_conn_id": {
             "auth": true,
@@ -6609,6 +6610,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "basicmessage",
         "endpoints": {
           "send_message": {
             "auth": true,
@@ -6650,6 +6652,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "connection",
         "endpoints": {
           "accept_connection_invitation": {
             "auth": true,
@@ -7100,6 +7103,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "credential-definition",
         "endpoints": {
           "get_created_cred_defs": {
             "auth": true,
@@ -7238,6 +7242,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "credentials",
         "endpoints": {
           "delete_credential_record": {
             "auth": true,
@@ -7469,6 +7474,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "did-exchange",
         "endpoints": {
           "accept_didex_invitation": {
             "auth": true,
@@ -7651,6 +7657,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "discover-features",
         "endpoints": {
           "get_v10_feature_records": {
             "auth": true,
@@ -7714,6 +7721,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "discover-features v2.0",
         "endpoints": {
           "get_v20_feature_records": {
             "auth": true,
@@ -7777,6 +7785,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "endorse-transaction",
         "endpoints": {
           "cancel_transaction_request": {
             "auth": true,
@@ -7978,6 +7987,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "introduction",
         "endpoints": {
           "start_connection_introduction": {
             "auth": true,
@@ -8021,6 +8031,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "issue-credential v1.0",
         "endpoints": {
           "create_credential_record": {
             "auth": true,
@@ -8519,6 +8530,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "issue-credential v2.0",
         "endpoints": {
           "create_credential_record": {
             "auth": true,
@@ -8964,6 +8976,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "jsonld",
         "endpoints": {
           "sign": {
             "auth": true,
@@ -9031,6 +9044,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "ledger",
         "endpoints": {
           "accept_taa": {
             "auth": true,
@@ -9232,6 +9246,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "mediation",
         "endpoints": {
           "clear_default_mediator": {
             "auth": true,
@@ -9564,6 +9579,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "multitenancy",
         "endpoints": {
           "create_wallet": {
             "auth": true,
@@ -9771,6 +9787,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "out-of-band",
         "endpoints": {
           "create_oob_invitation": {
             "auth": true,
@@ -9889,6 +9906,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "present-proof v1.0",
         "endpoints": {
           "create_free_proof_request": {
             "auth": true,
@@ -10232,6 +10250,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "present-proof v2.0",
         "endpoints": {
           "create_proof_request": {
             "auth": true,
@@ -10590,6 +10609,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "resolver",
         "endpoints": {
           "get_did_document": {
             "auth": true,
@@ -10618,6 +10638,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "revocation",
         "endpoints": {
           "clear_pending_revocations": {
             "auth": true,
@@ -11104,6 +11125,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "schema",
         "endpoints": {
           "get_matching_created_schemas": {
             "auth": true,
@@ -11316,6 +11338,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "trustping",
         "endpoints": {
           "send_ping": {
             "auth": true,
@@ -11357,6 +11380,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "wallet",
         "endpoints": {
           "create_local_did": {
             "auth": true,
