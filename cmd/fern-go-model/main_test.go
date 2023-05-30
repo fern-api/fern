@@ -7,7 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
+	builtin "github.com/fern-api/fern-go/internal/testdata/builtin/fixtures"
 	custom "github.com/fern-api/fern-go/internal/testdata/custom/fixtures"
 	union "github.com/fern-api/fern-go/internal/testdata/union/fixtures"
 	"github.com/gofrs/uuid"
@@ -86,6 +88,31 @@ func TestRoundTrip(t *testing.T) {
 		constructor func() any
 	}{
 		{
+			desc: "built-in types",
+			value: &builtin.Type{
+				One:       42,
+				Two:       3.14,
+				Three:     "fern",
+				Four:      true,
+				Five:      42,
+				Six:       time.Now(),
+				Seven:     time.Now(),
+				Eight:     newUUID(t),
+				Nine:      []byte("abc"),
+				Ten:       []int{3, 1, 4},
+				Eleven:    []float64{1.618, 3.14, 6.02},
+				Twelve:    map[string]bool{"key": false},
+				Thirteen:  int64Ptr(42),
+				Fourteen:  map[string]any{"custom": "object"},
+				Fifteen:   [][]int{{3, 1, 4}},
+				Sixteen:   []map[string]int{{"key": 5}},
+				Seventeen: []*uuid.UUID{uuidPtr(newUUID(t))},
+			},
+			constructor: func() any {
+				return new(builtin.Type)
+			},
+		},
+		{
 			desc: "simple object",
 			value: &custom.Foo{
 				Id:   newUUID(t),
@@ -128,4 +155,12 @@ func newUUID(t *testing.T) uuid.UUID {
 	u, err := uuid.NewV4()
 	require.NoError(t, err)
 	return u
+}
+
+func uuidPtr(v uuid.UUID) *uuid.UUID {
+	return &v
+}
+
+func int64Ptr(v int64) *int64 {
+	return &v
 }
