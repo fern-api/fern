@@ -218,7 +218,14 @@ func containerToUndiscriminatedUnionField(container *ir.ContainerType, types map
 
 // literalToGoType maps the given literal into its Go-equivalent.
 func literalToGoType(literal *ir.Literal) string {
-	visitor := new(literalVisitor)
+	visitor := new(literalTypeVisitor)
+	_ = literal.Accept(visitor)
+	return visitor.value
+}
+
+// literalToValue maps the given literal into its value.
+func literalToValue(literal *ir.Literal) string {
+	visitor := new(literalValueVisitor)
 	_ = literal.Accept(visitor)
 	return visitor.value
 }
@@ -305,8 +312,49 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 
 func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " struct {")
-	_ = t.visitObjectProperties(object, true /* includeTags */)
+	_, literals := t.visitObjectProperties(object, true /* includeTags */)
+
+	if len(literals) == 0 {
+		t.writer.P("}")
+		t.writer.P()
+		return nil
+	}
+
+	// If the object has a literal, it needs custom [de]serialization logic,
+	// and a getter method to access the field so that it's impossible for
+	// the user to mutate it.
+	//
+	// Literals are ignored in visitObjectProperties, so we need to write them
+	// here, starting with the private fields.
+	for _, literal := range literals {
+		t.writer.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+	}
 	t.writer.P("}")
+	t.writer.P()
+
+	// Implement the getter methods.
+	for _, literal := range literals {
+		t.writer.P("func (x *", t.typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		t.writer.P("return x.", literal.Name.CamelCase.SafeName)
+		t.writer.P("}")
+		t.writer.P()
+	}
+
+	// Implement the json.Unmarshaler interface.
+	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+	t.writer.P("type unmarshaler ", t.typeName)
+	t.writer.P("var value unmarshaler")
+	t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
+	t.writer.P("return err")
+	t.writer.P("}")
+	t.writer.P("*x = ", t.typeName, "(value)")
+	for _, literal := range literals {
+		t.writer.P("x.", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+	}
+	t.writer.P("return nil")
+	t.writer.P("}")
+	t.writer.P()
+
 	t.writer.P()
 	return nil
 }
@@ -317,7 +365,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
 	for _, extend := range union.Extends {
-		_ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */)
+		_, _ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */)
 	}
 	for _, property := range union.BaseProperties {
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath))
@@ -340,7 +388,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 	var propertyNames []string
 	for _, extend := range union.Extends {
-		propertyNames = append(propertyNames, t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)...)
+		extendedProperties, _ := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)
+		propertyNames = append(propertyNames, extendedProperties...)
 	}
 	for _, property := range union.BaseProperties {
 		propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
@@ -392,7 +441,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
-	// TODO: Implement the json.Marshaler interface.
+	// Implement the json.Marshaler interface.
 	t.writer.P("func (x ", t.typeName, ") MarshalJSON() ([]byte, error) {")
 	t.writer.P("switch x.", discriminantName, " {")
 	for i, unionType := range union.Types {
@@ -406,7 +455,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 		// Include all of the extended and base properties.
 		for _, extend := range union.Extends {
-			t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)
+			_, _ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)
 		}
 		for _, property := range union.BaseProperties {
 			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
@@ -637,19 +686,33 @@ func (u *undiscriminatedUnionContainerTypeVisitor) VisitLiteral(literal *ir.Lite
 	return nil
 }
 
+// literal contains the information required to generate code for literal properties.
+type literal struct {
+	Name  *ir.Name
+	Value *ir.Literal
+}
+
 // visitObjectProperties writes all of this object's properties, and recursively calls itself with
 // the object's extended properties (if any). The 'includeTags' parameter controls whether or not
 // to generate JSON struct tags, which is only relevant for object types (not unions).
 //
-// A slice of all the transitive property names are returned.
-func (t *typeVisitor) visitObjectProperties(object *ir.ObjectTypeDeclaration, includeTags bool) []string {
+// A slice of all the transitive property names, as well as a sentinel value that signals whether
+// any of the properties are a literal value, are returned.
+func (t *typeVisitor) visitObjectProperties(object *ir.ObjectTypeDeclaration, includeTags bool) ([]string, []*literal) {
 	var names []string
+	var literals []*literal
 	for _, extend := range object.Extends {
 		// You can only extend other objects.
-		names = append(names, t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeTags)...)
+		extendedNames, extendedLiterals := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeTags)
+		names = append(names, extendedNames...)
+		literals = append(literals, extendedLiterals...)
 	}
 	for _, property := range object.Properties {
 		t.writer.WriteDocs(property.Docs)
+		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
+			literals = append(literals, &literal{Name: property.Name.Name, Value: property.ValueType.Container.Literal})
+			continue
+		}
 		names = append(names, property.Name.Name.PascalCase.UnsafeName)
 		if includeTags {
 			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
@@ -657,7 +720,7 @@ func (t *typeVisitor) visitObjectProperties(object *ir.ObjectTypeDeclaration, in
 		}
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath))
 	}
-	return names
+	return names, literals
 }
 
 // typeReferenceVisitor retrieves the string representation of type references
@@ -817,17 +880,31 @@ func (c *singleUnionTypePropertiesInitializerVisitor) VisitNoProperties(_ any) e
 	return nil
 }
 
-// containerTypeVisitor retrieves the string representation of literal ir.
+// literalValueVisitor retrieves the string representation of the literal value.
 // Strings are the only supported literals for now.
-type literalVisitor struct {
+type literalValueVisitor struct {
 	value string
 }
 
 // Compile-time assertion.
-var _ ir.LiteralVisitor = (*literalVisitor)(nil)
+var _ ir.LiteralVisitor = (*literalValueVisitor)(nil)
 
-func (l *literalVisitor) VisitString(value string) error {
-	l.value = value
+func (l *literalValueVisitor) VisitString(value string) error {
+	l.value = fmt.Sprintf("%q", value)
+	return nil
+}
+
+// literalTypeVisitor retrieves the string representation of the literal's type.
+// Strings are the only supported literals for now.
+type literalTypeVisitor struct {
+	value string
+}
+
+// Compile-time assertion.
+var _ ir.LiteralVisitor = (*literalTypeVisitor)(nil)
+
+func (l *literalTypeVisitor) VisitString(value string) error {
+	l.value = "string"
 	return nil
 }
 

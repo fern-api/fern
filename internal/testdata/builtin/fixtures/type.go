@@ -3,6 +3,7 @@
 package api
 
 import (
+	json "encoding/json"
 	uuid "github.com/gofrs/uuid"
 	time "time"
 )
@@ -25,4 +26,20 @@ type Type struct {
 	Fifteen   [][]int          `json:"fifteen"`
 	Sixteen   []map[string]int `json:"sixteen"`
 	Seventeen []*uuid.UUID     `json:"seventeen"`
+	eighteen  string
+}
+
+func (x *Type) Eighteen() string {
+	return x.eighteen
+}
+
+func (x *Type) UnmarshalJSON(data []byte) error {
+	type unmarshaler Type
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*x = Type(value)
+	x.eighteen = "fern"
+	return nil
 }
