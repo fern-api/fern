@@ -40,6 +40,31 @@ func (x *StreamCondition) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x StreamCondition) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "queryParameterKey":
+		var marshaler = struct {
+			Type              string `json:"type"`
+			QueryParameterKey string `json:"value"`
+		}{
+			Type:              x.Type,
+			QueryParameterKey: x.QueryParameterKey,
+		}
+		return json.Marshal(marshaler)
+	case "requestPropertyKey":
+		var marshaler = struct {
+			Type               string `json:"type"`
+			RequestPropertyKey string `json:"value"`
+		}{
+			Type:               x.Type,
+			RequestPropertyKey: x.RequestPropertyKey,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type StreamConditionVisitor interface {
 	VisitQueryParameterKey(string) error
 	VisitRequestPropertyKey(string) error

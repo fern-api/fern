@@ -36,6 +36,31 @@ func (x *HttpResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x HttpResponse) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "json":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*JsonResponse
+		}{
+			Type:         x.Type,
+			JsonResponse: x.Json,
+		}
+		return json.Marshal(marshaler)
+	case "fileDownload":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*FileDownloadResponse
+		}{
+			Type:                 x.Type,
+			FileDownloadResponse: x.FileDownload,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type HttpResponseVisitor interface {
 	VisitJson(*JsonResponse) error
 	VisitFileDownload(*FileDownloadResponse) error

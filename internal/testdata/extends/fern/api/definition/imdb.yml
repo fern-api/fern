@@ -1,7 +1,7 @@
 # Simple test for generating a type and a union that specify
 # the 'extends' keyword.
 types:
-  Type:
+  ExampleType:
     extends: Docs
     properties:
       name: string
@@ -14,12 +14,12 @@ types:
   Union:
     extends: Docs
     union:
-      one: Type
+      one: ExampleType
 
   NestedUnion:
     extends: JSON
     union:
-      one: Type
+      one: ExampleType
 
   Docs:
     properties:

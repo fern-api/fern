@@ -54,6 +54,49 @@ func (x *TypeReference) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x TypeReference) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "container":
+		var marshaler = struct {
+			Type      string         `json:"_type"`
+			Container *ContainerType `json:"container"`
+		}{
+			Type:      x.Type,
+			Container: x.Container,
+		}
+		return json.Marshal(marshaler)
+	case "named":
+		var marshaler = struct {
+			Type string `json:"_type"`
+			*DeclaredTypeName
+		}{
+			Type:             x.Type,
+			DeclaredTypeName: x.Named,
+		}
+		return json.Marshal(marshaler)
+	case "primitive":
+		var marshaler = struct {
+			Type      string        `json:"_type"`
+			Primitive PrimitiveType `json:"primitive"`
+		}{
+			Type:      x.Type,
+			Primitive: x.Primitive,
+		}
+		return json.Marshal(marshaler)
+	case "unknown":
+		var marshaler = struct {
+			Type    string `json:"_type"`
+			Unknown any    `json:"unknown"`
+		}{
+			Type:    x.Type,
+			Unknown: x.Unknown,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type TypeReferenceVisitor interface {
 	VisitContainer(*ContainerType) error
 	VisitNamed(*DeclaredTypeName) error

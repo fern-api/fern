@@ -36,6 +36,31 @@ func (x *ErrorDeclarationDiscriminantValue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "property":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*NameAndWireValue
+		}{
+			Type:             x.Type,
+			NameAndWireValue: x.Property,
+		}
+		return json.Marshal(marshaler)
+	case "statusCode":
+		var marshaler = struct {
+			Type       string `json:"type"`
+			StatusCode any    `json:"statusCode"`
+		}{
+			Type:       x.Type,
+			StatusCode: x.StatusCode,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type ErrorDeclarationDiscriminantValueVisitor interface {
 	VisitProperty(*NameAndWireValue) error
 	VisitStatusCode(any) error

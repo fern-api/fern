@@ -375,10 +375,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 		// Include all of the extended and base properties.
 		for _, extend := range union.Extends {
-			propertyNames = append(propertyNames, t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)...)
+			t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)
 		}
 		for _, property := range union.BaseProperties {
-			propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
 			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
 		}
 		typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath)
@@ -388,7 +387,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		case "samePropertiesAsObject":
 			t.writer.P(typeName)
 		case "noProperties":
-			t.writer.P("Unknown any `json:\"unknown\"`")
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.DiscriminantValue.Name.CamelCase.UnsafeName, "\"`")
 		}
 		// Set all of the values in the marshaler.
 		t.writer.P("}{")
@@ -396,7 +395,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		for _, propertyName := range propertyNames {
 			t.writer.P(propertyName, ": x.", propertyName, ",")
 		}
-		t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ": x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ",")
+		marshalerFieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		if unionType.Shape.PropertiesType == "samePropertiesAsObject" {
+			// If the object is embedded, the field name is equivalent to
+			// the object's name, without any leading pointers.
+			marshalerFieldName = typeNameToFieldName(typeName)
+		}
+		t.writer.P(marshalerFieldName, ": x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ",")
 		t.writer.P("}")
 		t.writer.P("return json.Marshal(marshaler)")
 	}
@@ -858,6 +863,15 @@ func primitiveToUndiscriminatedUnionField(primitive ir.PrimitiveType) string {
 	default:
 		return "Any"
 	}
+}
+
+// typeNameToFieldName maps the given type name (e.g. *foo.Bar) into its embedded field name
+// equivalent (e.g. Bar).
+func typeNameToFieldName(typeName string) string {
+	if split := strings.Split(typeName, "."); len(split) > 1 {
+		return split[len(split)-1]
+	}
+	return strings.TrimLeft(typeName, "*")
 }
 
 // fernFilepathToImportPath maps the given Fern filepath to its

@@ -43,6 +43,40 @@ func (x *ExampleSingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "samePropertiesAsObject":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*ExampleNamedType
+		}{
+			Type:             x.Type,
+			ExampleNamedType: x.SamePropertiesAsObject,
+		}
+		return json.Marshal(marshaler)
+	case "singleProperty":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*ExampleTypeReference
+		}{
+			Type:                 x.Type,
+			ExampleTypeReference: x.SingleProperty,
+		}
+		return json.Marshal(marshaler)
+	case "noProperties":
+		var marshaler = struct {
+			Type         string `json:"type"`
+			NoProperties any    `json:"noProperties"`
+		}{
+			Type:         x.Type,
+			NoProperties: x.NoProperties,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type ExampleSingleUnionTypePropertiesVisitor interface {
 	VisitSamePropertiesAsObject(*ExampleNamedType) error
 	VisitSingleProperty(*ExampleTypeReference) error

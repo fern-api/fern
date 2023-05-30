@@ -58,6 +58,49 @@ func (x *ExampleContainer) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x ExampleContainer) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "list":
+		var marshaler = struct {
+			Type string                  `json:"type"`
+			List []*ExampleTypeReference `json:"list"`
+		}{
+			Type: x.Type,
+			List: x.List,
+		}
+		return json.Marshal(marshaler)
+	case "set":
+		var marshaler = struct {
+			Type string                  `json:"type"`
+			Set  []*ExampleTypeReference `json:"set"`
+		}{
+			Type: x.Type,
+			Set:  x.Set,
+		}
+		return json.Marshal(marshaler)
+	case "optional":
+		var marshaler = struct {
+			Type     string                `json:"type"`
+			Optional *ExampleTypeReference `json:"optional"`
+		}{
+			Type:     x.Type,
+			Optional: x.Optional,
+		}
+		return json.Marshal(marshaler)
+	case "map":
+		var marshaler = struct {
+			Type string                 `json:"type"`
+			Map  []*ExampleKeyValuePair `json:"map"`
+		}{
+			Type: x.Type,
+			Map:  x.Map,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type ExampleContainerVisitor interface {
 	VisitList([]*ExampleTypeReference) error
 	VisitSet([]*ExampleTypeReference) error

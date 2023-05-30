@@ -31,6 +31,22 @@ func (x *Literal) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x Literal) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "string":
+		var marshaler = struct {
+			Type   string `json:"type"`
+			String string `json:"string"`
+		}{
+			Type:   x.Type,
+			String: x.String,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type LiteralVisitor interface {
 	VisitString(string) error
 }

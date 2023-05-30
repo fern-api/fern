@@ -43,6 +43,40 @@ func (x *AuthScheme) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x AuthScheme) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "bearer":
+		var marshaler = struct {
+			Type string `json:"_type"`
+			*BearerAuthScheme
+		}{
+			Type:             x.Type,
+			BearerAuthScheme: x.Bearer,
+		}
+		return json.Marshal(marshaler)
+	case "basic":
+		var marshaler = struct {
+			Type string `json:"_type"`
+			*BasicAuthScheme
+		}{
+			Type:            x.Type,
+			BasicAuthScheme: x.Basic,
+		}
+		return json.Marshal(marshaler)
+	case "header":
+		var marshaler = struct {
+			Type string `json:"_type"`
+			*HeaderAuthScheme
+		}{
+			Type:             x.Type,
+			HeaderAuthScheme: x.Header,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type AuthSchemeVisitor interface {
 	VisitBearer(*BearerAuthScheme) error
 	VisitBasic(*BasicAuthScheme) error

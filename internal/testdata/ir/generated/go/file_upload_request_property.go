@@ -36,6 +36,31 @@ func (x *FileUploadRequestProperty) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x FileUploadRequestProperty) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "file":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*FileProperty
+		}{
+			Type:         x.Type,
+			FileProperty: x.File,
+		}
+		return json.Marshal(marshaler)
+	case "bodyProperty":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*InlinedRequestBodyProperty
+		}{
+			Type:                       x.Type,
+			InlinedRequestBodyProperty: x.BodyProperty,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type FileUploadRequestPropertyVisitor interface {
 	VisitFile(*FileProperty) error
 	VisitBodyProperty(*InlinedRequestBodyProperty) error

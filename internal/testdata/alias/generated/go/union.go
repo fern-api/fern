@@ -47,6 +47,40 @@ func (x *Union) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x Union) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "fooAlias":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*Foo
+		}{
+			Type: x.Type,
+			Foo:  x.FooAlias,
+		}
+		return json.Marshal(marshaler)
+	case "barAlias":
+		var marshaler = struct {
+			Type     string   `json:"type"`
+			BarAlias BarAlias `json:"barAlias"`
+		}{
+			Type:     x.Type,
+			BarAlias: x.BarAlias,
+		}
+		return json.Marshal(marshaler)
+	case "doubleAlias":
+		var marshaler = struct {
+			Type        string `json:"type"`
+			DoubleAlias Double `json:"doubleAlias"`
+		}{
+			Type:        x.Type,
+			DoubleAlias: x.DoubleAlias,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type UnionVisitor interface {
 	VisitFooAlias(*Foo) error
 	VisitBarAlias(BarAlias) error

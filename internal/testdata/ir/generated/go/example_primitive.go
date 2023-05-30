@@ -96,6 +96,85 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (x ExamplePrimitive) MarshalJSON() ([]byte, error) {
+	switch x.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+	case "integer":
+		var marshaler = struct {
+			Type    string `json:"type"`
+			Integer int    `json:"integer"`
+		}{
+			Type:    x.Type,
+			Integer: x.Integer,
+		}
+		return json.Marshal(marshaler)
+	case "double":
+		var marshaler = struct {
+			Type   string  `json:"type"`
+			Double float64 `json:"double"`
+		}{
+			Type:   x.Type,
+			Double: x.Double,
+		}
+		return json.Marshal(marshaler)
+	case "string":
+		var marshaler = struct {
+			Type   string `json:"type"`
+			String string `json:"string"`
+		}{
+			Type:   x.Type,
+			String: x.String,
+		}
+		return json.Marshal(marshaler)
+	case "boolean":
+		var marshaler = struct {
+			Type    string `json:"type"`
+			Boolean bool   `json:"boolean"`
+		}{
+			Type:    x.Type,
+			Boolean: x.Boolean,
+		}
+		return json.Marshal(marshaler)
+	case "long":
+		var marshaler = struct {
+			Type string `json:"type"`
+			Long int64  `json:"long"`
+		}{
+			Type: x.Type,
+			Long: x.Long,
+		}
+		return json.Marshal(marshaler)
+	case "datetime":
+		var marshaler = struct {
+			Type     string    `json:"type"`
+			Datetime time.Time `json:"datetime"`
+		}{
+			Type:     x.Type,
+			Datetime: x.Datetime,
+		}
+		return json.Marshal(marshaler)
+	case "date":
+		var marshaler = struct {
+			Type string    `json:"type"`
+			Date time.Time `json:"date"`
+		}{
+			Type: x.Type,
+			Date: x.Date,
+		}
+		return json.Marshal(marshaler)
+	case "uuid":
+		var marshaler = struct {
+			Type string    `json:"type"`
+			Uuid uuid.UUID `json:"uuid"`
+		}{
+			Type: x.Type,
+			Uuid: x.Uuid,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
 type ExamplePrimitiveVisitor interface {
 	VisitInteger(int) error
 	VisitDouble(float64) error
