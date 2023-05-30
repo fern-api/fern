@@ -7610,9 +7610,6 @@ exports[`open api parser deel simple 1`] = `
         "base-path": "",
         "endpoints": {
           "createFileRef": {
-            "audiences": [
-              "external",
-            ],
             "auth": true,
             "display-name": "Upload file to Deel",
             "docs": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
@@ -7841,9 +7838,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createContractFixedRate": {
-            "audiences": [
-              "external",
-            ],
             "auth": true,
             "display-name": "Create a new contract (fixed-rate)",
             "docs": undefined,
@@ -7876,9 +7870,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createContractMilestoneBased": {
-            "audiences": [
-              "external",
-            ],
             "auth": true,
             "display-name": "Create a new contract (milestone-based)",
             "docs": undefined,
@@ -7911,9 +7902,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createContractTaskBased": {
-            "audiences": [
-              "external",
-            ],
             "auth": true,
             "display-name": "Create a new contract (task-based)",
             "docs": undefined,
@@ -7946,9 +7934,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createContractTimeBased": {
-            "audiences": [
-              "external",
-            ],
             "auth": true,
             "display-name": "Create a new contract (time-based)",
             "docs": undefined,
@@ -8212,9 +8197,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "calculateFinalPayment": {
-            "audiences": [
-              "external",
-            ],
             "auth": true,
             "display-name": "Calculate final payment",
             "docs": "Calculate the final payment due to the contractor when ending the contract.",
@@ -8438,9 +8420,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getContractTemplates": {
-            "audiences": [
-              "external",
-            ],
             "auth": true,
             "display-name": "Get contract templates",
             "docs": "Retrieve a list of contract templates in your organization.",
@@ -9563,9 +9542,6 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Organizations",
         "endpoints": {
           "getAgreements": {
-            "audiences": [
-              "external",
-            ],
             "auth": true,
             "display-name": "Get agreements with Deel.",
             "docs": "This end-point returns a list of your agreements with Deel.",
