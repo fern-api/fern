@@ -13,6 +13,7 @@ const (
 	PrimitiveTypeDouble
 	PrimitiveTypeString
 	PrimitiveTypeBoolean
+	// Within the range -2^53 to 2^53
 	PrimitiveTypeLong
 	PrimitiveTypeDateTime
 	PrimitiveTypeDate

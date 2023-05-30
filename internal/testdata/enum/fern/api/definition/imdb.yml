@@ -2,6 +2,7 @@
 types:
   Enum:
     enum:
-      - ONE
+      - value: ONE
+        docs: "The first enum value."
       - TWO
       - THREE

@@ -9,6 +9,7 @@ import (
 type Enum uint8
 
 const (
+	// The first enum value.
 	EnumOne Enum = iota + 1
 	EnumTwo
 	EnumThree

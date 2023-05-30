@@ -5,6 +5,7 @@ import (
 	fmt "fmt"
 )
 
+// This is a simple union.
 type Union struct {
 	Type string
 	Foo  *Foo

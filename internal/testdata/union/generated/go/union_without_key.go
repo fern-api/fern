@@ -8,7 +8,8 @@ import (
 type UnionWithoutKey struct {
 	Type string
 	Foo  *Foo
-	Bar  *Bar
+	// This is a bar field.
+	Bar *Bar
 }
 
 func (x *UnionWithoutKey) UnmarshalJSON(data []byte) error {

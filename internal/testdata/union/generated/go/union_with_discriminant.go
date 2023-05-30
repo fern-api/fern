@@ -7,8 +7,9 @@ import (
 
 type UnionWithDiscriminant struct {
 	Type string
-	Foo  *Foo
-	Bar  *Bar
+	// This is a Foo field.
+	Foo *Foo
+	Bar *Bar
 }
 
 func (x *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {

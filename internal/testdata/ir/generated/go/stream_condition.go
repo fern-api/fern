@@ -6,8 +6,12 @@ import (
 )
 
 type StreamCondition struct {
-	Type               string
-	QueryParameterKey  string
+	Type string
+	// The name of a boolean query parameter. If it is true, the response
+	// should be streamed. Otherwise, it should not be streamed.
+	QueryParameterKey string
+	// The name of a boolean property on the request. If it is true, the response
+	// should be streamed. Otherwise, it should not be streamed.
 	RequestPropertyKey string
 }
 

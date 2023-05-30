@@ -1,6 +1,7 @@
 # Simple test for generating a union.
 types:
   Union:
+    docs: "This is a simple union."
     union:
       foo:
         type: Foo
@@ -15,6 +16,7 @@ types:
       name: type
     union:
       foo:
+        docs: "This is a Foo field."
         type: Foo
         key: foo
       bar:
@@ -29,7 +31,9 @@ types:
   UnionWithoutKey:
     union:
       foo: Foo
-      bar: Bar
+      bar:
+        docs: "This is a bar field."
+        type: Bar
 
   UnionWithUnknown:
     union:

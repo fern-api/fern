@@ -87,7 +87,21 @@ func (f *fileWriter) WriteType(typeDeclaration *ir.TypeDeclaration) error {
 		importPath:     fernFilepathToImportPath(f.baseImportPath, typeDeclaration.Name.FernFilepath),
 		writer:         f,
 	}
+	f.WriteDocs(typeDeclaration.Docs)
 	return typeDeclaration.Shape.Accept(visitor)
+}
+
+// WriteDocs is a convenience function to writes the given documentation, if any.
+// This prevents us from having to perform a nil check and length check at every
+// call site.
+func (f *fileWriter) WriteDocs(docs *string) {
+	if docs == nil || len(*docs) == 0 {
+		return
+	}
+	split := strings.Split(*docs, "\n")
+	for _, line := range split {
+		f.P("// " + line)
+	}
 }
 
 // typeReferenceToGoType maps the given type reference into its Go-equivalent.
@@ -219,6 +233,7 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 	// Write all of the supported enum values in a single const block.
 	t.writer.P("const (")
 	for i, enumValue := range enum.Values {
+		t.writer.WriteDocs(enumValue.Docs)
 		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
 		if i == 0 {
 			t.writer.P(enumName, " ", t.typeName, " = iota + 1")
@@ -298,6 +313,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			// If the union has no properties, there's nothing for us to do.
 			continue
 		}
+		t.writer.WriteDocs(unionType.Docs)
 		t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName)
 	}
 	t.writer.P("}")
@@ -446,6 +462,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		typeName string
 		field    string
 		value    string
+		docs     *string
 	}
 	var members []*member
 	for _, unionMember := range union.Members {
@@ -459,6 +476,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 				typeName: typeName,
 				field:    typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types),
 				value:    typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath),
+				docs:     unionMember.Docs,
 			},
 		)
 	}
@@ -467,6 +485,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P("typeName string")
 	for _, member := range members {
+		t.writer.WriteDocs(member.docs)
 		t.writer.P(member.field, " ", member.value)
 	}
 	t.writer.P("}")
@@ -615,6 +634,7 @@ func (t *typeVisitor) visitObjectProperties(object *ir.ObjectTypeDeclaration, in
 		names = append(names, t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeTags)...)
 	}
 	for _, property := range object.Properties {
+		t.writer.WriteDocs(property.Docs)
 		names = append(names, property.Name.Name.PascalCase.UnsafeName)
 		if includeTags {
 			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
