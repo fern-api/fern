@@ -10,6 +10,9 @@ import (
 	"github.com/fern-api/fern-go/internal/fern/ir"
 )
 
+// packageDocsFilename represents the standard package documentation filename.
+const packageDocsFilename = "doc.go"
+
 // Generator represents the Go code generator.
 type Generator struct {
 	config *Config
@@ -39,6 +42,31 @@ func (g *Generator) Generate() ([]*File, error) {
 
 func (g *Generator) generate(ir *ir.IntermediateRepresentation) ([]*File, error) {
 	var files []*File
+	// First write all of the package-level documentation, if any (i.e. in a doc.go file).
+	if ir.RootPackage != nil && ir.RootPackage.Docs != nil || len(*ir.RootPackage.Docs) > 0 {
+		fileInfo := fileInfoForPackage(ir.ApiName, ir.RootPackage.FernFilepath)
+		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil)
+		writer.WriteDocs(ir.RootPackage.Docs)
+		file, err := writer.DocsFile()
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
+	}
+	for _, subpackage := range ir.Subpackages {
+		if subpackage.Docs == nil || len(*subpackage.Docs) == 0 {
+			continue
+		}
+		fileInfo := fileInfoForPackage(ir.ApiName, subpackage.FernFilepath)
+		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil)
+		writer.WriteDocs(subpackage.Docs)
+		file, err := writer.DocsFile()
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
+	}
+	// Then generate all of the types.
 	for _, irType := range ir.Types {
 		fileInfo := fileInfoForTypeDeclaration(ir.ApiName, irType)
 		writer := newFileWriter(
@@ -93,6 +121,25 @@ func fileInfoForTypeDeclaration(apiName *ir.Name, typeDeclaration *ir.TypeDeclar
 	}
 	return &fileInfo{
 		filename:    fmt.Sprintf("%s.go", filepath.Join(append(packages, typeName)...)),
+		packageName: packages[len(packages)-1],
+	}
+}
+
+func fileInfoForPackage(apiName *ir.Name, fernFilepath *ir.FernFilepath) *fileInfo {
+	var packages []string
+	for _, packageName := range fernFilepath.PackagePath {
+		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
+	}
+	if len(packages) == 0 {
+		// This type didn't declare a package, so it belongs at the top-level.
+		// The top-level package uses the API's name as its package declaration.
+		return &fileInfo{
+			filename:    packageDocsFilename,
+			packageName: strings.ToLower(apiName.CamelCase.SafeName),
+		}
+	}
+	return &fileInfo{
+		filename:    filepath.Join(append(packages, packageDocsFilename)...),
 		packageName: packages[len(packages)-1],
 	}
 }

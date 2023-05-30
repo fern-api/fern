@@ -58,7 +58,7 @@ func (f *fileWriter) P(elements ...any) {
 	fmt.Fprintln(f.buffer)
 }
 
-// Finish formats and writes the content stored in the writer's buffer into a *File.
+// File formats and writes the content stored in the writer's buffer into a *File.
 func (f *fileWriter) File() (*File, error) {
 	// Start with the package declaration and import statements.
 	header := newFileWriter(f.filename, f.packageName, f.baseImportPath, f.types)
@@ -76,6 +76,15 @@ func (f *fileWriter) File() (*File, error) {
 	return &File{
 		Path:    f.filename,
 		Content: formatted,
+	}, nil
+}
+
+// DocsFile acts like File, but is tailored to write docs.go files.
+func (f *fileWriter) DocsFile() (*File, error) {
+	f.P("package ", f.packageName)
+	return &File{
+		Path:    f.filename,
+		Content: f.buffer.Bytes(),
 	}, nil
 }
 
