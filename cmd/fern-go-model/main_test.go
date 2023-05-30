@@ -8,7 +8,9 @@ import (
 	"strings"
 	"testing"
 
+	custom "github.com/fern-api/fern-go/internal/testdata/custom/fixtures"
 	union "github.com/fern-api/fern-go/internal/testdata/union/fixtures"
+	"github.com/gofrs/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -84,6 +86,16 @@ func TestRoundTrip(t *testing.T) {
 		constructor func() any
 	}{
 		{
+			desc: "simple object",
+			value: &custom.Foo{
+				Id:   newUUID(t),
+				Name: "fern",
+			},
+			constructor: func() any {
+				return new(custom.Foo)
+			},
+		},
+		{
 			desc: "simple union",
 			value: &union.Union{
 				Type: "foo",
@@ -110,4 +122,10 @@ func TestRoundTrip(t *testing.T) {
 			assert.Equal(t, expectedBytes, actualBytes)
 		})
 	}
+}
+
+func newUUID(t *testing.T) uuid.UUID {
+	u, err := uuid.NewV4()
+	require.NoError(t, err)
+	return u
 }
