@@ -32,7 +32,7 @@ export function convertToServices({
             const serviceTag = tag == null ? undefined : openApiFile.tags[tag];
             const emptyService = getEmptyService();
             if (serviceTag?.description != null) {
-                emptyService["display-name"] = serviceTag.description;
+                emptyService["display-name"] = serviceTag.id;
             }
             services[file] = emptyService;
         }

@@ -6483,7 +6483,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Menu interaction over connection",
+        "display-name": "action-menu",
         "endpoints": {
           "close_menu_by_conn_id": {
             "auth": true,
@@ -6610,7 +6610,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Simple messaging",
+        "display-name": "basicmessage",
         "endpoints": {
           "send_message": {
             "auth": true,
@@ -6652,7 +6652,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Connection management",
+        "display-name": "connection",
         "endpoints": {
           "accept_connection_invitation": {
             "auth": true,
@@ -7103,7 +7103,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Credential definition operations",
+        "display-name": "credential-definition",
         "endpoints": {
           "get_created_cred_defs": {
             "auth": true,
@@ -7242,7 +7242,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Holder credential management",
+        "display-name": "credentials",
         "endpoints": {
           "delete_credential_record": {
             "auth": true,
@@ -7474,7 +7474,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Connection management via DID exchange",
+        "display-name": "did-exchange",
         "endpoints": {
           "accept_didex_invitation": {
             "auth": true,
@@ -7657,7 +7657,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Feature discovery",
+        "display-name": "discover-features",
         "endpoints": {
           "get_v10_feature_records": {
             "auth": true,
@@ -7721,7 +7721,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Feature discovery v2",
+        "display-name": "discover-features v2.0",
         "endpoints": {
           "get_v20_feature_records": {
             "auth": true,
@@ -7785,7 +7785,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Endorse a Transaction",
+        "display-name": "endorse-transaction",
         "endpoints": {
           "cancel_transaction_request": {
             "auth": true,
@@ -7987,7 +7987,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Introduction of known parties",
+        "display-name": "introduction",
         "endpoints": {
           "start_connection_introduction": {
             "auth": true,
@@ -8031,7 +8031,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Credential issue v1.0",
+        "display-name": "issue-credential v1.0",
         "endpoints": {
           "create_credential_record": {
             "auth": true,
@@ -8530,7 +8530,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Credential issue v2.0",
+        "display-name": "issue-credential v2.0",
         "endpoints": {
           "create_credential_record": {
             "auth": true,
@@ -8976,7 +8976,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Sign and verify json-ld data",
+        "display-name": "jsonld",
         "endpoints": {
           "sign": {
             "auth": true,
@@ -9044,7 +9044,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Interaction with ledger",
+        "display-name": "ledger",
         "endpoints": {
           "accept_taa": {
             "auth": true,
@@ -9246,7 +9246,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Mediation management",
+        "display-name": "mediation",
         "endpoints": {
           "clear_default_mediator": {
             "auth": true,
@@ -9579,7 +9579,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Multitenant wallet management",
+        "display-name": "multitenancy",
         "endpoints": {
           "create_wallet": {
             "auth": true,
@@ -9787,7 +9787,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Out-of-band connections",
+        "display-name": "out-of-band",
         "endpoints": {
           "create_oob_invitation": {
             "auth": true,
@@ -9906,7 +9906,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Proof presentation v1.0",
+        "display-name": "present-proof v1.0",
         "endpoints": {
           "create_free_proof_request": {
             "auth": true,
@@ -10250,7 +10250,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Proof presentation v2.0",
+        "display-name": "present-proof v2.0",
         "endpoints": {
           "create_proof_request": {
             "auth": true,
@@ -10609,7 +10609,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "did resolver interface.",
+        "display-name": "resolver",
         "endpoints": {
           "get_did_document": {
             "auth": true,
@@ -10638,7 +10638,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Revocation registry management",
+        "display-name": "revocation",
         "endpoints": {
           "clear_pending_revocations": {
             "auth": true,
@@ -11125,7 +11125,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Schema operations",
+        "display-name": "schema",
         "endpoints": {
           "get_matching_created_schemas": {
             "auth": true,
@@ -11338,7 +11338,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Trust-ping over connection",
+        "display-name": "trustping",
         "endpoints": {
           "send_ping": {
             "auth": true,
@@ -11380,7 +11380,7 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "DID and tag policy management",
+        "display-name": "wallet",
         "endpoints": {
           "create_local_did": {
             "auth": true,

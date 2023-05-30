@@ -3144,7 +3144,7 @@ empty.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Artifact (file) management APIs.",
+        "display-name": "artifacts",
         "endpoints": {
           "locate": {
             "auth": true,
@@ -3217,7 +3217,7 @@ empty.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Auth Connections of DevOrg.",
+        "display-name": "auth-connection",
         "endpoints": {
           "dev-org-auth-connections-create": {
             "auth": true,
@@ -3406,7 +3406,7 @@ organization.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Security token interactions.",
+        "display-name": "auth-tokens",
         "endpoints": {
           "create": {
             "auth": true,
@@ -3679,7 +3679,7 @@ organization.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Dev user interactions.",
+        "display-name": "dev-users",
         "endpoints": {
           "list": {
             "auth": true,
@@ -3768,7 +3768,7 @@ used.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "DevRev part interactions.",
+        "display-name": "parts",
         "endpoints": {
           "create": {
             "auth": true,
@@ -3956,7 +3956,7 @@ used.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Rev organization interactions.",
+        "display-name": "rev-orgs",
         "endpoints": {
           "create": {
             "auth": true,
@@ -4234,7 +4234,7 @@ records.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "DevRev tag interactions.",
+        "display-name": "tags",
         "endpoints": {
           "create": {
             "auth": true,
@@ -4439,7 +4439,7 @@ tags.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "APIs to manage timeline entries for objects.",
+        "display-name": "timeline-entries",
         "endpoints": {
           "create": {
             "auth": true,
@@ -4578,7 +4578,7 @@ used.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "Webhook event APIs.",
+        "display-name": "webhooks",
         "endpoints": {
           "create": {
             "auth": true,
@@ -4768,7 +4768,7 @@ won't receive any object events until successfully verified.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "DevRev work interactions.",
+        "display-name": "works",
         "endpoints": {
           "create": {
             "auth": true,
