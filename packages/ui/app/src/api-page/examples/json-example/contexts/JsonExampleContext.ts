@@ -7,6 +7,7 @@ export const JsonExampleContext = createContext<() => JsonExampleContextValue>((
 
 export interface JsonExampleContextValue {
     selectedProperty: JsonPropertyPath | undefined;
+    containerRef: HTMLElement | undefined;
 }
 
 export function useJsonExampleContext(): JsonExampleContextValue {

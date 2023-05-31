@@ -3,27 +3,27 @@ import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiSubpackages } from "./ApiSubpackages";
 import { EndpointSidebarItem } from "./EndpointSidebarItem";
 
-export declare namespace ApiSubpackageSidebarSectionContents {
+export declare namespace ApiPackageSidebarSectionContents {
     export interface Props {
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
+        package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
     }
 }
 
-export const ApiSubpackageSidebarSectionContents: React.FC<ApiSubpackageSidebarSectionContents.Props> = ({
-    subpackage,
+export const ApiPackageSidebarSectionContents: React.FC<ApiPackageSidebarSectionContents.Props> = ({
+    package: package_,
     slug,
 }) => {
     return (
         <div className="flex flex-col">
-            {subpackage.endpoints.map((endpoint, endpointIndex) => (
+            {package_.endpoints.map((endpoint, endpointIndex) => (
                 <EndpointSidebarItem
                     key={endpointIndex}
                     endpoint={endpoint}
                     slug={joinUrlSlugs(slug, endpoint.urlSlug)}
                 />
             ))}
-            <ApiSubpackages package={subpackage} slug={slug} />
+            <ApiSubpackages package={package_} slug={slug} />
         </div>
     );
 };
