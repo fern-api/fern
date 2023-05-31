@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
 import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
-import { ApiSubpackageSidebarSectionContents } from "./ApiSubpackageSidebarSectionContents";
+import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
 import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 import { SidebarGroup } from "./SidebarGroup";
 
@@ -29,7 +29,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
 
     return (
         <SidebarGroup title={<NavigatingSidebarItem title={<SubpackageTitle subpackage={subpackage} />} slug={slug} />}>
-            <ApiSubpackageSidebarSectionContents subpackage={subpackage} slug={slug} />
+            <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />
         </SidebarGroup>
     );
 };

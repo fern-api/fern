@@ -56,7 +56,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     className={classNames(
                         styles.code,
                         className,
-                        "flex-1 leading-relaxed overflow-auto text-xs p-2 bg-[#969CEE]/10"
+                        "flex flex-1 leading-relaxed text-xs bg-[#969CEE]/10"
                     )}
                 >
                     {children}

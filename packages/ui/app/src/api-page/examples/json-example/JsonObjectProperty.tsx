@@ -26,6 +26,8 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
     propertyValue,
     isLastProperty,
 }) => {
+    const { containerRef } = useJsonExampleContext();
+
     const { breadcrumbs } = useContext(JsonExampleBreadcumbsContext);
     const contextValue = useMemo(
         (): JsonExampleBreadcumbsContextValue => ({
@@ -55,14 +57,16 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
     const ref = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
+        if (containerRef == null || ref.current == null) {
+            return;
+        }
         if (isSelected) {
-            ref.current?.scrollIntoView({
+            containerRef.scrollTo({
+                top: ref.current.offsetTop - containerRef.offsetTop - 20,
                 behavior: "smooth",
-                block: "nearest",
-                inline: "nearest",
             });
         }
-    }, [isSelected]);
+    }, [containerRef, isSelected]);
 
     const [isOverlayInView, setIsOverlayInView] = useState(false);
     useEffect(() => {
