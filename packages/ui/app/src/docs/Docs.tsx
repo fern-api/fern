@@ -1,10 +1,9 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { MaybeLoadedDocs } from "./MaybeLoadedDocs";
-
-const docsDomainRegex = /^([^.\s]+)/;
-const domain = import.meta.env.VITE_DOCS_DOMAIN ?? window.location.hostname.match(docsDomainRegex)?.[1];
+import { useCurrentDomain } from "./useCurrentDomain";
 
 export const Docs: React.FC = () => {
+    const domain = useCurrentDomain();
     if (domain == null) {
         return <NonIdealState title="Domain not found" />;
     }
