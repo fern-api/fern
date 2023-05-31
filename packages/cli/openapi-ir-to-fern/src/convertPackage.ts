@@ -33,15 +33,22 @@ export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): C
         rootApiFile,
         definitionFiles: {
             ...Object.fromEntries(
-                Object.entries(convertedServices.services).map(([file, service]) => [
-                    file,
-                    {
-                        imports: {
-                            [ROOT_PREFIX]: FERN_PACKAGE_MARKER_FILENAME,
+                Object.entries(convertedServices.services).map(([file, service]) => {
+                    const numDirectoriesNested = file.split("/").length - 1;
+                    let importPrefix = "";
+                    for (const i = 0; i < numDirectoriesNested; ++i) {
+                        importPrefix += "../";
+                    }
+                    return [
+                        file,
+                        {
+                            imports: {
+                                [ROOT_PREFIX]: `${importPrefix}${FERN_PACKAGE_MARKER_FILENAME}`,
+                            },
+                            service,
                         },
-                        service,
-                    },
-                ])
+                    ];
+                })
             ),
             [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: getPackageYml(openApiFile, convertedServices),
         },
