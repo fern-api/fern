@@ -36,8 +36,8 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         <SidebarGroup title={<NavigatingSidebarItem title={<SubpackageTitle subpackage={subpackage} />} slug={slug} />}>
             <div
                 className={classNames(
-                    "flex flex-col transition-[max-height] duration-300 overflow-hidden",
-                    shouldShowContents ? "max-h-[1000px]" : "max-h-0"
+                    "flex flex-col transition-[max-height] overflow-hidden",
+                    shouldShowContents ? "max-h-[1000px] duration-500" : "max-h-0 duration-150"
                 )}
             >
                 <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />
