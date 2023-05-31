@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { HeaderButton } from "./HeaderButton";
 
 export const Header: React.FC = () => {
     const { resolveFile, docsDefinition } = useDocsContext();
@@ -20,15 +21,9 @@ export const Header: React.FC = () => {
                 )}
             </div>
             <div className="flex items-center gap-10">
-                <div className="text-accentPrimary/80 hover:text-accentPrimary cursor-pointer transition">
-                    All products
-                </div>
-                <div className="text-accentPrimary/80 hover:text-accentPrimary cursor-pointer transition">
-                    Help center
-                </div>
-                <div className="border-accentPrimary bg-accentHighlight text-accentPrimary hover:bg-accentPrimary/20 cursor-pointer rounded-lg border px-4 py-2 transition">
-                    Schedule demo
-                </div>
+                {docsDefinition.config.navbarLinks.map((navbarLink, i) => (
+                    <HeaderButton key={i} navbarLink={navbarLink} />
+                ))}
             </div>
         </div>
     );
