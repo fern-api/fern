@@ -1,6 +1,5 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import classNames from "classnames";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
 import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
@@ -26,21 +25,28 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         [resolveSubpackageById, subpackage.subpackageId]
     );
 
+    const [contentsHeight, setContentsHeight] = useState<number>();
+    const setContentsRef = useCallback(
+        (ref: HTMLElement | null) => {
+            if (contentsHeight == null && ref != null) {
+                setContentsHeight(ref.getBoundingClientRect().height);
+            }
+        },
+        [contentsHeight]
+    );
+
     if (!hasEndpoints) {
         return null;
     }
 
-    const shouldShowContents = selectedPath != null && selectedPath.slug.startsWith(slug);
+    const isSelected = selectedPath != null && selectedPath.slug.startsWith(slug);
 
     return (
         <SidebarGroup title={<NavigatingSidebarItem title={<SubpackageTitle subpackage={subpackage} />} slug={slug} />}>
             <div
-                className={classNames(
-                    "flex flex-col transition-[max-height] overflow-hidden ease-linear",
-                    shouldShowContents
-                        ? "max-h-[1000px] duration-1000 ease-[ease-in-out]"
-                        : "max-h-0 duration-500 ease-[ease-in-out]"
-                )}
+                ref={setContentsRef}
+                className="flex flex-col overflow-hidden transition-[height] duration-500"
+                style={contentsHeight != null ? { height: isSelected ? contentsHeight : 0 } : undefined}
             >
                 <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />
             </div>
