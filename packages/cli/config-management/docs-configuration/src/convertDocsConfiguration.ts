@@ -21,6 +21,8 @@ export async function convertDocsConfiguration({
                 ? convertLogoReference(rawDocsConfiguration.logo, absolutePathOfConfiguration)
                 : undefined,
         colors: convertColorsConfiguration(rawDocsConfiguration.colors ?? {}, context),
+        navbarLinks:
+            rawDocsConfiguration.navbarLinks != null ? convertNavbarLinks(rawDocsConfiguration.navbarLinks) : undefined,
     };
 }
 
@@ -142,4 +144,23 @@ function parseHexColorCode(value: string | undefined): number | undefined {
         return undefined;
     }
     return valueAsNumber;
+}
+
+function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): FernRegistry.docs.v1.write.NavbarLink[] {
+    return rawConfig.map((item) => {
+        return {
+            text: item.text,
+            url: item.url,
+            style: item.style != null ? convertNavbarLinkStyle(item.style) : undefined,
+        };
+    });
+}
+
+function convertNavbarLinkStyle(rawConfig: RawDocs.NavbarLinkStyle): FernRegistry.docs.v1.write.NavbarLinkStyle {
+    switch (rawConfig) {
+        case "primary":
+            return FernRegistry.docs.v1.write.NavbarLinkStyle.Primary;
+        default:
+            assertNever(rawConfig);
+    }
 }

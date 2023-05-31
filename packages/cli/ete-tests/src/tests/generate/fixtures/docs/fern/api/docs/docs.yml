@@ -1,5 +1,9 @@
 logo: ./fern.png
 
+navbar-links:
+  - text: Bar
+    url: https://github.com/
+
 navigation:
   - page: Foo
     path: foo.md
