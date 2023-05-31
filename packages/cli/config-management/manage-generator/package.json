@@ -29,8 +29,7 @@
   "dependencies": {
     "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-api/task-context": "workspace:*",
-    "immer": "^9.0.15"
+    "@fern-api/task-context": "workspace:*"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
