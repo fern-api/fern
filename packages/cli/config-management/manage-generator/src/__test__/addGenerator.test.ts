@@ -10,6 +10,7 @@ describe("addGenerator", () => {
         };
         const newConfiguration = addGenerator({
             generatorName: "fern-java",
+            groupName: "local",
             generatorsConfiguration,
             context: createMockTaskContext(),
         });
@@ -48,6 +49,7 @@ describe("addGenerator", () => {
             addGenerator({
                 generatorName: "typescript",
                 generatorsConfiguration,
+                groupName: "local",
                 context: createMockTaskContext({ logger: NOOP_LOGGER }),
             })
         ).toThrow(FernCliError);

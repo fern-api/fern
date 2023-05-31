@@ -12,3 +12,4 @@ export {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     type GeneratorsConfigurationSchema,
 } from "./schemas/GeneratorsConfigurationSchema";
+export { updateGeneratorGroup } from "./updateGeneratorGroup";

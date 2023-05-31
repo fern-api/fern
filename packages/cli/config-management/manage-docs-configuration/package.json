@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/manage-generator",
+  "name": "@fern-api/manage-docs-configuration",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/config-management/manage-generator"
+    "directory": "packages/cli/config-management/manage-docs-configuration"
   },
   "private": true,
   "files": [
@@ -27,15 +27,20 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
-    "@fern-api/logger": "workspace:*",
-    "@fern-api/task-context": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
+    "@fern-api/workspace-loader": "workspace:*",
+    "@fern-fern/docs-config": "0.0.11",
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.0.3",
+    "@types/js-yaml": "^4.0.5",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
