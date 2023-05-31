@@ -36,7 +36,7 @@ export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): C
                 Object.entries(convertedServices.services).map(([file, service]) => {
                     const numDirectoriesNested = file.split("/").length - 1;
                     let importPrefix = "";
-                    for (const i = 0; i < numDirectoriesNested; ++i) {
+                    for (let i = 0; i < numDirectoriesNested; ++i) {
                         importPrefix += "../";
                     }
                     return [
