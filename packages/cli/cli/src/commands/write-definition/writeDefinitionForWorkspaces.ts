@@ -43,6 +43,8 @@ async function writeDefinitionForWorkspace(workspace: FernWorkspace) {
         fileContents = formatDefinitionFile({
             fileContents: yaml.dump(definitionFile.contents),
         });
+        const dirname = absoluteFilepath.split("/").slice(0, -1).join("/");
+        await mkdir(dirname, { recursive: true });
         await writeFile(absoluteFilepath, fileContents);
     }
 }
