@@ -4,6 +4,7 @@ types:
       navigation: list<NavigationItem>
       logo: optional<string>
       colors: optional<ColorsConfiguration>
+      "navbar-links": optional<list<NavbarLink>>
 
   NavigationItem:
     discriminated: false
@@ -30,3 +31,13 @@ types:
   ColorsConfiguration:
     properties:
       accentPrimary: optional<string>
+
+  NavbarLink:
+    properties:
+      text: string
+      url: string
+      style: optional<NavbarLinkStyle>
+
+  NavbarLinkStyle:
+    enum:
+      - primary

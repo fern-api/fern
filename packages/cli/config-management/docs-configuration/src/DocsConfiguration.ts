@@ -6,6 +6,7 @@ export interface DocsConfiguration {
     navigation: DocsNavigationConfiguration;
     logo: LogoReference | undefined;
     colors: FernRegistry.docs.v1.write.ColorsConfig;
+    navbarLinks: FernRegistry.docs.v1.write.NavbarLink[] | undefined;
 }
 
 export type LogoReference = LogoReference.Url | LogoReference.File;
