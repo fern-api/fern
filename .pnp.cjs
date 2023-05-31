@@ -44,6 +44,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/cli/config-management/generators-configuration"\
       },\
       {\
+        "name": "@fern-api/manage-docs-configuration",\
+        "reference": "workspace:packages/cli/config-management/manage-docs-configuration"\
+      },\
+      {\
         "name": "@fern-api/manage-generator",\
         "reference": "workspace:packages/cli/config-management/manage-generator"\
       },\
@@ -249,6 +253,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/logger", ["workspace:packages/cli/logger"]],\
       ["@fern-api/logging-execa", ["workspace:packages/commons/logging-execa"]],\
       ["@fern-api/login", ["workspace:packages/cli/login"]],\
+      ["@fern-api/manage-docs-configuration", ["workspace:packages/cli/config-management/manage-docs-configuration"]],\
       ["@fern-api/manage-generator", ["workspace:packages/cli/config-management/manage-generator"]],\
       ["@fern-api/openapi-ir-to-fern", ["workspace:packages/cli/openapi-ir-to-fern"]],\
       ["@fern-api/openapi-migrator", ["workspace:packages/cli/openapi-migrator"]],\
@@ -5696,6 +5701,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
+            ["@fern-api/manage-docs-configuration", "workspace:packages/cli/config-management/manage-docs-configuration"],\
             ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
             ["@fern-api/openapi-ir-to-fern", "workspace:packages/cli/openapi-ir-to-fern"],\
             ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
@@ -6195,6 +6201,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
+            ["immer", "npm:9.0.15"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -6475,6 +6482,38 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["qs", "npm:6.11.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/manage-docs-configuration", [\
+        ["workspace:packages/cli/config-management/manage-docs-configuration", {\
+          "packageLocation": "./packages/cli/config-management/manage-docs-configuration/",\
+          "packageDependencies": [\
+            ["@fern-api/manage-docs-configuration", "workspace:packages/cli/config-management/manage-docs-configuration"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
+            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
+            ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
+            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
+            ["@fern-fern/docs-config", "npm:0.0.11"],\
+            ["@fern-fern/registry-node", "npm:0.0.754"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
+            ["js-yaml", "npm:4.1.0"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\

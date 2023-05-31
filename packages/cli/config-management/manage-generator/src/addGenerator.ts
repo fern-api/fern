@@ -1,36 +1,42 @@
-import { DEFAULT_GROUP_NAME, GeneratorName, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
+import {
+    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
+    GeneratorName,
+    GeneratorsConfigurationSchema,
+    updateGeneratorGroup,
+} from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import produce from "immer";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 
 export function addGenerator({
     generatorName,
     generatorsConfiguration,
+    groupName = generatorsConfiguration[DEFAULT_GROUP_GENERATORS_CONFIG_KEY],
     context,
 }: {
     generatorName: string;
     generatorsConfiguration: GeneratorsConfigurationSchema;
+    groupName: string | undefined;
     context: TaskContext;
 }): GeneratorsConfigurationSchema {
     const normalizedGeneratorName = normalizeGeneratorName(generatorName);
     if (normalizedGeneratorName == null) {
         return context.failAndThrow("Unrecognized generator: " + generatorName);
     }
-
     const invocation = GENERATOR_INVOCATIONS[normalizedGeneratorName];
 
-    const group = generatorsConfiguration.groups?.[DEFAULT_GROUP_NAME];
-    if (group != null && group.generators.some((generator) => generator.name === normalizedGeneratorName)) {
-        context.failAndThrow(`${generatorName} is already installed in group ${DEFAULT_GROUP_NAME}.`);
-    }
-
-    return produce(generatorsConfiguration, (draft) => {
-        const groups = (draft.groups ??= {});
-        const draftGroup = (groups[DEFAULT_GROUP_NAME] ??= { generators: [] });
-        draftGroup.generators.push({
-            name: normalizedGeneratorName,
-            ...invocation,
-        });
+    return updateGeneratorGroup({
+        generatorsConfiguration,
+        groupName,
+        context,
+        update: (group) => {
+            if (group.generators.some((generator) => generator.name === normalizedGeneratorName)) {
+                context.failAndThrow(`${generatorName} is already installed in group ${groupName}.`);
+            }
+            group.generators.push({
+                name: normalizedGeneratorName,
+                ...invocation,
+            });
+        },
     });
 }
 

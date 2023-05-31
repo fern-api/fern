@@ -207,16 +207,21 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("api", {
                     string: true,
                     description: "Only run the command on the provided API",
+                })
+                .option("group", {
+                    string: true,
+                    description: "Add the generator to the specified group",
                 }),
         async (argv) => {
-            await addGeneratorToWorkspaces(
-                await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+            await addGeneratorToWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
                 }),
-                argv.generator,
-                cliContext
-            );
+                generatorName: argv.generator,
+                groupName: argv.group,
+                cliContext,
+            });
         }
     );
 }

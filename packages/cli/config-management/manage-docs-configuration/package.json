@@ -1,10 +1,10 @@
 {
-  "name": "@fern-api/generators-configuration",
+  "name": "@fern-api/manage-docs-configuration",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "packages/cli/config-management/generators-configuration"
+    "directory": "packages/cli/config-management/manage-docs-configuration"
   },
   "private": true,
   "files": [
@@ -29,13 +29,15 @@
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/docs-configuration": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/generators-configuration": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.193",
-    "immer": "^9.0.15",
-    "js-yaml": "^4.1.0",
-    "zod": "^3.14.3"
+    "@fern-api/workspace-loader": "workspace:*",
+    "@fern-fern/docs-config": "0.0.11",
+    "@fern-fern/registry-node": "^0.0.754",
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
