@@ -12,7 +12,9 @@ export interface EndpointLocation {
 export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     if (endpoint.sdkName != null) {
         const filename =
-            endpoint.sdkName.groupName == null ? "__package__.yml" : `${camelCase(endpoint.sdkName.groupName)}.yml`;
+            endpoint.sdkName.groupName.length === 0
+                ? "__package__.yml"
+                : `${endpoint.sdkName.groupName.map((part) => camelCase(part)).join("/")}.yml`;
         return {
             file: RelativeFilePath.of(filename),
             endpointId: endpoint.sdkName.methodName,

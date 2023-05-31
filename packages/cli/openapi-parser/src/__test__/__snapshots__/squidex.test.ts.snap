@@ -83,7 +83,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "userManagement",
+            "groupName": [
+              "userManagement",
+            ],
             "methodName": "getUsers",
           },
           "server": [],
@@ -134,7 +136,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "userManagement",
+            "groupName": [
+              "userManagement",
+            ],
             "methodName": "postUser",
           },
           "server": [],
@@ -187,7 +191,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "userManagement",
+            "groupName": [
+              "userManagement",
+            ],
             "methodName": "getUser",
           },
           "server": [],
@@ -252,7 +258,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "userManagement",
+            "groupName": [
+              "userManagement",
+            ],
             "methodName": "putUser",
           },
           "server": [],
@@ -296,7 +304,9 @@ exports[`open api parser squidex parse open api 1`] = `
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "userManagement",
+            "groupName": [
+              "userManagement",
+            ],
             "methodName": "deleteUser",
           },
           "server": [],
@@ -351,7 +361,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "userManagement",
+            "groupName": [
+              "userManagement",
+            ],
             "methodName": "lockUser",
           },
           "server": [],
@@ -406,7 +418,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "userManagement",
+            "groupName": [
+              "userManagement",
+            ],
             "methodName": "unlockUser",
           },
           "server": [],
@@ -445,7 +459,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "users",
+            "groupName": [
+              "users",
+            ],
             "methodName": "getUserResources",
           },
           "server": [],
@@ -504,7 +520,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "users",
+            "groupName": [
+              "users",
+            ],
             "methodName": "getUsers",
           },
           "server": [],
@@ -557,7 +575,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "users",
+            "groupName": [
+              "users",
+            ],
             "methodName": "getUser",
           },
           "server": [],
@@ -599,7 +619,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "users",
+            "groupName": [
+              "users",
+            ],
             "methodName": "getUserPicture",
           },
           "server": [],
@@ -663,7 +685,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "translations",
+            "groupName": [
+              "translations",
+            ],
             "methodName": "postTranslation",
           },
           "server": [],
@@ -702,7 +726,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "templates",
+            "groupName": [
+              "templates",
+            ],
             "methodName": "getTemplates",
           },
           "server": [],
@@ -755,7 +781,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "templates",
+            "groupName": [
+              "templates",
+            ],
             "methodName": "getTemplate",
           },
           "server": [],
@@ -808,7 +836,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "teams",
+            "groupName": [
+              "teams",
+            ],
             "methodName": "getContributors",
           },
           "server": [],
@@ -873,7 +903,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "teams",
+            "groupName": [
+              "teams",
+            ],
             "methodName": "postContributor",
           },
           "server": [],
@@ -927,7 +959,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "teams",
+            "groupName": [
+              "teams",
+            ],
             "methodName": "deleteMyself",
           },
           "server": [],
@@ -993,7 +1027,9 @@ exports[`open api parser squidex parse open api 1`] = `
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "teams",
+            "groupName": [
+              "teams",
+            ],
             "methodName": "deleteContributor",
           },
           "server": [],
@@ -1037,7 +1073,9 @@ You will retrieve all teams, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "teams",
+            "groupName": [
+              "teams",
+            ],
             "methodName": "getTeams",
           },
           "server": [],
@@ -1090,7 +1128,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "teams",
+            "groupName": [
+              "teams",
+            ],
             "methodName": "postTeam",
           },
           "server": [],
@@ -1143,7 +1183,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "teams",
+            "groupName": [
+              "teams",
+            ],
             "methodName": "getTeam",
           },
           "server": [],
@@ -1208,7 +1250,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "teams",
+            "groupName": [
+              "teams",
+            ],
             "methodName": "putTeam",
           },
           "server": [],
@@ -1261,7 +1305,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "statistics",
+            "groupName": [
+              "statistics",
+            ],
             "methodName": "getLog",
           },
           "server": [],
@@ -1338,7 +1384,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "statistics",
+            "groupName": [
+              "statistics",
+            ],
             "methodName": "getUsages",
           },
           "server": [],
@@ -1415,7 +1463,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "statistics",
+            "groupName": [
+              "statistics",
+            ],
             "methodName": "getUsagesForTeam",
           },
           "server": [],
@@ -1468,7 +1518,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "statistics",
+            "groupName": [
+              "statistics",
+            ],
             "methodName": "getCurrentStorageSize",
           },
           "server": [],
@@ -1521,7 +1573,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "statistics",
+            "groupName": [
+              "statistics",
+            ],
             "methodName": "getTeamCurrentStorageSizeForTeam",
           },
           "server": [],
@@ -1602,7 +1656,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "statistics",
+            "groupName": [
+              "statistics",
+            ],
             "methodName": "getStorageSizes",
           },
           "server": [],
@@ -1683,7 +1739,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "statistics",
+            "groupName": [
+              "statistics",
+            ],
             "methodName": "getStorageSizesForTeam",
           },
           "server": [],
@@ -1756,7 +1814,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "search",
+            "groupName": [
+              "search",
+            ],
             "methodName": "getSearchResults",
           },
           "server": [],
@@ -1834,7 +1894,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "postField",
           },
           "server": [],
@@ -1924,7 +1986,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "postNestedField",
           },
           "server": [],
@@ -2001,7 +2065,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putSchemaUIFields",
           },
           "server": [],
@@ -2078,7 +2144,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putSchemaFieldOrdering",
           },
           "server": [],
@@ -2167,7 +2235,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putNestedFieldOrdering",
           },
           "server": [],
@@ -2256,7 +2326,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putField",
           },
           "server": [],
@@ -2334,7 +2406,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "deleteField",
           },
           "server": [],
@@ -2435,7 +2509,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putNestedField",
           },
           "server": [],
@@ -2525,7 +2601,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "deleteNestedField",
           },
           "server": [],
@@ -2603,7 +2681,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "lockField",
           },
           "server": [],
@@ -2693,7 +2773,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "lockNestedField",
           },
           "server": [],
@@ -2771,7 +2853,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "hideField",
           },
           "server": [],
@@ -2861,7 +2945,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "hideNestedField",
           },
           "server": [],
@@ -2939,7 +3025,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "showField",
           },
           "server": [],
@@ -3029,7 +3117,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "showNestedField",
           },
           "server": [],
@@ -3107,7 +3197,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "enableField",
           },
           "server": [],
@@ -3197,7 +3289,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "enableNestedField",
           },
           "server": [],
@@ -3275,7 +3369,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "disableField",
           },
           "server": [],
@@ -3365,7 +3461,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "disableNestedField",
           },
           "server": [],
@@ -3418,7 +3516,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "getSchemas",
           },
           "server": [],
@@ -3483,7 +3583,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "postSchema",
           },
           "server": [],
@@ -3548,7 +3650,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "getSchema",
           },
           "server": [],
@@ -3625,7 +3729,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putSchema",
           },
           "server": [],
@@ -3680,7 +3786,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "deleteSchema",
           },
           "server": [],
@@ -3757,7 +3865,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putSchemaSync",
           },
           "server": [],
@@ -3834,7 +3944,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putCategory",
           },
           "server": [],
@@ -3911,7 +4023,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putPreviewUrls",
           },
           "server": [],
@@ -3988,7 +4102,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putScripts",
           },
           "server": [],
@@ -4065,7 +4181,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "putRules",
           },
           "server": [],
@@ -4131,7 +4249,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "publishSchema",
           },
           "server": [],
@@ -4197,7 +4317,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "schemas",
+            "groupName": [
+              "schemas",
+            ],
             "methodName": "unpublishSchema",
           },
           "server": [],
@@ -4243,7 +4365,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "getActions",
           },
           "server": [],
@@ -4296,7 +4420,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "getRules",
           },
           "server": [],
@@ -4361,7 +4487,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "postRule",
           },
           "server": [],
@@ -4403,7 +4531,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "deleteRuleRun",
           },
           "server": [],
@@ -4480,7 +4610,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "putRule",
           },
           "server": [],
@@ -4535,7 +4667,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "deleteRule",
           },
           "server": [],
@@ -4601,7 +4735,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "enableRule",
           },
           "server": [],
@@ -4667,7 +4803,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "disableRule",
           },
           "server": [],
@@ -4722,7 +4860,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "triggerRule",
           },
           "server": [],
@@ -4792,7 +4932,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "putRuleRun",
           },
           "server": [],
@@ -4846,7 +4988,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "deleteRuleEvents",
           },
           "server": [],
@@ -4911,7 +5055,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "simulatePOST",
           },
           "server": [],
@@ -4976,7 +5122,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "simulateGET",
           },
           "server": [],
@@ -5075,7 +5223,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "getEvents",
           },
           "server": [],
@@ -5117,7 +5267,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "deleteEvents",
           },
           "server": [],
@@ -5172,7 +5324,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "putEvent",
           },
           "server": [],
@@ -5227,7 +5381,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "deleteEvent",
           },
           "server": [],
@@ -5269,7 +5425,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "getEventTypes",
           },
           "server": [],
@@ -5317,7 +5475,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "rules",
+            "groupName": [
+              "rules",
+            ],
             "methodName": "getEventSchema",
           },
           "server": [],
@@ -5370,7 +5530,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "plans",
+            "groupName": [
+              "plans",
+            ],
             "methodName": "getPlans",
           },
           "server": [],
@@ -5435,7 +5597,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "plans",
+            "groupName": [
+              "plans",
+            ],
             "methodName": "putPlan",
           },
           "server": [],
@@ -5488,7 +5652,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "plans",
+            "groupName": [
+              "plans",
+            ],
             "methodName": "getTeamPlans",
           },
           "server": [],
@@ -5553,7 +5719,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "plans",
+            "groupName": [
+              "plans",
+            ],
             "methodName": "putTeamPlan",
           },
           "server": [],
@@ -5592,7 +5760,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "ping",
+            "groupName": [
+              "ping",
+            ],
             "methodName": "getInfo",
           },
           "server": [],
@@ -5620,7 +5790,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "ping",
+            "groupName": [
+              "ping",
+            ],
             "methodName": "getPing",
           },
           "server": [],
@@ -5661,7 +5833,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "ping",
+            "groupName": [
+              "ping",
+            ],
             "methodName": "getAppPing",
           },
           "server": [],
@@ -5716,7 +5890,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "news",
+            "groupName": [
+              "news",
+            ],
             "methodName": "getNews",
           },
           "server": [],
@@ -5759,7 +5935,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "languages",
+            "groupName": [
+              "languages",
+            ],
             "methodName": "getLanguages",
           },
           "server": [],
@@ -5832,7 +6010,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "history",
+            "groupName": [
+              "history",
+            ],
             "methodName": "getAppHistory",
           },
           "server": [],
@@ -5905,7 +6085,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "history",
+            "groupName": [
+              "history",
+            ],
             "methodName": "getTeamHistory",
           },
           "server": [],
@@ -5944,7 +6126,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "eventConsumers",
+            "groupName": [
+              "eventConsumers",
+            ],
             "methodName": "getEventConsumers",
           },
           "server": [],
@@ -5998,7 +6182,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "eventConsumers",
+            "groupName": [
+              "eventConsumers",
+            ],
             "methodName": "startEventConsumer",
           },
           "server": [],
@@ -6052,7 +6238,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "eventConsumers",
+            "groupName": [
+              "eventConsumers",
+            ],
             "methodName": "stopEventConsumer",
           },
           "server": [],
@@ -6106,7 +6294,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "eventConsumers",
+            "groupName": [
+              "eventConsumers",
+            ],
             "methodName": "resetEventConsumer",
           },
           "server": [],
@@ -6135,7 +6325,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "diagnostics",
+            "groupName": [
+              "diagnostics",
+            ],
             "methodName": "getDump",
           },
           "server": [],
@@ -6164,7 +6356,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "diagnostics",
+            "groupName": [
+              "diagnostics",
+            ],
             "methodName": "getGCDump",
           },
           "server": [],
@@ -6260,7 +6454,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "getContents",
           },
           "server": [],
@@ -6383,7 +6579,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "postContent",
           },
           "server": [],
@@ -6460,7 +6658,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "getContentsPost",
           },
           "server": [],
@@ -6553,7 +6753,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "getContent",
           },
           "server": [],
@@ -6688,7 +6890,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "postUpsertContent",
           },
           "server": [],
@@ -6777,7 +6981,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "putContent",
           },
           "server": [],
@@ -6866,7 +7072,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "patchContent",
           },
           "server": [],
@@ -6964,7 +7172,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "deleteContent",
           },
           "server": [],
@@ -7031,7 +7241,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "getContentValidity",
           },
           "server": [],
@@ -7124,7 +7336,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "getReferences",
           },
           "server": [],
@@ -7217,7 +7431,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "getReferencing",
           },
           "server": [],
@@ -7295,7 +7511,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "getContentVersion",
           },
           "server": [],
@@ -7376,7 +7594,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "postContents",
           },
           "server": [],
@@ -7457,7 +7677,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "bulkUpdateContents",
           },
           "server": [],
@@ -7546,7 +7768,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "putContentStatus",
           },
           "server": [],
@@ -7624,7 +7848,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "deleteContentStatus",
           },
           "server": [],
@@ -7702,7 +7928,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "createDraft",
           },
           "server": [],
@@ -7780,7 +8008,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "contents",
+            "groupName": [
+              "contents",
+            ],
             "methodName": "deleteVersion",
           },
           "server": [],
@@ -7852,7 +8082,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "comments",
+            "groupName": [
+              "comments",
+            ],
             "methodName": "getWatchingUsers",
           },
           "server": [],
@@ -7933,7 +8165,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "comments",
+            "groupName": [
+              "comments",
+            ],
             "methodName": "getComments",
           },
           "server": [],
@@ -8010,7 +8244,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "comments",
+            "groupName": [
+              "comments",
+            ],
             "methodName": "postComment",
           },
           "server": [],
@@ -8088,7 +8324,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "comments",
+            "groupName": [
+              "comments",
+            ],
             "methodName": "putComment",
           },
           "server": [],
@@ -8155,7 +8393,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "comments",
+            "groupName": [
+              "comments",
+            ],
             "methodName": "deleteComment",
           },
           "server": [],
@@ -8223,7 +8463,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "notifications",
+            "groupName": [
+              "notifications",
+            ],
             "methodName": "getNotifications",
           },
           "server": [],
@@ -8278,7 +8520,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "notifications",
+            "groupName": [
+              "notifications",
+            ],
             "methodName": "deleteComment",
           },
           "server": [],
@@ -8332,7 +8576,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "backups",
+            "groupName": [
+              "backups",
+            ],
             "methodName": "getBackupContent",
           },
           "server": [],
@@ -8387,7 +8633,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "backups",
+            "groupName": [
+              "backups",
+            ],
             "methodName": "deleteBackup",
           },
           "server": [],
@@ -8460,7 +8708,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "backups",
+            "groupName": [
+              "backups",
+            ],
             "methodName": "getBackupContentV2",
           },
           "server": [],
@@ -8513,7 +8763,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "backups",
+            "groupName": [
+              "backups",
+            ],
             "methodName": "getBackups",
           },
           "server": [],
@@ -8556,7 +8808,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "backups",
+            "groupName": [
+              "backups",
+            ],
             "methodName": "postBackup",
           },
           "server": [],
@@ -8595,7 +8849,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "backups",
+            "groupName": [
+              "backups",
+            ],
             "methodName": "getRestoreJob",
           },
           "server": [],
@@ -8635,7 +8891,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "backups",
+            "groupName": [
+              "backups",
+            ],
             "methodName": "postRestoreJob",
           },
           "server": [],
@@ -8918,7 +9176,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "getAssetContentBySlug",
           },
           "server": [],
@@ -9173,7 +9433,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "getAssetContent",
           },
           "server": [],
@@ -9258,7 +9520,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "getAssetFolders",
           },
           "server": [],
@@ -9323,7 +9587,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "postAssetFolder",
           },
           "server": [],
@@ -9400,7 +9666,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "putAssetFolder",
           },
           "server": [],
@@ -9455,7 +9723,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "deleteAssetFolder",
           },
           "server": [],
@@ -9532,7 +9802,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "putAssetFolderParent",
           },
           "server": [],
@@ -9591,7 +9863,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "getTags",
           },
           "server": [],
@@ -9674,7 +9948,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "putTag",
           },
           "server": [],
@@ -9833,7 +10109,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "getAssets",
           },
           "server": [],
@@ -9947,7 +10225,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "postAsset",
           },
           "server": [],
@@ -10012,7 +10292,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "getAssetsPost",
           },
           "server": [],
@@ -10077,7 +10359,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "getAsset",
           },
           "server": [],
@@ -10188,7 +10472,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "postUpsertAsset",
           },
           "server": [],
@@ -10265,7 +10551,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "putAsset",
           },
           "server": [],
@@ -10351,7 +10639,9 @@ You will be assigned as owner of the new team automatically.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "deleteAsset",
           },
           "server": [],
@@ -10420,7 +10710,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "bulkUpdateAssets",
           },
           "server": [],
@@ -10500,7 +10792,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "putAssetContent",
           },
           "server": [],
@@ -10577,7 +10871,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "assets",
+            "groupName": [
+              "assets",
+            ],
             "methodName": "putAssetParent",
           },
           "server": [],
@@ -10630,7 +10926,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getAssetScripts",
           },
           "server": [],
@@ -10695,7 +10993,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "putAssetScripts",
           },
           "server": [],
@@ -10748,7 +11048,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getClients",
           },
           "server": [],
@@ -10814,7 +11116,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "postClient",
           },
           "server": [],
@@ -10891,7 +11195,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "putClient",
           },
           "server": [],
@@ -10957,7 +11263,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "deleteClient",
           },
           "server": [],
@@ -11010,7 +11318,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getContributors",
           },
           "server": [],
@@ -11075,7 +11385,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "postContributor",
           },
           "server": [],
@@ -11129,7 +11441,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "deleteMyself",
           },
           "server": [],
@@ -11195,7 +11509,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "deleteContributor",
           },
           "server": [],
@@ -11237,7 +11553,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getImage",
           },
           "server": [],
@@ -11304,7 +11622,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "uploadImage",
           },
           "server": [],
@@ -11358,7 +11678,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "deleteImage",
           },
           "server": [],
@@ -11411,7 +11733,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getLanguages",
           },
           "server": [],
@@ -11476,7 +11800,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "postLanguage",
           },
           "server": [],
@@ -11553,7 +11879,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "putLanguage",
           },
           "server": [],
@@ -11619,7 +11947,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "deleteLanguage",
           },
           "server": [],
@@ -11672,7 +12002,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getRoles",
           },
           "server": [],
@@ -11737,7 +12069,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "postRole",
           },
           "server": [],
@@ -11793,7 +12127,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getPermissions",
           },
           "server": [],
@@ -11870,7 +12206,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "putRole",
           },
           "server": [],
@@ -11936,7 +12274,9 @@ The client secret is auto generated on the server and returned. The client does 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "deleteRole",
           },
           "server": [],
@@ -11980,7 +12320,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getApps",
           },
           "server": [],
@@ -12033,7 +12375,9 @@ You will be assigned as owner of the new app automatically.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "postApp",
           },
           "server": [],
@@ -12090,7 +12434,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getTeamApps",
           },
           "server": [],
@@ -12143,7 +12489,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getApp",
           },
           "server": [],
@@ -12208,7 +12556,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "putApp",
           },
           "server": [],
@@ -12251,7 +12601,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "deleteApp",
           },
           "server": [],
@@ -12316,7 +12668,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "putAppTeam",
           },
           "server": [],
@@ -12369,7 +12723,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getSettings",
           },
           "server": [],
@@ -12434,7 +12790,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "putSettings",
           },
           "server": [],
@@ -12487,7 +12845,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "getWorkflows",
           },
           "server": [],
@@ -12552,7 +12912,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "postWorkflow",
           },
           "server": [],
@@ -12629,7 +12991,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "putWorkflow",
           },
           "server": [],
@@ -12695,7 +13059,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "apps",
+            "groupName": [
+              "apps",
+            ],
             "methodName": "deleteWorkflow",
           },
           "server": [],
