@@ -39,7 +39,11 @@ export function convertToServices({
         const service = services[file];
         if (service != null) {
             if (endpointId in service.endpoints) {
-                throw new Error(`Encountered duplicate endpoint id ${endpointId} in file ${file}`);
+                throw new Error(
+                    `The OpenAPI Spec has conflicting sdk method names. See ${endpoint.method.toUpperCase()} ${
+                        endpoint.path
+                    }`
+                );
             }
             const convertedEndpoint = convertEndpoint({
                 endpoint,
