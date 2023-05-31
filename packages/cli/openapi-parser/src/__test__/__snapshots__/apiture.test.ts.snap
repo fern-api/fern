@@ -193,7 +193,9 @@ Transfers support recurring schedules, such as repeating every week or every mon
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "accounts",
+            "groupName": [
+              "accounts",
+            ],
             "methodName": "listAccounts",
           },
           "server": [],
@@ -248,7 +250,9 @@ Transfers support recurring schedules, such as repeating every week or every mon
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "accounts",
+            "groupName": [
+              "accounts",
+            ],
             "methodName": "getAccount",
           },
           "server": [],
@@ -325,7 +329,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "accounts",
+            "groupName": [
+              "accounts",
+            ],
             "methodName": "listAccountBalances",
           },
           "server": [],
@@ -381,7 +387,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "accountJointOwners",
+            "groupName": [
+              "accountJointOwners",
+            ],
             "methodName": "listAccountJointOwners",
           },
           "server": [],
@@ -500,7 +508,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "accounts",
+            "groupName": [
+              "accounts",
+            ],
             "methodName": "listEligibleAchAccounts",
           },
           "server": [],
@@ -592,7 +602,9 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "overdraftProtection",
+            "groupName": [
+              "overdraftProtection",
+            ],
             "methodName": "listEligibleOverdraftAccounts",
           },
           "server": [],
@@ -647,7 +659,9 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "overdraftProtection",
+            "groupName": [
+              "overdraftProtection",
+            ],
             "methodName": "getOverdraftProtection",
           },
           "server": [],
@@ -717,7 +731,9 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "overdraftProtection",
+            "groupName": [
+              "overdraftProtection",
+            ],
             "methodName": "patchOverdraftAccounts",
           },
           "server": [],
@@ -787,7 +803,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "jointOwners",
+            "groupName": [
+              "jointOwners",
+            ],
             "methodName": "createJointOwnerInvitation",
           },
           "server": [],
@@ -879,7 +897,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "institutions",
+            "groupName": [
+              "institutions",
+            ],
             "methodName": "lookUpInstitutionByLocator",
           },
           "server": [],
@@ -1002,7 +1022,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "institutions",
+            "groupName": [
+              "institutions",
+            ],
             "methodName": "listTransferSchedule",
           },
           "server": [],
@@ -1095,7 +1117,9 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "institutions",
+            "groupName": [
+              "institutions",
+            ],
             "methodName": "getCutoffTimes",
           },
           "server": [],
@@ -1217,7 +1241,9 @@ This information provides hints to clients, allowing bank customers to select tr
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "institutions",
+            "groupName": [
+              "institutions",
+            ],
             "methodName": "getTransferDateRestrictions",
           },
           "server": [],
@@ -1480,7 +1506,9 @@ The default response lists only recent transactions. Normally, this is transacti
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "transactions",
+            "groupName": [
+              "transactions",
+            ],
             "methodName": "listTransactions",
           },
           "server": [],
@@ -1540,7 +1568,9 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "transactionCategories",
+            "groupName": [
+              "transactionCategories",
+            ],
             "methodName": "listTransactionCategories",
           },
           "server": [],
@@ -1676,7 +1706,9 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "transfers",
+            "groupName": [
+              "transfers",
+            ],
             "methodName": "listTransfers",
           },
           "server": [],
@@ -1748,7 +1780,9 @@ Note: This operation requires an identity challenge if the financial institution
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "transfers",
+            "groupName": [
+              "transfers",
+            ],
             "methodName": "createTransfer",
           },
           "server": [],
@@ -1803,7 +1837,9 @@ Note: This operation requires an identity challenge if the financial institution
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "transfers",
+            "groupName": [
+              "transfers",
+            ],
             "methodName": "getTransfer",
           },
           "server": [],
@@ -1890,7 +1926,9 @@ Note: This operation requires an identity challenge if the financial institution
           },
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "transfers",
+            "groupName": [
+              "transfers",
+            ],
             "methodName": "patchTransfer",
           },
           "server": [],
@@ -1935,7 +1973,9 @@ Note: This operation requires an identity challenge if the financial institution
           "response": undefined,
           "responseIsStreaming": false,
           "sdkName": {
-            "groupName": "transfers",
+            "groupName": [
+              "transfers",
+            ],
             "methodName": "deleteTransfer",
           },
           "server": [],

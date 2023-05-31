@@ -197,10 +197,10 @@ function convertSyncAndAsyncEndpoints({
 
 function getSdkName({ operation }: { operation: OpenAPIV3.OperationObject }): EndpointSdkName | undefined {
     const sdkMethodName = getExtension<string>(operation, FernOpenAPIExtension.SDK_METHOD_NAME);
-    const sdkGroupName = getExtension<string>(operation, FernOpenAPIExtension.SDK_GROUP_NAME);
+    const sdkGroupName = getExtension<string | string[]>(operation, FernOpenAPIExtension.SDK_GROUP_NAME) ?? [];
     if (sdkMethodName != null) {
         return {
-            groupName: sdkGroupName,
+            groupName: typeof sdkGroupName === "string" ? [sdkGroupName] : sdkGroupName,
             methodName: sdkMethodName,
         };
     }
@@ -232,8 +232,8 @@ function convertToEndpoint({
     if (sdkName == null && operation.operationId == null) {
         throw new Error(`${httpMethod} ${path} must specify either operationId or x-fern-sdk-method-name`);
     } else if (sdkName != null) {
-        if (sdkName.groupName != null) {
-            baseBreadcrumbs.push(sdkName.groupName);
+        if (sdkName.groupName.length > 0) {
+            baseBreadcrumbs.push(...sdkName.groupName);
         }
         baseBreadcrumbs.push(sdkName.methodName);
     } else if (operation.operationId != null) {
