@@ -187,6 +187,7 @@ async function convertDocsConfiguration({
             ),
         },
         colors: docsDefinition.config.colors,
+        navbarLinks: docsDefinition.config.navbarLinks,
     };
 }
 
