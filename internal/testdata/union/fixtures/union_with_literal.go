@@ -9,7 +9,7 @@ import (
 
 type UnionWithLiteral struct {
 	Type     string
-	Fern     string
+	fern     string
 	extended string
 	base     string
 }
@@ -22,6 +22,10 @@ func (x *UnionWithLiteral) Base() string {
 	return x.base
 }
 
+func (x *UnionWithLiteral) Fern() string {
+	return x.fern
+}
+
 func (x *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
@@ -30,15 +34,11 @@ func (x *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	x.Type = unmarshaler.Type
+	x.extended = "extended"
+	x.base = "base"
 	switch unmarshaler.Type {
 	case "fern":
-		var valueUnmarshaler struct {
-			Fern string `json:"value"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
-			return err
-		}
-		x.Fern = valueUnmarshaler.Fern
+		x.fern = "fern"
 	}
 	return nil
 }
@@ -49,11 +49,15 @@ func (x UnionWithLiteral) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
 	case "fern":
 		var marshaler = struct {
-			Type string `json:"type"`
-			Fern string `json:"value"`
+			Type     string `json:"type"`
+			Extended string `json:"extended"`
+			Base     string `json:"base"`
+			Fern     string `json:"value"`
 		}{
-			Type: x.Type,
-			Fern: x.Fern,
+			Type:     x.Type,
+			Extended: "extended",
+			Base:     "base",
+			Fern:     "fern",
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,6 +72,6 @@ func (x *UnionWithLiteral) Accept(v UnionWithLiteralVisitor) error {
 	default:
 		return fmt.Errorf("invalid type %s in %T", x.Type, x)
 	case "fern":
-		return v.VisitFern(x.Fern)
+		return v.VisitFern(x.fern)
 	}
 }
