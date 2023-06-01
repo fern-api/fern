@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import * as Ir from "@fern-fern/ir-model";
 import { FernRegistry } from "@fern-fern/registry-node";
 import { startCase } from "lodash-es";
@@ -25,6 +26,14 @@ function convertService(
         (irEndpoint): FernRegistry.api.v1.register.EndpointDefinition => ({
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
+            defaultEnvironment:
+                ir.environments?.defaultEnvironment != null
+                    ? FernRegistry.api.v1.register.EnvironmentId(ir.environments.defaultEnvironment)
+                    : undefined,
+            environments:
+                ir.environments != null
+                    ? convertIrEnvironments({ environmentsConfig: ir.environments, endpoint: irEndpoint })
+                    : undefined,
             id: FernRegistry.api.v1.register.EndpointId(irEndpoint.name.originalName),
             name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
             path: {
@@ -56,6 +65,44 @@ function convertService(
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
+}
+
+function convertIrEnvironments({
+    environmentsConfig,
+    endpoint,
+}: {
+    environmentsConfig: Ir.environment.EnvironmentsConfig;
+    endpoint: Ir.http.HttpEndpoint;
+}): FernRegistry.api.v1.register.Environment[] {
+    const environmentsConfigValue = environmentsConfig.environments;
+    const endpointBaseUrlId = endpoint.baseUrl;
+    switch (environmentsConfigValue.type) {
+        case "singleBaseUrl":
+            return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
+                return {
+                    id: FernRegistry.api.v1.register.EnvironmentId(singleBaseUrlEnvironment.id),
+                    baseUrl: singleBaseUrlEnvironment.url,
+                };
+            });
+        case "multipleBaseUrls":
+            if (endpointBaseUrlId == null) {
+                throw new Error(`Expected endpoint ${endpoint.name.originalName} to have base url.`);
+            }
+            return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
+                const endpointBaseUrl = singleBaseUrlEnvironment.urls[endpointBaseUrlId];
+                if (endpointBaseUrl == null) {
+                    throw new Error(
+                        `Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${endpointBaseUrlId}`
+                    );
+                }
+                return {
+                    id: FernRegistry.api.v1.register.EnvironmentId(singleBaseUrlEnvironment.id),
+                    baseUrl: endpointBaseUrl,
+                };
+            });
+        default:
+            assertNever(environmentsConfigValue);
+    }
 }
 
 function convertHttpMethod(method: Ir.http.HttpMethod): FernRegistry.api.v1.register.HttpMethod {
