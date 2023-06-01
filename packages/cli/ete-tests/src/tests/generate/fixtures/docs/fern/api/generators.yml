@@ -1,6 +1,5 @@
 default-group: public
 groups:
   public:
-    # docs:
-    #   domain: x
-    generators: []
+    docs:
+      domain: ferndevtest
