@@ -84,6 +84,7 @@ service:
   base-path: /movies
   endpoints:
     createMovie:
+      auth: true
       method: POST
       path: ""
       request: CreateMovieRequest
