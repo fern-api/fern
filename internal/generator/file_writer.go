@@ -325,7 +325,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	// the user to mutate it.
 	//
 	// Literals are ignored in visitObjectProperties, so we need to write them
-	// here, starting with the private fields.
+	// here.
 	for _, literal := range literals {
 		t.writer.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 	}

@@ -151,6 +151,23 @@ func TestRoundTrip(t *testing.T) {
 	}
 }
 
+// TestLiteral verifies that any type with a literal has
+// the constant value serialized, regardless, of what's
+// found on the wire.
+func TestLiteral(t *testing.T) {
+	value := new(builtin.Type)
+	require.NoError(t, json.Unmarshal([]byte(`{"eighteen": "something"}`), &value))
+	assert.Equal(t, "fern", value.Eighteen())
+
+	bytes, err := json.Marshal(value)
+	require.NoError(t, err)
+
+	object := make(map[string]any)
+	require.NoError(t, json.Unmarshal(bytes, &object))
+
+	assert.Equal(t, "fern", object["eighteen"])
+}
+
 func newUUID(t *testing.T) uuid.UUID {
 	u, err := uuid.NewV4()
 	require.NoError(t, err)

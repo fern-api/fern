@@ -689,6 +689,43 @@
                             },
                             "_type": "container"
                         }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "eighteen",
+                                "camelCase": {
+                                    "unsafeName": "eighteen",
+                                    "safeName": "eighteen"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "eighteen",
+                                    "safeName": "eighteen"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EIGHTEEN",
+                                    "safeName": "EIGHTEEN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Eighteen",
+                                    "safeName": "Eighteen"
+                                }
+                            },
+                            "wireValue": "eighteen"
+                        },
+                        "valueType": {
+                            "container": {
+                                "literal": {
+                                    "string": "fern",
+                                    "type": "string"
+                                },
+                                "_type": "literal"
+                            },
+                            "_type": "container"
+                        }
                     }
                 ],
                 "_type": "object"
