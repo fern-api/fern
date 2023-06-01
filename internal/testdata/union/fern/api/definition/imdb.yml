@@ -40,6 +40,13 @@ types:
       foo: Foo
       unknown: {}
 
+  UnionWithLiteral:
+    extends: Baz
+    base-properties:
+      base: literal<"base">
+    union:
+      fern: literal<"fern">
+
   Foo:
     properties:
       name: string
@@ -47,3 +54,7 @@ types:
   Bar:
     properties:
       name: string
+
+  Baz:
+    properties:
+      extended: literal<"extended">

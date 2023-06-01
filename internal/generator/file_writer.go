@@ -375,15 +375,24 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	return nil
 }
 
+// TODO: Ensure extended literal properties are generated.
+// TODO: Modify json.Unmarshaler and json.Marshaler based
+// on literal values.
 func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Write the union type definition.
 	discriminantName := union.Discriminant.Name.PascalCase.UnsafeName
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
+	var literals []*literal
 	for _, extend := range union.Extends {
-		_, _ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */)
+		_, extendedLiterals := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */)
+		literals = append(literals, extendedLiterals...)
 	}
 	for _, property := range union.BaseProperties {
+		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
+			literals = append(literals, &literal{Name: property.Name.Name, Value: property.ValueType.Container.Literal})
+			continue
+		}
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath))
 	}
 	for _, unionType := range union.Types {
@@ -395,8 +404,19 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.WriteDocs(unionType.Docs)
 		t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName)
 	}
+	for _, literal := range literals {
+		t.writer.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+	}
 	t.writer.P("}")
 	t.writer.P()
+
+	// Implement the getter methods.
+	for _, literal := range literals {
+		t.writer.P("func (x *", t.typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		t.writer.P("return x.", literal.Name.CamelCase.SafeName)
+		t.writer.P("}")
+		t.writer.P()
+	}
 
 	// Implement the json.Unmarshaler interface.
 	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
@@ -408,6 +428,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		propertyNames = append(propertyNames, extendedProperties...)
 	}
 	for _, property := range union.BaseProperties {
+		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
+			continue
+		}
 		propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
 	}
@@ -422,6 +445,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	for _, propertyName := range propertyNames {
 		t.writer.P("x.", propertyName, " = unmarshaler.", propertyName)
 	}
+	// TODO: Set the literal values on the receiver.
 
 	// Generate the switch to unmarshal the appropriate type.
 	t.writer.P("switch unmarshaler.", discriminantName, " {")
@@ -474,8 +498,12 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			_, _ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)
 		}
 		for _, property := range union.BaseProperties {
+			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
+				continue
+			}
 			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.Name.CamelCase.UnsafeName, "\"`")
 		}
+		// TODO: Include the literal fields.
 		typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath)
 		switch unionType.Shape.PropertiesType {
 		case "singleProperty":
@@ -491,6 +519,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		for _, propertyName := range propertyNames {
 			t.writer.P(propertyName, ": x.", propertyName, ",")
 		}
+		// TODO: Include the literal fields.
 		marshalerFieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
 		if unionType.Shape.PropertiesType == "samePropertiesAsObject" {
 			// If the object is embedded, the field name is equivalent to
