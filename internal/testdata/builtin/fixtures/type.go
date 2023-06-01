@@ -43,3 +43,15 @@ func (x *Type) UnmarshalJSON(data []byte) error {
 	x.eighteen = "fern"
 	return nil
 }
+
+func (x *Type) MarshalJSON() ([]byte, error) {
+	type embed Type
+	var marshaler = struct {
+		embed
+		Eighteen string `json:"eighteen"`
+	}{
+		embed:    embed(*x),
+		Eighteen: "fern",
+	}
+	return json.Marshal(marshaler)
+}

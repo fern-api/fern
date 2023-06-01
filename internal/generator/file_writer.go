@@ -355,6 +355,22 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
+	// Implement the json.Marshaler interface.
+	t.writer.P("func (x *", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("type embed ", t.typeName)
+	t.writer.P("var marshaler = struct{")
+	t.writer.P("embed")
+	for _, literal := range literals {
+		t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
+	}
+	t.writer.P("}{")
+	t.writer.P("embed: embed(*x),")
+	for _, literal := range literals {
+		t.writer.P(literal.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
+	}
+	t.writer.P("}")
+	t.writer.P("return json.Marshal(marshaler)")
+	t.writer.P("}")
 	t.writer.P()
 	return nil
 }
