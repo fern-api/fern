@@ -12,6 +12,14 @@ types:
       - list<string>
       - list<list<string>>
       - set<double>
+      - literal<"fern">
+
+  AnotherUnion:
+    discriminated: false
+    union:
+      - string
+      - literal<"fern">
+      - Foo
 
   Foo:
     properties:

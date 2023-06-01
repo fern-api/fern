@@ -604,24 +604,35 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	// all of the relevant information upfront, and traverse it
 	// multiple times seamlessly (and in the order they're specified).
 	type member struct {
-		typeName string
-		field    string
-		value    string
-		docs     *string
+		typeName  string
+		field     string
+		value     string
+		docs      *string
+		literal   string
+		isLiteral bool
 	}
 	var members []*member
+	var hasLiteral bool
 	for _, unionMember := range union.Members {
 		var typeName string
 		if unionMember.Type.Named != nil {
 			typeName = unionMember.Type.Named.TypeId
 		}
+		var literal string
+		isLiteral := unionMember.Type.Container != nil && unionMember.Type.Container.Literal != nil
+		if isLiteral {
+			literal = literalToValue(unionMember.Type.Container.Literal)
+		}
+		hasLiteral = hasLiteral || isLiteral
 		members = append(
 			members,
 			&member{
-				typeName: typeName,
-				field:    typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types),
-				value:    typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath),
-				docs:     unionMember.Docs,
+				typeName:  typeName,
+				field:     typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types),
+				value:     typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath),
+				docs:      unionMember.Docs,
+				literal:   literal,
+				isLiteral: isLiteral,
 			},
 		)
 	}
@@ -636,9 +647,33 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P("}")
 	t.writer.P()
 
+	// Write getters for literal values, if any.
+	for _, member := range members {
+		if !member.isLiteral {
+			continue
+		}
+		t.writer.P("func (x *", t.typeName, ") ", strings.Title(member.field), "() ", member.value, "{")
+		t.writer.P("return x.", member.field)
+		t.writer.P("}")
+		t.writer.P()
+	}
+
 	// Implement the json.Unmarshaler interface.
 	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 	for _, member := range members {
+		if member.isLiteral {
+			// If the undiscriminated union specifies a literal, it will always
+			// succeed, which means any of the following members are effectively
+			// ignored.
+			//
+			// We include a comment to explain this.
+			t.writer.P("// A literal value will always succeed, so we don't bother")
+			t.writer.P("// to unmarshal the remaining undiscriminated union values.")
+			t.writer.P("x.typeName = \"", member.field, "\"")
+			t.writer.P("x.", member.field, " = ", member.literal)
+			t.writer.P("return nil")
+			break
+		}
 		value := member.value
 		format := "var " + member.field + " %s"
 		if member.typeName != "" && isPointer(t.writer.types[member.typeName]) {
@@ -652,7 +687,10 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		t.writer.P("return nil")
 		t.writer.P("}")
 	}
-	t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, x)`)
+	if !hasLiteral {
+		// If there isn't a literal to guarantee deserialization, we need to return an error.
+		t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, x)`)
+	}
 	t.writer.P("}")
 	t.writer.P()
 
@@ -665,6 +703,11 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", x.typeName, x)")
 		}
 		t.writer.P("case \"", member.field, "\":")
+		if member.isLiteral {
+			// If we have a literal, we need to marshal it directly.
+			t.writer.P("return json.Marshal(", member.literal, ")")
+			continue
+		}
 		t.writer.P("return json.Marshal(x.", member.field, ")")
 	}
 	t.writer.P("}")
@@ -674,7 +717,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	// Generate the Visitor interface.
 	t.writer.P("type ", t.typeName, "Visitor interface {")
 	for _, member := range members {
-		t.writer.P("Visit", member.field, "(", member.value, ") error")
+		t.writer.P("Visit", strings.Title(member.field), "(", member.value, ") error")
 	}
 	t.writer.P("}")
 	t.writer.P()
@@ -689,7 +732,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", x.typeName, x)")
 		}
 		t.writer.P("case \"", member.field, "\":")
-		t.writer.P("return v.Visit", member.field, "(x.", member.field, ")")
+		t.writer.P("return v.Visit", strings.Title(member.field), "(x.", member.field, ")")
 	}
 	t.writer.P("}")
 	t.writer.P("}")
@@ -999,9 +1042,9 @@ func unknownToGoType(_ any) string {
 func literalToUndiscriminatedUnionField(literal *ir.Literal) string {
 	switch literal.Type {
 	case "string":
-		return "String"
+		return "string"
 	default:
-		return "Unknown"
+		return "unknown"
 	}
 }
 

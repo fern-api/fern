@@ -18,6 +18,11 @@ type Union struct {
 	StringList       []string
 	StringListList   [][]string
 	DoubleSet        []float64
+	stringLiteral    string
+}
+
+func (x *Union) StringLiteral() string {
+	return x.stringLiteral
 }
 
 func (x *Union) UnmarshalJSON(data []byte) error {
@@ -75,7 +80,11 @@ func (x *Union) UnmarshalJSON(data []byte) error {
 		x.DoubleSet = DoubleSet
 		return nil
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, x)
+	// A literal value will always succeed, so we don't bother
+	// to unmarshal the remaining undiscriminated union values.
+	x.typeName = "stringLiteral"
+	x.stringLiteral = "fern"
+	return nil
 }
 
 func (x Union) MarshalJSON() ([]byte, error) {
@@ -100,6 +109,8 @@ func (x Union) MarshalJSON() ([]byte, error) {
 		return json.Marshal(x.StringListList)
 	case "DoubleSet":
 		return json.Marshal(x.DoubleSet)
+	case "stringLiteral":
+		return json.Marshal("fern")
 	}
 }
 
@@ -113,6 +124,7 @@ type UnionVisitor interface {
 	VisitStringList([]string) error
 	VisitStringListList([][]string) error
 	VisitDoubleSet([]float64) error
+	VisitStringLiteral(string) error
 }
 
 func (x *Union) Accept(v UnionVisitor) error {
@@ -137,5 +149,7 @@ func (x *Union) Accept(v UnionVisitor) error {
 		return v.VisitStringListList(x.StringListList)
 	case "DoubleSet":
 		return v.VisitDoubleSet(x.DoubleSet)
+	case "stringLiteral":
+		return v.VisitStringLiteral(x.stringLiteral)
 	}
 }
