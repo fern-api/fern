@@ -24,6 +24,7 @@ function convertService(
 ): FernRegistry.api.v1.register.EndpointDefinition[] {
     return irService.endpoints.map(
         (irEndpoint): FernRegistry.api.v1.register.EndpointDefinition => ({
+            auth: irEndpoint.auth,
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
             defaultEnvironment:

@@ -3,12 +3,14 @@ import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import { FernRegistry } from "@fern-fern/registry-node";
 import { convertPackage, convertSubpackageId } from "./convertPackage";
 import { convertTypeId, convertTypeShape } from "./convertTypeShape";
+import { convertAuth } from "./covertAuth";
 
 export function convertIrToFdrApi(ir: IntermediateRepresentation): FernRegistry.api.v1.register.ApiDefinition {
     const fdrApi: FernRegistry.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
+        auth: convertAuth(ir.auth),
     };
 
     for (const [typeId, type] of entries(ir.types)) {
