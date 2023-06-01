@@ -15,6 +15,13 @@ module.exports = {
                 ...colors,
                 accentPrimary: withOpacity("--accent-primary"),
                 accentHighlight: "rgba(var(--accent-primary), 10%)",
+                background: colors.neutral[900],
+                "gray-light": colors.neutral[600],
+                "gray-medium": colors.neutral[700],
+                "gray-dark": colors.neutral[800],
+                border: colors.neutral[700],
+                "text-default": "#fff",
+                "text-muted": colors.neutral[400],
             };
         },
     },

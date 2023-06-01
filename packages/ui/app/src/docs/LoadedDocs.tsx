@@ -1,8 +1,8 @@
-import classNames from "classnames";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { Sidebar } from "../sidebar/Sidebar";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
+import nebulaImage from "./nebula.png";
 import { useCustomTheme } from "./useCustomTheme";
 
 export const LoadedDocs: React.FC = () => {
@@ -10,7 +10,10 @@ export const LoadedDocs: React.FC = () => {
     useCustomTheme(docsDefinition);
 
     return (
-        <div className={classNames("flex flex-col flex-1 min-h-0", "dark:bg-[#19181C]")}>
+        <div
+            className="relative flex min-h-0 flex-1 flex-col bg-cover"
+            style={{ backgroundImage: `url('${nebulaImage}')` }}
+        >
             <Header />
             <div className="flex min-h-0 flex-1">
                 <div className="flex w-64">

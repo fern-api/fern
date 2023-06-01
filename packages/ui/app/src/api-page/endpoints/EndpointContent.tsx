@@ -58,17 +58,17 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
 
     return (
         <PageMargins>
-            <div className="flex min-w-0 flex-1 gap-20" ref={setTargetRef}>
-                <div className="flex flex-1 flex-col">
-                    <div className="pt-10 text-2xl font-semibold">
-                        <EndpointTitle endpoint={endpoint} />
-                    </div>
-                    <div className="mt-6">
+            <div className="flex flex-1 flex-col" ref={setTargetRef}>
+                <div className="mb-8 text-3xl font-medium">
+                    <EndpointTitle endpoint={endpoint} />
+                </div>
+                <div className="flex min-w-0 flex-1 gap-20">
+                    <div className="flex flex-1 flex-col">
                         <div className="flex items-center gap-2 text-neutral-400">
                             <div
-                                className={classNames("rounded px-2 py-1 font-semibold uppercase", {
+                                className={classNames("rounded px-2 py-1 font-medium uppercase", {
                                     "text-green-400 bg-green-500/20": endpoint.method === "GET",
-                                    "text-blue-300 bg-blue-500/20":
+                                    "text-accentPrimary bg-accentHighlight":
                                         endpoint.method === "POST" ||
                                         endpoint.method === "PUT" ||
                                         endpoint.method === "PATCH",
@@ -91,44 +91,44 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                                 ))}
                             </div>
                         </div>
-                    </div>
-                    {endpoint.description != null && (
-                        <div className="mt-6">
-                            <Markdown>{endpoint.description}</Markdown>
+                        {endpoint.description != null && (
+                            <div className="mt-6">
+                                <Markdown>{endpoint.description}</Markdown>
+                            </div>
+                        )}
+                        <div className="mt-8 flex">
+                            <div className="flex flex-1 flex-col gap-12">
+                                {endpoint.path.pathParameters.length > 0 && (
+                                    <PathParametersSection pathParameters={endpoint.path.pathParameters} />
+                                )}
+                                {endpoint.queryParameters.length > 0 && (
+                                    <QueryParametersSection queryParameters={endpoint.queryParameters} />
+                                )}
+                                {endpoint.request != null && (
+                                    <EndpointSection title="Request">
+                                        <EndpointRequestSection httpRequest={endpoint.request} />
+                                    </EndpointSection>
+                                )}
+                                {endpoint.response != null && (
+                                    <EndpointSection title="Response">
+                                        <EndpointResponseSection
+                                            httpResponse={endpoint.response}
+                                            onHoverProperty={onHoverResponseProperty}
+                                        />
+                                    </EndpointSection>
+                                )}
+                            </div>
                         </div>
-                    )}
-                    <div className="mt-8 flex">
-                        <div className="flex flex-1 flex-col gap-12">
-                            {endpoint.path.pathParameters.length > 0 && (
-                                <PathParametersSection pathParameters={endpoint.path.pathParameters} />
-                            )}
-                            {endpoint.queryParameters.length > 0 && (
-                                <QueryParametersSection queryParameters={endpoint.queryParameters} />
-                            )}
-                            {endpoint.request != null && (
-                                <EndpointSection title="Request">
-                                    <EndpointRequestSection httpRequest={endpoint.request} />
-                                </EndpointSection>
-                            )}
-                            {endpoint.response != null && (
-                                <EndpointSection title="Response">
-                                    <EndpointResponseSection
-                                        httpResponse={endpoint.response}
-                                        onHoverProperty={onHoverResponseProperty}
-                                    />
-                                </EndpointSection>
-                            )}
-                        </div>
                     </div>
-                </div>
-                <div
-                    className={classNames(
-                        "flex-1 flex sticky self-start top-0 min-w-0",
-                        // the 4rem is the same as the h-10 as the Header
-                        "max-h-[calc(100vh-4rem)]"
-                    )}
-                >
-                    <EndpointExamples endpoint={endpoint} />
+                    <div
+                        className={classNames(
+                            "flex-1 flex sticky self-start top-0 min-w-0",
+                            // the 4rem is the same as the h-10 as the Header
+                            "max-h-[calc(100vh-4rem)]"
+                        )}
+                    >
+                        <EndpointExamples endpoint={endpoint} />
+                    </div>
                 </div>
             </div>
         </PageMargins>

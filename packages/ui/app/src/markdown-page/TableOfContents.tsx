@@ -13,7 +13,7 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ markdown }) =
 
     return (
         <div className="flex flex-col">
-            <div className="semibold mb-3 uppercase">On this page</div>
+            <div className="medium mb-3 uppercase">On this page</div>
             <div className="flex flex-col gap-3">
                 {headings.map((heading, index) => (
                     <div

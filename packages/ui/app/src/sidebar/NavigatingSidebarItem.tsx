@@ -8,11 +8,12 @@ import { SidebarItemLayout } from "./SidebarItemLayout";
 export declare namespace NavigatingSidebarItem {
     export interface Props {
         title: JSX.Element | string;
+        icon?: JSX.Element;
         slug: string;
     }
 }
 
-export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ title, slug }) => {
+export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ title, icon, slug }) => {
     const { navigateToPath, registerScrolledToPathListener } = useDocsContext();
     const handleClick = useCallback(() => {
         navigateToPath(slug);
@@ -35,19 +36,24 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
-                <Text
-                    className={classNames("select-none", {
-                        "text-accentPrimary": isSelected,
-                        "text-white": !isSelected && isHovering,
-                        transition: !isSelected && !wasRecentlySelected,
-                    })}
-                    ellipsize
-                >
-                    {title}
-                </Text>
+                <div className="flex items-center gap-2">
+                    {icon != null && (
+                        <div className="text-text-muted/70 flex items-center justify-center text-lg">{icon}</div>
+                    )}
+                    <Text
+                        className={classNames("select-none", {
+                            "text-accentPrimary": isSelected,
+                            "text-white": !isSelected && isHovering,
+                            transition: !isSelected && !wasRecentlySelected,
+                        })}
+                        ellipsize
+                    >
+                        {title}
+                    </Text>
+                </div>
             );
         },
-        [isSelected, title, wasRecentlySelected]
+        [icon, isSelected, title, wasRecentlySelected]
     );
 
     const [ref, setRef] = useState<HTMLElement | null>(null);

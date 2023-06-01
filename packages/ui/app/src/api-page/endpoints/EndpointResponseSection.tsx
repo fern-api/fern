@@ -1,5 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
+import { Description } from "../types/Description";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
@@ -14,7 +15,7 @@ export declare namespace EndpointResponseSection {
 export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = ({ httpResponse, onHoverProperty }) => {
     return (
         <div className="flex flex-col">
-            {httpResponse.description != null && <div className="mb-2 text-gray-500">{httpResponse.description}</div>}
+            <Description description={httpResponse.description} />
             <div className="mb-5 text-neutral-400">
                 {"This endpoint returns "}
                 {httpResponse.type._visit<JSX.Element | string>({
