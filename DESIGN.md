@@ -279,3 +279,80 @@ be used to check for existence (not just the values set in the pointer).
 
 For now, the Go generator represents the `set` type just like the `list`.
 Note that we might revisit this later.
+
+## Literals
+
+Fern supports literal values with the `<literal<>>` syntax. For now, the only
+supported literals are string types, such as the following:
+
+```yaml
+types:
+  Foo:
+    properties:
+      name: string
+      value: literal<"fern">
+```
+
+In this case, the `value` property should only ever be set to the `"fern"` string.
+Ideally, the user is not allowed to mutate this value at all.
+
+Without literals, the generator represents custom types by simply including the
+relevant JSON serde tags like so:
+
+```go
+type Foo struct {
+  Name string `json:"name"`
+}
+```
+
+However, if a literal is included (like the `value` property shown above), we can't
+rely on simple serde tags because it would mean the value could be mutated and/or
+modified on the wire. Thus, we un-export the field name, generate a getter method for
+it, and generate custom [un]marshaling logic to handle this case:
+
+```go
+type Foo struct {
+  Name  string `json:"name"`
+  value string
+}
+
+func (f *Foo) Value() string {
+  return f.value
+}
+
+func (f *Foo) UnmarshalJSON(data []byte) error {
+  type unmarshaler Foo
+  var value unmarshaler
+  if err := json.Unmarshal(data, &value); err != nil {
+    return err
+  }
+  *f = Foo(value)
+  f.value = "fern"
+  return nil
+}
+
+func (f *Foo) MarshalJSON() ([]byte, error) {
+  type embed Foo
+  var marshaler = struct {
+    embed
+    Value string `json:"value"`
+  }{
+    embed: embed(*f),
+    Value: "fern",
+  }
+  return json.Marshal(marshaler)
+}
+```
+
+The `UnmarshalJSON` and `MarshalJSON` implementations both take advantage of
+a separate type declaration (i.e. `type unmarshaler Foo` in `UnmarshalJSON` and
+`type embed Foo` in `MarshalJSON`).
+
+This effectively provides the default JSON serde logic for the non-literal
+fields in the `Foo` object, but allows us to _extend_ the serialization logic
+without causing an infinite recursive loop (i.e. if we tried to call `json.Unmarshal`
+on the same `Foo` type within its `UnmarshalJSON` method).
+
+With this, the user cannot mutate the value of the `value` literal, it will _always_
+be set to `"fern"` (as long as it's [de]serialized from JSON), and they can access it
+with the idiomatic `Value()` getter.
