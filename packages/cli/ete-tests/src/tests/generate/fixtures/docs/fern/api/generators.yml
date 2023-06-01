@@ -3,3 +3,4 @@ groups:
   public:
     docs:
       domain: ferndevtest
+    generators: []
