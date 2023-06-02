@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback, useMemo, useState } from "react";
-import { HiOutlineFolder } from "react-icons/hi2";
+import { HiOutlineChevronDown } from "react-icons/hi2";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
 import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
@@ -46,8 +46,9 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         <SidebarGroup
             title={
                 <NavigatingSidebarItem
+                    className="mt-1"
                     title={<SubpackageTitle subpackage={subpackage} />}
-                    icon={<HiOutlineFolder />}
+                    rightIcon={<HiOutlineChevronDown />}
                     slug={slug}
                 />
             }
