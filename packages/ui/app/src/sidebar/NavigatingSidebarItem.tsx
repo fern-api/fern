@@ -10,11 +10,18 @@ export declare namespace NavigatingSidebarItem {
         title: JSX.Element | string;
         className?: string;
         slug: string;
-        rightIcon?: JSX.Element;
+        leftElement?: JSX.Element;
+        rightElement?: JSX.Element;
     }
 }
 
-export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ title, className, slug, rightIcon }) => {
+export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({
+    title,
+    className,
+    slug,
+    leftElement,
+    rightElement,
+}) => {
     const { navigateToPath, registerScrolledToPathListener } = useDocsContext();
     const handleClick = useCallback(() => {
         navigateToPath(slug);
@@ -38,18 +45,21 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
         ({ isHovering }: { isHovering: boolean }) => {
             return (
                 <div
-                    className={classNames("flex flex-1 items-center justify-between select-none", {
+                    className={classNames("flex flex-1 items-center justify-between select-none min-w-0", {
                         "text-accentPrimary": isSelected,
                         "text-white": !isSelected && isHovering,
                         transition: !isSelected && !wasRecentlySelected,
                     })}
                 >
-                    <Text ellipsize>{title}</Text>
-                    {rightIcon}
+                    <div className="flex min-w-0 items-center gap-2">
+                        {leftElement}
+                        <Text ellipsize>{title}</Text>
+                    </div>
+                    {rightElement}
                 </div>
             );
         },
-        [isSelected, rightIcon, title, wasRecentlySelected]
+        [isSelected, leftElement, rightElement, title, wasRecentlySelected]
     );
 
     const [ref, setRef] = useState<HTMLElement | null>(null);

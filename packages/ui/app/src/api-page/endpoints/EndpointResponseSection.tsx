@@ -16,7 +16,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     return (
         <div className="flex flex-col">
             <Description description={httpResponse.description} />
-            <div className="mb-5 text-neutral-400">
+            <div className="text-text-muted mb-5">
                 {"This endpoint returns "}
                 {httpResponse.type._visit<JSX.Element | string>({
                     object: () => "an object",

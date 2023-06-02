@@ -61,6 +61,7 @@ export declare namespace ResolvedUrlPath {
         apiSlug: string;
         slug: string;
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        parent: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 }
 
@@ -137,6 +138,7 @@ export class UrlPathResolverImpl {
                     apiSection: node.apiSection,
                     apiSlug: node.apiSlug,
                     slug: node.slug,
+                    parent: node.parent,
                     endpoint: node.endpoint,
                 };
             default:

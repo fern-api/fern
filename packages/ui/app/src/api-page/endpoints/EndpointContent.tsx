@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import React, { useCallback, useEffect, useLayoutEffect, useRef } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 import { PageMargins } from "../../page-margins/PageMargins";
@@ -10,6 +10,7 @@ import { Markdown } from "../markdown/Markdown";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
+import { EndpointMethodPill } from "./EndpointMethodPill";
 import { EndpointPathParameter } from "./EndpointPathParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
@@ -56,79 +57,79 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
         };
     }, [apiPageContainerRef, isInVerticalCenter, onScrollToPath, slug]);
 
+    const [titleHeight, setTitleHeight] = useState<number>();
+    const setTitleRef = useCallback(
+        (ref: HTMLElement | null) => {
+            if (titleHeight == null && ref != null) {
+                setTitleHeight(ref.getBoundingClientRect().height);
+            }
+        },
+        [titleHeight]
+    );
+
     return (
         <PageMargins>
-            <div className="flex flex-1 flex-col" ref={setTargetRef}>
-                <div className="mb-8 text-3xl font-medium">
-                    <EndpointTitle endpoint={endpoint} />
+            <div className="flex min-w-0 flex-1 gap-20" ref={setTargetRef}>
+                <div className="flex flex-1 flex-col">
+                    <div className="pb-8 pt-10 text-3xl font-medium" ref={setTitleRef}>
+                        <EndpointTitle endpoint={endpoint} />
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <EndpointMethodPill endpoint={endpoint} />
+                        <div className="text-text-muted flex">
+                            {endpoint.path.parts.map((part, index) => (
+                                <MonospaceText key={index}>
+                                    {part._visit<JSX.Element | string | null>({
+                                        literal: (literal) => literal,
+                                        pathParameter: (pathParameter) => (
+                                            <EndpointPathParameter pathParameter={pathParameter} />
+                                        ),
+                                        _other: () => null,
+                                    })}
+                                </MonospaceText>
+                            ))}
+                        </div>
+                    </div>
+                    {endpoint.description != null && (
+                        <div className="mt-6">
+                            <Markdown>{endpoint.description}</Markdown>
+                        </div>
+                    )}
+                    <div className="mt-8 flex">
+                        <div className="flex flex-1 flex-col gap-12">
+                            {endpoint.path.pathParameters.length > 0 && (
+                                <PathParametersSection pathParameters={endpoint.path.pathParameters} />
+                            )}
+                            {endpoint.queryParameters.length > 0 && (
+                                <QueryParametersSection queryParameters={endpoint.queryParameters} />
+                            )}
+                            {endpoint.request != null && (
+                                <EndpointSection title="Request">
+                                    <EndpointRequestSection httpRequest={endpoint.request} />
+                                </EndpointSection>
+                            )}
+                            {endpoint.response != null && (
+                                <EndpointSection title="Response">
+                                    <EndpointResponseSection
+                                        httpResponse={endpoint.response}
+                                        onHoverProperty={onHoverResponseProperty}
+                                    />
+                                </EndpointSection>
+                            )}
+                        </div>
+                    </div>
                 </div>
-                <div className="flex min-w-0 flex-1 gap-20">
-                    <div className="flex flex-1 flex-col">
-                        <div className="flex items-center gap-2 text-neutral-400">
-                            <div
-                                className={classNames("rounded px-2 py-1 font-medium uppercase", {
-                                    "text-green-400 bg-green-500/20": endpoint.method === "GET",
-                                    "text-accentPrimary bg-accentHighlight":
-                                        endpoint.method === "POST" ||
-                                        endpoint.method === "PUT" ||
-                                        endpoint.method === "PATCH",
-                                    "text-red-400 bg-red-500/20": endpoint.method === "DELETE",
-                                })}
-                            >
-                                {endpoint.method}
-                            </div>
-                            <div className="flex">
-                                {endpoint.path.parts.map((part, index) => (
-                                    <MonospaceText key={index}>
-                                        {part._visit<JSX.Element | string | null>({
-                                            literal: (literal) => literal,
-                                            pathParameter: (pathParameter) => (
-                                                <EndpointPathParameter pathParameter={pathParameter} />
-                                            ),
-                                            _other: () => null,
-                                        })}
-                                    </MonospaceText>
-                                ))}
-                            </div>
-                        </div>
-                        {endpoint.description != null && (
-                            <div className="mt-6">
-                                <Markdown>{endpoint.description}</Markdown>
-                            </div>
-                        )}
-                        <div className="mt-8 flex">
-                            <div className="flex flex-1 flex-col gap-12">
-                                {endpoint.path.pathParameters.length > 0 && (
-                                    <PathParametersSection pathParameters={endpoint.path.pathParameters} />
-                                )}
-                                {endpoint.queryParameters.length > 0 && (
-                                    <QueryParametersSection queryParameters={endpoint.queryParameters} />
-                                )}
-                                {endpoint.request != null && (
-                                    <EndpointSection title="Request">
-                                        <EndpointRequestSection httpRequest={endpoint.request} />
-                                    </EndpointSection>
-                                )}
-                                {endpoint.response != null && (
-                                    <EndpointSection title="Response">
-                                        <EndpointResponseSection
-                                            httpResponse={endpoint.response}
-                                            onHoverProperty={onHoverResponseProperty}
-                                        />
-                                    </EndpointSection>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        className={classNames(
-                            "flex-1 flex sticky self-start top-0 min-w-0",
-                            // the 4rem is the same as the h-10 as the Header
-                            "max-h-[calc(100vh-4rem)]"
-                        )}
-                    >
-                        <EndpointExamples endpoint={endpoint} />
-                    </div>
+                <div
+                    className={classNames(
+                        "flex-1 flex sticky self-start top-0 min-w-0 pb-10",
+                        // the 4rem is the same as the h-10 as the Header
+                        "max-h-[calc(100vh-4rem)]"
+                    )}
+                    style={{
+                        paddingTop: titleHeight,
+                    }}
+                >
+                    <EndpointExamples endpoint={endpoint} />
                 </div>
             </div>
         </PageMargins>

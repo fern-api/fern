@@ -14,7 +14,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
     return (
         <div className="flex flex-col">
             <Description description={httpRequest.description} />
-            <div className="mb-5 text-neutral-400">
+            <div className="text-text-muted mb-5">
                 {"This endpoint expects "}
                 {httpRequest.type._visit<JSX.Element | string>({
                     object: () => "an object",

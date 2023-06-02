@@ -16,7 +16,7 @@ export const ApiPage: React.FC = () => {
         <ApiPageContextProvider containerRef={containerRef ?? undefined}>
             <div ref={setContainerRef} className="min-h-0 overflow-y-auto pb-36">
                 <PageMargins>
-                    <div className="text-accentPrimary mb-1.5 mt-20 font-medium">{apiSection.title}</div>
+                    <div className="mt-20 pb-2 text-4xl font-medium">{apiSection.title}</div>
                 </PageMargins>
                 {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
                     <ApiArtifacts apiArtifacts={apiSection.artifacts} />

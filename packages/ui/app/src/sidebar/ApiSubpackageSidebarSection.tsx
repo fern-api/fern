@@ -41,6 +41,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     }
 
     const isSelected = selectedPath != null && selectedPath.slug.startsWith(slug);
+    const isOpen = isSelected || contentsHeight == null;
 
     return (
         <SidebarGroup
@@ -48,7 +49,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                 <NavigatingSidebarItem
                     className="mt-1"
                     title={<SubpackageTitle subpackage={subpackage} />}
-                    rightIcon={<HiOutlineChevronDown />}
+                    rightElement={<HiOutlineChevronDown />}
                     slug={slug}
                 />
             }
@@ -56,7 +57,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
             <div
                 ref={setContentsRef}
                 className="flex flex-col overflow-hidden transition-[height] duration-500"
-                style={contentsHeight != null ? { height: isSelected ? contentsHeight : 0 } : undefined}
+                style={{ height: isOpen ? contentsHeight : 0 }}
             >
                 <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />
             </div>
