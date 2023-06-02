@@ -1,18 +1,19 @@
 import { Button, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
-import { PropsWithChildren, useMemo } from "react";
+import { useMemo, useState } from "react";
 import styles from "./TitledExample.module.scss";
 import { useCopyToClipboard } from "./useCopyToClipboard";
 
 export declare namespace TitledExample {
-    export type Props = PropsWithChildren<{
+    export interface Props {
         title: string;
         titleRightContent?: JSX.Element;
         actions?: JSX.Element;
         className?: string;
         copyableExample: unknown;
-    }>;
+        children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
+    }
 }
 
 export const TitledExample: React.FC<TitledExample.Props> = ({
@@ -28,6 +29,8 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
         [copyableExample]
     );
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(exampleAsString);
+
+    const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
 
     return (
         <div
@@ -65,7 +68,9 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                         "flex flex-1 leading-relaxed text-xs bg-gray-dark/40 min-w-0"
                     )}
                 >
-                    {children}
+                    <div className="flex-1 overflow-auto p-2" ref={setContentRef}>
+                        {typeof children === "function" ? children(contentRef ?? undefined) : children}
+                    </div>
                 </div>
             </div>
         </div>

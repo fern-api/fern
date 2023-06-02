@@ -32,7 +32,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
         isInitialMount.current = false;
     }, []);
 
-    const { setHoveredResponsePropertyPath } = useEndpointContext();
+    const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
+    const onHoverRequestProperty = useCallback(
+        (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
+            setHoveredRequestPropertyPath(isHovering ? jsonPropertyPath : undefined);
+        },
+        [setHoveredRequestPropertyPath]
+    );
     const onHoverResponseProperty = useCallback(
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
             setHoveredResponsePropertyPath(isHovering ? jsonPropertyPath : undefined);
@@ -105,7 +111,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                             )}
                             {endpoint.request != null && (
                                 <EndpointSection title="Request">
-                                    <EndpointRequestSection httpRequest={endpoint.request} />
+                                    <EndpointRequestSection
+                                        httpRequest={endpoint.request}
+                                        onHoverProperty={onHoverRequestProperty}
+                                    />
                                 </EndpointSection>
                             )}
                             {endpoint.response != null && (

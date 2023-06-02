@@ -1,7 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
+import { CurlExample } from "../../examples/curl-example/CurlExample";
 import { JsonExample } from "../../examples/json-example/JsonExample";
-import { SyntaxHighlightedCodeExample } from "../../examples/SyntaxHighlightedCodeExample";
 import { TitledExample } from "../../examples/TitledExample";
 import { useEndpointContext } from "../endpoint-context/useEndpointContext";
 
@@ -12,13 +12,20 @@ export declare namespace EndpointExample {
     }
 }
 
-export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) => {
-    const { hoveredResponsePropertyPath } = useEndpointContext();
+export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, example }) => {
+    const { hoveredRequestPropertyPath, hoveredResponsePropertyPath } = useEndpointContext();
 
     return (
         <div className="flex min-h-0 flex-1 flex-col gap-6">
             <TitledExample title="Request" copyableExample={example.codeExamples.nodeAxios}>
-                <SyntaxHighlightedCodeExample code={example.codeExamples.nodeAxios} language="javascript" />
+                {(parent) => (
+                    <CurlExample
+                        endpoint={endpoint}
+                        example={example}
+                        selectedProperty={hoveredRequestPropertyPath}
+                        parent={parent}
+                    />
+                )}
             </TitledExample>
             {example.responseBody != null && (
                 <TitledExample
@@ -38,7 +45,13 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
                     }
                     copyableExample={example.responseBody}
                 >
-                    <JsonExample json={example.responseBody} selectedProperty={hoveredResponsePropertyPath} />
+                    {(parent) => (
+                        <JsonExample
+                            json={example.responseBody}
+                            selectedProperty={hoveredResponsePropertyPath}
+                            parent={parent}
+                        />
+                    )}
                 </TitledExample>
             )}
         </div>

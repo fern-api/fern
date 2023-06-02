@@ -108,7 +108,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
             <JsonItemBottomLine value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
             <div
                 className={classNames(
-                    "absolute inset-x-1 inset-y-0 border rounded transition",
+                    "absolute inset-x-0 inset-y-[-4px] border rounded transition",
                     isSelected ? "bg-accentHighlight border-accentPrimary" : "bg-transparent border-transparent",
                     {
                         invisible: !isOverlayInView,

@@ -3908,7 +3908,7 @@ __metadata:
     "@fern-api/routing-utils": "workspace:*"
     "@fern-api/split-view": "workspace:*"
     "@fern-api/theme": "workspace:*"
-    "@fern-fern/registry-browser": ^0.0.828
+    "@fern-fern/registry-browser": 0.0.893
     "@fontsource/ibm-plex-mono": ^4.5.13
     "@tanstack/react-query": ^4.29.7
     "@types/jest": ^29.0.3
@@ -4309,16 +4309,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:^0.0.828":
-  version: 0.0.828
-  resolution: "@fern-fern/registry-browser@npm:0.0.828"
+"@fern-fern/registry-browser@npm:0.0.893":
+  version: 0.0.893
+  resolution: "@fern-fern/registry-browser@npm:0.0.893"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 4062e0d18c5c826d6ad0093817a1468b1d7cc2637075e994efd4adc35faedf1a780c3c53392069e4a422cba53a3d5b2e693ace4c7b7e75ed1d75816d9b266df8
+  checksum: e225d147dbea391d8dead0a9c9738d0aa5a343fa2a83dc1865091ed16ace765c9579e65f010202bfbf10ace0e518dc9289b3130af54905f1eccd18c4c416d867
   languageName: node
   linkType: hard
 

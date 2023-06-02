@@ -6,6 +6,9 @@ export const EndpointContext = createContext<() => EndpointContextValue>(() => {
 });
 
 export interface EndpointContextValue {
+    hoveredRequestPropertyPath: JsonPropertyPath | undefined;
+    setHoveredRequestPropertyPath: (path: JsonPropertyPath | undefined) => void;
+
     hoveredResponsePropertyPath: JsonPropertyPath | undefined;
     setHoveredResponsePropertyPath: (path: JsonPropertyPath | undefined) => void;
 }
