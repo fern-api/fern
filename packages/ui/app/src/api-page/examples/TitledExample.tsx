@@ -62,7 +62,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     className={classNames(
                         styles.code,
                         className,
-                        "flex flex-1 leading-relaxed text-xs bg-gray-dark/40"
+                        "flex flex-1 leading-relaxed text-xs bg-gray-dark/40 min-w-0"
                     )}
                 >
                     {children}

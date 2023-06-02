@@ -61,12 +61,11 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
             return;
         }
         if (isSelected) {
+            const targetBBox = ref.current.getBoundingClientRect();
+            const containerBBox = containerRef.getBoundingClientRect();
             containerRef.scrollTo({
-                top:
-                    containerRef.scrollTop +
-                    ref.current.getBoundingClientRect().y -
-                    containerRef.getBoundingClientRect().y -
-                    20,
+                top: containerRef.scrollTop + targetBBox.y - containerBBox.y - 20,
+                left: 0,
                 behavior: "smooth",
             });
         }
