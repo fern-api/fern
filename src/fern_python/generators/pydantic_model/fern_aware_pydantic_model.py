@@ -40,6 +40,7 @@ class FernAwarePydanticModel:
         custom_config: PydanticModelCustomConfig,
         class_name: str,
         type_name: Optional[ir_types.DeclaredTypeName],
+        should_export: bool = None,
         extends: Sequence[ir_types.DeclaredTypeName] = None,
         docstring: Optional[str] = None,
     ):
@@ -52,6 +53,7 @@ class FernAwarePydanticModel:
         self._pydantic_model = PydanticModel(
             name=class_name,
             source_file=source_file,
+            should_export=should_export,
             base_models=[context.get_class_reference_for_type_name(extended) for extended in extends]
             if extends is not None
             else None,

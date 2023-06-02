@@ -62,6 +62,18 @@ types:
         type: double
         docs: The rating scale is one to five stars
 
+  Person:
+    base-properties:
+      name: string
+    union:
+      actor: string
+      actress: Actress
+      director: {}
+
+  Actress:
+    properties:
+      previousMovies: list<string>
+
 errors:
   MovieNotFoundError:
     status-code: 404

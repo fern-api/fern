@@ -117,8 +117,10 @@ snapshots['test_github_sdk filepaths'] = [
     'src/fern/resources/movie/errors/movie_already_exists_error.py',
     'src/fern/resources/movie/errors/movie_not_found_error.py',
     'src/fern/resources/movie/types/__init__.py',
+    'src/fern/resources/movie/types/actress.py',
     'src/fern/resources/movie/types/movie.py',
-    'src/fern/resources/movie/types/movie_id.py'
+    'src/fern/resources/movie/types/movie_id.py',
+    'src/fern/resources/movie/types/person.py'
 ]
 
 snapshots['test_github_sdk src_fern___init__'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern___init__.py')
@@ -151,9 +153,13 @@ snapshots['test_github_sdk src_fern_resources_movie_errors_movie_not_found_error
 
 snapshots['test_github_sdk src_fern_resources_movie_types___init__'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_resources_movie_types___init__.py')
 
+snapshots['test_github_sdk src_fern_resources_movie_types_actress'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_resources_movie_types_actress.py')
+
 snapshots['test_github_sdk src_fern_resources_movie_types_movie'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_resources_movie_types_movie.py')
 
 snapshots['test_github_sdk src_fern_resources_movie_types_movie_id'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_resources_movie_types_movie_id.py')
+
+snapshots['test_github_sdk src_fern_resources_movie_types_person'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_resources_movie_types_person.py')
 
 snapshots['test_multiple_urls_sdk __init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk __init__.py')
 
