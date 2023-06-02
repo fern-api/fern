@@ -34,8 +34,8 @@ export const SdkCardLayout: React.FC<SdkCardLayout.Props> = ({ icon, title, subt
             <div className="flex">
                 <div className="mr-5 text-neutral-200">{icon}</div>
                 <div className="flex flex-col justify-center gap-px">
-                    <div className="text-lg font-semibold text-neutral-200">{title}</div>
-                    <div className="text-neutral-400">{subtitle}</div>
+                    <div className="text-lg font-medium text-neutral-200">{title}</div>
+                    <div className="text-text-muted">{subtitle}</div>
                 </div>
             </div>
             {rightElement}

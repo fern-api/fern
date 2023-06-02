@@ -319,7 +319,7 @@ export class UrlSlugTree {
                 }),
                 ...this.constructSlugToEndpointRecord({
                     apiSection,
-                    package_: subpackage,
+                    subpackage,
                     apiSlug,
                     slugInsideApi,
                 }),
@@ -329,20 +329,21 @@ export class UrlSlugTree {
 
     private constructSlugToEndpointRecord({
         apiSection,
-        package_,
+        subpackage,
         apiSlug,
         slugInsideApi,
     }: {
         apiSection: FernRegistryDocsRead.ApiSection;
-        package_: FernRegistryApiRead.ApiDefinitionPackage;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         apiSlug: string;
         slugInsideApi: string;
     }): Record<UrlSlug, UrlSlugTreeNode.Endpoint> {
-        return package_.endpoints.reduce<Record<UrlSlug, UrlSlugTreeNode.Endpoint>>((acc, endpoint) => {
+        return subpackage.endpoints.reduce<Record<UrlSlug, UrlSlugTreeNode.Endpoint>>((acc, endpoint) => {
             acc[endpoint.urlSlug] = this.constructEndpointNode({
                 apiSection,
                 apiSlug,
                 slugInsideApi: joinUrlSlugs(slugInsideApi, endpoint.urlSlug),
+                parent: subpackage,
                 endpoint,
             });
             return acc;
@@ -353,11 +354,13 @@ export class UrlSlugTree {
         apiSection,
         apiSlug,
         slugInsideApi,
+        parent,
         endpoint,
     }: {
         apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
         slugInsideApi: string;
+        parent: FernRegistryApiRead.ApiDefinitionSubpackage;
         endpoint: FernRegistryApiRead.EndpointDefinition;
     }): UrlSlugTreeNode.Endpoint {
         return {
@@ -365,6 +368,7 @@ export class UrlSlugTree {
             apiSection,
             apiSlug,
             slug: joinUrlSlugs(apiSlug, slugInsideApi),
+            parent,
             endpoint,
         };
     }
@@ -443,6 +447,7 @@ export declare namespace UrlSlugTreeNode {
     export interface Endpoint extends BaseNode, BaseApiNode {
         type: "endpoint";
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        parent: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 
     export interface BaseNode {

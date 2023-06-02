@@ -27,7 +27,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ example }) =>
                         example.responseStatusCode >= 400 ? (
                             <div
                                 className={classNames(
-                                    "font-semibold px-2 py-px rounded-sm",
+                                    "font-medium px-2 py-px rounded-sm",
 
                                     "text-rose-500"
                                 )}

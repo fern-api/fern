@@ -1,4 +1,5 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { Description } from "../types/Description";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
@@ -12,8 +13,8 @@ export declare namespace EndpointRequestSection {
 export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({ httpRequest }) => {
     return (
         <div className="flex flex-col">
-            {httpRequest.description != null && <div className="mb-2 text-gray-500">{httpRequest.description}</div>}
-            <div className="mb-5 text-neutral-400">
+            <Description description={httpRequest.description} />
+            <div className="text-text-muted mb-5">
                 {"This endpoint expects "}
                 {httpRequest.type._visit<JSX.Element | string>({
                     object: () => "an object",

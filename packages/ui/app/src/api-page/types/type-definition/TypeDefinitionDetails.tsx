@@ -16,9 +16,9 @@ export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({ e
             <SeparatedElements
                 separator={
                     separatorText != null ? (
-                        <div className="flex items-center gap-2">
+                        <div className="flex h-px items-center gap-2">
                             <TypeComponentSeparator className="flex-1" />
-                            <div className="text-gray-200 dark:text-gray-700">{separatorText}</div>
+                            <div className="text-text-muted dark:text-text-muted">{separatorText}</div>
                             <TypeComponentSeparator className="flex-1" />
                         </div>
                     ) : (

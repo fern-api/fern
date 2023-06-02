@@ -57,8 +57,8 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 
     return (
         <div
-            className={classNames("flex flex-col py-4", {
-                "px-2": !isRootTypeDefinition,
+            className={classNames("flex flex-col py-3", {
+                "px-3": !isRootTypeDefinition,
             })}
         >
             <MonospaceText>{startCase(unionVariant.discriminantValue)}</MonospaceText>

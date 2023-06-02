@@ -61,8 +61,11 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
             return;
         }
         if (isSelected) {
+            const targetBBox = ref.current.getBoundingClientRect();
+            const containerBBox = containerRef.getBoundingClientRect();
             containerRef.scrollTo({
-                top: ref.current.offsetTop - containerRef.offsetTop - 20,
+                top: containerRef.scrollTop + targetBBox.y - containerBBox.y - 20,
+                left: 0,
                 behavior: "smooth",
             });
         }
@@ -92,7 +95,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
             <JsonExampleLine>
                 <div>
                     <span>
-                        <span className="text-[#a5acb8]">&quot;{propertyKey}&quot;</span>
+                        <span className="text-text-muted">&quot;{propertyKey}&quot;</span>
                         <span>:</span>
                     </span>
                     &nbsp;
@@ -106,7 +109,7 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
             <div
                 className={classNames(
                     "absolute inset-x-1 inset-y-0 border rounded transition",
-                    isSelected ? "bg-[#716FEC]/20 border-[#716FEC]" : "bg-transparent border-transparent",
+                    isSelected ? "bg-accentHighlight border-accentPrimary" : "bg-transparent border-transparent",
                     {
                         invisible: !isOverlayInView,
                     }

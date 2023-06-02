@@ -73,15 +73,15 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
 
     return (
         <div
-            className={classNames("flex flex-col py-4", {
-                "px-2": !contextValue.isRootTypeDefinition,
+            className={classNames("flex flex-col py-3", {
+                "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
             <div className="flex items-baseline gap-2">
                 <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                     <MonospaceText>{property.key}</MonospaceText>
                 </div>
-                <div className={classNames("text-xs", "text-gray-500", "dark:text-gray-500")}>
+                <div className={classNames("text-xs", "text-text-muted", "dark:text-text-muted")}>
                     <TypeShorthand type={property.valueType} plural={false} />
                 </div>
             </div>

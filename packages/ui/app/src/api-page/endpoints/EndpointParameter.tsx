@@ -16,9 +16,9 @@ export declare namespace EndpointParameter {
 export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, description, type }) => {
     return (
         <div className="flex flex-col gap-2 py-4">
-            <div className="flex items-center gap-1">
+            <div className="flex items-baseline gap-1">
                 <MonospaceText>{name}</MonospaceText>
-                <div className={classNames("text-xs", "text-gray-500", "dark:text-gray-500")}>
+                <div className={classNames("text-xs", "text-text-muted", "dark:text-text-muted")}>
                     <TypeShorthand type={type} plural={false} />
                 </div>
             </div>

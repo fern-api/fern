@@ -21,9 +21,9 @@ export const DefinitionItemExamples: React.FC<DefinitionItemExamples.Props> = ({
 
     return (
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-            {example.name != null && <div className="mb-1 text-lg font-semibold">{example.name}</div>}
+            {example.name != null && <div className="mb-1 text-lg font-medium">{example.name}</div>}
             {example.description != null && <Markdown>{example.description}</Markdown>}
-            <div className="my-10 flex min-h-0 flex-1 flex-col">{example.render()}</div>
+            <div className="flex min-h-0 flex-1 flex-col">{example.render()}</div>
         </div>
     );
 };

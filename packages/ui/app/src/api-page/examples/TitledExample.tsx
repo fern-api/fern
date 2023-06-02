@@ -1,4 +1,4 @@
-import { Button } from "@blueprintjs/core";
+import { Button, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
 import { PropsWithChildren, useMemo } from "react";
@@ -32,21 +32,27 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col basis-full min-h-0 rounded-xl border border-[#252529] overflow-hidden",
+                "flex flex-col basis-full min-h-0 rounded-xl border border-border overflow-hidden",
                 className
             )}
         >
-            <div className="flex items-center justify-between bg-[#969CEE]/30 py-1 pl-3 pr-2">
+            <div className="border-border flex items-center justify-between border-b bg-white/10 py-1 pl-3 pr-2">
                 <div className="flex items-center gap-2">
-                    <div className="uppercase tracking-wide text-neutral-300">{title}</div>
+                    <div className="text-xs uppercase tracking-wide text-neutral-300">{title}</div>
                     {titleRightContent}
                 </div>
                 <div className="flex gap-2">
                     {actions}
                     <Button
                         minimal
-                        icon={wasJustCopied ? IconNames.TICK : IconNames.CLIPBOARD}
-                        text="Copy"
+                        icon={
+                            <Icon
+                                icon={wasJustCopied ? IconNames.TICK : IconNames.DUPLICATE}
+                                className={classNames({
+                                    "!text-accentPrimary": wasJustCopied,
+                                })}
+                            />
+                        }
                         onClick={copyToClipboard}
                     />
                 </div>
@@ -56,7 +62,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     className={classNames(
                         styles.code,
                         className,
-                        "flex flex-1 leading-relaxed text-xs bg-[#969CEE]/10"
+                        "flex flex-1 leading-relaxed text-xs bg-gray-dark/40 min-w-0"
                     )}
                 >
                     {children}

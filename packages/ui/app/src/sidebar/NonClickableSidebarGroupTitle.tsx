@@ -11,7 +11,13 @@ export const NonClickableSidebarGroupTitle: React.FC<NonClickableSidebarGroupTit
     return (
         <SidebarItemLayout
             title={
-                <div className={classNames("uppercase font-medium tracking-wide", "text-white", "dark:text-white")}>
+                <div
+                    className={classNames(
+                        "uppercase font-medium tracking-wide text-xs",
+                        "text-white",
+                        "dark:text-white"
+                    )}
+                >
                     {title}
                 </div>
             }

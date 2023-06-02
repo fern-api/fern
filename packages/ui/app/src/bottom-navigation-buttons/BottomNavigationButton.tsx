@@ -63,7 +63,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
                 previous: iconElement,
                 next: null,
             })}
-            <div className="font-semibold">{text}</div>
+            <div className="font-medium">{text}</div>
             {visitDirection({
                 previous: null,
                 next: iconElement,

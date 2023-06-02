@@ -1,5 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useCallback, useMemo, useState } from "react";
+import { HiOutlineChevronDown } from "react-icons/hi2";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
 import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
@@ -40,13 +41,23 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
     }
 
     const isSelected = selectedPath != null && selectedPath.slug.startsWith(slug);
+    const isOpen = isSelected || contentsHeight == null;
 
     return (
-        <SidebarGroup title={<NavigatingSidebarItem title={<SubpackageTitle subpackage={subpackage} />} slug={slug} />}>
+        <SidebarGroup
+            title={
+                <NavigatingSidebarItem
+                    className="mt-1"
+                    title={<SubpackageTitle subpackage={subpackage} />}
+                    rightElement={<HiOutlineChevronDown />}
+                    slug={slug}
+                />
+            }
+        >
             <div
                 ref={setContentsRef}
                 className="flex flex-col overflow-hidden transition-[height] duration-500"
-                style={contentsHeight != null ? { height: isSelected ? contentsHeight : 0 } : undefined}
+                style={{ height: isOpen ? contentsHeight : 0 }}
             >
                 <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />
             </div>

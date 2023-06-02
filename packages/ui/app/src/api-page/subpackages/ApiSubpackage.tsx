@@ -1,4 +1,3 @@
-import { H2 } from "@blueprintjs/core";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { PageMargins } from "../../page-margins/PageMargins";
@@ -23,9 +22,9 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
     return (
         <>
             <PageMargins>
-                <H2 elementRef={setTargetRef} className="pt-20">
+                <div ref={setTargetRef} className="pt-20 text-4xl font-bold">
                     <SubpackageTitle subpackage={subpackage} />
-                </H2>
+                </div>
             </PageMargins>
             <ApiPackageContents key={subpackageId} package={subpackage} slug={slug} />
         </>

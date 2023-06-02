@@ -11,7 +11,7 @@ export declare namespace HeaderButton {
 export const HeaderButton: React.FC<HeaderButton.Props> = ({ navbarLink }) => {
     return (
         <a
-            className={classNames("", getClassesForStyle(navbarLink.style))}
+            className={classNames("font-medium", getClassesForStyle(navbarLink.style))}
             href={navbarLink.url}
             rel="noreferrer noopener"
         >
@@ -25,7 +25,7 @@ const DEFAULT_STYLE = "!text-accentPrimary/80 hover:!text-accentPrimary cursor-p
 function getClassesForStyle(style: FernRegistryDocsRead.NavbarLinkStyle): string {
     switch (style) {
         case "PRIMARY":
-            return "border-accentPrimary bg-accentHighlight !text-accentPrimary hover:bg-accentPrimary/20 cursor-pointer rounded-lg border px-4 py-2 transition";
+            return DEFAULT_STYLE;
         case "DEFAULT":
             return DEFAULT_STYLE;
         default:

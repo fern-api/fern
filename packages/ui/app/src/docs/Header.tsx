@@ -8,7 +8,7 @@ export const Header: React.FC = () => {
     return (
         <div
             className={classNames(
-                "flex justify-between items-center gap-10 shrink-0 p-4 border-b border-neutral-800",
+                "flex justify-between items-center gap-10 shrink-0 py-4 pl-4 pr-20 border-b border-border",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-16"
             )}
@@ -16,11 +16,11 @@ export const Header: React.FC = () => {
             <div className="flex max-h-full">
                 {docsDefinition.config.logo != null && (
                     <div className="flex items-center">
-                        <img className="max-h-full" src={resolveFile(docsDefinition.config.logo)} />
+                        <img className="max-h-5" src={resolveFile(docsDefinition.config.logo)} />
                     </div>
                 )}
             </div>
-            <div className="flex items-center gap-10">
+            <div className="flex items-center gap-5">
                 {docsDefinition.config.navbarLinks.map((navbarLink, i) => (
                     <HeaderButton key={i} navbarLink={navbarLink} />
                 ))}

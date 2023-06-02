@@ -8,11 +8,20 @@ import { SidebarItemLayout } from "./SidebarItemLayout";
 export declare namespace NavigatingSidebarItem {
     export interface Props {
         title: JSX.Element | string;
+        className?: string;
         slug: string;
+        leftElement?: JSX.Element;
+        rightElement?: JSX.Element;
     }
 }
 
-export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ title, slug }) => {
+export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({
+    title,
+    className,
+    slug,
+    leftElement,
+    rightElement,
+}) => {
     const { navigateToPath, registerScrolledToPathListener } = useDocsContext();
     const handleClick = useCallback(() => {
         navigateToPath(slug);
@@ -35,19 +44,22 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
     const renderTitle = useCallback(
         ({ isHovering }: { isHovering: boolean }) => {
             return (
-                <Text
-                    className={classNames("select-none", {
+                <div
+                    className={classNames("flex flex-1 items-center justify-between select-none min-w-0", {
                         "text-accentPrimary": isSelected,
                         "text-white": !isSelected && isHovering,
                         transition: !isSelected && !wasRecentlySelected,
                     })}
-                    ellipsize
                 >
-                    {title}
-                </Text>
+                    <div className="flex min-w-0 items-center gap-2">
+                        {leftElement}
+                        <Text ellipsize>{title}</Text>
+                    </div>
+                    {rightElement}
+                </div>
             );
         },
-        [isSelected, title, wasRecentlySelected]
+        [isSelected, leftElement, rightElement, title, wasRecentlySelected]
     );
 
     const [ref, setRef] = useState<HTMLElement | null>(null);
@@ -64,7 +76,7 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({ t
     }, [ref, registerScrolledToPathListener, slug]);
 
     return (
-        <div ref={setRef}>
+        <div className={className} ref={setRef}>
             <SidebarItemLayout title={renderTitle} onClick={handleClick} isSelected={isSelected} />
         </div>
     );
