@@ -119,18 +119,23 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                         </div>
                     </div>
                 </div>
-                <div
-                    className={classNames(
-                        "flex-1 flex sticky self-start top-0 min-w-0 pb-10",
-                        // the 4rem is the same as the h-10 as the Header
-                        "max-h-[calc(100vh-4rem)]"
-                    )}
-                    style={{
-                        paddingTop: titleHeight,
-                    }}
-                >
-                    <EndpointExamples endpoint={endpoint} />
-                </div>
+                {titleHeight != null && (
+                    <div
+                        className={classNames(
+                            "flex-1 flex sticky self-start top-0 min-w-0",
+                            // the py-10 is the same as the 40px below
+                            "py-10",
+                            // the 4rem is the same as the h-10 as the Header
+                            "max-h-[calc(100vh-4rem)]"
+                        )}
+                        style={{
+                            // the 40px is the same as the py-10 above
+                            marginTop: titleHeight - 40,
+                        }}
+                    >
+                        <EndpointExamples endpoint={endpoint} />
+                    </div>
+                )}
             </div>
         </PageMargins>
     );
