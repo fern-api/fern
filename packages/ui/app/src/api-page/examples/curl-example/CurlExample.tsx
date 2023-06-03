@@ -129,7 +129,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             }
         }
 
-        const curlElement = <span className="text-yellow-100">{CURL_PREFIX}</span>;
+        const curlElement = <span className="text-text-muted">{CURL_PREFIX}</span>;
         if (parts[0] != null) {
             parts[0] = {
                 ...parts[0],

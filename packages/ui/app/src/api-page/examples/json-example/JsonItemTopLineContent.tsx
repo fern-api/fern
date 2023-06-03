@@ -25,10 +25,13 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
                         ? { content: <span>{"["}</span>, isEndOfElement: false }
                         : { content: <span>{"[]"}</span>, isEndOfElement: true },
                 string: (value) => ({
-                    content: <span className="text-green-500">{`"${value}"`}</span>,
+                    content: <span className="text-accentPrimary">{`"${value}"`}</span>,
                     isEndOfElement: true,
                 }),
-                number: (value) => ({ content: <span className="text-[#d67653]">{value}</span>, isEndOfElement: true }),
+                number: (value) => ({
+                    content: <span className="text-orange-400">{value}</span>,
+                    isEndOfElement: true,
+                }),
                 boolean: (value) => ({
                     content: <span className="font-medium text-[#738ee8]">{value.toString()}</span>,
                     isEndOfElement: true,

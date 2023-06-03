@@ -8,7 +8,7 @@ export declare namespace CurlParameter {
 export const CurlParameter: React.FC<CurlParameter.Props> = ({ paramKey, value }) => {
     return (
         <>
-            <span className="text-yellow-100">{paramKey}</span>
+            <span className="text-text-muted">{paramKey}</span>
             {value != null && (
                 <>
                     {" "}
