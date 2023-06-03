@@ -1,6 +1,6 @@
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { Sidebar } from "../sidebar/Sidebar";
-import nebulaTricolorImage from "./backgrounds/nebula.png";
+import nebulaTricolorImage from "./backgrounds/nebula-tricolor.png";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import { useCustomTheme } from "./useCustomTheme";
