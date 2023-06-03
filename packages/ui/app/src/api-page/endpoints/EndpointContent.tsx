@@ -18,6 +18,7 @@ import { EndpointSection } from "./EndpointSection";
 import { EndpointTitle } from "./EndpointTitle";
 import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
+import { useEndpointEnvironmentUrl } from "./useEndpointEnvironmentUrl";
 
 export declare namespace EndpointContent {
     export interface Props {
@@ -32,7 +33,13 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
         isInitialMount.current = false;
     }, []);
 
-    const { setHoveredResponsePropertyPath } = useEndpointContext();
+    const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
+    const onHoverRequestProperty = useCallback(
+        (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
+            setHoveredRequestPropertyPath(isHovering ? jsonPropertyPath : undefined);
+        },
+        [setHoveredRequestPropertyPath]
+    );
     const onHoverResponseProperty = useCallback(
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
             setHoveredResponsePropertyPath(isHovering ? jsonPropertyPath : undefined);
@@ -67,18 +74,21 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
         [titleHeight]
     );
 
+    const environmentUrl = useEndpointEnvironmentUrl(endpoint);
+
     return (
         <PageMargins>
             <div className="flex min-w-0 flex-1 gap-20" ref={setTargetRef}>
                 <div className="flex flex-1 flex-col">
-                    <div className="pb-8 pt-10 text-3xl font-medium" ref={setTitleRef}>
+                    <div className="pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
                     <div className="flex items-center gap-2">
                         <EndpointMethodPill endpoint={endpoint} />
-                        <div className="text-text-muted flex">
+                        <MonospaceText className="text-text-muted flex">
+                            {environmentUrl}
                             {endpoint.path.parts.map((part, index) => (
-                                <MonospaceText key={index}>
+                                <React.Fragment key={index}>
                                     {part._visit<JSX.Element | string | null>({
                                         literal: (literal) => literal,
                                         pathParameter: (pathParameter) => (
@@ -86,9 +96,9 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                                         ),
                                         _other: () => null,
                                     })}
-                                </MonospaceText>
+                                </React.Fragment>
                             ))}
-                        </div>
+                        </MonospaceText>
                     </div>
                     {endpoint.description != null && (
                         <div className="mt-6">
@@ -105,7 +115,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                             )}
                             {endpoint.request != null && (
                                 <EndpointSection title="Request">
-                                    <EndpointRequestSection httpRequest={endpoint.request} />
+                                    <EndpointRequestSection
+                                        httpRequest={endpoint.request}
+                                        onHoverProperty={onHoverRequestProperty}
+                                    />
                                 </EndpointSection>
                             )}
                             {endpoint.response != null && (
@@ -126,7 +139,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                             // the py-10 is the same as the 40px below
                             "py-10",
                             // the 4rem is the same as the h-10 as the Header
-                            "max-h-[calc(100vh-4rem)]"
+                            "h-[calc(100vh-4rem)]"
                         )}
                         style={{
                             // the 40px is the same as the py-10 above

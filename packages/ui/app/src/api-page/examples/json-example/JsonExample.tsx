@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { JsonExampleContext, JsonExampleContextValue } from "./contexts/JsonExampleContext";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
 import { JsonItemBottomLine } from "./JsonItemBottomLine";
@@ -9,27 +9,24 @@ export declare namespace JsonExample {
     export interface Props {
         json: unknown;
         selectedProperty: JsonPropertyPath | undefined;
+        parent: HTMLElement | undefined;
     }
 }
 
-export const JsonExample: React.FC<JsonExample.Props> = ({ json, selectedProperty }) => {
-    const [ref, setRef] = useState<HTMLElement | null>(null);
-
+export const JsonExample: React.FC<JsonExample.Props> = ({ json, selectedProperty, parent }) => {
     const contextValue = useCallback(
         (): JsonExampleContextValue => ({
             selectedProperty,
-            containerRef: ref ?? undefined,
+            containerRef: parent,
         }),
-        [ref, selectedProperty]
+        [parent, selectedProperty]
     );
 
     return (
-        <div className="flex-1 overflow-auto p-2" ref={setRef}>
-            <JsonExampleContext.Provider value={contextValue}>
-                <JsonItemTopLine value={json} isNonLastItemInCollection={false} />
-                <JsonItemMiddleLines value={json} />
-                <JsonItemBottomLine value={json} isNonLastItemInCollection={false} />
-            </JsonExampleContext.Provider>
-        </div>
+        <JsonExampleContext.Provider value={contextValue}>
+            <JsonItemTopLine value={json} isNonLastItemInCollection={false} />
+            <JsonItemMiddleLines value={json} />
+            <JsonItemBottomLine value={json} isNonLastItemInCollection={false} />
+        </JsonExampleContext.Provider>
     );
 };
