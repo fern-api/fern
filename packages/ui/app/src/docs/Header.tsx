@@ -8,8 +8,11 @@ export const Header: React.FC = () => {
     return (
         <div
             className={classNames(
-                "flex justify-between items-center gap-10 shrink-0 py-4 pl-4 pr-20 border-b border-border",
-                // this matches with the calc() in the EndpointContent examples section
+                "absolute top-A0 inset-x-0 flex justify-between items-center gap-10 shrink-0 py-4 pl-4 pr-20 border-b border-border backdrop-blur",
+                // without this, examples and icons aren't blurred out
+                "z-[1]",
+                // this matches with the calc() in the EndpointContent examples section,
+                // and the Sidebar top padding
                 "h-16"
             )}
         >

@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
-import { PageMargins } from "../../page-margins/PageMargins";
+import { PageMargins } from "../../page/PageMargins";
 import { ApiPackageContents } from "../ApiPackageContents";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { SubpackageTitle } from "./SubpackageTitle";
