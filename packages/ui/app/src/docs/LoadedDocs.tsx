@@ -1,8 +1,8 @@
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { Sidebar } from "../sidebar/Sidebar";
+import nebulaTricolorImage from "./backgrounds/nebula.png";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
-import nebulaImage from "./nebula.png";
 import { useCustomTheme } from "./useCustomTheme";
 
 export const LoadedDocs: React.FC = () => {
@@ -12,7 +12,7 @@ export const LoadedDocs: React.FC = () => {
     return (
         <div
             className="relative flex min-h-0 flex-1 flex-col bg-cover"
-            style={{ backgroundImage: `url('${nebulaImage}')` }}
+            style={{ backgroundImage: `url('${nebulaTricolorImage}')` }}
         >
             <Header />
             <div className="flex min-h-0 flex-1">
