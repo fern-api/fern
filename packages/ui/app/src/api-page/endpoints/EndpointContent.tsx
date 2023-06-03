@@ -139,7 +139,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                             // the py-10 is the same as the 40px below
                             "py-10",
                             // the 4rem is the same as the h-10 as the Header
-                            "h-[calc(100vh-4rem)]"
+                            "max-h-[calc(100vh-4rem)]"
                         )}
                         style={{
                             // the 40px is the same as the py-10 above
