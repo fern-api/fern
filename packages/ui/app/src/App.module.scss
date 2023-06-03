@@ -7,19 +7,19 @@ body {
     :global {
         code,
         pre {
-            font-family: "Berkeley Mono Trial";
+            font-family: "Berkeley Mono";
         }
     }
 }
 
 @font-face {
-    font-family: "Berkeley Mono Trial";
-    src: local("Berkeley Mono Trial"), url("./fonts/BerkeleyMonoTrial-Regular.otf") format("opentype");
+    font-family: "Berkeley Mono";
+    src: local("Berkeley Mono"), url("./fonts/BerkeleyMono-Regular.woff2") format("woff2");
 }
 
 @font-face {
     font-family: Inter;
-    src: local("Inter"), url("./fonts/Inter/Inter.ttf") format("truetype");
+    src: local("Inter"), url("./fonts/Inter.ttf") format("truetype");
 }
 
 .app {

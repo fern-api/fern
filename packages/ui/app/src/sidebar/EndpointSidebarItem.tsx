@@ -17,7 +17,7 @@ export const EndpointSidebarItem: React.FC<EndpointSidebarItem.Props> = ({ slug,
             title={<EndpointTitle endpoint={endpoint} />}
             leftElement={
                 <div
-                    className={classNames("rounded-sm h-2.5 w-2.5", {
+                    className={classNames("rounded-sm h-2.5 w-2.5 shrink-0", {
                         "bg-green-400": endpoint.method === "GET",
                         "bg-accentPrimary":
                             endpoint.method === "POST" || endpoint.method === "PUT" || endpoint.method === "PATCH",

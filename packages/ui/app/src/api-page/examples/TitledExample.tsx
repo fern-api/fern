@@ -35,7 +35,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     return (
         <div
             className={classNames(
-                "flex flex-col basis-full min-h-0 rounded-xl border border-border overflow-hidden",
+                "flex flex-col rounded-xl border border-border overflow-hidden basis-full",
                 className
             )}
         >
