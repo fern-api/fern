@@ -10,17 +10,24 @@ import { useSlugListeners } from "./useSlugListeners";
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        basePath: string | undefined;
     }>;
 }
 
-export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsDefinition, children }) => {
+export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
+    docsDefinition,
+    basePath = "/",
+    children,
+}) => {
     const urlPathResolver = useMemo(() => new UrlPathResolverImpl(docsDefinition), [docsDefinition]);
 
     const location = useLocation();
-    const resolvedPathFromUrl = useMemo(
-        () => urlPathResolver.resolveSlug(removeLeadingAndTrailingSlashes(location.pathname)),
-        [location.pathname, urlPathResolver]
-    );
+    const resolvedPathFromUrl = useMemo(() => {
+        let path = location.pathname;
+        path = path.replace(new RegExp(`^${basePath}`), "");
+        path = removeLeadingAndTrailingSlashes(path);
+        return urlPathResolver.resolveSlug(path);
+    }, [basePath, location.pathname, urlPathResolver]);
 
     const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
     // handle redirects
@@ -113,6 +120,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
 
     const contextValue = useCallback(
         (): DocsContextValue => ({
+            basePath,
             resolveApi,
             resolvePage,
             resolveFile,
@@ -127,6 +135,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({ docsD
             previousPath,
         }),
         [
+            basePath,
             docsDefinition,
             navigateToPath,
             navigateToPathListeners.registerListener,

@@ -15,8 +15,8 @@ export const MaybeLoadedDocs: React.FC<MaybeLoadedDocs.Props> = ({ url }) => {
 
     return visitLoadable(docs, {
         loading: () => <NonIdealState title={<Spinner />} />,
-        loaded: (docsDefinition) => (
-            <DocsContextProvider docsDefinition={docsDefinition}>
+        loaded: ({ definition, baseUrl }) => (
+            <DocsContextProvider docsDefinition={definition} basePath={baseUrl.basePath}>
                 <LoadedDocs />
             </DocsContextProvider>
         ),

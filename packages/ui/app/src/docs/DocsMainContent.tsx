@@ -11,7 +11,7 @@ import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
 
 export const DocsMainContent: React.FC = () => {
     const location = useLocation();
-    const { resolvedPathFromUrl, docsDefinition } = useDocsContext();
+    const { resolvedPathFromUrl, docsDefinition, basePath } = useDocsContext();
 
     useEffect(() => {
         const root = document.querySelector<HTMLElement>(":root");
@@ -24,7 +24,7 @@ export const DocsMainContent: React.FC = () => {
     }, []);
 
     if (resolvedPathFromUrl == null) {
-        if (location.pathname === "/") {
+        if (location.pathname === basePath) {
             return <RedirectToFirstNavigationItem items={docsDefinition.config.navigation.items} slug="" />;
         }
         return <NonIdealState title="404" />;
