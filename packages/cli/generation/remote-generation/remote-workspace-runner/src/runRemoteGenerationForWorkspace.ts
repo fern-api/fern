@@ -39,6 +39,7 @@ export async function runRemoteGenerationForWorkspace({
                 }
                 await publishDocs({
                     docsDefinition: workspace.docsDefinition,
+                    customDomains: generatorDocsConfig.customDomains,
                     domain: generatorDocsConfig.domain,
                     token,
                     organization,

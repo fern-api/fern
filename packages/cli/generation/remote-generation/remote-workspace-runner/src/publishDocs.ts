@@ -18,6 +18,7 @@ export async function publishDocs({
     organization,
     docsDefinition,
     domain,
+    customDomains,
     workspace,
     context,
     generatorGroup,
@@ -27,6 +28,7 @@ export async function publishDocs({
     organization: string;
     docsDefinition: DocsDefinition;
     domain: string;
+    customDomains: string[];
     workspace: FernWorkspace;
     context: TaskContext;
     generatorGroup: GeneratorGroup;
@@ -36,8 +38,10 @@ export async function publishDocs({
 
     const filepathsToUpload = getFilepathsToUpload(docsDefinition);
 
-    const startDocsRegisterResponse = await fdr.docs.v1.write.startDocsRegister({
+    const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
         domain,
+        customDomains,
+        apiId: FernRegistry.ApiId(workspace.definition.rootApiFile.contents.name),
         orgId: FernRegistry.OrgId(organization),
         filepaths: filepathsToUpload.map((filepath) => convertAbsoluteFilepathToFdrFilepath(filepath, docsDefinition)),
     });
@@ -46,6 +50,16 @@ export async function publishDocs({
         return startDocsRegisterResponse.error._visit<never>({
             _other: (error) => {
                 return context.failAndThrow("Failed to publish docs.", error);
+            },
+            invalidDomainError: () => {
+                return context.failAndThrow(
+                    `Your docs domain should end with ${process.env.DOCS_DOMAIN_SUFFIX ?? "docs.buildwithfern.com"}`
+                );
+            },
+            invalidCustomDomainError: () => {
+                return context.failAndThrow(
+                    "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
+                );
             },
         });
     }
@@ -67,7 +81,7 @@ export async function publishDocs({
         })
     );
 
-    const registerDocsResponse = await fdr.docs.v1.write.finishDocsRegister(
+    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         docsRegistrationId,
         await constructRegisterDocsRequest({
             docsDefinition,
@@ -122,7 +136,7 @@ async function constructRegisterDocsRequest({
     generatorGroup: GeneratorGroup;
     uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
     version: string | undefined;
-}): Promise<FernRegistry.docs.v1.write.RegisterDocsRequest> {
+}): Promise<FernRegistry.docs.v2.write.RegisterDocsRequest> {
     return {
         docsDefinition: {
             pages: entries(docsDefinition.pages).reduce(

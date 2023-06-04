@@ -6,17 +6,17 @@ import { LoadedDocs } from "./LoadedDocs";
 
 export declare namespace MaybeLoadedDocs {
     export interface Props {
-        domain: string;
+        url: string;
     }
 }
 
-export const MaybeLoadedDocs: React.FC<MaybeLoadedDocs.Props> = ({ domain }) => {
-    const docs = useDocs(domain);
+export const MaybeLoadedDocs: React.FC<MaybeLoadedDocs.Props> = ({ url }) => {
+    const docs = useDocs(url);
 
     return visitLoadable(docs, {
         loading: () => <NonIdealState title={<Spinner />} />,
-        loaded: (docsDefinition) => (
-            <DocsContextProvider docsDefinition={docsDefinition}>
+        loaded: ({ definition, baseUrl }) => (
+            <DocsContextProvider docsDefinition={definition} basePath={baseUrl.basePath}>
                 <LoadedDocs />
             </DocsContextProvider>
         ),

@@ -1,2 +1,3 @@
 # if there are any release blockers in this list, releasing will fail on Circle
-release-blockers: []
+release-blockers:
+  - "load-docs-from-read-v2"

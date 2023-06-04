@@ -1,11 +1,11 @@
 import { Loadable } from "@fern-api/loadable";
 import { TypedQueryKey, useTypedQuery } from "@fern-api/react-query-utils";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
 import { REGISTRY_SERVICE } from "../services/registry";
 
-export function useDocs(domain: string): Loadable<FernRegistryDocsRead.DocsDefinition> {
-    return useTypedQuery(buildQueryKey(domain), async () => {
-        const response = await REGISTRY_SERVICE.docs.v1.read.getDocsForDomain({ domain });
+export function useDocs(url: string): Loadable<FernRegistryDocsReadV2.LoadDocsForUrlResponse> {
+    return useTypedQuery(buildQueryKey(url), async () => {
+        const response = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({ url });
         if (response.ok) {
             return response.body;
         } else {
@@ -15,7 +15,7 @@ export function useDocs(domain: string): Loadable<FernRegistryDocsRead.DocsDefin
     });
 }
 
-function buildQueryKey(domain: string): TypedQueryKey<FernRegistryDocsRead.DocsDefinition> {
+function buildQueryKey(domain: string): TypedQueryKey<FernRegistryDocsReadV2.LoadDocsForUrlResponse> {
     const queryKey = ["docs", { domain }];
     return TypedQueryKey.of(queryKey);
 }

@@ -2,5 +2,7 @@ default-group: public
 groups:
   public:
     docs:
-      domain: ferndevtest
+      domain: ferndevtest.docs.dev.buildwithfern.com
+      custom-domains:
+        - devtest.buildwithfern.com
     generators: []
