@@ -1,9 +1,17 @@
 import { FernToken } from "@fern-api/auth";
+import { combineAudiences } from "@fern-api/config-management-commons";
+import { assertNever, entries } from "@fern-api/core-utils";
+import { DocsNavigationItem, LogoReference } from "@fern-api/docs-configuration";
+import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
+import { registerApi } from "@fern-api/register";
 import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernRegistry } from "@fern-fern/registry-node";
+import axios from "axios";
+import chalk from "chalk";
+import { readFile } from "fs/promises";
 
 export async function publishDocs({
     token,
@@ -73,7 +81,7 @@ export async function publishDocs({
         })
     );
 
-    const registerDocsResponse = await fdr.docs.v1.write.finishDocsRegister(
+    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         docsRegistrationId,
         await constructRegisterDocsRequest({
             docsDefinition,
@@ -128,7 +136,7 @@ async function constructRegisterDocsRequest({
     generatorGroup: GeneratorGroup;
     uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
     version: string | undefined;
-}): Promise<FernRegistry.docs.v1.write.RegisterDocsRequest> {
+}): Promise<FernRegistry.docs.v2.write.RegisterDocsRequest> {
     return {
         docsDefinition: {
             pages: entries(docsDefinition.pages).reduce(
