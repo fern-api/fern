@@ -38,4 +38,5 @@ export type GenerationLanguage = Values<typeof GenerationLanguage>;
 
 export interface GeneratorGroupDocsConfiguration {
     domain: string;
+    customDomains: string[];
 }

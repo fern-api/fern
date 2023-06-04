@@ -1,23 +1,16 @@
 import { FernToken } from "@fern-api/auth";
-import { combineAudiences } from "@fern-api/config-management-commons";
-import { assertNever, entries } from "@fern-api/core-utils";
-import { DocsNavigationItem, LogoReference } from "@fern-api/docs-configuration";
-import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
-import { registerApi } from "@fern-api/register";
 import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernRegistry } from "@fern-fern/registry-node";
-import axios from "axios";
-import chalk from "chalk";
-import { readFile } from "fs/promises";
 
 export async function publishDocs({
     token,
     organization,
     docsDefinition,
     domain,
+    customDomains,
     workspace,
     context,
     generatorGroup,
@@ -27,6 +20,7 @@ export async function publishDocs({
     organization: string;
     docsDefinition: DocsDefinition;
     domain: string;
+    customDomains: string[];
     workspace: FernWorkspace;
     context: TaskContext;
     generatorGroup: GeneratorGroup;
@@ -36,8 +30,10 @@ export async function publishDocs({
 
     const filepathsToUpload = getFilepathsToUpload(docsDefinition);
 
-    const startDocsRegisterResponse = await fdr.docs.v1.write.startDocsRegister({
+    const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
         domain,
+        customDomains,
+        apiId: FernRegistry.ApiId(workspace.definition.rootApiFile.contents.name),
         orgId: FernRegistry.OrgId(organization),
         filepaths: filepathsToUpload.map((filepath) => convertAbsoluteFilepathToFdrFilepath(filepath, docsDefinition)),
     });
@@ -46,6 +42,16 @@ export async function publishDocs({
         return startDocsRegisterResponse.error._visit<never>({
             _other: (error) => {
                 return context.failAndThrow("Failed to publish docs.", error);
+            },
+            invalidDomainError: () => {
+                return context.failAndThrow(
+                    `Your docs domain should end with ${process.env.DOCS_DOMAIN_SUFFIX ?? "docs.buildwithfern.com"}`
+                );
+            },
+            invalidCustomDomainError: () => {
+                return context.failAndThrow(
+                    "Please make sure that none of your custom domains are not overlapping (i.e. one is a substring of another)"
+                );
             },
         });
     }

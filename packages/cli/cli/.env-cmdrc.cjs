@@ -8,6 +8,7 @@ module.exports = {
         VENUS_AUDIENCE: "venus-prod",
         LOCAL_STORAGE_FOLDER: ".fern",
         POSTHOG_API_KEY: process.env.POSTHOG_API_KEY,
+        DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
     },
     dev: {
         AUTH0_DOMAIN: "fern-dev.us.auth0.com",
@@ -18,5 +19,6 @@ module.exports = {
         VENUS_AUDIENCE: "venus-dev",
         LOCAL_STORAGE_FOLDER: ".fern-dev",
         POSTHOG_API_KEY: null,
+        DOCS_DOMAIN_SUFFIX: "dev.docs.buildwithfern.com",
     },
 };
