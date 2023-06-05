@@ -406,6 +406,37 @@
                             "typeId": "type_bar/bar:Bar",
                             "_type": "named"
                         }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "uuid",
+                                "camelCase": {
+                                    "unsafeName": "uuid",
+                                    "safeName": "uuid"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "uuid",
+                                    "safeName": "uuid"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UUID",
+                                    "safeName": "UUID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Uuid",
+                                    "safeName": "Uuid"
+                                }
+                            },
+                            "wireValue": "uuid"
+                        },
+                        "valueType": {
+                            "primitive": "UUID",
+                            "_type": "primitive"
+                        }
                     }
                 ],
                 "_type": "object"
