@@ -17,33 +17,33 @@ type GeneratorUpdate struct {
 	ExitStatusUpdate *ExitStatusUpdate
 }
 
-func (x *GeneratorUpdate) UnmarshalJSON(data []byte) error {
+func (g *GeneratorUpdate) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	g.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "init":
 		value := new(InitUpdate)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Init = value
+		g.Init = value
 	case "initV2":
 		value := new(InitUpdateV2)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.InitV2 = value
+		g.InitV2 = value
 	case "log":
 		value := new(LogUpdate)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Log = value
+		g.Log = value
 	case "publishing":
 		var valueUnmarshaler struct {
 			Publishing *PackageCoordinate `json:"publishing"`
@@ -51,7 +51,7 @@ func (x *GeneratorUpdate) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Publishing = valueUnmarshaler.Publishing
+		g.Publishing = valueUnmarshaler.Publishing
 	case "published":
 		var valueUnmarshaler struct {
 			Published *PackageCoordinate `json:"published"`
@@ -59,7 +59,7 @@ func (x *GeneratorUpdate) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Published = valueUnmarshaler.Published
+		g.Published = valueUnmarshaler.Published
 	case "exitStatusUpdate":
 		var valueUnmarshaler struct {
 			ExitStatusUpdate *ExitStatusUpdate `json:"exitStatusUpdate"`
@@ -67,22 +67,22 @@ func (x *GeneratorUpdate) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.ExitStatusUpdate = valueUnmarshaler.ExitStatusUpdate
+		g.ExitStatusUpdate = valueUnmarshaler.ExitStatusUpdate
 	}
 	return nil
 }
 
-func (x GeneratorUpdate) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (g GeneratorUpdate) MarshalJSON() ([]byte, error) {
+	switch g.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", g.Type, g)
 	case "init":
 		var marshaler = struct {
 			Type string `json:"_type"`
 			*InitUpdate
 		}{
-			Type:       x.Type,
-			InitUpdate: x.Init,
+			Type:       g.Type,
+			InitUpdate: g.Init,
 		}
 		return json.Marshal(marshaler)
 	case "initV2":
@@ -90,8 +90,8 @@ func (x GeneratorUpdate) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*InitUpdateV2
 		}{
-			Type:         x.Type,
-			InitUpdateV2: x.InitV2,
+			Type:         g.Type,
+			InitUpdateV2: g.InitV2,
 		}
 		return json.Marshal(marshaler)
 	case "log":
@@ -99,8 +99,8 @@ func (x GeneratorUpdate) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*LogUpdate
 		}{
-			Type:      x.Type,
-			LogUpdate: x.Log,
+			Type:      g.Type,
+			LogUpdate: g.Log,
 		}
 		return json.Marshal(marshaler)
 	case "publishing":
@@ -108,8 +108,8 @@ func (x GeneratorUpdate) MarshalJSON() ([]byte, error) {
 			Type       string             `json:"_type"`
 			Publishing *PackageCoordinate `json:"publishing"`
 		}{
-			Type:       x.Type,
-			Publishing: x.Publishing,
+			Type:       g.Type,
+			Publishing: g.Publishing,
 		}
 		return json.Marshal(marshaler)
 	case "published":
@@ -117,8 +117,8 @@ func (x GeneratorUpdate) MarshalJSON() ([]byte, error) {
 			Type      string             `json:"_type"`
 			Published *PackageCoordinate `json:"published"`
 		}{
-			Type:      x.Type,
-			Published: x.Published,
+			Type:      g.Type,
+			Published: g.Published,
 		}
 		return json.Marshal(marshaler)
 	case "exitStatusUpdate":
@@ -126,8 +126,8 @@ func (x GeneratorUpdate) MarshalJSON() ([]byte, error) {
 			Type             string            `json:"_type"`
 			ExitStatusUpdate *ExitStatusUpdate `json:"exitStatusUpdate"`
 		}{
-			Type:             x.Type,
-			ExitStatusUpdate: x.ExitStatusUpdate,
+			Type:             g.Type,
+			ExitStatusUpdate: g.ExitStatusUpdate,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -142,21 +142,21 @@ type GeneratorUpdateVisitor interface {
 	VisitExitStatusUpdate(*ExitStatusUpdate) error
 }
 
-func (x *GeneratorUpdate) Accept(v GeneratorUpdateVisitor) error {
-	switch x.Type {
+func (g *GeneratorUpdate) Accept(v GeneratorUpdateVisitor) error {
+	switch g.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", g.Type, g)
 	case "init":
-		return v.VisitInit(x.Init)
+		return v.VisitInit(g.Init)
 	case "initV2":
-		return v.VisitInitV2(x.InitV2)
+		return v.VisitInitV2(g.InitV2)
 	case "log":
-		return v.VisitLog(x.Log)
+		return v.VisitLog(g.Log)
 	case "publishing":
-		return v.VisitPublishing(x.Publishing)
+		return v.VisitPublishing(g.Publishing)
 	case "published":
-		return v.VisitPublished(x.Published)
+		return v.VisitPublished(g.Published)
 	case "exitStatusUpdate":
-		return v.VisitExitStatusUpdate(x.ExitStatusUpdate)
+		return v.VisitExitStatusUpdate(g.ExitStatusUpdate)
 	}
 }

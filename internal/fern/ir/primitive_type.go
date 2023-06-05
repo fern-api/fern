@@ -23,10 +23,10 @@ const (
 	PrimitiveTypeBase64
 )
 
-func (x PrimitiveType) String() string {
-	switch x {
+func (p PrimitiveType) String() string {
+	switch p {
 	default:
-		return strconv.Itoa(int(x))
+		return strconv.Itoa(int(p))
 	case PrimitiveTypeInteger:
 		return "INTEGER"
 	case PrimitiveTypeDouble:
@@ -48,11 +48,11 @@ func (x PrimitiveType) String() string {
 	}
 }
 
-func (x PrimitiveType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", x.String())), nil
+func (p PrimitiveType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", p.String())), nil
 }
 
-func (x *PrimitiveType) UnmarshalJSON(data []byte) error {
+func (p *PrimitiveType) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -60,31 +60,31 @@ func (x *PrimitiveType) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "INTEGER":
 		value := PrimitiveTypeInteger
-		*x = value
+		*p = value
 	case "DOUBLE":
 		value := PrimitiveTypeDouble
-		*x = value
+		*p = value
 	case "STRING":
 		value := PrimitiveTypeString
-		*x = value
+		*p = value
 	case "BOOLEAN":
 		value := PrimitiveTypeBoolean
-		*x = value
+		*p = value
 	case "LONG":
 		value := PrimitiveTypeLong
-		*x = value
+		*p = value
 	case "DATE_TIME":
 		value := PrimitiveTypeDateTime
-		*x = value
+		*p = value
 	case "DATE":
 		value := PrimitiveTypeDate
-		*x = value
+		*p = value
 	case "UUID":
 		value := PrimitiveTypeUuid
-		*x = value
+		*p = value
 	case "BASE_64":
 		value := PrimitiveTypeBase64
-		*x = value
+		*p = value
 	}
 	return nil
 }

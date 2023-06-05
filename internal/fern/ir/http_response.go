@@ -13,42 +13,42 @@ type HttpResponse struct {
 	FileDownload *FileDownloadResponse
 }
 
-func (x *HttpResponse) UnmarshalJSON(data []byte) error {
+func (h *HttpResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	h.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "json":
 		value := new(JsonResponse)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Json = value
+		h.Json = value
 	case "fileDownload":
 		value := new(FileDownloadResponse)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.FileDownload = value
+		h.FileDownload = value
 	}
 	return nil
 }
 
-func (x HttpResponse) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (h HttpResponse) MarshalJSON() ([]byte, error) {
+	switch h.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "json":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*JsonResponse
 		}{
-			Type:         x.Type,
-			JsonResponse: x.Json,
+			Type:         h.Type,
+			JsonResponse: h.Json,
 		}
 		return json.Marshal(marshaler)
 	case "fileDownload":
@@ -56,8 +56,8 @@ func (x HttpResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*FileDownloadResponse
 		}{
-			Type:                 x.Type,
-			FileDownloadResponse: x.FileDownload,
+			Type:                 h.Type,
+			FileDownloadResponse: h.FileDownload,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,13 +68,13 @@ type HttpResponseVisitor interface {
 	VisitFileDownload(*FileDownloadResponse) error
 }
 
-func (x *HttpResponse) Accept(v HttpResponseVisitor) error {
-	switch x.Type {
+func (h *HttpResponse) Accept(v HttpResponseVisitor) error {
+	switch h.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "json":
-		return v.VisitJson(x.Json)
+		return v.VisitJson(h.Json)
 	case "fileDownload":
-		return v.VisitFileDownload(x.FileDownload)
+		return v.VisitFileDownload(h.FileDownload)
 	}
 }

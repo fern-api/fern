@@ -13,42 +13,42 @@ type PackageCoordinate struct {
 	Maven *MavenCoordinate
 }
 
-func (x *PackageCoordinate) UnmarshalJSON(data []byte) error {
+func (p *PackageCoordinate) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	p.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "npm":
 		value := new(NpmCoordinate)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Npm = value
+		p.Npm = value
 	case "maven":
 		value := new(MavenCoordinate)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Maven = value
+		p.Maven = value
 	}
 	return nil
 }
 
-func (x PackageCoordinate) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (p PackageCoordinate) MarshalJSON() ([]byte, error) {
+	switch p.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", p.Type, p)
 	case "npm":
 		var marshaler = struct {
 			Type string `json:"_type"`
 			*NpmCoordinate
 		}{
-			Type:          x.Type,
-			NpmCoordinate: x.Npm,
+			Type:          p.Type,
+			NpmCoordinate: p.Npm,
 		}
 		return json.Marshal(marshaler)
 	case "maven":
@@ -56,8 +56,8 @@ func (x PackageCoordinate) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*MavenCoordinate
 		}{
-			Type:            x.Type,
-			MavenCoordinate: x.Maven,
+			Type:            p.Type,
+			MavenCoordinate: p.Maven,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,13 +68,13 @@ type PackageCoordinateVisitor interface {
 	VisitMaven(*MavenCoordinate) error
 }
 
-func (x *PackageCoordinate) Accept(v PackageCoordinateVisitor) error {
-	switch x.Type {
+func (p *PackageCoordinate) Accept(v PackageCoordinateVisitor) error {
+	switch p.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", p.Type, p)
 	case "npm":
-		return v.VisitNpm(x.Npm)
+		return v.VisitNpm(p.Npm)
 	case "maven":
-		return v.VisitMaven(x.Maven)
+		return v.VisitMaven(p.Maven)
 	}
 }

@@ -15,10 +15,10 @@ const (
 	AuthSchemesRequirementAny
 )
 
-func (x AuthSchemesRequirement) String() string {
-	switch x {
+func (a AuthSchemesRequirement) String() string {
+	switch a {
 	default:
-		return strconv.Itoa(int(x))
+		return strconv.Itoa(int(a))
 	case AuthSchemesRequirementAll:
 		return "ALL"
 	case AuthSchemesRequirementAny:
@@ -26,11 +26,11 @@ func (x AuthSchemesRequirement) String() string {
 	}
 }
 
-func (x AuthSchemesRequirement) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", x.String())), nil
+func (a AuthSchemesRequirement) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", a.String())), nil
 }
 
-func (x *AuthSchemesRequirement) UnmarshalJSON(data []byte) error {
+func (a *AuthSchemesRequirement) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -38,10 +38,10 @@ func (x *AuthSchemesRequirement) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "ALL":
 		value := AuthSchemesRequirementAll
-		*x = value
+		*a = value
 	case "ANY":
 		value := AuthSchemesRequirementAny
-		*x = value
+		*a = value
 	}
 	return nil
 }

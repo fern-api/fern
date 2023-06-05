@@ -16,14 +16,14 @@ type ContainerType struct {
 	Literal  *Literal
 }
 
-func (x *ContainerType) UnmarshalJSON(data []byte) error {
+func (c *ContainerType) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	c.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
@@ -32,13 +32,13 @@ func (x *ContainerType) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.List = valueUnmarshaler.List
+		c.List = valueUnmarshaler.List
 	case "map":
 		value := new(MapType)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Map = value
+		c.Map = value
 	case "optional":
 		var valueUnmarshaler struct {
 			Optional *TypeReference `json:"optional"`
@@ -46,7 +46,7 @@ func (x *ContainerType) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Optional = valueUnmarshaler.Optional
+		c.Optional = valueUnmarshaler.Optional
 	case "set":
 		var valueUnmarshaler struct {
 			Set *TypeReference `json:"set"`
@@ -54,7 +54,7 @@ func (x *ContainerType) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Set = valueUnmarshaler.Set
+		c.Set = valueUnmarshaler.Set
 	case "literal":
 		var valueUnmarshaler struct {
 			Literal *Literal `json:"literal"`
@@ -62,22 +62,22 @@ func (x *ContainerType) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Literal = valueUnmarshaler.Literal
+		c.Literal = valueUnmarshaler.Literal
 	}
 	return nil
 }
 
-func (x ContainerType) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (c ContainerType) MarshalJSON() ([]byte, error) {
+	switch c.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", c.Type, c)
 	case "list":
 		var marshaler = struct {
 			Type string         `json:"_type"`
 			List *TypeReference `json:"list"`
 		}{
-			Type: x.Type,
-			List: x.List,
+			Type: c.Type,
+			List: c.List,
 		}
 		return json.Marshal(marshaler)
 	case "map":
@@ -85,8 +85,8 @@ func (x ContainerType) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*MapType
 		}{
-			Type:    x.Type,
-			MapType: x.Map,
+			Type:    c.Type,
+			MapType: c.Map,
 		}
 		return json.Marshal(marshaler)
 	case "optional":
@@ -94,8 +94,8 @@ func (x ContainerType) MarshalJSON() ([]byte, error) {
 			Type     string         `json:"_type"`
 			Optional *TypeReference `json:"optional"`
 		}{
-			Type:     x.Type,
-			Optional: x.Optional,
+			Type:     c.Type,
+			Optional: c.Optional,
 		}
 		return json.Marshal(marshaler)
 	case "set":
@@ -103,8 +103,8 @@ func (x ContainerType) MarshalJSON() ([]byte, error) {
 			Type string         `json:"_type"`
 			Set  *TypeReference `json:"set"`
 		}{
-			Type: x.Type,
-			Set:  x.Set,
+			Type: c.Type,
+			Set:  c.Set,
 		}
 		return json.Marshal(marshaler)
 	case "literal":
@@ -112,8 +112,8 @@ func (x ContainerType) MarshalJSON() ([]byte, error) {
 			Type    string   `json:"_type"`
 			Literal *Literal `json:"literal"`
 		}{
-			Type:    x.Type,
-			Literal: x.Literal,
+			Type:    c.Type,
+			Literal: c.Literal,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -127,19 +127,19 @@ type ContainerTypeVisitor interface {
 	VisitLiteral(*Literal) error
 }
 
-func (x *ContainerType) Accept(v ContainerTypeVisitor) error {
-	switch x.Type {
+func (c *ContainerType) Accept(v ContainerTypeVisitor) error {
+	switch c.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", c.Type, c)
 	case "list":
-		return v.VisitList(x.List)
+		return v.VisitList(c.List)
 	case "map":
-		return v.VisitMap(x.Map)
+		return v.VisitMap(c.Map)
 	case "optional":
-		return v.VisitOptional(x.Optional)
+		return v.VisitOptional(c.Optional)
 	case "set":
-		return v.VisitSet(x.Set)
+		return v.VisitSet(c.Set)
 	case "literal":
-		return v.VisitLiteral(x.Literal)
+		return v.VisitLiteral(c.Literal)
 	}
 }

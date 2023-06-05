@@ -16,10 +16,10 @@ const (
 	PathParameterLocationEndpoint
 )
 
-func (x PathParameterLocation) String() string {
-	switch x {
+func (p PathParameterLocation) String() string {
+	switch p {
 	default:
-		return strconv.Itoa(int(x))
+		return strconv.Itoa(int(p))
 	case PathParameterLocationRoot:
 		return "ROOT"
 	case PathParameterLocationService:
@@ -29,11 +29,11 @@ func (x PathParameterLocation) String() string {
 	}
 }
 
-func (x PathParameterLocation) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", x.String())), nil
+func (p PathParameterLocation) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", p.String())), nil
 }
 
-func (x *PathParameterLocation) UnmarshalJSON(data []byte) error {
+func (p *PathParameterLocation) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -41,13 +41,13 @@ func (x *PathParameterLocation) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "ROOT":
 		value := PathParameterLocationRoot
-		*x = value
+		*p = value
 	case "SERVICE":
 		value := PathParameterLocationService
-		*x = value
+		*p = value
 	case "ENDPOINT":
 		value := PathParameterLocationEndpoint
-		*x = value
+		*p = value
 	}
 	return nil
 }

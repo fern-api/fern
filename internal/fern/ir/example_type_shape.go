@@ -15,54 +15,54 @@ type ExampleTypeShape struct {
 	Union  *ExampleSingleUnionType
 }
 
-func (x *ExampleTypeShape) UnmarshalJSON(data []byte) error {
+func (e *ExampleTypeShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	e.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "alias":
 		value := new(ExampleAliasType)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Alias = value
+		e.Alias = value
 	case "enum":
 		value := new(ExampleEnumType)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Enum = value
+		e.Enum = value
 	case "object":
 		value := new(ExampleObjectType)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Object = value
+		e.Object = value
 	case "union":
 		value := new(ExampleSingleUnionType)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Union = value
+		e.Union = value
 	}
 	return nil
 }
 
-func (x ExampleTypeShape) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
+	switch e.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "alias":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*ExampleAliasType
 		}{
-			Type:             x.Type,
-			ExampleAliasType: x.Alias,
+			Type:             e.Type,
+			ExampleAliasType: e.Alias,
 		}
 		return json.Marshal(marshaler)
 	case "enum":
@@ -70,8 +70,8 @@ func (x ExampleTypeShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleEnumType
 		}{
-			Type:            x.Type,
-			ExampleEnumType: x.Enum,
+			Type:            e.Type,
+			ExampleEnumType: e.Enum,
 		}
 		return json.Marshal(marshaler)
 	case "object":
@@ -79,8 +79,8 @@ func (x ExampleTypeShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleObjectType
 		}{
-			Type:              x.Type,
-			ExampleObjectType: x.Object,
+			Type:              e.Type,
+			ExampleObjectType: e.Object,
 		}
 		return json.Marshal(marshaler)
 	case "union":
@@ -88,8 +88,8 @@ func (x ExampleTypeShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleSingleUnionType
 		}{
-			Type:                   x.Type,
-			ExampleSingleUnionType: x.Union,
+			Type:                   e.Type,
+			ExampleSingleUnionType: e.Union,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -102,17 +102,17 @@ type ExampleTypeShapeVisitor interface {
 	VisitUnion(*ExampleSingleUnionType) error
 }
 
-func (x *ExampleTypeShape) Accept(v ExampleTypeShapeVisitor) error {
-	switch x.Type {
+func (e *ExampleTypeShape) Accept(v ExampleTypeShapeVisitor) error {
+	switch e.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "alias":
-		return v.VisitAlias(x.Alias)
+		return v.VisitAlias(e.Alias)
 	case "enum":
-		return v.VisitEnum(x.Enum)
+		return v.VisitEnum(e.Enum)
 	case "object":
-		return v.VisitObject(x.Object)
+		return v.VisitObject(e.Object)
 	case "union":
-		return v.VisitUnion(x.Union)
+		return v.VisitUnion(e.Union)
 	}
 }

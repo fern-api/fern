@@ -15,54 +15,54 @@ type GeneratorPublishTarget struct {
 	Postman *PostmanConfig
 }
 
-func (x *GeneratorPublishTarget) UnmarshalJSON(data []byte) error {
+func (g *GeneratorPublishTarget) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	g.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "maven":
 		value := new(MavenRegistryConfigV2)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Maven = value
+		g.Maven = value
 	case "npm":
 		value := new(NpmRegistryConfigV2)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Npm = value
+		g.Npm = value
 	case "pypi":
 		value := new(PypiRegistryConfig)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Pypi = value
+		g.Pypi = value
 	case "postman":
 		value := new(PostmanConfig)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Postman = value
+		g.Postman = value
 	}
 	return nil
 }
 
-func (x GeneratorPublishTarget) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (g GeneratorPublishTarget) MarshalJSON() ([]byte, error) {
+	switch g.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", g.Type, g)
 	case "maven":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*MavenRegistryConfigV2
 		}{
-			Type:                  x.Type,
-			MavenRegistryConfigV2: x.Maven,
+			Type:                  g.Type,
+			MavenRegistryConfigV2: g.Maven,
 		}
 		return json.Marshal(marshaler)
 	case "npm":
@@ -70,8 +70,8 @@ func (x GeneratorPublishTarget) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*NpmRegistryConfigV2
 		}{
-			Type:                x.Type,
-			NpmRegistryConfigV2: x.Npm,
+			Type:                g.Type,
+			NpmRegistryConfigV2: g.Npm,
 		}
 		return json.Marshal(marshaler)
 	case "pypi":
@@ -79,8 +79,8 @@ func (x GeneratorPublishTarget) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*PypiRegistryConfig
 		}{
-			Type:               x.Type,
-			PypiRegistryConfig: x.Pypi,
+			Type:               g.Type,
+			PypiRegistryConfig: g.Pypi,
 		}
 		return json.Marshal(marshaler)
 	case "postman":
@@ -88,8 +88,8 @@ func (x GeneratorPublishTarget) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*PostmanConfig
 		}{
-			Type:          x.Type,
-			PostmanConfig: x.Postman,
+			Type:          g.Type,
+			PostmanConfig: g.Postman,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -102,17 +102,17 @@ type GeneratorPublishTargetVisitor interface {
 	VisitPostman(*PostmanConfig) error
 }
 
-func (x *GeneratorPublishTarget) Accept(v GeneratorPublishTargetVisitor) error {
-	switch x.Type {
+func (g *GeneratorPublishTarget) Accept(v GeneratorPublishTargetVisitor) error {
+	switch g.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", g.Type, g)
 	case "maven":
-		return v.VisitMaven(x.Maven)
+		return v.VisitMaven(g.Maven)
 	case "npm":
-		return v.VisitNpm(x.Npm)
+		return v.VisitNpm(g.Npm)
 	case "pypi":
-		return v.VisitPypi(x.Pypi)
+		return v.VisitPypi(g.Pypi)
 	case "postman":
-		return v.VisitPostman(x.Postman)
+		return v.VisitPostman(g.Postman)
 	}
 }

@@ -18,10 +18,10 @@ const (
 	HttpMethodDelete
 )
 
-func (x HttpMethod) String() string {
-	switch x {
+func (h HttpMethod) String() string {
+	switch h {
 	default:
-		return strconv.Itoa(int(x))
+		return strconv.Itoa(int(h))
 	case HttpMethodGet:
 		return "GET"
 	case HttpMethodPost:
@@ -35,11 +35,11 @@ func (x HttpMethod) String() string {
 	}
 }
 
-func (x HttpMethod) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", x.String())), nil
+func (h HttpMethod) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", h.String())), nil
 }
 
-func (x *HttpMethod) UnmarshalJSON(data []byte) error {
+func (h *HttpMethod) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -47,19 +47,19 @@ func (x *HttpMethod) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "GET":
 		value := HttpMethodGet
-		*x = value
+		*h = value
 	case "POST":
 		value := HttpMethodPost
-		*x = value
+		*h = value
 	case "PUT":
 		value := HttpMethodPut
-		*x = value
+		*h = value
 	case "PATCH":
 		value := HttpMethodPatch
-		*x = value
+		*h = value
 	case "DELETE":
 		value := HttpMethodDelete
-		*x = value
+		*h = value
 	}
 	return nil
 }

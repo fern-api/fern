@@ -14,48 +14,48 @@ type OutputMode struct {
 	Github        *GithubOutputMode
 }
 
-func (x *OutputMode) UnmarshalJSON(data []byte) error {
+func (o *OutputMode) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	o.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "publish":
 		value := new(GeneratorPublishConfig)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Publish = value
+		o.Publish = value
 	case "downloadFiles":
 		value := make(map[string]any)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.DownloadFiles = value
+		o.DownloadFiles = value
 	case "github":
 		value := new(GithubOutputMode)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Github = value
+		o.Github = value
 	}
 	return nil
 }
 
-func (x OutputMode) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (o OutputMode) MarshalJSON() ([]byte, error) {
+	switch o.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", o.Type, o)
 	case "publish":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*GeneratorPublishConfig
 		}{
-			Type:                   x.Type,
-			GeneratorPublishConfig: x.Publish,
+			Type:                   o.Type,
+			GeneratorPublishConfig: o.Publish,
 		}
 		return json.Marshal(marshaler)
 	case "downloadFiles":
@@ -63,8 +63,8 @@ func (x OutputMode) MarshalJSON() ([]byte, error) {
 			Type          string `json:"type"`
 			DownloadFiles any    `json:"downloadFiles"`
 		}{
-			Type:          x.Type,
-			DownloadFiles: x.DownloadFiles,
+			Type:          o.Type,
+			DownloadFiles: o.DownloadFiles,
 		}
 		return json.Marshal(marshaler)
 	case "github":
@@ -72,8 +72,8 @@ func (x OutputMode) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*GithubOutputMode
 		}{
-			Type:             x.Type,
-			GithubOutputMode: x.Github,
+			Type:             o.Type,
+			GithubOutputMode: o.Github,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -85,15 +85,15 @@ type OutputModeVisitor interface {
 	VisitGithub(*GithubOutputMode) error
 }
 
-func (x *OutputMode) Accept(v OutputModeVisitor) error {
-	switch x.Type {
+func (o *OutputMode) Accept(v OutputModeVisitor) error {
+	switch o.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", o.Type, o)
 	case "publish":
-		return v.VisitPublish(x.Publish)
+		return v.VisitPublish(o.Publish)
 	case "downloadFiles":
-		return v.VisitDownloadFiles(x.DownloadFiles)
+		return v.VisitDownloadFiles(o.DownloadFiles)
 	case "github":
-		return v.VisitGithub(x.Github)
+		return v.VisitGithub(o.Github)
 	}
 }

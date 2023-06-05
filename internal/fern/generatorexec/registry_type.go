@@ -16,10 +16,10 @@ const (
 	RegistryTypePypi
 )
 
-func (x RegistryType) String() string {
-	switch x {
+func (r RegistryType) String() string {
+	switch r {
 	default:
-		return strconv.Itoa(int(x))
+		return strconv.Itoa(int(r))
 	case RegistryTypeNpm:
 		return "NPM"
 	case RegistryTypeMaven:
@@ -29,11 +29,11 @@ func (x RegistryType) String() string {
 	}
 }
 
-func (x RegistryType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", x.String())), nil
+func (r RegistryType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", r.String())), nil
 }
 
-func (x *RegistryType) UnmarshalJSON(data []byte) error {
+func (r *RegistryType) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -41,13 +41,13 @@ func (x *RegistryType) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "NPM":
 		value := RegistryTypeNpm
-		*x = value
+		*r = value
 	case "MAVEN":
 		value := RegistryTypeMaven
-		*x = value
+		*r = value
 	case "PYPI":
 		value := RegistryTypePypi
-		*x = value
+		*r = value
 	}
 	return nil
 }

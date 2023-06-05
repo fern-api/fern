@@ -5,7 +5,7 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	uuid "github.com/gofrs/uuid"
+	uuid "github.com/gofrs/uuid/v5"
 	time "time"
 )
 
@@ -21,14 +21,14 @@ type ExamplePrimitive struct {
 	Uuid     uuid.UUID
 }
 
-func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
+func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	e.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "integer":
 		var valueUnmarshaler struct {
@@ -37,7 +37,7 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Integer = valueUnmarshaler.Integer
+		e.Integer = valueUnmarshaler.Integer
 	case "double":
 		var valueUnmarshaler struct {
 			Double float64 `json:"double"`
@@ -45,7 +45,7 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Double = valueUnmarshaler.Double
+		e.Double = valueUnmarshaler.Double
 	case "string":
 		var valueUnmarshaler struct {
 			String string `json:"string"`
@@ -53,7 +53,7 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.String = valueUnmarshaler.String
+		e.String = valueUnmarshaler.String
 	case "boolean":
 		var valueUnmarshaler struct {
 			Boolean bool `json:"boolean"`
@@ -61,7 +61,7 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Boolean = valueUnmarshaler.Boolean
+		e.Boolean = valueUnmarshaler.Boolean
 	case "long":
 		var valueUnmarshaler struct {
 			Long int64 `json:"long"`
@@ -69,7 +69,7 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Long = valueUnmarshaler.Long
+		e.Long = valueUnmarshaler.Long
 	case "datetime":
 		var valueUnmarshaler struct {
 			Datetime time.Time `json:"datetime"`
@@ -77,7 +77,7 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Datetime = valueUnmarshaler.Datetime
+		e.Datetime = valueUnmarshaler.Datetime
 	case "date":
 		var valueUnmarshaler struct {
 			Date time.Time `json:"date"`
@@ -85,7 +85,7 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Date = valueUnmarshaler.Date
+		e.Date = valueUnmarshaler.Date
 	case "uuid":
 		var valueUnmarshaler struct {
 			Uuid uuid.UUID `json:"uuid"`
@@ -93,22 +93,22 @@ func (x *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Uuid = valueUnmarshaler.Uuid
+		e.Uuid = valueUnmarshaler.Uuid
 	}
 	return nil
 }
 
-func (x ExamplePrimitive) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
+	switch e.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "integer":
 		var marshaler = struct {
 			Type    string `json:"type"`
 			Integer int    `json:"integer"`
 		}{
-			Type:    x.Type,
-			Integer: x.Integer,
+			Type:    e.Type,
+			Integer: e.Integer,
 		}
 		return json.Marshal(marshaler)
 	case "double":
@@ -116,8 +116,8 @@ func (x ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type   string  `json:"type"`
 			Double float64 `json:"double"`
 		}{
-			Type:   x.Type,
-			Double: x.Double,
+			Type:   e.Type,
+			Double: e.Double,
 		}
 		return json.Marshal(marshaler)
 	case "string":
@@ -125,8 +125,8 @@ func (x ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type   string `json:"type"`
 			String string `json:"string"`
 		}{
-			Type:   x.Type,
-			String: x.String,
+			Type:   e.Type,
+			String: e.String,
 		}
 		return json.Marshal(marshaler)
 	case "boolean":
@@ -134,8 +134,8 @@ func (x ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type    string `json:"type"`
 			Boolean bool   `json:"boolean"`
 		}{
-			Type:    x.Type,
-			Boolean: x.Boolean,
+			Type:    e.Type,
+			Boolean: e.Boolean,
 		}
 		return json.Marshal(marshaler)
 	case "long":
@@ -143,8 +143,8 @@ func (x ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			Long int64  `json:"long"`
 		}{
-			Type: x.Type,
-			Long: x.Long,
+			Type: e.Type,
+			Long: e.Long,
 		}
 		return json.Marshal(marshaler)
 	case "datetime":
@@ -152,8 +152,8 @@ func (x ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type     string    `json:"type"`
 			Datetime time.Time `json:"datetime"`
 		}{
-			Type:     x.Type,
-			Datetime: x.Datetime,
+			Type:     e.Type,
+			Datetime: e.Datetime,
 		}
 		return json.Marshal(marshaler)
 	case "date":
@@ -161,8 +161,8 @@ func (x ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type string    `json:"type"`
 			Date time.Time `json:"date"`
 		}{
-			Type: x.Type,
-			Date: x.Date,
+			Type: e.Type,
+			Date: e.Date,
 		}
 		return json.Marshal(marshaler)
 	case "uuid":
@@ -170,8 +170,8 @@ func (x ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type string    `json:"type"`
 			Uuid uuid.UUID `json:"uuid"`
 		}{
-			Type: x.Type,
-			Uuid: x.Uuid,
+			Type: e.Type,
+			Uuid: e.Uuid,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -188,25 +188,25 @@ type ExamplePrimitiveVisitor interface {
 	VisitUuid(uuid.UUID) error
 }
 
-func (x *ExamplePrimitive) Accept(v ExamplePrimitiveVisitor) error {
-	switch x.Type {
+func (e *ExamplePrimitive) Accept(v ExamplePrimitiveVisitor) error {
+	switch e.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "integer":
-		return v.VisitInteger(x.Integer)
+		return v.VisitInteger(e.Integer)
 	case "double":
-		return v.VisitDouble(x.Double)
+		return v.VisitDouble(e.Double)
 	case "string":
-		return v.VisitString(x.String)
+		return v.VisitString(e.String)
 	case "boolean":
-		return v.VisitBoolean(x.Boolean)
+		return v.VisitBoolean(e.Boolean)
 	case "long":
-		return v.VisitLong(x.Long)
+		return v.VisitLong(e.Long)
 	case "datetime":
-		return v.VisitDatetime(x.Datetime)
+		return v.VisitDatetime(e.Datetime)
 	case "date":
-		return v.VisitDate(x.Date)
+		return v.VisitDate(e.Date)
 	case "uuid":
-		return v.VisitUuid(x.Uuid)
+		return v.VisitUuid(e.Uuid)
 	}
 }

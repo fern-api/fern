@@ -15,14 +15,14 @@ type ResolvedTypeReference struct {
 	Unknown   any
 }
 
-func (x *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
+func (r *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	r.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "container":
 		var valueUnmarshaler struct {
@@ -31,13 +31,13 @@ func (x *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Container = valueUnmarshaler.Container
+		r.Container = valueUnmarshaler.Container
 	case "named":
 		value := new(ResolvedNamedType)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Named = value
+		r.Named = value
 	case "primitive":
 		var valueUnmarshaler struct {
 			Primitive PrimitiveType `json:"primitive"`
@@ -45,28 +45,28 @@ func (x *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Primitive = valueUnmarshaler.Primitive
+		r.Primitive = valueUnmarshaler.Primitive
 	case "unknown":
 		value := make(map[string]any)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Unknown = value
+		r.Unknown = value
 	}
 	return nil
 }
 
-func (x ResolvedTypeReference) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
+	switch r.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", r.Type, r)
 	case "container":
 		var marshaler = struct {
 			Type      string         `json:"_type"`
 			Container *ContainerType `json:"container"`
 		}{
-			Type:      x.Type,
-			Container: x.Container,
+			Type:      r.Type,
+			Container: r.Container,
 		}
 		return json.Marshal(marshaler)
 	case "named":
@@ -74,8 +74,8 @@ func (x ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*ResolvedNamedType
 		}{
-			Type:              x.Type,
-			ResolvedNamedType: x.Named,
+			Type:              r.Type,
+			ResolvedNamedType: r.Named,
 		}
 		return json.Marshal(marshaler)
 	case "primitive":
@@ -83,8 +83,8 @@ func (x ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 			Type      string        `json:"_type"`
 			Primitive PrimitiveType `json:"primitive"`
 		}{
-			Type:      x.Type,
-			Primitive: x.Primitive,
+			Type:      r.Type,
+			Primitive: r.Primitive,
 		}
 		return json.Marshal(marshaler)
 	case "unknown":
@@ -92,8 +92,8 @@ func (x ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 			Type    string `json:"_type"`
 			Unknown any    `json:"unknown"`
 		}{
-			Type:    x.Type,
-			Unknown: x.Unknown,
+			Type:    r.Type,
+			Unknown: r.Unknown,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -106,17 +106,17 @@ type ResolvedTypeReferenceVisitor interface {
 	VisitUnknown(any) error
 }
 
-func (x *ResolvedTypeReference) Accept(v ResolvedTypeReferenceVisitor) error {
-	switch x.Type {
+func (r *ResolvedTypeReference) Accept(v ResolvedTypeReferenceVisitor) error {
+	switch r.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", r.Type, r)
 	case "container":
-		return v.VisitContainer(x.Container)
+		return v.VisitContainer(r.Container)
 	case "named":
-		return v.VisitNamed(x.Named)
+		return v.VisitNamed(r.Named)
 	case "primitive":
-		return v.VisitPrimitive(x.Primitive)
+		return v.VisitPrimitive(r.Primitive)
 	case "unknown":
-		return v.VisitUnknown(x.Unknown)
+		return v.VisitUnknown(r.Unknown)
 	}
 }

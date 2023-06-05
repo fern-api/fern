@@ -14,48 +14,48 @@ type HttpRequestBody struct {
 	FileUpload         *FileUploadRequest
 }
 
-func (x *HttpRequestBody) UnmarshalJSON(data []byte) error {
+func (h *HttpRequestBody) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	h.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "inlinedRequestBody":
 		value := new(InlinedRequestBody)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.InlinedRequestBody = value
+		h.InlinedRequestBody = value
 	case "reference":
 		value := new(HttpRequestBodyReference)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Reference = value
+		h.Reference = value
 	case "fileUpload":
 		value := new(FileUploadRequest)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.FileUpload = value
+		h.FileUpload = value
 	}
 	return nil
 }
 
-func (x HttpRequestBody) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
+	switch h.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "inlinedRequestBody":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*InlinedRequestBody
 		}{
-			Type:               x.Type,
-			InlinedRequestBody: x.InlinedRequestBody,
+			Type:               h.Type,
+			InlinedRequestBody: h.InlinedRequestBody,
 		}
 		return json.Marshal(marshaler)
 	case "reference":
@@ -63,8 +63,8 @@ func (x HttpRequestBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*HttpRequestBodyReference
 		}{
-			Type:                     x.Type,
-			HttpRequestBodyReference: x.Reference,
+			Type:                     h.Type,
+			HttpRequestBodyReference: h.Reference,
 		}
 		return json.Marshal(marshaler)
 	case "fileUpload":
@@ -72,8 +72,8 @@ func (x HttpRequestBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*FileUploadRequest
 		}{
-			Type:              x.Type,
-			FileUploadRequest: x.FileUpload,
+			Type:              h.Type,
+			FileUploadRequest: h.FileUpload,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -85,15 +85,15 @@ type HttpRequestBodyVisitor interface {
 	VisitFileUpload(*FileUploadRequest) error
 }
 
-func (x *HttpRequestBody) Accept(v HttpRequestBodyVisitor) error {
-	switch x.Type {
+func (h *HttpRequestBody) Accept(v HttpRequestBodyVisitor) error {
+	switch h.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "inlinedRequestBody":
-		return v.VisitInlinedRequestBody(x.InlinedRequestBody)
+		return v.VisitInlinedRequestBody(h.InlinedRequestBody)
 	case "reference":
-		return v.VisitReference(x.Reference)
+		return v.VisitReference(h.Reference)
 	case "fileUpload":
-		return v.VisitFileUpload(x.FileUpload)
+		return v.VisitFileUpload(h.FileUpload)
 	}
 }

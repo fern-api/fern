@@ -17,14 +17,14 @@ type StreamCondition struct {
 	RequestPropertyKey string
 }
 
-func (x *StreamCondition) UnmarshalJSON(data []byte) error {
+func (s *StreamCondition) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	s.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "queryParameterKey":
 		var valueUnmarshaler struct {
@@ -33,7 +33,7 @@ func (x *StreamCondition) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.QueryParameterKey = valueUnmarshaler.QueryParameterKey
+		s.QueryParameterKey = valueUnmarshaler.QueryParameterKey
 	case "requestPropertyKey":
 		var valueUnmarshaler struct {
 			RequestPropertyKey string `json:"value"`
@@ -41,22 +41,22 @@ func (x *StreamCondition) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.RequestPropertyKey = valueUnmarshaler.RequestPropertyKey
+		s.RequestPropertyKey = valueUnmarshaler.RequestPropertyKey
 	}
 	return nil
 }
 
-func (x StreamCondition) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (s StreamCondition) MarshalJSON() ([]byte, error) {
+	switch s.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "queryParameterKey":
 		var marshaler = struct {
 			Type              string `json:"type"`
 			QueryParameterKey string `json:"value"`
 		}{
-			Type:              x.Type,
-			QueryParameterKey: x.QueryParameterKey,
+			Type:              s.Type,
+			QueryParameterKey: s.QueryParameterKey,
 		}
 		return json.Marshal(marshaler)
 	case "requestPropertyKey":
@@ -64,8 +64,8 @@ func (x StreamCondition) MarshalJSON() ([]byte, error) {
 			Type               string `json:"type"`
 			RequestPropertyKey string `json:"value"`
 		}{
-			Type:               x.Type,
-			RequestPropertyKey: x.RequestPropertyKey,
+			Type:               s.Type,
+			RequestPropertyKey: s.RequestPropertyKey,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -76,13 +76,13 @@ type StreamConditionVisitor interface {
 	VisitRequestPropertyKey(string) error
 }
 
-func (x *StreamCondition) Accept(v StreamConditionVisitor) error {
-	switch x.Type {
+func (s *StreamCondition) Accept(v StreamConditionVisitor) error {
+	switch s.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "queryParameterKey":
-		return v.VisitQueryParameterKey(x.QueryParameterKey)
+		return v.VisitQueryParameterKey(s.QueryParameterKey)
 	case "requestPropertyKey":
-		return v.VisitRequestPropertyKey(x.RequestPropertyKey)
+		return v.VisitRequestPropertyKey(s.RequestPropertyKey)
 	}
 }

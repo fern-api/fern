@@ -17,10 +17,10 @@ const (
 	LogLevelError
 )
 
-func (x LogLevel) String() string {
-	switch x {
+func (l LogLevel) String() string {
+	switch l {
 	default:
-		return strconv.Itoa(int(x))
+		return strconv.Itoa(int(l))
 	case LogLevelDebug:
 		return "DEBUG"
 	case LogLevelInfo:
@@ -32,11 +32,11 @@ func (x LogLevel) String() string {
 	}
 }
 
-func (x LogLevel) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", x.String())), nil
+func (l LogLevel) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", l.String())), nil
 }
 
-func (x *LogLevel) UnmarshalJSON(data []byte) error {
+func (l *LogLevel) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -44,16 +44,16 @@ func (x *LogLevel) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "DEBUG":
 		value := LogLevelDebug
-		*x = value
+		*l = value
 	case "INFO":
 		value := LogLevelInfo
-		*x = value
+		*l = value
 	case "WARN":
 		value := LogLevelWarn
-		*x = value
+		*l = value
 	case "ERROR":
 		value := LogLevelError
-		*x = value
+		*l = value
 	}
 	return nil
 }

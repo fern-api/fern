@@ -13,42 +13,42 @@ type GeneratorEnvironment struct {
 	Remote *RemoteGeneratorEnvironment
 }
 
-func (x *GeneratorEnvironment) UnmarshalJSON(data []byte) error {
+func (g *GeneratorEnvironment) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	g.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "local":
 		value := make(map[string]any)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Local = value
+		g.Local = value
 	case "remote":
 		value := new(RemoteGeneratorEnvironment)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Remote = value
+		g.Remote = value
 	}
 	return nil
 }
 
-func (x GeneratorEnvironment) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (g GeneratorEnvironment) MarshalJSON() ([]byte, error) {
+	switch g.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", g.Type, g)
 	case "local":
 		var marshaler = struct {
 			Type  string `json:"_type"`
 			Local any    `json:"local"`
 		}{
-			Type:  x.Type,
-			Local: x.Local,
+			Type:  g.Type,
+			Local: g.Local,
 		}
 		return json.Marshal(marshaler)
 	case "remote":
@@ -56,8 +56,8 @@ func (x GeneratorEnvironment) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*RemoteGeneratorEnvironment
 		}{
-			Type:                       x.Type,
-			RemoteGeneratorEnvironment: x.Remote,
+			Type:                       g.Type,
+			RemoteGeneratorEnvironment: g.Remote,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,13 +68,13 @@ type GeneratorEnvironmentVisitor interface {
 	VisitRemote(*RemoteGeneratorEnvironment) error
 }
 
-func (x *GeneratorEnvironment) Accept(v GeneratorEnvironmentVisitor) error {
-	switch x.Type {
+func (g *GeneratorEnvironment) Accept(v GeneratorEnvironmentVisitor) error {
+	switch g.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", g.Type, g)
 	case "local":
-		return v.VisitLocal(x.Local)
+		return v.VisitLocal(g.Local)
 	case "remote":
-		return v.VisitRemote(x.Remote)
+		return v.VisitRemote(g.Remote)
 	}
 }

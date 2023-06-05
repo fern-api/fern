@@ -15,54 +15,54 @@ type GithubPublishInfo struct {
 	Pypi    *PypiGithubPublishInfo
 }
 
-func (x *GithubPublishInfo) UnmarshalJSON(data []byte) error {
+func (g *GithubPublishInfo) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	g.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "npm":
 		value := new(NpmGithubPublishInfo)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Npm = value
+		g.Npm = value
 	case "maven":
 		value := new(MavenGithubPublishInfo)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Maven = value
+		g.Maven = value
 	case "postman":
 		value := new(PostmanGithubPublishInfo)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Postman = value
+		g.Postman = value
 	case "pypi":
 		value := new(PypiGithubPublishInfo)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Pypi = value
+		g.Pypi = value
 	}
 	return nil
 }
 
-func (x GithubPublishInfo) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (g GithubPublishInfo) MarshalJSON() ([]byte, error) {
+	switch g.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", g.Type, g)
 	case "npm":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*NpmGithubPublishInfo
 		}{
-			Type:                 x.Type,
-			NpmGithubPublishInfo: x.Npm,
+			Type:                 g.Type,
+			NpmGithubPublishInfo: g.Npm,
 		}
 		return json.Marshal(marshaler)
 	case "maven":
@@ -70,8 +70,8 @@ func (x GithubPublishInfo) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*MavenGithubPublishInfo
 		}{
-			Type:                   x.Type,
-			MavenGithubPublishInfo: x.Maven,
+			Type:                   g.Type,
+			MavenGithubPublishInfo: g.Maven,
 		}
 		return json.Marshal(marshaler)
 	case "postman":
@@ -79,8 +79,8 @@ func (x GithubPublishInfo) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*PostmanGithubPublishInfo
 		}{
-			Type:                     x.Type,
-			PostmanGithubPublishInfo: x.Postman,
+			Type:                     g.Type,
+			PostmanGithubPublishInfo: g.Postman,
 		}
 		return json.Marshal(marshaler)
 	case "pypi":
@@ -88,8 +88,8 @@ func (x GithubPublishInfo) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*PypiGithubPublishInfo
 		}{
-			Type:                  x.Type,
-			PypiGithubPublishInfo: x.Pypi,
+			Type:                  g.Type,
+			PypiGithubPublishInfo: g.Pypi,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -102,17 +102,17 @@ type GithubPublishInfoVisitor interface {
 	VisitPypi(*PypiGithubPublishInfo) error
 }
 
-func (x *GithubPublishInfo) Accept(v GithubPublishInfoVisitor) error {
-	switch x.Type {
+func (g *GithubPublishInfo) Accept(v GithubPublishInfoVisitor) error {
+	switch g.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", g.Type, g)
 	case "npm":
-		return v.VisitNpm(x.Npm)
+		return v.VisitNpm(g.Npm)
 	case "maven":
-		return v.VisitMaven(x.Maven)
+		return v.VisitMaven(g.Maven)
 	case "postman":
-		return v.VisitPostman(x.Postman)
+		return v.VisitPostman(g.Postman)
 	case "pypi":
-		return v.VisitPypi(x.Pypi)
+		return v.VisitPypi(g.Pypi)
 	}
 }

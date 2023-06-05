@@ -13,42 +13,42 @@ type ExampleResponse struct {
 	Error *ExampleEndpointErrorResponse
 }
 
-func (x *ExampleResponse) UnmarshalJSON(data []byte) error {
+func (e *ExampleResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	e.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "ok":
 		value := new(ExampleEndpointSuccessResponse)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Ok = value
+		e.Ok = value
 	case "error":
 		value := new(ExampleEndpointErrorResponse)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Error = value
+		e.Error = value
 	}
 	return nil
 }
 
-func (x ExampleResponse) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (e ExampleResponse) MarshalJSON() ([]byte, error) {
+	switch e.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "ok":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*ExampleEndpointSuccessResponse
 		}{
-			Type:                           x.Type,
-			ExampleEndpointSuccessResponse: x.Ok,
+			Type:                           e.Type,
+			ExampleEndpointSuccessResponse: e.Ok,
 		}
 		return json.Marshal(marshaler)
 	case "error":
@@ -56,8 +56,8 @@ func (x ExampleResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleEndpointErrorResponse
 		}{
-			Type:                         x.Type,
-			ExampleEndpointErrorResponse: x.Error,
+			Type:                         e.Type,
+			ExampleEndpointErrorResponse: e.Error,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,13 +68,13 @@ type ExampleResponseVisitor interface {
 	VisitError(*ExampleEndpointErrorResponse) error
 }
 
-func (x *ExampleResponse) Accept(v ExampleResponseVisitor) error {
-	switch x.Type {
+func (e *ExampleResponse) Accept(v ExampleResponseVisitor) error {
+	switch e.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "ok":
-		return v.VisitOk(x.Ok)
+		return v.VisitOk(e.Ok)
 	case "error":
-		return v.VisitError(x.Error)
+		return v.VisitError(e.Error)
 	}
 }

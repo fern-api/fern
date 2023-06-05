@@ -17,10 +17,10 @@ const (
 	AvailabilityStatusDeprecated
 )
 
-func (x AvailabilityStatus) String() string {
-	switch x {
+func (a AvailabilityStatus) String() string {
+	switch a {
 	default:
-		return strconv.Itoa(int(x))
+		return strconv.Itoa(int(a))
 	case AvailabilityStatusInDevelopment:
 		return "IN_DEVELOPMENT"
 	case AvailabilityStatusPreRelease:
@@ -32,11 +32,11 @@ func (x AvailabilityStatus) String() string {
 	}
 }
 
-func (x AvailabilityStatus) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", x.String())), nil
+func (a AvailabilityStatus) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", a.String())), nil
 }
 
-func (x *AvailabilityStatus) UnmarshalJSON(data []byte) error {
+func (a *AvailabilityStatus) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -44,16 +44,16 @@ func (x *AvailabilityStatus) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "IN_DEVELOPMENT":
 		value := AvailabilityStatusInDevelopment
-		*x = value
+		*a = value
 	case "PRE_RELEASE":
 		value := AvailabilityStatusPreRelease
-		*x = value
+		*a = value
 	case "GENERAL_AVAILABILITY":
 		value := AvailabilityStatusGeneralAvailability
-		*x = value
+		*a = value
 	case "DEPRECATED":
 		value := AvailabilityStatusDeprecated
-		*x = value
+		*a = value
 	}
 	return nil
 }

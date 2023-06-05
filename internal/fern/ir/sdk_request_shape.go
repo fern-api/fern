@@ -13,42 +13,42 @@ type SdkRequestShape struct {
 	Wrapper         *SdkRequestWrapper
 }
 
-func (x *SdkRequestShape) UnmarshalJSON(data []byte) error {
+func (s *SdkRequestShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	s.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "justRequestBody":
 		value := new(HttpRequestBodyReference)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.JustRequestBody = value
+		s.JustRequestBody = value
 	case "wrapper":
 		value := new(SdkRequestWrapper)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Wrapper = value
+		s.Wrapper = value
 	}
 	return nil
 }
 
-func (x SdkRequestShape) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (s SdkRequestShape) MarshalJSON() ([]byte, error) {
+	switch s.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "justRequestBody":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*HttpRequestBodyReference
 		}{
-			Type:                     x.Type,
-			HttpRequestBodyReference: x.JustRequestBody,
+			Type:                     s.Type,
+			HttpRequestBodyReference: s.JustRequestBody,
 		}
 		return json.Marshal(marshaler)
 	case "wrapper":
@@ -56,8 +56,8 @@ func (x SdkRequestShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*SdkRequestWrapper
 		}{
-			Type:              x.Type,
-			SdkRequestWrapper: x.Wrapper,
+			Type:              s.Type,
+			SdkRequestWrapper: s.Wrapper,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,13 +68,13 @@ type SdkRequestShapeVisitor interface {
 	VisitWrapper(*SdkRequestWrapper) error
 }
 
-func (x *SdkRequestShape) Accept(v SdkRequestShapeVisitor) error {
-	switch x.Type {
+func (s *SdkRequestShape) Accept(v SdkRequestShapeVisitor) error {
+	switch s.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "justRequestBody":
-		return v.VisitJustRequestBody(x.JustRequestBody)
+		return v.VisitJustRequestBody(s.JustRequestBody)
 	case "wrapper":
-		return v.VisitWrapper(x.Wrapper)
+		return v.VisitWrapper(s.Wrapper)
 	}
 }
