@@ -14,7 +14,7 @@ type NestedUnion struct {
 	One  *ExampleType
 }
 
-func (x *NestedUnion) UnmarshalJSON(data []byte) error {
+func (n *NestedUnion) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 		Docs string `json:"docs"`
@@ -23,24 +23,24 @@ func (x *NestedUnion) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
-	x.Docs = unmarshaler.Docs
-	x.Raw = unmarshaler.Raw
+	n.Type = unmarshaler.Type
+	n.Docs = unmarshaler.Docs
+	n.Raw = unmarshaler.Raw
 	switch unmarshaler.Type {
 	case "one":
 		value := new(ExampleType)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.One = value
+		n.One = value
 	}
 	return nil
 }
 
-func (x NestedUnion) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (n NestedUnion) MarshalJSON() ([]byte, error) {
+	switch n.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", n.Type, n)
 	case "one":
 		var marshaler = struct {
 			Type string `json:"type"`
@@ -48,10 +48,10 @@ func (x NestedUnion) MarshalJSON() ([]byte, error) {
 			Raw  string `json:"raw"`
 			*ExampleType
 		}{
-			Type:        x.Type,
-			Docs:        x.Docs,
-			Raw:         x.Raw,
-			ExampleType: x.One,
+			Type:        n.Type,
+			Docs:        n.Docs,
+			Raw:         n.Raw,
+			ExampleType: n.One,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -61,11 +61,11 @@ type NestedUnionVisitor interface {
 	VisitOne(*ExampleType) error
 }
 
-func (x *NestedUnion) Accept(v NestedUnionVisitor) error {
-	switch x.Type {
+func (n *NestedUnion) Accept(v NestedUnionVisitor) error {
+	switch n.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", n.Type, n)
 	case "one":
-		return v.VisitOne(x.One)
+		return v.VisitOne(n.One)
 	}
 }

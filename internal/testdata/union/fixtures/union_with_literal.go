@@ -14,39 +14,39 @@ type UnionWithLiteral struct {
 	base     string
 }
 
-func (x *UnionWithLiteral) Extended() string {
-	return x.extended
+func (u *UnionWithLiteral) Extended() string {
+	return u.extended
 }
 
-func (x *UnionWithLiteral) Base() string {
-	return x.base
+func (u *UnionWithLiteral) Base() string {
+	return u.base
 }
 
-func (x *UnionWithLiteral) Fern() string {
-	return x.fern
+func (u *UnionWithLiteral) Fern() string {
+	return u.fern
 }
 
-func (x *UnionWithLiteral) UnmarshalJSON(data []byte) error {
+func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
-	x.extended = "extended"
-	x.base = "base"
+	u.Type = unmarshaler.Type
+	u.extended = "extended"
+	u.base = "base"
 	switch unmarshaler.Type {
 	case "fern":
-		x.fern = "fern"
+		u.fern = "fern"
 	}
 	return nil
 }
 
-func (x UnionWithLiteral) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
+	switch u.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "fern":
 		var marshaler = struct {
 			Type     string `json:"type"`
@@ -54,7 +54,7 @@ func (x UnionWithLiteral) MarshalJSON() ([]byte, error) {
 			Base     string `json:"base"`
 			Fern     string `json:"value"`
 		}{
-			Type:     x.Type,
+			Type:     u.Type,
 			Extended: "extended",
 			Base:     "base",
 			Fern:     "fern",
@@ -67,11 +67,11 @@ type UnionWithLiteralVisitor interface {
 	VisitFern(string) error
 }
 
-func (x *UnionWithLiteral) Accept(v UnionWithLiteralVisitor) error {
-	switch x.Type {
+func (u *UnionWithLiteral) Accept(v UnionWithLiteralVisitor) error {
+	switch u.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "fern":
-		return v.VisitFern(x.fern)
+		return v.VisitFern(u.fern)
 	}
 }

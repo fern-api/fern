@@ -13,42 +13,42 @@ type ExampleRequestBody struct {
 	Reference          *ExampleTypeReference
 }
 
-func (x *ExampleRequestBody) UnmarshalJSON(data []byte) error {
+func (e *ExampleRequestBody) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	e.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "inlinedRequestBody":
 		value := new(ExampleInlinedRequestBody)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.InlinedRequestBody = value
+		e.InlinedRequestBody = value
 	case "reference":
 		value := new(ExampleTypeReference)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Reference = value
+		e.Reference = value
 	}
 	return nil
 }
 
-func (x ExampleRequestBody) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (e ExampleRequestBody) MarshalJSON() ([]byte, error) {
+	switch e.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "inlinedRequestBody":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*ExampleInlinedRequestBody
 		}{
-			Type:                      x.Type,
-			ExampleInlinedRequestBody: x.InlinedRequestBody,
+			Type:                      e.Type,
+			ExampleInlinedRequestBody: e.InlinedRequestBody,
 		}
 		return json.Marshal(marshaler)
 	case "reference":
@@ -56,8 +56,8 @@ func (x ExampleRequestBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleTypeReference
 		}{
-			Type:                 x.Type,
-			ExampleTypeReference: x.Reference,
+			Type:                 e.Type,
+			ExampleTypeReference: e.Reference,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,13 +68,13 @@ type ExampleRequestBodyVisitor interface {
 	VisitReference(*ExampleTypeReference) error
 }
 
-func (x *ExampleRequestBody) Accept(v ExampleRequestBodyVisitor) error {
-	switch x.Type {
+func (e *ExampleRequestBody) Accept(v ExampleRequestBodyVisitor) error {
+	switch e.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "inlinedRequestBody":
-		return v.VisitInlinedRequestBody(x.InlinedRequestBody)
+		return v.VisitInlinedRequestBody(e.InlinedRequestBody)
 	case "reference":
-		return v.VisitReference(x.Reference)
+		return v.VisitReference(e.Reference)
 	}
 }

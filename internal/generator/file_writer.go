@@ -701,7 +701,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		t.writer.P("return nil")
 		t.writer.P("}")
 	}
-	t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, x)`)
+	t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, `, receiver, ")")
 	t.writer.P("}")
 	t.writer.P()
 

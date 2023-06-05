@@ -13,42 +13,42 @@ type Environments struct {
 	MultipleBaseUrls *MultipleBaseUrlsEnvironments
 }
 
-func (x *Environments) UnmarshalJSON(data []byte) error {
+func (e *Environments) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	e.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "singleBaseUrl":
 		value := new(SingleBaseUrlEnvironments)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.SingleBaseUrl = value
+		e.SingleBaseUrl = value
 	case "multipleBaseUrls":
 		value := new(MultipleBaseUrlsEnvironments)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.MultipleBaseUrls = value
+		e.MultipleBaseUrls = value
 	}
 	return nil
 }
 
-func (x Environments) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (e Environments) MarshalJSON() ([]byte, error) {
+	switch e.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "singleBaseUrl":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*SingleBaseUrlEnvironments
 		}{
-			Type:                      x.Type,
-			SingleBaseUrlEnvironments: x.SingleBaseUrl,
+			Type:                      e.Type,
+			SingleBaseUrlEnvironments: e.SingleBaseUrl,
 		}
 		return json.Marshal(marshaler)
 	case "multipleBaseUrls":
@@ -56,8 +56,8 @@ func (x Environments) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*MultipleBaseUrlsEnvironments
 		}{
-			Type:                         x.Type,
-			MultipleBaseUrlsEnvironments: x.MultipleBaseUrls,
+			Type:                         e.Type,
+			MultipleBaseUrlsEnvironments: e.MultipleBaseUrls,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,13 +68,13 @@ type EnvironmentsVisitor interface {
 	VisitMultipleBaseUrls(*MultipleBaseUrlsEnvironments) error
 }
 
-func (x *Environments) Accept(v EnvironmentsVisitor) error {
-	switch x.Type {
+func (e *Environments) Accept(v EnvironmentsVisitor) error {
+	switch e.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "singleBaseUrl":
-		return v.VisitSingleBaseUrl(x.SingleBaseUrl)
+		return v.VisitSingleBaseUrl(e.SingleBaseUrl)
 	case "multipleBaseUrls":
-		return v.VisitMultipleBaseUrls(x.MultipleBaseUrls)
+		return v.VisitMultipleBaseUrls(e.MultipleBaseUrls)
 	}
 }

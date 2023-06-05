@@ -10,28 +10,28 @@ type Baz struct {
 	extended string
 }
 
-func (x *Baz) Extended() string {
-	return x.extended
+func (b *Baz) Extended() string {
+	return b.extended
 }
 
-func (x *Baz) UnmarshalJSON(data []byte) error {
+func (b *Baz) UnmarshalJSON(data []byte) error {
 	type unmarshaler Baz
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*x = Baz(value)
-	x.extended = "extended"
+	*b = Baz(value)
+	b.extended = "extended"
 	return nil
 }
 
-func (x *Baz) MarshalJSON() ([]byte, error) {
+func (b *Baz) MarshalJSON() ([]byte, error) {
 	type embed Baz
 	var marshaler = struct {
 		embed
 		Extended string `json:"extended"`
 	}{
-		embed:    embed(*x),
+		embed:    embed(*b),
 		Extended: "extended",
 	}
 	return json.Marshal(marshaler)

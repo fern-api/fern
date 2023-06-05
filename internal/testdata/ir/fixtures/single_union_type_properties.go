@@ -14,48 +14,48 @@ type SingleUnionTypeProperties struct {
 	NoProperties           any
 }
 
-func (x *SingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
+func (s *SingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		PropertiesType string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.PropertiesType = unmarshaler.PropertiesType
+	s.PropertiesType = unmarshaler.PropertiesType
 	switch unmarshaler.PropertiesType {
 	case "samePropertiesAsObject":
 		value := new(DeclaredTypeName)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.SamePropertiesAsObject = value
+		s.SamePropertiesAsObject = value
 	case "singleProperty":
 		value := new(SingleUnionTypeProperty)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.SingleProperty = value
+		s.SingleProperty = value
 	case "noProperties":
 		value := make(map[string]any)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.NoProperties = value
+		s.NoProperties = value
 	}
 	return nil
 }
 
-func (x SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
-	switch x.PropertiesType {
+func (s SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
+	switch s.PropertiesType {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.PropertiesType, x)
+		return nil, fmt.Errorf("invalid type %s in %T", s.PropertiesType, s)
 	case "samePropertiesAsObject":
 		var marshaler = struct {
 			PropertiesType string `json:"_type"`
 			*DeclaredTypeName
 		}{
-			PropertiesType:   x.PropertiesType,
-			DeclaredTypeName: x.SamePropertiesAsObject,
+			PropertiesType:   s.PropertiesType,
+			DeclaredTypeName: s.SamePropertiesAsObject,
 		}
 		return json.Marshal(marshaler)
 	case "singleProperty":
@@ -63,8 +63,8 @@ func (x SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 			PropertiesType string `json:"_type"`
 			*SingleUnionTypeProperty
 		}{
-			PropertiesType:          x.PropertiesType,
-			SingleUnionTypeProperty: x.SingleProperty,
+			PropertiesType:          s.PropertiesType,
+			SingleUnionTypeProperty: s.SingleProperty,
 		}
 		return json.Marshal(marshaler)
 	case "noProperties":
@@ -72,8 +72,8 @@ func (x SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 			PropertiesType string `json:"_type"`
 			NoProperties   any    `json:"noProperties"`
 		}{
-			PropertiesType: x.PropertiesType,
-			NoProperties:   x.NoProperties,
+			PropertiesType: s.PropertiesType,
+			NoProperties:   s.NoProperties,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -85,15 +85,15 @@ type SingleUnionTypePropertiesVisitor interface {
 	VisitNoProperties(any) error
 }
 
-func (x *SingleUnionTypeProperties) Accept(v SingleUnionTypePropertiesVisitor) error {
-	switch x.PropertiesType {
+func (s *SingleUnionTypeProperties) Accept(v SingleUnionTypePropertiesVisitor) error {
+	switch s.PropertiesType {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.PropertiesType, x)
+		return fmt.Errorf("invalid type %s in %T", s.PropertiesType, s)
 	case "samePropertiesAsObject":
-		return v.VisitSamePropertiesAsObject(x.SamePropertiesAsObject)
+		return v.VisitSamePropertiesAsObject(s.SamePropertiesAsObject)
 	case "singleProperty":
-		return v.VisitSingleProperty(x.SingleProperty)
+		return v.VisitSingleProperty(s.SingleProperty)
 	case "noProperties":
-		return v.VisitNoProperties(x.NoProperties)
+		return v.VisitNoProperties(s.NoProperties)
 	}
 }

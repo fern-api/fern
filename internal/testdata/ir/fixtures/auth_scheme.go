@@ -14,48 +14,48 @@ type AuthScheme struct {
 	Header *HeaderAuthScheme
 }
 
-func (x *AuthScheme) UnmarshalJSON(data []byte) error {
+func (a *AuthScheme) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	a.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "bearer":
 		value := new(BearerAuthScheme)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Bearer = value
+		a.Bearer = value
 	case "basic":
 		value := new(BasicAuthScheme)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Basic = value
+		a.Basic = value
 	case "header":
 		value := new(HeaderAuthScheme)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Header = value
+		a.Header = value
 	}
 	return nil
 }
 
-func (x AuthScheme) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (a AuthScheme) MarshalJSON() ([]byte, error) {
+	switch a.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", a.Type, a)
 	case "bearer":
 		var marshaler = struct {
 			Type string `json:"_type"`
 			*BearerAuthScheme
 		}{
-			Type:             x.Type,
-			BearerAuthScheme: x.Bearer,
+			Type:             a.Type,
+			BearerAuthScheme: a.Bearer,
 		}
 		return json.Marshal(marshaler)
 	case "basic":
@@ -63,8 +63,8 @@ func (x AuthScheme) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*BasicAuthScheme
 		}{
-			Type:            x.Type,
-			BasicAuthScheme: x.Basic,
+			Type:            a.Type,
+			BasicAuthScheme: a.Basic,
 		}
 		return json.Marshal(marshaler)
 	case "header":
@@ -72,8 +72,8 @@ func (x AuthScheme) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*HeaderAuthScheme
 		}{
-			Type:             x.Type,
-			HeaderAuthScheme: x.Header,
+			Type:             a.Type,
+			HeaderAuthScheme: a.Header,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -85,15 +85,15 @@ type AuthSchemeVisitor interface {
 	VisitHeader(*HeaderAuthScheme) error
 }
 
-func (x *AuthScheme) Accept(v AuthSchemeVisitor) error {
-	switch x.Type {
+func (a *AuthScheme) Accept(v AuthSchemeVisitor) error {
+	switch a.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", a.Type, a)
 	case "bearer":
-		return v.VisitBearer(x.Bearer)
+		return v.VisitBearer(a.Bearer)
 	case "basic":
-		return v.VisitBasic(x.Basic)
+		return v.VisitBasic(a.Basic)
 	case "header":
-		return v.VisitHeader(x.Header)
+		return v.VisitHeader(a.Header)
 	}
 }

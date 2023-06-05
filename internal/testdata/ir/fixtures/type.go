@@ -16,60 +16,60 @@ type Type struct {
 	UndiscriminatedUnion *UndiscriminatedUnionTypeDeclaration
 }
 
-func (x *Type) UnmarshalJSON(data []byte) error {
+func (t *Type) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	t.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "alias":
 		value := new(AliasTypeDeclaration)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Alias = value
+		t.Alias = value
 	case "enum":
 		value := new(EnumTypeDeclaration)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Enum = value
+		t.Enum = value
 	case "object":
 		value := new(ObjectTypeDeclaration)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Object = value
+		t.Object = value
 	case "union":
 		value := new(UnionTypeDeclaration)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Union = value
+		t.Union = value
 	case "undiscriminatedUnion":
 		value := new(UndiscriminatedUnionTypeDeclaration)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.UndiscriminatedUnion = value
+		t.UndiscriminatedUnion = value
 	}
 	return nil
 }
 
-func (x Type) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (t Type) MarshalJSON() ([]byte, error) {
+	switch t.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
 	case "alias":
 		var marshaler = struct {
 			Type string `json:"_type"`
 			*AliasTypeDeclaration
 		}{
-			Type:                 x.Type,
-			AliasTypeDeclaration: x.Alias,
+			Type:                 t.Type,
+			AliasTypeDeclaration: t.Alias,
 		}
 		return json.Marshal(marshaler)
 	case "enum":
@@ -77,8 +77,8 @@ func (x Type) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*EnumTypeDeclaration
 		}{
-			Type:                x.Type,
-			EnumTypeDeclaration: x.Enum,
+			Type:                t.Type,
+			EnumTypeDeclaration: t.Enum,
 		}
 		return json.Marshal(marshaler)
 	case "object":
@@ -86,8 +86,8 @@ func (x Type) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*ObjectTypeDeclaration
 		}{
-			Type:                  x.Type,
-			ObjectTypeDeclaration: x.Object,
+			Type:                  t.Type,
+			ObjectTypeDeclaration: t.Object,
 		}
 		return json.Marshal(marshaler)
 	case "union":
@@ -95,8 +95,8 @@ func (x Type) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*UnionTypeDeclaration
 		}{
-			Type:                 x.Type,
-			UnionTypeDeclaration: x.Union,
+			Type:                 t.Type,
+			UnionTypeDeclaration: t.Union,
 		}
 		return json.Marshal(marshaler)
 	case "undiscriminatedUnion":
@@ -104,8 +104,8 @@ func (x Type) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*UndiscriminatedUnionTypeDeclaration
 		}{
-			Type:                                x.Type,
-			UndiscriminatedUnionTypeDeclaration: x.UndiscriminatedUnion,
+			Type:                                t.Type,
+			UndiscriminatedUnionTypeDeclaration: t.UndiscriminatedUnion,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -119,19 +119,19 @@ type TypeVisitor interface {
 	VisitUndiscriminatedUnion(*UndiscriminatedUnionTypeDeclaration) error
 }
 
-func (x *Type) Accept(v TypeVisitor) error {
-	switch x.Type {
+func (t *Type) Accept(v TypeVisitor) error {
+	switch t.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", t.Type, t)
 	case "alias":
-		return v.VisitAlias(x.Alias)
+		return v.VisitAlias(t.Alias)
 	case "enum":
-		return v.VisitEnum(x.Enum)
+		return v.VisitEnum(t.Enum)
 	case "object":
-		return v.VisitObject(x.Object)
+		return v.VisitObject(t.Object)
 	case "union":
-		return v.VisitUnion(x.Union)
+		return v.VisitUnion(t.Union)
 	case "undiscriminatedUnion":
-		return v.VisitUndiscriminatedUnion(x.UndiscriminatedUnion)
+		return v.VisitUndiscriminatedUnion(t.UndiscriminatedUnion)
 	}
 }

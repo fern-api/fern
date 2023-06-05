@@ -17,10 +17,10 @@ const (
 	EnumThree
 )
 
-func (x Enum) String() string {
-	switch x {
+func (e Enum) String() string {
+	switch e {
 	default:
-		return strconv.Itoa(int(x))
+		return strconv.Itoa(int(e))
 	case EnumOne:
 		return "ONE"
 	case EnumTwo:
@@ -30,11 +30,11 @@ func (x Enum) String() string {
 	}
 }
 
-func (x Enum) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", x.String())), nil
+func (e Enum) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", e.String())), nil
 }
 
-func (x *Enum) UnmarshalJSON(data []byte) error {
+func (e *Enum) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -42,13 +42,13 @@ func (x *Enum) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "ONE":
 		value := EnumOne
-		*x = value
+		*e = value
 	case "TWO":
 		value := EnumTwo
-		*x = value
+		*e = value
 	case "THREE":
 		value := EnumThree
-		*x = value
+		*e = value
 	}
 	return nil
 }

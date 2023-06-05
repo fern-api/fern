@@ -13,42 +13,42 @@ type ErrorDiscriminationStrategy struct {
 	Property   *ErrorDiscriminationByPropertyStrategy
 }
 
-func (x *ErrorDiscriminationStrategy) UnmarshalJSON(data []byte) error {
+func (e *ErrorDiscriminationStrategy) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	e.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "statusCode":
 		value := make(map[string]any)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.StatusCode = value
+		e.StatusCode = value
 	case "property":
 		value := new(ErrorDiscriminationByPropertyStrategy)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Property = value
+		e.Property = value
 	}
 	return nil
 }
 
-func (x ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
+	switch e.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "statusCode":
 		var marshaler = struct {
 			Type       string `json:"type"`
 			StatusCode any    `json:"statusCode"`
 		}{
-			Type:       x.Type,
-			StatusCode: x.StatusCode,
+			Type:       e.Type,
+			StatusCode: e.StatusCode,
 		}
 		return json.Marshal(marshaler)
 	case "property":
@@ -56,8 +56,8 @@ func (x ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ErrorDiscriminationByPropertyStrategy
 		}{
-			Type:                                  x.Type,
-			ErrorDiscriminationByPropertyStrategy: x.Property,
+			Type:                                  e.Type,
+			ErrorDiscriminationByPropertyStrategy: e.Property,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,13 +68,13 @@ type ErrorDiscriminationStrategyVisitor interface {
 	VisitProperty(*ErrorDiscriminationByPropertyStrategy) error
 }
 
-func (x *ErrorDiscriminationStrategy) Accept(v ErrorDiscriminationStrategyVisitor) error {
-	switch x.Type {
+func (e *ErrorDiscriminationStrategy) Accept(v ErrorDiscriminationStrategyVisitor) error {
+	switch e.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "statusCode":
-		return v.VisitStatusCode(x.StatusCode)
+		return v.VisitStatusCode(e.StatusCode)
 	case "property":
-		return v.VisitProperty(x.Property)
+		return v.VisitProperty(e.Property)
 	}
 }

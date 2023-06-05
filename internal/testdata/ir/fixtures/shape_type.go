@@ -17,10 +17,10 @@ const (
 	ShapeTypeUndiscriminatedUnion
 )
 
-func (x ShapeType) String() string {
-	switch x {
+func (s ShapeType) String() string {
+	switch s {
 	default:
-		return strconv.Itoa(int(x))
+		return strconv.Itoa(int(s))
 	case ShapeTypeEnum:
 		return "ENUM"
 	case ShapeTypeObject:
@@ -32,11 +32,11 @@ func (x ShapeType) String() string {
 	}
 }
 
-func (x ShapeType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", x.String())), nil
+func (s ShapeType) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", s.String())), nil
 }
 
-func (x *ShapeType) UnmarshalJSON(data []byte) error {
+func (s *ShapeType) UnmarshalJSON(data []byte) error {
 	var raw string
 	if err := json.Unmarshal(data, &raw); err != nil {
 		return err
@@ -44,16 +44,16 @@ func (x *ShapeType) UnmarshalJSON(data []byte) error {
 	switch raw {
 	case "ENUM":
 		value := ShapeTypeEnum
-		*x = value
+		*s = value
 	case "OBJECT":
 		value := ShapeTypeObject
-		*x = value
+		*s = value
 	case "UNION":
 		value := ShapeTypeUnion
-		*x = value
+		*s = value
 	case "UNDISCRIMINATED_UNION":
 		value := ShapeTypeUndiscriminatedUnion
-		*x = value
+		*s = value
 	}
 	return nil
 }

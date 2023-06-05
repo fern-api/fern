@@ -14,44 +14,44 @@ type AnotherUnion struct {
 	Foo           *Foo
 }
 
-func (x *AnotherUnion) StringLiteral() string {
-	return x.stringLiteral
+func (a *AnotherUnion) StringLiteral() string {
+	return a.stringLiteral
 }
 
-func (x *AnotherUnion) UnmarshalJSON(data []byte) error {
+func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
-		x.typeName = "string"
-		x.String = valueString
+		a.typeName = "string"
+		a.String = valueString
 		return nil
 	}
 	var valueStringLiteral string
 	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
 		if valueStringLiteral == "fern" {
-			x.typeName = "stringLiteral"
-			x.stringLiteral = valueStringLiteral
+			a.typeName = "stringLiteral"
+			a.stringLiteral = valueStringLiteral
 			return nil
 		}
 	}
 	valueFoo := new(Foo)
 	if err := json.Unmarshal(data, &valueFoo); err == nil {
-		x.typeName = "foo"
-		x.Foo = valueFoo
+		a.typeName = "foo"
+		a.Foo = valueFoo
 		return nil
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, x)
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, a)
 }
 
-func (x AnotherUnion) MarshalJSON() ([]byte, error) {
-	switch x.typeName {
+func (a AnotherUnion) MarshalJSON() ([]byte, error) {
+	switch a.typeName {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.typeName, x)
+		return nil, fmt.Errorf("invalid type %s in %T", a.typeName, a)
 	case "string":
-		return json.Marshal(x.String)
+		return json.Marshal(a.String)
 	case "stringLiteral":
 		return json.Marshal("fern")
 	case "foo":
-		return json.Marshal(x.Foo)
+		return json.Marshal(a.Foo)
 	}
 }
 
@@ -61,15 +61,15 @@ type AnotherUnionVisitor interface {
 	VisitFoo(*Foo) error
 }
 
-func (x *AnotherUnion) Accept(v AnotherUnionVisitor) error {
-	switch x.typeName {
+func (a *AnotherUnion) Accept(v AnotherUnionVisitor) error {
+	switch a.typeName {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.typeName, x)
+		return fmt.Errorf("invalid type %s in %T", a.typeName, a)
 	case "string":
-		return v.VisitString(x.String)
+		return v.VisitString(a.String)
 	case "stringLiteral":
-		return v.VisitStringLiteral(x.stringLiteral)
+		return v.VisitStringLiteral(a.stringLiteral)
 	case "foo":
-		return v.VisitFoo(x.Foo)
+		return v.VisitFoo(a.Foo)
 	}
 }

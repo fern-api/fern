@@ -21,98 +21,98 @@ type Union struct {
 	stringLiteral    string
 }
 
-func (x *Union) StringLiteral() string {
-	return x.stringLiteral
+func (u *Union) StringLiteral() string {
+	return u.stringLiteral
 }
 
-func (x *Union) UnmarshalJSON(data []byte) error {
+func (u *Union) UnmarshalJSON(data []byte) error {
 	valueFoo := new(Foo)
 	if err := json.Unmarshal(data, &valueFoo); err == nil {
-		x.typeName = "foo"
-		x.Foo = valueFoo
+		u.typeName = "foo"
+		u.Foo = valueFoo
 		return nil
 	}
 	valueBar := new(Bar)
 	if err := json.Unmarshal(data, &valueBar); err == nil {
-		x.typeName = "bar"
-		x.Bar = valueBar
+		u.typeName = "bar"
+		u.Bar = valueBar
 		return nil
 	}
 	valueBaz := new(Baz)
 	if err := json.Unmarshal(data, &valueBaz); err == nil {
-		x.typeName = "baz"
-		x.Baz = valueBaz
+		u.typeName = "baz"
+		u.Baz = valueBaz
 		return nil
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
-		x.typeName = "string"
-		x.String = valueString
+		u.typeName = "string"
+		u.String = valueString
 		return nil
 	}
 	var valueIntegerOptional *int
 	if err := json.Unmarshal(data, &valueIntegerOptional); err == nil {
-		x.typeName = "integerOptional"
-		x.IntegerOptional = valueIntegerOptional
+		u.typeName = "integerOptional"
+		u.IntegerOptional = valueIntegerOptional
 		return nil
 	}
 	var valueStringBooleanMap map[string]bool
 	if err := json.Unmarshal(data, &valueStringBooleanMap); err == nil {
-		x.typeName = "stringBooleanMap"
-		x.StringBooleanMap = valueStringBooleanMap
+		u.typeName = "stringBooleanMap"
+		u.StringBooleanMap = valueStringBooleanMap
 		return nil
 	}
 	var valueStringList []string
 	if err := json.Unmarshal(data, &valueStringList); err == nil {
-		x.typeName = "stringList"
-		x.StringList = valueStringList
+		u.typeName = "stringList"
+		u.StringList = valueStringList
 		return nil
 	}
 	var valueStringListList [][]string
 	if err := json.Unmarshal(data, &valueStringListList); err == nil {
-		x.typeName = "stringListList"
-		x.StringListList = valueStringListList
+		u.typeName = "stringListList"
+		u.StringListList = valueStringListList
 		return nil
 	}
 	var valueDoubleSet []float64
 	if err := json.Unmarshal(data, &valueDoubleSet); err == nil {
-		x.typeName = "doubleSet"
-		x.DoubleSet = valueDoubleSet
+		u.typeName = "doubleSet"
+		u.DoubleSet = valueDoubleSet
 		return nil
 	}
 	var valueStringLiteral string
 	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
 		if valueStringLiteral == "fern" {
-			x.typeName = "stringLiteral"
-			x.stringLiteral = valueStringLiteral
+			u.typeName = "stringLiteral"
+			u.stringLiteral = valueStringLiteral
 			return nil
 		}
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, x)
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
 }
 
-func (x Union) MarshalJSON() ([]byte, error) {
-	switch x.typeName {
+func (u Union) MarshalJSON() ([]byte, error) {
+	switch u.typeName {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.typeName, x)
+		return nil, fmt.Errorf("invalid type %s in %T", u.typeName, u)
 	case "foo":
-		return json.Marshal(x.Foo)
+		return json.Marshal(u.Foo)
 	case "bar":
-		return json.Marshal(x.Bar)
+		return json.Marshal(u.Bar)
 	case "baz":
-		return json.Marshal(x.Baz)
+		return json.Marshal(u.Baz)
 	case "string":
-		return json.Marshal(x.String)
+		return json.Marshal(u.String)
 	case "integerOptional":
-		return json.Marshal(x.IntegerOptional)
+		return json.Marshal(u.IntegerOptional)
 	case "stringBooleanMap":
-		return json.Marshal(x.StringBooleanMap)
+		return json.Marshal(u.StringBooleanMap)
 	case "stringList":
-		return json.Marshal(x.StringList)
+		return json.Marshal(u.StringList)
 	case "stringListList":
-		return json.Marshal(x.StringListList)
+		return json.Marshal(u.StringListList)
 	case "doubleSet":
-		return json.Marshal(x.DoubleSet)
+		return json.Marshal(u.DoubleSet)
 	case "stringLiteral":
 		return json.Marshal("fern")
 	}
@@ -131,29 +131,29 @@ type UnionVisitor interface {
 	VisitStringLiteral(string) error
 }
 
-func (x *Union) Accept(v UnionVisitor) error {
-	switch x.typeName {
+func (u *Union) Accept(v UnionVisitor) error {
+	switch u.typeName {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.typeName, x)
+		return fmt.Errorf("invalid type %s in %T", u.typeName, u)
 	case "foo":
-		return v.VisitFoo(x.Foo)
+		return v.VisitFoo(u.Foo)
 	case "bar":
-		return v.VisitBar(x.Bar)
+		return v.VisitBar(u.Bar)
 	case "baz":
-		return v.VisitBaz(x.Baz)
+		return v.VisitBaz(u.Baz)
 	case "string":
-		return v.VisitString(x.String)
+		return v.VisitString(u.String)
 	case "integerOptional":
-		return v.VisitIntegerOptional(x.IntegerOptional)
+		return v.VisitIntegerOptional(u.IntegerOptional)
 	case "stringBooleanMap":
-		return v.VisitStringBooleanMap(x.StringBooleanMap)
+		return v.VisitStringBooleanMap(u.StringBooleanMap)
 	case "stringList":
-		return v.VisitStringList(x.StringList)
+		return v.VisitStringList(u.StringList)
 	case "stringListList":
-		return v.VisitStringListList(x.StringListList)
+		return v.VisitStringListList(u.StringListList)
 	case "doubleSet":
-		return v.VisitDoubleSet(x.DoubleSet)
+		return v.VisitDoubleSet(u.DoubleSet)
 	case "stringLiteral":
-		return v.VisitStringLiteral(x.stringLiteral)
+		return v.VisitStringLiteral(u.stringLiteral)
 	}
 }

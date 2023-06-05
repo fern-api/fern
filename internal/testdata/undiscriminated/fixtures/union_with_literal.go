@@ -13,36 +13,36 @@ type UnionWithLiteral struct {
 	String        string
 }
 
-func (x *UnionWithLiteral) StringLiteral() string {
-	return x.stringLiteral
+func (u *UnionWithLiteral) StringLiteral() string {
+	return u.stringLiteral
 }
 
-func (x *UnionWithLiteral) UnmarshalJSON(data []byte) error {
+func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var valueStringLiteral string
 	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
 		if valueStringLiteral == "fern" {
-			x.typeName = "stringLiteral"
-			x.stringLiteral = valueStringLiteral
+			u.typeName = "stringLiteral"
+			u.stringLiteral = valueStringLiteral
 			return nil
 		}
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
-		x.typeName = "string"
-		x.String = valueString
+		u.typeName = "string"
+		u.String = valueString
 		return nil
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, x)
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
 }
 
-func (x UnionWithLiteral) MarshalJSON() ([]byte, error) {
-	switch x.typeName {
+func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
+	switch u.typeName {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.typeName, x)
+		return nil, fmt.Errorf("invalid type %s in %T", u.typeName, u)
 	case "stringLiteral":
 		return json.Marshal("fern")
 	case "string":
-		return json.Marshal(x.String)
+		return json.Marshal(u.String)
 	}
 }
 
@@ -51,13 +51,13 @@ type UnionWithLiteralVisitor interface {
 	VisitString(string) error
 }
 
-func (x *UnionWithLiteral) Accept(v UnionWithLiteralVisitor) error {
-	switch x.typeName {
+func (u *UnionWithLiteral) Accept(v UnionWithLiteralVisitor) error {
+	switch u.typeName {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.typeName, x)
+		return fmt.Errorf("invalid type %s in %T", u.typeName, u)
 	case "stringLiteral":
-		return v.VisitStringLiteral(x.stringLiteral)
+		return v.VisitStringLiteral(u.stringLiteral)
 	case "string":
-		return v.VisitString(x.String)
+		return v.VisitString(u.String)
 	}
 }

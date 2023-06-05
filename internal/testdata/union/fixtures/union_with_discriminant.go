@@ -14,14 +14,14 @@ type UnionWithDiscriminant struct {
 	Bar *Bar
 }
 
-func (x *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
+func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	u.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "foo":
 		var valueUnmarshaler struct {
@@ -30,7 +30,7 @@ func (x *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Foo = valueUnmarshaler.Foo
+		u.Foo = valueUnmarshaler.Foo
 	case "bar":
 		var valueUnmarshaler struct {
 			Bar *Bar `json:"bar"`
@@ -38,22 +38,22 @@ func (x *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Bar = valueUnmarshaler.Bar
+		u.Bar = valueUnmarshaler.Bar
 	}
 	return nil
 }
 
-func (x UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
+	switch u.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
 		var marshaler = struct {
 			Type string `json:"_type"`
 			Foo  *Foo   `json:"foo"`
 		}{
-			Type: x.Type,
-			Foo:  x.Foo,
+			Type: u.Type,
+			Foo:  u.Foo,
 		}
 		return json.Marshal(marshaler)
 	case "bar":
@@ -61,8 +61,8 @@ func (x UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			Bar  *Bar   `json:"bar"`
 		}{
-			Type: x.Type,
-			Bar:  x.Bar,
+			Type: u.Type,
+			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -73,13 +73,13 @@ type UnionWithDiscriminantVisitor interface {
 	VisitBar(*Bar) error
 }
 
-func (x *UnionWithDiscriminant) Accept(v UnionWithDiscriminantVisitor) error {
-	switch x.Type {
+func (u *UnionWithDiscriminant) Accept(v UnionWithDiscriminantVisitor) error {
+	switch u.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return v.VisitFoo(x.Foo)
+		return v.VisitFoo(u.Foo)
 	case "bar":
-		return v.VisitBar(x.Bar)
+		return v.VisitBar(u.Bar)
 	}
 }

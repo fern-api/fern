@@ -16,21 +16,21 @@ type Union struct {
 	AnotherBar   *bar.Bar
 }
 
-func (x *Union) UnmarshalJSON(data []byte) error {
+func (u *Union) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	u.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "value":
 		value := new(Value)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Value = value
+		u.Value = value
 	case "anotherValue":
 		var valueUnmarshaler struct {
 			AnotherValue *Value `json:"anotherValue"`
@@ -38,13 +38,13 @@ func (x *Union) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.AnotherValue = valueUnmarshaler.AnotherValue
+		u.AnotherValue = valueUnmarshaler.AnotherValue
 	case "bar":
 		value := new(bar.Bar)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Bar = value
+		u.Bar = value
 	case "anotherBar":
 		var valueUnmarshaler struct {
 			AnotherBar *bar.Bar `json:"anotherBar"`
@@ -52,22 +52,22 @@ func (x *Union) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.AnotherBar = valueUnmarshaler.AnotherBar
+		u.AnotherBar = valueUnmarshaler.AnotherBar
 	}
 	return nil
 }
 
-func (x Union) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (u Union) MarshalJSON() ([]byte, error) {
+	switch u.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "value":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*Value
 		}{
-			Type:  x.Type,
-			Value: x.Value,
+			Type:  u.Type,
+			Value: u.Value,
 		}
 		return json.Marshal(marshaler)
 	case "anotherValue":
@@ -75,8 +75,8 @@ func (x Union) MarshalJSON() ([]byte, error) {
 			Type         string `json:"type"`
 			AnotherValue *Value `json:"anotherValue"`
 		}{
-			Type:         x.Type,
-			AnotherValue: x.AnotherValue,
+			Type:         u.Type,
+			AnotherValue: u.AnotherValue,
 		}
 		return json.Marshal(marshaler)
 	case "bar":
@@ -84,8 +84,8 @@ func (x Union) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*bar.Bar
 		}{
-			Type: x.Type,
-			Bar:  x.Bar,
+			Type: u.Type,
+			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
 	case "anotherBar":
@@ -93,8 +93,8 @@ func (x Union) MarshalJSON() ([]byte, error) {
 			Type       string   `json:"type"`
 			AnotherBar *bar.Bar `json:"anotherBar"`
 		}{
-			Type:       x.Type,
-			AnotherBar: x.AnotherBar,
+			Type:       u.Type,
+			AnotherBar: u.AnotherBar,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -107,17 +107,17 @@ type UnionVisitor interface {
 	VisitAnotherBar(*bar.Bar) error
 }
 
-func (x *Union) Accept(v UnionVisitor) error {
-	switch x.Type {
+func (u *Union) Accept(v UnionVisitor) error {
+	switch u.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "value":
-		return v.VisitValue(x.Value)
+		return v.VisitValue(u.Value)
 	case "anotherValue":
-		return v.VisitAnotherValue(x.AnotherValue)
+		return v.VisitAnotherValue(u.AnotherValue)
 	case "bar":
-		return v.VisitBar(x.Bar)
+		return v.VisitBar(u.Bar)
 	case "anotherBar":
-		return v.VisitAnotherBar(x.AnotherBar)
+		return v.VisitAnotherBar(u.AnotherBar)
 	}
 }

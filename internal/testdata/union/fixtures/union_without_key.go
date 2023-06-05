@@ -14,42 +14,42 @@ type UnionWithoutKey struct {
 	Bar *Bar
 }
 
-func (x *UnionWithoutKey) UnmarshalJSON(data []byte) error {
+func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	u.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Foo = value
+		u.Foo = value
 	case "bar":
 		value := new(Bar)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Bar = value
+		u.Bar = value
 	}
 	return nil
 }
 
-func (x UnionWithoutKey) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
+	switch u.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*Foo
 		}{
-			Type: x.Type,
-			Foo:  x.Foo,
+			Type: u.Type,
+			Foo:  u.Foo,
 		}
 		return json.Marshal(marshaler)
 	case "bar":
@@ -57,8 +57,8 @@ func (x UnionWithoutKey) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*Bar
 		}{
-			Type: x.Type,
-			Bar:  x.Bar,
+			Type: u.Type,
+			Bar:  u.Bar,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -69,13 +69,13 @@ type UnionWithoutKeyVisitor interface {
 	VisitBar(*Bar) error
 }
 
-func (x *UnionWithoutKey) Accept(v UnionWithoutKeyVisitor) error {
-	switch x.Type {
+func (u *UnionWithoutKey) Accept(v UnionWithoutKeyVisitor) error {
+	switch u.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return v.VisitFoo(x.Foo)
+		return v.VisitFoo(u.Foo)
 	case "bar":
-		return v.VisitBar(x.Bar)
+		return v.VisitBar(u.Bar)
 	}
 }

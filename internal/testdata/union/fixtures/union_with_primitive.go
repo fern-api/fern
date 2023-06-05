@@ -13,14 +13,14 @@ type UnionWithPrimitive struct {
 	String  string
 }
 
-func (x *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
+func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	u.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "boolean":
 		var valueUnmarshaler struct {
@@ -29,7 +29,7 @@ func (x *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.Boolean = valueUnmarshaler.Boolean
+		u.Boolean = valueUnmarshaler.Boolean
 	case "string":
 		var valueUnmarshaler struct {
 			String string `json:"value"`
@@ -37,22 +37,22 @@ func (x *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		x.String = valueUnmarshaler.String
+		u.String = valueUnmarshaler.String
 	}
 	return nil
 }
 
-func (x UnionWithPrimitive) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
+	switch u.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "boolean":
 		var marshaler = struct {
 			Type    string `json:"type"`
 			Boolean bool   `json:"value"`
 		}{
-			Type:    x.Type,
-			Boolean: x.Boolean,
+			Type:    u.Type,
+			Boolean: u.Boolean,
 		}
 		return json.Marshal(marshaler)
 	case "string":
@@ -60,8 +60,8 @@ func (x UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 			Type   string `json:"type"`
 			String string `json:"value"`
 		}{
-			Type:   x.Type,
-			String: x.String,
+			Type:   u.Type,
+			String: u.String,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -72,13 +72,13 @@ type UnionWithPrimitiveVisitor interface {
 	VisitString(string) error
 }
 
-func (x *UnionWithPrimitive) Accept(v UnionWithPrimitiveVisitor) error {
-	switch x.Type {
+func (u *UnionWithPrimitive) Accept(v UnionWithPrimitiveVisitor) error {
+	switch u.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "boolean":
-		return v.VisitBoolean(x.Boolean)
+		return v.VisitBoolean(u.Boolean)
 	case "string":
-		return v.VisitString(x.String)
+		return v.VisitString(u.String)
 	}
 }

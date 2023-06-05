@@ -15,54 +15,54 @@ type SdkResponse struct {
 	FileDownload   *FileDownloadResponse
 }
 
-func (x *SdkResponse) UnmarshalJSON(data []byte) error {
+func (s *SdkResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	s.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "json":
 		value := new(JsonResponse)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Json = value
+		s.Json = value
 	case "streaming":
 		value := new(StreamingResponse)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Streaming = value
+		s.Streaming = value
 	case "maybeStreaming":
 		value := new(MaybeStreamingResponse)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.MaybeStreaming = value
+		s.MaybeStreaming = value
 	case "fileDownload":
 		value := new(FileDownloadResponse)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.FileDownload = value
+		s.FileDownload = value
 	}
 	return nil
 }
 
-func (x SdkResponse) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (s SdkResponse) MarshalJSON() ([]byte, error) {
+	switch s.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "json":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*JsonResponse
 		}{
-			Type:         x.Type,
-			JsonResponse: x.Json,
+			Type:         s.Type,
+			JsonResponse: s.Json,
 		}
 		return json.Marshal(marshaler)
 	case "streaming":
@@ -70,8 +70,8 @@ func (x SdkResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*StreamingResponse
 		}{
-			Type:              x.Type,
-			StreamingResponse: x.Streaming,
+			Type:              s.Type,
+			StreamingResponse: s.Streaming,
 		}
 		return json.Marshal(marshaler)
 	case "maybeStreaming":
@@ -79,8 +79,8 @@ func (x SdkResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*MaybeStreamingResponse
 		}{
-			Type:                   x.Type,
-			MaybeStreamingResponse: x.MaybeStreaming,
+			Type:                   s.Type,
+			MaybeStreamingResponse: s.MaybeStreaming,
 		}
 		return json.Marshal(marshaler)
 	case "fileDownload":
@@ -88,8 +88,8 @@ func (x SdkResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*FileDownloadResponse
 		}{
-			Type:                 x.Type,
-			FileDownloadResponse: x.FileDownload,
+			Type:                 s.Type,
+			FileDownloadResponse: s.FileDownload,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -102,17 +102,17 @@ type SdkResponseVisitor interface {
 	VisitFileDownload(*FileDownloadResponse) error
 }
 
-func (x *SdkResponse) Accept(v SdkResponseVisitor) error {
-	switch x.Type {
+func (s *SdkResponse) Accept(v SdkResponseVisitor) error {
+	switch s.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "json":
-		return v.VisitJson(x.Json)
+		return v.VisitJson(s.Json)
 	case "streaming":
-		return v.VisitStreaming(x.Streaming)
+		return v.VisitStreaming(s.Streaming)
 	case "maybeStreaming":
-		return v.VisitMaybeStreaming(x.MaybeStreaming)
+		return v.VisitMaybeStreaming(s.MaybeStreaming)
 	case "fileDownload":
-		return v.VisitFileDownload(x.FileDownload)
+		return v.VisitFileDownload(s.FileDownload)
 	}
 }

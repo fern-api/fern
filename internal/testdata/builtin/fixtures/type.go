@@ -29,28 +29,28 @@ type Type struct {
 	eighteen  string
 }
 
-func (x *Type) Eighteen() string {
-	return x.eighteen
+func (t *Type) Eighteen() string {
+	return t.eighteen
 }
 
-func (x *Type) UnmarshalJSON(data []byte) error {
+func (t *Type) UnmarshalJSON(data []byte) error {
 	type unmarshaler Type
 	var value unmarshaler
 	if err := json.Unmarshal(data, &value); err != nil {
 		return err
 	}
-	*x = Type(value)
-	x.eighteen = "fern"
+	*t = Type(value)
+	t.eighteen = "fern"
 	return nil
 }
 
-func (x *Type) MarshalJSON() ([]byte, error) {
+func (t *Type) MarshalJSON() ([]byte, error) {
 	type embed Type
 	var marshaler = struct {
 		embed
 		Eighteen string `json:"eighteen"`
 	}{
-		embed:    embed(*x),
+		embed:    embed(*t),
 		Eighteen: "fern",
 	}
 	return json.Marshal(marshaler)

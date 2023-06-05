@@ -13,42 +13,42 @@ type UnionWithUnknown struct {
 	Unknown any
 }
 
-func (x *UnionWithUnknown) UnmarshalJSON(data []byte) error {
+func (u *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	x.Type = unmarshaler.Type
+	u.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Foo = value
+		u.Foo = value
 	case "unknown":
 		value := make(map[string]any)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		x.Unknown = value
+		u.Unknown = value
 	}
 	return nil
 }
 
-func (x UnionWithUnknown) MarshalJSON() ([]byte, error) {
-	switch x.Type {
+func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
+	switch u.Type {
 	default:
-		return nil, fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
 		var marshaler = struct {
 			Type string `json:"type"`
 			*Foo
 		}{
-			Type: x.Type,
-			Foo:  x.Foo,
+			Type: u.Type,
+			Foo:  u.Foo,
 		}
 		return json.Marshal(marshaler)
 	case "unknown":
@@ -56,8 +56,8 @@ func (x UnionWithUnknown) MarshalJSON() ([]byte, error) {
 			Type    string `json:"type"`
 			Unknown any    `json:"unknown"`
 		}{
-			Type:    x.Type,
-			Unknown: x.Unknown,
+			Type:    u.Type,
+			Unknown: u.Unknown,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -68,13 +68,13 @@ type UnionWithUnknownVisitor interface {
 	VisitUnknown(any) error
 }
 
-func (x *UnionWithUnknown) Accept(v UnionWithUnknownVisitor) error {
-	switch x.Type {
+func (u *UnionWithUnknown) Accept(v UnionWithUnknownVisitor) error {
+	switch u.Type {
 	default:
-		return fmt.Errorf("invalid type %s in %T", x.Type, x)
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return v.VisitFoo(x.Foo)
+		return v.VisitFoo(u.Foo)
 	case "unknown":
-		return v.VisitUnknown(x.Unknown)
+		return v.VisitUnknown(u.Unknown)
 	}
 }
