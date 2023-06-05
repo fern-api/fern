@@ -13,7 +13,8 @@ type Config struct {
 // ModuleConfig represents the configuration used to generate
 // a go.mod and go.sum.
 type ModuleConfig struct {
-	Path string
+	Path    string
+	Version string
 
 	// Map from import path to version.
 	//

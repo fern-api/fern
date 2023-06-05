@@ -101,6 +101,17 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation) ([]*File, error)
 		}
 		files = append(files, file)
 	}
+	// Finally, generate the go.mod file, if needed.
+	//
+	// The go.sum file will be generated after the
+	// go.mod file is written to disk.
+	if g.config.ModuleConfig != nil {
+		file, err := NewModFile(g.config.ModuleConfig)
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
+	}
 	return files, nil
 }
 

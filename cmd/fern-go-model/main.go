@@ -101,6 +101,7 @@ type customConfig struct {
 
 type moduleConfig struct {
 	Path    string            `json:"path,omitempty"`
+	Version string            `json:"version,omitempty"`
 	Imports map[string]string `json:"imports,omitempty"`
 }
 
@@ -127,11 +128,15 @@ func moduleConfigFromCustomConfig(customConfig *customConfig) (*generator.Module
 	if customConfig.Module == nil || customConfig.Module == (&moduleConfig{}) {
 		return nil, nil
 	}
-	if customConfig.Module.Path == "" && len(customConfig.Module.Imports) > 0 {
+	if customConfig.Module.Path == "" {
 		return nil, errors.New("custom module configuration must specify a path")
+	}
+	if customConfig.Module.Version == "" {
+		return nil, errors.New("custom module configuration must specify a version")
 	}
 	return &generator.ModuleConfig{
 		Path:    customConfig.Module.Path,
+		Version: customConfig.Module.Version,
 		Imports: customConfig.Module.Imports,
 	}, nil
 }
