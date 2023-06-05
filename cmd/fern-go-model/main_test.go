@@ -11,6 +11,7 @@ import (
 
 	builtin "github.com/fern-api/fern-go/internal/testdata/builtin/fixtures"
 	custom "github.com/fern-api/fern-go/internal/testdata/custom/fixtures"
+	enum "github.com/fern-api/fern-go/internal/testdata/enum/fixtures"
 	undiscriminated "github.com/fern-api/fern-go/internal/testdata/undiscriminated/fixtures"
 	union "github.com/fern-api/fern-go/internal/testdata/union/fixtures"
 	"github.com/gofrs/uuid"
@@ -124,6 +125,14 @@ func TestRoundTrip(t *testing.T) {
 			},
 		},
 		{
+			desc:  "simple enum",
+			value: enum.EnumTwo,
+			constructor: func() any {
+				var value enum.Enum
+				return value
+			},
+		},
+		{
 			desc: "simple union",
 			value: &union.Union{
 				Type: "foo",
@@ -150,6 +159,21 @@ func TestRoundTrip(t *testing.T) {
 			assert.Equal(t, expectedBytes, actualBytes)
 		})
 	}
+}
+
+// TestEnum verifies that enums are [de]serialized and
+// represented appropriately.
+func TestEnum(t *testing.T) {
+	var one enum.Enum
+	require.NoError(t, json.Unmarshal([]byte(`"ONE"`), &one))
+
+	assert.Equal(t, enum.EnumOne, one)
+	assert.Equal(t, "ONE", one.String())
+
+	bytes, err := json.Marshal(one)
+	require.NoError(t, err)
+
+	assert.Equal(t, []byte(`"ONE"`), bytes)
 }
 
 // TestLiteral verifies that any type with a literal has
