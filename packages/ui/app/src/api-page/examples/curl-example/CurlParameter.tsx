@@ -1,3 +1,5 @@
+import { JsonExampleString } from "../json-example/JsonExampleString";
+
 export declare namespace CurlParameter {
     export interface Props {
         paramKey: string;
@@ -8,11 +10,11 @@ export declare namespace CurlParameter {
 export const CurlParameter: React.FC<CurlParameter.Props> = ({ paramKey, value }) => {
     return (
         <>
-            <span className="text-yellow-100">{paramKey}</span>
+            <span className="text-text-muted">{paramKey}</span>
             {value != null && (
                 <>
                     {" "}
-                    <span className="text-accentPrimary">{`"${value}"`}</span>
+                    <JsonExampleString value={value} />
                 </>
             )}
         </>

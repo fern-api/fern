@@ -21,6 +21,7 @@ export interface DocsContextValue {
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    basePath: string;
     resolvedPathFromUrl: ResolvedUrlPath | undefined;
     nextPath: ResolvedUrlPath | undefined;
     previousPath: ResolvedUrlPath | undefined;

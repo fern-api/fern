@@ -20,7 +20,8 @@
       "DEFAULT_FDR_ORIGIN",
       "VENUS_AUDIENCE",
       "LOCAL_STORAGE_FOLDER",
-      "POSTHOG_API_KEY"
+      "POSTHOG_API_KEY",
+      "DOCS_DOMAIN_SUFFIX"
     ]
   },
   "plugins": {

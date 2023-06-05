@@ -5,6 +5,7 @@ import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionCo
 import { useEndpointEnvironmentUrl } from "../../endpoints/useEndpointEnvironmentUrl";
 import { JsonExampleContext, JsonExampleContextValue } from "../json-example/contexts/JsonExampleContext";
 import { JsonPropertyPath } from "../json-example/contexts/JsonPropertyPath";
+import { JsonExampleString } from "../json-example/JsonExampleString";
 import { JsonItemBottomLine } from "../json-example/JsonItemBottomLine";
 import { JsonItemMiddleLines } from "../json-example/JsonItemMiddleLines";
 import { JsonItemTopLine } from "../json-example/JsonItemTopLine";
@@ -101,8 +102,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                         {
                             value: (
                                 <>
-                                    <CurlParameter paramKey="--data" />{" "}
-                                    <span className="text-accentPrimary">{"'"}</span>
+                                    <CurlParameter paramKey="--data" /> <JsonExampleString value="'" doNotAddQuotes />
                                 </>
                             ),
                             excludeTrailingBackslash: true,
@@ -119,7 +119,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                             excludeTrailingBackslash: true,
                         },
                         {
-                            value: <span className="text-accentPrimary">{"'"}</span>,
+                            value: <JsonExampleString value="'" doNotAddQuotes />,
                             excludeIndent: true,
                         }
                     );

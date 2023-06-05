@@ -1,5 +1,6 @@
 import { size } from "lodash-es";
 import { useMemo } from "react";
+import { JsonExampleString } from "./JsonExampleString";
 import { visitJsonItem } from "./visitJsonItem";
 
 export declare namespace JsonItemTopLineContent {
@@ -25,7 +26,7 @@ export const JsonItemTopLineContent: React.FC<JsonItemTopLineContent.Props> = ({
                         ? { content: <span>{"["}</span>, isEndOfElement: false }
                         : { content: <span>{"[]"}</span>, isEndOfElement: true },
                 string: (value) => ({
-                    content: <span className="text-green-500">{`"${value}"`}</span>,
+                    content: <JsonExampleString value={value} />,
                     isEndOfElement: true,
                 }),
                 number: (value) => ({ content: <span className="text-[#d67653]">{value}</span>, isEndOfElement: true }),
