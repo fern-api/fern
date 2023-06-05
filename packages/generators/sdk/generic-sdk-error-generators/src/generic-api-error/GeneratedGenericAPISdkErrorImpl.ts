@@ -15,8 +15,11 @@ export class GeneratedGenericAPISdkErrorImpl
     private static RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME =
         GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME;
 
+    private static BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
+
     public writeToFile(context: GenericAPISdkErrorContext): void {
         super.writeToSourceFile(context);
+        this.writeBuildMessageFunctionToFile(context);
     }
 
     public build(
@@ -152,7 +155,31 @@ export class GeneratedGenericAPISdkErrorImpl
     }
 
     protected getSuperArguments(): ts.Expression[] {
-        return [ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME)];
+        return [
+            ts.factory.createCallExpression(
+                ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.BUILD_MESSAGE_FUNCTION_NAME),
+                undefined,
+                [
+                    ts.factory.createObjectLiteralExpression(
+                        [
+                            ts.factory.createShorthandPropertyAssignment(
+                                GeneratedGenericAPISdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME,
+                                undefined
+                            ),
+                            ts.factory.createShorthandPropertyAssignment(
+                                GeneratedGenericAPISdkErrorImpl.STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME,
+                                undefined
+                            ),
+                            ts.factory.createShorthandPropertyAssignment(
+                                GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME,
+                                undefined
+                            ),
+                        ],
+                        false
+                    ),
+                ]
+            ),
+        ];
     }
 
     protected getConstructorStatements(): ts.Statement[] {
@@ -220,5 +247,200 @@ export class GeneratedGenericAPISdkErrorImpl
 
     protected isAbstract(): boolean {
         return false;
+    }
+
+    private writeBuildMessageFunctionToFile(context: GenericAPISdkErrorContext): void {
+        const LINES_VARIABLE_NAME = "lines";
+
+        context.base.sourceFile.addFunction({
+            name: GeneratedGenericAPISdkErrorImpl.BUILD_MESSAGE_FUNCTION_NAME,
+            parameters: [
+                {
+                    name: getTextOfTsNode(
+                        ts.factory.createObjectBindingPattern([
+                            ts.factory.createBindingElement(
+                                undefined,
+                                undefined,
+                                GeneratedGenericAPISdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME,
+                                undefined
+                            ),
+                            ts.factory.createBindingElement(
+                                undefined,
+                                undefined,
+                                GeneratedGenericAPISdkErrorImpl.STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME,
+                                undefined
+                            ),
+                            ts.factory.createBindingElement(
+                                undefined,
+                                undefined,
+                                GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME,
+                                undefined
+                            ),
+                        ])
+                    ),
+                    type: getTextOfTsNode(
+                        ts.factory.createTypeLiteralNode([
+                            ts.factory.createPropertySignature(
+                                undefined,
+                                GeneratedGenericAPISdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME,
+                                undefined,
+                                ts.factory.createUnionTypeNode([
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                                ])
+                            ),
+                            ts.factory.createPropertySignature(
+                                undefined,
+                                GeneratedGenericAPISdkErrorImpl.STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME,
+                                undefined,
+                                ts.factory.createUnionTypeNode([
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                                ])
+                            ),
+                            ts.factory.createPropertySignature(
+                                undefined,
+                                GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME,
+                                undefined,
+                                ts.factory.createUnionTypeNode([
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                                ])
+                            ),
+                        ])
+                    ),
+                },
+            ],
+            returnType: "string",
+            statements: [
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                LINES_VARIABLE_NAME,
+                                undefined,
+                                ts.factory.createArrayTypeNode(
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                                ),
+                                ts.factory.createArrayLiteralExpression([], false)
+                            ),
+                        ],
+                        ts.NodeFlags.Let
+                    )
+                ),
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createExpressionStatement(
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier(LINES_VARIABLE_NAME),
+                                        ts.factory.createIdentifier("push")
+                                    ),
+                                    undefined,
+                                    [
+                                        ts.factory.createIdentifier(
+                                            GeneratedGenericAPISdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME
+                                        ),
+                                    ]
+                                )
+                            ),
+                        ],
+                        true
+                    ),
+                    undefined
+                ),
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME),
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createExpressionStatement(
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier(LINES_VARIABLE_NAME),
+                                        ts.factory.createIdentifier("push")
+                                    ),
+                                    undefined,
+                                    [
+                                        ts.factory.createCallExpression(
+                                            ts.factory.createPropertyAccessExpression(
+                                                ts.factory.createIdentifier(
+                                                    GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME
+                                                ),
+                                                ts.factory.createIdentifier("toString")
+                                            ),
+                                            undefined,
+                                            []
+                                        ),
+                                    ]
+                                )
+                            ),
+                        ],
+                        true
+                    ),
+                    undefined
+                ),
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createIdentifier(
+                            GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
+                        ),
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
+                    ),
+                    ts.factory.createBlock(
+                        [
+                            ts.factory.createExpressionStatement(
+                                ts.factory.createCallExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier(LINES_VARIABLE_NAME),
+                                        ts.factory.createIdentifier("push")
+                                    ),
+                                    undefined,
+                                    [
+                                        ts.factory.createCallExpression(
+                                            ts.factory.createPropertyAccessExpression(
+                                                ts.factory.createIdentifier("JSON"),
+                                                ts.factory.createIdentifier("stringify")
+                                            ),
+                                            undefined,
+                                            [
+                                                ts.factory.createIdentifier(
+                                                    GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
+                                                ),
+                                                ts.factory.createIdentifier("undefined"),
+                                                ts.factory.createNumericLiteral("2"),
+                                            ]
+                                        ),
+                                    ]
+                                )
+                            ),
+                        ],
+                        true
+                    ),
+                    undefined
+                ),
+                ts.factory.createReturnStatement(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier(LINES_VARIABLE_NAME),
+                            ts.factory.createIdentifier("join")
+                        ),
+                        undefined,
+                        [ts.factory.createStringLiteral("\n")]
+                    )
+                ),
+            ].map(getTextOfTsNode),
+        });
     }
 }
