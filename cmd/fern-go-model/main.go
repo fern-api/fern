@@ -76,7 +76,7 @@ func run(configFilename string) error {
 			)
 		}
 	}
-	generatorConfig, err := generator.NewConfig(config.DryRun, config.IrFilepath, customConfig.ImportPath, moduleConfig)
+	generatorConfig, err := generator.NewConfig(config.DryRun, config.IrFilepath, importPath, moduleConfig)
 	if err != nil {
 		return err
 	}

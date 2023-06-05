@@ -1,0 +1,20 @@
+{
+    "irFilepath": "ir.json",
+    "output": {
+        "mode": {
+            "type": "downloadFiles"
+        },
+        "path": "temp"
+    },
+    "customConfig": {
+      "module":
+        "path": "github.com/example/organization",
+        "version": "1.19"
+    },
+    "workspaceName": "test",
+    "organization": "fernbot",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false
+}

@@ -18,29 +18,30 @@ const modFilename = "go.mod"
 //
 // require github.com/gofrs/uuid/v5 v5.0.0
 func NewModFile(c *ModuleConfig) (*File, error) {
-	if c.Path != "" {
+	if c.Path == "" {
 		return nil, fmt.Errorf("module path is required")
 	}
-	if c.Version != "" {
+	if c.Version == "" {
 		return nil, fmt.Errorf("module go version is required")
 	}
 
 	buffer := bytes.NewBuffer(nil)
 
 	// Write the module path.
-	fmt.Fprint(buffer, fmt.Sprintf("module %s\n", c.Path))
+	fmt.Fprintf(buffer, "module %s\n", c.Path)
 	fmt.Fprintln(buffer)
 
 	// Write the go version.
-	fmt.Fprint(buffer, fmt.Sprintf("go %s\n", c.Version))
+	fmt.Fprintf(buffer, "go %s\n", c.Version)
 	fmt.Fprintln(buffer)
 
 	// Write all of the imports in a single require block.
 	fmt.Fprint(buffer, "require (\n")
 	for path, version := range c.Imports {
-		fmt.Fprint(buffer, fmt.Sprintf("%s %s", path, version))
+		fmt.Fprintf(buffer, "\t%s %s\n", path, version)
 	}
 	fmt.Fprint(buffer, ")\n")
+	fmt.Fprintln(buffer)
 
 	return &File{
 		Path:    modFilename,
