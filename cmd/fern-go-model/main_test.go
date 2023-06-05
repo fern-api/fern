@@ -156,17 +156,38 @@ func TestRoundTrip(t *testing.T) {
 // the constant value serialized, regardless, of what's
 // found on the wire.
 func TestLiteral(t *testing.T) {
-	value := new(builtin.Type)
-	require.NoError(t, json.Unmarshal([]byte(`{"eighteen": "something"}`), &value))
-	assert.Equal(t, "fern", value.Eighteen())
+	t.Run("object", func(t *testing.T) {
+		value := new(builtin.Type)
+		require.NoError(t, json.Unmarshal([]byte(`{"eighteen": "something"}`), &value))
+		assert.Equal(t, "fern", value.Eighteen())
 
-	bytes, err := json.Marshal(value)
-	require.NoError(t, err)
+		bytes, err := json.Marshal(value)
+		require.NoError(t, err)
 
-	object := make(map[string]any)
-	require.NoError(t, json.Unmarshal(bytes, &object))
+		object := make(map[string]any)
+		require.NoError(t, json.Unmarshal(bytes, &object))
 
-	assert.Equal(t, "fern", object["eighteen"])
+		assert.Equal(t, "fern", object["eighteen"])
+	})
+
+	t.Run("union", func(t *testing.T) {
+		value := new(union.UnionWithLiteral)
+		require.NoError(t, json.Unmarshal([]byte(`{"type": "fern", "value": "fern"}`), &value))
+		assert.Equal(t, "extended", value.Extended())
+		assert.Equal(t, "base", value.Base())
+		assert.Equal(t, "fern", value.Fern())
+
+		bytes, err := json.Marshal(value)
+		require.NoError(t, err)
+
+		object := make(map[string]any)
+		require.NoError(t, json.Unmarshal(bytes, &object))
+
+		actualBytes, err := json.Marshal(object)
+		require.NoError(t, err)
+
+		assert.Equal(t, []byte(`{"base":"base","extended":"extended","type":"fern","value":"fern"}`), actualBytes)
+	})
 }
 
 func TestUndiscriminatedUnion(t *testing.T) {
