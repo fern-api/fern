@@ -101,7 +101,7 @@ groups:
           location: local-file-system
           path: ../../generated/openapi
       - name: fernapi/fern-java-sdk
-        version: 0.0.132
+        version: 0.3.6
       - name: fernapi/fern-postman
         version: 0.0.25
 ",
