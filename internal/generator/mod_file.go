@@ -21,9 +21,6 @@ func NewModFile(c *ModuleConfig) (*File, error) {
 	if c.Path == "" {
 		return nil, fmt.Errorf("module path is required")
 	}
-	if c.Version == "" {
-		return nil, fmt.Errorf("module go version is required")
-	}
 
 	buffer := bytes.NewBuffer(nil)
 
@@ -32,8 +29,10 @@ func NewModFile(c *ModuleConfig) (*File, error) {
 	fmt.Fprintln(buffer)
 
 	// Write the go version.
-	fmt.Fprintf(buffer, "go %s\n", c.Version)
-	fmt.Fprintln(buffer)
+	if c.Version != "" {
+		fmt.Fprintf(buffer, "go %s\n", c.Version)
+		fmt.Fprintln(buffer)
+	}
 
 	// Write all of the imports in a single require block.
 	fmt.Fprint(buffer, "require (\n")

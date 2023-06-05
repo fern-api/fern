@@ -3,9 +3,9 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/fern-api/fern-go"
 	"github.com/fern-api/fern-go/internal/fern/generatorexec"
@@ -22,6 +22,12 @@ Usage:
 Flags:
   -h, --help     Print this help and exit.
   -v, --version  Print the version and exit.`
+
+// defaultImports specify the default imports used in the generated
+// go.mod (if any).
+var defaultImports = map[string]string{
+	"github.com/gofrs/uuid/v5": "v5.0.0",
+}
 
 func main() {
 	if len(os.Args) == 2 && (os.Args[1] == "--version" || os.Args[1] == "-v") {
@@ -59,7 +65,7 @@ func run(configFilename string) error {
 	if err != nil {
 		return err
 	}
-	moduleConfig, err := moduleConfigFromCustomConfig(customConfig)
+	moduleConfig, err := moduleConfigFromCustomConfig(customConfig, outputMode)
 	if err != nil {
 		return err
 	}
@@ -145,26 +151,35 @@ func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, er
 	return config, nil
 }
 
-func moduleConfigFromCustomConfig(customConfig *customConfig) (*generator.ModuleConfig, error) {
-	if customConfig.Module == nil || customConfig.Module == (&moduleConfig{}) {
+func moduleConfigFromCustomConfig(customConfig *customConfig, outputMode writer.OutputMode) (*generator.ModuleConfig, error) {
+	githubConfig, ok := outputMode.(*writer.GithubConfig)
+	if !ok && customConfig.Module == nil || customConfig.Module == (&moduleConfig{}) {
+		// Neither a GitHub configuration nor a module configuration were provided.
 		return nil, nil
 	}
-	if customConfig.Module.Path == "" {
-		return nil, errors.New("custom module configuration must specify a path")
+	var modulePath string
+	if ok {
+		modulePath = strings.TrimPrefix(githubConfig.RepoURL, "https://")
 	}
-	if customConfig.Module.Version == "" {
-		return nil, errors.New("custom module configuration must specify a version")
+	if customConfig.Module == nil || customConfig.Module == (&moduleConfig{}) {
+		// A GitHub configuration was provided, so the module config should use
+		// the GitHub configuration's repository url.
+		return &generator.ModuleConfig{
+			Path:    modulePath,
+			Imports: defaultImports,
+		}, nil
+	}
+	if customConfig.Module.Path != "" {
+		// The user explicitly specified a module path, so we should use it.
+		modulePath = customConfig.Module.Path
 	}
 	imports := customConfig.Module.Imports
 	if imports == nil {
-		// Set the default imports if they aren't explicitly specified.
-		imports = map[string]string{
-			"github.com/gofrs/uuid/v5": "v5.0.0",
-		}
+		imports = defaultImports
 	}
 	return &generator.ModuleConfig{
-		Path:    customConfig.Module.Path,
-		Version: customConfig.Module.Version,
+		Path:    modulePath,
+		Version: customConfig.Module.Version, // If not specified, defaults to the Go command's current version.
 		Imports: imports,
 	}, nil
 }
