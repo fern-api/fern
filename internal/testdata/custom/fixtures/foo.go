@@ -3,7 +3,7 @@
 package api
 
 import (
-	uuid "github.com/gofrs/uuid"
+	uuid "github.com/gofrs/uuid/v5"
 )
 
 // This is a Foo.

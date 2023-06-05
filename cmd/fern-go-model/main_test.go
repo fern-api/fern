@@ -14,7 +14,7 @@ import (
 	enum "github.com/fern-api/fern-go/internal/testdata/enum/fixtures"
 	undiscriminated "github.com/fern-api/fern-go/internal/testdata/undiscriminated/fixtures"
 	union "github.com/fern-api/fern-go/internal/testdata/union/fixtures"
-	"github.com/gofrs/uuid"
+	"github.com/gofrs/uuid/v5"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

@@ -4,7 +4,7 @@ package api
 
 import (
 	json "encoding/json"
-	uuid "github.com/gofrs/uuid"
+	uuid "github.com/gofrs/uuid/v5"
 	time "time"
 )
 
