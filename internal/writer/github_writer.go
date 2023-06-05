@@ -34,6 +34,10 @@ func newGithubWriter(config *GithubConfig) (*githubWriter, error) {
 	}, nil
 }
 
+func (g *githubWriter) Root() string {
+	return ""
+}
+
 func (g *githubWriter) WriteFiles(files []*generator.File) error {
 	return errors.New("unimplemented")
 }

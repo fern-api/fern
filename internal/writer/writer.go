@@ -8,6 +8,7 @@ import (
 
 // Writer writes files to their configured location.
 type Writer interface {
+	Root() string
 	WriteFiles([]*generator.File) error
 }
 

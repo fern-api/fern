@@ -26,12 +26,6 @@ type ModuleConfig struct {
 
 // NewConfig returns a new *Config for the given values.
 func NewConfig(dryRun bool, irFilepath string, importPath string, moduleConfig *ModuleConfig) (*Config, error) {
-	if moduleConfig != nil && moduleConfig.Path != "" && moduleConfig.Imports == nil {
-		// Set the default imports if they aren't explicitly specified.
-		moduleConfig.Imports = map[string]string{
-			"github.com/gofrs/uuid/v5": "v5.0.0",
-		}
-	}
 	return &Config{
 		DryRun:       dryRun,
 		IRFilepath:   irFilepath,

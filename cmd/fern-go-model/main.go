@@ -10,6 +10,7 @@ import (
 	"github.com/fern-api/fern-go"
 	"github.com/fern-api/fern-go/internal/fern/generatorexec"
 	"github.com/fern-api/fern-go/internal/generator"
+	"github.com/fern-api/fern-go/internal/goexec"
 	"github.com/fern-api/fern-go/internal/writer"
 )
 
@@ -62,6 +63,19 @@ func run(configFilename string) error {
 	if err != nil {
 		return err
 	}
+	importPath := customConfig.ImportPath
+	if moduleConfig != nil {
+		if customConfig.ImportPath == "" {
+			importPath = moduleConfig.Path
+		}
+		if importPath != moduleConfig.Path {
+			return fmt.Errorf(
+				"both module path (%q) and import path (%q) are specified, but not equal; please remove import path",
+				moduleConfig.Path,
+				importPath,
+			)
+		}
+	}
 	generatorConfig, err := generator.NewConfig(config.DryRun, config.IrFilepath, customConfig.ImportPath, moduleConfig)
 	if err != nil {
 		return err
@@ -78,7 +92,14 @@ func run(configFilename string) error {
 	if err != nil {
 		return err
 	}
-	return writer.WriteFiles(files)
+	if err := writer.WriteFiles(files); err != nil {
+		return err
+	}
+	// If a module file was written, we still need to generate the go.sum.
+	if moduleConfig != nil {
+		return goexec.RunTidy(writer.Root())
+	}
+	return nil
 }
 
 // readConfig returns the generator configuration from the given filename.
@@ -134,10 +155,17 @@ func moduleConfigFromCustomConfig(customConfig *customConfig) (*generator.Module
 	if customConfig.Module.Version == "" {
 		return nil, errors.New("custom module configuration must specify a version")
 	}
+	imports := customConfig.Module.Imports
+	if imports == nil {
+		// Set the default imports if they aren't explicitly specified.
+		imports = map[string]string{
+			"github.com/gofrs/uuid/v5": "v5.0.0",
+		}
+	}
 	return &generator.ModuleConfig{
 		Path:    customConfig.Module.Path,
 		Version: customConfig.Module.Version,
-		Imports: customConfig.Module.Imports,
+		Imports: imports,
 	}, nil
 }
 

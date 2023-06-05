@@ -31,6 +31,10 @@ func newLocalWriter(config *LocalConfig) (*localWriter, error) {
 	}, nil
 }
 
+func (l *localWriter) Root() string {
+	return l.config.Path
+}
+
 func (l *localWriter) WriteFiles(files []*generator.File) error {
 	if len(files) == 0 {
 		return nil
