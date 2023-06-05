@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { Sidebar } from "../sidebar/Sidebar";
 import { DocsMainContent } from "./DocsMainContent";
@@ -12,7 +11,7 @@ export const LoadedDocs: React.FC = () => {
 
     return (
         <div
-            className={classNames("relative flex min-h-0 flex-1 flex-col bg-cover")}
+            className="relative flex min-h-0 flex-1 flex-col bg-cover"
             style={{ backgroundImage: `url('${nebulaImage}')` }}
         >
             <Header />
