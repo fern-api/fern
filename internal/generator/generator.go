@@ -41,6 +41,23 @@ func (g *Generator) Generate() ([]*File, error) {
 }
 
 func (g *Generator) generate(ir *ir.IntermediateRepresentation) ([]*File, error) {
+	if g.config.ImportPath == "" {
+		// If an import path is not configured, we need to validate that none of types
+		// import types from another package.
+		for _, typeDeclaration := range ir.Types {
+			typeImportPath := fernFilepathToImportPath(g.config.ImportPath, typeDeclaration.Name.FernFilepath)
+			for _, referencedType := range typeDeclaration.ReferencedTypes {
+				referencedImportPath := fernFilepathToImportPath(g.config.ImportPath, referencedType.FernFilepath)
+				if typeImportPath != referencedImportPath {
+					return nil, fmt.Errorf(
+						"%s referneces %s from another package, but a generator import path was not specified",
+						typeDeclaration.Name.TypeId,
+						referencedType.TypeId,
+					)
+				}
+			}
+		}
+	}
 	var files []*File
 	// First write all of the package-level documentation, if any (i.e. in a doc.go file).
 	if ir.RootPackage != nil && ir.RootPackage.Docs != nil && len(*ir.RootPackage.Docs) > 0 {
