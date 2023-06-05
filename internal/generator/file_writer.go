@@ -9,6 +9,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"unicode"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	"golang.org/x/tools/go/ast/astutil"
@@ -605,7 +606,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	// multiple times seamlessly (and in the order they're specified).
 	type member struct {
 		typeName  string
+		caseName  string
 		field     string
+		variable  string
 		value     string
 		docs      *string
 		literal   string
@@ -614,6 +617,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	var members []*member
 	var hasLiteral bool
 	for _, unionMember := range union.Members {
+		field := typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types)
 		var typeName string
 		if unionMember.Type.Named != nil {
 			typeName = unionMember.Type.Named.TypeId
@@ -628,7 +632,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			members,
 			&member{
 				typeName:  typeName,
-				field:     typeReferenceToUndiscriminatedUnionField(unionMember.Type, t.writer.types),
+				field:     field,
+				variable:  fmt.Sprintf("value%s", strings.Title(field)),
+				caseName:  firstLetterToLower(field),
 				value:     typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath),
 				docs:      unionMember.Docs,
 				literal:   literal,
@@ -661,36 +667,31 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	// Implement the json.Unmarshaler interface.
 	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 	for _, member := range members {
-		if member.isLiteral {
-			// If the undiscriminated union specifies a literal, it will always
-			// succeed, which means any of the following members are effectively
-			// ignored.
-			//
-			// We include a comment to explain this.
-			t.writer.P("// A literal value will always succeed, so we don't bother")
-			t.writer.P("// to unmarshal the remaining undiscriminated union values.")
-			t.writer.P("x.typeName = \"", member.field, "\"")
-			t.writer.P("x.", member.field, " = ", member.literal)
-			t.writer.P("return nil")
-			break
-		}
 		value := member.value
-		format := "var " + member.field + " %s"
+		format := "var " + member.variable + " %s"
 		if member.typeName != "" && isPointer(t.writer.types[member.typeName]) {
-			format = member.field + " := new(%s)"
+			format = member.variable + " := new(%s)"
 			value = strings.TrimLeft(value, "*")
 		}
 		t.writer.P(fmt.Sprintf(format, value))
-		t.writer.P("if err := json.Unmarshal(data, &", member.field, "); err == nil {")
-		t.writer.P("x.typeName = \"", member.field, "\"")
-		t.writer.P("x.", member.field, " = ", member.field)
+		t.writer.P("if err := json.Unmarshal(data, &", member.variable, "); err == nil {")
+		if member.isLiteral {
+			// If the undiscriminated union specifies a literal, it will only
+			// succeed if the literal matches exactly.
+			t.writer.P("if ", member.variable, "== ", member.literal, " {")
+			t.writer.P("x.typeName = \"", member.caseName, "\"")
+			t.writer.P("x.", member.field, " = ", member.variable)
+			t.writer.P("return nil")
+			t.writer.P("}")
+			t.writer.P("}")
+			continue
+		}
+		t.writer.P("x.typeName = \"", member.caseName, "\"")
+		t.writer.P("x.", member.field, " = ", member.variable)
 		t.writer.P("return nil")
 		t.writer.P("}")
 	}
-	if !hasLiteral {
-		// If there isn't a literal to guarantee deserialization, we need to return an error.
-		t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, x)`)
-	}
+	t.writer.P(`return fmt.Errorf("%s cannot be deserialized as a %T", data, x)`)
 	t.writer.P("}")
 	t.writer.P()
 
@@ -702,7 +703,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("default:")
 			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", x.typeName, x)")
 		}
-		t.writer.P("case \"", member.field, "\":")
+		t.writer.P("case \"", member.caseName, "\":")
 		if member.isLiteral {
 			// If we have a literal, we need to marshal it directly.
 			t.writer.P("return json.Marshal(", member.literal, ")")
@@ -731,7 +732,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("default:")
 			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", x.typeName, x)")
 		}
-		t.writer.P("case \"", member.field, "\":")
+		t.writer.P("case \"", member.caseName, "\":")
 		t.writer.P("return v.Visit", strings.Title(member.field), "(x.", member.field, ")")
 	}
 	t.writer.P("}")
@@ -1131,6 +1132,17 @@ func isPointer(typeDeclaration *ir.TypeDeclaration) bool {
 	}
 	// Unreachable.
 	return false
+}
+
+// firstLetterToLower returns the given string with its
+// first letter lowercased.
+func firstLetterToLower(s string) string {
+	if len(s) == 0 {
+		return s
+	}
+	r := []rune(s)
+	r[0] = unicode.ToLower(r[0])
+	return string(r)
 }
 
 // removeUnusedImports parses the buffer, interpreting it as Go code,

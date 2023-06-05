@@ -7,24 +7,17 @@ import (
 	fmt "fmt"
 )
 
-type AnotherUnion struct {
+type UnionWithLiteral struct {
 	typeName      string
-	String        string
 	stringLiteral string
-	Foo           *Foo
+	String        string
 }
 
-func (x *AnotherUnion) StringLiteral() string {
+func (x *UnionWithLiteral) StringLiteral() string {
 	return x.stringLiteral
 }
 
-func (x *AnotherUnion) UnmarshalJSON(data []byte) error {
-	var valueString string
-	if err := json.Unmarshal(data, &valueString); err == nil {
-		x.typeName = "string"
-		x.String = valueString
-		return nil
-	}
+func (x *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var valueStringLiteral string
 	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
 		if valueStringLiteral == "fern" {
@@ -33,43 +26,38 @@ func (x *AnotherUnion) UnmarshalJSON(data []byte) error {
 			return nil
 		}
 	}
-	valueFoo := new(Foo)
-	if err := json.Unmarshal(data, &valueFoo); err == nil {
-		x.typeName = "foo"
-		x.Foo = valueFoo
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		x.typeName = "string"
+		x.String = valueString
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, x)
 }
 
-func (x AnotherUnion) MarshalJSON() ([]byte, error) {
+func (x UnionWithLiteral) MarshalJSON() ([]byte, error) {
 	switch x.typeName {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", x.typeName, x)
-	case "string":
-		return json.Marshal(x.String)
 	case "stringLiteral":
 		return json.Marshal("fern")
-	case "foo":
-		return json.Marshal(x.Foo)
+	case "string":
+		return json.Marshal(x.String)
 	}
 }
 
-type AnotherUnionVisitor interface {
-	VisitString(string) error
+type UnionWithLiteralVisitor interface {
 	VisitStringLiteral(string) error
-	VisitFoo(*Foo) error
+	VisitString(string) error
 }
 
-func (x *AnotherUnion) Accept(v AnotherUnionVisitor) error {
+func (x *UnionWithLiteral) Accept(v UnionWithLiteralVisitor) error {
 	switch x.typeName {
 	default:
 		return fmt.Errorf("invalid type %s in %T", x.typeName, x)
-	case "string":
-		return v.VisitString(x.String)
 	case "stringLiteral":
 		return v.VisitStringLiteral(x.stringLiteral)
-	case "foo":
-		return v.VisitFoo(x.Foo)
+	case "string":
+		return v.VisitString(x.String)
 	}
 }

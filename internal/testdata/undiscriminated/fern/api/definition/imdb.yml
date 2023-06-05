@@ -21,6 +21,12 @@ types:
       - literal<"fern">
       - Foo
 
+  UnionWithLiteral:
+    discriminated: false
+    union:
+      - literal<"fern">
+      - string
+
   Foo:
     properties:
       name: string

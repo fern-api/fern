@@ -11,6 +11,7 @@ import (
 
 	builtin "github.com/fern-api/fern-go/internal/testdata/builtin/fixtures"
 	custom "github.com/fern-api/fern-go/internal/testdata/custom/fixtures"
+	undiscriminated "github.com/fern-api/fern-go/internal/testdata/undiscriminated/fixtures"
 	union "github.com/fern-api/fern-go/internal/testdata/union/fixtures"
 	"github.com/gofrs/uuid"
 	"github.com/stretchr/testify/assert"
@@ -166,6 +167,34 @@ func TestLiteral(t *testing.T) {
 	require.NoError(t, json.Unmarshal(bytes, &object))
 
 	assert.Equal(t, "fern", object["eighteen"])
+}
+
+func TestUndiscriminatedUnion(t *testing.T) {
+	type body struct {
+		Body *undiscriminated.Union `json:"body"`
+	}
+
+	request := new(body)
+	require.NoError(t, json.Unmarshal([]byte(`{"body": "something"}`), request))
+
+	assert.Equal(t, "something", request.Body.String)
+	assert.Empty(t, request.Body.StringLiteral())
+
+	unionLiteral := new(undiscriminated.Union)
+	require.NoError(t, json.Unmarshal([]byte(`"fern"`), unionLiteral))
+
+	// Test that the string takes precedence over the literal because
+	// they aren't specified in the correct order.
+	assert.Empty(t, unionLiteral.StringLiteral())
+	assert.Equal(t, "fern", unionLiteral.String)
+
+	unionWithLiteral := new(undiscriminated.UnionWithLiteral)
+	require.NoError(t, json.Unmarshal([]byte(`"fern"`), unionWithLiteral))
+
+	// Test that the literal is used as long as it's actually observed
+	// on the wire.
+	assert.Equal(t, "fern", unionWithLiteral.StringLiteral())
+	assert.Empty(t, unionWithLiteral.String)
 }
 
 func newUUID(t *testing.T) uuid.UUID {

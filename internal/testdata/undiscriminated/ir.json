@@ -818,6 +818,101 @@
             ],
             "examples": []
         },
+        "type_imdb:UnionWithLiteral": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "UnionWithLiteral",
+                    "camelCase": {
+                        "unsafeName": "unionWithLiteral",
+                        "safeName": "unionWithLiteral"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_with_literal",
+                        "safeName": "union_with_literal"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_WITH_LITERAL",
+                        "safeName": "UNION_WITH_LITERAL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionWithLiteral",
+                        "safeName": "UnionWithLiteral"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                },
+                "typeId": "type_imdb:UnionWithLiteral"
+            },
+            "shape": {
+                "members": [
+                    {
+                        "type": {
+                            "container": {
+                                "literal": {
+                                    "string": "fern",
+                                    "type": "string"
+                                },
+                                "_type": "literal"
+                            },
+                            "_type": "container"
+                        }
+                    },
+                    {
+                        "type": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    }
+                ],
+                "_type": "undiscriminatedUnion"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "type_imdb:Foo": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -1244,6 +1339,7 @@
             "types": [
                 "type_imdb:Union",
                 "type_imdb:AnotherUnion",
+                "type_imdb:UnionWithLiteral",
                 "type_imdb:Foo",
                 "type_imdb:Bar",
                 "type_imdb:Baz"

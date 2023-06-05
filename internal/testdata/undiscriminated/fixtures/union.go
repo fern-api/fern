@@ -26,88 +26,92 @@ func (x *Union) StringLiteral() string {
 }
 
 func (x *Union) UnmarshalJSON(data []byte) error {
-	Foo := new(Foo)
-	if err := json.Unmarshal(data, &Foo); err == nil {
-		x.typeName = "Foo"
-		x.Foo = Foo
+	valueFoo := new(Foo)
+	if err := json.Unmarshal(data, &valueFoo); err == nil {
+		x.typeName = "foo"
+		x.Foo = valueFoo
 		return nil
 	}
-	Bar := new(Bar)
-	if err := json.Unmarshal(data, &Bar); err == nil {
-		x.typeName = "Bar"
-		x.Bar = Bar
+	valueBar := new(Bar)
+	if err := json.Unmarshal(data, &valueBar); err == nil {
+		x.typeName = "bar"
+		x.Bar = valueBar
 		return nil
 	}
-	Baz := new(Baz)
-	if err := json.Unmarshal(data, &Baz); err == nil {
-		x.typeName = "Baz"
-		x.Baz = Baz
+	valueBaz := new(Baz)
+	if err := json.Unmarshal(data, &valueBaz); err == nil {
+		x.typeName = "baz"
+		x.Baz = valueBaz
 		return nil
 	}
-	var String string
-	if err := json.Unmarshal(data, &String); err == nil {
-		x.typeName = "String"
-		x.String = String
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		x.typeName = "string"
+		x.String = valueString
 		return nil
 	}
-	var IntegerOptional *int
-	if err := json.Unmarshal(data, &IntegerOptional); err == nil {
-		x.typeName = "IntegerOptional"
-		x.IntegerOptional = IntegerOptional
+	var valueIntegerOptional *int
+	if err := json.Unmarshal(data, &valueIntegerOptional); err == nil {
+		x.typeName = "integerOptional"
+		x.IntegerOptional = valueIntegerOptional
 		return nil
 	}
-	var StringBooleanMap map[string]bool
-	if err := json.Unmarshal(data, &StringBooleanMap); err == nil {
-		x.typeName = "StringBooleanMap"
-		x.StringBooleanMap = StringBooleanMap
+	var valueStringBooleanMap map[string]bool
+	if err := json.Unmarshal(data, &valueStringBooleanMap); err == nil {
+		x.typeName = "stringBooleanMap"
+		x.StringBooleanMap = valueStringBooleanMap
 		return nil
 	}
-	var StringList []string
-	if err := json.Unmarshal(data, &StringList); err == nil {
-		x.typeName = "StringList"
-		x.StringList = StringList
+	var valueStringList []string
+	if err := json.Unmarshal(data, &valueStringList); err == nil {
+		x.typeName = "stringList"
+		x.StringList = valueStringList
 		return nil
 	}
-	var StringListList [][]string
-	if err := json.Unmarshal(data, &StringListList); err == nil {
-		x.typeName = "StringListList"
-		x.StringListList = StringListList
+	var valueStringListList [][]string
+	if err := json.Unmarshal(data, &valueStringListList); err == nil {
+		x.typeName = "stringListList"
+		x.StringListList = valueStringListList
 		return nil
 	}
-	var DoubleSet []float64
-	if err := json.Unmarshal(data, &DoubleSet); err == nil {
-		x.typeName = "DoubleSet"
-		x.DoubleSet = DoubleSet
+	var valueDoubleSet []float64
+	if err := json.Unmarshal(data, &valueDoubleSet); err == nil {
+		x.typeName = "doubleSet"
+		x.DoubleSet = valueDoubleSet
 		return nil
 	}
-	// A literal value will always succeed, so we don't bother
-	// to unmarshal the remaining undiscriminated union values.
-	x.typeName = "stringLiteral"
-	x.stringLiteral = "fern"
-	return nil
+	var valueStringLiteral string
+	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
+		if valueStringLiteral == "fern" {
+			x.typeName = "stringLiteral"
+			x.stringLiteral = valueStringLiteral
+			return nil
+		}
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, x)
 }
 
 func (x Union) MarshalJSON() ([]byte, error) {
 	switch x.typeName {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", x.typeName, x)
-	case "Foo":
+	case "foo":
 		return json.Marshal(x.Foo)
-	case "Bar":
+	case "bar":
 		return json.Marshal(x.Bar)
-	case "Baz":
+	case "baz":
 		return json.Marshal(x.Baz)
-	case "String":
+	case "string":
 		return json.Marshal(x.String)
-	case "IntegerOptional":
+	case "integerOptional":
 		return json.Marshal(x.IntegerOptional)
-	case "StringBooleanMap":
+	case "stringBooleanMap":
 		return json.Marshal(x.StringBooleanMap)
-	case "StringList":
+	case "stringList":
 		return json.Marshal(x.StringList)
-	case "StringListList":
+	case "stringListList":
 		return json.Marshal(x.StringListList)
-	case "DoubleSet":
+	case "doubleSet":
 		return json.Marshal(x.DoubleSet)
 	case "stringLiteral":
 		return json.Marshal("fern")
@@ -131,23 +135,23 @@ func (x *Union) Accept(v UnionVisitor) error {
 	switch x.typeName {
 	default:
 		return fmt.Errorf("invalid type %s in %T", x.typeName, x)
-	case "Foo":
+	case "foo":
 		return v.VisitFoo(x.Foo)
-	case "Bar":
+	case "bar":
 		return v.VisitBar(x.Bar)
-	case "Baz":
+	case "baz":
 		return v.VisitBaz(x.Baz)
-	case "String":
+	case "string":
 		return v.VisitString(x.String)
-	case "IntegerOptional":
+	case "integerOptional":
 		return v.VisitIntegerOptional(x.IntegerOptional)
-	case "StringBooleanMap":
+	case "stringBooleanMap":
 		return v.VisitStringBooleanMap(x.StringBooleanMap)
-	case "StringList":
+	case "stringList":
 		return v.VisitStringList(x.StringList)
-	case "StringListList":
+	case "stringListList":
 		return v.VisitStringListList(x.StringListList)
-	case "DoubleSet":
+	case "doubleSet":
 		return v.VisitDoubleSet(x.DoubleSet)
 	case "stringLiteral":
 		return v.VisitStringLiteral(x.stringLiteral)
