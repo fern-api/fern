@@ -19,6 +19,13 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
     },
     [GeneratorName.JAVA_SPRING]: {
         version: "0.3.6",
+        output: {
+            location: "local-file-system",
+            path: "../../src/main/java/com/fern",
+        },
+        config: {
+            "package-prefix": "com.fern",
+        },
     },
     [GeneratorName.TYPESCRIPT]: {
         version: "0.0.247",
@@ -37,6 +44,10 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
     },
     [GeneratorName.PYTHON_FASTAPI]: {
         version: "0.3.7",
+        output: {
+            location: "local-file-system",
+            path: "../../src/fern",
+        },
     },
     [GeneratorName.PYTHON_SDK]: {
         version: "0.3.7",
