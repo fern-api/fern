@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
-import { PageMargins } from "../page-margins/PageMargins";
+import { Page } from "../page/Page";
+import { PageMargins } from "../page/PageMargins";
 import { ApiPageContextProvider } from "./api-page-context/ApiPageContextProvider";
 import { ApiPackageContents } from "./ApiPackageContents";
 import { ApiArtifacts } from "./artifacts/ApiArtifacts";
@@ -14,7 +15,7 @@ export const ApiPage: React.FC = () => {
 
     return (
         <ApiPageContextProvider containerRef={containerRef ?? undefined}>
-            <div ref={setContainerRef} className="min-h-0 overflow-y-auto pb-36">
+            <Page ref={setContainerRef} className="min-h-0 flex-col pb-36 pt-20">
                 <PageMargins>
                     <div className="mt-20 pb-2 text-4xl font-medium">{apiSection.title}</div>
                 </PageMargins>
@@ -25,7 +26,7 @@ export const ApiPage: React.FC = () => {
                 <PageMargins>
                     <BottomNavigationButtons />
                 </PageMargins>
-            </div>
+            </Page>
         </ApiPageContextProvider>
     );
 };

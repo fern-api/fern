@@ -3,7 +3,7 @@ import classNames from "classnames";
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useDocsContext } from "../../docs-context/useDocsContext";
-import { PageMargins } from "../../page-margins/PageMargins";
+import { PageMargins } from "../../page/PageMargins";
 import { useApiPageContext } from "../api-page-context/useApiPageContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
@@ -79,7 +79,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
     return (
         <PageMargins>
             <div className="flex min-w-0 flex-1 gap-20" ref={setTargetRef}>
-                <div className="flex flex-1 flex-col">
+                <div className="flex flex-1 flex-col pb-20">
                     <div className="pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>

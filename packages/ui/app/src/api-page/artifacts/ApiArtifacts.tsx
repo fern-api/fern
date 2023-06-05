@@ -2,7 +2,7 @@ import { H2 } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { joinUrlSlugs } from "../../docs-context/joinUrlSlugs";
-import { PageMargins } from "../../page-margins/PageMargins";
+import { PageMargins } from "../../page/PageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { ApiArtifactsTitle } from "./ApiArtifactsTitle";
 import { DotNetLogo } from "./sdk-logos/DotNetLogo";
