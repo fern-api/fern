@@ -19,3 +19,13 @@ groups:
           wrapped_aliases: true
           include_union_utils: true
           frozen: true
+
+      - name: fernapi/fern-go-model
+        version: v0.0.1-1-g0e2c037
+        github:
+          repository: fern-api/fern-go-model
+        config:
+          # The values used to populate the generated go.mod.
+          module:
+            path: github.com/fern-api/fern-go-model
+            version: "1.19" # Not full SemVer, so use an explicit string.
