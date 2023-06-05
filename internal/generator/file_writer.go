@@ -185,9 +185,11 @@ func singleUnionTypePropertiesToInitializer(
 	baseImportPath string,
 	importPath string,
 	discriminantName string,
+	receiver string,
 ) string {
 	visitor := &singleUnionTypePropertiesInitializerVisitor{
 		discriminantName: discriminantName,
+		receiver:         receiver,
 		baseImportPath:   baseImportPath,
 		importPath:       importPath,
 		imports:          imports,
@@ -267,14 +269,16 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 	t.writer.P(")")
 	t.writer.P()
 
+	receiver := typeNameToReceiver(t.typeName)
+
 	// Implement the fmt.Stringer interface.
-	t.writer.P("func (x ", t.typeName, ") String() string {")
-	t.writer.P("switch x {")
+	t.writer.P("func (", receiver, " ", t.typeName, ") String() string {")
+	t.writer.P("switch ", receiver, " {")
 	for i, enumValue := range enum.Values {
 		if i == 0 {
 			// Implement the default case first.
 			t.writer.P("default:")
-			t.writer.P("return strconv.Itoa(int(x))")
+			t.writer.P("return strconv.Itoa(int(", receiver, "))")
 		}
 		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
 		t.writer.P("case ", enumName, ":")
@@ -285,13 +289,13 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 	t.writer.P()
 
 	// Implement the json.Marshaler interface.
-	t.writer.P("func (x ", t.typeName, ") MarshalJSON() ([]byte, error) {")
-	t.writer.P("return []byte(fmt.Sprintf(\"%q\", x.String())), nil")
+	t.writer.P("func (", receiver, " ", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("return []byte(fmt.Sprintf(\"%q\", ", receiver, ".String())), nil")
 	t.writer.P("}")
 	t.writer.P()
 
 	// Implement the json.Unmarshaler interface.
-	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 	t.writer.P("var raw string")
 	t.writer.P("if err := json.Unmarshal(data, &raw); err != nil {")
 	t.writer.P("return err")
@@ -301,7 +305,7 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
 		t.writer.P("case \"", enumValue.Name.WireValue, "\":")
 		t.writer.P("value := ", enumName)
-		t.writer.P("*x = value")
+		t.writer.P("*", receiver, " = value")
 	}
 	t.writer.P("}")
 	t.writer.P("return nil")
@@ -333,31 +337,33 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
+	receiver := typeNameToReceiver(t.typeName)
+
 	// Implement the getter methods.
 	for _, literal := range literals {
-		t.writer.P("func (x *", t.typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
-		t.writer.P("return x.", literal.Name.CamelCase.SafeName)
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		t.writer.P("return ", receiver, ".", literal.Name.CamelCase.SafeName)
 		t.writer.P("}")
 		t.writer.P()
 	}
 
 	// Implement the json.Unmarshaler interface.
-	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 	t.writer.P("type unmarshaler ", t.typeName)
 	t.writer.P("var value unmarshaler")
 	t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
 	t.writer.P("return err")
 	t.writer.P("}")
-	t.writer.P("*x = ", t.typeName, "(value)")
+	t.writer.P("*", receiver, " = ", t.typeName, "(value)")
 	for _, literal := range literals {
-		t.writer.P("x.", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+		t.writer.P(receiver, ".", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
 	}
 	t.writer.P("return nil")
 	t.writer.P("}")
 	t.writer.P()
 
 	// Implement the json.Marshaler interface.
-	t.writer.P("func (x *", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("func (", receiver, " *", t.typeName, ") MarshalJSON() ([]byte, error) {")
 	t.writer.P("type embed ", t.typeName)
 	t.writer.P("var marshaler = struct{")
 	t.writer.P("embed")
@@ -365,7 +371,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
 	}
 	t.writer.P("}{")
-	t.writer.P("embed: embed(*x),")
+	t.writer.P("embed: embed(*", receiver, "),")
 	for _, literal := range literals {
 		t.writer.P(literal.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
 	}
@@ -426,16 +432,18 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
+	receiver := typeNameToReceiver(t.typeName)
+
 	// Implement the getter methods.
 	for _, literal := range append(literals, unionLiterals...) {
-		t.writer.P("func (x *", t.typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
-		t.writer.P("return x.", literal.Name.CamelCase.SafeName)
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		t.writer.P("return ", receiver, ".", literal.Name.CamelCase.SafeName)
 		t.writer.P("}")
 		t.writer.P()
 	}
 
 	// Implement the json.Unmarshaler interface.
-	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 	t.writer.P("var unmarshaler struct {")
 	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 	var propertyNames []string
@@ -457,12 +465,12 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 
 	// Set the union's type on the exported type, plus all of the other
 	// extended and/or base properties.
-	t.writer.P("x.", discriminantName, " = unmarshaler.", discriminantName)
+	t.writer.P(receiver, ".", discriminantName, " = unmarshaler.", discriminantName)
 	for _, propertyName := range propertyNames {
-		t.writer.P("x.", propertyName, " = unmarshaler.", propertyName)
+		t.writer.P(receiver, ".", propertyName, " = unmarshaler.", propertyName)
 	}
 	for _, literal := range literals {
-		t.writer.P("x.", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+		t.writer.P(receiver, ".", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
 	}
 
 	// Generate the switch to unmarshal the appropriate type.
@@ -473,7 +481,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			if unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 				// We have a literal, so we need to set its value explicitly.
 				literal := unionType.Shape.SingleProperty.Type.Container.Literal
-				t.writer.P("x.", unionType.DiscriminantValue.Name.CamelCase.SafeName, " = ", literalToValue(literal))
+				t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.CamelCase.SafeName, " = ", literalToValue(literal))
 				continue
 			}
 			// If the union is a single property, we need a separate unmarshaler.
@@ -491,14 +499,14 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
 			t.writer.P("return err")
 			t.writer.P("}")
-			t.writer.P("x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
+			t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
 			continue
 		}
-		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath, unionType.DiscriminantValue.Name.PascalCase.UnsafeName))
+		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath, unionType.DiscriminantValue.Name.PascalCase.UnsafeName, receiver))
 		t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
 		t.writer.P("return err")
 		t.writer.P("}")
-		t.writer.P("x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = value")
+		t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = value")
 	}
 	t.writer.P("}")
 	t.writer.P("return nil")
@@ -506,13 +514,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P()
 
 	// Implement the json.Marshaler interface.
-	t.writer.P("func (x ", t.typeName, ") MarshalJSON() ([]byte, error) {")
-	t.writer.P("switch x.", discriminantName, " {")
+	t.writer.P("func (", receiver, " ", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("switch ", receiver, ".", discriminantName, " {")
 	for i, unionType := range union.Types {
 		if i == 0 {
 			// Implement the default case first.
 			t.writer.P("default:")
-			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", x.", discriminantName, ", x)")
+			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".", discriminantName, ", ", receiver, ")")
 		}
 		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
 		t.writer.P("var marshaler = struct {")
@@ -541,9 +549,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		}
 		// Set all of the values in the marshaler.
 		t.writer.P("}{")
-		t.writer.P(discriminantName, ": x.", discriminantName, ",")
+		t.writer.P(discriminantName, ": ", receiver, ".", discriminantName, ",")
 		for _, propertyName := range propertyNames {
-			t.writer.P(propertyName, ": x.", propertyName, ",")
+			t.writer.P(propertyName, ": ", receiver, ".", propertyName, ",")
 		}
 		for _, literal := range literals {
 			t.writer.P(literal.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
@@ -558,7 +566,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 				// the object's name, without any leading pointers.
 				marshalerFieldName = typeNameToFieldName(typeName)
 			}
-			t.writer.P(marshalerFieldName, ": x.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ",")
+			t.writer.P(marshalerFieldName, ": ", receiver, ".", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ",")
 		}
 		t.writer.P("}")
 		t.writer.P("return json.Marshal(marshaler)")
@@ -576,20 +584,20 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P()
 
 	// Generate the Accept method.
-	t.writer.P("func (x *", t.typeName, ") Accept(v ", t.typeName, "Visitor) error {")
-	t.writer.P("switch x.", discriminantName, "{")
+	t.writer.P("func (", receiver, " *", t.typeName, ") Accept(v ", t.typeName, "Visitor) error {")
+	t.writer.P("switch ", receiver, ".", discriminantName, "{")
 	for i, unionType := range union.Types {
 		if i == 0 {
 			// Implement the default case first.
 			t.writer.P("default:")
-			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", x.", discriminantName, ", x)")
+			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".", discriminantName, ", ", receiver, ")")
 		}
 		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
 		fieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
 		if unionType.Shape.SingleProperty != nil && unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 			fieldName = unionType.DiscriminantValue.Name.CamelCase.SafeName
 		}
-		t.writer.P("return v.Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(x.", fieldName, ")")
+		t.writer.P("return v.Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(", receiver, ".", fieldName, ")")
 	}
 	t.writer.P("}")
 	t.writer.P("}")
@@ -653,19 +661,21 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P("}")
 	t.writer.P()
 
+	receiver := typeNameToReceiver(t.typeName)
+
 	// Write getters for literal values, if any.
 	for _, member := range members {
 		if !member.isLiteral {
 			continue
 		}
-		t.writer.P("func (x *", t.typeName, ") ", strings.Title(member.field), "() ", member.value, "{")
-		t.writer.P("return x.", member.field)
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", strings.Title(member.field), "() ", member.value, "{")
+		t.writer.P("return ", receiver, ".", member.field)
 		t.writer.P("}")
 		t.writer.P()
 	}
 
 	// Implement the json.Unmarshaler interface.
-	t.writer.P("func (x *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 	for _, member := range members {
 		value := member.value
 		format := "var " + member.variable + " %s"
@@ -679,15 +689,15 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			// If the undiscriminated union specifies a literal, it will only
 			// succeed if the literal matches exactly.
 			t.writer.P("if ", member.variable, "== ", member.literal, " {")
-			t.writer.P("x.typeName = \"", member.caseName, "\"")
-			t.writer.P("x.", member.field, " = ", member.variable)
+			t.writer.P(receiver, ".typeName = \"", member.caseName, "\"")
+			t.writer.P(receiver, ".", member.field, " = ", member.variable)
 			t.writer.P("return nil")
 			t.writer.P("}")
 			t.writer.P("}")
 			continue
 		}
-		t.writer.P("x.typeName = \"", member.caseName, "\"")
-		t.writer.P("x.", member.field, " = ", member.variable)
+		t.writer.P(receiver, ".typeName = \"", member.caseName, "\"")
+		t.writer.P(receiver, ".", member.field, " = ", member.variable)
 		t.writer.P("return nil")
 		t.writer.P("}")
 	}
@@ -695,13 +705,13 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P("}")
 	t.writer.P()
 
-	t.writer.P("func (x ", t.typeName, ") MarshalJSON() ([]byte, error) {")
-	t.writer.P("switch x.typeName {")
+	t.writer.P("func (", receiver, " ", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("switch ", receiver, ".typeName {")
 	for i, member := range members {
 		if i == 0 {
 			// Implement the default case first.
 			t.writer.P("default:")
-			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", x.typeName, x)")
+			t.writer.P("return nil, fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".typeName, ", receiver, ")")
 		}
 		t.writer.P("case \"", member.caseName, "\":")
 		if member.isLiteral {
@@ -709,7 +719,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("return json.Marshal(", member.literal, ")")
 			continue
 		}
-		t.writer.P("return json.Marshal(x.", member.field, ")")
+		t.writer.P("return json.Marshal(", receiver, ".", member.field, ")")
 	}
 	t.writer.P("}")
 	t.writer.P("}")
@@ -724,16 +734,16 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P()
 
 	// Generate the Accept method.
-	t.writer.P("func (x *", t.typeName, ") Accept(v ", t.typeName, "Visitor) error {")
-	t.writer.P("switch x.typeName {")
+	t.writer.P("func (", receiver, " *", t.typeName, ") Accept(v ", t.typeName, "Visitor) error {")
+	t.writer.P("switch ", receiver, ".typeName {")
 	for i, member := range members {
 		if i == 0 {
 			// Implement the default case first.
 			t.writer.P("default:")
-			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", x.typeName, x)")
+			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".typeName, ", receiver, ")")
 		}
 		t.writer.P("case \"", member.caseName, "\":")
-		t.writer.P("return v.Visit", strings.Title(member.field), "(x.", member.field, ")")
+		t.writer.P("return v.Visit", strings.Title(member.field), "(", receiver, ".", member.field, ")")
 	}
 	t.writer.P("}")
 	t.writer.P("}")
@@ -973,6 +983,7 @@ func (c *singleUnionTypePropertiesVisitor) VisitNoProperties(_ any) error {
 type singleUnionTypePropertiesInitializerVisitor struct {
 	value            string
 	discriminantName string
+	receiver         string
 	baseImportPath   string
 	importPath       string
 	imports          imports
@@ -996,7 +1007,7 @@ func (c *singleUnionTypePropertiesInitializerVisitor) VisitSamePropertiesAsObjec
 }
 
 func (c *singleUnionTypePropertiesInitializerVisitor) VisitSingleProperty(_ *ir.SingleUnionTypeProperty) error {
-	c.value = fmt.Sprintf("x.%s = unmarshaler.%s", c.discriminantName, c.discriminantName)
+	c.value = fmt.Sprintf("%s.%s = unmarshaler.%s", c.receiver, c.discriminantName, c.discriminantName)
 	return nil
 }
 
@@ -1132,6 +1143,17 @@ func isPointer(typeDeclaration *ir.TypeDeclaration) bool {
 	}
 	// Unreachable.
 	return false
+}
+
+// typeNameToReceiver returns the receiver name for
+// the given type name. This is just the lowercase
+// equivalent of the first character.
+func typeNameToReceiver(typeName string) string {
+	if len(typeName) == 0 {
+		return typeName
+	}
+	r := []rune(typeName)
+	return string(unicode.ToLower(r[0]))
 }
 
 // firstLetterToLower returns the given string with its

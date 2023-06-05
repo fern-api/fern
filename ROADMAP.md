@@ -18,8 +18,8 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Verify with round-trip tests (i.e. deserialize and re-serialize and verify it is equivalent)
 - [x] Handle literal values in objects and [undiscriminated] unions
 - [x] Add unsafe words to the Fern compiler (i.e. Go keywords).
+- [x] Polish (e.g. better method receiver identifiers)
 - [] Generate a basic `go.mod`, `go.sum`, etc (similar to Fern's Typescript generator's `package.json`)
-- [] Polish (e.g. better method receiver identifiers)
 - [] API review
 
 ## Client
