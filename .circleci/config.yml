@@ -35,9 +35,8 @@ workflows:
               only: /.*/
       - publish-dockers:
           filters:
-            # TODO: Uncomment this block after the initial publish.
-            # branches:
-              # only: main
+            branches:
+              only: main
             tags:
               only:
                 - /.*/
