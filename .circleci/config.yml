@@ -1,0 +1,47 @@
+version: 2.1
+
+jobs:
+  test:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: make test
+
+  publish-dockers:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - checkout
+      - run:
+          name: Setup Buildx
+          command: |
+            docker buildx create --name multiplatform --driver docker-container --bootstrap --use
+      - run:
+          name: Publish Model Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker buildx build --platform linux/amd64,linux/arm64 -f ./Dockerfile -t fernapi/fern-go-model:${projectVersion} . --push
+
+workflows:
+  build:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
+      - publish-dockers:
+          filters:
+            # TODO: Uncomment this block after the initial publish.
+            # branches:
+              # only: main
+            tags:
+              only:
+                - /.*/
+          requires:
+            - test
+          context:
+            - docker-hub
