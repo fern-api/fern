@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 
@@ -56,7 +58,11 @@ func run(configFilename string) error {
 	if err != nil {
 		return err
 	}
-	generatorConfig, err := generator.NewConfig(config.DryRun, config.IrFilepath, customConfig.ImportPath)
+	moduleConfig, err := moduleConfigFromCustomConfig(customConfig)
+	if err != nil {
+		return err
+	}
+	generatorConfig, err := generator.NewConfig(config.DryRun, config.IrFilepath, customConfig.ImportPath, moduleConfig)
 	if err != nil {
 		return err
 	}
@@ -89,41 +95,45 @@ func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
 }
 
 type customConfig struct {
-	ImportPath string
+	ImportPath string        `json:"importPath,omitempty"`
+	Module     *moduleConfig `json:"module,omitempty"`
+}
+
+type moduleConfig struct {
+	Path    string            `json:"path,omitempty"`
+	Imports map[string]string `json:"imports,omitempty"`
 }
 
 func customConfigFromConfig(c *generatorexec.GeneratorConfig) (*customConfig, error) {
 	if c.CustomConfig == nil {
 		return &customConfig{}, nil
 	}
-	customConfigMap, ok := c.CustomConfig.(map[string]any)
-	if !ok {
-		return nil, fmt.Errorf("expected custom configuration to be an object, but found %T", c.CustomConfig)
+	configBytes, err := json.Marshal(c.CustomConfig)
+	if err != nil {
+		return nil, fmt.Errorf("failed to serialize custom configuration: %v", err)
 	}
-	if len(customConfigMap) == 0 {
-		return &customConfig{}, nil
+	// We use a custom decoder here to validate the custom configuration fields.
+	decoder := json.NewDecoder(bytes.NewReader(configBytes))
+	decoder.DisallowUnknownFields()
+
+	config := new(customConfig)
+	if err := decoder.Decode(config); err != nil {
+		return nil, fmt.Errorf("failed to read custom configuration: %v", err)
 	}
-	value, ok := customConfigMap["importPath"]
-	if ok {
-		importPath, ok := value.(string)
-		if !ok {
-			return nil, fmt.Errorf("importPath configuration must be a string, but found %T", value)
-		}
-		if len(customConfigMap) == 1 {
-			return &customConfig{
-				ImportPath: importPath,
-			}, nil
-		}
+	return config, nil
+}
+
+func moduleConfigFromCustomConfig(customConfig *customConfig) (*generator.ModuleConfig, error) {
+	if customConfig.Module == nil || customConfig.Module == (&moduleConfig{}) {
+		return nil, nil
 	}
-	// More keys were configured than are supported.
-	var keys []string
-	for key := range customConfigMap {
-		if key == "importPath" {
-			continue
-		}
-		keys = append(keys, key)
+	if customConfig.Module.Path == "" && len(customConfig.Module.Imports) > 0 {
+		return nil, errors.New("custom module configuration must specify a path")
 	}
-	return nil, fmt.Errorf("custom configuration includes unsupported fields %v", keys)
+	return &generator.ModuleConfig{
+		Path:    customConfig.Module.Path,
+		Imports: customConfig.Module.Imports,
+	}, nil
 }
 
 func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, error) {

@@ -44,7 +44,10 @@ func newFileWriter(
 	imports.Add("encoding/json")
 	imports.Add("strconv")
 	imports.Add("time")
-	imports.Add("github.com/gofrs/uuid")
+
+	// Manually specify the UUID path so that we can use
+	// the uuid alias.
+	imports["github.com/gofrs/uuid/v5"] = "uuid"
 
 	return &fileWriter{
 		filename:       filename,

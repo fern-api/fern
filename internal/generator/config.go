@@ -6,14 +6,35 @@ type Config struct {
 	IRFilepath string
 	ImportPath string
 
-	// TODO: Add Workspace, Organization, and Environment, as needed.
+	// If not specified, a go.mod and go.sum will not be generated.
+	ModuleConfig *ModuleConfig
+}
+
+// ModuleConfig represents the configuration used to generate
+// a go.mod and go.sum.
+type ModuleConfig struct {
+	Path string
+
+	// Map from import path to version.
+	//
+	// The default value is
+	//
+	//  "github.com/gofrs/uuid/v5": "v5.0.0"
+	Imports map[string]string
 }
 
 // NewConfig returns a new *Config for the given values.
-func NewConfig(dryRun bool, irFilepath string, importPath string) (*Config, error) {
+func NewConfig(dryRun bool, irFilepath string, importPath string, moduleConfig *ModuleConfig) (*Config, error) {
+	if moduleConfig != nil && moduleConfig.Path != "" && moduleConfig.Imports == nil {
+		// Set the default imports if they aren't explicitly specified.
+		moduleConfig.Imports = map[string]string{
+			"github.com/gofrs/uuid/v5": "v5.0.0",
+		}
+	}
 	return &Config{
-		DryRun:     dryRun,
-		IRFilepath: irFilepath,
-		ImportPath: importPath,
+		DryRun:       dryRun,
+		IRFilepath:   irFilepath,
+		ImportPath:   importPath,
+		ModuleConfig: moduleConfig,
 	}, nil
 }
