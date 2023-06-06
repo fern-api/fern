@@ -2213,6 +2213,7 @@ Note: This operation requires an identity challenge if the financial institution
           "properties": [
             {
               "conflict": {},
+              "generatedName": "abstractPagedBodyStart",
               "key": "start",
               "schema": {
                 "description": undefined,
@@ -2237,6 +2238,7 @@ Note: This operation requires an identity challenge if the financial institution
           "properties": [
             {
               "conflict": {},
+              "generatedName": "abstractPagedBodyFieldsLimit",
               "key": "limit",
               "schema": {
                 "description": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
@@ -2248,6 +2250,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "abstractPagedBodyFieldsNextPageUrl",
               "key": "nextPage_url",
               "schema": {
                 "description": undefined,
@@ -2289,6 +2292,7 @@ Note: This operation requires an identity challenge if the financial institution
           "properties": [
             {
               "conflict": {},
+              "generatedName": "accountAllows",
               "key": "allows",
               "schema": {
                 "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
@@ -2301,6 +2305,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountElectronicStatements",
               "key": "electronicStatements",
               "schema": {
                 "description": "If \`true\`, the customer has opted in to receive account statements electronically.",
@@ -2411,6 +2416,7 @@ Note: This operation requires an identity challenge if the financial institution
           "properties": [
             {
               "conflict": {},
+              "generatedName": "accountBalanceId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -2423,6 +2429,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountBalanceAvailable",
               "key": "available",
               "schema": {
                 "description": undefined,
@@ -2439,6 +2446,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountBalanceCurrent",
               "key": "current",
               "schema": {
                 "description": undefined,
@@ -2455,6 +2463,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountBalanceUpdatedAt",
               "key": "updatedAt",
               "schema": {
                 "description": undefined,
@@ -2471,6 +2480,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountBalanceCurrentWithPending",
               "key": "currentWithPending",
               "schema": {
                 "description": undefined,
@@ -2487,6 +2497,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountBalanceIncomplete",
               "key": "incomplete",
               "schema": {
                 "description": "If \`true\`, the response is incomplete and the client may retry the operation after the \`Retry-After\` time in order to fetch balances for any incomplete accounts in the \`items\`. The retry operation should only pass in accounts that are \`incomplete\`.",
@@ -2516,6 +2527,7 @@ Note: This operation requires an identity challenge if the financial institution
           "properties": [
             {
               "conflict": {},
+              "generatedName": "accountBalancesItems",
               "key": "items",
               "schema": {
                 "description": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
@@ -2541,6 +2553,7 @@ Note: This operation requires an identity challenge if the financial institution
           "properties": [
             {
               "conflict": {},
+              "generatedName": "accountFieldsId",
               "key": "id",
               "schema": {
                 "description": "The unique identifier for this account resource. This is an immutable opaque string.",
@@ -2553,6 +2566,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountFieldsLabel",
               "key": "label",
               "schema": {
                 "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
@@ -2564,6 +2578,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountFieldsNickname",
               "key": "nickname",
               "schema": {
                 "description": undefined,
@@ -2580,6 +2595,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountFieldsMaskedNumber",
               "key": "maskedNumber",
               "schema": {
                 "description": undefined,
@@ -2592,6 +2608,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountFieldsProduct",
               "key": "product",
               "schema": {
                 "description": undefined,
@@ -2604,6 +2621,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountFieldsLocation",
               "key": "location",
               "schema": {
                 "description": "Indicates where an account is held.",
@@ -2650,6 +2668,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "differentSchema": true,
                 },
               },
+              "generatedName": "accountItemId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -2670,6 +2689,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "differentSchema": true,
                 },
               },
+              "generatedName": "accountItemLabel",
               "key": "label",
               "schema": {
                 "description": undefined,
@@ -2689,6 +2709,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "differentSchema": true,
                 },
               },
+              "generatedName": "accountItemNickname",
               "key": "nickname",
               "schema": {
                 "description": undefined,
@@ -2709,6 +2730,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "differentSchema": true,
                 },
               },
+              "generatedName": "accountItemMaskedNumber",
               "key": "maskedNumber",
               "schema": {
                 "description": undefined,
@@ -2725,6 +2747,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountItemAllows",
               "key": "allows",
               "schema": {
                 "description": undefined,
@@ -2741,6 +2764,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "differentSchema": true,
                 },
               },
+              "generatedName": "accountItemProduct",
               "key": "product",
               "schema": {
                 "description": undefined,
@@ -2761,6 +2785,7 @@ Note: This operation requires an identity challenge if the financial institution
                   "differentSchema": true,
                 },
               },
+              "generatedName": "accountItemLocation",
               "key": "location",
               "schema": {
                 "description": undefined,
@@ -2795,6 +2820,7 @@ Note: This operation requires an identity challenge if the financial institution
           "properties": [
             {
               "conflict": {},
+              "generatedName": "accountJointOwnerId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -2807,6 +2833,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             {
               "conflict": {},
+              "generatedName": "accountJointOwnerName",
               "key": "name",
               "schema": {
                 "description": "The full name of the joint owner.",
@@ -2827,6 +2854,7 @@ Note: This operation requires an identity challenge if the financial institution
           "properties": [
             {
               "conflict": {},
+              "generatedName": "accountJointOwnersItems",
               "key": "items",
               "schema": {
                 "description": "An array containing account joint owner items.",
@@ -2889,6 +2917,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "accountPermissionsBillPay",
               "key": "billPay",
               "schema": {
                 "description": "If \`true\`, the customer may use this account for Bill Pay.",
@@ -2900,6 +2929,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "accountPermissionsMobileCheckDeposit",
               "key": "mobileCheckDeposit",
               "schema": {
                 "description": "If \`true\`, the customer may use this account for mobile check deposits.",
@@ -2911,6 +2941,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "accountPermissionsTransferFrom",
               "key": "transferFrom",
               "schema": {
                 "description": "If \`true\`, the customer may use this account as the target (deposit) account for account-to-account transfers.",
@@ -2922,6 +2953,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "accountPermissionsTransferTo",
               "key": "transferTo",
               "schema": {
                 "description": "If \`true\`, the customer may use this account as the source (debit) account for account-to-account transfers.",
@@ -2933,6 +2965,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "accountPermissionsView",
               "key": "view",
               "schema": {
                 "description": "If \`true\`, the customer may view the details of this account, including the account balance and transactions.",
@@ -2944,6 +2977,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "accountPermissionsViewCards",
               "key": "viewCards",
               "schema": {
                 "description": "If \`true\`, the customer may view debit cards associated with this account.",
@@ -2955,6 +2989,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "accountPermissionsManageCards",
               "key": "manageCards",
               "schema": {
                 "description": "If true, the customer may manage debit cards associated with this account. This includes locking and unlocking cards, changing card controls, ordering cards, or canceling cards.",
@@ -2991,6 +3026,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "accountsItems",
               "key": "items",
               "schema": {
                 "description": "The array of items in this page of accounts. This array may be empty.",
@@ -3007,6 +3043,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "accountsCount",
               "key": "count",
               "schema": {
                 "description": undefined,
@@ -3022,6 +3059,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "accountsPrimaryAccountId",
               "key": "primaryAccountId",
               "schema": {
                 "description": undefined,
@@ -3042,6 +3080,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                   "differentSchema": true,
                 },
               },
+              "generatedName": "accountsNextPageUrl",
               "key": "nextPage_url",
               "schema": {
                 "description": undefined,
@@ -3245,6 +3284,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "addressRegionName",
               "key": "regionName",
               "schema": {
                 "description": undefined,
@@ -3260,6 +3300,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "addressRegionCode",
               "key": "regionCode",
               "schema": {
                 "description": undefined,
@@ -3275,6 +3316,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "addressPostalCode",
               "key": "postalCode",
               "schema": {
                 "description": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
@@ -3290,6 +3332,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                   "differentSchema": false,
                 },
               },
+              "generatedName": "addressCountryCode",
               "key": "countryCode",
               "schema": {
                 "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
@@ -3310,6 +3353,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "addressFieldsAddress1",
               "key": "address1",
               "schema": {
                 "description": "The first line of the postal address. In the US, this typically includes the building number and street name.",
@@ -3321,6 +3365,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "addressFieldsAddress2",
               "key": "address2",
               "schema": {
                 "description": undefined,
@@ -3336,6 +3381,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "addressFieldsLocality",
               "key": "locality",
               "schema": {
                 "description": "The city/town/municipality of the address.",
@@ -3347,6 +3393,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "addressFieldsCountryCode",
               "key": "countryCode",
               "schema": {
                 "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
@@ -3374,6 +3421,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "apiProblemType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -3390,6 +3438,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "apiProblemTitle",
               "key": "title",
               "schema": {
                 "description": undefined,
@@ -3406,6 +3455,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "apiProblemStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -3422,6 +3472,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "apiProblemDetail",
               "key": "detail",
               "schema": {
                 "description": undefined,
@@ -3438,6 +3489,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "apiProblemInstance",
               "key": "instance",
               "schema": {
                 "description": undefined,
@@ -3454,6 +3506,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "apiProblemId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -3470,6 +3523,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "apiProblemOccurredAt",
               "key": "occurredAt",
               "schema": {
                 "description": undefined,
@@ -3486,6 +3540,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "apiProblemProblems",
               "key": "problems",
               "schema": {
                 "description": undefined,
@@ -3506,6 +3561,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "apiProblemAttributes",
               "key": "attributes",
               "schema": {
                 "description": undefined,
@@ -3533,6 +3589,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "challengeFactorType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -3545,6 +3602,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "challengeFactorLabels",
               "key": "labels",
               "schema": {
                 "description": undefined,
@@ -3564,6 +3622,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "challengeFactorSecurityQuestions",
               "key": "securityQuestions",
               "schema": {
                 "description": undefined,
@@ -3666,6 +3725,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "challengeSecurityQuestionId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -3678,6 +3738,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "challengeSecurityQuestionPrompt",
               "key": "prompt",
               "schema": {
                 "description": "The text prompt of this security question.",
@@ -3698,6 +3759,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "challengeSecurityQuestionsQuestions",
               "key": "questions",
               "schema": {
                 "description": "The array of security questions.",
@@ -3745,6 +3807,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "cutoffTimeType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -3757,6 +3820,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "cutoffTimeTime",
               "key": "time",
               "schema": {
                 "description": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
@@ -3871,6 +3935,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "cutoffTimesTimeZoneId",
               "key": "timeZoneId",
               "schema": {
                 "description": undefined,
@@ -3883,6 +3948,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "cutoffTimesItems",
               "key": "items",
               "schema": {
                 "description": "A list of cutoff times for a financial institution.",
@@ -3932,6 +3998,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eligibleOverdraftAccountsItems",
               "key": "items",
               "schema": {
                 "type": "unknown",
@@ -3939,6 +4006,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "eligibleOverdraftAccountsMaximumOverdraftAccounts",
               "key": "maximumOverdraftAccounts",
               "schema": {
                 "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
@@ -3954,6 +4022,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                   "differentSchema": true,
                 },
               },
+              "generatedName": "eligibleOverdraftAccountsNextPageUrl",
               "key": "nextPage_url",
               "schema": {
                 "description": undefined,
@@ -4044,6 +4113,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "fullAccountPermissionsManageJointOwners",
               "key": "manageJointOwners",
               "schema": {
                 "description": "If \`true\`, the customer can list the other joint owners on the account and invite new joint owners.",
@@ -4055,6 +4125,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "fullAccountPermissionsManageOverdraftAccounts",
               "key": "manageOverdraftAccounts",
               "schema": {
                 "description": "If \`true\`, the customer can list and manage overdraft account settings.",
@@ -4084,6 +4155,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "incompleteAccountBalancesItems",
               "key": "items",
               "schema": {
                 "description": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
@@ -4100,6 +4172,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "incompleteAccountBalancesIncompleteAccounts",
               "key": "incompleteAccounts",
               "schema": {
                 "description": undefined,
@@ -4112,6 +4185,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "incompleteAccountBalancesRetryCount",
               "key": "retryCount",
               "schema": {
                 "description": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
@@ -4141,6 +4215,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "incompleteTransactionsRetryCount",
               "key": "retryCount",
               "schema": {
                 "description": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listTransactions\`](#op-listTransactions) operation.",
@@ -4227,6 +4302,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "institutionLookupResultFound",
               "key": "found",
               "schema": {
                 "description": "\`true\` if a financial institution was found matching the requested FI locator, \`false\` if none was found.",
@@ -4238,6 +4314,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "institutionLookupResultInstitution",
               "key": "institution",
               "schema": {
                 "description": undefined,
@@ -4254,6 +4331,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "institutionLookupResultIntermediaryInstitutions",
               "key": "intermediaryInstitutions",
               "schema": {
                 "description": undefined,
@@ -4300,6 +4378,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "jointOwnerInvitationId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -4321,6 +4400,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "jointOwnerInvitationFieldsFirstName",
               "key": "firstName",
               "schema": {
                 "description": "The invitee's first name.",
@@ -4332,6 +4412,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "jointOwnerInvitationFieldsLastName",
               "key": "lastName",
               "schema": {
                 "description": "The invitee's last name name.",
@@ -4343,6 +4424,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "jointOwnerInvitationFieldsTaxId",
               "key": "taxId",
               "schema": {
                 "description": undefined,
@@ -4358,6 +4440,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "jointOwnerInvitationFieldsSharedSecret",
               "key": "sharedSecret",
               "schema": {
                 "description": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
@@ -4369,6 +4452,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "jointOwnerInvitationFieldsEmailAddress",
               "key": "emailAddress",
               "schema": {
                 "description": "The invitee's email address.",
@@ -4380,6 +4464,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
               "key": "disallowDebitCardAccess",
               "schema": {
                 "description": undefined,
@@ -4460,6 +4545,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "newTransferSchedule",
               "key": "schedule",
               "schema": {
                 "description": undefined,
@@ -4481,6 +4567,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "overdraftAccountFieldsId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -4497,6 +4584,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "overdraftAccountFieldsLabel",
               "key": "label",
               "schema": {
                 "description": undefined,
@@ -4512,6 +4600,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "overdraftAccountFieldsMaskedNumber",
               "key": "maskedNumber",
               "schema": {
                 "description": undefined,
@@ -4562,6 +4651,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "overdraftProtectionMaximumOverdraftAccounts",
               "key": "maximumOverdraftAccounts",
               "schema": {
                 "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
@@ -4582,6 +4672,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "overdraftProtectionFieldsAccounts",
               "key": "accounts",
               "schema": {
                 "description": undefined,
@@ -4659,6 +4750,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "productReferenceType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -4671,6 +4763,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "productReferenceCode",
               "key": "code",
               "schema": {
                 "description": "The product's product code. Codes are unique to the financial institution.",
@@ -4682,6 +4775,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "productReferenceLabel",
               "key": "label",
               "schema": {
                 "description": "A human-readable label for this banking product.",
@@ -4693,6 +4787,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "productReferenceDescription",
               "key": "description",
               "schema": {
                 "description": "A human-readable description of this banking product.",
@@ -4808,6 +4903,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "requiredIdentityChallengeXFernSdkMethodName",
               "key": "x-fern-sdk-method-name",
               "schema": {
                 "description": undefined,
@@ -4820,6 +4916,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "requiredIdentityChallengeChallengeId",
               "key": "challengeId",
               "schema": {
                 "description": undefined,
@@ -4832,6 +4929,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "requiredIdentityChallengeFactors",
               "key": "factors",
               "schema": {
                 "description": "A list of challenge factors. The user must complete one of these challenge factors. The \`labels\` in each factor identify one or more channels the user may use, such as a list of email addresses the system may use to send a one-time passcode to the user. ***Note**: The same channel may be used by multiple factors in the array of factors. For example, the user's primary mobile phone number may be used for both an \`sms\` factor and a \`voice\` factor.",
@@ -4864,6 +4962,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "simpleInstitutionName",
               "key": "name",
               "schema": {
                 "description": "The financial institution's name.",
@@ -4875,6 +4974,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "simpleInstitutionAddress",
               "key": "address",
               "schema": {
                 "description": undefined,
@@ -4887,6 +4987,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "simpleInstitutionLocator",
               "key": "locator",
               "schema": {
                 "description": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
@@ -4898,6 +4999,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "simpleInstitutionLocatorType",
               "key": "locatorType",
               "schema": {
                 "description": undefined,
@@ -4926,6 +5028,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timestampFieldsCreatedAt",
               "key": "createdAt",
               "schema": {
                 "description": undefined,
@@ -4941,6 +5044,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "timestampFieldsUpdatedAt",
               "key": "updatedAt",
               "schema": {
                 "description": undefined,
@@ -4965,6 +5069,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transactionCategoriesItems",
               "key": "items",
               "schema": {
                 "description": "An array containing transaction category items.",
@@ -4990,6 +5095,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transactionCategorizationLabel",
               "key": "label",
               "schema": {
                 "description": undefined,
@@ -5002,6 +5108,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionCategorizationId",
               "key": "id",
               "schema": {
                 "description": "The unique ID of this transaction's category.",
@@ -5039,6 +5146,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transactionCategoryType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -5107,6 +5215,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transactionCheckNumber",
               "key": "number",
               "schema": {
                 "description": "The check number.",
@@ -5118,6 +5227,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionCheckImageFrontUrl",
               "key": "imageFront_url",
               "schema": {
                 "description": undefined,
@@ -5133,6 +5243,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionCheckImageBackUrl",
               "key": "imageBack_url",
               "schema": {
                 "description": undefined,
@@ -5157,6 +5268,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transactionFieldsId",
               "key": "id",
               "schema": {
                 "description": "This transaction's unique identifier.",
@@ -5168,6 +5280,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -5180,6 +5293,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsSubtype",
               "key": "subtype",
               "schema": {
                 "description": undefined,
@@ -5192,6 +5306,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsOccurredOn",
               "key": "occurredOn",
               "schema": {
                 "description": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
@@ -5203,6 +5318,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsCreatedOn",
               "key": "createdOn",
               "schema": {
                 "description": undefined,
@@ -5218,6 +5334,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsPostedOn",
               "key": "postedOn",
               "schema": {
                 "description": undefined,
@@ -5233,6 +5350,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsAmount",
               "key": "amount",
               "schema": {
                 "description": undefined,
@@ -5245,6 +5363,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsPosted",
               "key": "posted",
               "schema": {
                 "description": undefined,
@@ -5260,6 +5379,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsBalance",
               "key": "balance",
               "schema": {
                 "description": undefined,
@@ -5276,6 +5396,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsMemo",
               "key": "memo",
               "schema": {
                 "description": undefined,
@@ -5291,6 +5412,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsDescription",
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -5306,6 +5428,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsCategory",
               "key": "category",
               "schema": {
                 "description": undefined,
@@ -5322,6 +5445,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsMerchant",
               "key": "merchant",
               "schema": {
                 "description": undefined,
@@ -5338,6 +5462,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionFieldsCheck",
               "key": "check",
               "schema": {
                 "description": undefined,
@@ -5388,6 +5513,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transactionMerchantName",
               "key": "name",
               "schema": {
                 "description": undefined,
@@ -5403,6 +5529,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionMerchantWebsiteUrl",
               "key": "website_url",
               "schema": {
                 "description": undefined,
@@ -5418,6 +5545,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionMerchantLogoUrl",
               "key": "logo_url",
               "schema": {
                 "description": undefined,
@@ -5541,6 +5669,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transactionsItems",
               "key": "items",
               "schema": {
                 "description": "An array containing a page of transaction items.",
@@ -5557,6 +5686,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transactionsCount",
               "key": "count",
               "schema": {
                 "description": undefined,
@@ -5606,6 +5736,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferAccountReferenceId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -5618,6 +5749,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transferAccountReferenceLabel",
               "key": "label",
               "schema": {
                 "description": undefined,
@@ -5633,6 +5765,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transferAccountReferenceType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -5649,6 +5782,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transferAccountReferenceLocation",
               "key": "location",
               "schema": {
                 "description": undefined,
@@ -5674,6 +5808,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferDateRestrictionOccursOn",
               "key": "occursOn",
               "schema": {
                 "description": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
@@ -5685,6 +5820,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transferDateRestrictionReason",
               "key": "reason",
               "schema": {
                 "description": undefined,
@@ -5697,6 +5833,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transferDateRestrictionCreditOn",
               "key": "creditOn",
               "schema": {
                 "description": undefined,
@@ -5712,6 +5849,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
             {
               "conflict": {},
+              "generatedName": "transferDateRestrictionDebitOn",
               "key": "debitOn",
               "schema": {
                 "description": undefined,
@@ -5826,6 +5964,7 @@ The response may include dates prior to requested the start date, as that is use
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferDateRestrictionsRestrictedDates",
               "key": "restrictedDates",
               "schema": {
                 "description": undefined,
@@ -5846,6 +5985,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             {
               "conflict": {},
+              "generatedName": "transferDateRestrictionsAccuracyEndsOn",
               "key": "accuracyEndsOn",
               "schema": {
                 "description": undefined,
@@ -5870,6 +6010,7 @@ The response may include dates prior to requested the start date, as that is use
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferFieldsAmount",
               "key": "amount",
               "schema": {
                 "description": undefined,
@@ -5886,6 +6027,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             {
               "conflict": {},
+              "generatedName": "transferFieldsSourceAccount",
               "key": "sourceAccount",
               "schema": {
                 "description": undefined,
@@ -5902,6 +6044,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             {
               "conflict": {},
+              "generatedName": "transferFieldsTargetAccount",
               "key": "targetAccount",
               "schema": {
                 "description": undefined,
@@ -5918,6 +6061,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             {
               "conflict": {},
+              "generatedName": "transferFieldsMemo",
               "key": "memo",
               "schema": {
                 "description": undefined,
@@ -6109,6 +6253,7 @@ The response may include dates prior to requested the start date, as that is use
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferItemId",
               "key": "id",
               "schema": {
                 "description": "The unique identifier for this transfer resource. This is an immutable opaque string.",
@@ -6121,6 +6266,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             {
               "conflict": {},
+              "generatedName": "transferItemSchedule",
               "key": "schedule",
               "schema": {
                 "description": undefined,
@@ -6133,6 +6279,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             {
               "conflict": {},
+              "generatedName": "transferItemState",
               "key": "state",
               "schema": {
                 "description": "The state of this transfer resource.",
@@ -6145,6 +6292,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             {
               "conflict": {},
+              "generatedName": "transferItemProcessedAt",
               "key": "processedAt",
               "schema": {
                 "description": undefined,
@@ -6160,6 +6308,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             {
               "conflict": {},
+              "generatedName": "transferItemUpdatedBy",
               "key": "updatedBy",
               "schema": {
                 "description": undefined,
@@ -6193,6 +6342,7 @@ The response may include dates prior to requested the start date, as that is use
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferItemScheduleDebitsOn",
               "key": "debitsOn",
               "schema": {
                 "description": undefined,
@@ -6208,6 +6358,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             {
               "conflict": {},
+              "generatedName": "transferItemScheduleCreditsOn",
               "key": "creditsOn",
               "schema": {
                 "description": undefined,
@@ -6249,6 +6400,7 @@ The response may include dates prior to requested the start date, as that is use
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferPatchSchedule",
               "key": "schedule",
               "schema": {
                 "description": undefined,
@@ -6316,6 +6468,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferScheduleScheduledOn",
               "key": "scheduledOn",
               "schema": {
                 "description": undefined,
@@ -6331,6 +6484,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
             {
               "conflict": {},
+              "generatedName": "transferScheduleRecurrenceType",
               "key": "recurrenceType",
               "schema": {
                 "description": undefined,
@@ -6347,6 +6501,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
             {
               "conflict": {},
+              "generatedName": "transferScheduleFrequency",
               "key": "frequency",
               "schema": {
                 "description": undefined,
@@ -6359,6 +6514,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
             {
               "conflict": {},
+              "generatedName": "transferScheduleEndsOn",
               "key": "endsOn",
               "schema": {
                 "description": undefined,
@@ -6374,6 +6530,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
             {
               "conflict": {},
+              "generatedName": "transferScheduleCount",
               "key": "count",
               "schema": {
                 "description": undefined,
@@ -6389,6 +6546,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
             {
               "conflict": {},
+              "generatedName": "transferScheduleAmountLimit",
               "key": "amountLimit",
               "schema": {
                 "description": undefined,
@@ -6464,6 +6622,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferScheduleItemScheduledOn",
               "key": "scheduledOn",
               "schema": {
                 "description": "The scheduled date of the calculated calendar recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
@@ -6475,6 +6634,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
             {
               "conflict": {},
+              "generatedName": "transferScheduleItemEffectiveOn",
               "key": "effectiveOn",
               "schema": {
                 "description": "The effective date of the recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is \`credit\` and adjusted to after the scheduled date when the transfer direction is \`debit\`.",
@@ -6504,6 +6664,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transferSchedulesItems",
               "key": "items",
               "schema": {
                 "description": "An array containing upcoming transfer schedule items.",
@@ -6706,6 +6867,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transfersItems",
               "key": "items",
               "schema": {
                 "description": "An array containing a page of transfer items.",
@@ -6722,6 +6884,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
             {
               "conflict": {},
+              "generatedName": "transfersCount",
               "key": "count",
               "schema": {
                 "description": undefined,
@@ -6755,6 +6918,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "properties": [
             {
               "conflict": {},
+              "generatedName": "wireTransferInstitutionLocalClearingCode",
               "key": "localClearingCode",
               "schema": {
                 "description": undefined,

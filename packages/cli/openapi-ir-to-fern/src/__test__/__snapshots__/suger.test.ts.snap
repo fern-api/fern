@@ -6672,14 +6672,17 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "id": {
                     "docs": "The ID of the API Client.",
+                    "name": "sharedGetApiClientAccessTokenParamsId",
                     "type": "string",
                   },
                   "organizationID": {
                     "docs": undefined,
+                    "name": "sharedGetApiClientAccessTokenParamsOrganizationId",
                     "type": "string",
                   },
                   "secret": {
                     "docs": "The secret of the API Client.",
+                    "name": "sharedGetApiClientAccessTokenParamsSecret",
                     "type": "string",
                   },
                 },
@@ -6772,18 +6775,22 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "description": {
                     "docs": undefined,
+                    "name": "githubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParamsDescription",
                     "type": "optional<string>",
                   },
                   "id": {
                     "docs": undefined,
+                    "name": "githubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParamsId",
                     "type": "optional<string>",
                   },
                   "name": {
                     "docs": undefined,
+                    "name": "githubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParamsName",
                     "type": "optional<string>",
                   },
                   "organizationID": {
                     "docs": undefined,
+                    "name": "githubComSugerioMarketplaceServiceRdsDbLibUpdateBuyerNameDescriptionParamsOrganizationId",
                     "type": "optional<string>",
                   },
                 },
@@ -6833,14 +6840,17 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "creditAmountIncrement": {
                     "docs": "The amount to be added to the credit amount.",
+                    "name": "sharedAddEntitlementCreditParamsCreditAmountIncrement",
                     "type": "double",
                   },
                   "entitlementID": {
                     "docs": undefined,
+                    "name": "sharedAddEntitlementCreditParamsEntitlementId",
                     "type": "string",
                   },
                   "organizationID": {
                     "docs": undefined,
+                    "name": "sharedAddEntitlementCreditParamsOrganizationId",
                     "type": "string",
                   },
                 },
@@ -7018,14 +7028,17 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "id": {
                     "docs": undefined,
+                    "name": "githubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParamsId",
                     "type": "optional<string>",
                   },
                   "name": {
                     "docs": undefined,
+                    "name": "githubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParamsName",
                     "type": "optional<string>",
                   },
                   "organizationID": {
                     "docs": undefined,
+                    "name": "githubComSugerioMarketplaceServiceRdsDbLibUpdateEntitlementNameParamsOrganizationId",
                     "type": "optional<string>",
                   },
                 },
@@ -7134,22 +7147,27 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "createdBy": {
                     "docs": undefined,
+                    "name": "sharedCreateIntegrationParamsCreatedBy",
                     "type": "optional<string>",
                   },
                   "info": {
                     "docs": undefined,
+                    "name": "sharedCreateIntegrationParamsInfo",
                     "type": "root.SharedIntegrationInfo",
                   },
                   "organizationID": {
                     "docs": undefined,
+                    "name": "sharedCreateIntegrationParamsOrganizationId",
                     "type": "string",
                   },
                   "partner": {
                     "docs": undefined,
+                    "name": "sharedCreateIntegrationParamsPartner",
                     "type": "root.SharedCreateIntegrationParamsPartner",
                   },
                   "service": {
                     "docs": undefined,
+                    "name": "sharedCreateIntegrationParamsService",
                     "type": "root.SharedCreateIntegrationParamsService",
                   },
                 },
@@ -7269,10 +7287,12 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "info": {
                     "docs": undefined,
+                    "name": "sharedUpdateIntegrationParamsInfo",
                     "type": "root.SharedIntegrationInfo",
                   },
                   "organizationID": {
                     "docs": undefined,
+                    "name": "sharedUpdateIntegrationParamsOrganizationId",
                     "type": "string",
                   },
                   "partner": {
@@ -7704,22 +7724,27 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "entitlementID": {
                     "docs": undefined,
+                    "name": "sharedCreateUsageRecordGroupParamsEntitlementId",
                     "type": "string",
                   },
                   "id": {
                     "docs": "uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
+                    "name": "sharedCreateUsageRecordGroupParamsId",
                     "type": "optional<string>",
                   },
                   "metaInfo": {
                     "docs": "read-only, don't set it when reporting the usage record group.",
+                    "name": "sharedCreateUsageRecordGroupParamsMetaInfo",
                     "type": "optional<root.SharedMeteringUsageRecordGroupMetaInfo>",
                   },
                   "organizationID": {
                     "docs": undefined,
+                    "name": "sharedCreateUsageRecordGroupParamsOrganizationId",
                     "type": "string",
                   },
                   "records": {
                     "docs": undefined,
+                    "name": "sharedCreateUsageRecordGroupParamsRecords",
                     "type": "map<string, double>",
                   },
                 },
@@ -8156,14 +8181,17 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "fulfillmentUrl": {
                     "docs": undefined,
+                    "name": "sharedUpdateProductParamsFulfillmentUrl",
                     "type": "string",
                   },
                   "id": {
                     "docs": undefined,
+                    "name": "sharedUpdateProductParamsId",
                     "type": "string",
                   },
                   "organizationID": {
                     "docs": undefined,
+                    "name": "sharedUpdateProductParamsOrganizationId",
                     "type": "string",
                   },
                 },
@@ -8209,30 +8237,37 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "buyerID": {
                     "docs": "Optional, if available, return the report for the Buyer.",
+                    "name": "sharedGetRevenueReportParamsBuyerId",
                     "type": "optional<string>",
                   },
                   "entitlementID": {
                     "docs": "Optional, if available, return the report for the Entitlement.",
+                    "name": "sharedGetRevenueReportParamsEntitlementId",
                     "type": "optional<string>",
                   },
                   "organizationID": {
                     "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
+                    "name": "sharedGetRevenueReportParamsOrganizationId",
                     "type": "string",
                   },
                   "partner": {
                     "docs": "Required.",
+                    "name": "sharedGetRevenueReportParamsPartner",
                     "type": "root.SharedGetRevenueReportParamsPartner",
                   },
                   "productID": {
                     "docs": "Optional, if available, return the report for the Product.",
+                    "name": "sharedGetRevenueReportParamsProductId",
                     "type": "optional<string>",
                   },
                   "reportType": {
                     "docs": undefined,
+                    "name": "sharedGetRevenueReportParamsReportType",
                     "type": "root.SharedRevenueReportType",
                   },
                   "service": {
                     "docs": "Required.",
+                    "name": "sharedGetRevenueReportParamsService",
                     "type": "root.SharedGetRevenueReportParamsService",
                   },
                 },
@@ -8267,10 +8302,12 @@ the same customer, dimension, and time, but a different quantity.",
                 "properties": {
                   "entitlementID": {
                     "docs": undefined,
+                    "name": "sharedGetUsageReportParamsEntitlementId",
                     "type": "string",
                   },
                   "organizationID": {
                     "docs": undefined,
+                    "name": "sharedGetUsageReportParamsOrganizationId",
                     "type": "string",
                   },
                 },

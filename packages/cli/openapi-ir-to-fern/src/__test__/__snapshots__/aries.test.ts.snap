@@ -6540,10 +6540,12 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "name": {
                     "docs": "Menu option name",
+                    "name": "performRequestName",
                     "type": "optional<string>",
                   },
                   "params": {
                     "docs": "Input parameter values",
+                    "name": "performRequestParams",
                     "type": "optional<map<string, string>>",
                   },
                 },
@@ -6593,6 +6595,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "menu": {
                     "docs": undefined,
+                    "name": "sendMenuMenu",
                     "type": "root.SendMenuMenu",
                   },
                 },
@@ -6636,6 +6639,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "content": {
                     "docs": "Message content",
+                    "name": "sendMessageContent",
                     "type": "optional<string>",
                   },
                 },
@@ -6739,26 +6743,32 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
+                    "name": "createInvitationRequestMediationId",
                     "type": "optional<string>",
                   },
                   "metadata": {
                     "docs": "Optional metadata to attach to the connection created with the invitation",
+                    "name": "createInvitationRequestMetadata",
                     "type": "optional<root.CreateInvitationRequestMetadata>",
                   },
                   "my_label": {
                     "docs": "Optional label for connection invitation",
+                    "name": "createInvitationRequestMyLabel",
                     "type": "optional<string>",
                   },
                   "recipient_keys": {
                     "docs": "List of recipient keys",
+                    "name": "createInvitationRequestRecipientKeys",
                     "type": "optional<list<string>>",
                   },
                   "routing_keys": {
                     "docs": "List of routing keys",
+                    "name": "createInvitationRequestRoutingKeys",
                     "type": "optional<list<string>>",
                   },
                   "service_endpoint": {
                     "docs": "Connection endpoint",
+                    "name": "createInvitationRequestServiceEndpoint",
                     "type": "optional<string>",
                   },
                 },
@@ -6805,34 +6815,42 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "alias": {
                     "docs": "Alias to assign to this connection",
+                    "name": "connectionStaticRequestAlias",
                     "type": "optional<string>",
                   },
                   "my_did": {
                     "docs": "Local DID",
+                    "name": "connectionStaticRequestMyDid",
                     "type": "optional<string>",
                   },
                   "my_seed": {
                     "docs": "Seed to use for the local DID",
+                    "name": "connectionStaticRequestMySeed",
                     "type": "optional<string>",
                   },
                   "their_did": {
                     "docs": "Remote DID",
+                    "name": "connectionStaticRequestTheirDid",
                     "type": "optional<string>",
                   },
                   "their_endpoint": {
                     "docs": "URL endpoint for other party",
+                    "name": "connectionStaticRequestTheirEndpoint",
                     "type": "optional<string>",
                   },
                   "their_label": {
                     "docs": "Other party's label for this connection",
+                    "name": "connectionStaticRequestTheirLabel",
                     "type": "optional<string>",
                   },
                   "their_seed": {
                     "docs": "Seed to use for the remote DID",
+                    "name": "connectionStaticRequestTheirSeed",
                     "type": "optional<string>",
                   },
                   "their_verkey": {
                     "docs": "Remote verification key",
+                    "name": "connectionStaticRequestTheirVerkey",
                     "type": "optional<string>",
                   },
                 },
@@ -7002,34 +7020,42 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "@id": {
                     "docs": "Message identifier",
+                    "name": "receiveInvitationRequestId",
                     "type": "optional<string>",
                   },
                   "@type": {
                     "docs": "Message type",
+                    "name": "receiveInvitationRequestType",
                     "type": "optional<string>",
                   },
                   "did": {
                     "docs": "DID for connection invitation",
+                    "name": "receiveInvitationRequestDid",
                     "type": "optional<string>",
                   },
                   "imageUrl": {
                     "docs": "Optional image URL for connection invitation",
+                    "name": "receiveInvitationRequestImageUrl",
                     "type": "optional<string>",
                   },
                   "label": {
                     "docs": "Optional label for connection invitation",
+                    "name": "receiveInvitationRequestLabel",
                     "type": "optional<string>",
                   },
                   "recipientKeys": {
                     "docs": "List of recipient keys",
+                    "name": "receiveInvitationRequestRecipientKeys",
                     "type": "optional<list<string>>",
                   },
                   "routingKeys": {
                     "docs": "List of routing keys",
+                    "name": "receiveInvitationRequestRoutingKeys",
                     "type": "optional<list<string>>",
                   },
                   "serviceEndpoint": {
                     "docs": "Service endpoint at which to reach this agent",
+                    "name": "receiveInvitationRequestServiceEndpoint",
                     "type": "optional<string>",
                   },
                 },
@@ -7077,6 +7103,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "metadata": {
                     "docs": "Dictionary of metadata to set for connection.",
+                    "name": "connectionMetadataSetRequestMetadata",
                     "type": "root.ConnectionMetadataSetRequestMetadata",
                   },
                 },
@@ -7201,18 +7228,22 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "revocation_registry_size": {
                     "docs": "Revocation registry size",
+                    "name": "credentialDefinitionSendRequestRevocationRegistrySize",
                     "type": "optional<integer>",
                   },
                   "schema_id": {
                     "docs": "Schema identifier",
+                    "name": "credentialDefinitionSendRequestSchemaId",
                     "type": "optional<string>",
                   },
                   "support_revocation": {
                     "docs": "Revocation supported flag",
+                    "name": "credentialDefinitionSendRequestSupportRevocation",
                     "type": "optional<boolean>",
                   },
                   "tag": {
                     "docs": "Credential definition identifier tag",
+                    "name": "credentialDefinitionSendRequestTag",
                     "type": "optional<string>",
                   },
                 },
@@ -7434,38 +7465,47 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "contexts": {
                     "docs": undefined,
+                    "name": "w3CCredentialsListRequestContexts",
                     "type": "optional<list<string>>",
                   },
                   "given_id": {
                     "docs": "Given credential id to match",
+                    "name": "w3CCredentialsListRequestGivenId",
                     "type": "optional<string>",
                   },
                   "issuer_id": {
                     "docs": "Credential issuer identifier to match",
+                    "name": "w3CCredentialsListRequestIssuerId",
                     "type": "optional<string>",
                   },
                   "max_results": {
                     "docs": "Maximum number of results to return",
+                    "name": "w3CCredentialsListRequestMaxResults",
                     "type": "optional<integer>",
                   },
                   "proof_types": {
                     "docs": undefined,
+                    "name": "w3CCredentialsListRequestProofTypes",
                     "type": "optional<list<string>>",
                   },
                   "schema_ids": {
                     "docs": "Schema identifiers, all of which to match",
+                    "name": "w3CCredentialsListRequestSchemaIds",
                     "type": "optional<list<string>>",
                   },
                   "subject_ids": {
                     "docs": "Subject identifiers, all of which to match",
+                    "name": "w3CCredentialsListRequestSubjectIds",
                     "type": "optional<list<string>>",
                   },
                   "tag_query": {
                     "docs": "Tag filter",
+                    "name": "w3CCredentialsListRequestTagQuery",
                     "type": "optional<map<string, string>>",
                   },
                   "types": {
                     "docs": undefined,
+                    "name": "w3CCredentialsListRequestTypes",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -7632,22 +7672,27 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "@id": {
                     "docs": "Message identifier",
+                    "name": "didxRequestId",
                     "type": "optional<string>",
                   },
                   "@type": {
                     "docs": "Message type",
+                    "name": "didxRequestType",
                     "type": "optional<string>",
                   },
                   "did": {
                     "docs": "DID of exchange",
+                    "name": "didxRequestDid",
                     "type": "optional<string>",
                   },
                   "did_doc~attach": {
                     "docs": undefined,
+                    "name": "didxRequestDidDocAttach",
                     "type": "optional<root.DidxRequestDidDocAttach>",
                   },
                   "label": {
                     "docs": "Label for DID exchange request",
+                    "name": "didxRequestLabel",
                     "type": "string",
                   },
                 },
@@ -7856,6 +7901,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "expires_time": {
                     "docs": "Expiry Date",
+                    "name": "dateExpiresTime",
                     "type": "string",
                   },
                 },
@@ -8094,42 +8140,52 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_remove": {
                     "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "name": "v10CredentialCreateAutoRemove",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v10CredentialCreateComment",
                     "type": "optional<string>",
                   },
                   "cred_def_id": {
                     "docs": "Credential definition identifier",
+                    "name": "v10CredentialCreateCredDefId",
                     "type": "optional<string>",
                   },
                   "credential_proposal": {
                     "docs": undefined,
+                    "name": "v10CredentialCreateCredentialProposal",
                     "type": "root.CredentialPreview",
                   },
                   "issuer_did": {
                     "docs": "Credential issuer DID",
+                    "name": "v10CredentialCreateIssuerDid",
                     "type": "optional<string>",
                   },
                   "schema_id": {
                     "docs": "Schema identifier",
+                    "name": "v10CredentialCreateSchemaId",
                     "type": "optional<string>",
                   },
                   "schema_issuer_did": {
                     "docs": "Schema issuer DID",
+                    "name": "v10CredentialCreateSchemaIssuerDid",
                     "type": "optional<string>",
                   },
                   "schema_name": {
                     "docs": "Schema name",
+                    "name": "v10CredentialCreateSchemaName",
                     "type": "optional<string>",
                   },
                   "schema_version": {
                     "docs": "Schema version",
+                    "name": "v10CredentialCreateSchemaVersion",
                     "type": "optional<string>",
                   },
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
+                    "name": "v10CredentialCreateTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8155,26 +8211,32 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_issue": {
                     "docs": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
+                    "name": "v10CredentialConnFreeOfferRequestAutoIssue",
                     "type": "optional<boolean>",
                   },
                   "auto_remove": {
                     "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "name": "v10CredentialConnFreeOfferRequestAutoRemove",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v10CredentialConnFreeOfferRequestComment",
                     "type": "optional<string>",
                   },
                   "cred_def_id": {
                     "docs": "Credential definition identifier",
+                    "name": "v10CredentialConnFreeOfferRequestCredDefId",
                     "type": "string",
                   },
                   "credential_preview": {
                     "docs": undefined,
+                    "name": "v10CredentialConnFreeOfferRequestCredentialPreview",
                     "type": "root.CredentialPreview",
                   },
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
+                    "name": "v10CredentialConnFreeOfferRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8279,6 +8341,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v10CredentialIssueRequestComment",
                     "type": "optional<string>",
                   },
                 },
@@ -8310,6 +8373,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "description": {
                     "docs": undefined,
+                    "name": "v10CredentialProblemReportRequestDescription",
                     "type": "string",
                   },
                 },
@@ -8341,6 +8405,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "counter_proposal": {
                     "docs": undefined,
+                    "name": "v10CredentialBoundOfferRequestCounterProposal",
                     "type": "optional<root.V10CredentialBoundOfferRequestCounterProposal>",
                   },
                 },
@@ -8384,46 +8449,57 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_remove": {
                     "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "name": "v10CredentialProposalRequestMandAutoRemove",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v10CredentialProposalRequestMandComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier",
+                    "name": "v10CredentialProposalRequestMandConnectionId",
                     "type": "string",
                   },
                   "cred_def_id": {
                     "docs": "Credential definition identifier",
+                    "name": "v10CredentialProposalRequestMandCredDefId",
                     "type": "optional<string>",
                   },
                   "credential_proposal": {
                     "docs": undefined,
+                    "name": "v10CredentialProposalRequestMandCredentialProposal",
                     "type": "root.CredentialPreview",
                   },
                   "issuer_did": {
                     "docs": "Credential issuer DID",
+                    "name": "v10CredentialProposalRequestMandIssuerDid",
                     "type": "optional<string>",
                   },
                   "schema_id": {
                     "docs": "Schema identifier",
+                    "name": "v10CredentialProposalRequestMandSchemaId",
                     "type": "optional<string>",
                   },
                   "schema_issuer_did": {
                     "docs": "Schema issuer DID",
+                    "name": "v10CredentialProposalRequestMandSchemaIssuerDid",
                     "type": "optional<string>",
                   },
                   "schema_name": {
                     "docs": "Schema name",
+                    "name": "v10CredentialProposalRequestMandSchemaName",
                     "type": "optional<string>",
                   },
                   "schema_version": {
                     "docs": "Schema version",
+                    "name": "v10CredentialProposalRequestMandSchemaVersion",
                     "type": "optional<string>",
                   },
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
+                    "name": "v10CredentialProposalRequestMandTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8449,30 +8525,37 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_issue": {
                     "docs": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
+                    "name": "v10CredentialFreeOfferRequestAutoIssue",
                     "type": "optional<boolean>",
                   },
                   "auto_remove": {
                     "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "name": "v10CredentialFreeOfferRequestAutoRemove",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v10CredentialFreeOfferRequestComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier",
+                    "name": "v10CredentialFreeOfferRequestConnectionId",
                     "type": "string",
                   },
                   "cred_def_id": {
                     "docs": "Credential definition identifier",
+                    "name": "v10CredentialFreeOfferRequestCredDefId",
                     "type": "string",
                   },
                   "credential_preview": {
                     "docs": undefined,
+                    "name": "v10CredentialFreeOfferRequestCredentialPreview",
                     "type": "root.CredentialPreview",
                   },
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
+                    "name": "v10CredentialFreeOfferRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8498,46 +8581,57 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_remove": {
                     "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "name": "v10CredentialProposalRequestOptAutoRemove",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v10CredentialProposalRequestOptComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier",
+                    "name": "v10CredentialProposalRequestOptConnectionId",
                     "type": "string",
                   },
                   "cred_def_id": {
                     "docs": "Credential definition identifier",
+                    "name": "v10CredentialProposalRequestOptCredDefId",
                     "type": "optional<string>",
                   },
                   "credential_proposal": {
                     "docs": undefined,
+                    "name": "v10CredentialProposalRequestOptCredentialProposal",
                     "type": "optional<root.CredentialPreview>",
                   },
                   "issuer_did": {
                     "docs": "Credential issuer DID",
+                    "name": "v10CredentialProposalRequestOptIssuerDid",
                     "type": "optional<string>",
                   },
                   "schema_id": {
                     "docs": "Schema identifier",
+                    "name": "v10CredentialProposalRequestOptSchemaId",
                     "type": "optional<string>",
                   },
                   "schema_issuer_did": {
                     "docs": "Schema issuer DID",
+                    "name": "v10CredentialProposalRequestOptSchemaIssuerDid",
                     "type": "optional<string>",
                   },
                   "schema_name": {
                     "docs": "Schema name",
+                    "name": "v10CredentialProposalRequestOptSchemaName",
                     "type": "optional<string>",
                   },
                   "schema_version": {
                     "docs": "Schema version",
+                    "name": "v10CredentialProposalRequestOptSchemaVersion",
                     "type": "optional<string>",
                   },
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
+                    "name": "v10CredentialProposalRequestOptTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8569,6 +8663,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "credential_id": {
                     "docs": undefined,
+                    "name": "v10CredentialStoreRequestCredentialId",
                     "type": "optional<string>",
                   },
                 },
@@ -8606,22 +8701,27 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_remove": {
                     "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "name": "v20IssueCredSchemaCoreAutoRemove",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v20IssueCredSchemaCoreComment",
                     "type": "optional<string>",
                   },
                   "credential_preview": {
                     "docs": undefined,
+                    "name": "v20IssueCredSchemaCoreCredentialPreview",
                     "type": "optional<root.V20CredPreview>",
                   },
                   "filter": {
                     "docs": undefined,
+                    "name": "v20IssueCredSchemaCoreFilter",
                     "type": "root.V20CredBoundOfferRequestFilter",
                   },
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
+                    "name": "v20IssueCredSchemaCoreTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8647,26 +8747,32 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_issue": {
                     "docs": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
+                    "name": "v20CredOfferConnFreeRequestAutoIssue",
                     "type": "optional<boolean>",
                   },
                   "auto_remove": {
                     "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "name": "v20CredOfferConnFreeRequestAutoRemove",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v20CredOfferConnFreeRequestComment",
                     "type": "optional<string>",
                   },
                   "credential_preview": {
                     "docs": undefined,
+                    "name": "v20CredOfferConnFreeRequestCredentialPreview",
                     "type": "optional<root.V20CredPreview>",
                   },
                   "filter": {
                     "docs": undefined,
+                    "name": "v20CredOfferConnFreeRequestFilter",
                     "type": "root.V20CredBoundOfferRequestFilter",
                   },
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
+                    "name": "v20CredOfferConnFreeRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8771,6 +8877,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v20CredIssueRequestComment",
                     "type": "optional<string>",
                   },
                 },
@@ -8802,6 +8909,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "description": {
                     "docs": undefined,
+                    "name": "v20CredIssueProblemReportRequestDescription",
                     "type": "string",
                   },
                 },
@@ -8833,10 +8941,12 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "counter_preview": {
                     "docs": undefined,
+                    "name": "v20CredBoundOfferRequestCounterPreview",
                     "type": "optional<root.V20CredBoundOfferRequestCounterPreview>",
                   },
                   "filter": {
                     "docs": undefined,
+                    "name": "v20CredBoundOfferRequestFilter",
                     "type": "optional<root.V20CredBoundOfferRequestFilter>",
                   },
                 },
@@ -8868,6 +8978,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "holder_did": {
                     "docs": "Holder DID to substitute for the credentialSubject.id",
+                    "name": "v20CredRequestRequestHolderDid",
                     "type": "optional<string>",
                   },
                 },
@@ -8911,30 +9022,37 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_issue": {
                     "docs": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
+                    "name": "v20CredOfferRequestAutoIssue",
                     "type": "optional<boolean>",
                   },
                   "auto_remove": {
                     "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "name": "v20CredOfferRequestAutoRemove",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v20CredOfferRequestComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier",
+                    "name": "v20CredOfferRequestConnectionId",
                     "type": "string",
                   },
                   "credential_preview": {
                     "docs": undefined,
+                    "name": "v20CredOfferRequestCredentialPreview",
                     "type": "optional<root.V20CredPreview>",
                   },
                   "filter": {
                     "docs": undefined,
+                    "name": "v20CredOfferRequestFilter",
                     "type": "root.V20CredBoundOfferRequestFilter",
                   },
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
+                    "name": "v20CredOfferRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8978,26 +9096,32 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_remove": {
                     "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "name": "v20CredRequestFreeAutoRemove",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v20CredRequestFreeComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier",
+                    "name": "v20CredRequestFreeConnectionId",
                     "type": "string",
                   },
                   "filter": {
                     "docs": undefined,
+                    "name": "v20CredRequestFreeFilter",
                     "type": "root.V20CredRequestFreeFilter",
                   },
                   "holder_did": {
                     "docs": "Holder DID to substitute for the credentialSubject.id",
+                    "name": "v20CredRequestFreeHolderDid",
                     "type": "optional<string>",
                   },
                   "trace": {
                     "docs": "Whether to trace event (default false)",
+                    "name": "v20CredRequestFreeTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -9029,6 +9153,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "credential_id": {
                     "docs": undefined,
+                    "name": "v20CredStoreRequestCredentialId",
                     "type": "optional<string>",
                   },
                 },
@@ -9066,10 +9191,12 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "doc": {
                     "docs": undefined,
+                    "name": "signRequestDoc",
                     "type": "root.Doc",
                   },
                   "verkey": {
                     "docs": "Verkey to use for signing",
+                    "name": "signRequestVerkey",
                     "type": "string",
                   },
                 },
@@ -9095,10 +9222,12 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "doc": {
                     "docs": undefined,
+                    "name": "verifyRequestDoc",
                     "type": "root.VerifyRequestDoc",
                   },
                   "verkey": {
                     "docs": "Verkey to use for doc verification",
+                    "name": "verifyRequestVerkey",
                     "type": "optional<string>",
                   },
                 },
@@ -9136,14 +9265,17 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "mechanism": {
                     "docs": undefined,
+                    "name": "taaAcceptMechanism",
                     "type": "optional<string>",
                   },
                   "text": {
                     "docs": undefined,
+                    "name": "taaAcceptText",
                     "type": "optional<string>",
                   },
                   "version": {
                     "docs": undefined,
+                    "name": "taaAcceptVersion",
                     "type": "optional<string>",
                   },
                 },
@@ -9383,10 +9515,12 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "mediator_terms": {
                     "docs": "List of mediator rules for recipient",
+                    "name": "adminMediationDenyMediatorTerms",
                     "type": "optional<list<string>>",
                   },
                   "recipient_terms": {
                     "docs": "List of recipient rules for mediation",
+                    "name": "adminMediationDenyRecipientTerms",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -9530,10 +9664,12 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "mediator_terms": {
                     "docs": "List of mediator rules for recipient",
+                    "name": "mediationCreateRequestMediatorTerms",
                     "type": "optional<list<string>>",
                   },
                   "recipient_terms": {
                     "docs": "List of recipient rules for mediation",
+                    "name": "mediationCreateRequestRecipientTerms",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -9565,6 +9701,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "filter": {
                     "docs": "Filter for keylist query",
+                    "name": "keylistQueryFilterRequestFilter",
                     "type": "optional<root.KeylistQueryFilterRequestFilter>",
                   },
                 },
@@ -9607,6 +9744,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "updates": {
                     "docs": undefined,
+                    "name": "keylistUpdateRequestUpdates",
                     "type": "optional<list<root.KeylistUpdateRule>>",
                   },
                 },
@@ -9656,6 +9794,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "mediation_id": {
                     "docs": "Mediation record identifier",
+                    "name": "mediationIdMatchInfoMediationId",
                     "type": "optional<string>",
                   },
                 },
@@ -9693,38 +9832,47 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "image_url": {
                     "docs": "Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection.",
+                    "name": "createWalletRequestImageUrl",
                     "type": "optional<string>",
                   },
                   "key_management_mode": {
                     "docs": "Key management method to use for this wallet.",
+                    "name": "createWalletRequestKeyManagementMode",
                     "type": "optional<root.CreateWalletRequestKeyManagementMode>",
                   },
                   "label": {
                     "docs": "Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection.",
+                    "name": "createWalletRequestLabel",
                     "type": "optional<string>",
                   },
                   "wallet_dispatch_type": {
                     "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
+                    "name": "createWalletRequestWalletDispatchType",
                     "type": "optional<root.CreateWalletRequestWalletDispatchType>",
                   },
                   "wallet_key": {
                     "docs": "Master key used for key derivation.",
+                    "name": "createWalletRequestWalletKey",
                     "type": "optional<string>",
                   },
                   "wallet_key_derivation": {
                     "docs": "Key derivation",
+                    "name": "createWalletRequestWalletKeyDerivation",
                     "type": "optional<root.CreateWalletRequestWalletKeyDerivation>",
                   },
                   "wallet_name": {
                     "docs": "Wallet name",
+                    "name": "createWalletRequestWalletName",
                     "type": "optional<string>",
                   },
                   "wallet_type": {
                     "docs": "Type of the wallet to create",
+                    "name": "createWalletRequestWalletType",
                     "type": "optional<root.CreateWalletRequestWalletType>",
                   },
                   "wallet_webhook_urls": {
                     "docs": "List of Webhook URLs associated with this subwallet",
+                    "name": "createWalletRequestWalletWebhookUrls",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -9756,6 +9904,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "wallet_key": {
                     "docs": "Master key used for key derivation. Only required for             unmanaged wallets.",
+                    "name": "removeWalletRequestWalletKey",
                     "type": "optional<string>",
                   },
                 },
@@ -9787,6 +9936,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "wallet_key": {
                     "docs": "Master key used for key derivation. Only required for             unamanged wallets.",
+                    "name": "createWalletTokenRequestWalletKey",
                     "type": "optional<string>",
                   },
                 },
@@ -9858,18 +10008,22 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "image_url": {
                     "docs": "Image url for this wallet. This image url is publicized            (self-attested) to other agents as part of forming a connection.",
+                    "name": "updateWalletRequestImageUrl",
                     "type": "optional<string>",
                   },
                   "label": {
                     "docs": "Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection.",
+                    "name": "updateWalletRequestLabel",
                     "type": "optional<string>",
                   },
                   "wallet_dispatch_type": {
                     "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
+                    "name": "updateWalletRequestWalletDispatchType",
                     "type": "optional<root.UpdateWalletRequestWalletDispatchType>",
                   },
                   "wallet_webhook_urls": {
                     "docs": "List of Webhook URLs associated with this subwallet",
+                    "name": "updateWalletRequestWalletWebhookUrls",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -9907,38 +10061,47 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "accept": {
                     "docs": "List of mime type in order of preference that should be use in responding to the message",
+                    "name": "invitationCreateRequestAccept",
                     "type": "optional<list<string>>",
                   },
                   "alias": {
                     "docs": "Alias for connection",
+                    "name": "invitationCreateRequestAlias",
                     "type": "optional<string>",
                   },
                   "attachments": {
                     "docs": "Optional invitation attachments",
+                    "name": "invitationCreateRequestAttachments",
                     "type": "optional<list<root.AttachmentDef>>",
                   },
                   "handshake_protocols": {
                     "docs": undefined,
+                    "name": "invitationCreateRequestHandshakeProtocols",
                     "type": "optional<list<string>>",
                   },
                   "mediation_id": {
                     "docs": "Identifier for active mediation record to be used",
+                    "name": "invitationCreateRequestMediationId",
                     "type": "optional<string>",
                   },
                   "metadata": {
                     "docs": "Optional metadata to attach to the connection created with the invitation",
+                    "name": "invitationCreateRequestMetadata",
                     "type": "optional<root.InvitationCreateRequestMetadata>",
                   },
                   "my_label": {
                     "docs": "Label for connection invitation",
+                    "name": "invitationCreateRequestMyLabel",
                     "type": "optional<string>",
                   },
                   "protocol_version": {
                     "docs": "OOB protocol version",
+                    "name": "invitationCreateRequestProtocolVersion",
                     "type": "optional<string>",
                   },
                   "use_public_did": {
                     "docs": "Whether to use public DID in invitation",
+                    "name": "invitationCreateRequestUsePublicDid",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10028,18 +10191,22 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_verify": {
                     "docs": "Verifier choice to auto-verify proof presentation",
+                    "name": "v10PresentationCreateRequestRequestAutoVerify",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": undefined,
+                    "name": "v10PresentationCreateRequestRequestComment",
                     "type": "optional<string>",
                   },
                   "proof_request": {
                     "docs": undefined,
+                    "name": "v10PresentationCreateRequestRequestProofRequest",
                     "type": "root.IndyProofRequest",
                   },
                   "trace": {
                     "docs": "Whether to trace event (default false)",
+                    "name": "v10PresentationCreateRequestRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10187,6 +10354,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "description": {
                     "docs": undefined,
+                    "name": "v10PresentationProblemReportRequestDescription",
                     "type": "string",
                   },
                 },
@@ -10212,22 +10380,27 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_verify": {
                     "docs": "Verifier choice to auto-verify proof presentation",
+                    "name": "v10PresentationSendRequestRequestAutoVerify",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": undefined,
+                    "name": "v10PresentationSendRequestRequestComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier",
+                    "name": "v10PresentationSendRequestRequestConnectionId",
                     "type": "string",
                   },
                   "proof_request": {
                     "docs": undefined,
+                    "name": "v10PresentationSendRequestRequestProofRequest",
                     "type": "root.IndyProofRequest",
                   },
                   "trace": {
                     "docs": "Whether to trace event (default false)",
+                    "name": "v10PresentationSendRequestRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10253,22 +10426,27 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_present": {
                     "docs": "Whether to respond automatically to presentation requests, building and presenting requested proof",
+                    "name": "v10PresentationProposalRequestAutoPresent",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v10PresentationProposalRequestComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier",
+                    "name": "v10PresentationProposalRequestConnectionId",
                     "type": "string",
                   },
                   "presentation_proposal": {
                     "docs": undefined,
+                    "name": "v10PresentationProposalRequestPresentationProposal",
                     "type": "root.IndyPresPreview",
                   },
                   "trace": {
                     "docs": "Whether to trace event (default false)",
+                    "name": "v10PresentationProposalRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10324,10 +10502,12 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_verify": {
                     "docs": "Verifier choice to auto-verify proof presentation",
+                    "name": "v10PresentationSendRequestToProposalAutoVerify",
                     "type": "optional<boolean>",
                   },
                   "trace": {
                     "docs": "Whether to trace event (default false)",
+                    "name": "v10PresentationSendRequestToProposalTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10383,18 +10563,22 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_verify": {
                     "docs": "Verifier choice to auto-verify proof presentation",
+                    "name": "v20PresCreateRequestRequestAutoVerify",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": undefined,
+                    "name": "v20PresCreateRequestRequestComment",
                     "type": "optional<string>",
                   },
                   "presentation_request": {
                     "docs": undefined,
+                    "name": "v20PresCreateRequestRequestPresentationRequest",
                     "type": "root.V20PresRequestByFormat",
                   },
                   "trace": {
                     "docs": "Whether to trace event (default false)",
+                    "name": "v20PresCreateRequestRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10542,6 +10726,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "description": {
                     "docs": undefined,
+                    "name": "v20PresProblemReportRequestDescription",
                     "type": "string",
                   },
                 },
@@ -10567,22 +10752,27 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_verify": {
                     "docs": "Verifier choice to auto-verify proof presentation",
+                    "name": "v20PresSendRequestRequestAutoVerify",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": undefined,
+                    "name": "v20PresSendRequestRequestComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier",
+                    "name": "v20PresSendRequestRequestConnectionId",
                     "type": "string",
                   },
                   "presentation_request": {
                     "docs": undefined,
+                    "name": "v20PresSendRequestRequestPresentationRequest",
                     "type": "root.V20PresRequestByFormat",
                   },
                   "trace": {
                     "docs": "Whether to trace event (default false)",
+                    "name": "v20PresSendRequestRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10608,22 +10798,27 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_present": {
                     "docs": "Whether to respond automatically to presentation requests, building and presenting requested proof",
+                    "name": "v20PresProposalRequestAutoPresent",
                     "type": "optional<boolean>",
                   },
                   "comment": {
                     "docs": "Human-readable comment",
+                    "name": "v20PresProposalRequestComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection identifier",
+                    "name": "v20PresProposalRequestConnectionId",
                     "type": "string",
                   },
                   "presentation_proposal": {
                     "docs": undefined,
+                    "name": "v20PresProposalRequestPresentationProposal",
                     "type": "root.V20PresProposalByFormat",
                   },
                   "trace": {
                     "docs": "Whether to trace event (default false)",
+                    "name": "v20PresProposalRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10655,14 +10850,17 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "dif": {
                     "docs": undefined,
+                    "name": "v20PresSpecByFormatRequestDif",
                     "type": "optional<root.V20PresSpecByFormatRequestDif>",
                   },
                   "indy": {
                     "docs": undefined,
+                    "name": "v20PresSpecByFormatRequestIndy",
                     "type": "optional<root.V20PresSpecByFormatRequestIndy>",
                   },
                   "trace": {
                     "docs": "Record trace information, based on agent configuration",
+                    "name": "v20PresSpecByFormatRequestTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10694,10 +10892,12 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "auto_verify": {
                     "docs": "Verifier choice to auto-verify proof presentation",
+                    "name": "v20PresentationSendRequestToProposalAutoVerify",
                     "type": "optional<boolean>",
                   },
                   "trace": {
                     "docs": "Whether to trace event (default false)",
+                    "name": "v20PresentationSendRequestToProposalTrace",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10783,6 +10983,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "purge": {
                     "docs": "Credential revocation ids by revocation registry id: omit for all, specify null or empty list for all pending per revocation registry",
+                    "name": "clearPendingRevocationsRequestPurge",
                     "type": "optional<map<string, list<string>>>",
                   },
                 },
@@ -10808,10 +11009,12 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "credential_definition_id": {
                     "docs": "Credential definition identifier",
+                    "name": "revRegCreateRequestCredentialDefinitionId",
                     "type": "optional<string>",
                   },
                   "max_cred_num": {
                     "docs": "Revocation registry size",
+                    "name": "revRegCreateRequestMaxCredNum",
                     "type": "optional<integer>",
                   },
                 },
@@ -11115,38 +11318,47 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "comment": {
                     "docs": "Optional comment to include in revocation notification",
+                    "name": "revokeRequestComment",
                     "type": "optional<string>",
                   },
                   "connection_id": {
                     "docs": "Connection ID to which the revocation notification will be sent; required if notify is true",
+                    "name": "revokeRequestConnectionId",
                     "type": "optional<string>",
                   },
                   "cred_ex_id": {
                     "docs": "Credential exchange identifier",
+                    "name": "revokeRequestCredExId",
                     "type": "optional<string>",
                   },
                   "cred_rev_id": {
                     "docs": "Credential revocation identifier",
+                    "name": "revokeRequestCredRevId",
                     "type": "optional<string>",
                   },
                   "notify": {
                     "docs": "Send a notification to the credential recipient",
+                    "name": "revokeRequestNotify",
                     "type": "optional<boolean>",
                   },
                   "notify_version": {
                     "docs": "Specify which version of the revocation notification should be sent",
+                    "name": "revokeRequestNotifyVersion",
                     "type": "optional<root.RevokeRequestNotifyVersion>",
                   },
                   "publish": {
                     "docs": "(True) publish revocation to ledger immediately, or (default, False) mark it pending",
+                    "name": "revokeRequestPublish",
                     "type": "optional<boolean>",
                   },
                   "rev_reg_id": {
                     "docs": "Revocation registry identifier",
+                    "name": "revokeRequestRevRegId",
                     "type": "optional<string>",
                   },
                   "thread_id": {
                     "docs": "Thread ID of the credential exchange message thread resulting in the credential now being revoked; required if notify is true",
+                    "name": "revokeRequestThreadId",
                     "type": "optional<string>",
                   },
                 },
@@ -11234,6 +11446,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "tails_public_uri": {
                     "docs": "Public URI to the tails file",
+                    "name": "revRegUpdateTailsFileUriTailsPublicUri",
                     "type": "string",
                   },
                 },
@@ -11344,14 +11557,17 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "attributes": {
                     "docs": "List of schema attributes",
+                    "name": "schemaSendRequestAttributes",
                     "type": "list<string>",
                   },
                   "schema_name": {
                     "docs": "Schema name",
+                    "name": "schemaSendRequestSchemaName",
                     "type": "string",
                   },
                   "schema_version": {
                     "docs": "Schema version",
+                    "name": "schemaSendRequestSchemaVersion",
                     "type": "string",
                   },
                 },
@@ -11519,6 +11735,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "comment": {
                     "docs": "Comment for the ping message",
+                    "name": "pingRequestComment",
                     "type": "optional<string>",
                   },
                 },
@@ -11556,14 +11773,17 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "method": {
                     "docs": "Method for the requested DID.Supported methods are 'key', 'sov', and any other registered method.",
+                    "name": "didCreateMethod",
                     "type": "optional<string>",
                   },
                   "options": {
                     "docs": undefined,
+                    "name": "didCreateOptions",
                     "type": "optional<root.DidCreateOptions>",
                   },
                   "seed": {
                     "docs": "Optional seed to use for DID, Must beenabled in configuration before use.",
+                    "name": "didCreateSeed",
                     "type": "optional<string>",
                   },
                 },
@@ -11687,14 +11907,17 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "did": {
                     "docs": "DID of interest",
+                    "name": "didEndpointWithTypeDid",
                     "type": "string",
                   },
                   "endpoint": {
                     "docs": "Endpoint to set (omit to delete)",
+                    "name": "didEndpointWithTypeEndpoint",
                     "type": "optional<string>",
                   },
                   "endpoint_type": {
                     "docs": "Endpoint type to set (default 'Endpoint'); affects only public or posted DIDs",
+                    "name": "didEndpointWithTypeEndpointType",
                     "type": "optional<root.DidEndpointWithTypeEndpointType>",
                   },
                 },

@@ -1044,6 +1044,7 @@ exports[`open api parser hathora simple 1`] = `
                 "properties": {
                   "idToken": {
                     "docs": undefined,
+                    "name": "loginGoogleRequestIdToken",
                     "type": "string",
                   },
                 },
@@ -1076,6 +1077,7 @@ exports[`open api parser hathora simple 1`] = `
                 "properties": {
                   "nickname": {
                     "docs": undefined,
+                    "name": "loginNicknameRequestNickname",
                     "type": "string",
                   },
                 },
@@ -1498,14 +1500,17 @@ exports[`open api parser hathora simple 1`] = `
                 "properties": {
                   "initialConfig": {
                     "docs": undefined,
+                    "name": "createLobbyRequestInitialConfig",
                     "type": "map<string, unknown>",
                   },
                   "region": {
                     "docs": undefined,
+                    "name": "createLobbyRequestRegion",
                     "type": "root.Region",
                   },
                   "visibility": {
                     "docs": undefined,
+                    "name": "createLobbyRequestVisibility",
                     "type": "root.CreateLobbyRequestVisibility",
                   },
                 },
@@ -1554,10 +1559,12 @@ exports[`open api parser hathora simple 1`] = `
                 "properties": {
                   "initialConfig": {
                     "docs": undefined,
+                    "name": "createLocalLobbyRequestInitialConfig",
                     "type": "map<string, unknown>",
                   },
                   "region": {
                     "docs": undefined,
+                    "name": "createLocalLobbyRequestRegion",
                     "type": "root.Region",
                   },
                 },
@@ -1606,10 +1613,12 @@ exports[`open api parser hathora simple 1`] = `
                 "properties": {
                   "initialConfig": {
                     "docs": undefined,
+                    "name": "createPrivateLobbyRequestInitialConfig",
                     "type": "map<string, unknown>",
                   },
                   "region": {
                     "docs": undefined,
+                    "name": "createPrivateLobbyRequestRegion",
                     "type": "root.Region",
                   },
                 },
@@ -1658,10 +1667,12 @@ exports[`open api parser hathora simple 1`] = `
                 "properties": {
                   "initialConfig": {
                     "docs": undefined,
+                    "name": "createPublicLobbyRequestInitialConfig",
                     "type": "map<string, unknown>",
                   },
                   "region": {
                     "docs": undefined,
+                    "name": "createPublicLobbyRequestRegion",
                     "type": "root.Region",
                   },
                 },
@@ -1761,6 +1772,7 @@ exports[`open api parser hathora simple 1`] = `
                 "properties": {
                   "state": {
                     "docs": undefined,
+                    "name": "setLobbyStateRequestState",
                     "type": "map<string, unknown>",
                   },
                 },
@@ -2077,6 +2089,7 @@ exports[`open api parser hathora simple 1`] = `
                 "properties": {
                   "region": {
                     "docs": undefined,
+                    "name": "createRoomRequestRegion",
                     "type": "root.Region",
                   },
                 },

@@ -41,18 +41,22 @@ Generate a completion using a previously defined deployment.
                 "properties": {
                   "deployment_id": {
                     "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                    "name": "generateRequestBodyRequestDeploymentId",
                     "type": "optional<string>",
                   },
                   "deployment_name": {
                     "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                    "name": "generateRequestBodyRequestDeploymentName",
                     "type": "optional<string>",
                   },
                   "options": {
                     "docs": "Additional configuration that can be used to control what's included in the response.",
+                    "name": "generateRequestBodyRequestOptions",
                     "type": "optional<GenerateOptionsRequest>",
                   },
                   "requests": {
                     "docs": "The generation requests to make. Supplying multiple will perform a bulk request to the LLM provided when possible.",
+                    "name": "generateRequestBodyRequestRequests",
                     "type": "list<GenerateRequestRequest>",
                   },
                 },
@@ -86,18 +90,22 @@ Perform a search against a document index.
                 "properties": {
                   "index_id": {
                     "docs": "The ID of the index to search against. Must provide either this or index_name.",
+                    "name": "searchRequestBodyRequestIndexId",
                     "type": "optional<string>",
                   },
                   "index_name": {
                     "docs": "The name of the index to search against. Must provide either this or index_id.",
+                    "name": "searchRequestBodyRequestIndexName",
                     "type": "optional<string>",
                   },
                   "options": {
                     "docs": "Configuration options for the search.",
+                    "name": "searchRequestBodyRequestOptions",
                     "type": "optional<SearchRequestOptionsRequest>",
                   },
                   "query": {
                     "docs": "The query to search for.",
+                    "name": "searchRequestBodyRequestQuery",
                     "type": "string",
                   },
                 },
@@ -131,14 +139,17 @@ Used to submit feedback regarding the quality of previously generated completion
                 "properties": {
                   "actuals": {
                     "docs": "Feedback regarding the quality of previously generated completions",
+                    "name": "submitCompletionActualsRequestRequestActuals",
                     "type": "list<SubmitCompletionActualRequest>",
                   },
                   "deployment_id": {
                     "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                    "name": "submitCompletionActualsRequestRequestDeploymentId",
                     "type": "optional<string>",
                   },
                   "deployment_name": {
                     "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                    "name": "submitCompletionActualsRequestRequestDeploymentName",
                     "type": "optional<string>",
                   },
                 },
