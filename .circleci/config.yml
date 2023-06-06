@@ -24,7 +24,7 @@ jobs:
           command: |
             projectVersion=$(./scripts/git-version.sh)
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker buildx build --platform linux/amd64,linux/arm64 -f ./Dockerfile -t fernapi/fern-go-model:${projectVersion} . --push
+            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.model -t fernapi/fern-go-model:${projectVersion} . --push
 
 workflows:
   build:

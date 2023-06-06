@@ -1,6 +1,7 @@
 .PHONY: build
 build:
-	docker build -t fernapi/fern-go-model .
+	docker build -f ./docker/Dockerfile.client -t fernapi/fern-go-client .
+	docker build -f ./docker/Dockerfile.model -t fernapi/fern-go-model .
 
 .PHONY: generate
 generate: install
