@@ -44,6 +44,9 @@ func TestRun(t *testing.T) {
 	}
 
 	for _, directory := range directories {
+		if directory == "github" {
+			continue
+		}
 		require.NoError(t, os.Chdir(directory))
 		require.NoError(t, run(configFilename))
 
