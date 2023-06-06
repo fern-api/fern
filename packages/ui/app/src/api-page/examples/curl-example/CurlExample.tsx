@@ -43,7 +43,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
 
         if (endpoint.method !== FernRegistryApiRead.HttpMethod.Get) {
             lines.push({
-                value: <CurlParameter paramKey="--method" value={endpoint.method.toUpperCase()} />,
+                value: <CurlParameter paramKey="-X" value={endpoint.method.toUpperCase()} />,
             });
         }
 
@@ -58,6 +58,21 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                     value: <CurlParameter paramKey="--url-query" value={`${queryParam.key}=${value}`} />,
                 });
             }
+        }
+
+        const requestContentType =
+            endpoint.request != null
+                ? endpoint.request.type._visit({
+                      object: () => "application/json",
+                      reference: () => "application/json",
+                      fileUpload: () => "multipart/form-data",
+                      _other: () => undefined,
+                  })
+                : undefined;
+        if (requestContentType != null) {
+            parts.push({
+                value: <CurlParameter paramKey="--header" value={`Content-Type: ${requestContentType}`} />,
+            });
         }
 
         if (apiDefinition.auth != null && endpoint.authed) {

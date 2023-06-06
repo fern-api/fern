@@ -398,6 +398,7 @@ exports[`open api parser hume parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "baseRequestModels",
               "key": "models",
               "schema": {
                 "description": undefined,
@@ -414,6 +415,7 @@ exports[`open api parser hume parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "baseRequestTranscription",
               "key": "transcription",
               "schema": {
                 "description": undefined,
@@ -430,6 +432,7 @@ exports[`open api parser hume parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "baseRequestUrls",
               "key": "urls",
               "schema": {
                 "description": undefined,
@@ -451,6 +454,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "baseRequestCallbackUrl",
               "key": "callback_url",
               "schema": {
                 "description": undefined,
@@ -466,6 +470,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "baseRequestNotify",
               "key": "notify",
               "schema": {
                 "description": undefined,
@@ -672,6 +677,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "boundingBoxX",
               "key": "x",
               "schema": {
                 "description": "x-coordinate of bounding box top left corner.",
@@ -683,6 +689,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "boundingBoxY",
               "key": "y",
               "schema": {
                 "description": "y-coordinate of bounding box top left corner.",
@@ -694,6 +701,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "boundingBoxW",
               "key": "w",
               "schema": {
                 "description": "Bounding box width.",
@@ -705,6 +713,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "boundingBoxH",
               "key": "h",
               "schema": {
                 "description": "Bounding box height.",
@@ -725,6 +734,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "burstPredictionTime",
               "key": "time",
               "schema": {
                 "description": undefined,
@@ -737,6 +747,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "burstPredictionEmotions",
               "key": "emotions",
               "schema": {
                 "description": "A high-dimensional embedding in emotion space.",
@@ -753,6 +764,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "burstPredictionDescriptions",
               "key": "descriptions",
               "schema": {
                 "description": "Modality-specific descriptive features and their scores.",
@@ -778,6 +790,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "completedCreatedTimestampMs",
               "key": "created_timestamp_ms",
               "schema": {
                 "description": "When this job was created (Unix timestamp in milliseconds).",
@@ -789,6 +802,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "completedStartedTimestampMs",
               "key": "started_timestamp_ms",
               "schema": {
                 "description": "When this job started (Unix timestamp in milliseconds).",
@@ -800,6 +814,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "completedEndedTimestampMs",
               "key": "ended_timestamp_ms",
               "schema": {
                 "description": "When this job ended (Unix timestamp in milliseconds).",
@@ -811,6 +826,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "completedNumPredictions",
               "key": "num_predictions",
               "schema": {
                 "description": "The number of predictions that were generated by this job.",
@@ -822,6 +838,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "completedNumErrors",
               "key": "num_errors",
               "schema": {
                 "description": "The number of errors that occurred while running this job.",
@@ -842,6 +859,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "descriptionsScoreName",
               "key": "name",
               "schema": {
                 "description": "Name of the descriptive feature being expressed.",
@@ -853,6 +871,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "descriptionsScoreScore",
               "key": "score",
               "schema": {
                 "description": "Embedding value for the descriptive feature being expressed.",
@@ -893,6 +912,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "emotionScoreName",
               "key": "name",
               "schema": {
                 "description": "Name of the emotion being expressed.",
@@ -904,6 +924,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "emotionScoreScore",
               "key": "score",
               "schema": {
                 "description": "Embedding value for the emotion being expressed.",
@@ -934,6 +955,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorMessage",
               "key": "message",
               "schema": {
                 "description": "An error message.",
@@ -945,6 +967,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "errorFile",
               "key": "file",
               "schema": {
                 "description": "A file path relative to the top level source URL or file.",
@@ -965,6 +988,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "faceFpsPred",
               "key": "fps_pred",
               "schema": {
                 "description": undefined,
@@ -980,6 +1004,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "faceProbThreshold",
               "key": "prob_threshold",
               "schema": {
                 "description": undefined,
@@ -995,6 +1020,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "faceIdentifyFaces",
               "key": "identify_faces",
               "schema": {
                 "description": undefined,
@@ -1010,6 +1036,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "faceMinFaceSize",
               "key": "min_face_size",
               "schema": {
                 "description": undefined,
@@ -1025,6 +1052,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "faceFacs",
               "key": "facs",
               "schema": {
                 "description": undefined,
@@ -1041,6 +1069,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "faceDescriptions",
               "key": "descriptions",
               "schema": {
                 "description": undefined,
@@ -1057,6 +1086,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "faceSaveFaces",
               "key": "save_faces",
               "schema": {
                 "description": undefined,
@@ -1081,6 +1111,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "facePredictionFrame",
               "key": "frame",
               "schema": {
                 "description": "Frame number",
@@ -1092,6 +1123,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "facePredictionTime",
               "key": "time",
               "schema": {
                 "description": "Time in seconds when face detection occurred.",
@@ -1103,6 +1135,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "facePredictionProb",
               "key": "prob",
               "schema": {
                 "description": "The predicted probability that a detected face was actually a face.",
@@ -1114,6 +1147,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "facePredictionBox",
               "key": "box",
               "schema": {
                 "description": undefined,
@@ -1126,6 +1160,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "facePredictionEmotions",
               "key": "emotions",
               "schema": {
                 "description": "A high-dimensional embedding in emotion space.",
@@ -1142,6 +1177,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "facePredictionFacs",
               "key": "facs",
               "schema": {
                 "description": undefined,
@@ -1162,6 +1198,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "facePredictionDescriptions",
               "key": "descriptions",
               "schema": {
                 "description": undefined,
@@ -1191,6 +1228,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "facemeshPredictionEmotions",
               "key": "emotions",
               "schema": {
                 "description": "A high-dimensional embedding in emotion space.",
@@ -1216,6 +1254,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "facsScoreName",
               "key": "name",
               "schema": {
                 "description": "Name of the FACS 2.0 feature being expressed.",
@@ -1227,6 +1266,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "facsScoreScore",
               "key": "score",
               "schema": {
                 "description": "Embedding value for the FACS 2.0 feature being expressed.",
@@ -1247,6 +1287,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "failedCreatedTimestampMs",
               "key": "created_timestamp_ms",
               "schema": {
                 "description": "When this job was created (Unix timestamp in milliseconds).",
@@ -1258,6 +1299,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "failedStartedTimestampMs",
               "key": "started_timestamp_ms",
               "schema": {
                 "description": "When this job started (Unix timestamp in milliseconds).",
@@ -1269,6 +1311,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "failedEndedTimestampMs",
               "key": "ended_timestamp_ms",
               "schema": {
                 "description": "When this job ended (Unix timestamp in milliseconds).",
@@ -1280,6 +1323,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "failedMessage",
               "key": "message",
               "schema": {
                 "description": "An error message.",
@@ -1300,6 +1344,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "fileFilename",
               "key": "filename",
               "schema": {
                 "description": undefined,
@@ -1315,6 +1360,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "fileContentType",
               "key": "content_type",
               "schema": {
                 "description": undefined,
@@ -1330,6 +1376,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "fileMd5Sum",
               "key": "md5sum",
               "schema": {
                 "description": "The MD5 checksum of the file.",
@@ -1382,6 +1429,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsBurstPredictionId",
               "key": "id",
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -1393,6 +1441,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsBurstPredictionPredictions",
               "key": "predictions",
               "schema": {
                 "description": undefined,
@@ -1418,6 +1467,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsFacePredictionId",
               "key": "id",
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -1429,6 +1479,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsFacePredictionPredictions",
               "key": "predictions",
               "schema": {
                 "description": undefined,
@@ -1454,6 +1505,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsFacemeshPredictionId",
               "key": "id",
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -1465,6 +1517,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsFacemeshPredictionPredictions",
               "key": "predictions",
               "schema": {
                 "description": undefined,
@@ -1490,6 +1543,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsLanguagePredictionId",
               "key": "id",
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -1501,6 +1555,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsLanguagePredictionPredictions",
               "key": "predictions",
               "schema": {
                 "description": undefined,
@@ -1526,6 +1581,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsNerPredictionId",
               "key": "id",
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -1537,6 +1593,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsNerPredictionPredictions",
               "key": "predictions",
               "schema": {
                 "description": undefined,
@@ -1562,6 +1619,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsProsodyPredictionId",
               "key": "id",
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
@@ -1573,6 +1631,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "groupedPredictionsProsodyPredictionPredictions",
               "key": "predictions",
               "schema": {
                 "description": undefined,
@@ -1598,6 +1657,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "inProgressCreatedTimestampMs",
               "key": "created_timestamp_ms",
               "schema": {
                 "description": "When this job was created (Unix timestamp in milliseconds).",
@@ -1609,6 +1669,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "inProgressStartedTimestampMs",
               "key": "started_timestamp_ms",
               "schema": {
                 "description": "When this job started (Unix timestamp in milliseconds).",
@@ -1629,6 +1690,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "jobRequestUserId",
               "key": "user_id",
               "schema": {
                 "description": undefined,
@@ -1640,6 +1702,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "jobRequestJobId",
               "key": "job_id",
               "schema": {
                 "description": undefined,
@@ -1651,6 +1714,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "jobRequestRequest",
               "key": "request",
               "schema": {
                 "description": undefined,
@@ -1663,6 +1727,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "jobRequestState",
               "key": "state",
               "schema": {
                 "description": undefined,
@@ -1684,6 +1749,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "jobIdJobId",
               "key": "job_id",
               "schema": {
                 "description": "The ID of the started job.",
@@ -1704,6 +1770,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "languageGranularity",
               "key": "granularity",
               "schema": {
                 "description": undefined,
@@ -1720,6 +1787,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "languageIdentifySpeakers",
               "key": "identify_speakers",
               "schema": {
                 "description": undefined,
@@ -1735,6 +1803,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "languageSentiment",
               "key": "sentiment",
               "schema": {
                 "description": undefined,
@@ -1751,6 +1820,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "languageToxicity",
               "key": "toxicity",
               "schema": {
                 "description": undefined,
@@ -1776,6 +1846,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "languagePredictionText",
               "key": "text",
               "schema": {
                 "description": "A segment of text (like a word or a sentence).",
@@ -1787,6 +1858,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "languagePredictionPosition",
               "key": "position",
               "schema": {
                 "description": undefined,
@@ -1799,6 +1871,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "languagePredictionTime",
               "key": "time",
               "schema": {
                 "description": undefined,
@@ -1815,6 +1888,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "languagePredictionConfidence",
               "key": "confidence",
               "schema": {
                 "description": undefined,
@@ -1830,6 +1904,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "languagePredictionSpeakerConfidence",
               "key": "speaker_confidence",
               "schema": {
                 "description": undefined,
@@ -1845,6 +1920,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "languagePredictionEmotions",
               "key": "emotions",
               "schema": {
                 "description": "A high-dimensional embedding in emotion space.",
@@ -1861,6 +1937,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "languagePredictionSentiment",
               "key": "sentiment",
               "schema": {
                 "description": undefined,
@@ -1883,6 +1960,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "languagePredictionToxicity",
               "key": "toxicity",
               "schema": {
                 "description": undefined,
@@ -1912,6 +1990,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "modelsFace",
               "key": "face",
               "schema": {
                 "description": undefined,
@@ -1928,6 +2007,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsBurst",
               "key": "burst",
               "schema": {
                 "description": undefined,
@@ -1944,6 +2024,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsProsody",
               "key": "prosody",
               "schema": {
                 "description": undefined,
@@ -1960,6 +2041,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsLanguage",
               "key": "language",
               "schema": {
                 "description": undefined,
@@ -1976,6 +2058,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsNer",
               "key": "ner",
               "schema": {
                 "description": undefined,
@@ -1992,6 +2075,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsFacemesh",
               "key": "facemesh",
               "schema": {
                 "description": undefined,
@@ -2017,6 +2101,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "modelsPredictionsFace",
               "key": "face",
               "schema": {
                 "description": undefined,
@@ -2033,6 +2118,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsPredictionsBurst",
               "key": "burst",
               "schema": {
                 "description": undefined,
@@ -2049,6 +2135,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsPredictionsProsody",
               "key": "prosody",
               "schema": {
                 "description": undefined,
@@ -2065,6 +2152,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsPredictionsLanguage",
               "key": "language",
               "schema": {
                 "description": undefined,
@@ -2081,6 +2169,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsPredictionsNer",
               "key": "ner",
               "schema": {
                 "description": undefined,
@@ -2097,6 +2186,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "modelsPredictionsFacemesh",
               "key": "facemesh",
               "schema": {
                 "description": undefined,
@@ -2122,6 +2212,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "nerIdentifySpeakers",
               "key": "identify_speakers",
               "schema": {
                 "description": undefined,
@@ -2146,6 +2237,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "nerPredictionEntity",
               "key": "entity",
               "schema": {
                 "description": "The recognized topic or entity.",
@@ -2157,6 +2249,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "nerPredictionPosition",
               "key": "position",
               "schema": {
                 "description": undefined,
@@ -2169,6 +2262,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "nerPredictionEntityConfidence",
               "key": "entity_confidence",
               "schema": {
                 "description": "Our NER model's relative confidence in the recognized topic or entity.",
@@ -2180,6 +2274,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "nerPredictionSupport",
               "key": "support",
               "schema": {
                 "description": "A measure of how often the entity is linked to by other entities.",
@@ -2191,6 +2286,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "nerPredictionUri",
               "key": "uri",
               "schema": {
                 "description": "A URL which provides more information about the recognized topic or entity.",
@@ -2202,6 +2298,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "nerPredictionLinkWord",
               "key": "link_word",
               "schema": {
                 "description": "The specific word to which the emotion predictions are linked.",
@@ -2213,6 +2310,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "nerPredictionTime",
               "key": "time",
               "schema": {
                 "description": undefined,
@@ -2229,6 +2327,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "nerPredictionConfidence",
               "key": "confidence",
               "schema": {
                 "description": undefined,
@@ -2244,6 +2343,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "nerPredictionSpeakerConfidence",
               "key": "speaker_confidence",
               "schema": {
                 "description": undefined,
@@ -2259,6 +2359,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "nerPredictionEmotions",
               "key": "emotions",
               "schema": {
                 "description": "A high-dimensional embedding in emotion space.",
@@ -2294,6 +2395,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "positionIntervalBegin",
               "key": "begin",
               "schema": {
                 "description": "The index of the first character in the text segment, inclusive.",
@@ -2305,6 +2407,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "positionIntervalEnd",
               "key": "end",
               "schema": {
                 "description": "The index of the last character in the text segment, exclusive.",
@@ -2325,6 +2428,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "predictionFile",
               "key": "file",
               "schema": {
                 "description": "A file path relative to the top level source URL or file.",
@@ -2336,6 +2440,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "predictionModels",
               "key": "models",
               "schema": {
                 "description": undefined,
@@ -2357,6 +2462,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalNullBurstPredictionMetadata",
               "key": "metadata",
               "schema": {
                 "description": undefined,
@@ -2373,6 +2479,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalNullBurstPredictionGroupedPredictions",
               "key": "grouped_predictions",
               "schema": {
                 "description": undefined,
@@ -2398,6 +2505,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalNullFacePredictionMetadata",
               "key": "metadata",
               "schema": {
                 "description": undefined,
@@ -2414,6 +2522,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalNullFacePredictionGroupedPredictions",
               "key": "grouped_predictions",
               "schema": {
                 "description": undefined,
@@ -2439,6 +2548,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalNullFacemeshPredictionMetadata",
               "key": "metadata",
               "schema": {
                 "description": undefined,
@@ -2455,6 +2565,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalNullFacemeshPredictionGroupedPredictions",
               "key": "grouped_predictions",
               "schema": {
                 "description": undefined,
@@ -2480,6 +2591,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
               "key": "metadata",
               "schema": {
                 "description": undefined,
@@ -2496,6 +2608,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictions",
               "key": "grouped_predictions",
               "schema": {
                 "description": undefined,
@@ -2521,6 +2634,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionMetadata",
               "key": "metadata",
               "schema": {
                 "description": undefined,
@@ -2537,6 +2651,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictions",
               "key": "grouped_predictions",
               "schema": {
                 "description": undefined,
@@ -2562,6 +2677,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
               "key": "metadata",
               "schema": {
                 "description": undefined,
@@ -2578,6 +2694,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictions",
               "key": "grouped_predictions",
               "schema": {
                 "description": undefined,
@@ -2603,6 +2720,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "prosodyGranularity",
               "key": "granularity",
               "schema": {
                 "description": undefined,
@@ -2619,6 +2737,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "prosodyIdentifySpeakers",
               "key": "identify_speakers",
               "schema": {
                 "description": undefined,
@@ -2634,6 +2753,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "prosodyWindow",
               "key": "window",
               "schema": {
                 "description": undefined,
@@ -2659,6 +2779,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "prosodyPredictionText",
               "key": "text",
               "schema": {
                 "description": undefined,
@@ -2674,6 +2795,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "prosodyPredictionTime",
               "key": "time",
               "schema": {
                 "description": undefined,
@@ -2686,6 +2808,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "prosodyPredictionConfidence",
               "key": "confidence",
               "schema": {
                 "description": undefined,
@@ -2701,6 +2824,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "prosodyPredictionSpeakerConfidence",
               "key": "speaker_confidence",
               "schema": {
                 "description": undefined,
@@ -2716,6 +2840,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "prosodyPredictionEmotions",
               "key": "emotions",
               "schema": {
                 "description": "A high-dimensional embedding in emotion space.",
@@ -2741,6 +2866,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "queuedCreatedTimestampMs",
               "key": "created_timestamp_ms",
               "schema": {
                 "description": "When this job was created (Unix timestamp in milliseconds).",
@@ -2761,6 +2887,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "properties": [
             {
               "conflict": {},
+              "generatedName": "requestModels",
               "key": "models",
               "schema": {
                 "description": undefined,
@@ -2777,6 +2904,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "requestTranscription",
               "key": "transcription",
               "schema": {
                 "description": undefined,
@@ -2793,6 +2921,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             },
             {
               "conflict": {},
+              "generatedName": "requestUrls",
               "key": "urls",
               "schema": {
                 "description": undefined,
@@ -2814,6 +2943,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "requestCallbackUrl",
               "key": "callback_url",
               "schema": {
                 "description": undefined,
@@ -2829,6 +2959,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "requestNotify",
               "key": "notify",
               "schema": {
                 "description": undefined,
@@ -2844,6 +2975,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "requestFiles",
               "key": "files",
               "schema": {
                 "description": undefined,
@@ -2869,6 +3001,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "resultsPredictions",
               "key": "predictions",
               "schema": {
                 "description": undefined,
@@ -2885,6 +3018,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "resultsErrors",
               "key": "errors",
               "schema": {
                 "description": undefined,
@@ -2910,6 +3044,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "sentimentScoreName",
               "key": "name",
               "schema": {
                 "description": "Level of sentiment, ranging from \`1\` (negative) to \`9\` (positive)",
@@ -2921,6 +3056,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "sentimentScoreScore",
               "key": "score",
               "schema": {
                 "description": "Prediction for this level of sentiment",
@@ -2996,6 +3132,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "sourceResultSource",
               "key": "source",
               "schema": {
                 "description": undefined,
@@ -3008,6 +3145,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "sourceResultResults",
               "key": "results",
               "schema": {
                 "description": undefined,
@@ -3024,6 +3162,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "sourceResultError",
               "key": "error",
               "schema": {
                 "description": undefined,
@@ -3118,6 +3257,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "stateCompletedStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -3147,6 +3287,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "stateFailedStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -3176,6 +3317,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "stateInProgressStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -3205,6 +3347,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "stateQueuedStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -3257,6 +3400,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timeIntervalBegin",
               "key": "begin",
               "schema": {
                 "description": "Beginning of time range in seconds.",
@@ -3268,6 +3412,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "timeIntervalEnd",
               "key": "end",
               "schema": {
                 "description": "End of time range in seconds.",
@@ -3288,6 +3433,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "toxicityScoreName",
               "key": "name",
               "schema": {
                 "description": "Category of toxicity.",
@@ -3299,6 +3445,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "toxicityScoreScore",
               "key": "score",
               "schema": {
                 "description": "Prediction for this category of toxicity",
@@ -3319,6 +3466,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transcriptionLanguage",
               "key": "language",
               "schema": {
                 "description": undefined,
@@ -3344,6 +3492,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "transcriptionMetadataConfidence",
               "key": "confidence",
               "schema": {
                 "description": "Value between \`0.0\` and \`1.0\` indicating our transcription model’s relative confidence in the transcription of your media file.",
@@ -3355,6 +3504,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "transcriptionMetadataDetectedLanguage",
               "key": "detected_language",
               "schema": {
                 "description": undefined,
@@ -3380,6 +3530,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "urlUrl",
               "key": "url",
               "schema": {
                 "description": "The URL of the source media file.",
@@ -3420,6 +3571,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "properties": [
             {
               "conflict": {},
+              "generatedName": "windowLength",
               "key": "length",
               "schema": {
                 "description": undefined,
@@ -3435,6 +3587,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             {
               "conflict": {},
+              "generatedName": "windowStep",
               "key": "step",
               "schema": {
                 "description": undefined,
