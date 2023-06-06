@@ -24,7 +24,6 @@ const (
 // Generator represents the Go code generator.
 type Generator struct {
 	config *Config
-	mode   Mode
 }
 
 // File is a generated file.
@@ -34,23 +33,22 @@ type File struct {
 }
 
 // New returns a new *Generator.
-func New(config *Config, mode Mode) (*Generator, error) {
+func New(config *Config) (*Generator, error) {
 	return &Generator{
 		config: config,
-		mode:   mode,
 	}, nil
 }
 
 // GenerateTypes runs the code generation process.
-func (g *Generator) Generate() ([]*File, error) {
+func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	ir, err := readIR(g.config.IRFilepath)
 	if err != nil {
 		return nil, err
 	}
-	return g.generate(ir)
+	return g.generate(ir, mode)
 }
 
-func (g *Generator) generate(ir *ir.IntermediateRepresentation) ([]*File, error) {
+func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*File, error) {
 	if g.config.ImportPath == "" {
 		// If an import path is not configured, we need to validate that none of types
 		// import types from another package.
@@ -93,7 +91,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation) ([]*File, error)
 		}
 		files = append(files, file)
 	}
-	switch g.mode {
+	switch mode {
 	case ModeModel:
 		for _, irType := range ir.Types {
 			fileInfo := fileInfoForTypeDeclaration(ir.ApiName, irType)

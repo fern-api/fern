@@ -23,9 +23,9 @@ func run(config *cmd.Config) ([]*generator.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	generator, err := generator.New(generatorConfig, generator.ModeModel)
+	g, err := generator.New(generatorConfig)
 	if err != nil {
 		return nil, err
 	}
-	return generator.Generate()
+	return g.Generate(generator.ModeModel)
 }
