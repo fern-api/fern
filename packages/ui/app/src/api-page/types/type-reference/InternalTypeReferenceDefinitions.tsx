@@ -10,6 +10,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         type: FernRegistryApiRead.TypeReference;
         isCollapsible: boolean;
         className?: string;
+        emphasizeRequiredProperties?: boolean;
     }
 }
 
@@ -17,6 +18,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     type,
     isCollapsible,
     className,
+    emphasizeRequiredProperties,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -26,6 +28,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                 key={typeId}
                 typeShape={resolveTypeById(typeId).shape}
                 isCollapsible={isCollapsible}
+                emphasizeRequiredProperties={emphasizeRequiredProperties}
             />
         ),
         primitive: () => null,

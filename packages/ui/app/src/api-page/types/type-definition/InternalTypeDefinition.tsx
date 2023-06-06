@@ -21,6 +21,7 @@ export declare namespace InternalTypeDefinition {
     export interface Props {
         typeShape: FernRegistryApiRead.TypeShape;
         isCollapsible: boolean;
+        emphasizeRequiredProperties?: boolean;
     }
 }
 
@@ -31,7 +32,11 @@ interface CollapsibleContent {
     separatorText?: string;
 }
 
-export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({ typeShape, isCollapsible }) => {
+export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
+    typeShape,
+    isCollapsible,
+    emphasizeRequiredProperties = false,
+}) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
     const collapsableContent = useMemo(
@@ -40,7 +45,11 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 alias: () => undefined,
                 object: (object) => ({
                     elements: getAllObjectProperties(object, resolveTypeById).map((property) => (
-                        <ObjectProperty key={property.key} property={property} />
+                        <ObjectProperty
+                            key={property.key}
+                            property={property}
+                            emphasizeIfRequired={emphasizeRequiredProperties}
+                        />
                     )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
@@ -68,7 +77,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 _other: () => undefined,
             }),
-        [resolveTypeById, typeShape]
+        [emphasizeRequiredProperties, resolveTypeById, typeShape]
     );
 
     const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(true);

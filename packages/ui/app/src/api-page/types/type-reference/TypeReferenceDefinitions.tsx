@@ -9,6 +9,7 @@ export declare namespace TypeReferenceDefinitions {
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         className?: string;
+        emphasizeRequiredProperties?: boolean;
     }
 }
 
@@ -17,10 +18,16 @@ export const TypeReferenceDefinitions: React.FC<TypeReferenceDefinitions.Props> 
     isCollapsible,
     onHoverProperty,
     className,
+    emphasizeRequiredProperties,
 }) => {
     return (
         <TypeDefinitionContextProvider onHoverProperty={onHoverProperty}>
-            <InternalTypeReferenceDefinitions type={type} isCollapsible={isCollapsible} className={className} />
+            <InternalTypeReferenceDefinitions
+                type={type}
+                isCollapsible={isCollapsible}
+                className={className}
+                emphasizeRequiredProperties={emphasizeRequiredProperties}
+            />
         </TypeDefinitionContextProvider>
     );
 };

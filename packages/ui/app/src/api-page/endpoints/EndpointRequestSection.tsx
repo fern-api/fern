@@ -32,10 +32,16 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         typeShape={FernRegistryApiRead.TypeShape.object(object)}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
+                        emphasizeRequiredProperties
                     />
                 ),
                 reference: (type) => (
-                    <TypeReferenceDefinitions type={type} isCollapsible={false} onHoverProperty={onHoverProperty} />
+                    <TypeReferenceDefinitions
+                        type={type}
+                        isCollapsible={false}
+                        onHoverProperty={onHoverProperty}
+                        emphasizeRequiredProperties
+                    />
                 ),
                 fileUpload: () => null,
                 _other: () => null,

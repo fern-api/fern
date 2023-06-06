@@ -16,10 +16,11 @@ import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 export declare namespace ObjectProperty {
     export interface Props {
         property: FernRegistryApiRead.ObjectProperty;
+        emphasizeIfRequired: boolean;
     }
 }
 
-export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => {
+export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property, emphasizeIfRequired }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
     const contextValue = useTypeDefinitionContext();
@@ -82,7 +83,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                     <MonospaceText>{property.key}</MonospaceText>
                 </div>
                 <div className={classNames("text-xs", "text-text-muted", "dark:text-text-muted")}>
-                    <TypeShorthand type={property.valueType} plural={false} />
+                    <TypeShorthand type={property.valueType} plural={false} emphasizeIfRequired={emphasizeIfRequired} />
                 </div>
             </div>
             <div className="flex flex-col">
