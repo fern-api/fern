@@ -15,11 +15,12 @@ export const JsonExampleLine = React.forwardRef<HTMLDivElement, PropsWithChildre
     return (
         <div
             className={classNames(
-                "w-fit min-w-full px-2 transition",
-                isSelected ? "bg-accentHighlight" : "bg-transparent"
+                "relative w-fit min-w-full px-2 transition py-px",
+                isSelected ? "bg-accentPrimary/20" : "bg-transparent"
             )}
             ref={ref}
         >
+            {isSelected && <div className="bg-accentPrimary absolute inset-y-0 left-0 w-1" />}
             {" ".repeat(depth * TAB_WIDTH)}
             {children}
         </div>
