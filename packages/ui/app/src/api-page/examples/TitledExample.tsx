@@ -1,7 +1,7 @@
 import { Button, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import styles from "./TitledExample.module.scss";
 import { useCopyToClipboard } from "./useCopyToClipboard";
 
@@ -11,7 +11,6 @@ export declare namespace TitledExample {
         titleRightContent?: JSX.Element;
         actions?: JSX.Element;
         className?: string;
-        copyableExample: unknown;
         children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
     }
 }
@@ -21,16 +20,11 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     titleRightContent,
     className,
     actions,
-    copyableExample,
     children,
 }) => {
-    const exampleAsString = useMemo(
-        () => (typeof copyableExample === "string" ? copyableExample : JSON.stringify(copyableExample, undefined, 2)),
-        [copyableExample]
-    );
-    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(exampleAsString);
-
     const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
+
+    const { copyToClipboard, wasJustCopied } = useCopyToClipboard(contentRef?.innerText);
 
     return (
         <div
@@ -48,6 +42,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     {actions}
                     <Button
                         minimal
+                        disabled={copyToClipboard == null}
                         icon={
                             <Icon
                                 icon={wasJustCopied ? IconNames.TICK : IconNames.DUPLICATE}
@@ -68,7 +63,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                         "flex flex-1 leading-relaxed text-xs bg-gray-dark/40 min-w-0"
                     )}
                 >
-                    <div className="flex-1 overflow-auto p-2" ref={setContentRef}>
+                    <div className="flex-1 overflow-auto whitespace-pre p-2" ref={setContentRef}>
                         {typeof children === "function" ? children(contentRef ?? undefined) : children}
                     </div>
                 </div>
