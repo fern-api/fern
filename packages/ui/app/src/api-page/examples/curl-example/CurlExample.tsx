@@ -43,7 +43,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
 
         if (endpoint.method !== FernRegistryApiRead.HttpMethod.Get) {
             parts.push({
-                value: <CurlParameter paramKey="-X" value={endpoint.method.toUpperCase()} />,
+                value: <CurlParameter paramKey="-X" value={endpoint.method.toUpperCase()} doNotStringifyValue />,
             });
         }
 
