@@ -10,11 +10,11 @@ import (
 	"time"
 
 	"github.com/fern-api/fern-go/internal/cmd/cmdtest"
-	builtin "github.com/fern-api/fern-go/internal/testdata/builtin/fixtures"
-	custom "github.com/fern-api/fern-go/internal/testdata/custom/fixtures"
-	enum "github.com/fern-api/fern-go/internal/testdata/enum/fixtures"
-	undiscriminated "github.com/fern-api/fern-go/internal/testdata/undiscriminated/fixtures"
-	union "github.com/fern-api/fern-go/internal/testdata/union/fixtures"
+	builtin "github.com/fern-api/fern-go/internal/testdata/model/builtin/fixtures"
+	custom "github.com/fern-api/fern-go/internal/testdata/model/custom/fixtures"
+	enum "github.com/fern-api/fern-go/internal/testdata/model/enum/fixtures"
+	undiscriminated "github.com/fern-api/fern-go/internal/testdata/model/undiscriminated/fixtures"
+	union "github.com/fern-api/fern-go/internal/testdata/model/union/fixtures"
 	"github.com/gofrs/uuid/v5"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -23,7 +23,7 @@ import (
 const (
 	commandName       = "fern-go-model"
 	configFilename    = "config.json"
-	testdataPath      = "../../internal/testdata"
+	testdataPath      = "../../internal/testdata/model"
 	fixturesDirectory = "fixtures"
 	outputDirectory   = "temp"
 )
