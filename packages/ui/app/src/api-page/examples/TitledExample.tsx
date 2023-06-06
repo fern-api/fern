@@ -11,7 +11,7 @@ export declare namespace TitledExample {
         titleRightContent?: JSX.Element;
         actions?: JSX.Element;
         className?: string;
-        copyableExample: unknown;
+        copyableExample?: unknown;
         children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
     }
 }
@@ -25,7 +25,12 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
     children,
 }) => {
     const exampleAsString = useMemo(
-        () => (typeof copyableExample === "string" ? copyableExample : JSON.stringify(copyableExample, undefined, 2)),
+        () =>
+            copyableExample != null
+                ? typeof copyableExample === "string"
+                    ? copyableExample
+                    : JSON.stringify(copyableExample, undefined, 2)
+                : undefined,
         [copyableExample]
     );
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(exampleAsString);
@@ -39,25 +44,27 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className
             )}
         >
-            <div className="border-border flex items-center justify-between border-b bg-white/10 py-1 pl-3 pr-2">
+            <div className="border-border flex h-10 items-center justify-between border-b bg-white/10 py-1 pl-3 pr-2">
                 <div className="flex items-center gap-2">
                     <div className="text-xs uppercase tracking-wide text-neutral-300">{title}</div>
                     {titleRightContent}
                 </div>
                 <div className="flex gap-2">
                     {actions}
-                    <Button
-                        minimal
-                        icon={
-                            <Icon
-                                icon={wasJustCopied ? IconNames.TICK : IconNames.DUPLICATE}
-                                className={classNames({
-                                    "!text-accentPrimary": wasJustCopied,
-                                })}
-                            />
-                        }
-                        onClick={copyToClipboard}
-                    />
+                    {copyToClipboard && (
+                        <Button
+                            minimal
+                            icon={
+                                <Icon
+                                    icon={wasJustCopied ? IconNames.TICK : IconNames.DUPLICATE}
+                                    className={classNames({
+                                        "!text-accentPrimary": wasJustCopied,
+                                    })}
+                                />
+                            }
+                            onClick={copyToClipboard}
+                        />
+                    )}
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">
