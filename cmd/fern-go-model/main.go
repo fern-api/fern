@@ -187,7 +187,7 @@ func moduleConfigFromCustomConfig(customConfig *customConfig, outputMode writer.
 func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, error) {
 	switch outputConfigMode := c.Output.Mode; outputConfigMode.Type {
 	case "github":
-		return writer.NewGithubConfig(outputConfigMode.Github.Version, outputConfigMode.Github.RepoUrl)
+		return writer.NewGithubConfig(c.Output.Path, outputConfigMode.Github.RepoUrl)
 	case "downloadFiles":
 		return writer.NewLocalConfig(c.Output.Path)
 	default:

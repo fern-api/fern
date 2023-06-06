@@ -1,25 +1,24 @@
 package writer
 
 import (
-	"errors"
+	"os"
+	"path/filepath"
 
 	"github.com/fern-api/fern-go/internal/generator"
 )
 
 // GithubConfig is the GitHub output mode configuration.
 type GithubConfig struct {
-	Version string
+	Path    string
 	RepoURL string
-
-	// TODO: Add PublishInfo.
 }
 
 func (g *GithubConfig) isOutputMode() {}
 
 // NewGithubConfig returns a new github writer configuration.
-func NewGithubConfig(version string, repoURL string) (*GithubConfig, error) {
+func NewGithubConfig(path string, repoURL string) (*GithubConfig, error) {
 	return &GithubConfig{
-		Version: version,
+		Path:    path,
 		RepoURL: repoURL,
 	}, nil
 }
@@ -35,9 +34,24 @@ func newGithubWriter(config *GithubConfig) (*githubWriter, error) {
 }
 
 func (g *githubWriter) Root() string {
-	return ""
+	return g.config.Path
 }
 
 func (g *githubWriter) WriteFiles(files []*generator.File) error {
-	return errors.New("unimplemented")
+	if len(files) == 0 {
+		return nil
+	}
+	if err := os.MkdirAll(g.config.Path, 0755); err != nil {
+		return err
+	}
+	for _, file := range files {
+		filename := filepath.Join(g.config.Path, file.Path)
+		if err := os.MkdirAll(filepath.Dir(filename), 0755); err != nil {
+			return err
+		}
+		if err := os.WriteFile(filename, file.Content, 0644); err != nil {
+			return err
+		}
+	}
+	return nil
 }
