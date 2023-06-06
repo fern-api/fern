@@ -70,6 +70,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createAppRequestAuthConfiguration",
                   "key": "authConfiguration",
                   "schema": {
                     "allOf": [],
@@ -79,6 +80,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "createAppRequestAuthConfigurationGoogle",
                         "key": "google",
                         "schema": {
                           "description": undefined,
@@ -91,6 +93,7 @@ exports[`open api parser hathora parse open api 1`] = `
                             "properties": [
                               {
                                 "conflict": {},
+                                "generatedName": "createAppRequestAuthConfigurationGoogleClientId",
                                 "key": "clientId",
                                 "schema": {
                                   "description": undefined,
@@ -107,6 +110,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "createAppRequestAuthConfigurationNickname",
                         "key": "nickname",
                         "schema": {
                           "description": undefined,
@@ -123,6 +127,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "createAppRequestAuthConfigurationAnonymous",
                         "key": "anonymous",
                         "schema": {
                           "description": undefined,
@@ -143,6 +148,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createAppRequestAppName",
                   "key": "appName",
                   "schema": {
                     "description": undefined,
@@ -218,6 +224,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "updateAppRequestAuthConfiguration",
                   "key": "authConfiguration",
                   "schema": {
                     "allOf": [],
@@ -227,6 +234,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "updateAppRequestAuthConfigurationGoogle",
                         "key": "google",
                         "schema": {
                           "description": undefined,
@@ -239,6 +247,7 @@ exports[`open api parser hathora parse open api 1`] = `
                             "properties": [
                               {
                                 "conflict": {},
+                                "generatedName": "updateAppRequestAuthConfigurationGoogleClientId",
                                 "key": "clientId",
                                 "schema": {
                                   "description": undefined,
@@ -255,6 +264,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "updateAppRequestAuthConfigurationNickname",
                         "key": "nickname",
                         "schema": {
                           "description": undefined,
@@ -271,6 +281,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "updateAppRequestAuthConfigurationAnonymous",
                         "key": "anonymous",
                         "schema": {
                           "description": undefined,
@@ -291,6 +302,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "updateAppRequestAppName",
                   "key": "appName",
                   "schema": {
                     "description": undefined,
@@ -456,6 +468,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "loginAnonymousResponseToken",
                   "key": "token",
                   "schema": {
                     "description": undefined,
@@ -516,6 +529,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "loginNicknameRequestNickname",
                   "key": "nickname",
                   "schema": {
                     "description": undefined,
@@ -541,6 +555,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "loginNicknameResponseToken",
                   "key": "token",
                   "schema": {
                     "description": undefined,
@@ -602,6 +617,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "loginGoogleRequestIdToken",
                   "key": "idToken",
                   "schema": {
                     "description": undefined,
@@ -627,6 +643,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "loginGoogleResponseToken",
                   "key": "token",
                   "schema": {
                     "description": undefined,
@@ -1531,6 +1548,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createPrivateLobbyRequestInitialConfig",
                   "key": "initialConfig",
                   "schema": {
                     "description": undefined,
@@ -1545,6 +1563,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createPrivateLobbyRequestRegion",
                   "key": "region",
                   "schema": {
                     "description": undefined,
@@ -1652,6 +1671,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createPublicLobbyRequestInitialConfig",
                   "key": "initialConfig",
                   "schema": {
                     "description": undefined,
@@ -1666,6 +1686,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createPublicLobbyRequestRegion",
                   "key": "region",
                   "schema": {
                     "description": undefined,
@@ -1773,6 +1794,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createLocalLobbyRequestInitialConfig",
                   "key": "initialConfig",
                   "schema": {
                     "description": undefined,
@@ -1787,6 +1809,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createLocalLobbyRequestRegion",
                   "key": "region",
                   "schema": {
                     "description": undefined,
@@ -1894,6 +1917,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createLobbyRequestVisibility",
                   "key": "visibility",
                   "schema": {
                     "description": undefined,
@@ -1924,6 +1948,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createLobbyRequestInitialConfig",
                   "key": "initialConfig",
                   "schema": {
                     "description": undefined,
@@ -1938,6 +1963,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createLobbyRequestRegion",
                   "key": "region",
                   "schema": {
                     "description": undefined,
@@ -2158,6 +2184,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "setLobbyStateRequestState",
                   "key": "state",
                   "schema": {
                     "description": undefined,
@@ -2825,6 +2852,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createRoomRequestRegion",
                   "key": "region",
                   "schema": {
                     "description": undefined,
@@ -3337,6 +3365,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "activeConnectionInfoStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -3355,6 +3384,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "activeConnectionInfoTransportType",
               "key": "transportType",
               "schema": {
                 "description": undefined,
@@ -3367,6 +3397,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "activeConnectionInfoPort",
               "key": "port",
               "schema": {
                 "description": undefined,
@@ -3378,6 +3409,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "activeConnectionInfoHost",
               "key": "host",
               "schema": {
                 "description": undefined,
@@ -3389,6 +3421,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "activeConnectionInfoRoomId",
               "key": "roomId",
               "schema": {
                 "description": undefined,
@@ -3417,6 +3450,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "applicationDeletedBy",
               "key": "deletedBy",
               "schema": {
                 "description": undefined,
@@ -3432,6 +3466,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "applicationDeletedAt",
               "key": "deletedAt",
               "schema": {
                 "description": undefined,
@@ -3447,6 +3482,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "applicationCreatedAt",
               "key": "createdAt",
               "schema": {
                 "description": undefined,
@@ -3458,6 +3494,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "applicationCreatedBy",
               "key": "createdBy",
               "schema": {
                 "description": undefined,
@@ -3469,6 +3506,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "applicationOrgId",
               "key": "orgId",
               "schema": {
                 "description": undefined,
@@ -3481,6 +3519,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "applicationAuthConfiguration",
               "key": "authConfiguration",
               "schema": {
                 "allOf": [],
@@ -3490,6 +3529,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "properties": [
                   {
                     "conflict": {},
+                    "generatedName": "applicationAuthConfigurationGoogle",
                     "key": "google",
                     "schema": {
                       "description": undefined,
@@ -3502,6 +3542,7 @@ exports[`open api parser hathora parse open api 1`] = `
                         "properties": [
                           {
                             "conflict": {},
+                            "generatedName": "applicationAuthConfigurationGoogleClientId",
                             "key": "clientId",
                             "schema": {
                               "description": undefined,
@@ -3518,6 +3559,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "conflict": {},
+                    "generatedName": "applicationAuthConfigurationNickname",
                     "key": "nickname",
                     "schema": {
                       "description": undefined,
@@ -3534,6 +3576,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   {
                     "conflict": {},
+                    "generatedName": "applicationAuthConfigurationAnonymous",
                     "key": "anonymous",
                     "schema": {
                       "description": undefined,
@@ -3554,6 +3597,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "applicationAppSecret",
               "key": "appSecret",
               "schema": {
                 "description": undefined,
@@ -3565,6 +3609,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "applicationAppId",
               "key": "appId",
               "schema": {
                 "description": undefined,
@@ -3576,6 +3621,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "applicationAppName",
               "key": "appName",
               "schema": {
                 "description": undefined,
@@ -3605,6 +3651,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "applicationWithDeploymentDeployment",
               "key": "deployment",
               "schema": {
                 "description": undefined,
@@ -3626,6 +3673,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "buildRegionalContainerTags",
               "key": "regionalContainerTags",
               "schema": {
                 "description": undefined,
@@ -3638,6 +3686,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "properties": [
                     {
                       "conflict": {},
+                      "generatedName": "buildRegionalContainerTagsItemContainerTag",
                       "key": "containerTag",
                       "schema": {
                         "description": undefined,
@@ -3649,6 +3698,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     },
                     {
                       "conflict": {},
+                      "generatedName": "buildRegionalContainerTagsItemRegion",
                       "key": "region",
                       "schema": {
                         "description": undefined,
@@ -3666,6 +3716,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "buildImageSize",
               "key": "imageSize",
               "schema": {
                 "description": undefined,
@@ -3677,6 +3728,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "buildStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -3713,6 +3765,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "buildDeletedAt",
               "key": "deletedAt",
               "schema": {
                 "description": undefined,
@@ -3728,6 +3781,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "buildFinishedAt",
               "key": "finishedAt",
               "schema": {
                 "description": undefined,
@@ -3743,6 +3797,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "buildStartedAt",
               "key": "startedAt",
               "schema": {
                 "description": undefined,
@@ -3758,6 +3813,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "buildCreatedAt",
               "key": "createdAt",
               "schema": {
                 "description": undefined,
@@ -3769,6 +3825,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "buildCreatedBy",
               "key": "createdBy",
               "schema": {
                 "description": undefined,
@@ -3780,6 +3837,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "buildBuildId",
               "key": "buildId",
               "schema": {
                 "description": undefined,
@@ -3792,6 +3850,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "buildAppId",
               "key": "appId",
               "schema": {
                 "description": undefined,
@@ -3856,6 +3915,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "deploymentCreatedAt",
               "key": "createdAt",
               "schema": {
                 "description": undefined,
@@ -3867,6 +3927,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentCreatedBy",
               "key": "createdBy",
               "schema": {
                 "description": undefined,
@@ -3878,6 +3939,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentRequestedMemoryMb",
               "key": "requestedMemoryMB",
               "schema": {
                 "description": undefined,
@@ -3889,6 +3951,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentRequestedCpu",
               "key": "requestedCPU",
               "schema": {
                 "description": undefined,
@@ -3900,6 +3963,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentDeploymentId",
               "key": "deploymentId",
               "schema": {
                 "description": undefined,
@@ -3912,6 +3976,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentBuildId",
               "key": "buildId",
               "schema": {
                 "description": undefined,
@@ -3924,6 +3989,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentAppId",
               "key": "appId",
               "schema": {
                 "description": undefined,
@@ -3945,6 +4011,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "deploymentConfigEnv",
               "key": "env",
               "schema": {
                 "description": undefined,
@@ -3957,6 +4024,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "properties": [
                     {
                       "conflict": {},
+                      "generatedName": "deploymentConfigEnvItemValue",
                       "key": "value",
                       "schema": {
                         "description": undefined,
@@ -3968,6 +4036,7 @@ exports[`open api parser hathora parse open api 1`] = `
                     },
                     {
                       "conflict": {},
+                      "generatedName": "deploymentConfigEnvItemName",
                       "key": "name",
                       "schema": {
                         "description": undefined,
@@ -3984,6 +4053,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentConfigRoomsPerProcess",
               "key": "roomsPerProcess",
               "schema": {
                 "description": undefined,
@@ -3995,6 +4065,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentConfigPlanName",
               "key": "planName",
               "schema": {
                 "description": undefined,
@@ -4007,6 +4078,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentConfigTransportType",
               "key": "transportType",
               "schema": {
                 "description": undefined,
@@ -4019,6 +4091,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "deploymentConfigContainerPort",
               "key": "containerPort",
               "schema": {
                 "description": undefined,
@@ -4049,6 +4122,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "properties": [
               {
                 "conflict": {},
+                "generatedName": "discoveryResponseItemPort",
                 "key": "port",
                 "schema": {
                   "description": undefined,
@@ -4060,6 +4134,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               {
                 "conflict": {},
+                "generatedName": "discoveryResponseItemHost",
                 "key": "host",
                 "schema": {
                   "description": undefined,
@@ -4071,6 +4146,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               {
                 "conflict": {},
+                "generatedName": "discoveryResponseItemRegion",
                 "key": "region",
                 "schema": {
                   "description": undefined,
@@ -4093,6 +4169,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "lobbyState",
               "key": "state",
               "schema": {
                 "description": undefined,
@@ -4111,6 +4188,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "lobbyInitialConfig",
               "key": "initialConfig",
               "schema": {
                 "description": undefined,
@@ -4125,6 +4203,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "lobbyCreatedAt",
               "key": "createdAt",
               "schema": {
                 "description": undefined,
@@ -4136,6 +4215,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "lobbyCreatedBy",
               "key": "createdBy",
               "schema": {
                 "description": undefined,
@@ -4147,6 +4227,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "lobbyLocal",
               "key": "local",
               "schema": {
                 "description": undefined,
@@ -4158,6 +4239,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "lobbyVisibility",
               "key": "visibility",
               "schema": {
                 "description": undefined,
@@ -4188,6 +4270,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "lobbyRegion",
               "key": "region",
               "schema": {
                 "description": undefined,
@@ -4200,6 +4283,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "lobbyRoomId",
               "key": "roomId",
               "schema": {
                 "description": undefined,
@@ -4212,6 +4296,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "lobbyAppId",
               "key": "appId",
               "schema": {
                 "description": undefined,
@@ -4265,6 +4350,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "metricValueValue",
               "key": "value",
               "schema": {
                 "description": undefined,
@@ -4276,6 +4362,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "metricValueTimestamp",
               "key": "timestamp",
               "schema": {
                 "description": undefined,
@@ -4319,6 +4406,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "pickRoomExcludeKeyofRoomAllocationsAppId",
               "key": "appId",
               "schema": {
                 "description": undefined,
@@ -4331,6 +4419,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "pickRoomExcludeKeyofRoomAllocationsRoomId",
               "key": "roomId",
               "schema": {
                 "description": undefined,
@@ -4343,6 +4432,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "pickRoomExcludeKeyofRoomAllocationsStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -4355,6 +4445,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "pickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
               "key": "currentAllocation",
               "schema": {
                 "description": undefined,
@@ -4412,6 +4503,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "processEgressedBytes",
               "key": "egressedBytes",
               "schema": {
                 "description": undefined,
@@ -4423,6 +4515,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processIdleSince",
               "key": "idleSince",
               "schema": {
                 "description": undefined,
@@ -4438,6 +4531,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processActiveConnections",
               "key": "activeConnections",
               "schema": {
                 "description": undefined,
@@ -4449,6 +4543,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processRoomSlotsAvailable",
               "key": "roomSlotsAvailable",
               "schema": {
                 "description": undefined,
@@ -4460,6 +4555,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processDraining",
               "key": "draining",
               "schema": {
                 "description": undefined,
@@ -4471,6 +4567,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processTerminatedAt",
               "key": "terminatedAt",
               "schema": {
                 "description": undefined,
@@ -4486,6 +4583,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processStoppingAt",
               "key": "stoppingAt",
               "schema": {
                 "description": undefined,
@@ -4501,6 +4599,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processStartedAt",
               "key": "startedAt",
               "schema": {
                 "description": undefined,
@@ -4516,6 +4615,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processStartingAt",
               "key": "startingAt",
               "schema": {
                 "description": undefined,
@@ -4527,6 +4627,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processRoomsPerProcess",
               "key": "roomsPerProcess",
               "schema": {
                 "description": undefined,
@@ -4538,6 +4639,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processPort",
               "key": "port",
               "schema": {
                 "description": undefined,
@@ -4549,6 +4651,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processHost",
               "key": "host",
               "schema": {
                 "description": undefined,
@@ -4560,6 +4663,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processRegion",
               "key": "region",
               "schema": {
                 "description": undefined,
@@ -4572,6 +4676,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processProcessId",
               "key": "processId",
               "schema": {
                 "description": undefined,
@@ -4584,6 +4689,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processDeploymentId",
               "key": "deploymentId",
               "schema": {
                 "description": undefined,
@@ -4596,6 +4702,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processAppId",
               "key": "appId",
               "schema": {
                 "description": undefined,
@@ -4633,6 +4740,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "processWithRoomsRooms",
               "key": "rooms",
               "schema": {
                 "description": undefined,
@@ -4649,6 +4757,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "processWithRoomsTotalRooms",
               "key": "totalRooms",
               "schema": {
                 "description": undefined,
@@ -4669,6 +4778,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
               "key": "cpu",
               "schema": {
                 "description": undefined,
@@ -4689,6 +4799,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
               "key": "memory",
               "schema": {
                 "description": undefined,
@@ -4709,6 +4820,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
               "key": "rate_egress",
               "schema": {
                 "description": undefined,
@@ -4729,6 +4841,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
               "key": "total_egress",
               "schema": {
                 "description": undefined,
@@ -4834,6 +4947,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "roomCurrentAllocation",
               "key": "currentAllocation",
               "schema": {
                 "description": undefined,
@@ -4850,6 +4964,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "roomStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -4862,6 +4977,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "roomAllocations",
               "key": "allocations",
               "schema": {
                 "description": undefined,
@@ -4878,6 +4994,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "roomRoomId",
               "key": "roomId",
               "schema": {
                 "description": undefined,
@@ -4890,6 +5007,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "roomAppId",
               "key": "appId",
               "schema": {
                 "description": undefined,
@@ -4911,6 +5029,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "roomAllocationUnscheduledAt",
               "key": "unscheduledAt",
               "schema": {
                 "description": undefined,
@@ -4926,6 +5045,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "roomAllocationScheduledAt",
               "key": "scheduledAt",
               "schema": {
                 "description": undefined,
@@ -4937,6 +5057,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "roomAllocationProcessId",
               "key": "processId",
               "schema": {
                 "description": undefined,
@@ -4949,6 +5070,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "roomAllocationRoomAllocationId",
               "key": "roomAllocationId",
               "schema": {
                 "description": undefined,
@@ -5024,6 +5146,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "properties": [
             {
               "conflict": {},
+              "generatedName": "startingConnectionInfoStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -5042,6 +5165,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             {
               "conflict": {},
+              "generatedName": "startingConnectionInfoRoomId",
               "key": "roomId",
               "schema": {
                 "description": undefined,

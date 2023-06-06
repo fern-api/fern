@@ -3582,6 +3582,7 @@ organizations.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "artifactsLocateResponseExpiresAt",
               "key": "expires_at",
               "schema": {
                 "description": undefined,
@@ -3597,6 +3598,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "artifactsLocateResponseUrl",
               "key": "url",
               "schema": {
                 "description": "The artifact's download URL.",
@@ -3617,6 +3619,7 @@ organizations.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "artifactsPrepareRequestFileName",
               "key": "file_name",
               "schema": {
                 "description": "The name of the file that's being uploaded.",
@@ -3637,6 +3640,7 @@ organizations.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "artifactsPrepareResponseFormData",
               "key": "form_data",
               "schema": {
                 "description": "The POST policy form data.",
@@ -3653,6 +3657,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "artifactsPrepareResponseId",
               "key": "id",
               "schema": {
                 "description": "The generated artifact's ID.",
@@ -3664,6 +3669,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "artifactsPrepareResponseUrl",
               "key": "url",
               "schema": {
                 "description": "The URL that the file's data should be uploaded to.",
@@ -3684,6 +3690,7 @@ organizations.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "artifactsPrepareResponseFormDataKey",
               "key": "key",
               "schema": {
                 "description": "Key of the form field.",
@@ -3695,6 +3702,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "artifactsPrepareResponseFormDataValue",
               "key": "value",
               "schema": {
                 "description": "Value corresponding to the key.",
@@ -3715,6 +3723,7 @@ organizations.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "atomBaseCreatedBy",
               "key": "created_by",
               "schema": {
                 "description": undefined,
@@ -3731,6 +3740,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "atomBaseCreatedDate",
               "key": "created_date",
               "schema": {
                 "description": undefined,
@@ -3746,6 +3756,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "atomBaseDisplayId",
               "key": "display_id",
               "schema": {
                 "description": undefined,
@@ -3761,6 +3772,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "atomBaseId",
               "key": "id",
               "schema": {
                 "description": "Globally unique object ID.",
@@ -3772,6 +3784,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "atomBaseModifiedBy",
               "key": "modified_by",
               "schema": {
                 "description": undefined,
@@ -3788,6 +3801,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "atomBaseModifiedDate",
               "key": "modified_date",
               "schema": {
                 "description": undefined,
@@ -3812,6 +3826,7 @@ organizations.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "atomBaseSummaryDisplayId",
               "key": "display_id",
               "schema": {
                 "description": undefined,
@@ -3827,6 +3842,7 @@ organizations.
             },
             {
               "conflict": {},
+              "generatedName": "atomBaseSummaryId",
               "key": "id",
               "schema": {
                 "description": "Globally unique object ID.",
@@ -3957,6 +3973,7 @@ authentication connection.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsAzureAdClientId",
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -3972,6 +3989,7 @@ authentication connection.
             },
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsAzureAdClientSecret",
               "key": "client_secret",
               "schema": {
                 "description": undefined,
@@ -3987,6 +4005,7 @@ authentication connection.
             },
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsAzureAdDomain",
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -4013,6 +4032,7 @@ authentication connection.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsGoogleAppsClientId",
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -4028,6 +4048,7 @@ authentication connection.
             },
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsGoogleAppsClientSecret",
               "key": "client_secret",
               "schema": {
                 "description": undefined,
@@ -4044,6 +4065,7 @@ authentication connection.
             },
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsGoogleAppsTenantDomain",
               "key": "tenant_domain",
               "schema": {
                 "description": undefined,
@@ -4071,6 +4093,7 @@ authentication connection.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsOidcClientId",
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -4086,6 +4109,7 @@ authentication connection.
             },
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsOidcClientSecret",
               "key": "client_secret",
               "schema": {
                 "description": undefined,
@@ -4101,6 +4125,7 @@ authentication connection.
             },
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsOidcIssuer",
               "key": "issuer",
               "schema": {
                 "description": undefined,
@@ -4127,6 +4152,7 @@ authentication connection.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsSamlSignInEndpoint",
               "key": "sign_in_endpoint",
               "schema": {
                 "description": undefined,
@@ -4142,6 +4168,7 @@ authentication connection.
             },
             {
               "conflict": {},
+              "generatedName": "authConnectionOptionsSamlSigningCert",
               "key": "signing_cert",
               "schema": {
                 "description": undefined,
@@ -4246,6 +4273,7 @@ for each authentication connection will depend on the type value.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokenClientId",
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -4263,6 +4291,7 @@ token. Only applicable for application access tokens.
             },
             {
               "conflict": {},
+              "generatedName": "authTokenExpiresAt",
               "key": "expires_at",
               "schema": {
                 "description": undefined,
@@ -4278,6 +4307,7 @@ token. Only applicable for application access tokens.
             },
             {
               "conflict": {},
+              "generatedName": "authTokenIssuedAt",
               "key": "issued_at",
               "schema": {
                 "description": undefined,
@@ -4293,6 +4323,7 @@ token. Only applicable for application access tokens.
             },
             {
               "conflict": {},
+              "generatedName": "authTokenRequestedTokenType",
               "key": "requested_token_type",
               "schema": {
                 "description": undefined,
@@ -4309,6 +4340,7 @@ token. Only applicable for application access tokens.
             },
             {
               "conflict": {},
+              "generatedName": "authTokenScopes",
               "key": "scopes",
               "schema": {
                 "description": undefined,
@@ -4328,6 +4360,7 @@ token. Only applicable for application access tokens.
             },
             {
               "conflict": {},
+              "generatedName": "authTokenStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -4344,6 +4377,7 @@ token. Only applicable for application access tokens.
             },
             {
               "conflict": {},
+              "generatedName": "authTokenSubject",
               "key": "subject",
               "schema": {
                 "description": undefined,
@@ -4359,6 +4393,7 @@ token. Only applicable for application access tokens.
             },
             {
               "conflict": {},
+              "generatedName": "authTokenTokenHint",
               "key": "token_hint",
               "schema": {
                 "description": undefined,
@@ -4558,6 +4593,7 @@ type.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestAud",
               "key": "aud",
               "schema": {
                 "description": undefined,
@@ -4577,6 +4613,7 @@ type.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestClientId",
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -4596,6 +4633,7 @@ This client_id is only associated with an AAT.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestExpiresIn",
               "key": "expires_in",
               "schema": {
                 "description": undefined,
@@ -4612,6 +4650,7 @@ This client_id is only associated with an AAT.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestGrantType",
               "key": "grant_type",
               "schema": {
                 "description": undefined,
@@ -4628,6 +4667,7 @@ This client_id is only associated with an AAT.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestRequestedTokenType",
               "key": "requested_token_type",
               "schema": {
                 "description": undefined,
@@ -4644,6 +4684,7 @@ This client_id is only associated with an AAT.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestRevInfo",
               "key": "rev_info",
               "schema": {
                 "description": undefined,
@@ -4660,6 +4701,7 @@ This client_id is only associated with an AAT.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestScope",
               "key": "scope",
               "schema": {
                 "description": undefined,
@@ -4678,6 +4720,7 @@ not matter.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestSubjectToken",
               "key": "subject_token",
               "schema": {
                 "description": undefined,
@@ -4695,6 +4738,7 @@ requesting an application access token (AAT).
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestSubjectTokenType",
               "key": "subject_token_type",
               "schema": {
                 "description": undefined,
@@ -4711,6 +4755,7 @@ requesting an application access token (AAT).
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateRequestTokenHint",
               "key": "token_hint",
               "schema": {
                 "description": undefined,
@@ -4737,6 +4782,7 @@ requested token type.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensCreateResponseAccessToken",
               "key": "access_token",
               "schema": {
                 "description": "The issued JSON Web Token (JWT) corresponding to the requested
@@ -4750,6 +4796,7 @@ token type.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateResponseClientId",
               "key": "client_id",
               "schema": {
                 "description": undefined,
@@ -4768,6 +4815,7 @@ application access token (AAT).
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateResponseExpiresIn",
               "key": "expires_in",
               "schema": {
                 "description": "The validity lifetime of the token specified in seconds since Unix
@@ -4781,6 +4829,7 @@ epoch.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateResponseRefreshToken",
               "key": "refresh_token",
               "schema": {
                 "description": undefined,
@@ -4796,6 +4845,7 @@ epoch.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateResponseScope",
               "key": "scope",
               "schema": {
                 "description": undefined,
@@ -4813,6 +4863,7 @@ of values in which the order of values does not matter.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensCreateResponseTokenType",
               "key": "token_type",
               "schema": {
                 "description": undefined,
@@ -4834,6 +4885,7 @@ of values in which the order of values does not matter.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensDeleteRequestTokenId",
               "key": "token_id",
               "schema": {
                 "description": undefined,
@@ -4861,6 +4913,7 @@ JTI claim of the token in the authorization header.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensGetResponseToken",
               "key": "token",
               "schema": {
                 "description": undefined,
@@ -4882,6 +4935,7 @@ JTI claim of the token in the authorization header.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensListResponseTokens",
               "key": "tokens",
               "schema": {
                 "description": "The list of token metadata.",
@@ -4907,6 +4961,7 @@ JTI claim of the token in the authorization header.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensOrgTraitsDisplayName",
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -4922,6 +4977,7 @@ JTI claim of the token in the authorization header.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensOrgTraitsDomain",
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -4948,6 +5004,7 @@ issue a Rev session token.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensRevInfoOrgRef",
               "key": "org_ref",
               "schema": {
                 "description": undefined,
@@ -4963,6 +5020,7 @@ issue a Rev session token.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensRevInfoOrgTraits",
               "key": "org_traits",
               "schema": {
                 "description": undefined,
@@ -4979,6 +5037,7 @@ issue a Rev session token.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensRevInfoRevUserId",
               "key": "rev_user_id",
               "schema": {
                 "description": undefined,
@@ -4994,6 +5053,7 @@ issue a Rev session token.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensRevInfoUserRef",
               "key": "user_ref",
               "schema": {
                 "description": "An identifier which uniquely identifies a Rev user.",
@@ -5005,6 +5065,7 @@ issue a Rev session token.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensRevInfoUserTraits",
               "key": "user_traits",
               "schema": {
                 "description": undefined,
@@ -5032,6 +5093,7 @@ that match with the provided token type.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensSelfDeleteRequestRequestedTokenType",
               "key": "requested_token_type",
               "schema": {
                 "description": undefined,
@@ -5057,6 +5119,7 @@ that match with the provided token type.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensUpdateRequestTokenHint",
               "key": "token_hint",
               "schema": {
                 "description": "A hint that identifies the token.",
@@ -5068,6 +5131,7 @@ that match with the provided token type.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensUpdateRequestTokenId",
               "key": "token_id",
               "schema": {
                 "description": "The unique identifier of the token under a given Dev organization.
@@ -5089,6 +5153,7 @@ that match with the provided token type.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensUpdateResponseToken",
               "key": "token",
               "schema": {
                 "description": undefined,
@@ -5110,6 +5175,7 @@ that match with the provided token type.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "authTokensUserTraitsDisplayName",
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -5125,6 +5191,7 @@ that match with the provided token type.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensUserTraitsEmail",
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -5140,6 +5207,7 @@ that match with the provided token type.
             },
             {
               "conflict": {},
+              "generatedName": "authTokensUserTraitsFullName",
               "key": "full_name",
               "schema": {
                 "description": undefined,
@@ -5285,6 +5353,7 @@ connection.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "devOrgAuthConnectionsCreateResponseAuthConnection",
               "key": "auth_connection",
               "schema": {
                 "description": undefined,
@@ -5309,6 +5378,7 @@ enabled cannot be deleted.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "devOrgAuthConnectionsDeleteRequestId",
               "key": "id",
               "schema": {
                 "description": "ID of the authentication connection to be deleted.",
@@ -5331,6 +5401,7 @@ authentication connection.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "devOrgAuthConnectionsGetResponseAuthConnection",
               "key": "auth_connection",
               "schema": {
                 "description": undefined,
@@ -5354,6 +5425,7 @@ authentication connections configured for a Dev organization.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "devOrgAuthConnectionsListResponseAuthConnections",
               "key": "auth_connections",
               "schema": {
                 "description": "List of all the authentication connections currently configured for
@@ -5383,6 +5455,7 @@ organization.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "devOrgAuthConnectionsToggleRequestId",
               "key": "id",
               "schema": {
                 "description": "ID of the authentication connection to be toggled.",
@@ -5394,6 +5467,7 @@ organization.
             },
             {
               "conflict": {},
+              "generatedName": "devOrgAuthConnectionsToggleRequestToggle",
               "key": "toggle",
               "schema": {
                 "description": undefined,
@@ -5551,6 +5625,7 @@ connection.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "devOrgAuthConnectionsUpdateResponseAuthConnection",
               "key": "auth_connection",
               "schema": {
                 "description": undefined,
@@ -5581,6 +5656,7 @@ connection.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "devUserExternalIdentities",
               "key": "external_identities",
               "schema": {
                 "description": undefined,
@@ -5618,6 +5694,7 @@ connection.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "devUsersListResponseDevUsers",
               "key": "dev_users",
               "schema": {
                 "description": "The list of Dev users.",
@@ -5634,6 +5711,7 @@ connection.
             },
             {
               "conflict": {},
+              "generatedName": "devUsersListResponseNextCursor",
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -5651,6 +5729,7 @@ sort order. If not set, then no later elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "devUsersListResponsePrevCursor",
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -5678,6 +5757,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "devUsersSelfResponseDevUser",
               "key": "dev_user",
               "schema": {
                 "description": undefined,
@@ -5718,6 +5798,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "enhancementTargetCloseDate",
               "key": "target_close_date",
               "schema": {
                 "description": undefined,
@@ -5759,6 +5840,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorBadRequestType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -5790,6 +5872,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorBadRequestInvalidEnumValueAllowedValues",
               "key": "allowed_values",
               "schema": {
                 "description": "The allowed values for the field.",
@@ -5805,6 +5888,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "errorBadRequestInvalidEnumValueFieldName",
               "key": "field_name",
               "schema": {
                 "description": "The field whose enum value is invalid.",
@@ -5816,6 +5900,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "errorBadRequestInvalidEnumValueValue",
               "key": "value",
               "schema": {
                 "description": "The value that was received.",
@@ -5836,6 +5921,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorBadRequestMissingRequiredFieldFieldName",
               "key": "field_name",
               "schema": {
                 "description": "The missing field's name.",
@@ -5904,6 +5990,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorBadRequestValueNotPermittedFieldName",
               "key": "field_name",
               "schema": {
                 "description": "The field whose value is not permitted.",
@@ -5915,6 +6002,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "errorBadRequestValueNotPermittedReason",
               "key": "reason",
               "schema": {
                 "description": undefined,
@@ -5939,6 +6027,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorBaseMessage",
               "key": "message",
               "schema": {
                 "description": undefined,
@@ -5972,6 +6061,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorForbiddenType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6026,6 +6116,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorInternalServerErrorReferenceId",
               "key": "reference_id",
               "schema": {
                 "description": undefined,
@@ -6043,6 +6134,7 @@ inquiry.
             },
             {
               "conflict": {},
+              "generatedName": "errorInternalServerErrorType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6097,6 +6189,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorNotFoundType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6151,6 +6244,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorServiceUnavailableType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6205,6 +6299,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorTooManyRequestsRetryAfter",
               "key": "retry_after",
               "schema": {
                 "description": undefined,
@@ -6221,6 +6316,7 @@ inquiry.
             },
             {
               "conflict": {},
+              "generatedName": "errorTooManyRequestsType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6275,6 +6371,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "errorUnauthorizedType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -6320,6 +6417,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventPartCreatedPart",
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -6341,6 +6439,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventPartDeletedId",
               "key": "id",
               "schema": {
                 "description": "The ID of the part that was deleted.",
@@ -6361,6 +6460,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventPartUpdatedPart",
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -6382,6 +6482,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventRevOrgCreatedRevOrg",
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -6403,6 +6504,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventRevOrgDeletedId",
               "key": "id",
               "schema": {
                 "description": "The ID of the Rev organization that was deleted.",
@@ -6423,6 +6525,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventRevOrgUpdatedRevOrg",
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -6444,6 +6547,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventTagCreatedTag",
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -6465,6 +6569,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventTagDeletedId",
               "key": "id",
               "schema": {
                 "description": "The ID of the tag that was deleted.",
@@ -6485,6 +6590,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventTagUpdatedTag",
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -6506,6 +6612,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventTimelineEntryCreatedEntry",
               "key": "entry",
               "schema": {
                 "description": undefined,
@@ -6527,6 +6634,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventTimelineEntryDeletedId",
               "key": "id",
               "schema": {
                 "description": "The ID of the timeline entry that was deleted.",
@@ -6547,6 +6655,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventTimelineEntryUpdatedEntry",
               "key": "entry",
               "schema": {
                 "description": undefined,
@@ -6568,6 +6677,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventWebhookCreatedWebhook",
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -6589,6 +6699,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventWebhookDeletedId",
               "key": "id",
               "schema": {
                 "description": "The ID of the webhook that was deleted.",
@@ -6609,6 +6720,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventWebhookUpdatedWebhook",
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -6630,6 +6742,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventWorkCreatedWork",
               "key": "work",
               "schema": {
                 "description": undefined,
@@ -6651,6 +6764,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventWorkDeletedId",
               "key": "id",
               "schema": {
                 "description": "The ID of the work that was deleted.",
@@ -6671,6 +6785,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "eventWorkUpdatedWork",
               "key": "work",
               "schema": {
                 "description": undefined,
@@ -6735,6 +6850,7 @@ inquiry.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "issuePriority",
               "key": "priority",
               "schema": {
                 "description": undefined,
@@ -6826,6 +6942,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "orgBaseDisplayName",
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -6859,6 +6976,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "orgBaseSummaryDisplayName",
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -6999,6 +7117,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partBaseArtifacts",
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -7019,6 +7138,7 @@ always be returned in the specified sort-by order.
             },
             {
               "conflict": {},
+              "generatedName": "partBaseDescription",
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -7034,6 +7154,7 @@ always be returned in the specified sort-by order.
             },
             {
               "conflict": {},
+              "generatedName": "partBaseName",
               "key": "name",
               "schema": {
                 "description": "Name of the part.",
@@ -7045,6 +7166,7 @@ always be returned in the specified sort-by order.
             },
             {
               "conflict": {},
+              "generatedName": "partBaseOwnedBy",
               "key": "owned_by",
               "schema": {
                 "description": "The users that own the part.",
@@ -7061,6 +7183,7 @@ always be returned in the specified sort-by order.
             },
             {
               "conflict": {},
+              "generatedName": "partBaseTags",
               "key": "tags",
               "schema": {
                 "description": undefined,
@@ -7099,6 +7222,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partBaseSummaryName",
               "key": "name",
               "schema": {
                 "description": "Name of the part.",
@@ -7280,6 +7404,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsCreateRequestCapabilityParentPart",
               "key": "parent_part",
               "schema": {
                 "description": "ID of the parent product for the capability.",
@@ -7304,6 +7429,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsCreateRequestEnhancementParentPart",
               "key": "parent_part",
               "schema": {
                 "description": "ID of the parent part on which the enhancement is to be created.
@@ -7320,6 +7446,7 @@ always be returned in the specified sort-by order.
             },
             {
               "conflict": {},
+              "generatedName": "partsCreateRequestEnhancementTargetCloseDate",
               "key": "target_close_date",
               "schema": {
                 "description": undefined,
@@ -7345,6 +7472,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsCreateRequestFeatureParentPart",
               "key": "parent_part",
               "schema": {
                 "description": "ID of the parent capability/feature for the feature.",
@@ -7379,6 +7507,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsCreateResponsePart",
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -7400,6 +7529,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsDeleteRequestId",
               "key": "id",
               "schema": {
                 "description": "The ID of the part to delete.",
@@ -7430,6 +7560,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsGetResponsePart",
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -7451,6 +7582,7 @@ always be returned in the specified sort-by order.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsListResponseNextCursor",
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -7468,6 +7600,7 @@ sort order. If not set, then no later elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "partsListResponseParts",
               "key": "parts",
               "schema": {
                 "description": "The list of parts.",
@@ -7484,6 +7617,7 @@ sort order. If not set, then no later elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "partsListResponsePrevCursor",
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -7627,6 +7761,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsUpdateRequestEnhancementTargetCloseDate",
               "key": "target_close_date",
               "schema": {
                 "description": undefined,
@@ -7661,6 +7796,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsUpdateRequestOwnedBySet",
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -7701,6 +7837,7 @@ empty.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "partsUpdateResponsePart",
               "key": "part",
               "schema": {
                 "description": undefined,
@@ -7747,6 +7884,7 @@ empty.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "revOrgDescription",
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -7762,6 +7900,7 @@ empty.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgDomain",
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -7777,6 +7916,7 @@ empty.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgExternalRef",
               "key": "external_ref",
               "schema": {
                 "description": undefined,
@@ -7815,6 +7955,7 @@ organization.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "revOrgsCreateRequestDescription",
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -7830,6 +7971,7 @@ organization.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsCreateRequestDisplayName",
               "key": "display_name",
               "schema": {
                 "description": "Name of the Rev organization.",
@@ -7841,6 +7983,7 @@ organization.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsCreateRequestDomain",
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -7856,6 +7999,7 @@ organization.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsCreateRequestEnvironment",
               "key": "environment",
               "schema": {
                 "description": undefined,
@@ -7872,6 +8016,7 @@ organization.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsCreateRequestExternalRef",
               "key": "external_ref",
               "schema": {
                 "description": undefined,
@@ -7890,6 +8035,7 @@ records.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsCreateRequestTier",
               "key": "tier",
               "schema": {
                 "description": undefined,
@@ -7915,6 +8061,7 @@ records.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "revOrgsCreateResponseRevOrg",
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -7936,6 +8083,7 @@ records.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "revOrgsDeleteRequestId",
               "key": "id",
               "schema": {
                 "description": "The ID of Rev organization to delete.",
@@ -7966,6 +8114,7 @@ records.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "revOrgsGetResponseRevOrg",
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -7988,6 +8137,7 @@ records.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "revOrgsListResponseNextCursor",
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -8005,6 +8155,7 @@ sort order. If not set, then no later elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsListResponsePrevCursor",
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -8022,6 +8173,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsListResponseRevOrgs",
               "key": "rev_orgs",
               "schema": {
                 "description": "List with all of the Rev organizations' information.",
@@ -8048,6 +8200,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "revOrgsUpdateRequestDescription",
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -8063,6 +8216,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsUpdateRequestDisplayName",
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -8078,6 +8232,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsUpdateRequestDomain",
               "key": "domain",
               "schema": {
                 "description": undefined,
@@ -8093,6 +8248,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsUpdateRequestEnvironment",
               "key": "environment",
               "schema": {
                 "description": undefined,
@@ -8109,6 +8265,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsUpdateRequestExternalRef",
               "key": "external_ref",
               "schema": {
                 "description": undefined,
@@ -8127,6 +8284,7 @@ records.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsUpdateRequestId",
               "key": "id",
               "schema": {
                 "description": "The ID of Rev organization to update.",
@@ -8138,6 +8296,7 @@ records.
             },
             {
               "conflict": {},
+              "generatedName": "revOrgsUpdateRequestTier",
               "key": "tier",
               "schema": {
                 "description": undefined,
@@ -8162,6 +8321,7 @@ records.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "revOrgsUpdateResponseRevOrg",
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -8192,6 +8352,7 @@ records.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "revUserSummaryExternalRef",
               "key": "external_ref",
               "schema": {
                 "description": undefined,
@@ -8212,6 +8373,7 @@ system-generated identifier will be assigned to the user.
             },
             {
               "conflict": {},
+              "generatedName": "revUserSummaryRevOrg",
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -8237,6 +8399,7 @@ system-generated identifier will be assigned to the user.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "setTagWithValueId",
               "key": "id",
               "schema": {
                 "description": "The ID of the tag.",
@@ -8248,6 +8411,7 @@ system-generated identifier will be assigned to the user.
             },
             {
               "conflict": {},
+              "generatedName": "setTagWithValueValue",
               "key": "value",
               "schema": {
                 "description": undefined,
@@ -8274,6 +8438,7 @@ the value must be one that's specified in the tag's allowed values.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "stageName",
               "key": "name",
               "schema": {
                 "description": "Current stage name of the work item.",
@@ -8294,6 +8459,7 @@ the value must be one that's specified in the tag's allowed values.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "stageInitName",
               "key": "name",
               "schema": {
                 "description": undefined,
@@ -8318,6 +8484,7 @@ the value must be one that's specified in the tag's allowed values.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "stageUpdateName",
               "key": "name",
               "schema": {
                 "description": undefined,
@@ -8360,6 +8527,7 @@ the value must be one that's specified in the tag's allowed values.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagAllowedValues",
               "key": "allowed_values",
               "schema": {
                 "description": undefined,
@@ -8382,6 +8550,7 @@ provided when the association is made.
             },
             {
               "conflict": {},
+              "generatedName": "tagDescription",
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -8399,6 +8568,7 @@ on the tag's purpose and usage.
             },
             {
               "conflict": {},
+              "generatedName": "tagName",
               "key": "name",
               "schema": {
                 "description": "The name of the tag, which denotes the logical concept by which all
@@ -8431,6 +8601,7 @@ unique.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagSummaryName",
               "key": "name",
               "schema": {
                 "description": "The name of the tag, which denotes the logical concept by which all
@@ -8454,6 +8625,7 @@ unique.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagWithValueTag",
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -8466,6 +8638,7 @@ unique.
             },
             {
               "conflict": {},
+              "generatedName": "tagWithValueValue",
               "key": "value",
               "schema": {
                 "description": undefined,
@@ -8490,6 +8663,7 @@ unique.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagsCreateRequestAllowedValues",
               "key": "allowed_values",
               "schema": {
                 "description": undefined,
@@ -8511,6 +8685,7 @@ permitted.
             },
             {
               "conflict": {},
+              "generatedName": "tagsCreateRequestDescription",
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -8526,6 +8701,7 @@ permitted.
             },
             {
               "conflict": {},
+              "generatedName": "tagsCreateRequestName",
               "key": "name",
               "schema": {
                 "description": "The name for the tag, which must be unique across all tags.
@@ -8547,6 +8723,7 @@ permitted.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagsCreateResponseTag",
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -8568,6 +8745,7 @@ permitted.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagsDeleteRequestId",
               "key": "id",
               "schema": {
                 "description": "The ID of the tag to delete.",
@@ -8598,6 +8776,7 @@ permitted.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagsGetResponseTag",
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -8619,6 +8798,7 @@ permitted.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagsListResponseNextCursor",
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -8636,6 +8816,7 @@ sort order. If not set, then no later elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "tagsListResponsePrevCursor",
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -8653,6 +8834,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "tagsListResponseTags",
               "key": "tags",
               "schema": {
                 "description": "The list of tags.",
@@ -8678,6 +8860,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagsUpdateAllowedValuesSet",
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -8706,6 +8889,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagsUpdateRequestAllowedValues",
               "key": "allowed_values",
               "schema": {
                 "description": undefined,
@@ -8722,6 +8906,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "tagsUpdateRequestDescription",
               "key": "description",
               "schema": {
                 "description": undefined,
@@ -8737,6 +8922,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "tagsUpdateRequestId",
               "key": "id",
               "schema": {
                 "description": "The ID of the tag to update.",
@@ -8748,6 +8934,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "tagsUpdateRequestName",
               "key": "name",
               "schema": {
                 "description": undefined,
@@ -8774,6 +8961,7 @@ tags.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "tagsUpdateResponseTag",
               "key": "tag",
               "schema": {
                 "description": undefined,
@@ -8804,6 +8992,7 @@ tags.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "ticketGroup",
               "key": "group",
               "schema": {
                 "description": undefined,
@@ -8820,6 +9009,7 @@ tags.
             },
             {
               "conflict": {},
+              "generatedName": "ticketRevOrg",
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -8836,6 +9026,7 @@ tags.
             },
             {
               "conflict": {},
+              "generatedName": "ticketSeverity",
               "key": "severity",
               "schema": {
                 "description": undefined,
@@ -8902,6 +9093,7 @@ tags.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timelineCommentArtifacts",
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -8922,6 +9114,7 @@ tags.
             },
             {
               "conflict": {},
+              "generatedName": "timelineCommentBody",
               "key": "body",
               "schema": {
                 "description": undefined,
@@ -8939,6 +9132,7 @@ will appear in the response.
             },
             {
               "conflict": {},
+              "generatedName": "timelineCommentBodyType",
               "key": "body_type",
               "schema": {
                 "description": undefined,
@@ -8955,6 +9149,7 @@ will appear in the response.
             },
             {
               "conflict": {},
+              "generatedName": "timelineCommentSnapKitBody",
               "key": "snap_kit_body",
               "schema": {
                 "description": undefined,
@@ -9049,6 +9244,7 @@ will appear in the response.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timelineEntriesCreateRequestTimelineCommentArtifacts",
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -9068,6 +9264,7 @@ will appear in the response.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesCreateRequestTimelineCommentBody",
               "key": "body",
               "schema": {
                 "description": undefined,
@@ -9083,6 +9280,7 @@ will appear in the response.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesCreateRequestTimelineCommentBodyType",
               "key": "body_type",
               "schema": {
                 "description": undefined,
@@ -9099,6 +9297,7 @@ will appear in the response.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesCreateRequestTimelineCommentSnapKitBody",
               "key": "snap_kit_body",
               "schema": {
                 "description": undefined,
@@ -9140,6 +9339,7 @@ will appear in the response.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timelineEntriesCreateResponseTimelineEntry",
               "key": "timeline_entry",
               "schema": {
                 "description": undefined,
@@ -9161,6 +9361,7 @@ will appear in the response.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timelineEntriesGetResponseTimelineEntry",
               "key": "timeline_entry",
               "schema": {
                 "description": undefined,
@@ -9182,6 +9383,7 @@ will appear in the response.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timelineEntriesListResponseNextCursor",
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -9199,6 +9401,7 @@ sort order. If not set, then no later elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesListResponsePrevCursor",
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -9216,6 +9419,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesListResponseTimelineEntries",
               "key": "timeline_entries",
               "schema": {
                 "description": "The timeline entries for the object.",
@@ -9273,6 +9477,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifacts",
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -9289,6 +9494,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesUpdateRequestTimelineCommentBody",
               "key": "body",
               "schema": {
                 "description": undefined,
@@ -9304,6 +9510,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesUpdateRequestTimelineCommentBodyType",
               "key": "body_type",
               "schema": {
                 "description": undefined,
@@ -9320,6 +9527,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesUpdateRequestTimelineCommentSnapKitBody",
               "key": "snap_kit_body",
               "schema": {
                 "description": undefined,
@@ -9347,6 +9555,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsAdd",
               "key": "add",
               "schema": {
                 "description": undefined,
@@ -9369,6 +9578,7 @@ already attached. Mutually exclusive with \`set\`.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsRemove",
               "key": "remove",
               "schema": {
                 "description": undefined,
@@ -9390,6 +9600,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
             },
             {
               "conflict": {},
+              "generatedName": "timelineEntriesUpdateRequestTimelineCommentArtifactsSet",
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -9432,6 +9643,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "timelineEntriesUpdateResponseTimelineEntry",
               "key": "timeline_entry",
               "schema": {
                 "description": undefined,
@@ -9522,6 +9734,7 @@ default visibility.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "userBaseDisplayName",
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -9538,6 +9751,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "userBaseDisplayPicture",
               "key": "display_picture",
               "schema": {
                 "description": undefined,
@@ -9554,6 +9768,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "userBaseEmail",
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -9569,6 +9784,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "userBaseFullName",
               "key": "full_name",
               "schema": {
                 "description": undefined,
@@ -9584,6 +9800,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "userBasePhoneNumbers",
               "key": "phone_numbers",
               "schema": {
                 "description": undefined,
@@ -9603,6 +9820,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "userBaseState",
               "key": "state",
               "schema": {
                 "description": undefined,
@@ -9637,6 +9855,7 @@ default visibility.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "userBaseSummaryDisplayName",
               "key": "display_name",
               "schema": {
                 "description": undefined,
@@ -9653,6 +9872,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "userBaseSummaryDisplayPicture",
               "key": "display_picture",
               "schema": {
                 "description": undefined,
@@ -9669,6 +9889,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "userBaseSummaryEmail",
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -9684,6 +9905,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "userBaseSummaryFullName",
               "key": "full_name",
               "schema": {
                 "description": undefined,
@@ -9699,6 +9921,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "userBaseSummaryState",
               "key": "state",
               "schema": {
                 "description": undefined,
@@ -9834,6 +10057,7 @@ default visibility.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhookEventTypes",
               "key": "event_types",
               "schema": {
                 "description": undefined,
@@ -9854,6 +10078,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookSecret",
               "key": "secret",
               "schema": {
                 "description": "The secret to use for verifying webhook events.",
@@ -9865,6 +10090,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -9877,6 +10103,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookUrl",
               "key": "url",
               "schema": {
                 "description": "The URL of the webhook endpoint.",
@@ -9897,6 +10124,7 @@ default visibility.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestId",
               "key": "id",
               "schema": {
                 "description": "The event's ID.",
@@ -9908,6 +10136,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestPartCreated",
               "key": "part_created",
               "schema": {
                 "description": undefined,
@@ -9924,6 +10153,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestPartDeleted",
               "key": "part_deleted",
               "schema": {
                 "description": undefined,
@@ -9940,6 +10170,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestPartUpdated",
               "key": "part_updated",
               "schema": {
                 "description": undefined,
@@ -9956,6 +10187,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestRevOrgCreated",
               "key": "rev_org_created",
               "schema": {
                 "description": undefined,
@@ -9972,6 +10204,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestRevOrgDeleted",
               "key": "rev_org_deleted",
               "schema": {
                 "description": undefined,
@@ -9988,6 +10221,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestRevOrgUpdated",
               "key": "rev_org_updated",
               "schema": {
                 "description": undefined,
@@ -10004,6 +10238,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestTagCreated",
               "key": "tag_created",
               "schema": {
                 "description": undefined,
@@ -10020,6 +10255,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestTagDeleted",
               "key": "tag_deleted",
               "schema": {
                 "description": undefined,
@@ -10036,6 +10272,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestTagUpdated",
               "key": "tag_updated",
               "schema": {
                 "description": undefined,
@@ -10052,6 +10289,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestTimelineEntryCreated",
               "key": "timeline_entry_created",
               "schema": {
                 "description": undefined,
@@ -10068,6 +10306,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestTimelineEntryDeleted",
               "key": "timeline_entry_deleted",
               "schema": {
                 "description": undefined,
@@ -10084,6 +10323,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestTimelineEntryUpdated",
               "key": "timeline_entry_updated",
               "schema": {
                 "description": undefined,
@@ -10100,6 +10340,7 @@ default visibility.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestTimestamp",
               "key": "timestamp",
               "schema": {
                 "description": undefined,
@@ -10119,6 +10360,7 @@ seconds.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestType",
               "key": "type",
               "schema": {
                 "description": undefined,
@@ -10135,6 +10377,7 @@ seconds.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestVerify",
               "key": "verify",
               "schema": {
                 "description": undefined,
@@ -10151,6 +10394,7 @@ seconds.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestWebhookCreated",
               "key": "webhook_created",
               "schema": {
                 "description": undefined,
@@ -10167,6 +10411,7 @@ seconds.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestWebhookDeleted",
               "key": "webhook_deleted",
               "schema": {
                 "description": undefined,
@@ -10183,6 +10428,7 @@ seconds.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestWebhookId",
               "key": "webhook_id",
               "schema": {
                 "description": "ID of the webhook for the event.",
@@ -10194,6 +10440,7 @@ seconds.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestWebhookUpdated",
               "key": "webhook_updated",
               "schema": {
                 "description": undefined,
@@ -10210,6 +10457,7 @@ seconds.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestWorkCreated",
               "key": "work_created",
               "schema": {
                 "description": undefined,
@@ -10226,6 +10474,7 @@ seconds.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestWorkDeleted",
               "key": "work_deleted",
               "schema": {
                 "description": undefined,
@@ -10242,6 +10491,7 @@ seconds.
             },
             {
               "conflict": {},
+              "generatedName": "webhookEventRequestWorkUpdated",
               "key": "work_updated",
               "schema": {
                 "description": undefined,
@@ -10267,6 +10517,7 @@ seconds.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhookEventResponseChallenge",
               "key": "challenge",
               "schema": {
                 "description": undefined,
@@ -10415,6 +10666,7 @@ be set for other request types.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhookEventVerifyChallenge",
               "key": "challenge",
               "schema": {
                 "description": "The challenge that must be echoed in the response.",
@@ -10461,6 +10713,7 @@ be set for other request types.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhooksCreateRequestEventTypes",
               "key": "event_types",
               "schema": {
                 "description": undefined,
@@ -10481,6 +10734,7 @@ be set for other request types.
             },
             {
               "conflict": {},
+              "generatedName": "webhooksCreateRequestSecret",
               "key": "secret",
               "schema": {
                 "description": undefined,
@@ -10500,6 +10754,7 @@ response.
             },
             {
               "conflict": {},
+              "generatedName": "webhooksCreateRequestUrl",
               "key": "url",
               "schema": {
                 "description": "The URL of the webhook endpoint.",
@@ -10520,6 +10775,7 @@ response.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhooksCreateResponseWebhook",
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -10541,6 +10797,7 @@ response.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhooksDeleteRequestId",
               "key": "id",
               "schema": {
                 "description": "ID for the webhook.",
@@ -10571,6 +10828,7 @@ response.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhooksGetResponseWebhook",
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -10592,6 +10850,7 @@ response.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhooksListResponseWebhooks",
               "key": "webhooks",
               "schema": {
                 "description": "The list of webhooks.",
@@ -10637,6 +10896,7 @@ response.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhooksUpdateRequestAction",
               "key": "action",
               "schema": {
                 "description": undefined,
@@ -10653,6 +10913,7 @@ response.
             },
             {
               "conflict": {},
+              "generatedName": "webhooksUpdateRequestEventTypes",
               "key": "event_types",
               "schema": {
                 "description": undefined,
@@ -10669,6 +10930,7 @@ response.
             },
             {
               "conflict": {},
+              "generatedName": "webhooksUpdateRequestId",
               "key": "id",
               "schema": {
                 "description": "ID for the webhook.",
@@ -10680,6 +10942,7 @@ response.
             },
             {
               "conflict": {},
+              "generatedName": "webhooksUpdateRequestSecret",
               "key": "secret",
               "schema": {
                 "description": undefined,
@@ -10700,6 +10963,7 @@ won't receive any object events until successfully verified.
             },
             {
               "conflict": {},
+              "generatedName": "webhooksUpdateRequestUrl",
               "key": "url",
               "schema": {
                 "description": undefined,
@@ -10727,6 +10991,7 @@ won't receive any object events until successfully verified.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhooksUpdateRequestEventTypesAdd",
               "key": "add",
               "schema": {
                 "description": undefined,
@@ -10750,6 +11015,7 @@ with 'set'.
             },
             {
               "conflict": {},
+              "generatedName": "webhooksUpdateRequestEventTypesRemove",
               "key": "remove",
               "schema": {
                 "description": undefined,
@@ -10773,6 +11039,7 @@ with 'set'.
             },
             {
               "conflict": {},
+              "generatedName": "webhooksUpdateRequestEventTypesSet",
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -10805,6 +11072,7 @@ event types. Note this is mutually exclusive with 'add' and
           "properties": [
             {
               "conflict": {},
+              "generatedName": "webhooksUpdateResponseWebhook",
               "key": "webhook",
               "schema": {
                 "description": undefined,
@@ -10864,6 +11132,7 @@ event types. Note this is mutually exclusive with 'add' and
           "properties": [
             {
               "conflict": {},
+              "generatedName": "workBaseAppliesToPart",
               "key": "applies_to_part",
               "schema": {
                 "description": undefined,
@@ -10880,6 +11149,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             {
               "conflict": {},
+              "generatedName": "workBaseArtifacts",
               "key": "artifacts",
               "schema": {
                 "description": undefined,
@@ -10900,6 +11170,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             {
               "conflict": {},
+              "generatedName": "workBaseBody",
               "key": "body",
               "schema": {
                 "description": undefined,
@@ -10915,6 +11186,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             {
               "conflict": {},
+              "generatedName": "workBaseOwnedBy",
               "key": "owned_by",
               "schema": {
                 "description": "The users that own the work.",
@@ -10931,6 +11203,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             {
               "conflict": {},
+              "generatedName": "workBaseReportedBy",
               "key": "reported_by",
               "schema": {
                 "description": undefined,
@@ -10951,6 +11224,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             {
               "conflict": {},
+              "generatedName": "workBaseStage",
               "key": "stage",
               "schema": {
                 "description": undefined,
@@ -10967,6 +11241,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             {
               "conflict": {},
+              "generatedName": "workBaseTags",
               "key": "tags",
               "schema": {
                 "description": undefined,
@@ -10987,6 +11262,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             {
               "conflict": {},
+              "generatedName": "workBaseTargetCloseDate",
               "key": "target_close_date",
               "schema": {
                 "description": undefined,
@@ -11002,6 +11278,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             {
               "conflict": {},
+              "generatedName": "workBaseTitle",
               "key": "title",
               "schema": {
                 "description": "Title of the work object.",
@@ -11209,6 +11486,7 @@ issues.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksCreateRequestIssuePriority",
               "key": "priority",
               "schema": {
                 "description": undefined,
@@ -11225,6 +11503,7 @@ issues.
             },
             {
               "conflict": {},
+              "generatedName": "worksCreateRequestIssueSprint",
               "key": "sprint",
               "schema": {
                 "description": undefined,
@@ -11249,6 +11528,7 @@ issues.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksCreateRequestTicketGroup",
               "key": "group",
               "schema": {
                 "description": undefined,
@@ -11264,6 +11544,7 @@ issues.
             },
             {
               "conflict": {},
+              "generatedName": "worksCreateRequestTicketRevOrg",
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -11279,6 +11560,7 @@ issues.
             },
             {
               "conflict": {},
+              "generatedName": "worksCreateRequestTicketSeverity",
               "key": "severity",
               "schema": {
                 "description": undefined,
@@ -11304,6 +11586,7 @@ issues.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksCreateResponseWork",
               "key": "work",
               "schema": {
                 "description": undefined,
@@ -11325,6 +11608,7 @@ issues.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksDeleteRequestId",
               "key": "id",
               "schema": {
                 "description": "The work's ID.",
@@ -11355,6 +11639,7 @@ issues.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksExportResponseWorks",
               "key": "works",
               "schema": {
                 "description": "The resulting collection of work items.",
@@ -11380,6 +11665,7 @@ issues.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksGetResponseWork",
               "key": "work",
               "schema": {
                 "description": undefined,
@@ -11401,6 +11687,7 @@ issues.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksListResponseNextCursor",
               "key": "next_cursor",
               "schema": {
                 "description": undefined,
@@ -11418,6 +11705,7 @@ sort order. If not set, then no later elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "worksListResponsePrevCursor",
               "key": "prev_cursor",
               "schema": {
                 "description": undefined,
@@ -11435,6 +11723,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "worksListResponseWorks",
               "key": "works",
               "schema": {
                 "description": "The list of works.",
@@ -11645,6 +11934,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksUpdateRequestArtifactIdsSet",
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -11673,6 +11963,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksUpdateRequestIssuePriority",
               "key": "priority",
               "schema": {
                 "description": undefined,
@@ -11689,6 +11980,7 @@ sort order. If not set, then no prior elements exist.
             },
             {
               "conflict": {},
+              "generatedName": "worksUpdateRequestIssueSprint",
               "key": "sprint",
               "schema": {
                 "description": undefined,
@@ -11717,6 +12009,7 @@ sort order. If not set, then no prior elements exist.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksUpdateRequestOwnedBySet",
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -11747,6 +12040,7 @@ empty.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksUpdateRequestReportedBySet",
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -11776,6 +12070,7 @@ empty.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksUpdateRequestTagsSet",
               "key": "set",
               "schema": {
                 "description": undefined,
@@ -11805,6 +12100,7 @@ empty.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksUpdateRequestTicketGroup",
               "key": "group",
               "schema": {
                 "description": undefined,
@@ -11820,6 +12116,7 @@ empty.
             },
             {
               "conflict": {},
+              "generatedName": "worksUpdateRequestTicketRevOrg",
               "key": "rev_org",
               "schema": {
                 "description": undefined,
@@ -11841,6 +12138,7 @@ empty.
             },
             {
               "conflict": {},
+              "generatedName": "worksUpdateRequestTicketSeverity",
               "key": "severity",
               "schema": {
                 "description": undefined,
@@ -11866,6 +12164,7 @@ empty.
           "properties": [
             {
               "conflict": {},
+              "generatedName": "worksUpdateResponseWork",
               "key": "work",
               "schema": {
                 "description": undefined,

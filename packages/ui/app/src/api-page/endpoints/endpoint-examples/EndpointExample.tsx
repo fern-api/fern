@@ -1,5 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
+import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { CurlExample } from "../../examples/curl-example/CurlExample";
 import { JsonExample } from "../../examples/json-example/JsonExample";
 import { TitledExample } from "../../examples/TitledExample";
@@ -14,6 +15,7 @@ export declare namespace EndpointExample {
 
 export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, example }) => {
     const { hoveredRequestPropertyPath, hoveredResponsePropertyPath } = useEndpointContext();
+    const { apiDefinition } = useApiDefinitionContext();
 
     return (
         <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] flex-col gap-6">

@@ -7277,10 +7277,12 @@ the same customer, dimension, and time, but a different quantity.",
                   },
                   "partner": {
                     "docs": undefined,
+                    "name": "sharedUpdateIntegrationParamsPartner",
                     "type": "root.SharedUpdateIntegrationParamsPartner",
                   },
                   "service": {
                     "docs": undefined,
+                    "name": "sharedUpdateIntegrationParamsService",
                     "type": "root.SharedUpdateIntegrationParamsService",
                   },
                 },

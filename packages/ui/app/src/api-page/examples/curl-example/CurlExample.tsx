@@ -2,7 +2,8 @@ import { noop } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React, { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { useEndpointEnvironmentUrl } from "../../endpoints/useEndpointEnvironmentUrl";
+import { assertVoidNoThrow } from "../../../utils/assertVoidNoThrow";
+import { getEndpointEnvironmentUrl } from "../../endpoints/getEndpointEnvironmentUrl";
 import { JsonExampleContext, JsonExampleContextValue } from "../json-example/contexts/JsonExampleContext";
 import { JsonPropertyPath } from "../json-example/contexts/JsonPropertyPath";
 import { JsonExampleString } from "../json-example/JsonExampleString";
@@ -35,14 +36,14 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         [parent, selectedProperty]
     );
 
-    const environmentUrl = useEndpointEnvironmentUrl(endpoint) ?? "localhost:8080";
+    const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint) ?? "localhost:8000", [endpoint]);
 
-    const parts = useMemo(() => {
+    const partsExcludingCurlCommand = useMemo(() => {
         const parts: CurlExamplePart[] = [];
 
         if (endpoint.method !== FernRegistryApiRead.HttpMethod.Get) {
             parts.push({
-                value: <CurlParameter paramKey="-X" value={endpoint.method.toUpperCase()} />,
+                value: <CurlParameter paramKey="-X" value={endpoint.method.toUpperCase()} doNotStringifyValue />,
             });
         }
 
@@ -178,17 +179,14 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
 
     return (
         <JsonExampleContext.Provider value={contextValue}>
-            {parts.map((part, index) => (
+            {partsExcludingCurlCommand.map((part, index) => (
                 <CurlExampleLine
                     key={index}
                     part={part}
                     indentInSpaces={index > 0 ? CURL_PREFIX.length : 0}
-                    isLastPart={index === parts.length - 1}
+                    isLastPart={index === partsExcludingCurlCommand.length - 1}
                 />
             ))}
         </JsonExampleContext.Provider>
     );
 };
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-function assertVoidNoThrow(_x: void): void {}

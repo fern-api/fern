@@ -38,7 +38,7 @@ export async function runLocalGenerationForWorkspace({
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
                     interactiveTaskContext.failWithoutThrowing(
-                        "Cannot generate becuase output location is not local-file-system"
+                        "Cannot generate because output location is not local-file-system"
                     );
                 } else {
                     await writeFilesToDiskAndRunGenerator({
