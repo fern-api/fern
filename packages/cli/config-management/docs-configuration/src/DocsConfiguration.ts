@@ -4,23 +4,15 @@ import { FernRegistry } from "@fern-fern/registry-node";
 
 export interface DocsConfiguration {
     navigation: DocsNavigationConfiguration;
-    logo: LogoReference | undefined;
+    title: string | undefined;
+    logo: ImageReference | undefined;
+    favicon: ImageReference | undefined;
     colors: FernRegistry.docs.v1.write.ColorsConfig;
     navbarLinks: FernRegistry.docs.v1.write.NavbarLink[] | undefined;
 }
 
-export type LogoReference = LogoReference.Url | LogoReference.File;
-
-export declare namespace LogoReference {
-    export interface Url {
-        type: "url";
-        url: string;
-    }
-
-    export interface File {
-        type: "file";
-        filepath: AbsoluteFilePath;
-    }
+export interface ImageReference {
+    filepath: AbsoluteFilePath;
 }
 
 export interface DocsNavigationConfiguration {
