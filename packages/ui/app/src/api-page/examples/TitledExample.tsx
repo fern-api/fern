@@ -63,7 +63,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                         "flex flex-1 leading-relaxed text-xs bg-gray-dark/40 min-w-0"
                     )}
                 >
-                    <div className="flex-1 overflow-auto whitespace-pre p-2" ref={setContentRef}>
+                    <div className="flex-1 overflow-auto whitespace-pre py-2" ref={setContentRef}>
                         {typeof children === "function" ? children(contentRef ?? undefined) : children}
                     </div>
                 </div>

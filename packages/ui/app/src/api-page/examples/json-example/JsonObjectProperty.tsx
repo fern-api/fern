@@ -7,6 +7,10 @@ import {
 } from "./contexts/JsonExampleBreadcumbsContext";
 import { useJsonExampleContext } from "./contexts/JsonExampleContext";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
+import {
+    JsonPropertySelectionContext,
+    JsonPropertySelectionContextValue,
+} from "./contexts/JsonPropertySelectionContext";
 import { JsonExampleLine } from "./JsonExampleLine";
 import { JsonItemBottomLine } from "./JsonItemBottomLine";
 import { JsonItemMiddleLines } from "./JsonItemMiddleLines";
@@ -53,14 +57,14 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
         });
     }, [contextValue.breadcrumbs, selectedProperty]);
 
-    const ref = useRef<HTMLDivElement | null>(null);
+    const topLineRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        if (containerRef == null || ref.current == null) {
+        if (containerRef == null || topLineRef.current == null) {
             return;
         }
         if (isSelected) {
-            const targetBBox = ref.current.getBoundingClientRect();
+            const targetBBox = topLineRef.current.getBoundingClientRect();
             const containerBBox = containerRef.getBoundingClientRect();
             containerRef.scrollTo({
                 top: containerRef.scrollTop + targetBBox.y - containerBBox.y - 20,
@@ -70,20 +74,24 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
         }
     }, [containerRef, isSelected]);
 
+    const { isSelected: isAncestorSelected } = useContext(JsonPropertySelectionContext);
+    const propertySelectionContextValue = useMemo(
+        (): JsonPropertySelectionContextValue => ({ isSelected: isSelected || isAncestorSelected }),
+        [isAncestorSelected, isSelected]
+    );
+
     return (
-        <>
-            <JsonExampleLine>
-                <span>
-                    <span className="text-neutral-300">&quot;{propertyKey}&quot;</span>
-                    <span>:</span>
-                </span>{" "}
+        <JsonPropertySelectionContext.Provider value={propertySelectionContextValue}>
+            <JsonExampleLine ref={topLineRef}>
+                <span className="text-neutral-300">&quot;{propertyKey}&quot;</span>
+                {": "}
                 <JsonItemTopLineContent value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
             </JsonExampleLine>
             <JsonExampleBreadcumbsContext.Provider value={contextValue}>
                 <JsonItemMiddleLines value={propertyValue} />
             </JsonExampleBreadcumbsContext.Provider>
             <JsonItemBottomLine value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
-        </>
+        </JsonPropertySelectionContext.Provider>
     );
 };
 
