@@ -275,12 +275,12 @@ function getRequest({
                 return [
                     property.key,
                     usedNames.has(property.key)
-                        ? propertyTypeReference.typeReference
-                        : {
+                        ? {
                               type: getTypeFromTypeReference(propertyTypeReference.typeReference),
                               docs: getDocsFromTypeReference(propertyTypeReference.typeReference),
                               name: property.generatedName,
-                          },
+                          }
+                        : propertyTypeReference.typeReference,
                 ];
             })
         );

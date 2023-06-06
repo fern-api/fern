@@ -4772,12 +4772,10 @@ You will be assigned as owner of the new app automatically.",
                 "properties": {
                   "name": {
                     "docs": "The name of the app.",
-                    "name": "createAppDtoName",
                     "type": "string",
                   },
                   "template": {
                     "docs": "Initialize the app with the inbuilt template.",
-                    "name": "createAppDtoTemplate",
                     "type": "optional<string>",
                   },
                 },
@@ -4814,7 +4812,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "id": {
                     "docs": "The ID of the client.",
-                    "name": "createClientDtoId",
                     "type": "string",
                   },
                 },
@@ -4878,7 +4875,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "language": {
                     "docs": "The language to add.",
-                    "name": "addLanguageDtoLanguage",
                     "type": "string",
                   },
                 },
@@ -4914,7 +4910,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "name": {
                     "docs": "The role name.",
-                    "name": "addRoleDtoName",
                     "type": "string",
                   },
                 },
@@ -4950,7 +4945,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "name": {
                     "docs": "The name of the workflow.",
-                    "name": "addWorkflowDtoName",
                     "type": "string",
                   },
                 },
@@ -4986,12 +4980,10 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "description": {
                     "docs": "The optional description of your app.",
-                    "name": "updateAppDtoDescription",
                     "type": "optional<string>",
                   },
                   "label": {
                     "docs": "The optional label of your app.",
-                    "name": "updateAppDtoLabel",
                     "type": "optional<string>",
                   },
                 },
@@ -5027,7 +5019,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "teamId": {
                     "docs": "The ID of the team.",
-                    "name": "transferToTeamDtoTeamId",
                     "type": "optional<string>",
                   },
                 },
@@ -5063,37 +5054,30 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "annotate": {
                     "docs": "The script that is executed when annotating a content.",
-                    "name": "updateAssetScriptsDtoAnnotate",
                     "type": "optional<string>",
                   },
                   "create": {
                     "docs": "The script that is executed when creating an asset.",
-                    "name": "updateAssetScriptsDtoCreate",
                     "type": "optional<string>",
                   },
                   "delete": {
                     "docs": "The script that is executed when deleting a content.",
-                    "name": "updateAssetScriptsDtoDelete",
                     "type": "optional<string>",
                   },
                   "move": {
                     "docs": "The script that is executed when moving a content.",
-                    "name": "updateAssetScriptsDtoMove",
                     "type": "optional<string>",
                   },
                   "query": {
                     "docs": "The script that is executed for each asset when querying assets.",
-                    "name": "updateAssetScriptsDtoQuery",
                     "type": "optional<string>",
                   },
                   "queryPre": {
                     "docs": "The script that is executed for all assets when querying assets.",
-                    "name": "updateAssetScriptsDtoQueryPre",
                     "type": "optional<string>",
                   },
                   "update": {
                     "docs": "The script that is executed when updating a content.",
-                    "name": "updateAssetScriptsDtoUpdate",
                     "type": "optional<string>",
                   },
                 },
@@ -5133,27 +5117,22 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "allowAnonymous": {
                     "docs": "True to allow anonymous access without an access token for this client.",
-                    "name": "updateClientDtoAllowAnonymous",
                     "type": "optional<boolean>",
                   },
                   "apiCallsLimit": {
                     "docs": "The number of allowed api calls per month for this client.",
-                    "name": "updateClientDtoApiCallsLimit",
                     "type": "optional<integer>",
                   },
                   "apiTrafficLimit": {
                     "docs": "The number of allowed api traffic bytes per month for this client.",
-                    "name": "updateClientDtoApiTrafficLimit",
                     "type": "optional<integer>",
                   },
                   "name": {
                     "docs": "The new display name of the client.",
-                    "name": "updateClientDtoName",
                     "type": "optional<string>",
                   },
                   "role": {
                     "docs": "The role of the client.",
-                    "name": "updateClientDtoRole",
                     "type": "optional<string>",
                   },
                 },
@@ -5193,17 +5172,14 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "fallback": {
                     "docs": "Optional fallback languages.",
-                    "name": "updateLanguageDtoFallback",
                     "type": "optional<list<string>>",
                   },
                   "isMaster": {
                     "docs": "Set the value to true to make the language the master.",
-                    "name": "updateLanguageDtoIsMaster",
                     "type": "optional<boolean>",
                   },
                   "isOptional": {
                     "docs": "Set the value to true to make the language optional.",
-                    "name": "updateLanguageDtoIsOptional",
                     "type": "optional<boolean>",
                   },
                 },
@@ -5243,12 +5219,10 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "permissions": {
                     "docs": "Associated list of permissions.",
-                    "name": "updateRoleDtoPermissions",
                     "type": "list<string>",
                   },
                   "properties": {
                     "docs": "Associated list of UI properties.",
-                    "name": "updateRoleDtoProperties",
                     "type": "optional<map<string, unknown>>",
                   },
                 },
@@ -5284,22 +5258,18 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "editors": {
                     "docs": "The configured UI editors.",
-                    "name": "updateAppSettingsDtoEditors",
                     "type": "list<root.EditorDto>",
                   },
                   "hideDateTimeModeButton": {
                     "docs": "Hide the datetime mode button.",
-                    "name": "updateAppSettingsDtoHideDateTimeModeButton",
                     "type": "optional<boolean>",
                   },
                   "hideScheduler": {
                     "docs": "Hide the scheduler for content items.",
-                    "name": "updateAppSettingsDtoHideScheduler",
                     "type": "optional<boolean>",
                   },
                   "patterns": {
                     "docs": "The configured app patterns.",
-                    "name": "updateAppSettingsDtoPatterns",
                     "type": "list<root.PatternDto>",
                   },
                 },
@@ -5339,22 +5309,18 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "initial": {
                     "docs": "The initial step.",
-                    "name": "updateWorkflowDtoInitial",
                     "type": "string",
                   },
                   "name": {
                     "docs": "The name of the workflow.",
-                    "name": "updateWorkflowDtoName",
                     "type": "optional<string>",
                   },
                   "schemaIds": {
                     "docs": "The schema ids.",
-                    "name": "updateWorkflowDtoSchemaIds",
                     "type": "optional<list<string>>",
                   },
                   "steps": {
                     "docs": "The workflow steps.",
-                    "name": "updateWorkflowDtoSteps",
                     "type": "map<string, root.WorkflowStepDto>",
                   },
                 },
@@ -5433,22 +5399,18 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "checkReferrers": {
                     "docs": "True to check referrers of deleted assets.",
-                    "name": "bulkUpdateAssetsDtoCheckReferrers",
                     "type": "optional<boolean>",
                   },
                   "doNotScript": {
                     "docs": "True to turn off scripting for faster inserts. Default: true.",
-                    "name": "bulkUpdateAssetsDtoDoNotScript",
                     "type": "optional<boolean>",
                   },
                   "jobs": {
                     "docs": "The contents to update or insert.",
-                    "name": "bulkUpdateAssetsDtoJobs",
                     "type": "optional<list<root.BulkUpdateAssetsJobDto>>",
                   },
                   "optimizeValidation": {
                     "docs": "True to turn off costly validation: Folder checks. Default: true.",
-                    "name": "bulkUpdateAssetsDtoOptimizeValidation",
                     "type": "optional<boolean>",
                   },
                 },
@@ -5957,12 +5919,10 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "folderName": {
                     "docs": "The name of the folder.",
-                    "name": "createAssetFolderDtoFolderName",
                     "type": "string",
                   },
                   "parentId": {
                     "docs": "The ID of the parent folder.",
-                    "name": "createAssetFolderDtoParentId",
                     "type": "optional<string>",
                   },
                 },
@@ -6050,27 +6010,22 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "fileName": {
                     "docs": "The new name of the asset.",
-                    "name": "annotateAssetDtoFileName",
                     "type": "optional<string>",
                   },
                   "isProtected": {
                     "docs": "True, when the asset is not public.",
-                    "name": "annotateAssetDtoIsProtected",
                     "type": "optional<boolean>",
                   },
                   "metadata": {
                     "docs": "The asset metadata.",
-                    "name": "annotateAssetDtoMetadata",
                     "type": "optional<map<string, unknown>>",
                   },
                   "slug": {
                     "docs": "The new slug of the asset.",
-                    "name": "annotateAssetDtoSlug",
                     "type": "optional<string>",
                   },
                   "tags": {
                     "docs": "The new asset tags.",
-                    "name": "annotateAssetDtoTags",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -6147,7 +6102,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "folderName": {
                     "docs": "The name of the folder.",
-                    "name": "renameAssetFolderDtoFolderName",
                     "type": "string",
                   },
                 },
@@ -6187,7 +6141,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "parentId": {
                     "docs": "The parent folder id.",
-                    "name": "moveAssetFolderDtoParentId",
                     "type": "optional<string>",
                   },
                 },
@@ -6227,7 +6180,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "parentId": {
                     "docs": "The parent folder id.",
-                    "name": "moveAssetDtoParentId",
                     "type": "optional<string>",
                   },
                 },
@@ -6267,7 +6219,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "tagName": {
                     "docs": "The new name for the tag.",
-                    "name": "renameTagDtoTagName",
                     "type": "string",
                   },
                 },
@@ -6437,12 +6388,10 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "name": {
                     "docs": "The name of the app.",
-                    "name": "restoreRequestDtoName",
                     "type": "optional<string>",
                   },
                   "url": {
                     "docs": "The url to the restore file.",
-                    "name": "restoreRequestDtoUrl",
                     "type": "string",
                   },
                 },
@@ -6650,37 +6599,30 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "checkReferrers": {
                     "docs": "True to check referrers of deleted contents.",
-                    "name": "bulkUpdateContentsDtoCheckReferrers",
                     "type": "optional<boolean>",
                   },
                   "doNotScript": {
                     "docs": "True to turn off scripting for faster inserts. Default: true.",
-                    "name": "bulkUpdateContentsDtoDoNotScript",
                     "type": "optional<boolean>",
                   },
                   "doNotValidate": {
                     "docs": "True to turn off validation for faster inserts. Default: false.",
-                    "name": "bulkUpdateContentsDtoDoNotValidate",
                     "type": "optional<boolean>",
                   },
                   "doNotValidateWorkflow": {
                     "docs": "True to turn off validation of workflow rules. Default: false.",
-                    "name": "bulkUpdateContentsDtoDoNotValidateWorkflow",
                     "type": "optional<boolean>",
                   },
                   "jobs": {
                     "docs": "The contents to update or insert.",
-                    "name": "bulkUpdateContentsDtoJobs",
                     "type": "list<root.BulkUpdateContentsJobDto>",
                   },
                   "optimizeValidation": {
                     "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
-                    "name": "bulkUpdateContentsDtoOptimizeValidation",
                     "type": "optional<boolean>",
                   },
                   "publish": {
                     "docs": "True to automatically publish the content.",
-                    "name": "bulkUpdateContentsDtoPublish",
                     "type": "optional<boolean>",
                   },
                 },
@@ -7182,22 +7124,18 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "datas": {
                     "docs": "The data to import.",
-                    "name": "importContentsDtoDatas",
                     "type": "list<root.ContentData>",
                   },
                   "doNotScript": {
                     "docs": "True to turn off scripting for faster inserts. Default: true.",
-                    "name": "importContentsDtoDoNotScript",
                     "type": "optional<boolean>",
                   },
                   "optimizeValidation": {
                     "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
-                    "name": "importContentsDtoOptimizeValidation",
                     "type": "optional<boolean>",
                   },
                   "publish": {
                     "docs": "True to automatically publish the content.",
-                    "name": "importContentsDtoPublish",
                     "type": "optional<boolean>",
                   },
                 },
@@ -7331,17 +7269,14 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "checkReferrers": {
                     "docs": "True to check referrers of this content.",
-                    "name": "changeStatusDtoCheckReferrers",
                     "type": "optional<boolean>",
                   },
                   "dueTime": {
                     "docs": "The due time.",
-                    "name": "changeStatusDtoDueTime",
                     "type": "optional<string>",
                   },
                   "status": {
                     "docs": "The new status.",
-                    "name": "changeStatusDtoStatus",
                     "type": "string",
                   },
                 },
@@ -8184,22 +8119,18 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "action": {
                     "docs": undefined,
-                    "name": "updateRuleDtoAction",
                     "type": "optional<root.RuleActionDto>",
                   },
                   "isEnabled": {
                     "docs": "Enable or disable the rule.",
-                    "name": "updateRuleDtoIsEnabled",
                     "type": "optional<boolean>",
                   },
                   "name": {
                     "docs": "Optional rule name.",
-                    "name": "updateRuleDtoName",
                     "type": "optional<string>",
                   },
                   "trigger": {
                     "docs": undefined,
-                    "name": "updateRuleDtoTrigger",
                     "type": "optional<root.RuleTriggerDto>",
                   },
                 },
@@ -8813,17 +8744,14 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "isSingleton": {
                     "docs": "Set to true to allow a single content item only.",
-                    "name": "createSchemaDtoIsSingleton",
                     "type": "boolean",
                   },
                   "name": {
                     "docs": "The name of the schema.",
-                    "name": "createSchemaDtoName",
                     "type": "string",
                   },
                   "type": {
                     "docs": undefined,
-                    "name": "createSchemaDtoType",
                     "type": "root.SchemaType",
                   },
                 },
@@ -8889,7 +8817,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "name": {
                     "docs": "The name of the category.",
-                    "name": "changeCategoryDtoName",
                     "type": "optional<string>",
                   },
                 },
@@ -9073,7 +9000,6 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "fieldRules": {
                     "docs": "The field rules to configure.",
-                    "name": "configureFieldRulesDtoFieldRules",
                     "type": "optional<list<root.FieldRuleDto>>",
                   },
                 },
@@ -9113,37 +9039,30 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "contentEditorUrl": {
                     "docs": "The url to the editor plugin.",
-                    "name": "updateSchemaDtoContentEditorUrl",
                     "type": "optional<string>",
                   },
                   "contentSidebarUrl": {
                     "docs": "The url to a the sidebar plugin for content items.",
-                    "name": "updateSchemaDtoContentSidebarUrl",
                     "type": "optional<string>",
                   },
                   "contentsSidebarUrl": {
                     "docs": "The url to a the sidebar plugin for content lists.",
-                    "name": "updateSchemaDtoContentsSidebarUrl",
                     "type": "optional<string>",
                   },
                   "hints": {
                     "docs": "Hints to describe the schema.",
-                    "name": "updateSchemaDtoHints",
                     "type": "optional<string>",
                   },
                   "label": {
                     "docs": "Optional label for the editor.",
-                    "name": "updateSchemaDtoLabel",
                     "type": "optional<string>",
                   },
                   "tags": {
                     "docs": "Tags for automation processes.",
-                    "name": "updateSchemaDtoTags",
                     "type": "optional<list<string>>",
                   },
                   "validateOnPublish": {
                     "docs": "True to validate the content items on publish.",
-                    "name": "updateSchemaDtoValidateOnPublish",
                     "type": "boolean",
                   },
                 },
@@ -9218,12 +9137,10 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "noFieldDeletion": {
                     "docs": "True, when fields should not be deleted.",
-                    "name": "synchronizeSchemaDtoNoFieldDeletion",
                     "type": "boolean",
                   },
                   "noFieldRecreation": {
                     "docs": "True, when fields with different types should not be recreated.",
-                    "name": "synchronizeSchemaDtoNoFieldRecreation",
                     "type": "boolean",
                   },
                 },
@@ -9263,12 +9180,10 @@ The client secret is auto generated on the server and returned. The client does 
                 "properties": {
                   "fieldsInLists": {
                     "docs": "The name of fields that are used in content lists.",
-                    "name": "configureUiFieldsDtoFieldsInLists",
                     "type": "optional<list<string>>",
                   },
                   "fieldsInReferences": {
                     "docs": "The name of fields that are used in content references.",
-                    "name": "configureUiFieldsDtoFieldsInReferences",
                     "type": "optional<list<string>>",
                   },
                 },
@@ -9797,7 +9712,6 @@ You will be assigned as owner of the new team automatically.",
                 "properties": {
                   "name": {
                     "docs": "The name of the team.",
-                    "name": "createTeamDtoName",
                     "type": "string",
                   },
                 },
@@ -9833,7 +9747,6 @@ You will be assigned as owner of the new team automatically.",
                 "properties": {
                   "name": {
                     "docs": "The name of the team.",
-                    "name": "updateTeamDtoName",
                     "type": "string",
                   },
                 },
@@ -9925,17 +9838,14 @@ You will be assigned as owner of the new team automatically.",
                 "properties": {
                   "sourceLanguage": {
                     "docs": "The optional source language.",
-                    "name": "translateDtoSourceLanguage",
                     "type": "optional<string>",
                   },
                   "targetLanguage": {
                     "docs": "The target language.",
-                    "name": "translateDtoTargetLanguage",
                     "type": "string",
                   },
                   "text": {
                     "docs": "The text to translate.",
-                    "name": "translateDtoText",
                     "type": "string",
                   },
                 },
@@ -10072,22 +9982,18 @@ You will be assigned as owner of the new team automatically.",
                 "properties": {
                   "displayName": {
                     "docs": "The display name (usually first name and last name) of the user.",
-                    "name": "createUserDtoDisplayName",
                     "type": "string",
                   },
                   "email": {
                     "docs": "The email of the user. Unique value.",
-                    "name": "createUserDtoEmail",
                     "type": "string",
                   },
                   "password": {
                     "docs": "The password of the user.",
-                    "name": "createUserDtoPassword",
                     "type": "string",
                   },
                   "permissions": {
                     "docs": "Additional permissions for the user.",
-                    "name": "createUserDtoPermissions",
                     "type": "list<string>",
                   },
                 },
@@ -10123,22 +10029,18 @@ You will be assigned as owner of the new team automatically.",
                 "properties": {
                   "displayName": {
                     "docs": "The display name (usually first name and last name) of the user.",
-                    "name": "updateUserDtoDisplayName",
                     "type": "string",
                   },
                   "email": {
                     "docs": "The email of the user. Unique value.",
-                    "name": "updateUserDtoEmail",
                     "type": "string",
                   },
                   "password": {
                     "docs": "The password of the user.",
-                    "name": "updateUserDtoPassword",
                     "type": "optional<string>",
                   },
                   "permissions": {
                     "docs": "Additional permissions for the user.",
-                    "name": "updateUserDtoPermissions",
                     "type": "list<string>",
                   },
                 },

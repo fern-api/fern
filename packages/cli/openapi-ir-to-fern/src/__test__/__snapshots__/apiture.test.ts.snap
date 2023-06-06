@@ -2990,7 +2990,6 @@ Note: This operation requires an identity challenge if the financial institution
                 "properties": {
                   "schedule": {
                     "docs": undefined,
-                    "name": "newTransferSchedule",
                     "type": "root.TransferSchedule",
                   },
                 },
@@ -3133,7 +3132,6 @@ Note: This operation requires an identity challenge if the financial institution
                 "properties": {
                   "schedule": {
                     "docs": undefined,
-                    "name": "transferPatchSchedule",
                     "type": "optional<root.TransferSchedule>",
                   },
                 },

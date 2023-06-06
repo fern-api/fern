@@ -3194,7 +3194,6 @@ empty.
                 "properties": {
                   "file_name": {
                     "docs": "The name of the file that's being uploaded.",
-                    "name": "artifactsPrepareRequestFileName",
                     "type": "string",
                   },
                 },
@@ -3273,7 +3272,6 @@ connections can not be deleted using this method.
                 "properties": {
                   "id": {
                     "docs": "ID of the authentication connection to be deleted.",
-                    "name": "devOrgAuthConnectionsDeleteRequestId",
                     "type": "string",
                   },
                 },
@@ -3358,12 +3356,10 @@ disabled.
                 "properties": {
                   "id": {
                     "docs": "ID of the authentication connection to be toggled.",
-                    "name": "devOrgAuthConnectionsToggleRequestId",
                     "type": "string",
                   },
                   "toggle": {
                     "docs": undefined,
-                    "name": "devOrgAuthConnectionsToggleRequestToggle",
                     "type": "optional<root.AuthConnectionToggle>",
                   },
                 },
@@ -3432,7 +3428,6 @@ authenticated user.
                 "properties": {
                   "aud": {
                     "docs": "The expected audience values with respect to the token.",
-                    "name": "authTokensCreateRequestAud",
                     "type": "optional<list<string>>",
                   },
                   "client_id": {
@@ -3441,28 +3436,23 @@ the token. If no client_id is present in the request to generate an
 application access token (AAT), DevRev will generate a client_id.
 This client_id is only associated with an AAT.
 ",
-                    "name": "authTokensCreateRequestClientId",
                     "type": "optional<string>",
                   },
                   "expires_in": {
                     "docs": "The expected validity lifetime of the token in number of days.
 ",
-                    "name": "authTokensCreateRequestExpiresIn",
                     "type": "optional<integer>",
                   },
                   "grant_type": {
                     "docs": undefined,
-                    "name": "authTokensCreateRequestGrantType",
                     "type": "optional<root.AuthTokenGrantType>",
                   },
                   "requested_token_type": {
                     "docs": undefined,
-                    "name": "authTokensCreateRequestRequestedTokenType",
                     "type": "optional<root.AuthTokenRequestedTokenType>",
                   },
                   "rev_info": {
                     "docs": undefined,
-                    "name": "authTokensCreateRequestRevInfo",
                     "type": "optional<root.AuthTokensRevInfo>",
                   },
                   "scope": {
@@ -3470,24 +3460,20 @@ This client_id is only associated with an AAT.
 space-delimited list of values in which the order of values does
 not matter.
 ",
-                    "name": "authTokensCreateRequestScope",
                     "type": "optional<string>",
                   },
                   "subject_token": {
                     "docs": "Represents the entity that requests the token. Not required when
 requesting an application access token (AAT).
 ",
-                    "name": "authTokensCreateRequestSubjectToken",
                     "type": "optional<string>",
                   },
                   "subject_token_type": {
                     "docs": undefined,
-                    "name": "authTokensCreateRequestSubjectTokenType",
                     "type": "optional<root.AuthTokenSubjectTokenType>",
                   },
                   "token_hint": {
                     "docs": "A hint that identifies the token.",
-                    "name": "authTokensCreateRequestTokenHint",
                     "type": "optional<string>",
                   },
                 },
@@ -3525,7 +3511,6 @@ given Dev organization.
 If no token ID is provided, then the token ID will be set from the
 JTI claim of the token in the authorization header.
 ",
-                    "name": "authTokensDeleteRequestTokenId",
                     "type": "optional<string>",
                   },
                 },
@@ -3636,7 +3621,6 @@ authenticated user.
                 "properties": {
                   "requested_token_type": {
                     "docs": undefined,
-                    "name": "authTokensSelfDeleteRequestRequestedTokenType",
                     "type": "optional<root.AuthTokenRequestedTokenType>",
                   },
                 },
@@ -3667,13 +3651,11 @@ organization.
                 "properties": {
                   "token_hint": {
                     "docs": "A hint that identifies the token.",
-                    "name": "authTokensUpdateRequestTokenHint",
                     "type": "string",
                   },
                   "token_id": {
                     "docs": "The unique identifier of the token under a given Dev organization.
 ",
-                    "name": "authTokensUpdateRequestTokenId",
                     "type": "string",
                   },
                 },
@@ -3831,7 +3813,6 @@ used.
                 "properties": {
                   "id": {
                     "docs": "The ID of the part to delete.",
-                    "name": "partsDeleteRequestId",
                     "type": "string",
                   },
                 },
@@ -3997,22 +3978,18 @@ organization.
                 "properties": {
                   "description": {
                     "docs": "Description of the Rev organization.",
-                    "name": "revOrgsCreateRequestDescription",
                     "type": "optional<string>",
                   },
                   "display_name": {
                     "docs": "Name of the Rev organization.",
-                    "name": "revOrgsCreateRequestDisplayName",
                     "type": "string",
                   },
                   "domain": {
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
-                    "name": "revOrgsCreateRequestDomain",
                     "type": "optional<string>",
                   },
                   "environment": {
                     "docs": undefined,
-                    "name": "revOrgsCreateRequestEnvironment",
                     "type": "optional<root.OrgEnvironment>",
                   },
                   "external_ref": {
@@ -4020,12 +3997,10 @@ organization.
 an unique id for this organization's data in some system of
 records.
 ",
-                    "name": "revOrgsCreateRequestExternalRef",
                     "type": "optional<string>",
                   },
                   "tier": {
                     "docs": "The tier of the RevOrg.",
-                    "name": "revOrgsCreateRequestTier",
                     "type": "optional<string>",
                   },
                 },
@@ -4058,7 +4033,6 @@ records.
                 "properties": {
                   "id": {
                     "docs": "The ID of Rev organization to delete.",
-                    "name": "revOrgsDeleteRequestId",
                     "type": "string",
                   },
                 },
@@ -4210,22 +4184,18 @@ them.
                 "properties": {
                   "description": {
                     "docs": "Description of the Rev organization.",
-                    "name": "revOrgsUpdateRequestDescription",
                     "type": "optional<string>",
                   },
                   "display_name": {
                     "docs": "Customer chosen name for the Rev organization.",
-                    "name": "revOrgsUpdateRequestDisplayName",
                     "type": "optional<string>",
                   },
                   "domain": {
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
-                    "name": "revOrgsUpdateRequestDomain",
                     "type": "optional<string>",
                   },
                   "environment": {
                     "docs": undefined,
-                    "name": "revOrgsUpdateRequestEnvironment",
                     "type": "optional<root.OrgEnvironment>",
                   },
                   "external_ref": {
@@ -4233,17 +4203,14 @@ them.
 an unique id for this organization's data in some system of
 records.
 ",
-                    "name": "revOrgsUpdateRequestExternalRef",
                     "type": "optional<string>",
                   },
                   "id": {
                     "docs": "The ID of Rev organization to update.",
-                    "name": "revOrgsUpdateRequestId",
                     "type": "string",
                   },
                   "tier": {
                     "docs": "The tier of the RevOrg.",
-                    "name": "revOrgsUpdateRequestTier",
                     "type": "optional<string>",
                   },
                 },
@@ -4291,18 +4258,15 @@ and a logical concept denoted by the tag's name.
                     "docs": "The allowed values for the tag, or empty if no values are
 permitted.
 ",
-                    "name": "tagsCreateRequestAllowedValues",
                     "type": "optional<list<string>>",
                   },
                   "description": {
                     "docs": "The description for the tag.",
-                    "name": "tagsCreateRequestDescription",
                     "type": "optional<string>",
                   },
                   "name": {
                     "docs": "The name for the tag, which must be unique across all tags.
 ",
-                    "name": "tagsCreateRequestName",
                     "type": "string",
                   },
                 },
@@ -4335,7 +4299,6 @@ permitted.
                 "properties": {
                   "id": {
                     "docs": "The ID of the tag to delete.",
-                    "name": "tagsDeleteRequestId",
                     "type": "string",
                   },
                 },
@@ -4439,24 +4402,20 @@ used.
                 "properties": {
                   "allowed_values": {
                     "docs": undefined,
-                    "name": "tagsUpdateRequestAllowedValues",
                     "type": "optional<root.TagsUpdateAllowedValues>",
                   },
                   "description": {
                     "docs": "The updated description of the tag.",
-                    "name": "tagsUpdateRequestDescription",
                     "type": "optional<string>",
                   },
                   "id": {
                     "docs": "The ID of the tag to update.",
-                    "name": "tagsUpdateRequestId",
                     "type": "string",
                   },
                   "name": {
                     "docs": "The updated name of the tag. The name must be unique across all
 tags.
 ",
-                    "name": "tagsUpdateRequestName",
                     "type": "optional<string>",
                   },
                 },
@@ -4639,7 +4598,6 @@ used.
                 "properties": {
                   "event_types": {
                     "docs": "The event types that the webhook endpoint will receive.",
-                    "name": "webhooksCreateRequestEventTypes",
                     "type": "optional<list<root.WebhookEventType>>",
                   },
                   "secret": {
@@ -4648,12 +4606,10 @@ secret must be between 8 and 32 bytes (inclusive). If not set, a
 secret will be automatically generated and provided in the
 response.
 ",
-                    "name": "webhooksCreateRequestSecret",
                     "type": "optional<string>",
                   },
                   "url": {
                     "docs": "The URL of the webhook endpoint.",
-                    "name": "webhooksCreateRequestUrl",
                     "type": "string",
                   },
                 },
@@ -4686,7 +4642,6 @@ response.
                 "properties": {
                   "id": {
                     "docs": "ID for the webhook.",
-                    "name": "webhooksDeleteRequestId",
                     "type": "string",
                   },
                 },
@@ -4766,17 +4721,14 @@ response.
                 "properties": {
                   "action": {
                     "docs": undefined,
-                    "name": "webhooksUpdateRequestAction",
                     "type": "optional<root.WebhooksUpdateAction>",
                   },
                   "event_types": {
                     "docs": undefined,
-                    "name": "webhooksUpdateRequestEventTypes",
                     "type": "optional<root.WebhooksUpdateRequestEventTypes>",
                   },
                   "id": {
                     "docs": "ID for the webhook.",
-                    "name": "webhooksUpdateRequestId",
                     "type": "string",
                   },
                   "secret": {
@@ -4786,7 +4738,6 @@ if empty, then a new secret is generated. If the webhook is active,
 then its status will transition to the 'unverified' state and it
 won't receive any object events until successfully verified.
 ",
-                    "name": "webhooksUpdateRequestSecret",
                     "type": "optional<string>",
                   },
                   "url": {
@@ -4794,7 +4745,6 @@ won't receive any object events until successfully verified.
 webhook's status will transition to the 'unverified' state and it
 won't receive any object events until successfully verified.
 ",
-                    "name": "webhooksUpdateRequestUrl",
                     "type": "optional<string>",
                   },
                 },
@@ -4865,7 +4815,6 @@ won't receive any object events until successfully verified.
                 "properties": {
                   "id": {
                     "docs": "The work's ID.",
-                    "name": "worksDeleteRequestId",
                     "type": "string",
                   },
                 },

@@ -7627,7 +7627,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "inputToCreateFileRefData",
                     "type": "root.InputToCreateFileRefData",
                   },
                 },
@@ -7749,7 +7748,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "premiumToAddContainerData",
                     "type": "root.PremiumToAdd",
                   },
                 },
@@ -7791,7 +7789,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "contractToAmendDetailsContainerData",
                     "type": "root.ContractDetailsToAmend",
                   },
                 },
@@ -7827,7 +7824,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "contractToCreateContainerData",
                     "type": "root.ContractToCreate",
                   },
                 },
@@ -7860,7 +7856,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "contractToCreateContainerOngoingTimeBasedData",
                     "type": "root.ContractToCreateOngoingTimeBased",
                   },
                 },
@@ -7893,7 +7888,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "contractToCreateContainerPaygMilestonesData",
                     "type": "root.ContractToCreatePaygMilestones",
                   },
                 },
@@ -7926,7 +7920,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "contractToCreateContainerPaygTasksData",
                     "type": "root.ContractToCreatePaygTasks",
                   },
                 },
@@ -7959,7 +7952,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "contractToCreateContainerPayAsYouGoTimeBasedData",
                     "type": "root.ContractToCreatePayAsYouGoTimeBased",
                   },
                 },
@@ -8073,7 +8065,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "contractToTerminateContainerData",
                     "type": "root.ContractToTerminate",
                   },
                 },
@@ -8192,7 +8183,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "inputToPatchContractExternalIdData",
                     "type": "root.ContractExternalIdToPatch",
                   },
                 },
@@ -8475,7 +8465,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "contractInvitationToCreateContainerData",
                     "type": "root.ContractInvitationToCreate",
                   },
                 },
@@ -8509,7 +8498,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "estimateFirstPaymentContainerData",
                     "type": "root.EstimateFirstPayment",
                   },
                 },
@@ -8551,7 +8539,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "contractSignatureToCreateContainerData",
                     "type": "root.ContractSignatureToCreate",
                   },
                 },
@@ -8625,7 +8612,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "eorContractToCreateContainerData",
                     "type": "root.EorContractToCreate",
                   },
                 },
@@ -8775,7 +8761,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "invoiceAdjustmentReviewToCreateContainerData",
                     "type": "root.InvoiceAdjustmentReviewToCreate",
                   },
                 },
@@ -8811,7 +8796,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "invoiceAdjustmentReviewsToCreateContainerData",
                     "type": "root.InvoiceAdjustmentReviewsToCreate",
                   },
                 },
@@ -9046,7 +9030,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "invoiceAdjustmentToUpdateContainerData",
                     "type": "root.InvoiceAdjustmentToUpdate",
                   },
                 },
@@ -9287,7 +9270,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "milestoneReviewToCreateContainerData",
                     "type": "root.MilestoneReviewToCreate",
                   },
                 },
@@ -9329,7 +9311,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "milestoneReviewsToCreateContainerData",
                     "type": "root.MilestoneReviewsToCreate",
                   },
                 },
@@ -9475,7 +9456,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "offCyclePaymentToCreateContainerData",
                     "type": "root.OffCyclePaymentToCreate",
                   },
                 },
@@ -9705,7 +9685,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "inputToCreatePgoTaskData",
                     "type": "root.PgoTaskToCreate",
                   },
                 },
@@ -9747,7 +9726,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "requestBodyToCreatePgoTaskReviewsReviewsContainerData",
                     "type": "root.PgoTaskReviewsToCreate",
                   },
                 },
@@ -9793,7 +9771,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "requestBodyToCreatePgoTaskReviewsByIdReviewsContainerData",
                     "type": "root.PgoTaskReviewsByIdToCreate",
                   },
                 },
@@ -10087,7 +10064,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "timeoffToReviewContainerData",
                     "type": "root.TimeoffReview",
                   },
                 },
@@ -10171,7 +10147,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "timesheetReviewToCreateContainerData",
                     "type": "root.TimesheetReviewToCreate",
                   },
                 },
@@ -10207,7 +10182,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "timesheetReviewsToCreateContainerData",
                     "type": "root.TimesheetReviewsToCreate",
                   },
                 },
@@ -10450,7 +10424,6 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "data": {
                     "docs": undefined,
-                    "name": "timesheetToUpdateContainerData",
                     "type": "root.TimesheetToUpdate",
                   },
                 },
@@ -10527,32 +10500,26 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "description": {
                     "docs": "Webhook subscription description.",
-                    "name": "patchWebhookRequestDescription",
                     "type": "optional<string>",
                   },
                   "events": {
                     "docs": "The list of events to enable for this subscription.",
-                    "name": "patchWebhookRequestEvents",
                     "type": "list<string>",
                   },
                   "name": {
                     "docs": "Webhook subscription name.",
-                    "name": "patchWebhookRequestName",
                     "type": "optional<string>",
                   },
                   "signing_key": {
                     "docs": "The webhook's signing key, used to generate webhook signatures.",
-                    "name": "patchWebhookRequestSigningKey",
                     "type": "optional<string>",
                   },
                   "status": {
                     "docs": "Status of webhook.",
-                    "name": "patchWebhookRequestStatus",
                     "type": "root.PatchWebhookRequestStatus",
                   },
                   "url": {
                     "docs": "Endpoint to receive webhook.",
-                    "name": "patchWebhookRequestUrl",
                     "type": "string",
                   },
                 },
@@ -10616,37 +10583,30 @@ exports[`open api parser deel simple 1`] = `
                 "properties": {
                   "api_version": {
                     "docs": "Deel API version. Currently Deel only has one version: v1.",
-                    "name": "createWebhookRequestApiVersion",
                     "type": "string",
                   },
                   "description": {
                     "docs": "Webhook subscription description.",
-                    "name": "createWebhookRequestDescription",
                     "type": "optional<string>",
                   },
                   "events": {
                     "docs": "The list of events to enable for this subscription.",
-                    "name": "createWebhookRequestEvents",
                     "type": "list<string>",
                   },
                   "name": {
                     "docs": "Webhook subscription name.",
-                    "name": "createWebhookRequestName",
                     "type": "optional<string>",
                   },
                   "signing_key": {
                     "docs": "The webhook's signing key, used to generate webhook signatures.",
-                    "name": "createWebhookRequestSigningKey",
                     "type": "optional<string>",
                   },
                   "status": {
                     "docs": "Status of webhook.",
-                    "name": "createWebhookRequestStatus",
                     "type": "root.CreateWebhookRequestStatus",
                   },
                   "url": {
                     "docs": "Endpoint to receive webhook.",
-                    "name": "createWebhookRequestUrl",
                     "type": "string",
                   },
                 },
