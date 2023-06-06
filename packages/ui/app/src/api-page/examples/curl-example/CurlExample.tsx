@@ -22,6 +22,8 @@ export declare namespace CurlExample {
     }
 }
 
+const CURL_PREFIX = "curl ";
+
 export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, selectedProperty, parent }) => {
     const { apiDefinition } = useApiDefinitionContext();
 
@@ -127,7 +129,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             }
         }
 
-        const curlElement = <span className="text-yellow-100">curl </span>;
+        const curlElement = <span className="text-yellow-100">{CURL_PREFIX}</span>;
         if (parts[0] != null) {
             parts[0] = {
                 ...parts[0],
@@ -165,7 +167,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                 <CurlExampleLine
                     key={index}
                     part={part}
-                    indent={index > 0 ? "curl ".length : 0}
+                    indent={index > 0 ? CURL_PREFIX.length : 0}
                     isLastPart={index === parts.length - 1}
                 />
             ))}
