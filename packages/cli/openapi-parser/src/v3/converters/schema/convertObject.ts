@@ -7,6 +7,7 @@ import {
 } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { getGeneratedPropertyName } from "../../utils/getSchemaName";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { isSchemaEqual } from "../../utils/isSchemaEqual";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "../convertSchemas";
@@ -88,6 +89,7 @@ export function convertObject({
             key: propertyName,
             schema,
             conflict: conflicts,
+            generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName]),
         };
     });
 

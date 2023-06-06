@@ -7,7 +7,7 @@ import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertToHttpMethod } from "./convertToHttpMethod";
 import { convertToTypeReference } from "./convertToTypeReference";
-import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedEndpoint {
     value: RawSchemas.HttpEndpointSchema;
@@ -35,6 +35,8 @@ export function convertEndpoint({
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
 
+    const names = new Set<string>();
+
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
         const convertedPathParameter = convertPathParameter({ pathParameter, schemas, isPackageYml });
@@ -43,6 +45,7 @@ export function convertEndpoint({
             ...additionalTypeDeclarations,
             ...convertedPathParameter.additionalTypeDeclarations,
         };
+        names.add(pathParameter.name);
     }
 
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
@@ -53,6 +56,7 @@ export function convertEndpoint({
             ...additionalTypeDeclarations,
             ...convertedQueryParameter.additionalTypeDeclarations,
         };
+        names.add(queryParameter.name);
     }
 
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
@@ -81,6 +85,7 @@ export function convertEndpoint({
             ...additionalTypeDeclarations,
             ...convertedHeader.additionalTypeDeclarations,
         };
+        names.add(header.name);
     }
 
     if (endpoint.request != null) {
@@ -93,6 +98,7 @@ export function convertEndpoint({
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
             nonRequestReferencedSchemas,
             headers: Object.keys(headers).length > 0 ? headers : undefined,
+            usedNames: names,
         });
         convertedEndpoint.request = convertedRequest.value;
         schemaIdsToExclude = [...schemaIdsToExclude, ...(convertedRequest.schemaIdsToExclude ?? [])];
@@ -195,6 +201,7 @@ function getRequest({
     queryParameters,
     nonRequestReferencedSchemas,
     headers,
+    usedNames,
 }: {
     isPackageYml: boolean;
     request: Request;
@@ -204,6 +211,7 @@ function getRequest({
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
     nonRequestReferencedSchemas: SchemaId[];
     headers?: Record<string, RawSchemas.HttpHeaderSchema>;
+    usedNames: Set<string>;
 }): ConvertedRequest {
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     if (request.type === "json") {
@@ -264,7 +272,16 @@ function getRequest({
                     ...additionalTypeDeclarations,
                     ...propertyTypeReference.additionalTypeDeclarations,
                 };
-                return [property.key, propertyTypeReference.typeReference];
+                return [
+                    property.key,
+                    usedNames.has(property.key)
+                        ? {
+                              type: getTypeFromTypeReference(propertyTypeReference.typeReference),
+                              docs: getDocsFromTypeReference(propertyTypeReference.typeReference),
+                              name: property.generatedName,
+                          }
+                        : propertyTypeReference.typeReference,
+                ];
             })
         );
         const extendedSchemas: string[] = resolvedSchema.allOf.map((referencedSchema) => {

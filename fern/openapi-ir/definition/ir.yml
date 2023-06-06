@@ -282,6 +282,10 @@ types:
       conflict:
         type: map<SchemaId, ObjectPropertyConflictInfo>
         docs: The schemas that conflict with this property
+      generatedName:
+        type: string
+        docs: |
+          A unique name for the property.
 
   ObjectPropertyConflictInfo:
     properties:

@@ -81,6 +81,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createTotpDeviceRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -93,6 +94,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createTotpDeviceRequestDeviceName",
                   "key": "deviceName",
                   "schema": {
                     "description": undefined,
@@ -104,6 +106,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createTotpDeviceRequestSkew",
                   "key": "skew",
                   "schema": {
                     "description": undefined,
@@ -115,6 +118,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createTotpDeviceRequestPeriod",
                   "key": "period",
                   "schema": {
                     "description": undefined,
@@ -156,6 +160,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "createTotpDeviceResponseOkSecret",
                         "key": "secret",
                         "schema": {
                           "description": undefined,
@@ -261,6 +266,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "updateTotpDeviceNameRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -273,6 +279,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "updateTotpDeviceNameRequestExistingDeviceName",
                   "key": "existingDeviceName",
                   "schema": {
                     "description": undefined,
@@ -284,6 +291,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "updateTotpDeviceNameRequestNewDeviceName",
                   "key": "newDeviceName",
                   "schema": {
                     "description": undefined,
@@ -452,6 +460,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getTotpDevicesResponseOkDevices",
                         "key": "devices",
                         "schema": {
                           "description": undefined,
@@ -467,6 +476,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                               "properties": [
                                 {
                                   "conflict": {},
+                                  "generatedName": "getTotpDevicesResponseOkDevicesItemName",
                                   "key": "name",
                                   "schema": {
                                     "description": undefined,
@@ -482,6 +492,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                                 },
                                 {
                                   "conflict": {},
+                                  "generatedName": "getTotpDevicesResponseOkDevicesItemPeriod",
                                   "key": "period",
                                   "schema": {
                                     "description": undefined,
@@ -497,6 +508,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                                 },
                                 {
                                   "conflict": {},
+                                  "generatedName": "getTotpDevicesResponseOkDevicesItemSkew",
                                   "key": "skew",
                                   "schema": {
                                     "description": undefined,
@@ -512,6 +524,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                                 },
                                 {
                                   "conflict": {},
+                                  "generatedName": "getTotpDevicesResponseOkDevicesItemVerified",
                                   "key": "verified",
                                   "schema": {
                                     "description": undefined,
@@ -631,6 +644,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "removeTotpDeviceRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -643,6 +657,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "removeTotpDeviceRequestDeviceName",
                   "key": "deviceName",
                   "schema": {
                     "description": undefined,
@@ -676,6 +691,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "removeTotpDeviceResponseOkDidDeviceExist",
                         "key": "didDeviceExist",
                         "schema": {
                           "description": undefined,
@@ -789,6 +805,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "verifyTotpCodeRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -801,6 +818,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "verifyTotpCodeRequestTotp",
                   "key": "totp",
                   "schema": {
                     "description": undefined,
@@ -812,6 +830,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "verifyTotpCodeRequestAllowUnverifiedDevices",
                   "key": "allowUnverifiedDevices",
                   "schema": {
                     "description": undefined,
@@ -853,6 +872,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "verifyTotpCodeResponseLimitReachedErrorRetryAfterMs",
                         "key": "retryAfterMs",
                         "schema": {
                           "description": undefined,
@@ -974,6 +994,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "verifyTotpDeviceRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -986,6 +1007,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "verifyTotpDeviceRequestDeviceName",
                   "key": "deviceName",
                   "schema": {
                     "description": undefined,
@@ -997,6 +1019,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "verifyTotpDeviceRequestTotp",
                   "key": "totp",
                   "schema": {
                     "description": undefined,
@@ -1038,6 +1061,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "verifyTotpDeviceResponseLimitReachedErrorRetryAfterMs",
                         "key": "retryAfterMs",
                         "schema": {
                           "description": undefined,
@@ -1062,6 +1086,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "verifyTotpDeviceResponseOkWasAlreadyVerified",
                         "key": "wasAlreadyVerified",
                         "schema": {
                           "description": undefined,
@@ -1239,6 +1264,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "userIdMappingGetMappingResponseOkSuperTokensUserId",
                         "key": "superTokensUserId",
                         "schema": {
                           "description": undefined,
@@ -1251,6 +1277,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "userIdMappingGetMappingResponseOkExternalUserId",
                         "key": "externalUserId",
                         "schema": {
                           "description": undefined,
@@ -1262,6 +1289,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "userIdMappingGetMappingResponseOkExternalUserIdInfo",
                         "key": "externalUserIdInfo",
                         "schema": {
                           "description": undefined,
@@ -1375,6 +1403,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingCreateMappingRequestSuperTokensUserId",
                   "key": "superTokensUserId",
                   "schema": {
                     "description": undefined,
@@ -1387,6 +1416,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingCreateMappingRequestExternalUserId",
                   "key": "externalUserId",
                   "schema": {
                     "description": undefined,
@@ -1398,6 +1428,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingCreateMappingRequestExternalUserIdInfo",
                   "key": "externalUserIdInfo",
                   "schema": {
                     "description": undefined,
@@ -1413,6 +1444,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingCreateMappingRequestForce",
                   "key": "force",
                   "schema": {
                     "description": undefined,
@@ -1466,6 +1498,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "userIdMappingCreateMappingResponseUserIdMappingAlreadyExistsErrorDoesSuperTokensUserIdExist",
                         "key": "doesSuperTokensUserIdExist",
                         "schema": {
                           "description": undefined,
@@ -1481,6 +1514,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "userIdMappingCreateMappingResponseUserIdMappingAlreadyExistsErrorDoesExternalUserIdExist",
                         "key": "doesExternalUserIdExist",
                         "schema": {
                           "description": undefined,
@@ -1586,6 +1620,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingRemoveMappingRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -1598,6 +1633,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingRemoveMappingRequestUserIdType",
                   "key": "userIdType",
                   "schema": {
                     "description": undefined,
@@ -1632,6 +1668,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingRemoveMappingRequestForce",
                   "key": "force",
                   "schema": {
                     "description": undefined,
@@ -1661,6 +1698,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingRemoveMappingResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -1677,6 +1715,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingRemoveMappingResponseDidMappingExist",
                   "key": "didMappingExist",
                   "schema": {
                     "description": undefined,
@@ -1777,6 +1816,7 @@ exports[`open api parser supertokens parse open api 1`] = `
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingUpateExternalUserIdInfoRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -1789,6 +1829,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingUpateExternalUserIdInfoRequestUserIdType",
                   "key": "userIdType",
                   "schema": {
                     "description": undefined,
@@ -1823,6 +1864,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userIdMappingUpateExternalUserIdInfoRequestExternalUserIdInfo",
                   "key": "externalUserIdInfo",
                   "schema": {
                     "description": undefined,
@@ -1963,6 +2005,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyPreAuthSessionId",
                         "key": "preAuthSessionId",
                         "schema": {
                           "description": undefined,
@@ -1975,6 +2018,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyLinkCode",
                         "key": "linkCode",
                         "schema": {
                           "description": undefined,
@@ -1996,6 +2040,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyPreAuthSessionId",
                         "key": "preAuthSessionId",
                         "schema": {
                           "description": undefined,
@@ -2008,6 +2053,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyDeviceId",
                         "key": "deviceId",
                         "schema": {
                           "description": undefined,
@@ -2020,6 +2066,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeRequestBodyPasswordlessTryUseCodeRequestBodyUserInputCode",
                         "key": "userInputCode",
                         "schema": {
                           "description": undefined,
@@ -2057,6 +2104,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeResponsePasswordlessTryUseCodeResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -2073,6 +2121,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeResponsePasswordlessTryUseCodeResponseCreatedNewUser",
                         "key": "createdNewUser",
                         "schema": {
                           "description": undefined,
@@ -2088,6 +2137,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeResponsePasswordlessTryUseCodeResponseUser",
                         "key": "user",
                         "schema": {
                           "description": undefined,
@@ -2113,6 +2163,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeResponsePasswordlessTryUseCodeResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -2141,6 +2192,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeResponsePasswordlessTryUseCodeResponseFailedCodeInputAttemptCount",
                         "key": "failedCodeInputAttemptCount",
                         "schema": {
                           "description": undefined,
@@ -2156,6 +2208,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeResponsePasswordlessTryUseCodeResponseMaximumCodeInputAttempts",
                         "key": "maximumCodeInputAttempts",
                         "schema": {
                           "description": undefined,
@@ -2180,6 +2233,7 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessTryUseCodeResponsePasswordlessTryUseCodeResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -2299,6 +2353,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyEmail",
                         "key": "email",
                         "schema": {
                           "description": undefined,
@@ -2311,6 +2366,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyUserInputCode",
                         "key": "userInputCode",
                         "schema": {
                           "description": undefined,
@@ -2336,6 +2392,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyPhoneNumber",
                         "key": "phoneNumber",
                         "schema": {
                           "description": undefined,
@@ -2348,6 +2405,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyUserInputCode",
                         "key": "userInputCode",
                         "schema": {
                           "description": undefined,
@@ -2373,6 +2431,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyDeviceId",
                         "key": "deviceId",
                         "schema": {
                           "description": undefined,
@@ -2385,6 +2444,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInRequestBodyPasswordlessStartSignInRequestBodyUserInputCode",
                         "key": "userInputCode",
                         "schema": {
                           "description": undefined,
@@ -2426,6 +2486,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInResponsePasswordlessStartSignInResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -2442,6 +2503,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInResponsePasswordlessStartSignInResponsePreAuthSessionId",
                         "key": "preAuthSessionId",
                         "schema": {
                           "description": undefined,
@@ -2458,6 +2520,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInResponsePasswordlessStartSignInResponseCodeId",
                         "key": "codeId",
                         "schema": {
                           "description": undefined,
@@ -2474,6 +2537,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInResponsePasswordlessStartSignInResponseDeviceId",
                         "key": "deviceId",
                         "schema": {
                           "description": undefined,
@@ -2490,6 +2554,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInResponsePasswordlessStartSignInResponseUserInputCode",
                         "key": "userInputCode",
                         "schema": {
                           "description": undefined,
@@ -2506,6 +2571,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInResponsePasswordlessStartSignInResponseLinkCode",
                         "key": "linkCode",
                         "schema": {
                           "description": undefined,
@@ -2522,6 +2588,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInResponsePasswordlessStartSignInResponseTimeCreated",
                         "key": "timeCreated",
                         "schema": {
                           "description": undefined,
@@ -2538,6 +2605,7 @@ Passing the optional deviceId signifies a resend code flow.
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInResponsePasswordlessStartSignInResponseCodeLifetime",
                         "key": "codeLifetime",
                         "schema": {
                           "description": undefined,
@@ -2563,6 +2631,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessStartSignInResponsePasswordlessStartSignInResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -2681,6 +2750,7 @@ Passing the optional deviceId signifies a resend code flow.
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "passwordlessRevokeCodeRequestCodeId",
                   "key": "codeId",
                   "schema": {
                     "description": undefined,
@@ -2707,6 +2777,7 @@ Passing the optional deviceId signifies a resend code flow.
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "passwordlessRevokeCodeResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -2874,6 +2945,7 @@ Passing the optional deviceId signifies a resend code flow.
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "passwordlessListCodesResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -2890,6 +2962,7 @@ Passing the optional deviceId signifies a resend code flow.
                 },
                 {
                   "conflict": {},
+                  "generatedName": "passwordlessListCodesResponseDevices",
                   "key": "devices",
                   "schema": {
                     "description": undefined,
@@ -2905,6 +2978,7 @@ Passing the optional deviceId signifies a resend code flow.
                         "properties": [
                           {
                             "conflict": {},
+                            "generatedName": "passwordlessListCodesResponseDevicesItemPreAuthSessionId",
                             "key": "preAuthSessionId",
                             "schema": {
                               "description": undefined,
@@ -2921,6 +2995,7 @@ Passing the optional deviceId signifies a resend code flow.
                           },
                           {
                             "conflict": {},
+                            "generatedName": "passwordlessListCodesResponseDevicesItemFailedCodeInputAttemptCount",
                             "key": "failedCodeInputAttemptCount",
                             "schema": {
                               "description": undefined,
@@ -2936,6 +3011,7 @@ Passing the optional deviceId signifies a resend code flow.
                           },
                           {
                             "conflict": {},
+                            "generatedName": "passwordlessListCodesResponseDevicesItemEmail",
                             "key": "email",
                             "schema": {
                               "description": undefined,
@@ -2952,6 +3028,7 @@ Passing the optional deviceId signifies a resend code flow.
                           },
                           {
                             "conflict": {},
+                            "generatedName": "passwordlessListCodesResponseDevicesItemPhoneNumber",
                             "key": "phoneNumber",
                             "schema": {
                               "description": undefined,
@@ -2968,6 +3045,7 @@ Passing the optional deviceId signifies a resend code flow.
                           },
                           {
                             "conflict": {},
+                            "generatedName": "passwordlessListCodesResponseDevicesItemCodes",
                             "key": "codes",
                             "schema": {
                               "description": undefined,
@@ -2983,6 +3061,7 @@ Passing the optional deviceId signifies a resend code flow.
                                   "properties": [
                                     {
                                       "conflict": {},
+                                      "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemCodeId",
                                       "key": "codeId",
                                       "schema": {
                                         "description": undefined,
@@ -2999,6 +3078,7 @@ Passing the optional deviceId signifies a resend code flow.
                                     },
                                     {
                                       "conflict": {},
+                                      "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemTimeCreated",
                                       "key": "timeCreated",
                                       "schema": {
                                         "description": undefined,
@@ -3015,6 +3095,7 @@ Passing the optional deviceId signifies a resend code flow.
                                     },
                                     {
                                       "conflict": {},
+                                      "generatedName": "passwordlessListCodesResponseDevicesItemCodesItemCodeLifetime",
                                       "key": "codeLifetime",
                                       "schema": {
                                         "description": undefined,
@@ -3134,6 +3215,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessRevokeAllCodesOfUserRequestBodyPasswordlessRevokeAllCodesOfUserRequestBodyEmail",
                         "key": "email",
                         "schema": {
                           "description": undefined,
@@ -3155,6 +3237,7 @@ Passing the optional deviceId signifies a resend code flow.
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessRevokeAllCodesOfUserRequestBodyPasswordlessRevokeAllCodesOfUserRequestBodyPhoneNumber",
                         "key": "phoneNumber",
                         "schema": {
                           "description": undefined,
@@ -3186,6 +3269,7 @@ Passing the optional deviceId signifies a resend code flow.
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "passwordlessRevokeAllCodesOfUserResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -3344,6 +3428,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessGetUserResponsePasswordlessGetUserResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -3360,6 +3445,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       },
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessGetUserResponsePasswordlessGetUserResponseUser",
                         "key": "user",
                         "schema": {
                           "description": undefined,
@@ -3385,6 +3471,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "passwordlessGetUserResponsePasswordlessGetUserResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -3510,6 +3597,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "passwordlessPutUserRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -3522,6 +3610,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "passwordlessPutUserRequestEmail",
                   "key": "email",
                   "schema": {
                     "description": undefined,
@@ -3547,6 +3636,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "passwordlessPutUserRequestPhoneNumber",
                   "key": "phoneNumber",
                   "schema": {
                     "description": undefined,
@@ -3586,6 +3676,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "passwordlessPutUserResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -3711,6 +3802,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordSigninRequestEmail",
                   "key": "email",
                   "schema": {
                     "description": undefined,
@@ -3727,6 +3819,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordSigninRequestPassword",
                   "key": "password",
                   "schema": {
                     "description": undefined,
@@ -3763,6 +3856,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "emailPasswordSigninResponseEmailPasswordSigninResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -3779,6 +3873,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       },
                       {
                         "conflict": {},
+                        "generatedName": "emailPasswordSigninResponseEmailPasswordSigninResponseUser",
                         "key": "user",
                         "schema": {
                           "description": undefined,
@@ -3893,6 +3988,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordSignupRequestEmail",
                   "key": "email",
                   "schema": {
                     "description": undefined,
@@ -3909,6 +4005,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordSignupRequestPassword",
                   "key": "password",
                   "schema": {
                     "description": undefined,
@@ -3955,6 +4052,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "emailPasswordSignupResponseOkUser",
                         "key": "user",
                         "schema": {
                           "description": undefined,
@@ -4102,6 +4200,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "emailPasswordGetUserResponseEmailPasswordGetUserResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -4118,6 +4217,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       },
                       {
                         "conflict": {},
+                        "generatedName": "emailPasswordGetUserResponseEmailPasswordGetUserResponseUser",
                         "key": "user",
                         "schema": {
                           "description": undefined,
@@ -4143,6 +4243,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "emailPasswordGetUserResponseEmailPasswordGetUserResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -4261,6 +4362,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordPutUserRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -4277,6 +4379,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordPutUserRequestEmail",
                   "key": "email",
                   "schema": {
                     "description": undefined,
@@ -4293,6 +4396,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordPutUserRequestPassword",
                   "key": "password",
                   "schema": {
                     "description": undefined,
@@ -4323,6 +4427,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordPutUserResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -4442,6 +4547,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordGetPasswordResetTokenRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -4478,6 +4584,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "emailPasswordGetPasswordResetTokenResponseEmailPasswordGetPasswordResetTokenResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -4494,6 +4601,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                       },
                       {
                         "conflict": {},
+                        "generatedName": "emailPasswordGetPasswordResetTokenResponseEmailPasswordGetPasswordResetTokenResponseToken",
                         "key": "token",
                         "schema": {
                           "description": undefined,
@@ -4669,6 +4777,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordGetUsersResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -4685,6 +4794,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordGetUsersResponseUsers",
                   "key": "users",
                   "schema": {
                     "description": undefined,
@@ -4705,6 +4815,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordGetUsersResponseNextPaginationToken",
                   "key": "nextPaginationToken",
                   "schema": {
                     "description": undefined,
@@ -4806,6 +4917,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordGetPasswordResetRequestMethod",
                   "key": "method",
                   "schema": {
                     "description": undefined,
@@ -4828,6 +4940,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordGetPasswordResetRequestToken",
                   "key": "token",
                   "schema": {
                     "description": undefined,
@@ -4844,6 +4957,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordGetPasswordResetRequestNewPassword",
                   "key": "newPassword",
                   "schema": {
                     "description": undefined,
@@ -4881,6 +4995,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "emailPasswordGetPasswordResetResponseOkUserId",
                         "key": "userId",
                         "schema": {
                           "description": undefined,
@@ -4997,6 +5112,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordGetUserCountResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -5013,6 +5129,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailPasswordGetUserCountResponseCount",
                   "key": "count",
                   "schema": {
                     "description": undefined,
@@ -5113,6 +5230,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userImportRequestEmail",
                   "key": "email",
                   "schema": {
                     "description": undefined,
@@ -5129,6 +5247,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userImportRequestPasswordHash",
                   "key": "passwordHash",
                   "schema": {
                     "description": undefined,
@@ -5144,6 +5263,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userImportRequestHashingAlgorithm",
                   "key": "hashingAlgorithm",
                   "schema": {
                     "description": undefined,
@@ -5192,6 +5312,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userImportResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -5208,6 +5329,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userImportResponseUser",
                   "key": "user",
                   "schema": {
                     "description": undefined,
@@ -5224,6 +5346,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userImportResponseDidUserAlreadyExist",
                   "key": "didUserAlreadyExist",
                   "schema": {
                     "description": undefined,
@@ -5324,6 +5447,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartySigninupRequestThirdPartyId",
                   "key": "thirdPartyId",
                   "schema": {
                     "description": undefined,
@@ -5340,6 +5464,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartySigninupRequestThirdPartyUserId",
                   "key": "thirdPartyUserId",
                   "schema": {
                     "description": undefined,
@@ -5356,6 +5481,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartySigninupRequestEmail",
                   "key": "email",
                   "schema": {
                     "description": undefined,
@@ -5386,6 +5512,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartySigninupResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -5402,6 +5529,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartySigninupResponseCreatedNewUser",
                   "key": "createdNewUser",
                   "schema": {
                     "description": undefined,
@@ -5417,6 +5545,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartySigninupResponseUser",
                   "key": "user",
                   "schema": {
                     "description": undefined,
@@ -5575,6 +5704,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "thirdPartyGetUserResponseThirdPartyGetUserResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -5591,6 +5721,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       },
                       {
                         "conflict": {},
+                        "generatedName": "thirdPartyGetUserResponseThirdPartyGetUserResponseUser",
                         "key": "user",
                         "schema": {
                           "description": undefined,
@@ -5616,6 +5747,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "thirdPartyGetUserResponseThirdPartyGetUserResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -5747,6 +5879,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartyGetUsersByEmailResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -5763,6 +5896,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 },
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartyGetUsersByEmailResponseUsers",
                   "key": "users",
                   "schema": {
                     "description": undefined,
@@ -5930,6 +6064,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartyGetUsersResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -5946,6 +6081,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 },
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartyGetUsersResponseUser",
                   "key": "user",
                   "schema": {
                     "description": undefined,
@@ -5966,6 +6102,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 },
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartyGetUsersResponseNextPaginationToken",
                   "key": "nextPaginationToken",
                   "schema": {
                     "description": undefined,
@@ -6070,6 +6207,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartyGetUserCountResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -6086,6 +6224,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 },
                 {
                   "conflict": {},
+                  "generatedName": "thirdPartyGetUserCountResponseCount",
                   "key": "count",
                   "schema": {
                     "description": undefined,
@@ -6215,6 +6354,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "emailVerificationVerifyTokenResponseOkToken",
                         "key": "token",
                         "schema": {
                           "description": undefined,
@@ -6334,6 +6474,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailVerificationVerifyTokenRemoveResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -6474,6 +6615,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailVerificationVerifyGetResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -6490,6 +6632,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailVerificationVerifyGetResponseIsVerified",
                   "key": "isVerified",
                   "schema": {
                     "description": undefined,
@@ -6591,6 +6734,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailVerificationVerifyRequestMethod",
                   "key": "method",
                   "schema": {
                     "description": undefined,
@@ -6613,6 +6757,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 },
                 {
                   "conflict": {},
+                  "generatedName": "emailVerificationVerifyRequestToken",
                   "key": "token",
                   "schema": {
                     "description": undefined,
@@ -6659,6 +6804,7 @@ Note that there is an invisible character at the end of the path, this was to av
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "emailVerificationVerifyResponseOkUserId",
                         "key": "userId",
                         "schema": {
                           "description": undefined,
@@ -6675,6 +6821,7 @@ Note that there is an invisible character at the end of the path, this was to av
                       },
                       {
                         "conflict": {},
+                        "generatedName": "emailVerificationVerifyResponseOkEmail",
                         "key": "email",
                         "schema": {
                           "description": undefined,
@@ -6794,6 +6941,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "emailVerificationVerifyRemoveResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -6915,6 +7063,7 @@ Note that there is an invisible character at the end of the path, this was to av
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userMetadataReadResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -6931,6 +7080,7 @@ Note that there is an invisible character at the end of the path, this was to av
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userMetadataReadResponseMetadata",
                   "key": "metadata",
                   "schema": {
                     "description": undefined,
@@ -7040,6 +7190,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userMetadataUpdateRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -7056,6 +7207,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userMetadataUpdateRequestMetadataUpdate",
                   "key": "metadataUpdate",
                   "schema": {
                     "description": undefined,
@@ -7086,6 +7238,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userMetadataUpdateResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -7102,6 +7255,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "userMetadataUpdateResponseMetadata",
                   "key": "metadata",
                   "schema": {
                     "description": undefined,
@@ -7203,6 +7357,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userMetadataDeleteRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -7233,6 +7388,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "userMetadataDeleteResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -7334,6 +7490,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "addUserRoleRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -7346,6 +7503,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "addUserRoleRequestRole",
                   "key": "role",
                   "schema": {
                     "description": undefined,
@@ -7378,6 +7536,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "addUserRoleResponseAddUserRoleResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -7394,6 +7553,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "addUserRoleResponseAddUserRoleResponseDidUserAlreadyHaveRole",
                         "key": "didUserAlreadyHaveRole",
                         "schema": {
                           "description": undefined,
@@ -7507,6 +7667,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "removeUserRoleRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -7519,6 +7680,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "removeUserRoleRequestRole",
                   "key": "role",
                   "schema": {
                     "description": undefined,
@@ -7551,6 +7713,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "removeUserRoleResponseRemoveUserRoleResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -7567,6 +7730,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "removeUserRoleResponseRemoveUserRoleResponseDidUserHaveRole",
                         "key": "didUserHaveRole",
                         "schema": {
                           "description": undefined,
@@ -7694,6 +7858,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getUserRolesResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -7710,6 +7875,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getUserRolesResponseRoles",
                   "key": "roles",
                   "schema": {
                     "description": undefined,
@@ -7835,6 +8001,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getRoleUsersResponseGetRoleUsersResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -7851,6 +8018,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getRoleUsersResponseGetRoleUsersResponseUsers",
                         "key": "users",
                         "schema": {
                           "description": undefined,
@@ -7969,6 +8137,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "putRoleRequestRole",
                   "key": "role",
                   "schema": {
                     "description": undefined,
@@ -7981,6 +8150,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "putRoleRequestPermissions",
                   "key": "permissions",
                   "schema": {
                     "description": undefined,
@@ -8014,6 +8184,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "putRoleResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -8030,6 +8201,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "putRoleResponseCreatedNewRole",
                   "key": "createdNewRole",
                   "schema": {
                     "description": undefined,
@@ -8150,6 +8322,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getRolePermissionsResponseGetRolePermissionsResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -8166,6 +8339,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getRolePermissionsResponseGetRolePermissionsResponsePermissions",
                         "key": "permissions",
                         "schema": {
                           "description": undefined,
@@ -8283,6 +8457,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "removeRolePermissionsRequestRole",
                   "key": "role",
                   "schema": {
                     "description": undefined,
@@ -8295,6 +8470,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "removeRolePermissionsRequestPermissions",
                   "key": "permissions",
                   "schema": {
                     "description": undefined,
@@ -8334,6 +8510,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "removeRolePermissionsResponseRemoveRolePermissionsResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -8462,6 +8639,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getPermissionRolesResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -8478,6 +8656,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getPermissionRolesResponseRoles",
                   "key": "roles",
                   "schema": {
                     "description": undefined,
@@ -8582,6 +8761,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "removeRoleRequestRole",
                   "key": "role",
                   "schema": {
                     "description": undefined,
@@ -8608,6 +8788,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "removeRoleResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -8624,6 +8805,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "removeRoleResponseDidRoleExist",
                   "key": "didRoleExist",
                   "schema": {
                     "description": undefined,
@@ -8726,6 +8908,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getRolesResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -8742,6 +8925,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getRolesResponseRoles",
                   "key": "roles",
                   "schema": {
                     "description": undefined,
@@ -8871,6 +9055,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getSessionInfoResponseGetSessionInfoResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -8887,6 +9072,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getSessionInfoResponseGetSessionInfoResponseUserDataInDatabase",
                         "key": "userDataInDatabase",
                         "schema": {
                           "description": undefined,
@@ -8903,6 +9089,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getSessionInfoResponseGetSessionInfoResponseUserDataInJwt",
                         "key": "userDataInJWT",
                         "schema": {
                           "description": undefined,
@@ -8919,6 +9106,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getSessionInfoResponseGetSessionInfoResponseUserId",
                         "key": "userId",
                         "schema": {
                           "description": undefined,
@@ -8935,6 +9123,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getSessionInfoResponseGetSessionInfoResponseExpiry",
                         "key": "expiry",
                         "schema": {
                           "description": undefined,
@@ -8951,6 +9140,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getSessionInfoResponseGetSessionInfoResponseTimeCreated",
                         "key": "timeCreated",
                         "schema": {
                           "description": undefined,
@@ -8967,6 +9157,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getSessionInfoResponseGetSessionInfoResponseSessionHandle",
                         "key": "sessionHandle",
                         "schema": {
                           "description": undefined,
@@ -9081,6 +9272,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -9097,6 +9289,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionRequestUserDataInJwt",
                   "key": "userDataInJWT",
                   "schema": {
                     "description": undefined,
@@ -9113,6 +9306,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionRequestUserDataInDatabase",
                   "key": "userDataInDatabase",
                   "schema": {
                     "description": undefined,
@@ -9129,6 +9323,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionRequestEnableAntiCsrf",
                   "key": "enableAntiCsrf",
                   "schema": {
                     "description": undefined,
@@ -9145,6 +9340,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionRequestUseDynamicSigningKey",
                   "key": "useDynamicSigningKey",
                   "schema": {
                     "description": undefined,
@@ -9174,6 +9370,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -9190,6 +9387,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionResponseSession",
                   "key": "session",
                   "schema": {
                     "description": undefined,
@@ -9206,6 +9404,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionResponseAccessToken",
                   "key": "accessToken",
                   "schema": {
                     "description": undefined,
@@ -9222,6 +9421,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionResponseRefreshToken",
                   "key": "refreshToken",
                   "schema": {
                     "description": undefined,
@@ -9238,6 +9438,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createNewSessionResponseAntiCsrfToken",
                   "key": "antiCsrfToken",
                   "schema": {
                     "description": undefined,
@@ -9345,6 +9546,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "deleteSessionRequestBodyDeleteSessionRequestBodySessionHandles",
                         "key": "sessionHandles",
                         "schema": {
                           "description": undefined,
@@ -9370,6 +9572,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "deleteSessionRequestBodyDeleteSessionRequestBodyUserId",
                         "key": "userId",
                         "schema": {
                           "description": undefined,
@@ -9405,6 +9608,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "deleteSessionResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -9421,6 +9625,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "deleteSessionResponseSessionHandlesRevoked",
                   "key": "sessionHandlesRevoked",
                   "schema": {
                     "description": undefined,
@@ -9522,6 +9727,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "verifySessionRequestAccessToken",
                   "key": "accessToken",
                   "schema": {
                     "description": undefined,
@@ -9538,6 +9744,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "verifySessionRequestEnableAntiCsrf",
                   "key": "enableAntiCsrf",
                   "schema": {
                     "description": undefined,
@@ -9554,6 +9761,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "verifySessionRequestDoAntiCsrfCheck",
                   "key": "doAntiCsrfCheck",
                   "schema": {
                     "description": undefined,
@@ -9569,6 +9777,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "verifySessionRequestCheckDatabase",
                   "key": "checkDatabase",
                   "schema": {
                     "description": undefined,
@@ -9584,6 +9793,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "verifySessionRequestAntiCsrfToken",
                   "key": "antiCsrfToken",
                   "schema": {
                     "description": undefined,
@@ -9620,6 +9830,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "verifySessionResponseVerifySessionResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -9636,6 +9847,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "verifySessionResponseVerifySessionResponseSession",
                         "key": "session",
                         "schema": {
                           "description": undefined,
@@ -9652,6 +9864,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "verifySessionResponseVerifySessionResponseAccessToken",
                         "key": "accessToken",
                         "schema": {
                           "description": undefined,
@@ -9685,6 +9898,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "verifySessionResponseVerifySessionResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -9701,6 +9915,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "verifySessionResponseVerifySessionResponseMessage",
                         "key": "message",
                         "schema": {
                           "description": undefined,
@@ -9807,6 +10022,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "refreshSessionRequestRefreshToken",
                   "key": "refreshToken",
                   "schema": {
                     "description": undefined,
@@ -9819,6 +10035,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "refreshSessionRequestEnableAntiCsrf",
                   "key": "enableAntiCsrf",
                   "schema": {
                     "description": undefined,
@@ -9831,6 +10048,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "refreshSessionRequestAntiCsrfToken",
                   "key": "antiCsrfToken",
                   "schema": {
                     "description": undefined,
@@ -9867,6 +10085,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "refreshSessionResponseRefreshSessionResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -9883,6 +10102,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "refreshSessionResponseRefreshSessionResponseSession",
                         "key": "session",
                         "schema": {
                           "description": undefined,
@@ -9899,6 +10119,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "refreshSessionResponseRefreshSessionResponseAccessToken",
                         "key": "accessToken",
                         "schema": {
                           "description": undefined,
@@ -9915,6 +10136,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "refreshSessionResponseRefreshSessionResponseRefreshToken",
                         "key": "refreshToken",
                         "schema": {
                           "description": undefined,
@@ -9931,6 +10153,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "refreshSessionResponseRefreshSessionResponseAntiCsrfToken",
                         "key": "antiCsrfToken",
                         "schema": {
                           "description": undefined,
@@ -9956,6 +10179,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "refreshSessionResponseRefreshSessionResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -9972,6 +10196,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "refreshSessionResponseRefreshSessionResponseSession",
                         "key": "session",
                         "schema": {
                           "description": undefined,
@@ -9984,6 +10209,7 @@ e.g.:
                             "properties": [
                               {
                                 "conflict": {},
+                                "generatedName": "refreshSessionResponseRefreshSessionResponseSessionHandle",
                                 "key": "handle",
                                 "schema": {
                                   "description": undefined,
@@ -10000,6 +10226,7 @@ e.g.:
                               },
                               {
                                 "conflict": {},
+                                "generatedName": "refreshSessionResponseRefreshSessionResponseSessionUserId",
                                 "key": "userId",
                                 "schema": {
                                   "description": undefined,
@@ -10137,6 +10364,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getUserSessionHandlesResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -10153,6 +10381,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getUserSessionHandlesResponseSessionHandles",
                   "key": "sessionHandles",
                   "schema": {
                     "description": undefined,
@@ -10254,6 +10483,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "regenerateSessionRequestAccessToken",
                   "key": "accessToken",
                   "schema": {
                     "description": undefined,
@@ -10270,6 +10500,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "regenerateSessionRequestUserDataInJwt",
                   "key": "userDataInJWT",
                   "schema": {
                     "description": undefined,
@@ -10306,6 +10537,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "regenerateSessionResponseRegenerateSessionResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -10322,6 +10554,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "regenerateSessionResponseRegenerateSessionResponseSession",
                         "key": "session",
                         "schema": {
                           "description": undefined,
@@ -10338,6 +10571,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "regenerateSessionResponseRegenerateSessionResponseAccessToken",
                         "key": "accessToken",
                         "schema": {
                           "description": undefined,
@@ -10477,6 +10711,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getSessionDataResponseGetSessionDataResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -10493,6 +10728,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getSessionDataResponseGetSessionDataResponseUserDataInDatabase",
                         "key": "userDataInDatabase",
                         "schema": {
                           "description": undefined,
@@ -10607,6 +10843,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "putSessionDataRequestSessionHandle",
                   "key": "sessionHandle",
                   "schema": {
                     "description": undefined,
@@ -10623,6 +10860,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "putSessionDataRequestUserDataInDatabase",
                   "key": "userDataInDatabase",
                   "schema": {
                     "description": undefined,
@@ -10755,6 +10993,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createSignedJwtRequestPayload",
                   "key": "payload",
                   "schema": {
                     "description": undefined,
@@ -10771,6 +11010,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createSignedJwtRequestAlgorithm",
                   "key": "algorithm",
                   "schema": {
                     "description": undefined,
@@ -10787,6 +11027,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createSignedJwtRequestJwksDomain",
                   "key": "jwksDomain",
                   "schema": {
                     "description": undefined,
@@ -10803,6 +11044,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createSignedJwtRequestValidity",
                   "key": "validity",
                   "schema": {
                     "description": undefined,
@@ -10819,6 +11061,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createSignedJwtRequestUseStaticSigningKey",
                   "key": "useStaticSigningKey",
                   "schema": {
                     "description": undefined,
@@ -10856,6 +11099,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "createSignedJwtResponseOkJwt",
                         "key": "jwt",
                         "schema": {
                           "description": undefined,
@@ -10924,6 +11168,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "retrieveJwksResponseKeys",
                   "key": "keys",
                   "schema": {
                     "description": undefined,
@@ -11054,6 +11299,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getJwtDataResponseGetJwtDataResponseStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -11070,6 +11316,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getJwtDataResponseGetJwtDataResponseUserDataInJwt",
                         "key": "userDataInJWT",
                         "schema": {
                           "description": undefined,
@@ -11184,6 +11431,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "putJwtDataRequestSessionHandle",
                   "key": "sessionHandle",
                   "schema": {
                     "description": undefined,
@@ -11200,6 +11448,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "putJwtDataRequestUserDataInJwt",
                   "key": "userDataInJWT",
                   "schema": {
                     "description": undefined,
@@ -11334,6 +11583,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "createDashboardUserRequestEmail",
                   "key": "email",
                   "schema": {
                     "description": undefined,
@@ -11349,6 +11599,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "createDashboardUserRequestPassword",
                   "key": "password",
                   "schema": {
                     "description": undefined,
@@ -11402,6 +11653,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "createDashboardUserResponseOkUser",
                         "key": "user",
                         "schema": {
                           "description": undefined,
@@ -11414,6 +11666,7 @@ e.g.:
                             "properties": [
                               {
                                 "conflict": {},
+                                "generatedName": "createDashboardUserResponseOkUserUserId",
                                 "key": "userId",
                                 "schema": {
                                   "description": undefined,
@@ -11429,6 +11682,7 @@ e.g.:
                               },
                               {
                                 "conflict": {},
+                                "generatedName": "createDashboardUserResponseOkUserEmail",
                                 "key": "email",
                                 "schema": {
                                   "description": undefined,
@@ -11444,6 +11698,7 @@ e.g.:
                               },
                               {
                                 "conflict": {},
+                                "generatedName": "createDashboardUserResponseOkUserTimeCreated",
                                 "key": "timeCreated",
                                 "schema": {
                                   "description": undefined,
@@ -11473,6 +11728,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "createDashboardUserResponsePasswordWeakErrorMessage",
                         "key": "message",
                         "schema": {
                           "description": undefined,
@@ -11584,6 +11840,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "updateDashboardUserRequestBodyUpdateDashboardUserRequestBodyEmail",
                         "key": "email",
                         "schema": {
                           "description": undefined,
@@ -11599,6 +11856,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "updateDashboardUserRequestBodyUpdateDashboardUserRequestBodyNewPassword",
                         "key": "newPassword",
                         "schema": {
                           "description": undefined,
@@ -11614,6 +11872,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "updateDashboardUserRequestBodyUpdateDashboardUserRequestBodyNewEmail",
                         "key": "newEmail",
                         "schema": {
                           "description": undefined,
@@ -11638,6 +11897,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "updateDashboardUserRequestBodyUpdateDashboardUserRequestBodyUserId",
                         "key": "userId",
                         "schema": {
                           "description": undefined,
@@ -11653,6 +11913,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "updateDashboardUserRequestBodyUpdateDashboardUserRequestBodyNewPassword",
                         "key": "newPassword",
                         "schema": {
                           "description": undefined,
@@ -11668,6 +11929,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "updateDashboardUserRequestBodyUpdateDashboardUserRequestBodyNewEmail",
                         "key": "newEmail",
                         "schema": {
                           "description": undefined,
@@ -11726,6 +11988,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "updateDashboardUserResponseOkUser",
                         "key": "user",
                         "schema": {
                           "description": undefined,
@@ -11738,6 +12001,7 @@ e.g.:
                             "properties": [
                               {
                                 "conflict": {},
+                                "generatedName": "updateDashboardUserResponseOkUserUserId",
                                 "key": "userId",
                                 "schema": {
                                   "description": undefined,
@@ -11753,6 +12017,7 @@ e.g.:
                               },
                               {
                                 "conflict": {},
+                                "generatedName": "updateDashboardUserResponseOkUserEmail",
                                 "key": "email",
                                 "schema": {
                                   "description": undefined,
@@ -11768,6 +12033,7 @@ e.g.:
                               },
                               {
                                 "conflict": {},
+                                "generatedName": "updateDashboardUserResponseOkUserTimeCreated",
                                 "key": "timeCreated",
                                 "schema": {
                                   "description": undefined,
@@ -11797,6 +12063,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "updateDashboardUserResponsePasswordWeakErrorMessage",
                         "key": "message",
                         "schema": {
                           "description": undefined,
@@ -11943,6 +12210,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "deleteDashboardUserResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -11959,6 +12227,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "deleteDashboardUserResponseDidUserExist",
                   "key": "didUserExist",
                   "schema": {
                     "description": undefined,
@@ -12061,6 +12330,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getAllDashboardUsersResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -12083,6 +12353,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getAllDashboardUsersResponseUsers",
                   "key": "users",
                   "schema": {
                     "description": undefined,
@@ -12098,6 +12369,7 @@ e.g.:
                         "properties": [
                           {
                             "conflict": {},
+                            "generatedName": "getAllDashboardUsersResponseUsersItemEmail",
                             "key": "email",
                             "schema": {
                               "description": undefined,
@@ -12113,6 +12385,7 @@ e.g.:
                           },
                           {
                             "conflict": {},
+                            "generatedName": "getAllDashboardUsersResponseUsersItemUserId",
                             "key": "userId",
                             "schema": {
                               "description": undefined,
@@ -12128,6 +12401,7 @@ e.g.:
                           },
                           {
                             "conflict": {},
+                            "generatedName": "getAllDashboardUsersResponseUsersItemTimeCreated",
                             "key": "timeCreated",
                             "schema": {
                               "description": undefined,
@@ -12143,6 +12417,7 @@ e.g.:
                           },
                           {
                             "conflict": {},
+                            "generatedName": "getAllDashboardUsersResponseUsersItemIsSuspended",
                             "key": "isSuspended",
                             "schema": {
                               "description": undefined,
@@ -12249,6 +12524,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "verifyDashboardUserSessionRequestSessionId",
                   "key": "sessionId",
                   "schema": {
                     "description": undefined,
@@ -12302,6 +12578,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "verifyDashboardUserSessionResponseUserSuspendedErrorMessage",
                         "key": "message",
                         "schema": {
                           "description": undefined,
@@ -12425,6 +12702,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "revokeDashboardUsersSessionResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -12526,6 +12804,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "signInDashboardUserRequestEmail",
                   "key": "email",
                   "schema": {
                     "description": undefined,
@@ -12541,6 +12820,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "signInDashboardUserRequestPassword",
                   "key": "password",
                   "schema": {
                     "description": undefined,
@@ -12586,6 +12866,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "signInDashboardUserResponseOkSessionId",
                         "key": "sessionId",
                         "schema": {
                           "description": undefined,
@@ -12610,6 +12891,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "signInDashboardUserResponseUserSuspendedErrorMessage",
                         "key": "message",
                         "schema": {
                           "description": undefined,
@@ -12733,6 +13015,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getAllSessionsForDashboardUserResponseSessions",
                   "key": "sessions",
                   "schema": {
                     "description": undefined,
@@ -12748,6 +13031,7 @@ e.g.:
                         "properties": [
                           {
                             "conflict": {},
+                            "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemUserId",
                             "key": "userId",
                             "schema": {
                               "description": undefined,
@@ -12764,6 +13048,7 @@ e.g.:
                           },
                           {
                             "conflict": {},
+                            "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemSessionId",
                             "key": "sessionId",
                             "schema": {
                               "description": undefined,
@@ -12779,6 +13064,7 @@ e.g.:
                           },
                           {
                             "conflict": {},
+                            "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemTimeCreated",
                             "key": "timeCreated",
                             "schema": {
                               "description": undefined,
@@ -12794,6 +13080,7 @@ e.g.:
                           },
                           {
                             "conflict": {},
+                            "generatedName": "getAllSessionsForDashboardUserResponseSessionsItemExpiry",
                             "key": "expiry",
                             "schema": {
                               "description": undefined,
@@ -12872,6 +13159,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getApiVersionResponseVersions",
                   "key": "versions",
                   "schema": {
                     "description": undefined,
@@ -12995,6 +13283,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getConfigResponseOkPath",
                         "key": "path",
                         "schema": {
                           "description": undefined,
@@ -13278,6 +13567,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getTelemetryResponseGetTelemetryResponseExists",
                         "key": "exists",
                         "schema": {
                           "description": undefined,
@@ -13293,6 +13583,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
+                        "generatedName": "getTelemetryResponseGetTelemetryResponseTelemetryId",
                         "key": "telemetryId",
                         "schema": {
                           "description": undefined,
@@ -13317,6 +13608,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getTelemetryResponseGetTelemetryResponseExists",
                         "key": "exists",
                         "schema": {
                           "description": undefined,
@@ -13425,6 +13717,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getUsersCountResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -13441,6 +13734,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getUsersCountResponseCount",
                   "key": "count",
                   "schema": {
                     "description": undefined,
@@ -13540,6 +13834,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getActiveUsersCountResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -13556,6 +13851,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getActiveUsersCountResponseCount",
                   "key": "count",
                   "schema": {
                     "description": undefined,
@@ -13777,6 +14073,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getUsersResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -13793,6 +14090,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getUsersResponseUsers",
                   "key": "users",
                   "schema": {
                     "description": undefined,
@@ -13808,6 +14106,7 @@ e.g.:
                         "properties": [
                           {
                             "conflict": {},
+                            "generatedName": "getUsersResponseUsersItemRecipeId",
                             "key": "recipeId",
                             "schema": {
                               "description": undefined,
@@ -13838,6 +14137,7 @@ e.g.:
                           },
                           {
                             "conflict": {},
+                            "generatedName": "getUsersResponseUsersItemUser",
                             "key": "user",
                             "schema": {
                               "oneOf": {
@@ -13883,6 +14183,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getUsersResponseNextPaginationToken",
                   "key": "nextPaginationToken",
                   "schema": {
                     "description": undefined,
@@ -13968,6 +14269,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "deleteUserRequestUserId",
                   "key": "userId",
                   "schema": {
                     "description": undefined,
@@ -13998,6 +14300,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "deleteUserResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -14086,6 +14389,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getSearchTagsResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -14102,6 +14406,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getSearchTagsResponseTags",
                   "key": "tags",
                   "schema": {
                     "description": undefined,
@@ -14193,6 +14498,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "getFeatureFlagResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -14209,6 +14515,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getFeatureFlagResponseFeatures",
                   "key": "features",
                   "schema": {
                     "description": undefined,
@@ -14228,6 +14535,7 @@ e.g.:
                 },
                 {
                   "conflict": {},
+                  "generatedName": "getFeatureFlagResponseUsageStats",
                   "key": "usageStats",
                   "schema": {
                     "description": undefined,
@@ -14333,6 +14641,7 @@ e.g.:
                     "properties": [
                       {
                         "conflict": {},
+                        "generatedName": "getLicenseResponseOkLicenseKey",
                         "key": "licenseKey",
                         "schema": {
                           "description": undefined,
@@ -14422,6 +14731,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "setLicenseRequestLicenseKey",
                   "key": "licenseKey",
                   "schema": {
                     "description": undefined,
@@ -14550,6 +14860,7 @@ e.g.:
               "properties": [
                 {
                   "conflict": {},
+                  "generatedName": "deleteLicenseResponseStatus",
                   "key": "status",
                   "schema": {
                     "description": undefined,
@@ -14687,6 +14998,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "cookieInfoToken",
               "key": "token",
               "schema": {
                 "description": undefined,
@@ -14703,6 +15015,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "cookieInfoExpiry",
               "key": "expiry",
               "schema": {
                 "description": undefined,
@@ -14719,6 +15032,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "cookieInfoCreatedTime",
               "key": "createdTime",
               "schema": {
                 "description": undefined,
@@ -14782,6 +15096,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "emailVerificationVerifyTokenRequestUserId",
               "key": "userId",
               "schema": {
                 "description": undefined,
@@ -14798,6 +15113,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "emailVerificationVerifyTokenRequestEmail",
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -14886,6 +15202,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "jwkAlg",
               "key": "alg",
               "schema": {
                 "description": undefined,
@@ -14902,6 +15219,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "jwkKty",
               "key": "kty",
               "schema": {
                 "description": undefined,
@@ -14917,6 +15235,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "jwkUse",
               "key": "use",
               "schema": {
                 "description": undefined,
@@ -14932,6 +15251,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "jwkKid",
               "key": "kid",
               "schema": {
                 "description": undefined,
@@ -14947,6 +15267,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "jwkX5C",
               "key": "x5c",
               "schema": {
                 "description": undefined,
@@ -15045,6 +15366,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "passwordlessUserId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -15061,6 +15383,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "passwordlessUserEmail",
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -15077,6 +15400,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "passwordlessUserPhoneNumber",
               "key": "phoneNumber",
               "schema": {
                 "description": undefined,
@@ -15093,6 +15417,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "passwordlessUserTimeJoined",
               "key": "timeJoined",
               "schema": {
                 "description": undefined,
@@ -15153,6 +15478,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "sessionHandle",
               "key": "handle",
               "schema": {
                 "description": undefined,
@@ -15169,6 +15495,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "sessionUserId",
               "key": "userId",
               "schema": {
                 "description": undefined,
@@ -15185,6 +15512,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "sessionUserDataInJwt",
               "key": "userDataInJWT",
               "schema": {
                 "description": undefined,
@@ -15236,6 +15564,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "statusOkResponseStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -15267,6 +15596,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "thirdPartyEmailId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -15299,6 +15629,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "thirdPartyUserId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -15315,6 +15646,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "thirdPartyUserTimeJoined",
               "key": "timeJoined",
               "schema": {
                 "description": undefined,
@@ -15331,6 +15663,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "thirdPartyUserEmail",
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -15347,6 +15680,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "thirdPartyUserThirdParty",
               "key": "thirdParty",
               "schema": {
                 "description": undefined,
@@ -15359,6 +15693,7 @@ e.g.:
                   "properties": [
                     {
                       "conflict": {},
+                      "generatedName": "thirdPartyUserThirdPartyId",
                       "key": "id",
                       "schema": {
                         "description": undefined,
@@ -15375,6 +15710,7 @@ e.g.:
                     },
                     {
                       "conflict": {},
+                      "generatedName": "thirdPartyUserThirdPartyUserId",
                       "key": "userId",
                       "schema": {
                         "description": undefined,
@@ -15461,6 +15797,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "unauthorisedMessageResponseStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -15477,6 +15814,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "unauthorisedMessageResponseMessage",
               "key": "message",
               "schema": {
                 "description": undefined,
@@ -15516,6 +15854,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "unknownRoleResponseStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -15547,6 +15886,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "unknownUserIdResponseStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
@@ -15578,6 +15918,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "userId",
               "key": "id",
               "schema": {
                 "description": undefined,
@@ -15594,6 +15935,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "userEmail",
               "key": "email",
               "schema": {
                 "description": undefined,
@@ -15610,6 +15952,7 @@ e.g.:
             },
             {
               "conflict": {},
+              "generatedName": "userTimeJoined",
               "key": "timeJoined",
               "schema": {
                 "description": undefined,
@@ -15689,6 +16032,7 @@ e.g.:
           "properties": [
             {
               "conflict": {},
+              "generatedName": "wrongCredentialsResponseStatus",
               "key": "status",
               "schema": {
                 "description": undefined,
