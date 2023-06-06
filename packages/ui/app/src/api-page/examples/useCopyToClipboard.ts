@@ -1,24 +1,19 @@
 import { useTimeout } from "@fern-api/react-commons";
-import { useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 
 export declare namespace useCopyToClipboard {
     export interface Return {
-        copyToClipboard: (() => void) | undefined;
+        copyToClipboard: () => void;
         wasJustCopied: boolean;
     }
 }
 
-export function useCopyToClipboard(content: string | undefined): useCopyToClipboard.Return {
+export function useCopyToClipboard(content: string): useCopyToClipboard.Return {
     const [wasJustCopied, setWasJustCopied] = useState(false);
 
-    const copyToClipboard = useMemo(() => {
-        if (content == null) {
-            return undefined;
-        }
-        return async () => {
-            setWasJustCopied(true);
-            await navigator.clipboard.writeText(content);
-        };
+    const copyToClipboard = useCallback(async () => {
+        setWasJustCopied(true);
+        await navigator.clipboard.writeText(content);
     }, [content]);
 
     useTimeout(

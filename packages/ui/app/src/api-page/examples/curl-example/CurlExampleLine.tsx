@@ -5,26 +5,26 @@ import { CurlExamplePart } from "./CurlExamplePart";
 export declare namespace CurlExampleLine {
     export interface Props {
         part: CurlExamplePart;
-        indentInSpaces: number;
+        indent: number;
         isLastPart: boolean;
     }
 }
 
-export const CurlExampleLine: React.FC<CurlExampleLine.Props> = ({ part, indentInSpaces, isLastPart }) => {
+export const CurlExampleLine: React.FC<CurlExampleLine.Props> = ({ part, indent, isLastPart }) => {
     const { excludeTrailingBackslash = false, excludeIndent = false } = part;
-
-    const indentToRender = excludeIndent ? 0 : indentInSpaces;
-    const shouldRenderTrailingSlash = !excludeTrailingBackslash && !isLastPart;
-
-    if (indentToRender === 0 && !shouldRenderTrailingSlash && typeof part.value !== "string") {
-        return part.value;
-    }
-
     return (
         <JsonExampleLine>
-            {" ".repeat(indentToRender)}
+            {excludeIndent || repeat((index) => <React.Fragment key={index}>&nbsp;</React.Fragment>, indent)}
             {part.value}
-            {shouldRenderTrailingSlash && <>{" \\"}</>}
+            {!excludeTrailingBackslash && !isLastPart && <>&nbsp;{"\\"}</>}
         </JsonExampleLine>
     );
 };
+
+function repeat<T>(generate: (index: number) => T, count: number): T[] {
+    const elements = [];
+    for (let i = 0; i < count; i++) {
+        elements.push(generate(i));
+    }
+    return elements;
+}

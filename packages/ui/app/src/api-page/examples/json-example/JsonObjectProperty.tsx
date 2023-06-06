@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { useContext, useEffect, useMemo, useRef } from "react";
+import classNames from "classnames";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { JsonExampleBreadcrumb } from "./contexts/JsonExampleBreadcrumb";
 import {
     JsonExampleBreadcumbsContext,
@@ -70,20 +71,51 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
         }
     }, [containerRef, isSelected]);
 
+    const [isOverlayInView, setIsOverlayInView] = useState(false);
+    useEffect(() => {
+        if (isSelected) {
+            setIsOverlayInView(true);
+            return;
+        }
+
+        const timeout = setTimeout(
+            () => {
+                setIsOverlayInView(false);
+            },
+            // tailwind transition time
+            150
+        );
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [isSelected]);
+
     return (
-        <>
+        <div className="relative" ref={ref}>
             <JsonExampleLine>
-                <span>
-                    <span className="text-neutral-300">&quot;{propertyKey}&quot;</span>
-                    <span>:</span>
-                </span>{" "}
-                <JsonItemTopLineContent value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
+                <div>
+                    <span>
+                        <span className="text-neutral-300">&quot;{propertyKey}&quot;</span>
+                        <span>:</span>
+                    </span>
+                    &nbsp;
+                    <JsonItemTopLineContent value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
+                </div>
             </JsonExampleLine>
             <JsonExampleBreadcumbsContext.Provider value={contextValue}>
                 <JsonItemMiddleLines value={propertyValue} />
             </JsonExampleBreadcumbsContext.Provider>
             <JsonItemBottomLine value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
-        </>
+            <div
+                className={classNames(
+                    "absolute inset-x-0 inset-y-[-4px] border rounded transition",
+                    isSelected ? "bg-accentHighlight border-accentPrimary" : "bg-transparent border-transparent",
+                    {
+                        invisible: !isOverlayInView,
+                    }
+                )}
+            />
+        </div>
     );
 };
 

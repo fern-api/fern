@@ -1,14 +1,18 @@
-import React, { PropsWithChildren, useContext } from "react";
+import classNames from "classnames";
+import { PropsWithChildren, useContext } from "react";
 import { JsonExampleDepthContext } from "./contexts/JsonExampleDepthContext";
 
-const TAB_WIDTH = 2;
+export declare namespace JsonExampleLine {
+    export type Props = PropsWithChildren<{
+        className?: string;
+    }>;
+}
 
-export const JsonExampleLine: React.FC<PropsWithChildren> = ({ children }) => {
+export const JsonExampleLine: React.FC<JsonExampleLine.Props> = ({ className, children }) => {
     const { depth } = useContext(JsonExampleDepthContext);
 
     return (
-        <div className="w-fit min-w-full pr-3">
-            {" ".repeat(depth * TAB_WIDTH)}
+        <div className={classNames("pr-3 w-fit min-w-full", className)} style={{ paddingLeft: 5 + 25 * depth }}>
             {children}
         </div>
     );

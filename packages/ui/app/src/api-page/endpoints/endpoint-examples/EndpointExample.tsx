@@ -17,7 +17,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, exa
 
     return (
         <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] flex-col gap-6">
-            <TitledExample title="Request">
+            <TitledExample title="Request" copyableExample={example.codeExamples.nodeAxios}>
                 {(parent) => (
                     <CurlExample
                         endpoint={endpoint}
@@ -43,6 +43,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, exa
                             </div>
                         ) : undefined
                     }
+                    copyableExample={example.responseBody}
                 >
                     {(parent) => (
                         <JsonExample
