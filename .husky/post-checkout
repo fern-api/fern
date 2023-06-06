@@ -11,4 +11,5 @@ checkoutType=$3
 if [[ "$checkoutType" == "branch" && "$prevHEAD" != "$newHEAD" ]]; then
     find packages -name 'lib' -exec /bin/rm -r {} \+
     find packages -name tsconfig.tsbuildinfo -exec /bin/rm {} \+
+    find packages -name 'node_modules' -exec /bin/rm -r {} \+
 fi
