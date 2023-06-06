@@ -23,5 +23,4 @@ groups:
       - name: fernapi/fern-go-model
         version: v0.0.1-6-g61d7a5b
         github:
-          owner: fern-api
-          repo: fern-go-model
+          repository: fern-api/fern-go-model
