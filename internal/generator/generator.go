@@ -13,9 +13,18 @@ import (
 // packageDocsFilename represents the standard package documentation filename.
 const packageDocsFilename = "doc.go"
 
+// Mode is an enum for different generator modes (i.e. types, client, etc).
+type Mode uint8
+
+const (
+	ModeModel = iota + 1
+	ModeClient
+)
+
 // Generator represents the Go code generator.
 type Generator struct {
 	config *Config
+	mode   Mode
 }
 
 // File is a generated file.
@@ -25,13 +34,14 @@ type File struct {
 }
 
 // New returns a new *Generator.
-func New(config *Config) (*Generator, error) {
+func New(config *Config, mode Mode) (*Generator, error) {
 	return &Generator{
 		config: config,
+		mode:   mode,
 	}, nil
 }
 
-// Generate runs the code generation process.
+// GenerateTypes runs the code generation process.
 func (g *Generator) Generate() ([]*File, error) {
 	ir, err := readIR(g.config.IRFilepath)
 	if err != nil {
@@ -83,23 +93,43 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation) ([]*File, error)
 		}
 		files = append(files, file)
 	}
-	// Then generate all of the types.
-	for _, irType := range ir.Types {
-		fileInfo := fileInfoForTypeDeclaration(ir.ApiName, irType)
-		writer := newFileWriter(
-			fileInfo.filename,
-			fileInfo.packageName,
-			g.config.ImportPath,
-			ir.Types,
-		)
-		if err := writer.WriteType(irType); err != nil {
-			return nil, err
+	switch g.mode {
+	case ModeModel:
+		for _, irType := range ir.Types {
+			fileInfo := fileInfoForTypeDeclaration(ir.ApiName, irType)
+			writer := newFileWriter(
+				fileInfo.filename,
+				fileInfo.packageName,
+				g.config.ImportPath,
+				ir.Types,
+			)
+			if err := writer.WriteType(irType); err != nil {
+				return nil, err
+			}
+			file, err := writer.File()
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, file)
 		}
-		file, err := writer.File()
-		if err != nil {
-			return nil, err
+	case ModeClient:
+		for _, irService := range ir.Services {
+			fileInfo := fileInfoForService(ir.ApiName, irService)
+			writer := newFileWriter(
+				fileInfo.filename,
+				fileInfo.packageName,
+				g.config.ImportPath,
+				ir.Types,
+			)
+			if err := writer.WriteClient(irService); err != nil {
+				return nil, err
+			}
+			file, err := writer.File()
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, file)
 		}
-		files = append(files, file)
 	}
 	// Finally, generate the go.mod file, if needed.
 	//
@@ -149,6 +179,26 @@ func fileInfoForTypeDeclaration(apiName *ir.Name, typeDeclaration *ir.TypeDeclar
 	}
 	return &fileInfo{
 		filename:    fmt.Sprintf("%s.go", filepath.Join(append(packages, typeName)...)),
+		packageName: packages[len(packages)-1],
+	}
+}
+
+func fileInfoForService(apiName *ir.Name, service *ir.HttpService) *fileInfo {
+	var packages []string
+	for _, packageName := range service.Name.FernFilepath.PackagePath {
+		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
+	}
+	serviceName := service.Name.FernFilepath.File.SnakeCase.UnsafeName
+	if len(packages) == 0 {
+		// This type didn't declare a package, so it belongs at the top-level.
+		// The top-level package uses the API's name as its package declaration.
+		return &fileInfo{
+			filename:    fmt.Sprintf("%s.go", serviceName),
+			packageName: strings.ToLower(apiName.CamelCase.SafeName),
+		}
+	}
+	return &fileInfo{
+		filename:    fmt.Sprintf("%s.go", filepath.Join(append(packages, serviceName)...)),
 		packageName: packages[len(packages)-1],
 	}
 }

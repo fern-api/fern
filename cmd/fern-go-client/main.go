@@ -5,10 +5,10 @@ import (
 	"github.com/fern-api/fern-go/internal/generator"
 )
 
-const usage = `Generate Go models from your Fern API definition.
+const usage = `Generate Go clients from your Fern API definition.
 
 Usage:
-  fern-go-model <config_file_path>
+  fern-go-client <config_file_path>
 
 Flags:
   -h, --help     Print this help and exit.
@@ -23,7 +23,7 @@ func run(config *cmd.Config) ([]*generator.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	generator, err := generator.New(generatorConfig, generator.ModeModel)
+	generator, err := generator.New(generatorConfig, generator.ModeClient)
 	if err != nil {
 		return nil, err
 	}

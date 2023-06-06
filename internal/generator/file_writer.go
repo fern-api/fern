@@ -98,6 +98,11 @@ func (f *fileWriter) DocsFile() (*File, error) {
 	}, nil
 }
 
+// WriteClient writes a client for interacting with the given service.
+func (f *fileWriter) WriteClient(service *ir.HttpService) error {
+	return nil
+}
+
 // WriteType writes a complete type, including all of its properties.
 func (f *fileWriter) WriteType(typeDeclaration *ir.TypeDeclaration) error {
 	visitor := &typeVisitor{
