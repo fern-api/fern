@@ -38,23 +38,23 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
 
     const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint) ?? "localhost:8000", [endpoint]);
 
-    const parts = useMemo(() => {
-        const lines: CurlExamplePart[] = [];
+    const partsExcludingCurlCommand = useMemo(() => {
+        const parts: CurlExamplePart[] = [];
 
         if (endpoint.method !== FernRegistryApiRead.HttpMethod.Get) {
-            lines.push({
+            parts.push({
                 value: <CurlParameter paramKey="-X" value={endpoint.method.toUpperCase()} />,
             });
         }
 
-        lines.push({
+        parts.push({
             value: <CurlParameter paramKey="--url" value={`${environmentUrl}${example.path}`} />,
         });
 
         for (const queryParam of endpoint.queryParameters) {
             const value = example.queryParameters[queryParam.key];
             if (value != null) {
-                lines.push({
+                parts.push({
                     value: <CurlParameter paramKey="--url-query" value={`${queryParam.key}=${value}`} />,
                 });
             }
@@ -78,17 +78,17 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         if (apiDefinition.auth != null && endpoint.authed) {
             apiDefinition.auth._visit({
                 basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
-                    lines.push({
+                    parts.push({
                         value: <CurlParameter paramKey="--user" value={`${usernameName}:${passwordName}`} />,
                     });
                 },
                 bearerAuth: ({ tokenName = "token" }) => {
-                    lines.push({
+                    parts.push({
                         value: <CurlParameter paramKey="--header" value={`Authorization <${tokenName}>`} />,
                     });
                 },
                 header: ({ headerWireValue, nameOverride = headerWireValue }) => {
-                    lines.push({
+                    parts.push({
                         value: <CurlParameter paramKey="--header" value={`${headerWireValue}: <${nameOverride}>`} />,
                     });
                 },
@@ -99,7 +99,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         for (const header of endpoint.headers) {
             const value = example.headers[header.key];
             if (value != null) {
-                lines.push({
+                parts.push({
                     value: <CurlParameter paramKey="--header" value={`${header.key}: ${value}`} />,
                 });
             }
@@ -108,13 +108,13 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         if (endpoint.request != null) {
             switch (endpoint.request.type.type) {
                 case "fileUpload":
-                    lines.push({
+                    parts.push({
                         value: <CurlParameter paramKey="--data" value="@file" />,
                     });
                     break;
                 case "object":
                 case "reference":
-                    lines.push(
+                    parts.push(
                         {
                             value: (
                                 <>
@@ -146,23 +146,23 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         }
 
         const curlElement = <span className="text-yellow-100">{CURL_PREFIX}</span>;
-        if (lines[0] != null) {
-            lines[0] = {
-                ...lines[0],
+        if (parts[0] != null) {
+            parts[0] = {
+                ...parts[0],
                 value: (
                     <>
                         {curlElement}
-                        {lines[0].value}
+                        {parts[0].value}
                     </>
                 ),
             };
         } else {
-            lines.unshift({
+            parts.unshift({
                 value: curlElement,
             });
         }
 
-        return lines;
+        return parts;
     }, [
         apiDefinition.auth,
         endpoint.authed,
@@ -179,12 +179,12 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
 
     return (
         <JsonExampleContext.Provider value={contextValue}>
-            {parts.map((part, index) => (
+            {partsExcludingCurlCommand.map((part, index) => (
                 <CurlExampleLine
                     key={index}
                     part={part}
                     indent={index > 0 ? CURL_PREFIX.length : 0}
-                    isLastPart={index === parts.length - 1}
+                    isLastPart={index === partsExcludingCurlCommand.length - 1}
                 />
             ))}
         </JsonExampleContext.Provider>

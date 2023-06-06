@@ -18,18 +18,18 @@ export function generateCurlExampleAsString({
     endpoint: FernRegistryApiRead.EndpointDefinition;
     example: FernRegistryApiRead.ExampleEndpointCall;
 }): string {
-    const lines: (string | StringCurlExampleLine)[] = [];
+    const linesExcludingCurlCommand: (string | StringCurlExampleLine)[] = [];
 
     if (endpoint.method !== FernRegistryApiRead.HttpMethod.Get) {
-        lines.push({ value: `-X ${endpoint.method.toUpperCase()}` });
+        linesExcludingCurlCommand.push({ value: `-X ${endpoint.method.toUpperCase()}` });
     }
 
-    lines.push(`--url ${getEndpointEnvironmentUrl(endpoint)}${example.path}`);
+    linesExcludingCurlCommand.push(`--url "${getEndpointEnvironmentUrl(endpoint)}${example.path}"`);
 
     for (const queryParam of endpoint.queryParameters) {
         const value = example.queryParameters[queryParam.key];
         if (value != null) {
-            lines.push(`--url-query "${queryParam.key}=${value}"`);
+            linesExcludingCurlCommand.push(`--url-query "${queryParam.key}=${value}"`);
         }
     }
 
@@ -43,19 +43,19 @@ export function generateCurlExampleAsString({
               })
             : undefined;
     if (requestContentType != null) {
-        lines.push(`--header "Content-Type: ${requestContentType}"`);
+        linesExcludingCurlCommand.push(`--header "Content-Type: ${requestContentType}"`);
     }
 
     if (apiDefinition.auth != null && endpoint.authed) {
         apiDefinition.auth._visit({
             basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
-                lines.push(`--user "${usernameName}:${passwordName}"`);
+                linesExcludingCurlCommand.push(`--user "${usernameName}:${passwordName}"`);
             },
             bearerAuth: ({ tokenName = "token" }) => {
-                lines.push(`--header "Authorization <${tokenName}>"`);
+                linesExcludingCurlCommand.push(`--header "Authorization <${tokenName}>"`);
             },
             header: ({ headerWireValue, nameOverride = headerWireValue }) => {
-                lines.push(`--header "${headerWireValue}: <${nameOverride}>"`);
+                linesExcludingCurlCommand.push(`--header "${headerWireValue}: <${nameOverride}>"`);
             },
             _other: noop,
         });
@@ -64,18 +64,18 @@ export function generateCurlExampleAsString({
     for (const header of endpoint.headers) {
         const value = example.headers[header.key];
         if (value != null) {
-            lines.push(`--header "${header.key}: ${value}"`);
+            linesExcludingCurlCommand.push(`--header "${header.key}: ${value}"`);
         }
     }
 
     if (endpoint.request != null) {
         switch (endpoint.request.type.type) {
             case "fileUpload":
-                lines.push("--data @file");
+                linesExcludingCurlCommand.push("--data @file");
                 break;
             case "object":
             case "reference":
-                lines.push(
+                linesExcludingCurlCommand.push(
                     { value: "--data '", excludeTrailingBackslash: true },
                     ...JSON.stringify(example.requestBody, undefined, 2)
                         .split("\n")
@@ -96,18 +96,18 @@ export function generateCurlExampleAsString({
 
     return (
         "curl " +
-        lines
+        linesExcludingCurlCommand
             .map((line, index) => {
-                if (typeof line === "string") {
-                    return line;
-                }
+                const {
+                    value,
+                    excludeIndent = false,
+                    excludeTrailingBackslash = false,
+                } = typeof line === "string" ? { value: line } : line;
 
-                const { value, excludeIndent = false, excludeTrailingBackslash = false } = line;
+                const indent = index === 0 || excludeIndent ? 0 : "curl ".length;
 
-                const indent = excludeIndent ? 0 : "curl ".length;
-
-                let s = `${indent}${value}`;
-                if (index < lines.length - 1 && !excludeTrailingBackslash) {
+                let s = `${" ".repeat(indent)}${value}`;
+                if (index < linesExcludingCurlCommand.length - 1 && !excludeTrailingBackslash) {
                     s += " \\";
                 }
                 return s;
