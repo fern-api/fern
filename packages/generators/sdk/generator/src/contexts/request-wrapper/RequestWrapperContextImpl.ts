@@ -18,6 +18,7 @@ export declare namespace RequestWrapperContextImpl {
         requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
         requestWrapperGenerator: RequestWrapperGenerator;
         packageResolver: PackageResolver;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -33,6 +34,7 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
         requestWrapperDeclarationReferencer,
         requestWrapperGenerator,
         packageResolver,
+        treatUnknownAsAny,
         ...superInit
     }: RequestWrapperContextImpl.Init) {
         super(superInit);
@@ -43,6 +45,7 @@ export class RequestWrapperContextImpl extends BaseContextImpl implements Reques
             typeDeclarationReferencer,
             typeGenerator,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.requestWrapper = new RequestWrapperContextMixinImpl({
             requestWrapperDeclarationReferencer,

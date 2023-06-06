@@ -176,6 +176,16 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         targetRuntime: JavaScriptRuntime.NODE,
     },
+    {
+        path: "unknown-as-any",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
+        customConfig: {
+            treatUnknownAsAny: true,
+        },
+    },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 

@@ -14,14 +14,17 @@ import { ts } from "ts-morph";
 export declare namespace AbstractTypeReferenceConverter {
     export interface Init {
         typeResolver: TypeResolver;
+        treatUnknownAsAny: boolean;
     }
 }
 
 export abstract class AbstractTypeReferenceConverter<T> {
     protected typeResolver: TypeResolver;
+    private treatUnknownAsAny: boolean;
 
-    constructor({ typeResolver }: AbstractTypeReferenceConverter.Init) {
+    constructor({ typeResolver, treatUnknownAsAny }: AbstractTypeReferenceConverter.Init) {
         this.typeResolver = typeResolver;
+        this.treatUnknownAsAny = treatUnknownAsAny;
     }
 
     public convert(typeReference: TypeReference): T {
@@ -29,7 +32,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             named: this.named.bind(this),
             primitive: this.primitive.bind(this),
             container: this.container.bind(this),
-            unknown: this.unknown.bind(this),
+            unknown: this.treatUnknownAsAny ? this.any.bind(this) : this.unknown.bind(this),
             _unknown: () => {
                 throw new Error("Unexpected type reference: " + typeReference._type);
             },
@@ -59,6 +62,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected abstract optional(itemType: TypeReference): T;
     protected abstract literal(literal: Literal): T;
     protected abstract unknown(): T;
+    protected abstract any(): T;
 
     protected primitive(primitive: PrimitiveType): T {
         return PrimitiveType._visit<T>(primitive, {

@@ -26,6 +26,7 @@ export declare namespace ExpressInlinedRequestBodySchemaContextImpl {
         expressInlinedRequestBodySchemaGenerator: ExpressInlinedRequestBodySchemaGenerator;
         expressInlinedRequestBodySchemaDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
         packageResolver: PackageResolver;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -50,6 +51,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl
         expressInlinedRequestBodySchemaGenerator,
         expressInlinedRequestBodySchemaDeclarationReferencer,
         packageResolver,
+        treatUnknownAsAny,
         ...superInit
     }: ExpressInlinedRequestBodySchemaContextImpl.Init) {
         super(superInit);
@@ -61,6 +63,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl
             typeDeclarationReferencer,
             typeGenerator,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -71,6 +74,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl
             typeDeclarationReferencer,
             typeGenerator,
             typeSchemaGenerator,
+            treatUnknownAsAny,
         });
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextMixinImpl({
             packageResolver,

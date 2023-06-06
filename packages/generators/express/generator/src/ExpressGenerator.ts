@@ -66,6 +66,7 @@ export declare namespace ExpressGenerator {
         doNotHandleUnrecognizedErrors: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -73,6 +74,7 @@ export class ExpressGenerator {
     private context: GeneratorContext;
     private intermediateRepresentation: IntermediateRepresentation;
     private npmPackage: NpmPackage;
+    private config: ExpressGenerator.Config;
 
     private project: Project;
     private rootDirectory: Directory;
@@ -110,6 +112,7 @@ export class ExpressGenerator {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
         this.npmPackage = npmPackage;
+        this.config = config;
 
         this.exportsManager = new ExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager();
@@ -250,6 +253,7 @@ export class ExpressGenerator {
                         typeDeclarationReferencer: this.typeDeclarationReferencer,
                         typeGenerator: this.typeGenerator,
                         typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     typeContext.type.getGeneratedType(typeDeclaration.name).writeToFile(typeContext);
                 },
@@ -274,6 +278,7 @@ export class ExpressGenerator {
                         typeGenerator: this.typeGenerator,
                         typeSchemaGenerator: this.typeSchemaGenerator,
                         typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     typeSchemaContext.typeSchema
                         .getGeneratedTypeSchema(typeDeclaration.name)
@@ -307,6 +312,7 @@ export class ExpressGenerator {
                         expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
                         typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
                         typeSchemaGenerator: this.typeSchemaGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     errorContext.expressError.getGeneratedExpressError(errorDeclaration.name).writeToFile(errorContext);
                 },
@@ -338,6 +344,7 @@ export class ExpressGenerator {
                         expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
                         typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
                         typeSchemaGenerator: this.typeSchemaGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     errorContext.expressErrorSchema
                         .getGeneratedExpressErrorSchema(errorDeclaration.name)
@@ -371,6 +378,7 @@ export class ExpressGenerator {
                                     this.expressInlinedRequestBodyDeclarationReferencer,
                                 expressInlinedRequestBodyGenerator: this.expressInlinedRequestBodyGenerator,
                                 packageResolver: this.packageResolver,
+                                treatUnknownAsAny: this.config.treatUnknownAsAny,
                             });
                             context.expressInlinedRequestBody
                                 .getGeneratedInlinedRequestBody(packageId, endpoint.name)
@@ -411,6 +419,7 @@ export class ExpressGenerator {
                                     this.expressInlinedRequestBodySchemaDeclarationReferencer,
                                 typeSchemaGenerator: this.typeSchemaGenerator,
                                 typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+                                treatUnknownAsAny: this.config.treatUnknownAsAny,
                             });
                             context.expressInlinedRequestBodySchema
                                 .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
@@ -446,6 +455,7 @@ export class ExpressGenerator {
                             packageResolver: this.packageResolver,
                             expressEndpointTypeSchemasGenerator: this.expressEndpointTypeSchemasGenerator,
                             typeSchemaGenerator: this.typeSchemaGenerator,
+                            treatUnknownAsAny: this.config.treatUnknownAsAny,
                         });
                         endpointTypeSchemasContext.expressEndpointTypeSchemas
                             .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
@@ -489,6 +499,7 @@ export class ExpressGenerator {
                         errorResolver: this.errorResolver,
                         genericAPIExpressErrorDeclarationReferencer: this.genericApiExpressErrorDeclarationReferencer,
                         genericAPIExpressErrorGenerator: this.genericApiExpressErrorGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     expressServiceContext.expressService
                         .getGeneratedExpressService(packageId)

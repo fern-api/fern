@@ -47,6 +47,10 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         return this.zurg.unknown();
     }
 
+    protected override any(): Zurg.Schema {
+        return this.zurg.any();
+    }
+
     protected override list(itemType: TypeReference): Zurg.Schema {
         return this.zurg.list(this.convert(itemType));
     }

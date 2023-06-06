@@ -23,6 +23,7 @@ export declare namespace TypeSchemaContextMixinImpl {
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
         typeGenerator: TypeGenerator;
         typeSchemaGenerator: TypeSchemaGenerator;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -47,6 +48,7 @@ export class TypeSchemaContextMixinImpl implements TypeSchemaContextMixin {
         typeGenerator,
         typeSchemaDeclarationReferencer,
         typeSchemaGenerator,
+        treatUnknownAsAny,
     }: TypeSchemaContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
@@ -54,11 +56,13 @@ export class TypeSchemaContextMixinImpl implements TypeSchemaContextMixin {
         this.typeReferenceToRawTypeNodeConverter = new TypeReferenceToRawTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToRawNamedType(typeName).getEntityName(),
             typeResolver,
+            treatUnknownAsAny,
         });
         this.typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
             getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName, { isGeneratingSchema: true }),
             zurg: this.coreUtilities.zurg,
             typeResolver,
+            treatUnknownAsAny,
         });
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeSchemaDeclarationReferencer = typeSchemaDeclarationReferencer;

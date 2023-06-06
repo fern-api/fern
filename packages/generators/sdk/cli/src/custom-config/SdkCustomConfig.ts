@@ -13,4 +13,5 @@ export interface SdkCustomConfig {
     timeoutInSeconds: number | "infinity" | undefined;
     skipResponseValidation: boolean;
     extraDependencies: Record<string, string>;
+    treatUnknownAsAny: boolean;
 }

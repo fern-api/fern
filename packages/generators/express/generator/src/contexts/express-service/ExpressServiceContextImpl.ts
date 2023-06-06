@@ -47,6 +47,7 @@ export declare namespace ExpressServiceContextImpl {
         errorResolver: ErrorResolver;
         genericAPIExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
         genericAPIExpressErrorGenerator: GenericAPIExpressErrorGenerator;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -81,6 +82,7 @@ export class ExpressServiceContextImpl extends BaseContextImpl implements Expres
         expressErrorGenerator,
         genericAPIExpressErrorDeclarationReferencer,
         genericAPIExpressErrorGenerator,
+        treatUnknownAsAny,
         ...superInit
     }: ExpressServiceContextImpl.Init) {
         super(superInit);
@@ -91,6 +93,7 @@ export class ExpressServiceContextImpl extends BaseContextImpl implements Expres
             typeDeclarationReferencer,
             typeGenerator,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -101,6 +104,7 @@ export class ExpressServiceContextImpl extends BaseContextImpl implements Expres
             typeDeclarationReferencer,
             typeGenerator,
             typeSchemaGenerator,
+            treatUnknownAsAny,
         });
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextMixinImpl({
             expressInlinedRequestBodyDeclarationReferencer,

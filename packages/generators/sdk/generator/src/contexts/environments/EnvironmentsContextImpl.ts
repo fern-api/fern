@@ -10,6 +10,7 @@ export declare namespace EnvironmentsContextImpl {
         intermediateRepresentation: IntermediateRepresentation;
         environmentsGenerator: EnvironmentsGenerator;
         environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
+        treatUnknownAsAny: boolean;
     }
 }
 

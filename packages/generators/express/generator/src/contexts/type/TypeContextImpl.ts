@@ -12,6 +12,7 @@ export declare namespace TypeContextImpl {
         typeResolver: TypeResolver;
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -23,6 +24,7 @@ export class TypeContextImpl extends BaseContextImpl implements TypeContext {
         typeDeclarationReferencer,
         typeGenerator,
         typeReferenceExampleGenerator,
+        treatUnknownAsAny,
         ...superInit
     }: TypeContextImpl.Init) {
         super(superInit);
@@ -33,6 +35,7 @@ export class TypeContextImpl extends BaseContextImpl implements TypeContext {
             typeResolver,
             typeDeclarationReferencer,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
     }
 }

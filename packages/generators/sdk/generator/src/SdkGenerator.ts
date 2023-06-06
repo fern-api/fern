@@ -82,6 +82,7 @@ export declare namespace SdkGenerator {
         skipResponseValidation: boolean;
         targetRuntime: JavaScriptRuntime;
         extraDependencies: Record<string, string>;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -312,6 +313,7 @@ export class SdkGenerator {
                         typeDeclarationReferencer: this.typeDeclarationReferencer,
                         typeGenerator: this.typeGenerator,
                         typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     typeContext.type.getGeneratedType(typeDeclaration.name).writeToFile(typeContext);
                 },
@@ -336,6 +338,7 @@ export class SdkGenerator {
                         typeGenerator: this.typeGenerator,
                         typeSchemaGenerator: this.typeSchemaGenerator,
                         typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     typeSchemaContext.typeSchema
                         .getGeneratedTypeSchema(typeDeclaration.name)
@@ -365,6 +368,7 @@ export class SdkGenerator {
                         errorResolver: this.errorResolver,
                         genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
                         genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     errorContext.sdkError.getGeneratedSdkError(errorDeclaration.name)?.writeToFile(errorContext);
                 },
@@ -396,6 +400,7 @@ export class SdkGenerator {
                         sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
                         genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
                         genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     sdkErrorSchemaContext.sdkErrorSchema
                         .getGeneratedSdkErrorSchema(errorDeclaration.name)
@@ -430,6 +435,7 @@ export class SdkGenerator {
                             packageResolver: this.packageResolver,
                             typeGenerator: this.typeGenerator,
                             endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
+                            treatUnknownAsAny: this.config.treatUnknownAsAny,
                         });
                         endpointErrorUnionContext.endpointErrorUnion
                             .getGeneratedEndpointErrorUnion(packageId, endpoint.name)
@@ -471,6 +477,7 @@ export class SdkGenerator {
                             packageResolver: this.packageResolver,
                             sdkEndpointTypeSchemasGenerator: this.sdkEndpointTypeSchemasGenerator,
                             typeSchemaGenerator: this.typeSchemaGenerator,
+                            treatUnknownAsAny: this.config.treatUnknownAsAny,
                         });
                         endpointTypeSchemasContext.sdkEndpointTypeSchemas
                             .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
@@ -504,6 +511,7 @@ export class SdkGenerator {
                                 packageResolver: this.packageResolver,
                                 requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
                                 requestWrapperGenerator: this.requestWrapperGenerator,
+                                treatUnknownAsAny: this.config.treatUnknownAsAny,
                             });
                             context.requestWrapper
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
@@ -543,6 +551,7 @@ export class SdkGenerator {
                                     this.sdkInlinedRequestBodySchemaDeclarationReferencer,
                                 typeSchemaGenerator: this.typeSchemaGenerator,
                                 typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+                                treatUnknownAsAny: this.config.treatUnknownAsAny,
                             });
                             context.sdkInlinedRequestBodySchema
                                 .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
@@ -599,6 +608,7 @@ export class SdkGenerator {
                         genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
                         timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
                         timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
+                        treatUnknownAsAny: this.config.treatUnknownAsAny,
                     });
                     sdkClientClassContext.sdkClientClass
                         .getGeneratedSdkClientClass(packageId)
@@ -621,6 +631,7 @@ export class SdkGenerator {
                     intermediateRepresentation: this.intermediateRepresentation,
                     environmentsGenerator: this.environmentsGenerator,
                     environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
+                    treatUnknownAsAny: this.config.treatUnknownAsAny,
                 });
                 environmentsContext.environments.getGeneratedEnvironments().writeToFile(environmentsContext);
             },

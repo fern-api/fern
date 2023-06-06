@@ -4,4 +4,5 @@ export interface ExpressCustomConfig {
     doNotHandleUnrecognizedErrors: boolean;
     includeUtilsOnUnionMembers: boolean;
     includeOtherInUnionTypes: boolean;
+    treatUnknownAsAny: boolean;
 }

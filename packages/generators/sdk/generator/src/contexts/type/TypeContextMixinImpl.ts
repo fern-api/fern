@@ -25,6 +25,7 @@ export declare namespace TypeContextMixinImpl {
         typeDeclarationReferencer: TypeDeclarationReferencer;
         typeGenerator: TypeGenerator;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -45,6 +46,7 @@ export class TypeContextMixinImpl implements TypeContextMixin {
         typeDeclarationReferencer,
         typeGenerator,
         typeReferenceExampleGenerator,
+        treatUnknownAsAny,
     }: TypeContextMixinImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -56,9 +58,11 @@ export class TypeContextMixinImpl implements TypeContextMixin {
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             typeResolver,
+            treatUnknownAsAny,
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
+            treatUnknownAsAny,
         });
     }
 

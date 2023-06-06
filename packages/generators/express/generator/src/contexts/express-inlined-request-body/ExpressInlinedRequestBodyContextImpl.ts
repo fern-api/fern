@@ -18,6 +18,7 @@ export declare namespace ExpressInlinedRequestBodyContextImpl {
         packageResolver: PackageResolver;
         expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
         expressInlinedRequestBodyGenerator: ExpressInlinedRequestBodyGenerator;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -33,6 +34,7 @@ export class ExpressInlinedRequestBodyContextImpl extends BaseContextImpl implem
         expressInlinedRequestBodyDeclarationReferencer,
         expressInlinedRequestBodyGenerator,
         packageResolver,
+        treatUnknownAsAny,
         ...superInit
     }: ExpressInlinedRequestBodyContextImpl.Init) {
         super(superInit);
@@ -43,6 +45,7 @@ export class ExpressInlinedRequestBodyContextImpl extends BaseContextImpl implem
             typeDeclarationReferencer,
             typeGenerator,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextMixinImpl({
             expressInlinedRequestBodyDeclarationReferencer,

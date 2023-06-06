@@ -15,6 +15,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
+    treatUnknownAsAny: z.optional(z.boolean()),
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

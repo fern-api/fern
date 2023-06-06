@@ -37,6 +37,7 @@ export declare namespace SdkEndpointTypeSchemasContextImpl {
         sdkEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
         sdkEndpointTypeSchemasGenerator: SdkEndpointTypeSchemasGenerator;
         packageResolver: PackageResolver;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -65,6 +66,7 @@ export class SdkEndpointTypeSchemasContextImpl extends BaseContextImpl implement
         endpointErrorUnionGenerator,
         sdkEndpointTypeSchemasGenerator,
         packageResolver,
+        treatUnknownAsAny,
         ...superInit
     }: SdkEndpointTypeSchemasContextImpl.Init) {
         super(superInit);
@@ -76,6 +78,7 @@ export class SdkEndpointTypeSchemasContextImpl extends BaseContextImpl implement
             typeDeclarationReferencer,
             typeGenerator,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -86,6 +89,7 @@ export class SdkEndpointTypeSchemasContextImpl extends BaseContextImpl implement
             typeDeclarationReferencer,
             typeGenerator,
             typeSchemaGenerator,
+            treatUnknownAsAny,
         });
         this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,

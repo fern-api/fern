@@ -39,6 +39,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             timeoutInSeconds: parsed?.timeoutInSeconds,
             skipResponseValidation: parsed?.skipResponseValidation ?? false,
             extraDependencies: parsed?.extraDependencies ?? {},
+            treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
         };
     }
 
@@ -79,6 +80,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 skipResponseValidation: customConfig.skipResponseValidation,
                 targetRuntime: this.targetRuntime,
                 extraDependencies: customConfig.extraDependencies,
+                treatUnknownAsAny: customConfig.treatUnknownAsAny,
             },
         });
 

@@ -22,6 +22,7 @@ export declare namespace ExpressEndpointTypeSchemasContextImpl {
         expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
         expressEndpointTypeSchemasGenerator: ExpressEndpointTypeSchemasGenerator;
         packageResolver: PackageResolver;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -43,6 +44,7 @@ export class ExpressEndpointTypeSchemasContextImpl
         expressEndpointSchemaDeclarationReferencer,
         expressEndpointTypeSchemasGenerator,
         packageResolver,
+        treatUnknownAsAny,
         ...superInit
     }: ExpressEndpointTypeSchemasContextImpl.Init) {
         super(superInit);
@@ -54,6 +56,7 @@ export class ExpressEndpointTypeSchemasContextImpl
             typeDeclarationReferencer,
             typeGenerator,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -64,6 +67,7 @@ export class ExpressEndpointTypeSchemasContextImpl
             typeDeclarationReferencer,
             typeGenerator,
             typeSchemaGenerator,
+            treatUnknownAsAny,
         });
         this.expressEndpointTypeSchemas = new ExpressEndpointTypeSchemasContextMixinImpl({
             packageResolver,

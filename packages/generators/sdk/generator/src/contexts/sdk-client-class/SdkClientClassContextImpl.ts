@@ -74,6 +74,7 @@ export declare namespace SdkClientClassContextImpl {
         genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
         timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
         timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -121,6 +122,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
         genericAPISdkErrorGenerator,
         timeoutSdkErrorDeclarationReferencer,
         timeoutSdkErrorGenerator,
+        treatUnknownAsAny,
         ...superInit
     }: SdkClientClassContextImpl.Init) {
         super(superInit);
@@ -132,6 +134,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
             typeDeclarationReferencer,
             typeGenerator,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -142,6 +145,7 @@ export class SdkClientClassContextImpl extends BaseContextImpl implements SdkCli
             typeDeclarationReferencer,
             typeGenerator,
             typeSchemaGenerator,
+            treatUnknownAsAny,
         });
         this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,

@@ -120,6 +120,10 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         return this.jsonStringifyIfNotString.bind(this);
     }
 
+    protected override any(): (reference: ts.Expression) => ts.Expression {
+        return this.jsonStringifyIfNotString.bind(this);
+    }
+
     protected override list(): (reference: ts.Expression) => ts.Expression {
         return this.jsonStringify.bind(this);
     }

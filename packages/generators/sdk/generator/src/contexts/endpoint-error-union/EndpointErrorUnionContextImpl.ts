@@ -24,6 +24,7 @@ export declare namespace EndpointErrorUnionContextImpl {
         endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         packageResolver: PackageResolver;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -43,6 +44,7 @@ export class EndpointErrorUnionContextImpl extends BaseContextImpl implements En
         endpointErrorUnionDeclarationReferencer,
         endpointErrorUnionGenerator,
         packageResolver,
+        treatUnknownAsAny,
         ...superInit
     }: EndpointErrorUnionContextImpl.Init) {
         super(superInit);
@@ -53,6 +55,7 @@ export class EndpointErrorUnionContextImpl extends BaseContextImpl implements En
             typeDeclarationReferencer,
             typeGenerator,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,

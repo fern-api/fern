@@ -16,6 +16,7 @@ export declare namespace TypeSchemaContextImpl {
         typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
         typeSchemaGenerator: TypeSchemaGenerator;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -30,6 +31,7 @@ export class TypeSchemaContextImpl extends BaseContextImpl implements TypeSchema
         typeSchemaGenerator,
         typeGenerator,
         typeReferenceExampleGenerator,
+        treatUnknownAsAny,
         ...superInit
     }: TypeSchemaContextImpl.Init) {
         super(superInit);
@@ -40,6 +42,7 @@ export class TypeSchemaContextImpl extends BaseContextImpl implements TypeSchema
             typeGenerator,
             typeDeclarationReferencer,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -50,6 +53,7 @@ export class TypeSchemaContextImpl extends BaseContextImpl implements TypeSchema
             typeDeclarationReferencer,
             typeGenerator,
             typeSchemaGenerator,
+            treatUnknownAsAny,
         });
     }
 }

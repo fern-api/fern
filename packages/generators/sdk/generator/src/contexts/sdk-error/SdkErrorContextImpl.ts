@@ -23,6 +23,7 @@ export declare namespace SdkErrorContextImpl {
         errorResolver: ErrorResolver;
         genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
         genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -41,6 +42,7 @@ export class SdkErrorContextImpl extends BaseContextImpl implements SdkErrorCont
         typeReferenceExampleGenerator,
         genericAPISdkErrorDeclarationReferencer,
         genericAPISdkErrorGenerator,
+        treatUnknownAsAny,
         ...superInit
     }: SdkErrorContextImpl.Init) {
         super(superInit);
@@ -51,6 +53,7 @@ export class SdkErrorContextImpl extends BaseContextImpl implements SdkErrorCont
             typeGenerator,
             typeDeclarationReferencer,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.sdkError = new SdkErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,

@@ -31,6 +31,7 @@ export declare namespace ExpressErrorContextImpl {
         errorResolver: ErrorResolver;
         genericAPIExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
         genericAPIExpressErrorGenerator: GenericAPIExpressErrorGenerator;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -55,6 +56,7 @@ export class ExpressErrorContextImpl extends BaseContextImpl implements ExpressE
         typeSchemaGenerator,
         expressErrorSchemaGenerator,
         expressErrorSchemaDeclarationReferencer,
+        treatUnknownAsAny,
         ...superInit
     }: ExpressErrorContextImpl.Init) {
         super(superInit);
@@ -65,6 +67,7 @@ export class ExpressErrorContextImpl extends BaseContextImpl implements ExpressE
             typeGenerator,
             typeDeclarationReferencer,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -75,6 +78,7 @@ export class ExpressErrorContextImpl extends BaseContextImpl implements ExpressE
             typeDeclarationReferencer,
             typeGenerator,
             typeSchemaGenerator,
+            treatUnknownAsAny,
         });
         this.expressError = new ExpressErrorContextMixinImpl({
             sourceFile: this.base.sourceFile,

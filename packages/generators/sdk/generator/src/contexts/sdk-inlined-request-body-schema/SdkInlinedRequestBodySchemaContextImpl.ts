@@ -27,6 +27,7 @@ export declare namespace SdkInlinedRequestBodySchemaContextImpl {
         sdkInlinedRequestBodySchemaGenerator: SdkInlinedRequestBodySchemaGenerator;
         sdkInlinedRequestBodySchemaDeclarationReferencer: SdkInlinedRequestBodyDeclarationReferencer;
         packageResolver: PackageResolver;
+        treatUnknownAsAny: boolean;
     }
 }
 
@@ -51,6 +52,7 @@ export class SdkInlinedRequestBodySchemaContextImpl
         sdkInlinedRequestBodySchemaDeclarationReferencer,
         requestWrapperGenerator,
         packageResolver,
+        treatUnknownAsAny,
         ...superInit
     }: SdkInlinedRequestBodySchemaContextImpl.Init) {
         super(superInit);
@@ -62,6 +64,7 @@ export class SdkInlinedRequestBodySchemaContextImpl
             typeDeclarationReferencer,
             typeGenerator,
             typeReferenceExampleGenerator,
+            treatUnknownAsAny,
         });
         this.typeSchema = new TypeSchemaContextMixinImpl({
             sourceFile: this.base.sourceFile,
@@ -72,6 +75,7 @@ export class SdkInlinedRequestBodySchemaContextImpl
             typeDeclarationReferencer,
             typeGenerator,
             typeSchemaGenerator,
+            treatUnknownAsAny,
         });
         this.requestWrapper = new RequestWrapperContextMixinImpl({
             requestWrapperDeclarationReferencer,

@@ -80,6 +80,15 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         };
     }
 
+    protected override any(): TypeReferenceNode {
+        const typeNode = ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
+        return {
+            isOptional: true,
+            typeNode,
+            typeNodeWithoutUndefined: typeNode,
+        };
+    }
+
     protected override list(itemType: TypeReference): TypeReferenceNode {
         return this.generateNonOptionalTypeReferenceNode(
             ts.factory.createArrayTypeNode(this.convert(itemType).typeNode)
