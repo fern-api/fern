@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 import { PageMargins } from "../../page-margins/PageMargins";
@@ -16,9 +16,9 @@ import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
 import { EndpointTitle } from "./EndpointTitle";
+import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
-import { useEndpointEnvironmentUrl } from "./useEndpointEnvironmentUrl";
 
 export declare namespace EndpointContent {
     export interface Props {
@@ -74,7 +74,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
         [titleHeight]
     );
 
-    const environmentUrl = useEndpointEnvironmentUrl(endpoint);
+    const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint), [endpoint]);
 
     return (
         <PageMargins>

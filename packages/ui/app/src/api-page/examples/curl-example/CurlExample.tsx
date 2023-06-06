@@ -2,7 +2,8 @@ import { noop } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React, { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { useEndpointEnvironmentUrl } from "../../endpoints/useEndpointEnvironmentUrl";
+import { assertVoidNoThrow } from "../../../utils/assertVoidNoThrow";
+import { getEndpointEnvironmentUrl } from "../../endpoints/getEndpointEnvironmentUrl";
 import { JsonExampleContext, JsonExampleContextValue } from "../json-example/contexts/JsonExampleContext";
 import { JsonPropertyPath } from "../json-example/contexts/JsonPropertyPath";
 import { JsonExampleString } from "../json-example/JsonExampleString";
@@ -35,25 +36,25 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         [parent, selectedProperty]
     );
 
-    const environmentUrl = useEndpointEnvironmentUrl(endpoint) ?? "localhost:8080";
+    const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint) ?? "localhost:8000", [endpoint]);
 
     const parts = useMemo(() => {
-        const parts: CurlExamplePart[] = [];
+        const lines: CurlExamplePart[] = [];
 
         if (endpoint.method !== FernRegistryApiRead.HttpMethod.Get) {
-            parts.push({
+            lines.push({
                 value: <CurlParameter paramKey="--method" value={endpoint.method.toUpperCase()} />,
             });
         }
 
-        parts.push({
+        lines.push({
             value: <CurlParameter paramKey="--url" value={`${environmentUrl}${example.path}`} />,
         });
 
         for (const queryParam of endpoint.queryParameters) {
             const value = example.queryParameters[queryParam.key];
             if (value != null) {
-                parts.push({
+                lines.push({
                     value: <CurlParameter paramKey="--url-query" value={`${queryParam.key}=${value}`} />,
                 });
             }
@@ -62,17 +63,17 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         if (apiDefinition.auth != null && endpoint.authed) {
             apiDefinition.auth._visit({
                 basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
-                    parts.push({
+                    lines.push({
                         value: <CurlParameter paramKey="--user" value={`${usernameName}:${passwordName}`} />,
                     });
                 },
                 bearerAuth: ({ tokenName = "token" }) => {
-                    parts.push({
+                    lines.push({
                         value: <CurlParameter paramKey="--header" value={`Authorization <${tokenName}>`} />,
                     });
                 },
                 header: ({ headerWireValue, nameOverride = headerWireValue }) => {
-                    parts.push({
+                    lines.push({
                         value: <CurlParameter paramKey="--header" value={`${headerWireValue}: <${nameOverride}>`} />,
                     });
                 },
@@ -83,7 +84,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         for (const header of endpoint.headers) {
             const value = example.headers[header.key];
             if (value != null) {
-                parts.push({
+                lines.push({
                     value: <CurlParameter paramKey="--header" value={`${header.key}: ${value}`} />,
                 });
             }
@@ -92,13 +93,13 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         if (endpoint.request != null) {
             switch (endpoint.request.type.type) {
                 case "fileUpload":
-                    parts.push({
+                    lines.push({
                         value: <CurlParameter paramKey="--data" value="@file" />,
                     });
                     break;
                 case "object":
                 case "reference":
-                    parts.push(
+                    lines.push(
                         {
                             value: (
                                 <>
@@ -130,23 +131,23 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         }
 
         const curlElement = <span className="text-yellow-100">{CURL_PREFIX}</span>;
-        if (parts[0] != null) {
-            parts[0] = {
-                ...parts[0],
+        if (lines[0] != null) {
+            lines[0] = {
+                ...lines[0],
                 value: (
                     <>
                         {curlElement}
-                        {parts[0].value}
+                        {lines[0].value}
                     </>
                 ),
             };
         } else {
-            parts.unshift({
+            lines.unshift({
                 value: curlElement,
             });
         }
 
-        return parts;
+        return lines;
     }, [
         apiDefinition.auth,
         endpoint.authed,
@@ -174,6 +175,3 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         </JsonExampleContext.Provider>
     );
 };
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-function assertVoidNoThrow(_x: void): void {}
