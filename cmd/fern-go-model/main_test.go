@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/fern-api/fern-go/internal/cmd/cmdtest"
 	builtin "github.com/fern-api/fern-go/internal/testdata/builtin/fixtures"
 	custom "github.com/fern-api/fern-go/internal/testdata/custom/fixtures"
 	enum "github.com/fern-api/fern-go/internal/testdata/enum/fixtures"
@@ -20,6 +21,7 @@ import (
 )
 
 const (
+	commandName       = "fern-go-model"
 	configFilename    = "config.json"
 	testdataPath      = "../../internal/testdata"
 	fixturesDirectory = "fixtures"
@@ -45,7 +47,7 @@ func TestRun(t *testing.T) {
 
 	for _, directory := range directories {
 		require.NoError(t, os.Chdir(directory))
-		require.NoError(t, run(configFilename))
+		require.NoError(t, cmdtest.Run(t, commandName, configFilename, usage, run))
 
 		// Clean up all the generated files after we're done.
 		defer os.RemoveAll(filepath.Join(wd, directory, outputDirectory))
