@@ -183,7 +183,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                 <CurlExampleLine
                     key={index}
                     part={part}
-                    indent={index > 0 ? CURL_PREFIX.length : 0}
+                    indentInSpaces={index > 0 ? CURL_PREFIX.length : 0}
                     isLastPart={index === partsExcludingCurlCommand.length - 1}
                 />
             ))}

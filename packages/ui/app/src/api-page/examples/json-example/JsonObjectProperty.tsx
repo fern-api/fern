@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import classNames from "classnames";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef } from "react";
 import { JsonExampleBreadcrumb } from "./contexts/JsonExampleBreadcrumb";
 import {
     JsonExampleBreadcumbsContext,
@@ -8,6 +7,10 @@ import {
 } from "./contexts/JsonExampleBreadcumbsContext";
 import { useJsonExampleContext } from "./contexts/JsonExampleContext";
 import { JsonPropertyPath } from "./contexts/JsonPropertyPath";
+import {
+    JsonPropertySelectionContext,
+    JsonPropertySelectionContextValue,
+} from "./contexts/JsonPropertySelectionContext";
 import { JsonExampleLine } from "./JsonExampleLine";
 import { JsonItemBottomLine } from "./JsonItemBottomLine";
 import { JsonItemMiddleLines } from "./JsonItemMiddleLines";
@@ -54,14 +57,14 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
         });
     }, [contextValue.breadcrumbs, selectedProperty]);
 
-    const ref = useRef<HTMLDivElement | null>(null);
+    const topLineRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
-        if (containerRef == null || ref.current == null) {
+        if (containerRef == null || topLineRef.current == null) {
             return;
         }
         if (isSelected) {
-            const targetBBox = ref.current.getBoundingClientRect();
+            const targetBBox = topLineRef.current.getBoundingClientRect();
             const containerBBox = containerRef.getBoundingClientRect();
             containerRef.scrollTo({
                 top: containerRef.scrollTop + targetBBox.y - containerBBox.y - 20,
@@ -71,51 +74,24 @@ export const JsonObjectProperty: React.FC<JsonObjectProperty> = ({
         }
     }, [containerRef, isSelected]);
 
-    const [isOverlayInView, setIsOverlayInView] = useState(false);
-    useEffect(() => {
-        if (isSelected) {
-            setIsOverlayInView(true);
-            return;
-        }
-
-        const timeout = setTimeout(
-            () => {
-                setIsOverlayInView(false);
-            },
-            // tailwind transition time
-            150
-        );
-        return () => {
-            clearTimeout(timeout);
-        };
-    }, [isSelected]);
+    const { isSelected: isAncestorSelected } = useContext(JsonPropertySelectionContext);
+    const propertySelectionContextValue = useMemo(
+        (): JsonPropertySelectionContextValue => ({ isSelected: isSelected || isAncestorSelected }),
+        [isAncestorSelected, isSelected]
+    );
 
     return (
-        <div className="relative" ref={ref}>
-            <JsonExampleLine>
-                <div>
-                    <span>
-                        <span className="text-neutral-300">&quot;{propertyKey}&quot;</span>
-                        <span>:</span>
-                    </span>
-                    &nbsp;
-                    <JsonItemTopLineContent value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
-                </div>
+        <JsonPropertySelectionContext.Provider value={propertySelectionContextValue}>
+            <JsonExampleLine ref={topLineRef}>
+                <span className="text-neutral-300">&quot;{propertyKey}&quot;</span>
+                {": "}
+                <JsonItemTopLineContent value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
             </JsonExampleLine>
             <JsonExampleBreadcumbsContext.Provider value={contextValue}>
                 <JsonItemMiddleLines value={propertyValue} />
             </JsonExampleBreadcumbsContext.Provider>
             <JsonItemBottomLine value={propertyValue} isNonLastItemInCollection={!isLastProperty} />
-            <div
-                className={classNames(
-                    "absolute inset-x-0 inset-y-[-4px] border rounded transition",
-                    isSelected ? "bg-accentHighlight border-accentPrimary" : "bg-transparent border-transparent",
-                    {
-                        invisible: !isOverlayInView,
-                    }
-                )}
-            />
-        </div>
+        </JsonPropertySelectionContext.Provider>
     );
 };
 

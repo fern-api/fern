@@ -1,9 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import { useMemo } from "react";
-import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { CurlExample } from "../../examples/curl-example/CurlExample";
-import { generateCurlExampleAsString } from "../../examples/curl-example/generateCurlExampleAsString";
 import { JsonExample } from "../../examples/json-example/JsonExample";
 import { TitledExample } from "../../examples/TitledExample";
 import { useEndpointContext } from "../endpoint-context/useEndpointContext";
@@ -17,16 +14,10 @@ export declare namespace EndpointExample {
 
 export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, example }) => {
     const { hoveredRequestPropertyPath, hoveredResponsePropertyPath } = useEndpointContext();
-    const { apiDefinition } = useApiDefinitionContext();
-
-    const curlExampleAsString = useMemo(
-        () => generateCurlExampleAsString({ endpoint, example, apiDefinition }),
-        [apiDefinition, endpoint, example]
-    );
 
     return (
         <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] flex-col gap-6">
-            <TitledExample title="Request" copyableExample={curlExampleAsString}>
+            <TitledExample title="Request">
                 {(parent) => (
                     <CurlExample
                         endpoint={endpoint}
@@ -52,7 +43,6 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, exa
                             </div>
                         ) : undefined
                     }
-                    copyableExample={example.responseBody}
                 >
                     {(parent) => (
                         <JsonExample
