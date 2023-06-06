@@ -4,22 +4,22 @@ export declare namespace CurlParameter {
     export interface Props {
         paramKey: string;
         value?: string;
-        doNotAddQuotesAroundValue?: boolean;
+        doNotStringifyValue?: boolean;
     }
 }
 
-export const CurlParameter: React.FC<CurlParameter.Props> = ({
-    paramKey,
-    value,
-    doNotAddQuotesAroundValue = false,
-}) => {
+export const CurlParameter: React.FC<CurlParameter.Props> = ({ paramKey, value, doNotStringifyValue = false }) => {
     return (
         <>
             <span className="text-text-muted">{paramKey}</span>
             {value != null && (
                 <>
                     {" "}
-                    <JsonExampleString value={value} doNotAddQuotes={doNotAddQuotesAroundValue} />
+                    {doNotStringifyValue ? (
+                        <span className="text-text-muted">{value}</span>
+                    ) : (
+                        <JsonExampleString value={value} />
+                    )}
                 </>
             )}
         </>
