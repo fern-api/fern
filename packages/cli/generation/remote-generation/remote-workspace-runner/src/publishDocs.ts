@@ -180,10 +180,20 @@ async function convertDocsConfiguration({
     version: string | undefined;
 }): Promise<FernRegistry.docs.v1.write.DocsConfig> {
     return {
+        title: docsDefinition.config.title,
         logo:
             docsDefinition.config.logo != null
-                ? await convertLogoReference({
-                      logoReference: docsDefinition.config.logo,
+                ? await convertImageReference({
+                      imageReference: docsDefinition.config.logo,
+                      docsDefinition,
+                      uploadUrls,
+                      context,
+                  })
+                : undefined,
+        favicon:
+            docsDefinition.config.favicon != null
+                ? await convertImageReference({
+                      imageReference: docsDefinition.config.favicon,
                       docsDefinition,
                       uploadUrls,
                       context,
@@ -210,18 +220,18 @@ async function convertDocsConfiguration({
     };
 }
 
-async function convertLogoReference({
-    logoReference,
+async function convertImageReference({
+    imageReference,
     docsDefinition,
     uploadUrls,
     context,
 }: {
-    logoReference: ImageReference;
+    imageReference: ImageReference;
     docsDefinition: DocsDefinition;
     uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
     context: TaskContext;
 }): Promise<FernRegistry.docs.v1.write.FileId> {
-    const filepath = convertAbsoluteFilepathToFdrFilepath(logoReference.filepath, docsDefinition);
+    const filepath = convertAbsoluteFilepathToFdrFilepath(imageReference.filepath, docsDefinition);
     const file = uploadUrls[filepath];
     if (file == null) {
         return context.failAndThrow("Failed to locate file after uploading");

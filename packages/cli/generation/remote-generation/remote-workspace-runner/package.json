@@ -42,7 +42,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.193",
     "@fern-fern/ir-model": "0.0.1920",
-    "@fern-fern/registry-node": "^0.0.943",
+    "@fern-fern/registry-node": "^0.0.1005",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "decompress": "^4.2.1",
