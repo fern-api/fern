@@ -56,6 +56,30 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 	// The following expression is generated if the endpoint specifies
 	// any custom errors.
 	fooErrorDeserializer := func(statusCode int, body io.Reader) error {
+		// TODO: If the error disctrimination strategy is set,
+		// this implementation will be adapted a bit. Like
+		// unions, we'll first need to unmarshal the body into
+		// a type that recognizes the discriminant, then unmarshal
+		// the rest of the type after that.
+		//
+		// For example, if the discriminant is set to a 'name' field,
+		// the following will be generated (instead of a simple switch
+		// on the StatusCode):
+		//
+		//  bytes, err := io.ReadAll(body)
+		//  if err != nil {
+		//    return err
+		//  }
+		//  var discriminant struct {
+		//    Name string `json:"name"`
+		//  }
+		//  if err := json.Unmarshal(bytes, &discriminant); err != nil {
+		//    return err
+		//  }
+		//  switch discriminant.Name {
+		//    ...
+		//  }
+		//
 		decoder := json.NewDecoder(body)
 		switch statusCode {
 		case 404:
