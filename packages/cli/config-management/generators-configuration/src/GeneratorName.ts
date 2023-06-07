@@ -12,6 +12,7 @@ export const GeneratorName = {
     PYTHON_PYDANTIC: "fernapi/fern-pydantic-model",
     PYTHON_SDK: "fernapi/fern-python-sdk",
     GO_MODEL: "fernapi/fern-go-model",
+    GO_SDK: "fernapi/fern-go-sdk",
     OPENAPI: "fernapi/fern-openapi",
     STOPLIGHT: "fernapi/fern-stoplight",
     POSTMAN: "fernapi/fern-postman",

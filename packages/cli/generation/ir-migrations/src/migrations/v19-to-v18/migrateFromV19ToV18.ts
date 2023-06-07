@@ -32,6 +32,7 @@ export const V19_TO_V18_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: "0.0.44-1-gbf4b0f3",
         [GeneratorName.PYTHON_SDK]: "0.3.4-rc0-9-ge815162f",
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
     migrateBackwards: (v19, context): IrVersions.V18.ir.IntermediateRepresentation => {
         return {

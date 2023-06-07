@@ -31,6 +31,7 @@ export const V14_TO_V13_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
     migrateBackwards: (v14): IrVersions.V13.ir.IntermediateRepresentation => {
         const v13Types: Record<string, IrVersions.V13.types.TypeDeclaration> = mapValues(
