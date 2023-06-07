@@ -1,0 +1,18 @@
+@import "~@blueprintjs/core/lib/scss/variables";
+
+.container {
+    :not(pre) > code {
+        padding: 1px 0.25rem;
+        background-color: rgba(255, 255, 255, 15%);
+        border-radius: 0.25rem;
+
+        &::before,
+        &::after {
+            content: none;
+        }
+    }
+
+    .code {
+        font-family: "Berkeley Mono";
+    }
+}

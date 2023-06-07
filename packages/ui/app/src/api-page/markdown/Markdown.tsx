@@ -3,6 +3,7 @@ import React from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import styles from "./Markdown.module.scss";
 
 export declare namespace Markdown {
     export interface Props {
@@ -17,10 +18,7 @@ const REHYPE_PLUGINS = [rehypeRaw];
 export const Markdown: React.FC<Markdown.Props> = ({ children, className }) => {
     return (
         <ReactMarkdown
-            className={classNames(
-                className,
-                "prose prose-sm dark:prose-invert prose-code:before:content-none prose-code:after:content-none prose-code:bg-slate-700 prose-code:py-px prose-code:px-1 prose-code:rounded max-w-none"
-            )}
+            className={classNames(className, styles.container, "prose prose-sm dark:prose-invert max-w-none")}
             remarkPlugins={REMARK_PLUGINS}
             rehypePlugins={REHYPE_PLUGINS}
         >
