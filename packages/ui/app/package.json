@@ -42,7 +42,7 @@
     "@fern-api/routing-utils": "workspace:*",
     "@fern-api/split-view": "workspace:*",
     "@fern-api/theme": "workspace:*",
-    "@fern-fern/registry-browser": "0.0.961",
+    "@fern-fern/registry-browser": "0.0.1004",
     "@fontsource/ibm-plex-mono": "^4.5.13",
     "@tanstack/react-query": "^4.29.7",
     "classnames": "^2.3.1",

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { Sidebar } from "../sidebar/Sidebar";
 import { DocsMainContent } from "./DocsMainContent";
@@ -6,8 +7,19 @@ import nebulaImage from "./nebula.png";
 import { useCustomTheme } from "./useCustomTheme";
 
 export const LoadedDocs: React.FC = () => {
-    const { docsDefinition } = useDocsContext();
+    const { docsDefinition, resolveFile } = useDocsContext();
     useCustomTheme(docsDefinition);
+
+    useEffect(() => {
+        document.title = docsDefinition.config.title ?? "Documentation";
+
+        if (docsDefinition.config.favicon != null) {
+            const faviconElement = document.getElementById("favicon");
+            if (faviconElement != null) {
+                (faviconElement as HTMLLinkElement).href = resolveFile(docsDefinition.config.favicon);
+            }
+        }
+    }, [docsDefinition.config.favicon, docsDefinition.config.title, resolveFile]);
 
     return (
         <div
