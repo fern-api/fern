@@ -10,18 +10,35 @@ import (
 )
 
 const (
+	// acceptHeader is the Accept header.
+	acceptHeader = "Accept"
+
 	// contentType specifies the JSON Content-Type header value.
-	contentType = "application/json"
+	contentType       = "application/json"
+	contentTypeHeader = "Content-Type"
 
 	// fernLanguage specifies the value of the X-Fern-Language header.
-	fernLanguage = "go"
+	fernLanguage       = "go"
+	fernLanguageHeader = "X-Fern-Language"
 
 	// fernSDKName specifies the name of this Fern SDK.
-	fernSDKName = "fern-go-client"
+	fernSDKName       = "fern-go-client"
+	fernSDKNameHeader = "X-Fern-SDK-Name"
 
 	// fernSDKVersion specifies the version of this Fern SDK.
-	fernSDKVersion = "0.0.1"
+	fernSDKVersion       = "0.0.1"
+	fernSDKVersionHeader = "X-Fern-SDK-Version"
 )
+
+// fernHeaders specifies all of the standard Fern headers in
+// a set so that they're easier to access and reference.
+var fernHeaders = map[string]string{
+	acceptHeader:         contentType,
+	contentTypeHeader:    contentType,
+	fernLanguageHeader:   fernLanguage,
+	fernSDKNameHeader:    fernSDKName,
+	fernSDKVersionHeader: fernSDKVersion,
+}
 
 // Doer is an interface for a subset of the *http.Client.
 type Doer interface {
@@ -50,7 +67,6 @@ func doRequest(
 	method string,
 	request any,
 	response any,
-	opts ...CallOption,
 ) error {
 	requestBytes, err := json.Marshal(request)
 	if err != nil {
@@ -86,7 +102,7 @@ func doRequest(
 		return errors.New("TODO: error in response")
 	}
 
-	// Mutate the resposne parameter in-place.
+	// Mutate the response parameter in-place.
 	decoder := json.NewDecoder(resp.Body)
 	if err := decoder.Decode(response); err != nil {
 		return err
@@ -108,10 +124,8 @@ func newRequest(
 		return nil, err
 	}
 	req = req.WithContext(ctx)
-	req.Header.Set("Accept", contentType)
-	req.Header.Set("Content-Type", contentType)
-	req.Header.Set("X-Fern-Language", fernLanguage)
-	req.Header.Set("X-Fern-SDK-Name", fernSDKName)
-	req.Header.Set("X-Fern-SDK-Version", fernSDKVersion)
+	for name, value := range fernHeaders {
+		req.Header.Set(name, value)
+	}
 	return req, nil
 }

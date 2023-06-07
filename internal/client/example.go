@@ -23,7 +23,7 @@ type FooResponse struct {
 // the rest of Fern's generators). The caller simply gets the
 // *FooResponse as-is, and that's it.
 type ExampleClient interface {
-	Foo(context.Context, *FooRequest, ...CallOption) (*FooResponse, error)
+	Foo(context.Context, *FooRequest) (*FooResponse, error)
 }
 
 // NewExampleClient returns a new ExampleClient suitable
@@ -52,9 +52,9 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 	// on the type of endpoint. For example, if the endpoint has path
 	// parameters, then the request argument(s) will need to be applied to
 	// the fooURL, as needed.
-	fooImpl := func(ctx context.Context, request *FooRequest, opts ...CallOption) (*FooResponse, error) {
+	fooImpl := func(ctx context.Context, request *FooRequest) (*FooResponse, error) {
 		response := new(FooResponse)
-		if err := doRequest(ctx, client, fooURL, "GET", request, response, opts...); err != nil {
+		if err := doRequest(ctx, client, fooURL, "GET", request, response); err != nil {
 			return nil, err
 		}
 		return response, nil
@@ -67,10 +67,10 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 
 // exampleClient implements the ExampleClient interface.
 type exampleClient struct {
-	foo func(context.Context, *FooRequest, ...CallOption) (*FooResponse, error)
+	foo func(context.Context, *FooRequest) (*FooResponse, error)
 }
 
 // Foo calls the foo endpoint with the given request.
-func (e *exampleClient) Foo(ctx context.Context, request *FooRequest, opts ...CallOption) (*FooResponse, error) {
-	return e.foo(ctx, request, opts)
+func (e *exampleClient) Foo(ctx context.Context, request *FooRequest) (*FooResponse, error) {
+	return e.foo(ctx, request)
 }
