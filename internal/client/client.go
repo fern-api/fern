@@ -67,6 +67,7 @@ func doRequest(
 	method string,
 	request any,
 	response any,
+	errorDecoder func(int, io.Reader) error,
 ) error {
 	requestBytes, err := json.Marshal(request)
 	if err != nil {
@@ -96,10 +97,20 @@ func doRequest(
 	}
 
 	if resp.StatusCode != 200 {
-		// TODO: Read the error from the response.
-		// This will sometimes (and ideally) be a
-		// structured Fern error.
-		return errors.New("TODO: error in response")
+		if errorDecoder != nil {
+			// This endpoint has custom errors, so we'll
+			// attempt to unmarshal the error into a structured
+			// type based on the status code.
+			return errorDecoder(resp.StatusCode, resp.Body)
+		}
+		// This endpoint doesn't have any custom error
+		// types, so we just read the body as-is, and
+		// put it into a normal error.
+		bytes, err := io.ReadAll(resp.Body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
 	}
 
 	// Mutate the response parameter in-place.
