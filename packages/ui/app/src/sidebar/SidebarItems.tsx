@@ -14,7 +14,7 @@ export declare namespace SidebarItems {
 
 export const SidebarItems: React.FC<SidebarItems.Props> = ({ slug, navigationItems }) => {
     return (
-        <div className="flex flex-col overflow-y-auto">
+        <div className="flex flex-col">
             {navigationItems.map((navigationItem) =>
                 navigationItem._visit({
                     page: (pageMetadata) => (
