@@ -2,7 +2,11 @@ types:
   DocsConfiguration:
     properties:
       navigation: list<NavigationItem>
+      title:
+        type: optional<string>
+        docs: used as tab bar title, and in the navbar if no logo is defined
       logo: optional<string>
+      favicon: optional<string>
       colors: optional<ColorsConfiguration>
       "navbar-links": optional<list<NavbarLink>>
 

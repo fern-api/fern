@@ -6031,8 +6031,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-fern/docs-config", "npm:0.0.12"],\
-            ["@fern-fern/registry-node", "npm:0.0.943"],\
+            ["@fern-fern/docs-config", "npm:0.0.13"],\
+            ["@fern-fern/registry-node", "npm:0.0.1005"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6501,7 +6501,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/docs-config", "npm:0.0.12"],\
+            ["@fern-fern/docs-config", "npm:0.0.13"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6778,7 +6778,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-model", "npm:0.0.1920"],\
-            ["@fern-fern/registry-node", "npm:0.0.943"],\
+            ["@fern-fern/registry-node", "npm:0.0.1005"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6816,7 +6816,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.193"],\
             ["@fern-fern/ir-model", "npm:0.0.1920"],\
-            ["@fern-fern/registry-node", "npm:0.0.943"],\
+            ["@fern-fern/registry-node", "npm:0.0.1005"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -6932,7 +6932,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.193"],\
-            ["@fern-fern/registry-node", "npm:0.0.943"],\
+            ["@fern-fern/registry-node", "npm:0.0.1005"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -7283,10 +7283,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/docs-config", [\
-        ["npm:0.0.12", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.12-23b8bc50bd-9a1b5c7db0.zip/node_modules/@fern-fern/docs-config/",\
+        ["npm:0.0.13", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.13-fba210daa2-7b26a1105b.zip/node_modules/@fern-fern/docs-config/",\
           "packageDependencies": [\
-            ["@fern-fern/docs-config", "npm:0.0.12"]\
+            ["@fern-fern/docs-config", "npm:0.0.13"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7549,10 +7549,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-node", [\
-        ["npm:0.0.943", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.0.943-149b92be9c-fb8a15732a.zip/node_modules/@fern-fern/registry-node/",\
+        ["npm:0.0.1005", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.0.1005-77bcf50f8b-e0c7d974dc.zip/node_modules/@fern-fern/registry-node/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-node", "npm:0.0.943"],\
+            ["@fern-fern/registry-node", "npm:0.0.1005"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\

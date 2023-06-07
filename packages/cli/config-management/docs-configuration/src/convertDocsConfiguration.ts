@@ -3,7 +3,12 @@ import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { FernRegistry } from "@fern-fern/registry-node";
-import { DocsConfiguration, DocsNavigationConfiguration, DocsNavigationItem, LogoReference } from "./DocsConfiguration";
+import {
+    DocsConfiguration,
+    DocsNavigationConfiguration,
+    DocsNavigationItem,
+    ImageReference,
+} from "./DocsConfiguration";
 
 export async function convertDocsConfiguration({
     rawDocsConfiguration,
@@ -16,9 +21,14 @@ export async function convertDocsConfiguration({
 }): Promise<DocsConfiguration> {
     return {
         navigation: convertNavigationConfiguration(rawDocsConfiguration.navigation, absolutePathOfConfiguration),
+        title: rawDocsConfiguration.title,
         logo:
             rawDocsConfiguration.logo != null
-                ? convertLogoReference(rawDocsConfiguration.logo, absolutePathOfConfiguration)
+                ? convertImageReference(rawDocsConfiguration.logo, absolutePathOfConfiguration)
+                : undefined,
+        favicon:
+            rawDocsConfiguration.favicon != null
+                ? convertImageReference(rawDocsConfiguration.favicon, absolutePathOfConfiguration)
                 : undefined,
         colors: convertColorsConfiguration(rawDocsConfiguration.colors ?? {}, context),
         navbarLinks:
@@ -79,18 +89,13 @@ function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Ap
     return (item as RawDocs.ApiSectionConfiguration).api != null;
 }
 
-function convertLogoReference(rawLogoReference: string, absolutePathOfConfiguration: AbsoluteFilePath): LogoReference {
-    if (rawLogoReference.startsWith("http")) {
-        return {
-            type: "url",
-            url: rawLogoReference,
-        };
-    } else {
-        return {
-            type: "file",
-            filepath: resolve(dirname(absolutePathOfConfiguration), rawLogoReference),
-        };
-    }
+function convertImageReference(
+    rawImageReference: string,
+    absolutePathOfConfiguration: AbsoluteFilePath
+): ImageReference {
+    return {
+        filepath: resolve(dirname(absolutePathOfConfiguration), rawImageReference),
+    };
 }
 
 function convertColorsConfiguration(

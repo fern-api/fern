@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { combineAudiences } from "@fern-api/config-management-commons";
 import { assertNever, entries } from "@fern-api/core-utils";
-import { DocsNavigationItem, LogoReference } from "@fern-api/docs-configuration";
+import { DocsNavigationItem, ImageReference } from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
 import { registerApi } from "@fern-api/register";
@@ -180,9 +180,24 @@ async function convertDocsConfiguration({
     version: string | undefined;
 }): Promise<FernRegistry.docs.v1.write.DocsConfig> {
     return {
+        title: docsDefinition.config.title,
         logo:
             docsDefinition.config.logo != null
-                ? await convertLogoReference({ logoReference: docsDefinition.config.logo, docsDefinition, uploadUrls })
+                ? await convertImageReference({
+                      imageReference: docsDefinition.config.logo,
+                      docsDefinition,
+                      uploadUrls,
+                      context,
+                  })
+                : undefined,
+        favicon:
+            docsDefinition.config.favicon != null
+                ? await convertImageReference({
+                      imageReference: docsDefinition.config.favicon,
+                      docsDefinition,
+                      uploadUrls,
+                      context,
+                  })
                 : undefined,
         navigation: {
             items: await Promise.all(
@@ -205,24 +220,23 @@ async function convertDocsConfiguration({
     };
 }
 
-async function convertLogoReference({
-    logoReference,
+async function convertImageReference({
+    imageReference,
     docsDefinition,
     uploadUrls,
+    context,
 }: {
-    logoReference: LogoReference;
+    imageReference: ImageReference;
     docsDefinition: DocsDefinition;
     uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
-}): Promise<FernRegistry.docs.v1.write.FileId | undefined> {
-    switch (logoReference.type) {
-        case "url":
-            return undefined;
-        case "file": {
-            return uploadUrls[convertAbsoluteFilepathToFdrFilepath(logoReference.filepath, docsDefinition)]?.fileId;
-        }
-        default:
-            assertNever(logoReference);
+    context: TaskContext;
+}): Promise<FernRegistry.docs.v1.write.FileId> {
+    const filepath = convertAbsoluteFilepathToFdrFilepath(imageReference.filepath, docsDefinition);
+    const file = uploadUrls[filepath];
+    if (file == null) {
+        return context.failAndThrow("Failed to locate file after uploading");
     }
+    return file.fileId;
 }
 
 async function convertNavigationItem({
@@ -295,15 +309,11 @@ function getFilepathsToUpload(docsDefinition: DocsDefinition): AbsoluteFilePath[
     const filepaths: AbsoluteFilePath[] = [];
 
     if (docsDefinition.config.logo != null) {
-        switch (docsDefinition.config.logo.type) {
-            case "file":
-                filepaths.push(docsDefinition.config.logo.filepath);
-                break;
-            case "url":
-                break;
-            default:
-                assertNever(docsDefinition.config.logo);
-        }
+        filepaths.push(docsDefinition.config.logo.filepath);
+    }
+
+    if (docsDefinition.config.favicon != null) {
+        filepaths.push(docsDefinition.config.favicon.filepath);
     }
 
     return filepaths;
