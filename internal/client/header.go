@@ -6,6 +6,9 @@ import (
 	"net/http"
 )
 
+// TODO: This is just a proposal for now, the other approach being
+// explored is outlined in option.go.
+
 // requestHeaderKey uniquely identifies the http.Header attached
 // to the context.
 var requestHeaderKey struct{}

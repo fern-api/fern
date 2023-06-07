@@ -48,16 +48,9 @@ type Doer interface {
 // ClientOption adapts the behavior of a Fern client.
 type ClientOption func(*clientOptions)
 
-// CallOption adapts the behavior of a an individual endpoint.
-type CallOption interface{}
-
 // clientOptions holds all of the configuration options for
 // a Fern client. There are none for now.
 type clientOptions struct{}
-
-// callOptions holds all of the configuration options for
-// an endpoint call. There are none for now.
-type callOptions struct{}
 
 // doRequest issues a JSON request to the given url.
 func doRequest(
