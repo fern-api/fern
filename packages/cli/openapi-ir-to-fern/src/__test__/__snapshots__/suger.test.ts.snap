@@ -6659,7 +6659,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetApiClientAccessToken": {
             "auth": false,
@@ -6707,7 +6706,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetBuyer": {
             "auth": true,
@@ -6813,7 +6811,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "AddEntitlementCredit": {
             "auth": true,
@@ -7057,7 +7054,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetEntitlementTerm": {
             "auth": true,
@@ -7122,7 +7118,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "CreateIntegration": {
             "auth": true,
@@ -7346,7 +7341,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetUsageRecordGroup": {
             "auth": true,
@@ -7759,7 +7753,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "CancelOffer": {
             "auth": true,
@@ -7977,7 +7970,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "ListOperations": {
             "auth": true,
@@ -8035,7 +8027,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "DeleteProduct": {
             "auth": true,
@@ -8209,7 +8200,6 @@ the same customer, dimension, and time, but a different quantity.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetRevenueReport": {
             "auth": true,

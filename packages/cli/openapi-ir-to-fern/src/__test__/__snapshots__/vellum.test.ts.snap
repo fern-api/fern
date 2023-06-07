@@ -22,7 +22,6 @@ exports[`open api parser vellum simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "generate": {
             "auth": true,
@@ -785,7 +784,6 @@ Used to submit feedback regarding the quality of previously generated completion
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "list": {
             "auth": true,
@@ -885,7 +883,6 @@ Upload a document to be indexed and used for search.
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "retrieve": {
             "auth": true,

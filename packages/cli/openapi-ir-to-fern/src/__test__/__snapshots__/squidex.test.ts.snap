@@ -4321,7 +4321,6 @@ exports[`open api parser squidex simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "deleteApp": {
             "auth": true,
@@ -5380,7 +5379,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "bulkUpdateAssets": {
             "auth": true,
@@ -6248,7 +6246,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "deleteBackup": {
             "auth": true,
@@ -6419,7 +6416,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "deleteComment": {
             "auth": true,
@@ -6582,7 +6578,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "bulkUpdateContents": {
             "auth": true,
@@ -7312,7 +7307,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getDump": {
             "auth": true,
@@ -7347,7 +7341,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getEventConsumers": {
             "auth": true,
@@ -7440,7 +7433,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getAppHistory": {
             "auth": true,
@@ -7515,7 +7507,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getLanguages": {
             "auth": true,
@@ -7542,7 +7533,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getNews": {
             "auth": true,
@@ -7579,7 +7569,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "deleteComment": {
             "auth": true,
@@ -7644,7 +7633,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getAppPing": {
             "auth": true,
@@ -7697,7 +7685,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getPlans": {
             "auth": true,
@@ -7808,7 +7795,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "deleteEvent": {
             "auth": true,
@@ -8290,7 +8276,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "deleteField": {
             "auth": true,
@@ -9361,7 +9346,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getSearchResults": {
             "auth": true,
@@ -9405,7 +9389,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getCurrentStorageSize": {
             "auth": true,
@@ -9597,7 +9580,6 @@ The client secret is auto generated on the server and returned. The client does 
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "deleteContributor": {
             "auth": true,
@@ -9808,7 +9790,6 @@ You will be assigned as owner of the new team automatically.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getTemplate": {
             "auth": true,
@@ -9856,7 +9837,6 @@ You will be assigned as owner of the new team automatically.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "postTranslation": {
             "auth": true,
@@ -9911,7 +9891,6 @@ You will be assigned as owner of the new team automatically.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "deleteUser": {
             "auth": true,
@@ -10131,7 +10110,6 @@ You will be assigned as owner of the new team automatically.",
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getUser": {
             "auth": true,

@@ -79,13 +79,16 @@ export function convertToServices({
 }
 
 function constructService({ tag }: { tag?: Tag }): ConvertedService {
+    const service: RawSchemas.HttpServiceSchema = {
+        auth: false,
+        "base-path": "",
+        endpoints: {},
+    };
+    if (tag != null) {
+        service["display-name"] = tag.id;
+    }
     return {
-        service: {
-            auth: false,
-            "display-name": tag?.id,
-            "base-path": "",
-            endpoints: {},
-        },
+        service,
         docs: tag?.description ?? undefined,
     };
 }

@@ -7611,7 +7611,6 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "createFileRef": {
             "auth": true,
@@ -7655,7 +7654,6 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "getPeople": {
             "audiences": [
@@ -10466,7 +10464,6 @@ exports[`open api parser deel simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "WebhookController_deleteById": {
             "audiences": [

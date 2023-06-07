@@ -903,7 +903,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "CreateApp": {
             "auth": true,
@@ -1008,7 +1007,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "LoginAnonymous": {
             "auth": true,
@@ -1105,7 +1103,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "CreateBuild": {
             "auth": true,
@@ -1233,7 +1230,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "CreateDeployment": {
             "auth": true,
@@ -1319,7 +1315,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetPingServiceEndpoints": {
             "auth": true,
@@ -1343,7 +1338,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "CreatePrivateLobbyDeprecated": {
             "auth": true,
@@ -1488,7 +1482,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "CreateLobby": {
             "auth": true,
@@ -1800,7 +1793,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetLogsForApp": {
             "auth": true,
@@ -1922,7 +1914,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetMetrics": {
             "auth": true,
@@ -1984,7 +1975,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetProcessInfo": {
             "auth": true,
@@ -2078,7 +2068,6 @@ exports[`open api parser hathora simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "CreateRoom": {
             "auth": true,

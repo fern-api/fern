@@ -9,7 +9,6 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "endorse-transaction": {
             "auth": true,
@@ -11429,7 +11428,6 @@ exports[`open api parser aries simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "get_config": {
             "auth": true,

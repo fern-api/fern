@@ -620,7 +620,6 @@ exports[`open api parser buzzshot simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "listAccounts": {
             "auth": false,

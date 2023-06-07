@@ -567,7 +567,6 @@ exports[`open api parser axle simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetAccount": {
             "auth": false,
@@ -608,7 +607,6 @@ exports[`open api parser axle simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetCarrier": {
             "auth": false,
@@ -651,7 +649,6 @@ exports[`open api parser axle simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "StartIgnition": {
             "auth": false,
@@ -701,7 +698,6 @@ exports[`open api parser axle simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "GetPolicy": {
             "auth": false,
@@ -742,7 +738,6 @@ exports[`open api parser axle simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": undefined,
         "endpoints": {
           "ExchangeToken": {
             "auth": false,
