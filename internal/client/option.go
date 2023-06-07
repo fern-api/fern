@@ -55,6 +55,19 @@ type BarOption interface {
 	applyBar(*barOptions)
 }
 
+// BarWithEndpointHeader adds the given endpoint header value.
+//
+// Like query parameter options (e.g. FooWithLimit above), headers
+// attached to individual endpoints receive their own call option
+// scoped to the endpoint, so we use the Bar prefix in the name.
+//
+// This examples is referenced from https://buildwithfern.com/docs/definition/endpoints#headers
+func BarWithEndpointHeader(endpointHeader string) BarOption {
+	return &barEndpointHeaderOption{
+		endpointHeader: endpointHeader,
+	}
+}
+
 // AuthorizationOption would be yet another option that would only
 // implement the endpoints where it's enabled.
 //
@@ -106,6 +119,15 @@ func (f *fooLimitOption) applyFoo(opts *fooOptions) {
 type barOptions struct {
 	authorizationBearer string
 	header              http.Header
+	endpointHeader      string
+}
+
+type barEndpointHeaderOption struct {
+	endpointHeader string
+}
+
+func (b *barEndpointHeaderOption) applyBar(opts *barOptions) {
+	opts.endpointHeader = b.endpointHeader
 }
 
 type authorizationOption struct {
