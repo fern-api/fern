@@ -42,6 +42,12 @@ const FIXTURES: FixtureInfo[] = [
             includeOtherInUnionTypes: true,
         },
     },
+    {
+        path: "folders",
+        orgName: "fern",
+        outputMode: "local",
+        apiName: "api",
+    },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 

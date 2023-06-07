@@ -6,6 +6,18 @@ import { PackageId } from "@fern-typescript/commons";
 export class PackageResolver {
     constructor(private readonly intermediateRepresentation: IntermediateRepresentation) {}
 
+    public getAllPackageIds(): PackageId[] {
+        return [
+            {
+                isRoot: true,
+            },
+            ...Object.keys(this.intermediateRepresentation.subpackages).map((subpackageId) => ({
+                isRoot: false,
+                subpackageId,
+            })),
+        ];
+    }
+
     public resolvePackage(packageId: PackageId): Package {
         if (packageId.isRoot) {
             return this.intermediateRepresentation.rootPackage;

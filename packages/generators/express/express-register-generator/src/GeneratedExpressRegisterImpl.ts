@@ -1,4 +1,4 @@
-import { HttpService } from "@fern-fern/ir-model/http";
+import { Name } from "@fern-fern/ir-model/commons";
 import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
 import { convertHttpPathToExpressRoute, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ExpressRegisterContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
@@ -62,9 +62,9 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                 },
             ],
             returnType: "void",
-            statements: Object.keys(this.intermediateRepresentation.subpackages)
-                .flatMap((subpackageId) => {
-                    const packageId = { isRoot: false, subpackageId };
+            statements: this.packageResolver
+                .getAllPackageIds()
+                .flatMap((packageId) => {
                     const service = this.packageResolver.getServiceDeclaration(packageId);
                     if (service == null) {
                         return [];
@@ -83,13 +83,13 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                             path: ts.factory.createStringLiteral(convertHttpPathToExpressRoute(service.basePath)),
                             router: context.expressService
                                 .getGeneratedExpressService(packageId)
-                                .toRouter(this.getReferenceToServiceArgument(service)),
+                                .toRouter(this.getReferenceToServiceArgument(packageId)),
                         })
                     );
                     if (this.areImplementationsOptional) {
                         statement = ts.factory.createIfStatement(
                             ts.factory.createBinaryExpression(
-                                this.getReferenceToServiceArgument(service, { includeQuestionMarks: true }),
+                                this.getReferenceToServiceArgument(packageId, { includeQuestionMarks: true }),
                                 ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
                                 ts.factory.createNull()
                             ),
@@ -103,27 +103,35 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     }
 
     private getReferenceToServiceArgument(
-        service: HttpService,
+        packageId: PackageId,
         { includeQuestionMarks = false }: { includeQuestionMarks?: boolean } = {}
     ) {
-        return service.name.fernFilepath.allParts.reduce<ts.Expression>(
-            (acc, part) =>
-                ts.factory.createPropertyAccessChain(
-                    acc,
-                    includeQuestionMarks ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
-                    // TODO there's some conflation around subpackage name and fern filepath part in this file
-                    part.camelCase.unsafeName
-                ),
-            ts.factory.createIdentifier(GeneratedExpressRegisterImpl.EXPRESS_SERVICES_PARAMETER_NAME)
+        const referenceToPackage = this.packageResolver
+            .resolvePackage(packageId)
+            .fernFilepath.packagePath.reduce<ts.Expression>(
+                (acc, part) =>
+                    ts.factory.createPropertyAccessChain(
+                        acc,
+                        includeQuestionMarks ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
+                        this.getPackagePathKey(part)
+                    ),
+                ts.factory.createIdentifier(GeneratedExpressRegisterImpl.EXPRESS_SERVICES_PARAMETER_NAME)
+            );
+
+        return ts.factory.createPropertyAccessChain(
+            referenceToPackage,
+            includeQuestionMarks ? ts.factory.createToken(ts.SyntaxKind.QuestionDotToken) : undefined,
+            this.getServiceKey(packageId)
         );
     }
 
     private getServiceKey(packageId: PackageId) {
-        if (packageId.isRoot) {
-            return "_root";
-        }
-        const subpackage = this.packageResolver.resolveSubpackage(packageId.subpackageId);
-        return subpackage.name.camelCase.unsafeName;
+        const subpackage = this.packageResolver.resolvePackage(packageId);
+        return subpackage.fernFilepath.file != null ? subpackage.fernFilepath.file.camelCase.unsafeName : "_root";
+    }
+
+    private getPackagePathKey(part: Name): string {
+        return part.camelCase.unsafeName;
     }
 
     private constructLiteralTypeNodeForServicesTree(
@@ -153,8 +161,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
             members.push(
                 ts.factory.createPropertySignature(
                     undefined,
-                    // TODO put in function
-                    otherChild.name.camelCase.unsafeName,
+                    this.getPackagePathKey(otherChild.name),
                     this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                     this.constructLiteralTypeNodeForServicesTree(
                         { isRoot: false, subpackageId: otherChildId },
@@ -182,11 +189,12 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     }
 
     private getImportAliasForService(packageId: PackageId): string {
-        const service = this.packageResolver.getServiceDeclarationOrThrow(packageId);
-        const lastPart = service.name.fernFilepath.allParts[service.name.fernFilepath.allParts.length - 1];
+        const package_ = this.packageResolver.resolvePackage(packageId);
         return [
-            ...service.name.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName),
-            `${lastPart != null ? lastPart.pascalCase.unsafeName : "Root"}Service`,
+            ...package_.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName),
+            package_.fernFilepath.file != null
+                ? `${package_.fernFilepath.file.pascalCase.unsafeName}Service`
+                : "RootService",
         ].join("_");
     }
 }
