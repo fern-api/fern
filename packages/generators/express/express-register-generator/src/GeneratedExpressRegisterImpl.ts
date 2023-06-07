@@ -141,7 +141,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     ): ts.TypeLiteralNode {
         const [leaves, otherChildren] = partition(
             root.subpackages,
-            (subpackageId) => this.packageResolver.resolveSubpackage(subpackageId).subpackages.length === 0
+            (subpackageId) => this.packageResolver.resolveSubpackage(subpackageId).fernFilepath.file != null
         );
 
         const members: ts.TypeElement[] = [];
@@ -158,18 +158,22 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
 
         for (const otherChildId of otherChildren) {
             const otherChild = this.packageResolver.resolveSubpackage(otherChildId);
-            members.push(
-                ts.factory.createPropertySignature(
-                    undefined,
-                    this.getPackagePathKey(otherChild.name),
-                    this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
-                    this.constructLiteralTypeNodeForServicesTree(
-                        { isRoot: false, subpackageId: otherChildId },
-                        otherChild,
-                        context
+            if (otherChild.hasEndpointsInTree) {
+                members.push(
+                    ts.factory.createPropertySignature(
+                        undefined,
+                        this.getPackagePathKey(otherChild.name),
+                        this.areImplementationsOptional
+                            ? ts.factory.createToken(ts.SyntaxKind.QuestionToken)
+                            : undefined,
+                        this.constructLiteralTypeNodeForServicesTree(
+                            { isRoot: false, subpackageId: otherChildId },
+                            otherChild,
+                            context
+                        )
                     )
-                )
-            );
+                );
+            }
         }
 
         return ts.factory.createTypeLiteralNode(members);
