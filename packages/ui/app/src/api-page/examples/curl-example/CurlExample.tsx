@@ -1,4 +1,4 @@
-import { noop } from "@fern-api/core-utils";
+import { assertNever, noop } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React, { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
@@ -43,11 +43,13 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
 
         if (endpoint.method !== FernRegistryApiRead.HttpMethod.Get) {
             parts.push({
+                type: "line",
                 value: <CurlParameter paramKey="-X" value={endpoint.method.toUpperCase()} doNotStringifyValue />,
             });
         }
 
         parts.push({
+            type: "line",
             value: <CurlParameter paramKey="--url" value={`${environmentUrl}${example.path}`} />,
         });
 
@@ -55,6 +57,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             const value = example.queryParameters[queryParam.key];
             if (value != null) {
                 parts.push({
+                    type: "line",
                     value: <CurlParameter paramKey="--url-query" value={`${queryParam.key}=${value}`} />,
                 });
             }
@@ -71,6 +74,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                 : undefined;
         if (requestContentType != null) {
             parts.push({
+                type: "line",
                 value: <CurlParameter paramKey="--header" value={`Content-Type: ${requestContentType}`} />,
             });
         }
@@ -79,16 +83,19 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             apiDefinition.auth._visit({
                 basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
                     parts.push({
+                        type: "line",
                         value: <CurlParameter paramKey="--user" value={`${usernameName}:${passwordName}`} />,
                     });
                 },
                 bearerAuth: ({ tokenName = "token" }) => {
                     parts.push({
+                        type: "line",
                         value: <CurlParameter paramKey="--header" value={`Authorization <${tokenName}>`} />,
                     });
                 },
                 header: ({ headerWireValue, nameOverride = headerWireValue }) => {
                     parts.push({
+                        type: "line",
                         value: <CurlParameter paramKey="--header" value={`${headerWireValue}: <${nameOverride}>`} />,
                     });
                 },
@@ -100,6 +107,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             const value = example.headers[header.key];
             if (value != null) {
                 parts.push({
+                    type: "line",
                     value: <CurlParameter paramKey="--header" value={`${header.key}: ${value}`} />,
                 });
             }
@@ -109,6 +117,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             switch (endpoint.request.type.type) {
                 case "fileUpload":
                     parts.push({
+                        type: "line",
                         value: <CurlParameter paramKey="--data" value="@file" />,
                     });
                     break;
@@ -116,6 +125,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                 case "reference":
                     parts.push(
                         {
+                            type: "line",
                             value: (
                                 <>
                                     <CurlParameter paramKey="--data" /> <JsonExampleString value="'" doNotAddQuotes />
@@ -124,17 +134,17 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                             excludeTrailingBackslash: true,
                         },
                         {
-                            value: (
+                            type: "jsx",
+                            jsx: (
                                 <>
                                     <JsonItemTopLine value={example.requestBody} isNonLastItemInCollection={false} />
                                     <JsonItemMiddleLines value={example.requestBody} />
                                     <JsonItemBottomLine value={example.requestBody} isNonLastItemInCollection={false} />
                                 </>
                             ),
-                            excludeIndent: true,
-                            excludeTrailingBackslash: true,
                         },
                         {
+                            type: "line",
                             value: <JsonExampleString value="'" doNotAddQuotes />,
                             excludeIndent: true,
                         }
@@ -146,7 +156,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         }
 
         const curlElement = <span className="text-yellow-100">{CURL_PREFIX}</span>;
-        if (parts[0] != null) {
+        if (parts[0]?.type === "line") {
             parts[0] = {
                 ...parts[0],
                 value: (
@@ -158,6 +168,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             };
         } else {
             parts.unshift({
+                type: "line",
                 value: curlElement,
             });
         }
@@ -179,14 +190,23 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
 
     return (
         <JsonExampleContext.Provider value={contextValue}>
-            {partsExcludingCurlCommand.map((part, index) => (
-                <CurlExampleLine
-                    key={index}
-                    part={part}
-                    indentInSpaces={index > 0 ? CURL_PREFIX.length : 0}
-                    isLastPart={index === partsExcludingCurlCommand.length - 1}
-                />
-            ))}
+            {partsExcludingCurlCommand.map((part, index) => {
+                switch (part.type) {
+                    case "jsx":
+                        return <React.Fragment key={index}>{part.jsx}</React.Fragment>;
+                    case "line":
+                        return (
+                            <CurlExampleLine
+                                key={index}
+                                part={part}
+                                indentInSpaces={index > 0 ? CURL_PREFIX.length : 0}
+                                isLastPart={index === partsExcludingCurlCommand.length - 1}
+                            />
+                        );
+                    default:
+                        assertNever(part);
+                }
+            })}
         </JsonExampleContext.Provider>
     );
 };
