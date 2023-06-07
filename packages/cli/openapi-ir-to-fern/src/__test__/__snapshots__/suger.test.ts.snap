@@ -4,6 +4,7 @@ exports[`open api parser suger simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "docs": undefined,
       "errors": {
         "BadRequestError": {
           "status-code": 400,
@@ -6651,12 +6652,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "api.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetApiClientAccessToken": {
             "auth": false,
@@ -6697,12 +6700,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "buyer.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetBuyer": {
             "auth": true,
@@ -6801,12 +6806,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "entitlement.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "AddEntitlementCredit": {
             "auth": true,
@@ -7043,12 +7050,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "entitlementTerm.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetEntitlementTerm": {
             "auth": true,
@@ -7106,12 +7115,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "integration.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "CreateIntegration": {
             "auth": true,
@@ -7328,12 +7339,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "metering.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetUsageRecordGroup": {
             "auth": true,
@@ -7739,12 +7752,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "offer.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "CancelOffer": {
             "auth": true,
@@ -7955,12 +7970,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "operation.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "ListOperations": {
             "auth": true,
@@ -8011,12 +8028,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "product.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "DeleteProduct": {
             "auth": true,
@@ -8183,12 +8202,14 @@ the same customer, dimension, and time, but a different quantity.",
       },
     },
     "report.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetRevenueReport": {
             "auth": true,

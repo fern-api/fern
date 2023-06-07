@@ -4,12 +4,14 @@ exports[`open api parser hume simple 1`] = `
 {
   "definitionFiles": {
     "1StartJob.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "[1] Start Job",
         "endpoints": {
           "startJob": {
             "auth": false,
@@ -58,12 +60,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
     },
     "2GetJobPredictions.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "[2] Get Job Predictions",
         "endpoints": {
           "getJobArtifacts": {
             "auth": false,
@@ -123,12 +127,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
     },
     "3ListJobs.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "[3] List Jobs",
         "endpoints": {
           "listJobs": {
             "auth": false,
@@ -181,6 +187,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
     },
     "__package__.yml": {
+      "docs": undefined,
       "errors": {},
       "service": undefined,
       "types": {

@@ -4,6 +4,7 @@ exports[`open api parser squidex simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "docs": undefined,
       "errors": {
         "BadRequestError": {
           "status-code": 400,
@@ -4313,12 +4314,14 @@ exports[`open api parser squidex simple 1`] = `
       },
     },
     "apps.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "deleteApp": {
             "auth": true,
@@ -5370,12 +5373,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "assets.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "bulkUpdateAssets": {
             "auth": true,
@@ -6236,12 +6241,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "backups.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "deleteBackup": {
             "auth": true,
@@ -6405,12 +6412,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "comments.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "deleteComment": {
             "auth": true,
@@ -6566,12 +6575,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "contents.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "bulkUpdateContents": {
             "auth": true,
@@ -7294,12 +7305,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "diagnostics.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getDump": {
             "auth": true,
@@ -7327,12 +7340,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "eventConsumers.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getEventConsumers": {
             "auth": true,
@@ -7418,12 +7433,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "history.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getAppHistory": {
             "auth": true,
@@ -7491,12 +7508,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "languages.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getLanguages": {
             "auth": true,
@@ -7516,12 +7535,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "news.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getNews": {
             "auth": true,
@@ -7551,12 +7572,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "notifications.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "deleteComment": {
             "auth": true,
@@ -7614,12 +7637,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "ping.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getAppPing": {
             "auth": true,
@@ -7665,12 +7690,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "plans.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getPlans": {
             "auth": true,
@@ -7774,12 +7801,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "rules.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "deleteEvent": {
             "auth": true,
@@ -8254,12 +8283,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "schemas.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "deleteField": {
             "auth": true,
@@ -9323,12 +9354,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "search.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getSearchResults": {
             "auth": true,
@@ -9365,12 +9398,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "statistics.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getCurrentStorageSize": {
             "auth": true,
@@ -9555,12 +9590,14 @@ The client secret is auto generated on the server and returned. The client does 
       },
     },
     "teams.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "deleteContributor": {
             "auth": true,
@@ -9764,12 +9801,14 @@ You will be assigned as owner of the new team automatically.",
       },
     },
     "templates.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getTemplate": {
             "auth": true,
@@ -9810,12 +9849,14 @@ You will be assigned as owner of the new team automatically.",
       },
     },
     "translations.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "postTranslation": {
             "auth": true,
@@ -9863,12 +9904,14 @@ You will be assigned as owner of the new team automatically.",
       },
     },
     "userManagement.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "deleteUser": {
             "auth": true,
@@ -10081,12 +10124,14 @@ You will be assigned as owner of the new team automatically.",
       },
     },
     "users.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getUser": {
             "auth": true,

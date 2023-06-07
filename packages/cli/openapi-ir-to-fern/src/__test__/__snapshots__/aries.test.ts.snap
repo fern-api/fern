@@ -4,10 +4,12 @@ exports[`open api parser aries simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "docs": undefined,
       "errors": {},
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "endorse-transaction": {
             "auth": true,
@@ -6478,6 +6480,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "actionMenu.yml": {
+      "docs": "Menu interaction over connection",
       "imports": {
         "root": "__package__.yml",
       },
@@ -6610,6 +6613,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "basicmessage.yml": {
+      "docs": "Simple messaging",
       "imports": {
         "root": "__package__.yml",
       },
@@ -6653,6 +6657,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "connection.yml": {
+      "docs": "Connection management",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7116,6 +7121,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "credentialDefinition.yml": {
+      "docs": "Credential definition operations",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7259,6 +7265,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "credentials.yml": {
+      "docs": "Holder credential management",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7499,6 +7506,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "didExchange.yml": {
+      "docs": "Connection management via DID exchange",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7686,6 +7694,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "discoverFeatures.yml": {
+      "docs": "Feature discovery",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7752,6 +7761,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "discoverFeaturesV20.yml": {
+      "docs": "Feature discovery v2",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7818,6 +7828,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "endorseTransaction.yml": {
+      "docs": "Endorse a Transaction",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8029,6 +8040,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "introduction.yml": {
+      "docs": "Introduction of known parties",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8074,6 +8086,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "issueCredentialV10.yml": {
+      "docs": "Credential issue v1.0",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8586,6 +8599,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "issueCredentialV20.yml": {
+      "docs": "Credential issue v2.0",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9046,6 +9060,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "jsonld.yml": {
+      "docs": "Sign and verify json-ld data",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9116,6 +9131,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "ledger.yml": {
+      "docs": "Interaction with ledger",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9327,6 +9343,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "mediation.yml": {
+      "docs": "Mediation management",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9673,6 +9690,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "multitenancy.yml": {
+      "docs": "Multitenant wallet management",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9887,6 +9905,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "outOfBand.yml": {
+      "docs": "Out-of-band connections",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10008,6 +10027,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "presentProofV10.yml": {
+      "docs": "Proof presentation v1.0",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10363,6 +10383,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "presentProofV20.yml": {
+      "docs": "Proof presentation v2.0",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10733,6 +10754,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "resolver.yml": {
+      "docs": "did resolver interface.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10763,6 +10785,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "revocation.yml": {
+      "docs": "Revocation registry management",
       "imports": {
         "root": "__package__.yml",
       },
@@ -11269,6 +11292,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "schema.yml": {
+      "docs": "Schema operations",
       "imports": {
         "root": "__package__.yml",
       },
@@ -11398,12 +11422,14 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "server.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "get_config": {
             "auth": true,
@@ -11493,6 +11519,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "trustping.yml": {
+      "docs": "Trust-ping over connection",
       "imports": {
         "root": "__package__.yml",
       },
@@ -11536,6 +11563,7 @@ exports[`open api parser aries simple 1`] = `
       },
     },
     "wallet.yml": {
+      "docs": "DID and tag policy management",
       "imports": {
         "root": "__package__.yml",
       },

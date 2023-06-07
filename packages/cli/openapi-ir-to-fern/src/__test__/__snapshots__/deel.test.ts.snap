@@ -4,6 +4,7 @@ exports[`open api parser deel simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "docs": undefined,
       "errors": {
         "BadRequestError": {
           "status-code": 400,
@@ -7409,6 +7410,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "accounting.yml": {
+      "docs": "End-points to retrieve paid invoices and reciepts.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7602,12 +7604,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "attachments.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "createFileRef": {
             "auth": true,
@@ -7644,12 +7648,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "contract.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getPeople": {
             "audiences": [
@@ -7714,6 +7720,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "contractors.yml": {
+      "docs": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8082,6 +8089,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "contracts.yml": {
+      "docs": "The Contracts resource lets you create, amend and, retrieve Deel contracts.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8584,6 +8592,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "eor.yml": {
+      "docs": "Employee of Record (EOR).",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8655,6 +8664,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "hris.yml": {
+      "docs": "API end-points related to HRIS data.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8695,6 +8705,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "invoices.yml": {
+      "docs": "The Invoices resource lets you create, amend and retrieve invoices related to Deel contracts.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9047,6 +9058,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "lookups.yml": {
+      "docs": "Helper end-points for choosing options for other operations",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9194,6 +9206,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "milestones.yml": {
+      "docs": "Helper end-points for managing milestones of Deel contracts",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9420,6 +9433,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "offCyclePayments.yml": {
+      "docs": "End-points to manage off-cycle payments for a given contract",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9533,6 +9547,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "organizations.yml": {
+      "docs": "Helper end-points for additional information about your organizations",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9649,6 +9664,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "tasks.yml": {
+      "docs": "End-points to manage tasks for a given contract",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9858,6 +9874,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "timeOff.yml": {
+      "docs": "Manage time off requests.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10081,6 +10098,7 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "timesheets.yml": {
+      "docs": "The Invoices resource lets you create, amend and retrieve timesheets of Deel contracts.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10441,12 +10459,14 @@ exports[`open api parser deel simple 1`] = `
       },
     },
     "webhooks.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "WebhookController_deleteById": {
             "audiences": [

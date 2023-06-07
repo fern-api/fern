@@ -4,6 +4,7 @@ exports[`open api parser apiture simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "docs": undefined,
       "errors": {
         "BadRequestError": {
           "status-code": 400,
@@ -2253,12 +2254,14 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       },
     },
     "accountJointOwners.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "listAccountJointOwners": {
             "auth": true,
@@ -2287,12 +2290,14 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       },
     },
     "accounts.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getAccount": {
             "auth": true,
@@ -2451,12 +2456,14 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
       },
     },
     "institutions.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getCutoffTimes": {
             "auth": true,
@@ -2652,12 +2659,14 @@ This information provides hints to clients, allowing bank customers to select tr
       },
     },
     "jointOwners.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "createJointOwnerInvitation": {
             "auth": true,
@@ -2701,12 +2710,14 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       },
     },
     "overdraftProtection.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "getOverdraftProtection": {
             "auth": true,
@@ -2815,12 +2826,14 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       },
     },
     "transactionCategories.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "listTransactionCategories": {
             "auth": true,
@@ -2855,12 +2868,14 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       },
     },
     "transactions.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "listTransactions": {
             "auth": true,
@@ -2960,12 +2975,14 @@ The default response lists only recent transactions. Normally, this is transacti
       },
     },
     "transfers.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "createTransfer": {
             "auth": true,

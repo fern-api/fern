@@ -4,6 +4,7 @@ exports[`open api parser vellum simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "docs": undefined,
       "errors": {
         "BadRequestError": {
           "status-code": 400,
@@ -21,6 +22,7 @@ exports[`open api parser vellum simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "generate": {
             "auth": true,
@@ -776,12 +778,14 @@ Used to submit feedback regarding the quality of previously generated completion
       },
     },
     "documents.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "list": {
             "auth": true,
@@ -874,12 +878,14 @@ Upload a document to be indexed and used for search.
       },
     },
     "modelVersions.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "retrieve": {
             "auth": true,

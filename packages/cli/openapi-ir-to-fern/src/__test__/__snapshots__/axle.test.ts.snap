@@ -4,6 +4,7 @@ exports[`open api parser axle simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "docs": undefined,
       "errors": {},
       "service": undefined,
       "types": {
@@ -559,12 +560,14 @@ exports[`open api parser axle simple 1`] = `
       },
     },
     "accounts.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetAccount": {
             "auth": false,
@@ -598,12 +601,14 @@ exports[`open api parser axle simple 1`] = `
       },
     },
     "carriers.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetCarrier": {
             "auth": false,
@@ -639,12 +644,14 @@ exports[`open api parser axle simple 1`] = `
       },
     },
     "ignition.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "StartIgnition": {
             "auth": false,
@@ -687,12 +694,14 @@ exports[`open api parser axle simple 1`] = `
       },
     },
     "policies.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetPolicy": {
             "auth": false,
@@ -726,12 +735,14 @@ exports[`open api parser axle simple 1`] = `
       },
     },
     "tokens.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "ExchangeToken": {
             "auth": false,

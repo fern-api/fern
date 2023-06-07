@@ -4,6 +4,7 @@ exports[`open api parser hathora simple 1`] = `
 {
   "definitionFiles": {
     "__package__.yml": {
+      "docs": undefined,
       "errors": {
         "BadRequestError": {
           "status-code": 400,
@@ -895,12 +896,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "appV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "CreateApp": {
             "auth": true,
@@ -998,12 +1001,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "authV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "LoginAnonymous": {
             "auth": true,
@@ -1093,12 +1098,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "buildV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "CreateBuild": {
             "auth": true,
@@ -1219,12 +1226,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "deploymentV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "CreateDeployment": {
             "auth": true,
@@ -1303,12 +1312,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "discoveryV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetPingServiceEndpoints": {
             "auth": true,
@@ -1325,12 +1336,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "lobbyV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "CreatePrivateLobbyDeprecated": {
             "auth": true,
@@ -1468,12 +1481,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "lobbyV2.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "CreateLobby": {
             "auth": true,
@@ -1778,12 +1793,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "logV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetLogsForApp": {
             "auth": true,
@@ -1898,12 +1915,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "metricsV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetMetrics": {
             "auth": true,
@@ -1958,12 +1977,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "processesV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "GetProcessInfo": {
             "auth": true,
@@ -2050,12 +2071,14 @@ exports[`open api parser hathora simple 1`] = `
       },
     },
     "roomV1.yml": {
+      "docs": undefined,
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": undefined,
         "endpoints": {
           "CreateRoom": {
             "auth": true,
