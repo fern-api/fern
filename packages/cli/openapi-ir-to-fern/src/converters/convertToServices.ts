@@ -1,16 +1,21 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIFile, Tag } from "@fern-fern/openapi-ir-model/ir";
 import { EXTERNAL_AUDIENCE } from "../convertPackage";
 import { Environment } from "../getEnvironment";
 import { convertEndpoint } from "./convertEndpoint";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
 export interface ConvertedServices {
-    services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema>;
+    services: Record<RelativeFilePath, ConvertedService>;
     schemaIdsToExclude: string[];
     additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
+}
+
+export interface ConvertedService {
+    service: RawSchemas.HttpServiceSchema;
+    docs?: string;
 }
 
 export function convertToServices({
@@ -25,20 +30,17 @@ export function convertToServices({
     const { endpoints, schemas, nonRequestReferencedSchemas } = openApiFile;
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
-    const services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema> = {};
+    const services: Record<RelativeFilePath, ConvertedService> = {};
     for (const endpoint of endpoints) {
         const { endpointId, file, tag } = getEndpointLocation(endpoint);
         if (!(file in services)) {
             const serviceTag = tag == null ? undefined : openApiFile.tags[tag];
-            const emptyService = getEmptyService();
-            if (serviceTag?.description != null) {
-                emptyService["display-name"] = serviceTag.id;
-            }
+            const emptyService = constructService({ tag: serviceTag });
             services[file] = emptyService;
         }
         const service = services[file];
         if (service != null) {
-            if (endpointId in service.endpoints) {
+            if (endpointId in service.service.endpoints) {
                 throw new Error(
                     `The OpenAPI Spec has conflicting sdk method names. See ${endpoint.method.toUpperCase()} ${
                         endpoint.path
@@ -66,7 +68,7 @@ export function convertToServices({
                     audiences: [EXTERNAL_AUDIENCE],
                 };
             }
-            service.endpoints[endpointId] = endpointDefinition;
+            service.service.endpoints[endpointId] = endpointDefinition;
         }
     }
     return {
@@ -76,10 +78,14 @@ export function convertToServices({
     };
 }
 
-function getEmptyService(): RawSchemas.HttpServiceSchema {
+function constructService({ tag }: { tag?: Tag }): ConvertedService {
     return {
-        auth: false,
-        "base-path": "",
-        endpoints: {},
+        service: {
+            auth: false,
+            "display-name": tag?.id,
+            "base-path": "",
+            endpoints: {},
+        },
+        docs: tag?.description ?? undefined,
     };
 }

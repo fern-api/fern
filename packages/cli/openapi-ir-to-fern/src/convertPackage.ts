@@ -45,7 +45,8 @@ export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): C
                             imports: {
                                 [ROOT_PREFIX]: `${importPrefix}${FERN_PACKAGE_MARKER_FILENAME}`,
                             },
-                            service,
+                            service: service.service,
+                            docs: service.docs,
                         },
                     ];
                 })
@@ -151,9 +152,12 @@ function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedSer
         }
         errors[httpError.generatedName] = errorDeclaration;
     }
+
+    const convertedService = convertedServices.services[RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)];
     return {
         types,
-        service: convertedServices.services[RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)],
+        docs: convertedService?.docs,
+        service: convertedService?.service,
         errors,
     };
 }
