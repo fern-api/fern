@@ -40,6 +40,14 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
             },
             _getReferenceToType: this.getReferenceToTypeInStreamingFetcherModule("Args"),
         },
+
+        Response: {
+            properties: {
+                data: "data",
+                headers: "headers",
+            },
+            _getReferenceToType: this.getReferenceToTypeInStreamingFetcherModule("Response"),
+        },
     };
 
     public readonly StreamingFetchFunction = {

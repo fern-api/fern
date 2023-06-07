@@ -14,4 +14,5 @@ export interface SdkCustomConfig {
     skipResponseValidation: boolean;
     extraDependencies: Record<string, string>;
     treatUnknownAsAny: boolean;
+    includeContentHeadersOnFileDownloadResponse: boolean;
 }

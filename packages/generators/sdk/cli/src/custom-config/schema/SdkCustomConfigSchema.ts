@@ -16,6 +16,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     skipResponseValidation: z.optional(z.boolean()),
     extraDependencies: z.optional(z.record(z.string())),
     treatUnknownAsAny: z.optional(z.boolean()),
+    includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

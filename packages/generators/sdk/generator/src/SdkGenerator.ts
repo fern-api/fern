@@ -83,6 +83,7 @@ export declare namespace SdkGenerator {
         targetRuntime: JavaScriptRuntime;
         extraDependencies: Record<string, string>;
         treatUnknownAsAny: boolean;
+        includeContentHeadersOnFileDownloadResponse: boolean;
     }
 }
 
@@ -251,6 +252,7 @@ export class SdkGenerator {
             timeoutInSeconds: config.timeoutInSeconds,
             npmPackage,
             targetRuntime: config.targetRuntime,
+            includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();

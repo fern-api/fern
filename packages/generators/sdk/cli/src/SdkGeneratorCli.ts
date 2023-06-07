@@ -40,6 +40,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             skipResponseValidation: parsed?.skipResponseValidation ?? false,
             extraDependencies: parsed?.extraDependencies ?? {},
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
+            includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
         };
     }
 
@@ -81,6 +82,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 targetRuntime: this.targetRuntime,
                 extraDependencies: customConfig.extraDependencies,
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
+                includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
             },
         });
 

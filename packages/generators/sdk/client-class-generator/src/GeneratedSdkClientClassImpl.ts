@@ -44,6 +44,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         timeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
         targetRuntime: JavaScriptRuntime;
+        includeContentHeadersOnFileDownloadResponse: boolean;
     }
 }
 
@@ -83,6 +84,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         timeoutInSeconds,
         npmPackage,
         targetRuntime,
+        includeContentHeadersOnFileDownloadResponse,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -190,6 +192,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     includeCredentialsOnCrossOriginRequests,
                                     timeoutInSeconds,
                                     request: getGeneratedEndpointRequest(),
+                                    includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
                                 }),
                             browser: () =>
                                 new GeneratedBlobDownloadEndpointImplementation({

@@ -7,6 +7,11 @@ export interface StreamingFetcher {
             properties: { [Arg in keyof ActualStreamingFetcher.Args]-?: Arg };
             _getReferenceToType: () => ts.TypeNode;
         };
+
+        Response: {
+            properties: { [Key in keyof ActualStreamingFetcher.Response]-?: Key };
+            _getReferenceToType: () => ts.TypeNode;
+        };
     };
 
     readonly streamingFetcher: {

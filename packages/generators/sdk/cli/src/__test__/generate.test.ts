@@ -163,6 +163,16 @@ const FIXTURES: FixtureInfo[] = [
         targetRuntime: JavaScriptRuntime.NODE,
     },
     {
+        path: "file-download-response-headers",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
+        customConfig: {
+            includeContentHeadersOnFileDownloadResponse: true,
+        },
+    },
+    {
         path: "file-download-browser",
         orgName: "fern",
         outputMode: "github",

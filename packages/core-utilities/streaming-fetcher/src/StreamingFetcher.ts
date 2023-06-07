@@ -1,8 +1,8 @@
 import { default as URLSearchParams } from "@ungap/url-search-params";
-import axios, { AxiosAdapter, AxiosProgressEvent, AxiosResponse } from "axios";
+import axios, { AxiosAdapter, AxiosProgressEvent } from "axios";
 import { Readable } from "stream";
 
-export type StreamingFetchFunction = (args: StreamingFetcher.Args) => Promise<Readable>;
+export type StreamingFetchFunction = (args: StreamingFetcher.Args) => Promise<StreamingFetcher.Response>;
 
 export declare namespace StreamingFetcher {
     export interface Args {
@@ -24,6 +24,11 @@ export declare namespace StreamingFetcher {
         responseChunkPrefix?: string;
         terminator?: string;
     }
+
+    export interface Response {
+        data: Readable;
+        headers: Record<string, any>;
+    }
 }
 
 export const streamingFetcher: StreamingFetchFunction = async (args) => {
@@ -39,31 +44,25 @@ export const streamingFetcher: StreamingFetchFunction = async (args) => {
         }
     }
 
-    let response: AxiosResponse;
-    try {
-        response = await axios({
-            url: args.url,
-            params: args.queryParameters,
-            method: args.method,
-            headers,
-            data: args.body,
-            timeout: args.timeoutMs,
-            transitional: {
-                clarifyTimeoutError: true,
-            },
-            withCredentials: args.withCredentials,
-            maxBodyLength: Infinity,
-            maxContentLength: Infinity,
-            onUploadProgress: args.onUploadProgress,
-            onDownloadProgress: args.onDownloadProgress,
-            signal: args.abortController?.signal,
-            responseType: "stream",
-            adapter: args.adapter,
-        });
-    } catch (error) {
-        args.onError?.(error);
-        return;
-    }
+    const response = await axios({
+        url: args.url,
+        params: args.queryParameters,
+        method: args.method,
+        headers,
+        data: args.body,
+        timeout: args.timeoutMs,
+        transitional: {
+            clarifyTimeoutError: true,
+        },
+        withCredentials: args.withCredentials,
+        maxBodyLength: Infinity,
+        maxContentLength: Infinity,
+        onUploadProgress: args.onUploadProgress,
+        onDownloadProgress: args.onDownloadProgress,
+        signal: args.abortController?.signal,
+        responseType: "stream",
+        adapter: args.adapter,
+    });
 
     if (args.onData != null) {
         const { onData } = args;
@@ -91,5 +90,8 @@ export const streamingFetcher: StreamingFetchFunction = async (args) => {
         response.data.on("end", args.onFinish);
     }
 
-    return response.data;
+    return {
+        data: response.data,
+        headers: response.headers,
+    };
 };

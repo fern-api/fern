@@ -16,6 +16,7 @@ export declare namespace SdkClientClassGenerator {
         timeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
         targetRuntime: JavaScriptRuntime;
+        includeContentHeadersOnFileDownloadResponse: boolean;
     }
 
     export namespace generateService {
@@ -37,6 +38,7 @@ export class SdkClientClassGenerator {
     private timeoutInSeconds: number | "infinity" | undefined;
     private npmPackage: NpmPackage | undefined;
     private targetRuntime: JavaScriptRuntime;
+    private includeContentHeadersOnFileDownloadResponse: boolean;
 
     constructor({
         intermediateRepresentation,
@@ -49,6 +51,7 @@ export class SdkClientClassGenerator {
         timeoutInSeconds,
         npmPackage,
         targetRuntime,
+        includeContentHeadersOnFileDownloadResponse,
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -60,6 +63,7 @@ export class SdkClientClassGenerator {
         this.timeoutInSeconds = timeoutInSeconds;
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
+        this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
     }
 
     public generateService({
@@ -79,6 +83,7 @@ export class SdkClientClassGenerator {
             timeoutInSeconds: this.timeoutInSeconds,
             npmPackage: this.npmPackage,
             targetRuntime: this.targetRuntime,
+            includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
         });
     }
 }
