@@ -92,6 +92,40 @@ export function convertSchemaObject(
         });
     }
 
+    if (isListOfStrings(schema.type) && schema.type[1] != null && schema.type[0] != null) {
+        const firstElement = schema.type[0];
+        const secondElement = schema.type[1];
+        if (firstElement === "null") {
+            return Schema.nullable({
+                value: convertSchemaObject(
+                    {
+                        ...schema,
+                        type: secondElement as OpenAPIV3.NonArraySchemaObjectType,
+                    },
+                    wrapAsNullable,
+                    context,
+                    breadcrumbs,
+                    propertiesToExclude
+                ),
+                description: schema.description,
+            });
+        } else if (secondElement === "null") {
+            return Schema.nullable({
+                value: convertSchemaObject(
+                    {
+                        ...schema,
+                        type: firstElement as OpenAPIV3.NonArraySchemaObjectType,
+                    },
+                    wrapAsNullable,
+                    context,
+                    breadcrumbs,
+                    propertiesToExclude
+                ),
+                description: schema.description,
+            });
+        }
+    }
+
     // primitive types
     if (schema === "boolean" || schema.type === "boolean") {
         return wrapPrimitive({
