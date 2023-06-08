@@ -7,9 +7,7 @@
     "@babel/preset-typescript",
     "vite",
     "@types/react",
-    "@types/react",
-    "@emotion/react",
-    "@emotion/styled"
+    "@types/react"
   ],
   "ignore-patterns": ["lib"]
 }

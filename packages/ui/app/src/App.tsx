@@ -8,7 +8,6 @@ import "@blueprintjs/select/lib/css/blueprint-select.css";
 import "normalize.css";
 import { initializePosthog } from "./analytics/posthog";
 import styles from "./App.module.scss";
-import { CONTEXTS } from "./contexts";
 import { Docs } from "./docs/Docs";
 import { useAreFernFontsReady } from "./useAreFernFontsReady";
 
@@ -28,12 +27,7 @@ export const App: React.FC = () => {
 
     return (
         <div className={styles.app}>
-            {CONTEXTS.reduceRight(
-                (children, Context) => (
-                    <Context>{children}</Context>
-                ),
-                <Docs />
-            )}
+            <Docs />
         </div>
     );
 };
