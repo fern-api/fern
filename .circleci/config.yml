@@ -288,8 +288,11 @@ jobs:
           command: |
             cd packages/ui/fe-bundle
 
+            # Build
+            yarn build --mode staging
+
             # Install Vercel CLI
-            npm install --global vercel@latest
+            sudo npm install --global vercel@latest
 
             # Pull Vercel Environment Information
             vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
