@@ -9878,7 +9878,7 @@ env-cmd@toddbluhm/env-cmd:
     jsonc-parser: ~2.2.1
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
-    mrlint: ^0.0.116
+    mrlint: ^0.0.117
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     react: ^18.2.0
@@ -13708,12 +13708,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.116":
-  version: 0.0.116
-  resolution: "mrlint@npm:0.0.116"
+"mrlint@npm:^0.0.117":
+  version: 0.0.117
+  resolution: "mrlint@npm:0.0.117"
   bin:
     mrlint: cli.cjs
-  checksum: 46ff0d29e4068c2ac70ffc3e8fb3981e555a87e24454b62bd8b87c3ecba323d07d86206161fd900e2915145e0f0686ac162b52d775599860957d7593c47f5cf7
+  checksum: d82afa6befabfc168a1512521e77b52c877378ea4aed4a985affae648063e91e81514c55918d6b7e9d3e6fdb97781dea33ca842e9b7126fde172c585a5c29827
   languageName: node
   linkType: hard
 
