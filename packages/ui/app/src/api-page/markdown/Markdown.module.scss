@@ -1,14 +1,10 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
 .container {
-    :not(pre) > code {
-        padding: 1px 0.25rem;
-        background-color: rgba(255, 255, 255, 15%);
-        border-radius: 0.25rem;
-
-        &::before,
-        &::after {
-            content: none;
+    &,
+    :not(pre) {
+        code {
+            @apply px-2 py-1 rounded bg-white/10 before:content-none after:content-none;
         }
     }
 
