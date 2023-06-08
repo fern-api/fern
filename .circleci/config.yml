@@ -284,8 +284,21 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Publish docs (dev)
-          command: yarn workspace @fern-api/fe-bundle deploy:staging
+          name: Deploy
+          command: |
+            cd packages/ui/fe-bundle
+
+            # Install Vercel CLI
+            npm install --global vercel@latest
+
+            # Pull Vercel Environment Information
+            vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
+
+            # Build Project Artifacts
+            vercel build --prod --token=${VERCEL_TOKEN}
+
+            # Deploy Project Artifacts to Vercel
+            vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
   deploy-docs:
     docker:
@@ -435,18 +448,19 @@ workflows:
 
       - deploy-docs-dev:
           filters:
-            branches:
-              only: main
-          requires:
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-            - ete-tests
+            # branches:
+            #   only: main
+          # requires:
+          #   - check
+          #   - organize-imports
+          #   - compile
+          #   - eslint
+          #   - test
+          #   - ete-tests
           context:
             - aws
             - github
+            - vercel-dev
 
       - deploy-docs:
           filters:
