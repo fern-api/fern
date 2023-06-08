@@ -14,10 +14,14 @@ export const BuiltWithFern: React.FC = () => {
             )}
             onClick={onClick}
         >
-            <div className="h-4 w-4">
-                <FernLogo />
+            <div className="relative">
+                <div className="absolute inset-y-0 -left-6 flex items-center justify-center">
+                    <div className="h-4 w-4">
+                        <FernLogo />
+                    </div>
+                </div>
+                <div className="whitespace-nowrap text-xs">Built with Fern</div>
             </div>
-            <div className="whitespace-nowrap text-xs">Built with Fern</div>
         </div>
     );
 };
