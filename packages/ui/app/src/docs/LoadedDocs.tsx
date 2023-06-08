@@ -15,7 +15,6 @@ export const LoadedDocs: React.FC = () => {
 
         if (docsDefinition.config.favicon != null) {
             const faviconElement = document.getElementById("favicon");
-            console.log(faviconElement);
             if (faviconElement != null) {
                 (faviconElement as HTMLLinkElement).href = resolveFile(docsDefinition.config.favicon);
             }
