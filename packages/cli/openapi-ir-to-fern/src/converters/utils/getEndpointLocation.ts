@@ -89,6 +89,8 @@ function tokenizeString(input: string): string[] {
         tokens = input.split(/[^a-zA-Z0-9]+/);
     }
 
+    tokens = tokens.map((token) => token.toLowerCase());
+
     // Filter out empty tokens
     tokens = compact(tokens);
 
