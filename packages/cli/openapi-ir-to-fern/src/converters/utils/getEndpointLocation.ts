@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { Endpoint } from "@fern-fern/openapi-ir-model/ir";
-import { camelCase, compact, isEqual, words } from "lodash-es";
+import { camelCase, compact, isEqual } from "lodash-es";
 
 export interface EndpointLocation {
     file: RelativeFilePath;
@@ -78,11 +78,16 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
 }
 
 function tokenizeString(input: string): string[] {
-    // Handle camel case and snake case
-    let tokens = input.split(/(?=[A-Z])|_| /);
+    let tokens: string[];
 
-    // Remove non-alphanumeric characters from each token
-    tokens = tokens.map((token) => words(token).join(""));
+    // Check if the string is in camel case or Pascal case
+    if (/^[a-z]+(?:[A-Z][a-z]+)*$/.test(input)) {
+        // Camel case or Pascal case: Split based on capital letters
+        tokens = input.split(/(?=[A-Z])/);
+    } else {
+        // Snake case or non-alphanumeric separators: Split based on non-alphanumeric characters
+        tokens = input.split(/[^a-zA-Z0-9]+/);
+    }
 
     // Filter out empty tokens
     tokens = compact(tokens);

@@ -5,7 +5,40 @@ exports[`open api parser aries simple 1`] = `
   "definitionFiles": {
     "__package__.yml": {
       "errors": {},
-      "service": undefined,
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "endorse-transaction": {
+            "auth": true,
+            "display-name": "For Endorser to endorse a particular transaction record",
+            "docs": undefined,
+            "errors": [],
+            "method": "POST",
+            "path": "/transactions/{tran_id}/endorse",
+            "path-parameters": {
+              "tran_id": {
+                "docs": "Transaction identifier",
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "EndorseTransactionRequest",
+              "query-parameters": {
+                "endorser_did": {
+                  "allow-multiple": undefined,
+                  "docs": "Endorser DID",
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "TransactionRecord",
+            },
+          },
+        },
+      },
       "types": {
         "ActionMenuFetchResult": {
           "docs": undefined,
@@ -7839,34 +7872,6 @@ exports[`open api parser aries simple 1`] = `
                   "allow-multiple": undefined,
                   "docs": "Transaction identifier",
                   "type": "string",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "root.TransactionRecord",
-            },
-          },
-          "endorse_transaction": {
-            "auth": true,
-            "display-name": "For Endorser to endorse a particular transaction record",
-            "docs": undefined,
-            "errors": [],
-            "method": "POST",
-            "path": "/transactions/{tran_id}/endorse",
-            "path-parameters": {
-              "tran_id": {
-                "docs": "Transaction identifier",
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "EndorseTransactionRequest",
-              "query-parameters": {
-                "endorser_did": {
-                  "allow-multiple": undefined,
-                  "docs": "Endorser DID",
-                  "type": "optional<string>",
                 },
               },
             },
