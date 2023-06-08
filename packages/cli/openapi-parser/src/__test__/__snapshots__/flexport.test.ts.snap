@@ -12187,12 +12187,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     {
                       "description": undefined,
-                      "generatedName": "received_quote",
-                      "nameOverride": undefined,
-                      "value": "received_quote",
-                    },
-                    {
-                      "description": undefined,
                       "generatedName": "rejected_quote",
                       "nameOverride": undefined,
                       "value": "rejected_quote",

@@ -21,7 +21,8 @@ export function convertEnum({
     wrapAsNullable: boolean;
 }): Schema {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
-    const values = enumValues.map((value, index) => {
+    const uniqueValues = new Set(enumValues);
+    const values = Array.from(uniqueValues).map((value, index) => {
         const fernEnumValue = fernEnum?.[value];
         const enumVarName = strippedEnumVarNames[index];
         const valueIsValidName = VALID_NAME_REGEX.test(value);
