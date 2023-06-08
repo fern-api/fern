@@ -1,3 +1,5 @@
+"use client";
+
 import { EditableTextProps } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
 import produce from "immer";

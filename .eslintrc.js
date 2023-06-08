@@ -23,6 +23,7 @@ module.exports = {
         "plugin:react/recommended",
         "plugin:react-hooks/recommended",
         "plugin:tailwindcss/recommended",
+        "next/core-web-vitals",
     ],
     settings: {
         react: {

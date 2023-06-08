@@ -1,0 +1,20 @@
+{
+  "extends": "../../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "jsx": "preserve",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["./src", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"],
+  "references": [{ "path": "../app" }]
+}

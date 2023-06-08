@@ -8,10 +8,12 @@ packages/**/build
 packages/**/lib
 packages/**/dist
 packages/**/tsconfig*tsbuildinfo
+packages/**/out
 
-# docusaurus
-.docusaurus
-.cache-loader
+# next
+.next
+next-env.d.ts
+.vercel
 
 # misc
 .DS_Store

@@ -13,8 +13,7 @@
   "type": "module",
   "source": "src/index.ts",
   "module": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "src/index.ts",
   "sideEffects": false,
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -48,6 +47,7 @@
     "classnames": "^2.3.1",
     "lodash-es": "^4.17.21",
     "marked": "^5.0.3",
+    "next": "^13.4.4",
     "normalize.css": "^8.0.1",
     "posthog-js": "^1.50.0",
     "react": "^18.2.0",

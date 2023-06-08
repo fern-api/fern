@@ -1,3 +1,5 @@
+"use client";
+
 import { assertNever } from "@fern-api/core-utils";
 import { useCallback, useReducer } from "react";
 

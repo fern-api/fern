@@ -1,17 +1,5 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
-body {
-    overscroll-behavior-y: none;
-    font-family: Inter;
-
-    :global {
-        code,
-        pre {
-            font-family: "Berkeley Mono";
-        }
-    }
-}
-
 @font-face {
     font-family: "Berkeley Mono";
     src: local("Berkeley Mono"), url("./fonts/BerkeleyMono-Regular.woff2") format("woff2");
@@ -26,4 +14,13 @@ body {
     flex: 1;
     display: flex;
     height: 100vh;
+    overscroll-behavior-y: none;
+    font-family: Inter;
+
+    :global {
+        code,
+        pre {
+            font-family: "Berkeley Mono";
+        }
+    }
 }
