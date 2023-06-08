@@ -447,9 +447,9 @@ workflows:
             - fern-tokens
 
       - deploy-docs-dev:
-          filters:
-            # branches:
-            #   only: main
+          # filters:
+          # branches:
+          #   only: main
           # requires:
           #   - check
           #   - organize-imports
