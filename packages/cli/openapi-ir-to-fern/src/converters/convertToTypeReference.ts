@@ -74,10 +74,33 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         boolean: () => "boolean",
         _unknown: () => "unknown",
     });
+    const docsPrefix = PrimitiveSchemaValue._visit<string | undefined>(primitiveSchema.schema, {
+        int: () => undefined,
+        int64: () => undefined,
+        float: () => undefined,
+        double: () => undefined,
+        string: (value) => {
+            let prefix = "";
+            if (value.minLength != null && value.minLength === 0) {
+                prefix += "`non-empty` ";
+            }
+            if (value.maxLength != null) {
+                prefix += prefix += "`less than " + `${value.maxLength} characters` + "` ";
+            }
+            return prefix;
+        },
+        datetime: () => undefined,
+        date: () => undefined,
+        base64: () => undefined,
+        boolean: () => undefined,
+        _unknown: () => undefined,
+    });
+
+    const docs = primitiveSchema.description == null ? docsPrefix : docsPrefix + primitiveSchema.description;
     return {
         typeReference: {
             type: typeReference,
-            docs: primitiveSchema.description ?? undefined,
+            docs,
         },
         additionalTypeDeclarations: {},
     };

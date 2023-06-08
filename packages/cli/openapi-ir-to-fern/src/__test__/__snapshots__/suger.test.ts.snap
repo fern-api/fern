@@ -28,11 +28,11 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -41,11 +41,11 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "title": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "uri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "validationResults": {
@@ -90,15 +90,15 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "email": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "phone": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "type": {
@@ -106,7 +106,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureListingContactType>",
             },
             "uri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -135,19 +135,19 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "displayText": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "subtype": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "uri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -156,7 +156,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "dateTimeInUtc": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "localizePerMarket": {
@@ -182,7 +182,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "friendlyName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "marketCode": {
@@ -241,7 +241,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "price": {
-              "docs": "default 0",
+              "docs": "undefineddefault 0",
               "type": "optional<double>",
             },
             "prices": {
@@ -254,7 +254,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "$schema": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "acceptBy": {
@@ -270,7 +270,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureMarketplacePrivateOfferBeneficiary>>",
             },
             "eTag": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "end": {
@@ -286,7 +286,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "notificationContacts": {
@@ -294,7 +294,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "preparedBy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "pricing": {
@@ -306,7 +306,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureMarketplacePrivateOfferPrivateOfferType>",
             },
             "resourceName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "start": {
@@ -322,7 +322,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureMarketplacePrivateOfferSubState>",
             },
             "termsAndConditionsDocSasUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "upgradedFrom": {
@@ -347,7 +347,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "link": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -360,7 +360,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureMarketplacePrivateOfferBeneficiaryRecipient>>",
             },
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
@@ -373,7 +373,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "recipientType": {
@@ -401,7 +401,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "discountPercentage": {
-              "docs": "between 0 and 100",
+              "docs": "undefinedbetween 0 and 100",
               "type": "optional<double>",
             },
             "discountType": {
@@ -417,7 +417,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "planName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "planType": {
@@ -425,7 +425,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureMarketplacePrivateOfferPricingPlanType>",
             },
             "priceDetails": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "privateOfferPlan": {
@@ -437,7 +437,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "sugerOfferId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -491,11 +491,11 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -548,7 +548,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureMarketplaceTermType>",
             },
             "value": {
-              "docs": "default 0",
+              "docs": "undefineddefault 0",
               "type": "optional<double>",
             },
           },
@@ -582,7 +582,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "$schema": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "code": {
@@ -594,11 +594,11 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureMarketplaceValidationLevel>",
             },
             "message": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "resourceId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -692,11 +692,11 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "status": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "updateType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -713,7 +713,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<double>",
             },
             "priceTierID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -750,15 +750,15 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "$schema": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "plan": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "pricing": {
@@ -766,11 +766,11 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzurePriceAndAvailabilityPrivateOfferPrice>",
             },
             "product": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "resourceName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "validations": {
@@ -926,7 +926,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzurePricingUnitName>",
             },
             "unitType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "upperUnit": {
@@ -966,7 +966,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureTypeValue>>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "isModularPublishing": {
@@ -978,7 +978,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureProductListing>>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "packageConfigurations": {
@@ -990,7 +990,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureProductProperty>>",
             },
             "resourceType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "setup": {
@@ -1015,15 +1015,15 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureAudience>>",
             },
             "enterpriseLicensing": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "resourceType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "subscriptionAudiences": {
@@ -1031,7 +1031,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureAudience>>",
             },
             "visibility": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -1040,31 +1040,31 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "currentDraftInstanceID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "friendlyName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "module": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "resourceType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "variantID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -1077,7 +1077,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureProductVariantCustomMeter>>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "isHidden": {
@@ -1141,7 +1141,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "accessInformation": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "assets": {
@@ -1153,15 +1153,15 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "gettingStartedInstructions": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "keywords": {
@@ -1169,7 +1169,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "languageCode": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "listingContacts": {
@@ -1181,11 +1181,11 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureListingUri>>",
             },
             "productDisplayName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "publisherName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "resourceType": {
@@ -1193,15 +1193,15 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureProductListingResourceType>",
             },
             "shortDescription": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "summary": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "title": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -1210,23 +1210,23 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "fileName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "fileSasUri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "friendlyName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "order": {
@@ -1234,7 +1234,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<integer>",
             },
             "publisherDefinedSasUri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "resourceType": {
@@ -1246,7 +1246,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureProductListingAssetState>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -1315,23 +1315,23 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "azureActiveDirectoryApplicationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "azureActiveDirectoryTenantID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "connectionWebhook": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "landingPageUri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "resourceType": {
@@ -1358,7 +1358,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "appVersion": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "applicableProducts": {
@@ -1378,7 +1378,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "globalAmendmentTerms": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "hideKeys": {
@@ -1386,7 +1386,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "industries": {
@@ -1410,15 +1410,15 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "resourceType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "submissionVersion": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "termsOfUse": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "useEnterpriseContract": {
@@ -1451,11 +1451,11 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureProductSetupSellingOption>",
             },
             "testDriveType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "trialUri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -1513,11 +1513,11 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<boolean>",
             },
             "friendlyName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "pendingUpdateInfo": {
@@ -1525,7 +1525,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzurePendingUpdateInfo>",
             },
             "publishedTimeInUtc": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "releaseNumber": {
@@ -1640,7 +1640,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "conversionPaths": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "extendedProperties": {
@@ -1648,7 +1648,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureTypeValue>>",
             },
             "externalID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "featureAvailabilities": {
@@ -1656,19 +1656,19 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureProductFeatureAvailability>>",
             },
             "friendlyName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "leadGenID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "referenceVariantID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "resourceType": {
@@ -1685,11 +1685,11 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "displayName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "includedBaseQuantities": {
@@ -1705,11 +1705,11 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<double>",
             },
             "uniqueID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "unitOfMeasure": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -1722,11 +1722,11 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureLocalizedTimeRange>",
             },
             "friendlyName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "isBaseSchedule": {
-              "docs": "There is only one base schedule.",
+              "docs": "undefinedThere is only one base schedule.",
               "type": "optional<boolean>",
             },
             "marketCodes": {
@@ -1839,11 +1839,11 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -1852,7 +1852,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "errorMessage": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "memberNames": {
@@ -1869,7 +1869,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureTypeValue>>",
             },
             "variantID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2000,7 +2000,7 @@ This member is required.",
               "type": "optional<string>",
             },
             "quantity": {
-              "docs": "Number of units consumed",
+              "docs": "undefinedNumber of units consumed",
               "type": "optional<double>",
             },
             "resourceId": {
@@ -2029,11 +2029,11 @@ This member is required.",
               "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponseAdditionalInfo>",
             },
             "code": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "message": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2067,7 +2067,7 @@ This member is required.",
               "type": "optional<string>",
             },
             "quantity": {
-              "docs": "Number of units consumed",
+              "docs": "undefinedNumber of units consumed",
               "type": "optional<double>",
             },
             "resourceId": {
@@ -2142,11 +2142,11 @@ This member is required.",
           "docs": undefined,
           "properties": {
             "action": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "agreementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "amount": {
@@ -2158,47 +2158,47 @@ This member is required.",
               "type": "optional<integer>",
             },
             "bankTraceID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "billingAddressID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "brokerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "buyerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "currency": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "dataFeedProductID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "disbursementBillingEventID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "endUserAccountID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "fromAccountID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "insertDate": {
@@ -2210,19 +2210,19 @@ This member is required.",
               "type": "optional<SqlNullTime>",
             },
             "invoiceID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "offerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "parentBillingEventID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "paymentDueDate": {
@@ -2230,19 +2230,19 @@ This member is required.",
               "type": "optional<SqlNullTime>",
             },
             "productID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "toAccountID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "transactionReferenceID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "transactionType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "usagePeriodEndDate": {
@@ -2259,31 +2259,31 @@ This member is required.",
           "docs": undefined,
           "properties": {
             "azureAssetID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "azureBillingAccountID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "azureCustomerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "azureOfferID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "azurePlanID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "billingModel": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "buyerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "earningUsd": {
@@ -2291,27 +2291,27 @@ This member is required.",
               "type": "optional<double>",
             },
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "offerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "payoutStatus": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "productID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "purchaseRecordID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "revenueUsd": {
@@ -2319,11 +2319,11 @@ This member is required.",
               "type": "optional<double>",
             },
             "termEndDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "termStartDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2336,11 +2336,11 @@ This member is required.",
               "type": "optional<double>",
             },
             "accountID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "buyerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "charges": {
@@ -2348,7 +2348,7 @@ This member is required.",
               "type": "optional<double>",
             },
             "currency": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "dueVendor": {
@@ -2356,31 +2356,31 @@ This member is required.",
               "type": "optional<double>",
             },
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "googleEntity": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "insightAccountID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "offerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "paymentSchedule": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "paymentType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "prepayCredits": {
@@ -2388,7 +2388,7 @@ This member is required.",
               "type": "optional<double>",
             },
             "productID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "refundBalanceDeductedThisMonth": {
@@ -2400,7 +2400,7 @@ This member is required.",
               "type": "optional<double>",
             },
             "refundReason": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "released": {
@@ -2408,15 +2408,15 @@ This member is required.",
               "type": "optional<double>",
             },
             "reportDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "resource": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "sku": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "trialUse": {
@@ -2424,7 +2424,7 @@ This member is required.",
               "type": "optional<double>",
             },
             "unit": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "usage": {
@@ -2432,7 +2432,7 @@ This member is required.",
               "type": "optional<double>",
             },
             "usedBy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "withheld": {
@@ -2608,7 +2608,7 @@ request.",
           "docs": undefined,
           "properties": {
             "code": {
-              "docs": "Code: The status code, which should be an enum value of
+              "docs": "undefinedCode: The status code, which should be an enum value of
 google.rpc.Code.",
               "type": "optional<integer>",
             },
@@ -2629,23 +2629,23 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "creditAmountIncrement": {
-              "docs": "The amount to be added to the credit amount.",
+              "docs": "undefinedThe amount to be added to the credit amount.",
               "type": "optional<double>",
             },
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entitlementTermID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "newCreditAmount": {
-              "docs": "The new credit amount after the increment.",
+              "docs": "undefinedThe new credit amount after the increment.",
               "type": "optional<double>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2654,15 +2654,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "access_token": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "expires_in": {
-              "docs": "The token expires in 1 hour",
+              "docs": "undefinedThe token expires in 1 hour",
               "type": "optional<integer>",
             },
             "token_type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2746,7 +2746,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "mcasFullSyncDone": {
-              "docs": "Is AWS Marketplace Commerce Analytics Service (MCAS) full-sync done.",
+              "docs": "undefinedIs AWS Marketplace Commerce Analytics Service (MCAS) full-sync done.",
               "type": "optional<boolean>",
             },
             "mcasIamRoleArn": {
@@ -2762,7 +2762,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "mdfsFullSyncDone": {
-              "docs": "Is AWS Marketplace Data Feeds Service (MDFS) full-sync done.",
+              "docs": "undefinedIs AWS Marketplace Data Feeds Service (MDFS) full-sync done.",
               "type": "optional<boolean>",
             },
             "mdfsKmsKeyArn": {
@@ -2778,7 +2778,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<string>>",
             },
             "revenueRecordFullSyncDone": {
-              "docs": "Is AWS Marketplace Revenue Record full-sync done.",
+              "docs": "undefinedIs AWS Marketplace Revenue Record full-sync done.",
               "type": "optional<boolean>",
             },
           },
@@ -2811,7 +2811,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "productId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2820,15 +2820,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "Text": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Url": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2837,15 +2837,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "FulfillmentUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2854,7 +2854,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "AssociatedProducts": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Categories": {
@@ -2870,19 +2870,19 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<string>>",
             },
             "LongDescription": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Manufacturer": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "ProductCode": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "ProductTitle": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Registered": {
@@ -2894,11 +2894,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<string>>",
             },
             "ShortDescription": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Sku": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "UsW9Submitted": {
@@ -2906,7 +2906,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<boolean>",
             },
             "Visibility": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2915,15 +2915,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "Description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Key": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Types": {
@@ -2931,7 +2931,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<string>>",
             },
             "Unit": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2944,7 +2944,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedAwsSaasProductAdditionalResource>>",
             },
             "LogoUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2953,7 +2953,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "Description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2966,7 +2966,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedAwsSaasProductDeliveryOption>>",
             },
             "Id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2975,11 +2975,11 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "Endpoint": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Protocol": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "Status": {
@@ -2987,11 +2987,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedAwsSnsSubscriptionStatus>",
             },
             "SubscriptionArn": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "TopicArn": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -3032,7 +3032,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "objectId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "puid": {
@@ -3040,7 +3040,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "tenantId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -3049,19 +3049,19 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "billingAccountId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "customerId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "firstName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "lastName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -3070,7 +3070,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "cmaFullSyncDone": {
-              "docs": "Is Azure Commercial Marketplace Analytics (CMA) full-sync done.",
+              "docs": "undefinedIs Azure Commercial Marketplace Analytics (CMA) full-sync done.",
               "type": "optional<boolean>",
             },
             "credential": {
@@ -3087,15 +3087,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "accessToken": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "clientID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "clientSecret": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "expiresOn": {
@@ -3107,15 +3107,15 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "tenantID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "tokenScope": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "tokenType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -3136,15 +3136,15 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedAzureAdIdentifier>",
             },
             "created": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "fulfillmentId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "isFreeTrial": {
@@ -3156,23 +3156,23 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<boolean>",
             },
             "lastModified": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "offerId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "planId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "publisherId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "purchaser": {
@@ -3192,7 +3192,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedAzureMarketplaceSubscriptionSandboxType>",
             },
             "sessionId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "sessionMode": {
@@ -3200,7 +3200,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedAzureMarketplaceSubscriptionSessionMode>",
             },
             "storeFront": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "term": {
@@ -3293,19 +3293,19 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "chargeDuration": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "endDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "startDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "termUnit": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -3322,11 +3322,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedAzureAdIdentifier>",
             },
             "collectableAmount": {
-              "docs": "The amount that the seller can collect. It excludes the marketplace commision fee.",
+              "docs": "undefinedThe amount that the seller can collect. It excludes the marketplace commision fee.",
               "type": "optional<double>",
             },
             "disbursedAmount": {
-              "docs": "The amount that has been disbursed to the seller account.",
+              "docs": "undefinedThe amount that has been disbursed to the seller account.",
               "type": "optional<double>",
             },
             "gcpBuyer": {
@@ -3334,7 +3334,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedGcpMarketplaceUserAccount>",
             },
             "invoicedAmount": {
-              "docs": "The amount that the buyer has got invoiced.",
+              "docs": "undefinedThe amount that the buyer has got invoiced.",
               "type": "optional<double>",
             },
           },
@@ -3343,15 +3343,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": "The commit dimension. There may be one or more commit dimensions defined in single product, offer or entitlement.",
           "properties": {
             "category": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "isUserCreated": {
-              "docs": "Whether this commit dimension is newly created by user when creating AWS Marketplace Contract private offer.",
+              "docs": "undefinedWhether this commit dimension is newly created by user when creating AWS Marketplace Contract private offer.",
               "type": "optional<boolean>",
             },
             "key": {
@@ -3359,15 +3359,15 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "length": {
-              "docs": "The term length for the commit amount, such as 6 months, or 1 year. length is used together with timeUnit",
+              "docs": "undefinedThe term length for the commit amount, such as 6 months, or 1 year. length is used together with timeUnit",
               "type": "optional<integer>",
             },
             "maximumUsers": {
-              "docs": "The maximum number of users for PER_USER commit",
+              "docs": "undefinedThe maximum number of users for PER_USER commit",
               "type": "optional<integer>",
             },
             "minimumUsers": {
-              "docs": "The minimum number of users for PER_USER commit",
+              "docs": "undefinedThe minimum number of users for PER_USER commit",
               "type": "optional<integer>",
             },
             "name": {
@@ -3375,11 +3375,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "quantity": {
-              "docs": "The quantity of this commit.",
+              "docs": "undefinedThe quantity of this commit.",
               "type": "optional<integer>",
             },
             "rate": {
-              "docs": "The commit amount.",
+              "docs": "undefinedThe commit amount.",
               "type": "optional<double>",
             },
             "timeUnit": {
@@ -3435,35 +3435,35 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "addressLine1": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "addressLine2": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "city": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "country": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "emailDomain": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "postalCode": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "state": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -3472,15 +3472,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "company": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "email": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -3519,7 +3519,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "autoRenew": {
-              "docs": "Is this Entitlement Auto Renew enabled.",
+              "docs": "undefinedIs this Entitlement Auto Renew enabled.",
               "type": "optional<boolean>",
             },
             "awsEntitlements": {
@@ -3531,11 +3531,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedAzureMarketplaceSubscription>>",
             },
             "collectableAmount": {
-              "docs": "The amount that the seller can collect. It excludes the marketplace commision fee.",
+              "docs": "undefinedThe amount that the seller can collect. It excludes the marketplace commision fee.",
               "type": "optional<double>",
             },
             "commitAmount": {
-              "docs": "The amount that the buyer has committed to pay. It can be the sum of payment installments if applicable.",
+              "docs": "undefinedThe amount that the buyer has committed to pay. It can be the sum of payment installments if applicable.",
               "type": "optional<double>",
             },
             "commits": {
@@ -3551,11 +3551,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedMeteringDimension>>",
             },
             "disbursedAmount": {
-              "docs": "The amount that has been disbursed to the seller account.",
+              "docs": "undefinedThe amount that has been disbursed to the seller account.",
               "type": "optional<double>",
             },
             "discount": {
-              "docs": "The rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
+              "docs": "undefinedThe rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
               "type": "optional<double>",
             },
             "eulaType": {
@@ -3563,7 +3563,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedEulaType>",
             },
             "eulaUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "gcpEntitlements": {
@@ -3575,7 +3575,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedGcpPurchasePlan>>",
             },
             "invoicedAmount": {
-              "docs": "The amount that the buyer has got invoiced.",
+              "docs": "undefinedThe amount that the buyer has got invoiced.",
               "type": "optional<double>",
             },
             "paymentInstallments": {
@@ -3583,11 +3583,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedPaymentInstallment>>",
             },
             "refundCancelationPolicy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "sellerNotes": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -3644,7 +3644,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<double>>",
             },
             "date": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "keys": {
@@ -3731,15 +3731,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "loginUri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "signupUri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "singleSignOnUri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -3779,7 +3779,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "displayNames": {
@@ -3787,11 +3787,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<string>>",
             },
             "eulaUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "externalMarketingUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "icon": {
@@ -3803,7 +3803,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<string>>",
             },
             "searchDescription": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "searchKeywords": {
@@ -3811,7 +3811,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<string>>",
             },
             "shortTitle": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "supportSpec": {
@@ -3832,11 +3832,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "nanos": {
-              "docs": "Decimal part of the price. For example, 2000000 = 0.002, 200000000 = 0.2",
+              "docs": "undefinedDecimal part of the price. For example, 2000000 = 0.002, 200000000 = 0.2",
               "type": "optional<integer>",
             },
             "units": {
-              "docs": "Integer part of the price.",
+              "docs": "undefinedInteger part of the price.",
               "type": "optional<integer>",
             },
           },
@@ -3845,7 +3845,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "priceModel": {
@@ -3928,7 +3928,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "endUsageAmount": {
-              "docs": "The usage amount below which this tier is effective.",
+              "docs": "undefinedThe usage amount below which this tier is effective.",
               "type": "optional<double>",
             },
             "price": {
@@ -3936,7 +3936,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedGcpCommerceProducerPrice>",
             },
             "startUsageAmount": {
-              "docs": "The usage amount beyond which this tier is effective.",
+              "docs": "undefinedThe usage amount beyond which this tier is effective.",
               "type": "optional<double>",
             },
           },
@@ -3945,7 +3945,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "displayQuantity": {
-              "docs": "Default value is 1.",
+              "docs": "undefinedDefault value is 1.",
               "type": "optional<integer>",
             },
             "metricId": {
@@ -3980,15 +3980,15 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "displayName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "displayUnit": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "displayUnitDescription": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
@@ -3996,7 +3996,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "metricKind": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
@@ -4004,11 +4004,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "reportingUnit": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "unit": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "valueType": {
@@ -4055,7 +4055,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "producerProjectId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "title": {
@@ -4068,15 +4068,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "email": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "uri": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -4085,15 +4085,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "gcpProjectId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "gcpProjectNumber": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "identityProviderId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "partnerId": {
@@ -4109,7 +4109,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "reportFullSyncDone": {
-              "docs": "Is GCP Marketplace Report full-sync done.",
+              "docs": "undefinedIs GCP Marketplace Report full-sync done.",
               "type": "optional<boolean>",
             },
             "reportStartDate": {
@@ -4117,7 +4117,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "serviceAccountEmail": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "serviceNames": {
@@ -4125,7 +4125,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<string>>",
             },
             "workloadIdentityPoolId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -4151,7 +4151,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedGcpMarketplaceConsumer>>",
             },
             "createTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
@@ -4314,7 +4314,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedGcpMarketplaceUserAccountApproval>>",
             },
             "createTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
@@ -4351,7 +4351,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "reason": {
@@ -4412,7 +4412,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "createTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
@@ -4529,11 +4529,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "accessToken": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "acquiredOn": {
-              "docs": "UTC timestamp on receiving the auth response",
+              "docs": "undefinedUTC timestamp on receiving the auth response",
               "type": "optional<integer>",
             },
             "expiresIn": {
@@ -4541,7 +4541,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<integer>",
             },
             "refreshToken": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -4554,11 +4554,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedHubspotCrmCredential>",
             },
             "portalId": {
-              "docs": "Hubspot Account Id",
+              "docs": "undefinedHubspot Account Id",
               "type": "optional<integer>",
             },
             "secretKey": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -4567,19 +4567,19 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "creationTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "externalID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "info": {
@@ -4587,15 +4587,15 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedBuyerInfo>",
             },
             "lastUpdateTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "partner": {
@@ -4628,11 +4628,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "createdBy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "creationTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "info": {
@@ -4640,15 +4640,15 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedIntegrationInfo>",
             },
             "lastUpdateTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "lastUpdatedBy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "partner": {
@@ -4804,11 +4804,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": "The dimension to meter usage in entitlement.",
           "properties": {
             "category": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "description": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "includedBaseQuantities": {
@@ -4816,7 +4816,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<AzureIncludedBaseQuantity>>",
             },
             "key": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
@@ -4845,19 +4845,19 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "creationTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "lastUpdateTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "metaInfo": {
@@ -4865,7 +4865,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedMeteringUsageRecordGroupMetaInfo>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "records": {
@@ -4877,11 +4877,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<integer>",
             },
             "status": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "usageRecordReportID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -4899,19 +4899,19 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "creationTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entitlementTermID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "info": {
@@ -4919,11 +4919,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedMeteringUsageRecordReportInfo>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "productID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -4940,11 +4940,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1BatchUsageEventOkResponse>",
             },
             "commitAmount": {
-              "docs": "The amount of the commit if applicable.",
+              "docs": "undefinedThe amount of the commit if applicable.",
               "type": "optional<double>",
             },
             "creditAmount": {
-              "docs": "The amount of the credit if applicable.",
+              "docs": "undefinedThe amount of the credit if applicable.",
               "type": "optional<double>",
             },
             "creditRecords": {
@@ -4980,19 +4980,19 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<string>>",
             },
             "usedCommitAmount": {
-              "docs": "The amount of the used commit before the this usage record report if applicable.",
+              "docs": "undefinedThe amount of the used commit before the this usage record report if applicable.",
               "type": "optional<double>",
             },
             "usedCommitAmountIncrement": {
-              "docs": "The amount of the used commit increment in this usage record report if applicable.",
+              "docs": "undefinedThe amount of the used commit increment in this usage record report if applicable.",
               "type": "optional<double>",
             },
             "usedCreditAmount": {
-              "docs": "The amount of the used credit before the this usage record report if applicable.",
+              "docs": "undefinedThe amount of the used credit before the this usage record report if applicable.",
               "type": "optional<double>",
             },
             "usedCreditAmountIncrement": {
-              "docs": "The amount of the used credit increment in this usage record report if applicable.",
+              "docs": "undefinedThe amount of the used credit increment in this usage record report if applicable.",
               "type": "optional<double>",
             },
           },
@@ -5005,11 +5005,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedNotificationEventAction>",
             },
             "entityID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entityStatus": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entityType": {
@@ -5029,7 +5029,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "message": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
@@ -5160,7 +5160,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedCommitDimension>>",
             },
             "currency": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "dimensions": {
@@ -5168,7 +5168,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedMeteringDimension>>",
             },
             "discount": {
-              "docs": "The rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
+              "docs": "undefinedThe rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
               "type": "optional<double>",
             },
             "eulaType": {
@@ -5176,7 +5176,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedEulaType>",
             },
             "eulaUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "gcpMetrics": {
@@ -5196,11 +5196,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "refundCancelationPolicy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "sellerNotes": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "visibility": {
@@ -5236,11 +5236,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedContact>>",
             },
             "isAgreementBasedOffer": {
-              "docs": "Applicable for AWS Marketplace only, If this offer is agreement based offer.",
+              "docs": "undefinedApplicable for AWS Marketplace only, If this offer is agreement based offer.",
               "type": "optional<boolean>",
             },
             "isRenewalOffer": {
-              "docs": "Applicable for AWS Marketplace only, If this offer is renewal offer.",
+              "docs": "undefinedApplicable for AWS Marketplace only, If this offer is renewal offer.",
               "type": "optional<boolean>",
             },
             "notifications": {
@@ -5253,7 +5253,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "endTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
@@ -5261,19 +5261,19 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "message": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "startTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "status": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "type": {
@@ -5300,7 +5300,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<double>",
             },
             "chargeOn": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -5329,7 +5329,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedCommitDimension>>",
             },
             "currency": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "dimensions": {
@@ -5337,7 +5337,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedMeteringDimension>>",
             },
             "eulaUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "gcpProduct": {
@@ -5345,11 +5345,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedGcpProduct>",
             },
             "refundCancelationPolicy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "sellerNotes": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -5358,15 +5358,15 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": "The revenue amount for the revenue report",
+              "docs": "undefinedThe revenue amount for the revenue report",
               "type": "optional<double>",
             },
             "buyerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "collectableAmount": {
-              "docs": "The revenue amount that the seller/ISV can collect.",
+              "docs": "undefinedThe revenue amount that the seller/ISV can collect.",
               "type": "optional<double>",
             },
             "currency": {
@@ -5382,15 +5382,15 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<double>",
             },
             "disburseDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "info": {
@@ -5402,23 +5402,23 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<double>",
             },
             "invoiceDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "partner": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "paymentDueDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "productID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "refundDisburseAmount": {
@@ -5426,7 +5426,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<double>",
             },
             "refundDisburseDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "refundInvoiceAmount": {
@@ -5434,7 +5434,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<double>",
             },
             "refundInvoiceDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "taxAmount": {
@@ -5481,27 +5481,27 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "buyerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "partner": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "productID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "reportDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "reportType": {
@@ -5513,7 +5513,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedRevenueRecord>>",
             },
             "service": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -5542,7 +5542,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "access_token": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "exp": {
@@ -5550,11 +5550,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<integer>",
             },
             "instance_url": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "refresh_token": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -5571,7 +5571,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedSalesforceSyncFilter>>",
             },
             "instanceUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "isSandbox": {
@@ -5579,7 +5579,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<boolean>",
             },
             "secretKey": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "subdomain": {
@@ -5592,11 +5592,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "fieldName": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "operator": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "value": {
@@ -5609,11 +5609,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "accessToken": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "appId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "authedUser": {
@@ -5621,7 +5621,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SlackOAuthV2ResponseAuthedUser>",
             },
             "botUserId": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "enterprise": {
@@ -5637,11 +5637,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SlackOAuthResponseIncomingWebhook>",
             },
             "redirectUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "refreshToken": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "scope": {
@@ -5653,7 +5653,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SlackOAuthV2ResponseTeam>",
             },
             "tokenType": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -5692,15 +5692,15 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "creditCount": {
-              "docs": "The count of this dimension usage records that are handled as credit.",
+              "docs": "undefinedThe count of this dimension usage records that are handled as credit.",
               "type": "optional<double>",
             },
             "includedCount": {
-              "docs": "The count of this dimension usage records that are handled as included in IncludedBaseQuantity",
+              "docs": "undefinedThe count of this dimension usage records that are handled as included in IncludedBaseQuantity",
               "type": "optional<double>",
             },
             "reportedCount": {
-              "docs": "The count of this dimension usage records that are reported to cloud vendors.",
+              "docs": "undefinedThe count of this dimension usage records that are reported to cloud vendors.",
               "type": "optional<double>",
             },
           },
@@ -5709,15 +5709,15 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "reportDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "usageRecords": {
@@ -5770,11 +5770,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "buyerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "creationTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "endTime": {
@@ -5782,23 +5782,23 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "entitlementTermID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "externalBuyerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "externalID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "externalProductID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "info": {
@@ -5806,19 +5806,19 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedEntitlementInfo>",
             },
             "lastUpdateTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "offerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "partner": {
@@ -5826,7 +5826,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedWorkloadEntitlementPartner>",
             },
             "productID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "service": {
@@ -5834,7 +5834,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedWorkloadEntitlementService>",
             },
             "startTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "status": {
@@ -5842,7 +5842,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedWorkloadEntitlementStatus>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -5911,7 +5911,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "buyerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "commitAmount": {
@@ -5927,7 +5927,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "entitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "entitlementInfo": {
@@ -5935,11 +5935,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedEntitlementInfo>",
             },
             "externalEntitlementID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "info": {
@@ -5947,11 +5947,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedEntitlementTermInfo>",
             },
             "offerID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "partner": {
@@ -5959,7 +5959,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedWorkloadEntitlementTermPartner>",
             },
             "productID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "service": {
@@ -5967,7 +5967,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedWorkloadEntitlementTermService>",
             },
             "startTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "usedCommitAmount": {
@@ -6014,11 +6014,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "createdBy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "creationTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "endTime": {
@@ -6030,11 +6030,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "externalID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "info": {
@@ -6042,11 +6042,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedOfferInfo>",
             },
             "lastUpdateTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "lastUpdatedBy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "metaInfo": {
@@ -6054,7 +6054,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedOfferMetaInfo>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "offerType": {
@@ -6062,7 +6062,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedWorkloadOfferOfferType>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "partner": {
@@ -6070,7 +6070,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedWorkloadOfferPartner>",
             },
             "productID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "service": {
@@ -6217,23 +6217,23 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "createdBy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "creationTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "externalID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "fulfillmentUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "info": {
@@ -6241,19 +6241,19 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedProductInfo>",
             },
             "lastUpdateTime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "lastUpdatedBy": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "partner": {
@@ -6269,7 +6269,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedWorkloadProductService>",
             },
             "status": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -6343,19 +6343,19 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "channel": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "channel_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "configuration_url": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "url": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -6364,7 +6364,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "access_token": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "expires_in": {
@@ -6372,19 +6372,19 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<integer>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "refresh_token": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "scope": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "token_type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -6393,11 +6393,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -6406,11 +6406,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -6419,11 +6419,11 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "time": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "valid": {
-              "docs": "Valid is true if Time is not NULL",
+              "docs": "undefinedValid is true if Time is not NULL",
               "type": "optional<boolean>",
             },
           },
@@ -6466,7 +6466,7 @@ provided by AWS Marketplace when the product listing is created.",
           "docs": undefined,
           "properties": {
             "allocatedUsageQuantity": {
-              "docs": "The total quantity allocated to this bucket of usage.
+              "docs": "undefinedThe total quantity allocated to this bucket of usage.
 
 This member is required.",
               "type": "optional<integer>",
@@ -6496,7 +6496,7 @@ This member is required.",
               "type": "optional<string>",
             },
             "quantity": {
-              "docs": "The quantity of usage consumed by the customer for the given dimension and time.
+              "docs": "undefinedThe quantity of usage consumed by the customer for the given dimension and time.
 Defaults to 0 if not specified.",
               "type": "optional<integer>",
             },
@@ -6675,7 +6675,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "type": "string",
                   },
                   "organizationID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                   "secret": {
@@ -6771,19 +6771,19 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "description": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "id": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "organizationID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                 },
@@ -6832,15 +6832,15 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "creditAmountIncrement": {
-                    "docs": "The amount to be added to the credit amount.",
+                    "docs": "undefinedThe amount to be added to the credit amount.",
                     "type": "double",
                   },
                   "entitlementID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                   "organizationID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                 },
@@ -7017,15 +7017,15 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "id": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "organizationID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                 },
@@ -7133,7 +7133,7 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "createdBy": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "info": {
@@ -7141,7 +7141,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "type": "root.SharedIntegrationInfo",
                   },
                   "organizationID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                   "partner": {
@@ -7272,7 +7272,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "type": "root.SharedIntegrationInfo",
                   },
                   "organizationID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                   "partner": {
@@ -7705,7 +7705,7 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "entitlementID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                   "id": {
@@ -7717,7 +7717,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "type": "optional<root.SharedMeteringUsageRecordGroupMetaInfo>",
                   },
                   "organizationID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                   "records": {
@@ -8157,15 +8157,15 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "fulfillmentUrl": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                   "id": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                   "organizationID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                 },
@@ -8268,11 +8268,11 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "entitlementID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                   "organizationID": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                 },

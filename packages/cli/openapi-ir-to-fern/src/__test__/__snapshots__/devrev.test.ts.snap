@@ -493,7 +493,7 @@ application access token (AAT).
               "type": "optional<string>",
             },
             "expires_in": {
-              "docs": "The validity lifetime of the token specified in seconds since Unix
+              "docs": "undefinedThe validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
               "type": "integer",
@@ -1042,7 +1042,7 @@ inquiry.
           ],
           "properties": {
             "retry_after": {
-              "docs": "The number of seconds after which the client should retry.
+              "docs": "undefinedThe number of seconds after which the client should retry.
 ",
               "type": "optional<integer>",
             },
@@ -3439,7 +3439,7 @@ This client_id is only associated with an AAT.
                     "type": "optional<string>",
                   },
                   "expires_in": {
-                    "docs": "The expected validity lifetime of the token in number of days.
+                    "docs": "undefinedThe expected validity lifetime of the token in number of days.
 ",
                     "type": "optional<integer>",
                   },

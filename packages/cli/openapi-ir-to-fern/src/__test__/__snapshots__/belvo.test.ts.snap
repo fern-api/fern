@@ -430,7 +430,7 @@ The minimum amount required to pay to avoid generating interest.
               "type": "EnumLoanDataFeeType",
             },
             "value": {
-              "docs": "The total value of the fee. Same currency of the Loan.
+              "docs": "undefinedThe total value of the fee. Same currency of the Loan.
 ",
               "type": "double",
             },
@@ -457,7 +457,7 @@ The minimum amount required to pay to avoid generating interest.
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -502,23 +502,23 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "Object containing the reported annual costs and applicable deductions.",
           "properties": {
             "administration_expenses": {
-              "docs": "Total costs of the company related to training, company offsites, or similar.",
+              "docs": "undefinedTotal costs of the company related to training, company offsites, or similar.",
               "type": "double",
             },
             "costs": {
-              "docs": "Total costs for the company to operate.",
+              "docs": "undefinedTotal costs for the company to operate.",
               "type": "double",
             },
             "distribution_and_sales_expenses": {
-              "docs": "Total costs the company incurred in order to distribute or sell their product.",
+              "docs": "undefinedTotal costs the company incurred in order to distribute or sell their product.",
               "type": "double",
             },
             "financial_expenses": {
-              "docs": "Total value of any fees incurred by the company to operate (such as bank fees).",
+              "docs": "undefinedTotal value of any fees incurred by the company to operate (such as bank fees).",
               "type": "double",
             },
             "total_costs_and_deductible_expenses": {
-              "docs": "Total value of all costs and dedictible expenses.",
+              "docs": "undefinedTotal value of all costs and dedictible expenses.",
               "type": "double",
             },
           },
@@ -527,27 +527,27 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "Object containing the reported annual incomes, deductions, and final balances of the tax payer.",
           "properties": {
             "dividends": {
-              "docs": "Total income that the company generated from dividends.",
+              "docs": "undefinedTotal income that the company generated from dividends.",
               "type": "double",
             },
             "gross_income_from_ordinary_activities": {
-              "docs": "Total gross income that the company generated from their main economic activity.",
+              "docs": "undefinedTotal gross income that the company generated from their main economic activity.",
               "type": "double",
             },
             "other_income": {
-              "docs": "Total income that the company generated from activities not associated with their main economic activity.",
+              "docs": "undefinedTotal income that the company generated from activities not associated with their main economic activity.",
               "type": "double",
             },
             "returns_rebates_and_discounts_on_sales": {
-              "docs": "Total value of cancelled orders, corrected invoices, or similar, that can be discounted from the \`total_gross_income\`.",
+              "docs": "undefinedTotal value of cancelled orders, corrected invoices, or similar, that can be discounted from the \`total_gross_income\`.",
               "type": "double",
             },
             "total_gross_income": {
-              "docs": "Total gross income the company generated.",
+              "docs": "undefinedTotal gross income the company generated.",
               "type": "double",
             },
             "total_net_income": {
-              "docs": "Total net income of the company, taking into account \`returns_rebates_and_discounts_on_sales\`.",
+              "docs": "undefinedTotal net income of the company, taking into account \`returns_rebates_and_discounts_on_sales\`.",
               "type": "double",
             },
           },
@@ -577,19 +577,19 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "Object containing the tax payers total exempt, deducted, and ordinary net incomes.",
           "properties": {
             "total_applicable_deductions": {
-              "docs": "Total deductions that the taxpayer can apply to their income, according to the institution.",
+              "docs": "undefinedTotal deductions that the taxpayer can apply to their income, according to the institution.",
               "type": "double",
             },
             "total_exempt_income": {
-              "docs": "Total income that is not taxable, according to the institution.",
+              "docs": "undefinedTotal income that is not taxable, according to the institution.",
               "type": "double",
             },
             "total_exemptions_and_deductions": {
-              "docs": "Sum total of all exempt and deductions that can be applied to the taxpayer's income.",
+              "docs": "undefinedSum total of all exempt and deductions that can be applied to the taxpayer's income.",
               "type": "double",
             },
             "total_ordinary_net_income": {
-              "docs": "Sum total of the taxpayer's income (gross income - exemptions - deductions).",
+              "docs": "undefinedSum total of the taxpayer's income (gross income - exemptions - deductions).",
               "type": "double",
             },
           },
@@ -661,7 +661,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "optional<Account>",
             },
             "balance": {
-              "docs": "The funds available in the account by the end of the \`value_date\`.",
+              "docs": "undefinedThe funds available in the account by the end of the \`value_date\`.",
               "type": "optional<double>",
             },
             "collected_at": {
@@ -697,7 +697,7 @@ The ISO-8601 timestamp when the data point was collected.
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -929,7 +929,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -1060,7 +1060,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "amount": {
-              "docs": "The transaction amount.",
+              "docs": "undefinedThe transaction amount.",
               "type": "double",
             },
             "category": {
@@ -1130,7 +1130,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "amount": {
-              "docs": "The transaction amount.",
+              "docs": "undefinedThe transaction amount.",
               "type": "double",
             },
             "currency": {
@@ -1456,7 +1456,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "identifier": {
-              "docs": "The document number of the customer's ID.
+              "docs": "\`less than 25 characters\` The document number of the customer's ID.
 ",
               "type": "string",
             },
@@ -1465,7 +1465,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypeOfpi",
             },
             "name": {
-              "docs": "The full name of the customer you want to create.
+              "docs": "\`less than 200 characters\` The full name of the customer you want to create.
 ",
               "type": "string",
             },
@@ -1498,7 +1498,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "identifier": {
-              "docs": "The document number of the customer's ID.
+              "docs": "\`less than 25 characters\` The document number of the customer's ID.
 ",
               "type": "string",
             },
@@ -1507,7 +1507,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypePse",
             },
             "name": {
-              "docs": "The full name of the customer you want to create.
+              "docs": "\`less than 200 characters\` The full name of the customer you want to create.
 ",
               "type": "string",
             },
@@ -1594,7 +1594,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 ",
           "union": [
             {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             {
@@ -1659,7 +1659,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 ",
           "union": [
             {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             {
@@ -1724,7 +1724,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 ",
           "union": [
             {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             {
@@ -1804,7 +1804,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypeOfpi",
             },
             "name": {
-              "docs": "The full name of the customer.
+              "docs": "\`less than 200 characters\` The full name of the customer.
 ",
               "type": "string",
             },
@@ -1819,7 +1819,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -1899,7 +1899,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypePse",
             },
             "name": {
-              "docs": "The full name of the customer.
+              "docs": "\`less than 200 characters\` The full name of the customer.
 ",
               "type": "string",
             },
@@ -2278,12 +2278,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "optional<string>",
             },
             "monthly_salary": {
-              "docs": "The monthly salary of the individual, including any additional perks.
+              "docs": "undefinedThe monthly salary of the individual, including any additional perks.
 ",
               "type": "optional<double>",
             },
             "most_recent_base_salary": {
-              "docs": "The most recent base salary the individual earned.
+              "docs": "undefinedThe most recent base salary the individual earned.
 
 For Mexico, this is the *daily* rate that the individual earned, including the perks that the individual is entitled to throughout the year.
 ",
@@ -2300,7 +2300,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
               "type": "optional<string>",
             },
             "weeks_employed": {
-              "docs": "Number of weeks that the individual was employed.
+              "docs": "undefinedNumber of weeks that the individual was employed.
 ",
               "type": "optional<integer>",
             },
@@ -2324,7 +2324,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           "docs": "Details regarding any employment changes of the individual.",
           "properties": {
             "base_salary": {
-              "docs": "The base salary of the individual, current as of the \`update_date\`.
+              "docs": "undefinedThe base salary of the individual, current as of the \`update_date\`.
 ",
               "type": "optional<double>",
             },
@@ -2343,12 +2343,12 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           "docs": "Details regarding the benefits the individual is entitled to.",
           "properties": {
             "entitled_to_company_benefits": {
-              "docs": "Indicates whether or not the individual is entitled to company benefits.
+              "docs": "undefinedIndicates whether or not the individual is entitled to company benefits.
 ",
               "type": "optional<boolean>",
             },
             "entitled_to_health_insurance": {
-              "docs": "Indicated whether or not the individual is entitled to health insurance.
+              "docs": "undefinedIndicated whether or not the individual is entitled to health insurance.
 ",
               "type": "optional<boolean>",
             },
@@ -2440,7 +2440,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -4001,35 +4001,35 @@ We return one of the following enum values:
           "docs": "Object containing the general fiscal situation of the taxpayer.",
           "properties": {
             "accounts_documents_and_finance_leases_receivable": {
-              "docs": "Total of all payments the company expects to receive (for example, from partial invoices that have not been paid yet).",
+              "docs": "undefinedTotal of all payments the company expects to receive (for example, from partial invoices that have not been paid yet).",
               "type": "double",
             },
             "cash_and_cash_equivalents": {
-              "docs": "Total cash (or cash equivalents) that the business currently holds at the end of the fiscal year.",
+              "docs": "undefinedTotal cash (or cash equivalents) that the business currently holds at the end of the fiscal year.",
               "type": "double",
             },
             "debts": {
-              "docs": "Total debts that the company currently has.",
+              "docs": "undefinedTotal debts that the company currently has.",
               "type": "double",
             },
             "inventory": {
-              "docs": "Total financial value of the company's sellable inventory.",
+              "docs": "undefinedTotal financial value of the company's sellable inventory.",
               "type": "double",
             },
             "investments_and_derivative_financial_instruments": {
-              "docs": "Total value of all investments, stocks, or similar, that the company has.",
+              "docs": "undefinedTotal value of all investments, stocks, or similar, that the company has.",
               "type": "double",
             },
             "property_plant_and_equipment_investment_properties": {
-              "docs": "Total value of real estate, plant infrastructure, or equipment that has been purchased.",
+              "docs": "undefinedTotal value of real estate, plant infrastructure, or equipment that has been purchased.",
               "type": "double",
             },
             "total_gross_equity": {
-              "docs": "Total gross equity.",
+              "docs": "undefinedTotal gross equity.",
               "type": "double",
             },
             "total_net_equity": {
-              "docs": "The total net equity of the company (\`total_gross_equity\` - \`debts\`).",
+              "docs": "undefinedThe total net equity of the company (\`total_gross_equity\` - \`debts\`).",
               "type": "double",
             },
           },
@@ -4038,15 +4038,15 @@ We return one of the following enum values:
           "docs": "Object containing the general fiscal situation of the taxpayer.",
           "properties": {
             "total_debts": {
-              "docs": "The total debts of the tax_payer",
+              "docs": "undefinedThe total debts of the tax_payer",
               "type": "double",
             },
             "total_gross_equity": {
-              "docs": "The total gross equity of the tax payer.",
+              "docs": "undefinedThe total gross equity of the tax payer.",
               "type": "double",
             },
             "total_net_equity": {
-              "docs": "The total net equity value of the taxpayer.",
+              "docs": "undefinedThe total net equity value of the taxpayer.",
               "type": "double",
             },
           },
@@ -4071,7 +4071,7 @@ We return one of the following enum values:
               "type": "string",
             },
             "amount": {
-              "docs": "The income amount.",
+              "docs": "undefinedThe income amount.",
               "type": "double",
             },
             "currency": {
@@ -4110,19 +4110,19 @@ We return one of the following enum values:
           "docs": "Object containing the declared gross income of the tax payer.",
           "properties": {
             "capital_income": {
-              "docs": "Income received from an investment (such as dividends or from renting a property).",
+              "docs": "undefinedIncome received from an investment (such as dividends or from renting a property).",
               "type": "double",
             },
             "earned_income": {
-              "docs": "Income received from employment.",
+              "docs": "undefinedIncome received from employment.",
               "type": "double",
             },
             "fee_based_income": {
-              "docs": "Income received from emitted invoices (for example, income that independent contractors or freelancers receive).",
+              "docs": "undefinedIncome received from emitted invoices (for example, income that independent contractors or freelancers receive).",
               "type": "double",
             },
             "non_labor_income": {
-              "docs": "Income that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
+              "docs": "undefinedIncome that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
               "type": "double",
             },
           },
@@ -4338,67 +4338,67 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
               "type": "string",
             },
             "monthly_average": {
-              "docs": "Average amount of income received per month across all the accounts for the specific user.
+              "docs": "undefinedAverage amount of income received per month across all the accounts for the specific user.
 ",
               "type": "double",
             },
             "monthly_average_high_confidence": {
-              "docs": "Average amount of income received per month for the specific user with \`HIGH\` confidence.
+              "docs": "undefinedAverage amount of income received per month for the specific user with \`HIGH\` confidence.
 ",
               "type": "double",
             },
             "monthly_average_irregular": {
-              "docs": "Average amount of irregular income (with a frequency of \`SINGLE\` or \`IRREGULAR\`) received per month for the specific user.
+              "docs": "undefinedAverage amount of irregular income (with a frequency of \`SINGLE\` or \`IRREGULAR\`) received per month for the specific user.
 ",
               "type": "double",
             },
             "monthly_average_low_confidence": {
-              "docs": "Average amount of income received per month for the specific user with \`LOW\` confidence.
+              "docs": "undefinedAverage amount of income received per month for the specific user with \`LOW\` confidence.
 ",
               "type": "double",
             },
             "monthly_average_medium_confidence": {
-              "docs": "Average amount of income received per month for the specific user with \`MEDIUM\` confidence.
+              "docs": "undefinedAverage amount of income received per month for the specific user with \`MEDIUM\` confidence.
 ",
               "type": "double",
             },
             "monthly_average_regular": {
-              "docs": "Average amount of regular income (with a frequency of \`MONTHLY\`, \`FORTNIGHTLY\`, or \`WEEKLY\`) received per month for the specific user.
+              "docs": "undefinedAverage amount of regular income (with a frequency of \`MONTHLY\`, \`FORTNIGHTLY\`, or \`WEEKLY\`) received per month for the specific user.
 ",
               "type": "double",
             },
             "number_of_income_streams": {
-              "docs": "Number of total income streams analized.
+              "docs": "undefinedNumber of total income streams analized.
 ",
               "type": "integer",
             },
             "total_high_confidence": {
-              "docs": "Total amount of income for the specific user with \`HIGH\` confidence.
+              "docs": "undefinedTotal amount of income for the specific user with \`HIGH\` confidence.
 ",
               "type": "double",
             },
             "total_income_amount": {
-              "docs": "Total amount of all income received for the specific user.
+              "docs": "undefinedTotal amount of all income received for the specific user.
 ",
               "type": "double",
             },
             "total_irregular_income_amount": {
-              "docs": "Total amount of irregular income (with a frequency of \`SINGLE\` or \`IRREGULAR\`) for the specific user.
+              "docs": "undefinedTotal amount of irregular income (with a frequency of \`SINGLE\` or \`IRREGULAR\`) for the specific user.
 ",
               "type": "optional<double>",
             },
             "total_low_confidence": {
-              "docs": "Total amount of income for the specific user with \`LOW\` confidence.
+              "docs": "undefinedTotal amount of income for the specific user with \`LOW\` confidence.
 ",
               "type": "double",
             },
             "total_medium_confidence": {
-              "docs": "Total amount of income for the specific user with \`MEDIUM\` confidence.
+              "docs": "undefinedTotal amount of income for the specific user with \`MEDIUM\` confidence.
 ",
               "type": "double",
             },
             "total_regular_income_amount": {
-              "docs": "Total amount of regular income (with a frequency of \`MONTHLY\`, \`FORTNIGHTLY\`, \`WEEKLY\`) for the specific user.
+              "docs": "undefinedTotal amount of regular income (with a frequency of \`MONTHLY\`, \`FORTNIGHTLY\`, \`WEEKLY\`) for the specific user.
 ",
               "type": "double",
             },
@@ -4418,7 +4418,7 @@ For each income stream, we provide additional insights such as:
               "type": "string",
             },
             "average_income_amount": {
-              "docs": "The average income transaction amount from the source.
+              "docs": "undefinedThe average income transaction amount from the source.
 ",
               "type": "double",
             },
@@ -4439,7 +4439,7 @@ For each income stream, we provide additional insights such as:
               "type": "EnumIncomeStreamFrequency",
             },
             "full_periods": {
-              "docs": "Number of period units (based on *rolling months*) with data to perform calculations.
+              "docs": "undefinedNumber of period units (based on *rolling months*) with data to perform calculations.
 
 **Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-2023.
 ",
@@ -4450,7 +4450,7 @@ For each income stream, we provide additional insights such as:
               "type": "EnumIncomeStreamType",
             },
             "last_income_amount": {
-              "docs": "The amount of the most recent income received from the source.
+              "docs": "undefinedThe amount of the most recent income received from the source.
 ",
               "type": "double",
             },
@@ -4461,24 +4461,24 @@ For each income stream, we provide additional insights such as:
             },
             "last_income_description": "unknown",
             "lookback_periods": {
-              "docs": "Number of period units (based on *rolling months*) used to generate insights and calculations.
+              "docs": "undefinedNumber of period units (based on *rolling months*) used to generate insights and calculations.
 
 **Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-2023.
 ",
               "type": "integer",
             },
             "monthly_average": {
-              "docs": "The average amount of income received from the source over \`lookback_periods\`.
+              "docs": "undefinedThe average amount of income received from the source over \`lookback_periods\`.
 ",
               "type": "double",
             },
             "number_of_incomes": {
-              "docs": "Number of income transactions over the \`lookback_periods\`.
+              "docs": "undefinedNumber of income transactions over the \`lookback_periods\`.
 ",
               "type": "integer",
             },
             "periods_with_income": {
-              "docs": "Number of period units (based on *rolling months*) with at least one income available.
+              "docs": "undefinedNumber of period units (based on *rolling months*) with at least one income available.
 
 **Note:** A *rolling month* is a period of 30 days. For example, 2023-01-15 to 2023-02-2023.
 ",
@@ -4513,7 +4513,7 @@ For each income stream, we provide additional insights such as:
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -4565,7 +4565,7 @@ Here is a list of the available features:
               "type": "optional<string>",
             },
             "id": {
-              "docs": "The ID of the institution as designated by Belvo.",
+              "docs": "undefinedThe ID of the institution as designated by Belvo.",
               "type": "optional<integer>",
             },
             "integration_type": {
@@ -4671,7 +4671,7 @@ For \`institution_down\` errors, the description is:
               "type": "optional<string>",
             },
             "length": {
-              "docs": "Number of digits allowed when the type is \`token\`.",
+              "docs": "undefinedNumber of digits allowed when the type is \`token\`.",
               "type": "optional<integer>",
             },
             "name": {
@@ -4679,7 +4679,7 @@ For \`institution_down\` errors, the description is:
               "type": "optional<string>",
             },
             "optional": {
-              "docs": "It indicates whether this form field is optional.",
+              "docs": "undefinedIt indicates whether this form field is optional.",
               "type": "optional<boolean>",
             },
             "placeholder": {
@@ -4833,7 +4833,7 @@ For \`institution_unavailable\` errors, the description is:
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -5063,7 +5063,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
               "type": "string",
             },
             "value": {
-              "docs": "The value of \`fees.type\`. The currency of the fee is the same as the currency of the instrument.",
+              "docs": "undefinedThe value of \`fees.type\`. The currency of the fee is the same as the currency of the instrument.",
               "type": "double",
             },
           },
@@ -5080,7 +5080,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
               "type": "string",
             },
             "value": {
-              "docs": "The interest rate for the instrument, in percent.
+              "docs": "undefinedThe interest rate for the instrument, in percent.
 
 
 ℹ️  **Note:** If the \`interest_rate.index\` is present, this value is a percentage of the index. For example, if \`interest_rate.index\` = \`CDI\` and \`interest_rate.value\` = \`90\`, then the total interest rate applied is 90% of the CDI.
@@ -5119,7 +5119,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -5910,7 +5910,7 @@ Possible statuses are:
               "type": "optional<double>",
             },
             "partiality_number": {
-              "docs": "The payment installment number.
+              "docs": "undefinedThe payment installment number.
 ",
               "type": "optional<integer>",
             },
@@ -6049,7 +6049,7 @@ Please note that other currencies other than in the list above may be returned.
 ",
           "properties": {
             "amount": {
-              "docs": "The total amount of the payroll payment.
+              "docs": "undefinedThe total amount of the payroll payment.
 ",
               "type": "double",
             },
@@ -6147,7 +6147,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -6431,19 +6431,19 @@ For \`login_error\` errors, the description can be one of the following:
           "docs": "Object containing the declared net income of the tax payer. The values are calculated as the \`gross_income\` - \`non_taxable_income\`.",
           "properties": {
             "capital_income": {
-              "docs": "Income received from an investment (such as dividends or from renting a property).",
+              "docs": "undefinedIncome received from an investment (such as dividends or from renting a property).",
               "type": "double",
             },
             "earned_income": {
-              "docs": "Income received from employment.",
+              "docs": "undefinedIncome received from employment.",
               "type": "double",
             },
             "fee_based_income": {
-              "docs": "Income received from emitted invoices (for example, income independent contractors or freelancers receive).",
+              "docs": "undefinedIncome received from emitted invoices (for example, income independent contractors or freelancers receive).",
               "type": "double",
             },
             "non_labor_income": {
-              "docs": "Income that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
+              "docs": "undefinedIncome that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
               "type": "double",
             },
           },
@@ -6456,7 +6456,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayConfirmationRequiredOfpi>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
               "type": "optional<boolean>",
@@ -6512,7 +6512,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayConfirmationRequiredContentPse>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
               "type": "optional<boolean>",
@@ -6583,7 +6583,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayCredentialsRequiredContentPse>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
               "type": "optional<boolean>",
@@ -6654,7 +6654,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayCustomerBankAccountsContentPse>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
               "type": "optional<boolean>",
@@ -6725,7 +6725,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<NeedsRedirectContentPse>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
               "type": "optional<boolean>",
@@ -6796,7 +6796,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayPaymentFailed>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`,you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
               "type": "optional<boolean>",
@@ -6852,7 +6852,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayPaymentMethodInformationContentOfpi>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
               "type": "optional<boolean>",
@@ -6872,7 +6872,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayPaymentMethodInformationContentPse>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When the value is \`true\`, you'll need to make a PATCH request sending through \`confirm: true\` to confirm the payment.",
               "type": "optional<boolean>",
@@ -6979,7 +6979,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayPaymentProcessing>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
               "type": "optional<boolean>",
@@ -7035,7 +7035,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayPaymentSucceeded>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
               "type": "optional<boolean>",
@@ -7091,7 +7091,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<DisplayTokenRequiredContentPse>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. This value will return: 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. This value will return: 
 
   - \`false\` when a customer wants to pay for the very first time. This is so because you still need to input information about your customer in the following steps to process a payment successfully. 
   - \`true\` when a customer wants to pay and this is not their first time. This is so because the payment intent has all the information needed about the customer to process a payment. 
@@ -7166,7 +7166,7 @@ For \`login_error\` errors, the description can be one of the following:
               "type": "optional<NeedsRedirectContent>",
             },
             "ready_to_confirm": {
-              "docs": "Boolean that indicates whether the payment intent is ready to be confirmed. 
+              "docs": "undefinedBoolean that indicates whether the payment intent is ready to be confirmed. 
 
   **Note:** When set to \`true\`, you need to confirm the payment by making a PATCH request sending through \`confirm: true\`.",
               "type": "optional<boolean>",
@@ -7216,19 +7216,19 @@ For \`login_error\` errors, the description can be one of the following:
           "docs": "Object containing the declared non-taxable income of the tax payer.",
           "properties": {
             "capital_income": {
-              "docs": "Income received from an investment (such as dividends or from renting a property).",
+              "docs": "undefinedIncome received from an investment (such as dividends or from renting a property).",
               "type": "double",
             },
             "earned_income": {
-              "docs": "Income received from employment.",
+              "docs": "undefinedIncome received from employment.",
               "type": "double",
             },
             "fee_based_income": {
-              "docs": "Income received from emitted invoices (for example, income independent contractors or freelancers receive).",
+              "docs": "undefinedIncome received from emitted invoices (for example, income independent contractors or freelancers receive).",
               "type": "double",
             },
             "non_labor_income": {
-              "docs": "Income that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
+              "docs": "undefinedIncome that cannot be classified into the other three fields (such as income from cryptocurrencies or regular transfers from parents).",
               "type": "double",
             },
           },
@@ -7352,7 +7352,7 @@ For \`not_found\` errors, the description is:
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -7376,7 +7376,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -7404,7 +7404,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "save_data": {
-              "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+              "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
               "type": "optional<boolean>",
             },
@@ -7497,7 +7497,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "docs": undefined,
           "properties": {
             "active": {
-              "docs": "Indicates whether this institution is available for use or not.",
+              "docs": "undefinedIndicates whether this institution is available for use or not.",
               "type": "optional<boolean>",
             },
             "country": {
@@ -7688,7 +7688,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -7758,7 +7758,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "Details about the payment method type selected.",
           "properties": {
             "belvo_flow": {
-              "docs": "This parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using the Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
+              "docs": "undefinedThis parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using the Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
               "type": "boolean",
             },
             "beneficiary_bank_account": {
@@ -7972,7 +7972,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "Details about the organization's bank account that will receive the payment.",
           "properties": {
             "belvo_flow": {
-              "docs": "This parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
+              "docs": "undefinedThis parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
               "type": "boolean",
             },
             "beneficiary_bank_account": {
@@ -8189,7 +8189,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -8293,7 +8293,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "Details about the organization's bank account that will receive the payment.",
           "properties": {
             "belvo_flow": {
-              "docs": "This parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using the Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
+              "docs": "undefinedThis parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using the Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
               "type": "boolean",
             },
             "beneficiary_bank_account": {
@@ -8527,7 +8527,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -8551,7 +8551,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -8575,13 +8575,13 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "form_id": {
-              "docs": "Your unique Payments Way form ID.
+              "docs": "undefinedYour unique Payments Way form ID.
 
 **Note:** Belvo provides you with the Payments Way form ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
               "type": "integer",
             },
             "terminal_id": {
-              "docs": "Your unique Payments Way terminal ID.
+              "docs": "undefinedYour unique Payments Way terminal ID.
 
 **Note:** Belvo provides you with the Payments Way terminal ID during your onboarding process. If you don't have one yet, just reach out to us at payments-info@belvo.com and we'll give you a hand with this. 🙂",
               "type": "integer",
@@ -8592,7 +8592,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -8616,11 +8616,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "Object containing the tax payer's total pension income.",
           "properties": {
             "net_pension_income": {
-              "docs": "The total net pension of the taxpayer.",
+              "docs": "undefinedThe total net pension of the taxpayer.",
               "type": "double",
             },
             "net_taxable_pension_income": {
-              "docs": "The total taxable pension income of the taxpayer.",
+              "docs": "undefinedThe total taxable pension income of the taxpayer.",
               "type": "double",
             },
           },
@@ -8731,7 +8731,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -8759,7 +8759,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "optional<EnumReceivableTransactionFeeType>",
             },
             "value": {
-              "docs": "The value of \`fees.type\`.",
+              "docs": "undefinedThe value of \`fees.type\`.",
               "type": "double",
             },
           },
@@ -8768,7 +8768,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "An array of minified transaction objects used to evaluate the recurring expense. If no transactions were found, we return an empty array.",
           "properties": {
             "amount": {
-              "docs": "The transaction amount.",
+              "docs": "undefinedThe transaction amount.",
               "type": "double",
             },
             "description": {
@@ -8793,7 +8793,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "optional<Account>",
             },
             "average_transaction_amount": {
-              "docs": "The average transaction amount of the recurring expense.",
+              "docs": "undefinedThe average transaction amount of the recurring expense.",
               "type": "double",
             },
             "category": {
@@ -8801,7 +8801,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumRecurringExpenseCategory",
             },
             "days_since_last_transaction": {
-              "docs": "Number of days since the last recurring expense occurred.
+              "docs": "undefinedNumber of days since the last recurring expense occurred.
 
 Based on the frequency, you can infer how many days until the next charge will occur.
 ",
@@ -8816,7 +8816,7 @@ Based on the frequency, you can infer how many days until the next charge will o
               "type": "optional<string>",
             },
             "median_transaction_amount": {
-              "docs": "The median transaction amount of the recurring expense.",
+              "docs": "undefinedThe median transaction amount of the recurring expense.",
               "type": "double",
             },
             "name": {
@@ -8840,7 +8840,7 @@ Based on the frequency, you can infer how many days until the next charge will o
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -9043,7 +9043,7 @@ For \`request_timeout\` errors, the description is:
           "docs": "Balance metrics calculated based on the user's balances from checking and savings accounts.",
           "properties": {
             "balance_threshold_x": {
-              "docs": "The threshold used to compute \`days_balance_below_x_period\`. Please note, this is value is country specific (both in terms of the amount and the currency).
+              "docs": "undefinedThe threshold used to compute \`days_balance_below_x_period\`. Please note, this is value is country specific (both in terms of the amount and the currency).
 ",
               "type": "double",
             },
@@ -9179,7 +9179,7 @@ However, internal transfers (transfers between accounts belonging to the same li
           "docs": "Aggregated metrics calculated based on the link's credit card accounts.",
           "properties": {
             "num_accounts": {
-              "docs": "Number of credit cards accounts associated to the link.
+              "docs": "undefinedNumber of credit cards accounts associated to the link.
 ",
               "type": "integer",
             },
@@ -9199,7 +9199,7 @@ However, internal transfers (transfers between accounts belonging to the same li
           "docs": "Aggregated metrics calculated based on the user's loan accounts.",
           "properties": {
             "num_accounts": {
-              "docs": "Number of loan accounts associated with the link.
+              "docs": "undefinedNumber of loan accounts associated with the link.
 ",
               "type": "integer",
             },
@@ -9224,7 +9224,7 @@ However, internal transfers (transfers between accounts belonging to the same li
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -9308,7 +9308,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "optional<double>",
             },
             "num_incoming_transactions_1m": {
-              "docs": "The total number of inflow transactions for the last month.
+              "docs": "undefinedThe total number of inflow transactions for the last month.
 
 ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
 
@@ -9317,7 +9317,7 @@ If the account has not been open long enough to have the transaction data for a 
               "type": "integer",
             },
             "num_incoming_transactions_1w": {
-              "docs": "The total number of inflow transactions for the last week.
+              "docs": "undefinedThe total number of inflow transactions for the last week.
 
 ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
 
@@ -9326,7 +9326,7 @@ If the account has not been open long enough to have the transaction data for a 
               "type": "integer",
             },
             "num_incoming_transactions_3m": {
-              "docs": "The total number of inflow transactions for the last three months.
+              "docs": "undefinedThe total number of inflow transactions for the last three months.
 
 ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
 
@@ -9335,7 +9335,7 @@ If the account has not been open long enough to have the transaction data for a 
               "type": "integer",
             },
             "num_outgoing_transactions_1m": {
-              "docs": "To total number of outflow transactions in the last month.
+              "docs": "undefinedTo total number of outflow transactions in the last month.
 
 ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
 
@@ -9344,7 +9344,7 @@ If the account has not been open long enough to have the transaction data for a 
               "type": "integer",
             },
             "num_outgoing_transactions_1w": {
-              "docs": "To total number of outflow transactions in the last week.
+              "docs": "undefinedTo total number of outflow transactions in the last week.
 
 ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
 
@@ -9353,7 +9353,7 @@ If the account has not been open long enough to have the transaction data for a 
               "type": "integer",
             },
             "num_outgoing_transactions_3m": {
-              "docs": "To total number of outflow transactions in the last three months.
+              "docs": "undefinedTo total number of outflow transactions in the last three months.
 
 ℹ️ **Note**: If there are no transactions between the request date and the last seven or thirty days, the value is \`0\`.
 
@@ -9362,17 +9362,17 @@ If the account has not been open long enough to have the transaction data for a 
               "type": "integer",
             },
             "num_transactions_1m": {
-              "docs": "The total number of transactions analyzed to determine the risk insights for the last month (incoming and outgoing).
+              "docs": "undefinedThe total number of transactions analyzed to determine the risk insights for the last month (incoming and outgoing).
 ",
               "type": "integer",
             },
             "num_transactions_1w": {
-              "docs": "The total number of transactions analyzed to determine the risk insights for the last week (incoming and outgoing).
+              "docs": "undefinedThe total number of transactions analyzed to determine the risk insights for the last week (incoming and outgoing).
 ",
               "type": "integer",
             },
             "num_transactions_3m": {
-              "docs": "The total number of transactions analyzed to determine the risk insights for the last three months (incoming and outgoing).
+              "docs": "undefinedThe total number of transactions analyzed to determine the risk insights for the last three months (incoming and outgoing).
 ",
               "type": "integer",
             },
@@ -9435,7 +9435,7 @@ If the account has not been open long enough to have the transaction data for a 
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -9486,7 +9486,7 @@ For \`session_expired\` errors, the description is:
               "type": "string",
             },
             "save_data": {
-              "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+              "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
               "type": "optional<boolean>",
             },
@@ -9500,39 +9500,39 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "docs": "Object containing the calculated tax assessment of the tax payer. This includes the total taxable income, the income tax applied, and taxes already withheld.",
           "properties": {
             "fortuitous_profit_tax": {
-              "docs": "The tax applied on your unexpected income (such as lottery wins or house sales).",
+              "docs": "undefinedThe tax applied on your unexpected income (such as lottery wins or house sales).",
               "type": "double",
             },
             "net_income_tax": {
-              "docs": "After additional deductions that you can apply, this will be the net income tax. If no further deduction are identified, this value will be the same as \`total_tax_on_taxable_net_income\`.",
+              "docs": "undefinedAfter additional deductions that you can apply, this will be the net income tax. If no further deduction are identified, this value will be the same as \`total_tax_on_taxable_net_income\`.",
               "type": "double",
             },
             "net_income_taxable": {
-              "docs": "The net income on which tax can be applied.",
+              "docs": "undefinedThe net income on which tax can be applied.",
               "type": "double",
             },
             "total_balance_in_favor": {
-              "docs": "How much the tax payer is expected to receive.",
+              "docs": "undefinedHow much the tax payer is expected to receive.",
               "type": "double",
             },
             "total_balance_payable": {
-              "docs": "How much the tax payer is required to pay.",
+              "docs": "undefinedHow much the tax payer is required to pay.",
               "type": "double",
             },
             "total_payment": {
-              "docs": "The total the tax payer is required to pay, taking into account deductions and fiscal credits.",
+              "docs": "undefinedThe total the tax payer is required to pay, taking into account deductions and fiscal credits.",
               "type": "double",
             },
             "total_tax_due": {
-              "docs": "After further deductions, this is the final calculated tax that the taxpayer is required to pay.",
+              "docs": "undefinedAfter further deductions, this is the final calculated tax that the taxpayer is required to pay.",
               "type": "double",
             },
             "total_tax_on_taxable_net_income": {
-              "docs": "The calculated total tax that can be applied on the tax payer's taxable income (total income - exemptions - deductions).",
+              "docs": "undefinedThe calculated total tax that can be applied on the tax payer's taxable income (total income - exemptions - deductions).",
               "type": "double",
             },
             "total_withholdings_for_the_taxable_year_to_be_declared": {
-              "docs": "How much the tax payer has already paid througout the fiscal year.",
+              "docs": "undefinedHow much the tax payer has already paid througout the fiscal year.",
               "type": "double",
             },
           },
@@ -9541,23 +9541,23 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "docs": "Object containing the calculated tax assessment of the tax payer. This includes the total taxable income, the income tax applied, and taxes already withheld.",
           "properties": {
             "balance_payable": {
-              "docs": "How much the tax payer is required to pay.",
+              "docs": "undefinedHow much the tax payer is required to pay.",
               "type": "double",
             },
             "balance_refundable": {
-              "docs": "How much the tax payer is expected to receive. For DIAN, this will count as credit for the next fiscal year (see \`previous_year_balance\`).",
+              "docs": "undefinedHow much the tax payer is expected to receive. For DIAN, this will count as credit for the next fiscal year (see \`previous_year_balance\`).",
               "type": "double",
             },
             "fortuitous_profit_tax": {
-              "docs": "The tax applied on your unexpected income (such as lottery wins or house sales).",
+              "docs": "undefinedThe tax applied on your unexpected income (such as lottery wins or house sales).",
               "type": "double",
             },
             "net_income_tax": {
-              "docs": "After additional deductions that you can apply, this will be the net income tax. If not further deduction are identified, this value will be the same as \`total_tax_on_taxable_net_income\`.",
+              "docs": "undefinedAfter additional deductions that you can apply, this will be the net income tax. If not further deduction are identified, this value will be the same as \`total_tax_on_taxable_net_income\`.",
               "type": "double",
             },
             "previous_year_balance": {
-              "docs": "Only applicable for DIAN.
+              "docs": "undefinedOnly applicable for DIAN.
 
 
 The amount the tax payer has as a "credit" fromt he previous year (this is equal to the \`balance_refundable\`) of the previous year.
@@ -9565,19 +9565,19 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
               "type": "double",
             },
             "total_payment": {
-              "docs": "The total the tax payer is required to pay, taking into account deductions and fiscal credits.",
+              "docs": "undefinedThe total the tax payer is required to pay, taking into account deductions and fiscal credits.",
               "type": "double",
             },
             "total_tax_due": {
-              "docs": "After further deductions, this is the final calculated tax that the taxpayer is required to pay.",
+              "docs": "undefinedAfter further deductions, this is the final calculated tax that the taxpayer is required to pay.",
               "type": "double",
             },
             "total_tax_on_taxable_net_income": {
-              "docs": "The calculated total tax that can be applied on the tax payer's taxable income (total income - exemptions - deductions).",
+              "docs": "undefinedThe calculated total tax that can be applied on the tax payer's taxable income (total income - exemptions - deductions).",
               "type": "double",
             },
             "total_withheld_tax": {
-              "docs": "The total tax already withheld in the current fiscal year.",
+              "docs": "undefinedThe total tax already withheld in the current fiscal year.",
               "type": "double",
             },
           },
@@ -9619,7 +9619,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -9696,7 +9696,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -9773,7 +9773,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -9973,7 +9973,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -10213,7 +10213,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -10237,7 +10237,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -10261,7 +10261,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "Request body for monthly tax returns",
           "properties": {
             "attach_pdf": {
-              "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
+              "docs": "undefinedWhen this is set to \`true\`, you will receive the PDF as a binary string in the response.",
               "type": "optional<boolean>",
             },
             "date_from": {
@@ -10281,7 +10281,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "save_data": {
-              "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+              "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
               "type": "optional<boolean>",
             },
@@ -10296,7 +10296,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -10320,7 +10320,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -10344,7 +10344,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "docs": "Request body for yearly tax returns",
           "properties": {
             "attach_pdf": {
-              "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
+              "docs": "undefinedWhen this is set to \`true\`, you will receive the PDF as a binary string in the response.",
               "type": "optional<boolean>",
             },
             "link": {
@@ -10352,7 +10352,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "save_data": {
-              "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+              "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
               "type": "optional<boolean>",
             },
@@ -10693,7 +10693,7 @@ For detailed information regarding DIAN's economic activities, please see their 
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -10969,7 +10969,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "optional<string>",
             },
             "expiry": {
-              "docs": "Session duration time in seconds.",
+              "docs": "undefinedSession duration time in seconds.",
               "type": "optional<integer>",
             },
             "link": {
@@ -11002,7 +11002,7 @@ For \`token_required\` errors, the description is:
           "docs": "Details on how to generate the token.",
           "properties": {
             "expects_user_input": {
-              "docs": "Indicates whether the user needs to provide input in order to complete the authentication.
+              "docs": "undefinedIndicates whether the user needs to provide input in order to complete the authentication.
 When set to \`false\`, your user may need to:
 - confirm the login on another device - scan a QR code
 You will still need to make a PATCH call to complete the request.",
@@ -11215,7 +11215,7 @@ We only return merchant information for new transactions made from *checking* or
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "The total number of results in your Belvo account.",
+              "docs": "undefinedThe total number of results in your Belvo account.",
               "type": "optional<integer>",
             },
             "next": {
@@ -11259,7 +11259,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "save_data": {
-              "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+              "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
               "type": "optional<boolean>",
             },
@@ -12098,7 +12098,7 @@ For \`session_expired\` errors, the description can be (among others):
                     "type": "string",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },
@@ -12585,7 +12585,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "docs": "When set to \`true\`, you will receive the PDF in binary format in the response.",
+                    "docs": "undefinedWhen set to \`true\`, you will receive the PDF in binary format in the response.",
                     "type": "optional<boolean>",
                   },
                   "link": {
@@ -12593,7 +12593,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "type": "string",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },
@@ -12906,7 +12906,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "type": "optional<root.EnumIncomeMinimumConfidenceLevelRequest>",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },
@@ -13598,7 +13598,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "body": {
                 "properties": {
                   "attach_xml": {
-                    "docs": "When set to \`true\`, you will receive the XML invoice in the response.",
+                    "docs": "undefinedWhen set to \`true\`, you will receive the XML invoice in the response.",
                     "type": "optional<boolean>",
                   },
                   "date_from": {
@@ -13622,7 +13622,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "type": "string",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },
@@ -13995,7 +13995,7 @@ If we identify that the identifier contains PII, we will force a \`null\` value.
                     "type": "optional<string>",
                   },
                   "fetch_historical": {
-                    "docs": "Indicates whether or not to retrieve historical information for the link or not. For links where \`access_mode=single\`, the default is \`false\`. For links where \`access_mode=recurrent\` this is hardcoded to \`true\`.
+                    "docs": "undefinedIndicates whether or not to retrieve historical information for the link or not. For links where \`access_mode=single\`, the default is \`false\`. For links where \`access_mode=recurrent\` this is hardcoded to \`true\`.
 ",
                     "type": "optional<boolean>",
                   },
@@ -14762,7 +14762,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "body": {
                 "properties": {
                   "confirm": {
-                    "docs": "Boolean that indicates whether this request confirms the payment intent. 
+                    "docs": "undefinedBoolean that indicates whether this request confirms the payment intent. 
 
 **Note:** You'll need to send this parameter set to \`true\` when the payment intent next_step returns \`ready_to_confirm: true\`, meaning the payment intent is ready to be confirmed.",
                     "type": "optional<boolean>",
@@ -15423,7 +15423,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                     "type": "string",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },
@@ -15670,7 +15670,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "type": "string",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },
@@ -16131,7 +16131,7 @@ For example:
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "docs": "When set to \`true\`, you will receive the PDF in binary format in the response.",
+                    "docs": "undefinedWhen set to \`true\`, you will receive the PDF in binary format in the response.",
                     "type": "optional<boolean>",
                   },
                   "link": {
@@ -16139,7 +16139,7 @@ For example:
                     "type": "string",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },
@@ -16366,7 +16366,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "docs": "When this is set to \`true\`, you will receive the PDF as a binary string in the response.",
+                    "docs": "undefinedWhen this is set to \`true\`, you will receive the PDF as a binary string in the response.",
                     "type": "optional<boolean>",
                   },
                   "link": {
@@ -16374,7 +16374,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "type": "string",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },
@@ -16571,7 +16571,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "body": {
                 "properties": {
                   "attach_xml": {
-                    "docs": "When set to \`true\`, you will receive the XML tax retention in the response.",
+                    "docs": "undefinedWhen set to \`true\`, you will receive the XML tax retention in the response.",
                     "type": "optional<boolean>",
                   },
                   "date_from": {
@@ -16594,7 +16594,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "type": "string",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },
@@ -17026,7 +17026,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "body": {
                 "properties": {
                   "attach_pdf": {
-                    "docs": "When set to \`true\`, you will receive the PDF in binary format in the response.",
+                    "docs": "undefinedWhen set to \`true\`, you will receive the PDF in binary format in the response.",
                     "type": "optional<boolean>",
                   },
                   "link": {
@@ -17034,7 +17034,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "type": "string",
                   },
                   "save_data": {
-                    "docs": "Indicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
+                    "docs": "undefinedIndicates whether or not to persist the data in Belvo. By default, this is set to \`true\` and we return a 201 Created response.
 When set to \`false\`, the data won't be persisted and we return a 200 OK response.",
                     "type": "optional<boolean>",
                   },

@@ -116,7 +116,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "alive": {
-              "docs": "Liveliness status",
+              "docs": "undefinedLiveliness status",
               "type": "optional<boolean>",
             },
           },
@@ -125,7 +125,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "ready": {
-              "docs": "Readiness status",
+              "docs": "undefinedReadiness status",
               "type": "optional<boolean>",
             },
           },
@@ -142,11 +142,11 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<map<string, string>>",
             },
             "amlContext": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "version": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -159,7 +159,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "byte_count": {
-              "docs": "Byte count of data included by reference",
+              "docs": "undefinedByte count of data included by reference",
               "type": "optional<integer>",
             },
             "data": {
@@ -912,7 +912,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "n": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "r": {
@@ -920,15 +920,15 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<Generated>",
             },
             "rctxt": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "s": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "z": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -937,47 +937,47 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "g": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "g_dash": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "h": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "h0": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "h1": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "h2": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "h_cap": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "htilde": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "pk": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "u": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "y": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -1026,7 +1026,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "revoked": {
-              "docs": "Whether credential is revoked on the ledger",
+              "docs": "undefinedWhether credential is revoked on the ledger",
               "type": "optional<boolean>",
             },
           },
@@ -1047,7 +1047,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "issuanceDate": {
@@ -1186,7 +1186,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "cred_def_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "credential_proposal": {
@@ -1194,23 +1194,23 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<CredentialPreview>",
             },
             "issuer_did": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "schema_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "schema_issuer_did": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "schema_name": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "schema_version": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -1608,7 +1608,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "maxLength": {
-              "docs": "Max Length",
+              "docs": "undefinedMax Length",
               "type": "optional<integer>",
             },
             "maximum": {
@@ -1616,7 +1616,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<map<string, unknown>>",
             },
             "minLength": {
-              "docs": "Min Length",
+              "docs": "undefinedMin Length",
               "type": "optional<integer>",
             },
             "minimum": {
@@ -1624,7 +1624,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<map<string, unknown>>",
             },
             "not": {
-              "docs": "Not",
+              "docs": "undefinedNot",
               "type": "optional<boolean>",
             },
             "pattern": {
@@ -1641,15 +1641,15 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "master_secret": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "number": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "remainder": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2406,11 +2406,11 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "a_prime": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "e": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "m": {
@@ -2418,7 +2418,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<map<string, string>>",
             },
             "m2": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "revealed_attrs": {
@@ -2426,7 +2426,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<map<string, string>>",
             },
             "v": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -2435,11 +2435,11 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "alpha": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "mj": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "predicate": {
@@ -2472,7 +2472,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<IndyGeProofPredPType>",
             },
             "value": {
-              "docs": "Predicate threshold value",
+              "docs": "undefinedPredicate threshold value",
               "type": "optional<integer>",
             },
           },
@@ -2536,11 +2536,11 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "from": {
-              "docs": "Earliest time of interest in non-revocation interval",
+              "docs": "undefinedEarliest time of interest in non-revocation interval",
               "type": "optional<integer>",
             },
             "to": {
-              "docs": "Latest time of interest in non-revocation interval",
+              "docs": "undefinedLatest time of interest in non-revocation interval",
               "type": "optional<integer>",
             },
           },
@@ -2549,7 +2549,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "cred_def_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "mime-type": {
@@ -2586,7 +2586,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "IndyPresPredSpecPredicate",
             },
             "threshold": {
-              "docs": "Threshold value",
+              "docs": "undefinedThreshold value",
               "type": "integer",
             },
           },
@@ -2649,7 +2649,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "map<string, string>",
             },
             "trace": {
-              "docs": "Whether to trace event (default false)",
+              "docs": "undefinedWhether to trace event (default false)",
               "type": "optional<boolean>",
             },
           },
@@ -2781,11 +2781,11 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "from": {
-              "docs": "Earliest time of interest in non-revocation interval",
+              "docs": "undefinedEarliest time of interest in non-revocation interval",
               "type": "optional<integer>",
             },
             "to": {
-              "docs": "Latest time of interest in non-revocation interval",
+              "docs": "undefinedLatest time of interest in non-revocation interval",
               "type": "optional<integer>",
             },
           },
@@ -2806,7 +2806,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "IndyProofReqPredSpecPType",
             },
             "p_value": {
-              "docs": "Threshold value",
+              "docs": "undefinedThreshold value",
               "type": "integer",
             },
             "restrictions": {
@@ -2819,11 +2819,11 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "from": {
-              "docs": "Earliest time of interest in non-revocation interval",
+              "docs": "undefinedEarliest time of interest in non-revocation interval",
               "type": "optional<integer>",
             },
             "to": {
-              "docs": "Latest time of interest in non-revocation interval",
+              "docs": "undefinedLatest time of interest in non-revocation interval",
               "type": "optional<integer>",
             },
           },
@@ -2886,11 +2886,11 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "from": {
-              "docs": "Earliest time of interest in non-revocation interval",
+              "docs": "undefinedEarliest time of interest in non-revocation interval",
               "type": "optional<integer>",
             },
             "to": {
-              "docs": "Latest time of interest in non-revocation interval",
+              "docs": "undefinedLatest time of interest in non-revocation interval",
               "type": "optional<integer>",
             },
           },
@@ -2924,7 +2924,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "sub_proof_index": {
-              "docs": "Sub-proof index",
+              "docs": "undefinedSub-proof index",
               "type": "optional<integer>",
             },
           },
@@ -2941,7 +2941,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "sub_proof_index": {
-              "docs": "Sub-proof index",
+              "docs": "undefinedSub-proof index",
               "type": "optional<integer>",
             },
           },
@@ -2950,7 +2950,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "sub_proof_index": {
-              "docs": "Sub-proof index",
+              "docs": "undefinedSub-proof index",
               "type": "optional<integer>",
             },
             "values": {
@@ -2975,7 +2975,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "string",
             },
             "revealed": {
-              "docs": "Whether to reveal attribute in proof (default true)",
+              "docs": "undefinedWhether to reveal attribute in proof (default true)",
               "type": "optional<boolean>",
             },
           },
@@ -2988,7 +2988,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "string",
             },
             "timestamp": {
-              "docs": "Epoch timestamp of interest for non-revocation proof",
+              "docs": "undefinedEpoch timestamp of interest for non-revocation proof",
               "type": "optional<integer>",
             },
           },
@@ -3040,7 +3040,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<IndyRevRegDefValueIssuanceType>",
             },
             "maxCredNum": {
-              "docs": "Maximum number of credentials; registry size",
+              "docs": "undefinedMaximum number of credentials; registry size",
               "type": "optional<integer>",
             },
             "publicKeys": {
@@ -3238,7 +3238,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "updated_at": {
@@ -3333,7 +3333,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "max_cred_num": {
-              "docs": "Maximum number of credentials for revocation registry",
+              "docs": "undefinedMaximum number of credentials for revocation registry",
               "type": "optional<integer>",
             },
             "pending_pub": {
@@ -3446,11 +3446,11 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "limit": {
-              "docs": "Limit for keylist query",
+              "docs": "undefinedLimit for keylist query",
               "type": "optional<integer>",
             },
             "offset": {
-              "docs": "Offset value for query",
+              "docs": "undefinedOffset value for query",
               "type": "optional<integer>",
             },
           },
@@ -3570,7 +3570,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "is_production": {
-              "docs": "is_production",
+              "docs": "undefinedis_production",
               "type": "optional<boolean>",
             },
           },
@@ -3684,7 +3684,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "connection_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "created_at": {
@@ -3692,11 +3692,11 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "endpoint": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "mediation_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "mediator_terms": {
@@ -3708,7 +3708,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<list<string>>",
             },
             "role": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "routing_keys": {
@@ -3791,7 +3791,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "string",
             },
             "required": {
-              "docs": "Whether parameter is required",
+              "docs": "undefinedWhether parameter is required",
               "type": "optional<boolean>",
             },
             "title": {
@@ -3833,7 +3833,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "disabled": {
-              "docs": "Whether to show option as disabled",
+              "docs": "undefinedWhether to show option as disabled",
               "type": "optional<boolean>",
             },
             "form": {
@@ -3898,7 +3898,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<ServiceDecorator>",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "updated_at": {
@@ -4046,7 +4046,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "pid": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "roles": {
@@ -4093,11 +4093,11 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "comment": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "query": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },
@@ -4198,7 +4198,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "result": {
-              "docs": "Number of credentials issued against revocation registry",
+              "docs": "undefinedNumber of credentials issued against revocation registry",
               "type": "optional<integer>",
             },
           },
@@ -4273,7 +4273,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "connection_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "created_at": {
@@ -4281,15 +4281,15 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "recipient_key": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "record_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "role": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "state": {
@@ -4301,7 +4301,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "wallet_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -4322,7 +4322,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "seqNo": {
-              "docs": "Schema sequence number",
+              "docs": "undefinedSchema sequence number",
               "type": "optional<integer>",
             },
             "ver": {
@@ -4348,7 +4348,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "required": {
-              "docs": "Required",
+              "docs": "undefinedRequired",
               "type": "optional<boolean>",
             },
             "uri": {
@@ -4387,7 +4387,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "oneof_filter": {
-              "docs": "oneOf",
+              "docs": "undefinedoneOf",
               "type": "optional<boolean>",
             },
             "uri_groups": {
@@ -4488,23 +4488,23 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "challenge": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "domain": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "proofPurpose": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "verificationMethod": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },
@@ -4526,7 +4526,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "count": {
-              "docs": "Count Value",
+              "docs": "undefinedCount Value",
               "type": "optional<integer>",
             },
             "from": {
@@ -4538,11 +4538,11 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<list<SubmissionRequirements>>",
             },
             "max": {
-              "docs": "Max Value",
+              "docs": "undefinedMax Value",
               "type": "optional<integer>",
             },
             "min": {
-              "docs": "Min Value",
+              "docs": "undefinedMin Value",
               "type": "optional<integer>",
             },
             "name": {
@@ -4578,7 +4578,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "mechanism": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "time": {
@@ -4612,15 +4612,15 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "digest": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "text": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "version": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -4638,7 +4638,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "message": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -4721,7 +4721,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "endorser_write_txn": {
-              "docs": "If True, Endorser will write the transaction after endorsing it",
+              "docs": "undefinedIf True, Endorser will write the transaction after endorsing it",
               "type": "optional<boolean>",
             },
             "formats": {
@@ -4757,7 +4757,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<TransactionRecordTiming>",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "transaction_id": {
@@ -4828,7 +4828,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "success": {
-              "docs": "Success of nym registration operation",
+              "docs": "undefinedSuccess of nym registration operation",
               "type": "optional<boolean>",
             },
             "txn": {
@@ -4907,15 +4907,15 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "auto_issue": {
-              "docs": "Issuer choice to issue to request in this credential exchange",
+              "docs": "undefinedIssuer choice to issue to request in this credential exchange",
               "type": "optional<boolean>",
             },
             "auto_offer": {
-              "docs": "Holder choice to accept offer in this credential exchange",
+              "docs": "undefinedHolder choice to accept offer in this credential exchange",
               "type": "optional<boolean>",
             },
             "auto_remove": {
-              "docs": "Issuer choice to remove this credential exchange record when complete",
+              "docs": "undefinedIssuer choice to remove this credential exchange record when complete",
               "type": "optional<boolean>",
             },
             "connection_id": {
@@ -5003,7 +5003,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "updated_at": {
@@ -5124,7 +5124,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "updated_at": {
@@ -5149,11 +5149,11 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "auto_present": {
-              "docs": "Prover choice to auto-present proof as verifier requests",
+              "docs": "undefinedProver choice to auto-present proof as verifier requests",
               "type": "optional<boolean>",
             },
             "auto_verify": {
-              "docs": "Verifier choice to auto-verify proof presentation",
+              "docs": "undefinedVerifier choice to auto-verify proof presentation",
               "type": "optional<boolean>",
             },
             "connection_id": {
@@ -5205,7 +5205,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "updated_at": {
@@ -5321,7 +5321,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "auto_remove": {
-              "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+              "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
               "type": "optional<boolean>",
             },
             "comment": {
@@ -5341,7 +5341,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "V20CredBoundOfferRequestFilter",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "verification_method": {
@@ -5354,15 +5354,15 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "auto_issue": {
-              "docs": "Issuer choice to issue to request in this credential exchange",
+              "docs": "undefinedIssuer choice to issue to request in this credential exchange",
               "type": "optional<boolean>",
             },
             "auto_offer": {
-              "docs": "Holder choice to accept offer in this credential exchange",
+              "docs": "undefinedHolder choice to accept offer in this credential exchange",
               "type": "optional<boolean>",
             },
             "auto_remove": {
-              "docs": "Issuer choice to remove this credential exchange record when complete",
+              "docs": "undefinedIssuer choice to remove this credential exchange record when complete",
               "type": "optional<boolean>",
             },
             "by_format": {
@@ -5426,7 +5426,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "updated_at": {
@@ -5941,7 +5941,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "updated_at": {
@@ -5991,11 +5991,11 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "auto_present": {
-              "docs": "Prover choice to auto-present proof as verifier requests",
+              "docs": "undefinedProver choice to auto-present proof as verifier requests",
               "type": "optional<boolean>",
             },
             "auto_verify": {
-              "docs": "Verifier choice to auto-verify proof presentation",
+              "docs": "undefinedVerifier choice to auto-verify proof presentation",
               "type": "optional<boolean>",
             },
             "by_format": {
@@ -6047,7 +6047,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "trace": {
-              "docs": "Record trace information, based on agent configuration",
+              "docs": "undefinedRecord trace information, based on agent configuration",
               "type": "optional<boolean>",
             },
             "updated_at": {
@@ -6292,7 +6292,7 @@ exports[`open api parser aries simple 1`] = `
               "type": "list<AttachDecorator>",
             },
             "will_confirm": {
-              "docs": "Whether verifier will send confirmation ack",
+              "docs": "undefinedWhether verifier will send confirmation ack",
               "type": "optional<boolean>",
             },
           },
@@ -6470,7 +6470,7 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "properties": {
             "ledger_id": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -7200,7 +7200,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "revocation_registry_size": {
-                    "docs": "Revocation registry size",
+                    "docs": "undefinedRevocation registry size",
                     "type": "optional<integer>",
                   },
                   "schema_id": {
@@ -7208,7 +7208,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "support_revocation": {
-                    "docs": "Revocation supported flag",
+                    "docs": "undefinedRevocation supported flag",
                     "type": "optional<boolean>",
                   },
                   "tag": {
@@ -7445,7 +7445,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "max_results": {
-                    "docs": "Maximum number of results to return",
+                    "docs": "undefinedMaximum number of results to return",
                     "type": "optional<integer>",
                   },
                   "proof_types": {
@@ -8093,7 +8093,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_remove": {
-                    "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -8129,7 +8129,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "trace": {
-                    "docs": "Record trace information, based on agent configuration",
+                    "docs": "undefinedRecord trace information, based on agent configuration",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8154,11 +8154,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_issue": {
-                    "docs": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
+                    "docs": "undefinedWhether to respond automatically to credential requests, creating and issuing requested credentials",
                     "type": "optional<boolean>",
                   },
                   "auto_remove": {
-                    "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -8174,7 +8174,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.CredentialPreview",
                   },
                   "trace": {
-                    "docs": "Record trace information, based on agent configuration",
+                    "docs": "undefinedRecord trace information, based on agent configuration",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8309,7 +8309,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "description": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                 },
@@ -8383,7 +8383,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_remove": {
-                    "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -8423,7 +8423,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "trace": {
-                    "docs": "Record trace information, based on agent configuration",
+                    "docs": "undefinedRecord trace information, based on agent configuration",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8448,11 +8448,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_issue": {
-                    "docs": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
+                    "docs": "undefinedWhether to respond automatically to credential requests, creating and issuing requested credentials",
                     "type": "optional<boolean>",
                   },
                   "auto_remove": {
-                    "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -8472,7 +8472,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.CredentialPreview",
                   },
                   "trace": {
-                    "docs": "Record trace information, based on agent configuration",
+                    "docs": "undefinedRecord trace information, based on agent configuration",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8497,7 +8497,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_remove": {
-                    "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -8537,7 +8537,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "trace": {
-                    "docs": "Record trace information, based on agent configuration",
+                    "docs": "undefinedRecord trace information, based on agent configuration",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8568,7 +8568,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "credential_id": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                 },
@@ -8605,7 +8605,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_remove": {
-                    "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -8621,7 +8621,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.V20CredBoundOfferRequestFilter",
                   },
                   "trace": {
-                    "docs": "Record trace information, based on agent configuration",
+                    "docs": "undefinedRecord trace information, based on agent configuration",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8646,11 +8646,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_issue": {
-                    "docs": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
+                    "docs": "undefinedWhether to respond automatically to credential requests, creating and issuing requested credentials",
                     "type": "optional<boolean>",
                   },
                   "auto_remove": {
-                    "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -8666,7 +8666,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.V20CredBoundOfferRequestFilter",
                   },
                   "trace": {
-                    "docs": "Record trace information, based on agent configuration",
+                    "docs": "undefinedRecord trace information, based on agent configuration",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8801,7 +8801,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "description": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                 },
@@ -8910,11 +8910,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_issue": {
-                    "docs": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
+                    "docs": "undefinedWhether to respond automatically to credential requests, creating and issuing requested credentials",
                     "type": "optional<boolean>",
                   },
                   "auto_remove": {
-                    "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -8934,7 +8934,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.V20CredBoundOfferRequestFilter",
                   },
                   "trace": {
-                    "docs": "Record trace information, based on agent configuration",
+                    "docs": "undefinedRecord trace information, based on agent configuration",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8977,7 +8977,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_remove": {
-                    "docs": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
+                    "docs": "undefinedWhether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -8997,7 +8997,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "trace": {
-                    "docs": "Whether to trace event (default false)",
+                    "docs": "undefinedWhether to trace event (default false)",
                     "type": "optional<boolean>",
                   },
                 },
@@ -9028,7 +9028,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "credential_id": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                 },
@@ -9135,15 +9135,15 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "mechanism": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "text": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "version": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                 },
@@ -9938,7 +9938,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "use_public_did": {
-                    "docs": "Whether to use public DID in invitation",
+                    "docs": "undefinedWhether to use public DID in invitation",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10027,11 +10027,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_verify": {
-                    "docs": "Verifier choice to auto-verify proof presentation",
+                    "docs": "undefinedVerifier choice to auto-verify proof presentation",
                     "type": "optional<boolean>",
                   },
                   "comment": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "proof_request": {
@@ -10039,7 +10039,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.IndyProofRequest",
                   },
                   "trace": {
-                    "docs": "Whether to trace event (default false)",
+                    "docs": "undefinedWhether to trace event (default false)",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10186,7 +10186,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "description": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                 },
@@ -10211,11 +10211,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_verify": {
-                    "docs": "Verifier choice to auto-verify proof presentation",
+                    "docs": "undefinedVerifier choice to auto-verify proof presentation",
                     "type": "optional<boolean>",
                   },
                   "comment": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "connection_id": {
@@ -10227,7 +10227,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.IndyProofRequest",
                   },
                   "trace": {
-                    "docs": "Whether to trace event (default false)",
+                    "docs": "undefinedWhether to trace event (default false)",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10252,7 +10252,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_present": {
-                    "docs": "Whether to respond automatically to presentation requests, building and presenting requested proof",
+                    "docs": "undefinedWhether to respond automatically to presentation requests, building and presenting requested proof",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -10268,7 +10268,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.IndyPresPreview",
                   },
                   "trace": {
-                    "docs": "Whether to trace event (default false)",
+                    "docs": "undefinedWhether to trace event (default false)",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10323,11 +10323,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_verify": {
-                    "docs": "Verifier choice to auto-verify proof presentation",
+                    "docs": "undefinedVerifier choice to auto-verify proof presentation",
                     "type": "optional<boolean>",
                   },
                   "trace": {
-                    "docs": "Whether to trace event (default false)",
+                    "docs": "undefinedWhether to trace event (default false)",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10382,11 +10382,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_verify": {
-                    "docs": "Verifier choice to auto-verify proof presentation",
+                    "docs": "undefinedVerifier choice to auto-verify proof presentation",
                     "type": "optional<boolean>",
                   },
                   "comment": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "presentation_request": {
@@ -10394,7 +10394,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.V20PresRequestByFormat",
                   },
                   "trace": {
-                    "docs": "Whether to trace event (default false)",
+                    "docs": "undefinedWhether to trace event (default false)",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10541,7 +10541,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "description": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "string",
                   },
                 },
@@ -10566,11 +10566,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_verify": {
-                    "docs": "Verifier choice to auto-verify proof presentation",
+                    "docs": "undefinedVerifier choice to auto-verify proof presentation",
                     "type": "optional<boolean>",
                   },
                   "comment": {
-                    "docs": undefined,
+                    "docs": "",
                     "type": "optional<string>",
                   },
                   "connection_id": {
@@ -10582,7 +10582,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.V20PresRequestByFormat",
                   },
                   "trace": {
-                    "docs": "Whether to trace event (default false)",
+                    "docs": "undefinedWhether to trace event (default false)",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10607,7 +10607,7 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_present": {
-                    "docs": "Whether to respond automatically to presentation requests, building and presenting requested proof",
+                    "docs": "undefinedWhether to respond automatically to presentation requests, building and presenting requested proof",
                     "type": "optional<boolean>",
                   },
                   "comment": {
@@ -10623,7 +10623,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "root.V20PresProposalByFormat",
                   },
                   "trace": {
-                    "docs": "Whether to trace event (default false)",
+                    "docs": "undefinedWhether to trace event (default false)",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10662,7 +10662,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<root.V20PresSpecByFormatRequestIndy>",
                   },
                   "trace": {
-                    "docs": "Record trace information, based on agent configuration",
+                    "docs": "undefinedRecord trace information, based on agent configuration",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10693,11 +10693,11 @@ exports[`open api parser aries simple 1`] = `
               "body": {
                 "properties": {
                   "auto_verify": {
-                    "docs": "Verifier choice to auto-verify proof presentation",
+                    "docs": "undefinedVerifier choice to auto-verify proof presentation",
                     "type": "optional<boolean>",
                   },
                   "trace": {
-                    "docs": "Whether to trace event (default false)",
+                    "docs": "undefinedWhether to trace event (default false)",
                     "type": "optional<boolean>",
                   },
                 },
@@ -10811,7 +10811,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "max_cred_num": {
-                    "docs": "Revocation registry size",
+                    "docs": "undefinedRevocation registry size",
                     "type": "optional<integer>",
                   },
                 },
@@ -11130,7 +11130,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "notify": {
-                    "docs": "Send a notification to the credential recipient",
+                    "docs": "undefinedSend a notification to the credential recipient",
                     "type": "optional<boolean>",
                   },
                   "notify_version": {
@@ -11138,7 +11138,7 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<root.RevokeRequestNotifyVersion>",
                   },
                   "publish": {
-                    "docs": "(True) publish revocation to ledger immediately, or (default, False) mark it pending",
+                    "docs": "undefined(True) publish revocation to ledger immediately, or (default, False) mark it pending",
                     "type": "optional<boolean>",
                   },
                   "rev_reg_id": {

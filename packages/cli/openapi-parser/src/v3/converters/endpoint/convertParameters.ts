@@ -35,11 +35,20 @@ export function convertParameters(
                   ])
                 : isRequired
                 ? Schema.primitive({
-                      schema: PrimitiveSchemaValue.string(),
+                      schema: PrimitiveSchemaValue.string({
+                          minLength: undefined,
+                          maxLength: undefined,
+                      }),
                       description: undefined,
                   })
                 : Schema.optional({
-                      value: Schema.primitive({ schema: PrimitiveSchemaValue.string(), description: undefined }),
+                      value: Schema.primitive({
+                          schema: PrimitiveSchemaValue.string({
+                              minLength: undefined,
+                              maxLength: undefined,
+                          }),
+                          description: undefined,
+                      }),
                       description: undefined,
                   });
 

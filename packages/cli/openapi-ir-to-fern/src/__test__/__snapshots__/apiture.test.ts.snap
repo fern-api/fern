@@ -52,7 +52,7 @@ exports[`open api parser apiture simple 1`] = `
           ],
           "properties": {
             "start": {
-              "docs": "The opaque cursor that specifies the starting location of this page of items.",
+              "docs": "\`less than 256 characters\` The opaque cursor that specifies the starting location of this page of items.",
               "type": "optional<string>",
             },
           },
@@ -61,11 +61,11 @@ exports[`open api parser apiture simple 1`] = `
           "docs": "Common properties of collection page responses.",
           "properties": {
             "limit": {
-              "docs": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
+              "docs": "undefinedThe number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
               "type": "integer",
             },
             "nextPage_url": {
-              "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
+              "docs": "\`less than 8000 characters\` The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
               "type": "optional<string>",
             },
           },
@@ -82,7 +82,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "FullAccountPermissions",
             },
             "electronicStatements": {
-              "docs": "If \`true\`, the customer has opted in to receive account statements electronically.",
+              "docs": "undefinedIf \`true\`, the customer has opted in to receive account statements electronically.",
               "type": "boolean",
             },
           },
@@ -187,7 +187,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "ReadOnlyResourceId",
             },
             "incomplete": {
-              "docs": "If \`true\`, the response is incomplete and the client may retry the operation after the \`Retry-After\` time in order to fetch balances for any incomplete accounts in the \`items\`. The retry operation should only pass in accounts that are \`incomplete\`.",
+              "docs": "undefinedIf \`true\`, the response is incomplete and the client may retry the operation after the \`Retry-After\` time in order to fetch balances for any incomplete accounts in the \`items\`. The retry operation should only pass in accounts that are \`incomplete\`.",
               "type": "boolean",
             },
             "updatedAt": {
@@ -216,7 +216,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "ReadOnlyResourceId",
             },
             "label": {
-              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+              "docs": "\`less than 80 characters\` The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "string",
             },
             "location": {
@@ -249,7 +249,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "optional<ReadOnlyResourceId>",
             },
             "label": {
-              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+              "docs": "\`less than 80 characters\` The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "optional<string>",
             },
             "location": {
@@ -281,7 +281,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "ReadOnlyResourceId",
             },
             "name": {
-              "docs": "The full name of the joint owner.",
+              "docs": "\`less than 50 characters\` The full name of the joint owner.",
               "type": "string",
             },
           },
@@ -323,31 +323,31 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "Flags which indicate the permissions the current authorized user has on this account item resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in account items in the [\`accounts\`](#schema-accounts) list. See [\`fullAccountPermissions\`](#schema-fullAccountPermissions) for all capabilities a customer has on an account (the \`account.allows\` object in the [\`account\`](#schema-account) object response from [\`getAccount\`](#op-getAccount).)",
           "properties": {
             "billPay": {
-              "docs": "If \`true\`, the customer may use this account for Bill Pay.",
+              "docs": "undefinedIf \`true\`, the customer may use this account for Bill Pay.",
               "type": "boolean",
             },
             "manageCards": {
-              "docs": "If true, the customer may manage debit cards associated with this account. This includes locking and unlocking cards, changing card controls, ordering cards, or canceling cards.",
+              "docs": "undefinedIf true, the customer may manage debit cards associated with this account. This includes locking and unlocking cards, changing card controls, ordering cards, or canceling cards.",
               "type": "boolean",
             },
             "mobileCheckDeposit": {
-              "docs": "If \`true\`, the customer may use this account for mobile check deposits.",
+              "docs": "undefinedIf \`true\`, the customer may use this account for mobile check deposits.",
               "type": "boolean",
             },
             "transferFrom": {
-              "docs": "If \`true\`, the customer may use this account as the target (deposit) account for account-to-account transfers.",
+              "docs": "undefinedIf \`true\`, the customer may use this account as the target (deposit) account for account-to-account transfers.",
               "type": "boolean",
             },
             "transferTo": {
-              "docs": "If \`true\`, the customer may use this account as the source (debit) account for account-to-account transfers.",
+              "docs": "undefinedIf \`true\`, the customer may use this account as the source (debit) account for account-to-account transfers.",
               "type": "boolean",
             },
             "view": {
-              "docs": "If \`true\`, the customer may view the details of this account, including the account balance and transactions.",
+              "docs": "undefinedIf \`true\`, the customer may view the details of this account, including the account balance and transactions.",
               "type": "boolean",
             },
             "viewCards": {
-              "docs": "If \`true\`, the customer may view debit cards associated with this account.",
+              "docs": "undefinedIf \`true\`, the customer may view debit cards associated with this account.",
               "type": "boolean",
             },
           },
@@ -356,7 +356,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "A paginated list of the customer's accounts. This list contains internal banking accounts and external banking accounts. and outside fund accounts. The \`location\` property indicates where the account is held. Items in the list contain \`url\` links to the actual account resource which are in the \`accounts\`, \`externalAccounts\` or \`outsideAccounts\` collections.",
           "properties": {
             "count": {
-              "docs": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
+              "docs": "undefinedThe total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
               "type": "optional<integer>",
             },
             "items": {
@@ -364,11 +364,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "list<AccountItem>",
             },
             "limit": {
-              "docs": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
+              "docs": "undefinedThe number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
               "type": "integer",
             },
             "nextPage_url": {
-              "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
+              "docs": "\`less than 256 characters\` The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
               "type": "optional<string>",
             },
             "primaryAccountId": {
@@ -376,7 +376,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<ReadOnlyResourceId>",
             },
             "start": {
-              "docs": "The opaque cursor that specifies the starting location of this page of items.",
+              "docs": "\`less than 256 characters\` The opaque cursor that specifies the starting location of this page of items.",
               "type": "optional<string>",
             },
           },
@@ -553,15 +553,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "postalCode": {
-              "docs": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
+              "docs": "\`less than 10 characters\` The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
               "type": "string",
             },
             "regionCode": {
-              "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
+              "docs": "\`less than 2 characters\` The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
               "type": "optional<string>",
             },
             "regionName": {
-              "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
+              "docs": "\`less than 20 characters\` The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
               "type": "optional<string>",
             },
           },
@@ -570,19 +570,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "Properties of a simple address, used to compose other addresses.",
           "properties": {
             "address1": {
-              "docs": "The first line of the postal address. In the US, this typically includes the building number and street name.",
+              "docs": "\`less than 35 characters\` The first line of the postal address. In the US, this typically includes the building number and street name.",
               "type": "string",
             },
             "address2": {
-              "docs": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
+              "docs": "\`less than 35 characters\` The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
               "type": "optional<string>",
             },
             "countryCode": {
-              "docs": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
+              "docs": "\`less than 2 characters\` The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
               "type": "string",
             },
             "locality": {
-              "docs": "The city/town/municipality of the address.",
+              "docs": "\`less than 20 characters\` The city/town/municipality of the address.",
               "type": "string",
             },
           },
@@ -617,7 +617,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<list<ApiProblem>>",
             },
             "status": {
-              "docs": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
+              "docs": "undefinedThe [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
 ",
               "type": "optional<integer>",
             },
@@ -720,7 +720,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "challengePromptId",
             },
             "prompt": {
-              "docs": "The text prompt of this security question.",
+              "docs": "\`less than 50 characters\` The text prompt of this security question.",
               "type": "string",
             },
           },
@@ -851,19 +851,19 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": {
             "items": "unknown",
             "limit": {
-              "docs": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
+              "docs": "undefinedThe number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
               "type": "integer",
             },
             "maximumOverdraftAccounts": {
-              "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
+              "docs": "undefinedThe maximum number of overdraft protection accounts that may be linked to the account.",
               "type": "integer",
             },
             "nextPage_url": {
-              "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
+              "docs": "\`less than 256 characters\` The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
               "type": "optional<string>",
             },
             "start": {
-              "docs": "The opaque cursor that specifies the starting location of this page of items.",
+              "docs": "\`less than 256 characters\` The opaque cursor that specifies the starting location of this page of items.",
               "type": "optional<string>",
             },
           },
@@ -919,11 +919,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "manageJointOwners": {
-              "docs": "If \`true\`, the customer can list the other joint owners on the account and invite new joint owners.",
+              "docs": "undefinedIf \`true\`, the customer can list the other joint owners on the account and invite new joint owners.",
               "type": "boolean",
             },
             "manageOverdraftAccounts": {
-              "docs": "If \`true\`, the customer can list and manage overdraft account settings.",
+              "docs": "undefinedIf \`true\`, the customer can list and manage overdraft account settings.",
               "type": "boolean",
             },
           },
@@ -943,7 +943,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "list<AccountBalance>",
             },
             "retryCount": {
-              "docs": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
+              "docs": "undefinedPass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
               "type": "integer",
             },
           },
@@ -955,7 +955,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "retryCount": {
-              "docs": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listTransactions\`](#op-listTransactions) operation.",
+              "docs": "undefinedPass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listTransactions\`](#op-listTransactions) operation.",
               "type": "integer",
             },
           },
@@ -1011,7 +1011,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "found": {
-              "docs": "\`true\` if a financial institution was found matching the requested FI locator, \`false\` if none was found.",
+              "docs": "undefined\`true\` if a financial institution was found matching the requested FI locator, \`false\` if none was found.",
               "type": "boolean",
             },
             "institution": {
@@ -1041,27 +1041,27 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "Fields used to compose other joint owner invitation schemas.",
           "properties": {
             "disallowDebitCardAccess": {
-              "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
+              "docs": "undefinedIf \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
               "type": "optional<boolean>",
             },
             "emailAddress": {
-              "docs": "The invitee's email address.",
+              "docs": "\`less than 80 characters\` The invitee's email address.",
               "type": "string",
             },
             "firstName": {
-              "docs": "The invitee's first name.",
+              "docs": "\`less than 32 characters\` The invitee's first name.",
               "type": "string",
             },
             "lastName": {
-              "docs": "The invitee's last name name.",
+              "docs": "\`less than 32 characters\` The invitee's last name name.",
               "type": "string",
             },
             "sharedSecret": {
-              "docs": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
+              "docs": "\`less than 100 characters\` A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
               "type": "string",
             },
             "taxId": {
-              "docs": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
+              "docs": "\`less than 4 characters\` The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
               "type": "optional<string>",
             },
           },
@@ -1074,7 +1074,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<resourceId>",
             },
             "label": {
-              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+              "docs": "\`less than 80 characters\` The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "optional<string>",
             },
             "maskedNumber": {
@@ -1095,7 +1095,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "maximumOverdraftAccounts": {
-              "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
+              "docs": "undefinedThe maximum number of overdraft protection accounts that may be linked to the account.",
               "type": "integer",
             },
           },
@@ -1121,15 +1121,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "A reference to a banking product.",
           "properties": {
             "code": {
-              "docs": "The product's product code. Codes are unique to the financial institution.",
+              "docs": "\`less than 16 characters\` The product's product code. Codes are unique to the financial institution.",
               "type": "string",
             },
             "description": {
-              "docs": "A human-readable description of this banking product.",
+              "docs": "\`less than 400 characters\` A human-readable description of this banking product.",
               "type": "string",
             },
             "label": {
-              "docs": "A human-readable label for this banking product.",
+              "docs": "\`less than 48 characters\` A human-readable label for this banking product.",
               "type": "string",
             },
             "type": {
@@ -1238,7 +1238,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "Address",
             },
             "locator": {
-              "docs": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
+              "docs": "\`less than 36 characters\` The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
               "type": "string",
             },
             "locatorType": {
@@ -1246,7 +1246,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "InstitutionLocatorType",
             },
             "name": {
-              "docs": "The financial institution's name.",
+              "docs": "\`less than 35 characters\` The financial institution's name.",
               "type": "string",
             },
           },
@@ -1277,7 +1277,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "The transaction categorization.",
           "properties": {
             "id": {
-              "docs": "The unique ID of this transaction's category.",
+              "docs": "\`less than 32 characters\` The unique ID of this transaction's category.",
               "type": "string",
             },
             "label": {
@@ -1338,15 +1338,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
           "properties": {
             "imageBack_url": {
-              "docs": "The URL for downloading the image of the front of the check.",
+              "docs": "\`less than 400 characters\` The URL for downloading the image of the front of the check.",
               "type": "optional<string>",
             },
             "imageFront_url": {
-              "docs": "The URL for downloading the image of the front of the check.",
+              "docs": "\`less than 400 characters\` The URL for downloading the image of the front of the check.",
               "type": "optional<string>",
             },
             "number": {
-              "docs": "The check number.",
+              "docs": "undefinedThe check number.",
               "type": "integer",
             },
           },
@@ -1375,15 +1375,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<string>",
             },
             "description": {
-              "docs": "The transaction description assigned by the transaction cleansing service.",
+              "docs": "\`less than 128 characters\` The transaction description assigned by the transaction cleansing service.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": "This transaction's unique identifier.",
+              "docs": "\`less than 128 characters\` This transaction's unique identifier.",
               "type": "string",
             },
             "memo": {
-              "docs": "The user-settable transaction memo.",
+              "docs": "\`less than 128 characters\` The user-settable transaction memo.",
               "type": "optional<string>",
             },
             "merchant": {
@@ -1395,7 +1395,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "string",
             },
             "posted": {
-              "docs": "If \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
+              "docs": "undefinedIf \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
               "type": "optional<boolean>",
             },
             "postedOn": {
@@ -1424,15 +1424,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "Describes the merchant associated with a transaction.",
           "properties": {
             "logo_url": {
-              "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
+              "docs": "\`less than 400 characters\` The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": "The merchant\\'s name.",
+              "docs": "\`less than 32 characters\` The merchant\\'s name.",
               "type": "optional<string>",
             },
             "website_url": {
-              "docs": "The merchant's website URL.",
+              "docs": "\`less than 400 characters\` The merchant's website URL.",
               "type": "optional<string>",
             },
           },
@@ -1523,7 +1523,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "count": {
-              "docs": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
+              "docs": "undefinedThe total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
               "type": "optional<integer>",
             },
             "items": {
@@ -1548,7 +1548,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "resourceId",
             },
             "label": {
-              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+              "docs": "\`less than 80 characters\` The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "optional<string>",
             },
             "location": {
@@ -1678,7 +1678,7 @@ The response may include dates prior to requested the start date, as that is use
               "type": "optional<monetaryValue>",
             },
             "memo": {
-              "docs": "A customer-defined memo to describe the transfer.",
+              "docs": "\`less than 128 characters\` A customer-defined memo to describe the transfer.",
               "type": "optional<string>",
             },
             "sourceAccount": {
@@ -1849,7 +1849,7 @@ The response may include dates prior to requested the start date, as that is use
               "type": "TransferState",
             },
             "updatedBy": {
-              "docs": "The full name of the banking customer who last updated the transfer.",
+              "docs": "\`less than 48 characters\` The full name of the banking customer who last updated the transfer.",
               "type": "optional<string>",
             },
           },
@@ -1915,7 +1915,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "type": "optional<monetaryValue>",
             },
             "count": {
-              "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
+              "docs": "undefinedFor recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
               "type": "optional<integer>",
             },
             "endsOn": {
@@ -2161,7 +2161,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           ],
           "properties": {
             "count": {
-              "docs": "The number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
+              "docs": "undefinedThe number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
               "type": "optional<integer>",
             },
             "items": {
@@ -2177,7 +2177,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           ],
           "properties": {
             "localClearingCode": {
-              "docs": "The clearing code used to identify the financial institution for select countries.",
+              "docs": "\`less than 12 characters\` The clearing code used to identify the financial institution for select countries.",
               "type": "optional<string>",
             },
           },
@@ -2187,11 +2187,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "list<resourceId>",
         },
         "accountNickname": {
-          "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
+          "docs": "\`less than 50 characters\` The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
           "type": "string",
         },
         "accountRoutingNumber": {
-          "docs": "An account ABA routing and transit number.",
+          "docs": "\`less than 9 characters\` An account ABA routing and transit number.",
           "type": "string",
         },
         "amountRange": {
@@ -2199,11 +2199,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "string",
         },
         "challengePromptId": {
-          "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
+          "docs": "\`less than 48 characters\` The unique ID of a prompt (such as a security question) in a challenge factor.",
           "type": "string",
         },
         "challengeToken": {
-          "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
+          "docs": "\`less than 255 characters\` The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
           "type": "string",
         },
         "creditOrDebitValue": {
@@ -2215,15 +2215,15 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "string",
         },
         "fullAccountNumber": {
-          "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
+          "docs": "\`less than 32 characters\` A full account number. This is the number that the customer uses to reference the account within the financial institution.",
           "type": "string",
         },
         "institutionId": {
-          "docs": "The unique immutable identifier of a financial institution.",
+          "docs": "\`less than 9 characters\` The unique immutable identifier of a financial institution.",
           "type": "string",
         },
         "maskedAccountNumber": {
-          "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
+          "docs": "\`less than 5 characters\` A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
           "type": "string",
         },
         "monetaryValue": {
@@ -2235,19 +2235,19 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "string",
         },
         "readOnlyTimestamp": {
-          "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
+          "docs": "\`less than 30 characters\` A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
           "type": "string",
         },
         "resourceId": {
-          "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
+          "docs": "\`less than 48 characters\` The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
           "type": "string",
         },
         "timeZoneId": {
-          "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
+          "docs": "\`less than 36 characters\` The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
           "type": "string",
         },
         "transactionCategoryLabel": {
-          "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
+          "docs": "\`less than 64 characters\` The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
           "type": "string",
         },
       },

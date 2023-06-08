@@ -76,7 +76,10 @@ export function convertSchemaObject(
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.
             return wrapPrimitive({
-                primitive: PrimitiveSchemaValue.string(),
+                primitive: PrimitiveSchemaValue.string({
+                    minLength: undefined,
+                    maxLength: undefined,
+                }),
                 wrapAsNullable,
                 description,
             });
@@ -147,7 +150,10 @@ export function convertSchemaObject(
     }
     if (schema === "string" || schema.type === "string") {
         return wrapPrimitive({
-            primitive: PrimitiveSchemaValue.string(),
+            primitive: PrimitiveSchemaValue.string({
+                maxLength: schema.maxLength,
+                minLength: schema.minLength,
+            }),
             wrapAsNullable,
             description,
         });
@@ -277,7 +283,10 @@ export function convertSchemaObject(
         return wrapMap({
             description,
             wrapAsNullable,
-            keySchema: PrimitiveSchemaValue.string(),
+            keySchema: PrimitiveSchemaValue.string({
+                minLength: undefined,
+                maxLength: undefined,
+            }),
             valueSchema: Schema.unknown(),
         });
     }

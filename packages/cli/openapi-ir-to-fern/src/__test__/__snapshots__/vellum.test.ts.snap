@@ -164,7 +164,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "The human-readable name for the document.",
+              "docs": "\`less than 150 characters\` The human-readable name for the document.",
               "type": "string",
             },
           },
@@ -449,7 +449,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "ModelVersionExecConfigRead",
             },
             "external_id": {
-              "docs": "The unique id of this model version as it exists in the above provider's system.",
+              "docs": "\`less than 250 characters\` The unique id of this model version as it exists in the above provider's system.",
               "type": "string",
             },
             "id": {
@@ -457,7 +457,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "Human-friendly name for this model version.",
+              "docs": "\`less than 150 characters\` Human-friendly name for this model version.",
               "type": "string",
             },
             "model_type": {
@@ -478,7 +478,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "prompt_index": {
-              "docs": "The index of the prompt in the sandbox snapshot.",
+              "docs": "undefinedThe index of the prompt in the sandbox snapshot.",
               "type": "integer",
             },
           },
@@ -508,7 +508,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "integer",
             },
             "token": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "top_logprobs": {
@@ -525,11 +525,11 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "optional<integer>",
             },
             "next": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "previous": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "results": {
@@ -643,7 +643,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "list<string>",
             },
             "score": {
-              "docs": "A score representing how well the chunk matches the search query.",
+              "docs": "undefinedA score representing how well the chunk matches the search query.",
               "type": "double",
             },
             "text": {
@@ -656,7 +656,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "properties": {
             "enabled": {
-              "docs": "Whether to enable merging results",
+              "docs": "undefinedWhether to enable merging results",
               "type": "boolean",
             },
           },
@@ -665,11 +665,11 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "properties": {
             "keywords": {
-              "docs": "The relative weight to give to keyword matches",
+              "docs": "undefinedThe relative weight to give to keyword matches",
               "type": "double",
             },
             "semantic_similarity": {
-              "docs": "The relative weight to give to semantic similarity",
+              "docs": "undefinedThe relative weight to give to semantic similarity",
               "type": "double",
             },
           },
@@ -694,7 +694,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "optional<list<string>>",
             },
             "label": {
-              "docs": "Human-friendly name for this document.",
+              "docs": "\`less than 150 characters\` Human-friendly name for this document.",
               "type": "string",
             },
             "last_uploaded_at": {
@@ -750,7 +750,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "properties": {
             "detail": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },
@@ -759,7 +759,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "properties": {
             "detail": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },

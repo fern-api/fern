@@ -206,6 +206,8 @@ exports[`open api parser hume parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -257,6 +259,8 @@ exports[`open api parser hume parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -296,6 +300,8 @@ exports[`open api parser hume parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -445,6 +451,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                   "value": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -462,6 +470,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "value": {
                   "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -864,6 +874,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Name of the descriptive feature being expressed.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -876,6 +888,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Embedding value for the descriptive feature being expressed.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -917,6 +931,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Name of the emotion being expressed.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -929,6 +945,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Embedding value for the emotion being expressed.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -940,6 +958,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "Empty": {
           "description": "To include predictions for this model type, set this field to \`{}\`. It is currently not configurable further.",
           "key": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "map",
@@ -960,6 +980,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "An error message.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -972,6 +994,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "A file path relative to the top level source URL or file.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1259,6 +1283,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Name of the FACS 2.0 feature being expressed.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1271,6 +1297,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Embedding value for the FACS 2.0 feature being expressed.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1328,6 +1356,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "An error message.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1352,6 +1382,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "value": {
                   "description": "The name of the file.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1368,6 +1400,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "value": {
                   "description": "The content type of the file.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1381,6 +1415,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "The MD5 checksum of the file.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1434,6 +1470,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1472,6 +1510,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1510,6 +1550,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1548,6 +1590,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1586,6 +1630,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1624,6 +1670,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1695,6 +1743,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1707,6 +1757,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1754,6 +1806,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "The ID of the started job.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1851,6 +1905,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "A segment of text (like a word or a sentence).",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2242,6 +2298,8 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "schema": {
                 "description": "The recognized topic or entity.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2291,6 +2349,8 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "schema": {
                 "description": "A URL which provides more information about the recognized topic or entity.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2303,6 +2363,8 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "schema": {
                 "description": "The specific word to which the emotion predictions are linked.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2380,6 +2442,8 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         "Null": {
           "description": "No associated metadata for this model. Value will be \`null\`.",
           "key": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "map",
@@ -2433,6 +2497,8 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "schema": {
                 "description": "A file path relative to the top level source URL or file.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2787,6 +2853,8 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                 "value": {
                   "description": "A segment of text (like a word or a sentence).",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2934,6 +3002,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                   "value": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2951,6 +3021,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "value": {
                   "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3049,6 +3121,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Level of sentiment, ranging from \`1\` (negative) to \`9\` (positive)",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3061,6 +3135,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Prediction for this level of sentiment",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3170,6 +3246,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "value": {
                   "description": "An error message.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3262,6 +3340,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3292,6 +3372,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3322,6 +3404,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3352,6 +3436,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3438,6 +3524,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Category of toxicity.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3450,6 +3538,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "Prediction for this category of toxicity",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3535,6 +3625,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "schema": {
                 "description": "The URL of the source media file.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",

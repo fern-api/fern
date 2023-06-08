@@ -138,11 +138,11 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "canAccessApi": {
-              "docs": "Indicates if the user can access the api.",
+              "docs": "undefinedIndicates if the user can access the api.",
               "type": "boolean",
             },
             "canAccessContent": {
-              "docs": "Indicates if the user can access at least one content.",
+              "docs": "undefinedIndicates if the user can access at least one content.",
               "type": "boolean",
             },
             "created": {
@@ -186,7 +186,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "version": {
-              "docs": "The version of the app.",
+              "docs": "undefinedThe version of the app.",
               "type": "integer",
             },
           },
@@ -206,11 +206,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<string>",
             },
             "isMaster": {
-              "docs": "Indicates if the language is the master language.",
+              "docs": "undefinedIndicates if the language is the master language.",
               "type": "boolean",
             },
             "isOptional": {
-              "docs": "Indicates if the language is optional.",
+              "docs": "undefinedIndicates if the language is optional.",
               "type": "boolean",
             },
             "iso2Code": {
@@ -242,11 +242,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<EditorDto>",
             },
             "hideDateTimeModeButton": {
-              "docs": "Hide the datetime mode button.",
+              "docs": "undefinedHide the datetime mode button.",
               "type": "boolean",
             },
             "hideScheduler": {
-              "docs": "Hide the scheduler for content items.",
+              "docs": "undefinedHide the scheduler for content items.",
               "type": "boolean",
             },
             "patterns": {
@@ -254,7 +254,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<PatternDto>",
             },
             "version": {
-              "docs": "The version of the app.",
+              "docs": "undefinedThe version of the app.",
               "type": "integer",
             },
           },
@@ -316,7 +316,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "fileSize": {
-              "docs": "The size of the file in bytes.",
+              "docs": "undefinedThe size of the file in bytes.",
               "type": "integer",
             },
             "fileType": {
@@ -324,7 +324,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "fileVersion": {
-              "docs": "The version of the file.",
+              "docs": "undefinedThe version of the file.",
               "type": "integer",
             },
             "id": {
@@ -332,11 +332,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "isImage": {
-              "docs": "Determines of the created file is an image.",
+              "docs": "undefinedDetermines of the created file is an image.",
               "type": "boolean",
             },
             "isProtected": {
-              "docs": "True, when the asset is not public.",
+              "docs": "undefinedTrue, when the asset is not public.",
               "type": "boolean",
             },
             "lastModified": {
@@ -384,7 +384,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "AssetType",
             },
             "version": {
-              "docs": "The version of the asset.",
+              "docs": "undefinedThe version of the asset.",
               "type": "integer",
             },
           },
@@ -408,7 +408,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "version": {
-              "docs": "The version of the asset folder.",
+              "docs": "undefinedThe version of the asset folder.",
               "type": "integer",
             },
           },
@@ -448,7 +448,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<AssetFolderDto>",
             },
             "total": {
-              "docs": "The total number of assets.",
+              "docs": "undefinedThe total number of assets.",
               "type": "integer",
             },
           },
@@ -517,7 +517,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "version": {
-              "docs": "The version of the app.",
+              "docs": "undefinedThe version of the app.",
               "type": "integer",
             },
           },
@@ -558,7 +558,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<AssetDto>",
             },
             "total": {
-              "docs": "The total number of assets.",
+              "docs": "undefinedThe total number of assets.",
               "type": "integer",
             },
           },
@@ -567,7 +567,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "allowDuplicates": {
-              "docs": "True, if duplicate values are allowed.",
+              "docs": "undefinedTrue, if duplicate values are allowed.",
               "type": "boolean",
             },
             "allowedExtensions": {
@@ -631,7 +631,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<integer>",
             },
             "mustBeImage": {
-              "docs": "True to resolve first image in the content list.",
+              "docs": "undefinedTrue to resolve first image in the content list.",
               "type": "boolean",
             },
             "previewFormat": {
@@ -643,11 +643,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "AssetPreviewMode",
             },
             "resolveFirst": {
-              "docs": "True to resolve first asset in the content list.",
+              "docs": "undefinedTrue to resolve first asset in the content list.",
               "type": "boolean",
             },
             "resolveImage": {
-              "docs": "True to resolve first image in the content list.",
+              "docs": "undefinedTrue to resolve first image in the content list.",
               "type": "boolean",
             },
           },
@@ -660,7 +660,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "invite": {
-              "docs": "Set to true to invite the user if he does not exist.",
+              "docs": "undefinedSet to true to invite the user if he does not exist.",
               "type": "optional<boolean>",
             },
             "role": {
@@ -693,11 +693,11 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "handledAssets": {
-              "docs": "The number of handled assets.",
+              "docs": "undefinedThe number of handled assets.",
               "type": "integer",
             },
             "handledEvents": {
-              "docs": "The number of handled events.",
+              "docs": "undefinedThe number of handled events.",
               "type": "integer",
             },
             "id": {
@@ -761,7 +761,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "BooleanFieldEditor",
             },
             "inlineEditable": {
-              "docs": "Indicates that the inline editor is enabled for this field.",
+              "docs": "undefinedIndicates that the inline editor is enabled for this field.",
               "type": "boolean",
             },
           },
@@ -782,7 +782,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "jobIndex": {
-              "docs": "The index of the bulk job where the result belongs to. The order can change.",
+              "docs": "undefinedThe index of the bulk job where the result belongs to. The order can change.",
               "type": "integer",
             },
           },
@@ -811,7 +811,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "expectedVersion": {
-              "docs": "The expected version.",
+              "docs": "undefinedThe expected version.",
               "type": "optional<integer>",
             },
             "fileName": {
@@ -835,7 +835,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "permanent": {
-              "docs": "True to delete the asset permanently.",
+              "docs": "undefinedTrue to delete the asset permanently.",
               "type": "optional<boolean>",
             },
             "slug": {
@@ -904,11 +904,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "expectedCount": {
-              "docs": "The number of expected items. Set it to a higher number to update multiple items when a query is defined.",
+              "docs": "undefinedThe number of expected items. Set it to a higher number to update multiple items when a query is defined.",
               "type": "optional<integer>",
             },
             "expectedVersion": {
-              "docs": "The expected version.",
+              "docs": "undefinedThe expected version.",
               "type": "optional<integer>",
             },
             "id": {
@@ -916,11 +916,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "patch": {
-              "docs": "Makes the update as patch.",
+              "docs": "undefinedMakes the update as patch.",
               "type": "optional<boolean>",
             },
             "permanent": {
-              "docs": "True to delete the content permanently.",
+              "docs": "undefinedTrue to delete the content permanently.",
               "type": "optional<boolean>",
             },
             "query": {
@@ -945,19 +945,19 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "allowedBytes": {
-              "docs": "The included API traffic.",
+              "docs": "undefinedThe included API traffic.",
               "type": "integer",
             },
             "allowedCalls": {
-              "docs": "The included API calls.",
+              "docs": "undefinedThe included API calls.",
               "type": "integer",
             },
             "averageElapsedMs": {
-              "docs": "The average duration in milliseconds.",
+              "docs": "undefinedThe average duration in milliseconds.",
               "type": "double",
             },
             "blockingApiCalls": {
-              "docs": "The amount of calls that will block the app.",
+              "docs": "undefinedThe amount of calls that will block the app.",
               "type": "integer",
             },
             "details": {
@@ -965,19 +965,19 @@ exports[`open api parser squidex simple 1`] = `
               "type": "map<string, list<CallsUsagePerDateDto>>",
             },
             "monthBytes": {
-              "docs": "The total number of bytes transferred this month.",
+              "docs": "undefinedThe total number of bytes transferred this month.",
               "type": "integer",
             },
             "monthCalls": {
-              "docs": "The total number of API calls this month.",
+              "docs": "undefinedThe total number of API calls this month.",
               "type": "integer",
             },
             "totalBytes": {
-              "docs": "The total number of bytes transferred.",
+              "docs": "undefinedThe total number of bytes transferred.",
               "type": "integer",
             },
             "totalCalls": {
-              "docs": "The total number of API calls.",
+              "docs": "undefinedThe total number of API calls.",
               "type": "integer",
             },
           },
@@ -986,7 +986,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "averageElapsedMs": {
-              "docs": "The average duration in milliseconds.",
+              "docs": "undefinedThe average duration in milliseconds.",
               "type": "double",
             },
             "date": {
@@ -994,11 +994,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "totalBytes": {
-              "docs": "The total number of bytes transferred.",
+              "docs": "undefinedThe total number of bytes transferred.",
               "type": "integer",
             },
             "totalCalls": {
-              "docs": "The total number of API calls.",
+              "docs": "undefinedThe total number of API calls.",
               "type": "integer",
             },
           },
@@ -1019,15 +1019,15 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "allowAnonymous": {
-              "docs": "True to allow anonymous access without an access token for this client.",
+              "docs": "undefinedTrue to allow anonymous access without an access token for this client.",
               "type": "boolean",
             },
             "apiCallsLimit": {
-              "docs": "The number of allowed api calls per month for this client.",
+              "docs": "undefinedThe number of allowed api calls per month for this client.",
               "type": "integer",
             },
             "apiTrafficLimit": {
-              "docs": "The number of allowed api traffic bytes per month for this client.",
+              "docs": "undefinedThe number of allowed api traffic bytes per month for this client.",
               "type": "integer",
             },
             "id": {
@@ -1123,7 +1123,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<CommentDto>>",
             },
             "version": {
-              "docs": "The current version.",
+              "docs": "undefinedThe current version.",
               "type": "integer",
             },
           },
@@ -1166,7 +1166,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "handleAll": {
-              "docs": "Determines whether the trigger should handle all content changes events.",
+              "docs": "undefinedDetermines whether the trigger should handle all content changes events.",
               "type": "boolean",
             },
             "referencedSchemas": {
@@ -1207,7 +1207,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "isDeleted": {
-              "docs": "Indicates whether the content is deleted.",
+              "docs": "undefinedIndicates whether the content is deleted.",
               "type": "boolean",
             },
             "lastModified": {
@@ -1259,7 +1259,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "version": {
-              "docs": "The version of the content.",
+              "docs": "undefinedThe version of the content.",
               "type": "integer",
             },
           },
@@ -1283,7 +1283,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<StatusInfoDto>",
             },
             "total": {
-              "docs": "The total number of content items.",
+              "docs": "undefinedThe total number of content items.",
               "type": "integer",
             },
           },
@@ -1327,7 +1327,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<ContributorDto>",
             },
             "maxContributors": {
-              "docs": "The maximum number of allowed contributors.",
+              "docs": "undefinedThe maximum number of allowed contributors.",
               "type": "integer",
             },
           },
@@ -1353,7 +1353,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "publish": {
-              "docs": "Publish the content.",
+              "docs": "undefinedPublish the content.",
               "type": "boolean",
             },
             "schema": {
@@ -1379,11 +1379,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "maxAllowed": {
-              "docs": "The maximum allowed asset size.",
+              "docs": "undefinedThe maximum allowed asset size.",
               "type": "integer",
             },
             "size": {
-              "docs": "The size in bytes.",
+              "docs": "undefinedThe size in bytes.",
               "type": "integer",
             },
           },
@@ -1554,7 +1554,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "serverPort": {
-              "docs": "The port to the SMTP server.",
+              "docs": "undefinedThe port to the SMTP server.",
               "type": "integer",
             },
             "serverUsername": {
@@ -1579,7 +1579,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "statusCode": {
-              "docs": "Status code of the http response.",
+              "docs": "undefinedStatus code of the http response.",
               "type": "integer",
             },
             "traceId": {
@@ -1599,7 +1599,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "count": {
-              "docs": "The number of handled events.",
+              "docs": "undefinedThe number of handled events.",
               "type": "integer",
             },
             "error": {
@@ -1607,11 +1607,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "isResetting": {
-              "docs": "Indicates if the event consumer is resetting at the moment.",
+              "docs": "undefinedIndicates if the event consumer is resetting at the moment.",
               "type": "boolean",
             },
             "isStopped": {
-              "docs": "Indicates if the event consumer has been started.",
+              "docs": "undefinedIndicates if the event consumer has been started.",
               "type": "boolean",
             },
             "name": {
@@ -1674,7 +1674,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<FeatureDto>",
             },
             "version": {
-              "docs": "The recent version.",
+              "docs": "undefinedThe recent version.",
               "type": "integer",
             },
           },
@@ -1686,19 +1686,19 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "fieldId": {
-              "docs": "The ID of the field.",
+              "docs": "undefinedThe ID of the field.",
               "type": "integer",
             },
             "isDisabled": {
-              "docs": "Defines if the field is disabled.",
+              "docs": "undefinedDefines if the field is disabled.",
               "type": "boolean",
             },
             "isHidden": {
-              "docs": "Defines if the field is hidden.",
+              "docs": "undefinedDefines if the field is hidden.",
               "type": "boolean",
             },
             "isLocked": {
-              "docs": "Defines if the field is locked.",
+              "docs": "undefinedDefines if the field is locked.",
               "type": "boolean",
             },
             "name": {
@@ -1730,15 +1730,15 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "isHalfWidth": {
-              "docs": "Indicates if the field should be rendered with half width only.",
+              "docs": "undefinedIndicates if the field should be rendered with half width only.",
               "type": "boolean",
             },
             "isRequired": {
-              "docs": "Indicates if the field is required.",
+              "docs": "undefinedIndicates if the field is required.",
               "type": "boolean",
             },
             "isRequiredOnPublish": {
-              "docs": "Indicates if the field is required when publishing.",
+              "docs": "undefinedIndicates if the field is required when publishing.",
               "type": "boolean",
             },
             "label": {
@@ -1891,7 +1891,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "version": {
-              "docs": "The version identifier.",
+              "docs": "undefinedThe version identifier.",
               "type": "integer",
             },
           },
@@ -2041,7 +2041,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "isHtml": {
-              "docs": "Indicates whether the content is markdown or html.",
+              "docs": "undefinedIndicates whether the content is markdown or html.",
               "type": "boolean",
             },
             "publicationId": {
@@ -2065,19 +2065,19 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "fieldId": {
-              "docs": "The ID of the field.",
+              "docs": "undefinedThe ID of the field.",
               "type": "integer",
             },
             "isDisabled": {
-              "docs": "Defines if the field is disabled.",
+              "docs": "undefinedDefines if the field is disabled.",
               "type": "boolean",
             },
             "isHidden": {
-              "docs": "Defines if the field is hidden.",
+              "docs": "undefinedDefines if the field is hidden.",
               "type": "boolean",
             },
             "isLocked": {
-              "docs": "Defines if the field is locked.",
+              "docs": "undefinedDefines if the field is locked.",
               "type": "boolean",
             },
             "name": {
@@ -2156,11 +2156,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "NumberFieldEditor",
             },
             "inlineEditable": {
-              "docs": "Indicates that the inline editor is enabled for this field.",
+              "docs": "undefinedIndicates that the inline editor is enabled for this field.",
               "type": "boolean",
             },
             "isUnique": {
-              "docs": "Indicates if the field value must be unique. Ignored for nested fields and localized fields.",
+              "docs": "undefinedIndicates if the field value must be unique. Ignored for nested fields and localized fields.",
               "type": "boolean",
             },
             "maxValue": {
@@ -2244,19 +2244,19 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "maxApiBytes": {
-              "docs": "The maximum number of API traffic.",
+              "docs": "undefinedThe maximum number of API traffic.",
               "type": "integer",
             },
             "maxApiCalls": {
-              "docs": "The maximum number of API calls.",
+              "docs": "undefinedThe maximum number of API calls.",
               "type": "integer",
             },
             "maxAssetSize": {
-              "docs": "The maximum allowed asset size.",
+              "docs": "undefinedThe maximum allowed asset size.",
               "type": "integer",
             },
             "maxContributors": {
-              "docs": "The maximum number of contributors.",
+              "docs": "undefinedThe maximum number of contributors.",
               "type": "integer",
             },
             "name": {
@@ -2377,7 +2377,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<unknown>",
             },
             "fullText": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "random": {
@@ -2436,7 +2436,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "allowDuplicates": {
-              "docs": "True, if duplicate values are allowed.",
+              "docs": "undefinedTrue, if duplicate values are allowed.",
               "type": "boolean",
             },
             "defaultValue": {
@@ -2460,11 +2460,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<integer>",
             },
             "mustBePublished": {
-              "docs": "True when all references must be published.",
+              "docs": "undefinedTrue when all references must be published.",
               "type": "boolean",
             },
             "resolveReference": {
-              "docs": "True to resolve references in the content list.",
+              "docs": "undefinedTrue to resolve references in the content list.",
               "type": "boolean",
             },
             "schemaIds": {
@@ -2477,15 +2477,15 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "code": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "condition": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "earned": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },
@@ -2604,7 +2604,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "isDefaultRole": {
-              "docs": "Indicates if the role is an builtin default role.",
+              "docs": "undefinedIndicates if the role is an builtin default role.",
               "type": "boolean",
             },
             "name": {
@@ -2612,11 +2612,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "numClients": {
-              "docs": "The number of clients with this role.",
+              "docs": "undefinedThe number of clients with this role.",
               "type": "integer",
             },
             "numContributors": {
-              "docs": "The number of contributors with this role.",
+              "docs": "undefinedThe number of contributors with this role.",
               "type": "integer",
             },
             "permissions": {
@@ -2743,7 +2743,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "isEnabled": {
-              "docs": "Determines if the rule is enabled.",
+              "docs": "undefinedDetermines if the rule is enabled.",
               "type": "boolean",
             },
             "lastExecuted": {
@@ -2763,11 +2763,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "numFailed": {
-              "docs": "The number of failed executions.",
+              "docs": "undefinedThe number of failed executions.",
               "type": "integer",
             },
             "numSucceeded": {
-              "docs": "The number of completed executions.",
+              "docs": "undefinedThe number of completed executions.",
               "type": "integer",
             },
             "trigger": {
@@ -2775,7 +2775,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "RuleTriggerDto",
             },
             "version": {
-              "docs": "The version of the rule.",
+              "docs": "undefinedThe version of the rule.",
               "type": "integer",
             },
           },
@@ -2829,11 +2829,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "RuleFieldEditor",
             },
             "isFormattable": {
-              "docs": "Indicates if the property is formattable.",
+              "docs": "undefinedIndicates if the property is formattable.",
               "type": "boolean",
             },
             "isRequired": {
-              "docs": "Indicates if the property is required.",
+              "docs": "undefinedIndicates if the property is required.",
               "type": "boolean",
             },
             "name": {
@@ -2881,7 +2881,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "numCalls": {
-              "docs": "The number of calls.",
+              "docs": "undefinedThe number of calls.",
               "type": "integer",
             },
             "result": {
@@ -2901,7 +2901,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<RuleEventDto>",
             },
             "total": {
-              "docs": "The total number of rule events.",
+              "docs": "undefinedThe total number of rule events.",
               "type": "integer",
             },
           },
@@ -3096,11 +3096,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "condition": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "schemaId": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },
@@ -3144,11 +3144,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "isPublished": {
-              "docs": "Indicates if the schema is published.",
+              "docs": "undefinedIndicates if the schema is published.",
               "type": "boolean",
             },
             "isSingleton": {
-              "docs": "Indicates if the schema is a singleton.",
+              "docs": "undefinedIndicates if the schema is a singleton.",
               "type": "boolean",
             },
             "lastModified": {
@@ -3180,7 +3180,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "SchemaType",
             },
             "version": {
-              "docs": "The version of the schema.",
+              "docs": "undefinedThe version of the schema.",
               "type": "integer",
             },
           },
@@ -3213,7 +3213,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
             "validateOnPublish": {
-              "docs": "True to validate the content items on publish.",
+              "docs": "undefinedTrue to validate the content items on publish.",
               "type": "boolean",
             },
           },
@@ -3421,7 +3421,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<SimulatedRuleEventDto>",
             },
             "total": {
-              "docs": "The total number of simulated rule events.",
+              "docs": "undefinedThe total number of simulated rule events.",
               "type": "integer",
             },
           },
@@ -3548,11 +3548,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "totalCount": {
-              "docs": "The number of assets.",
+              "docs": "undefinedThe number of assets.",
               "type": "integer",
             },
             "totalSize": {
-              "docs": "The size in bytes.",
+              "docs": "undefinedThe size in bytes.",
               "type": "integer",
             },
           },
@@ -3644,7 +3644,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "StringContentType",
             },
             "createEnum": {
-              "docs": "Indicates whether GraphQL Enum should be created.",
+              "docs": "undefinedIndicates whether GraphQL Enum should be created.",
               "type": "boolean",
             },
             "defaultValue": {
@@ -3664,15 +3664,15 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "inlineEditable": {
-              "docs": "Indicates that the inline editor is enabled for this field.",
+              "docs": "undefinedIndicates that the inline editor is enabled for this field.",
               "type": "boolean",
             },
             "isEmbeddable": {
-              "docs": "Indicates that other content items or references are embedded.",
+              "docs": "undefinedIndicates that other content items or references are embedded.",
               "type": "boolean",
             },
             "isUnique": {
-              "docs": "Indicates if the field value must be unique. Ignored for nested fields and localized fields.",
+              "docs": "undefinedIndicates if the field value must be unique. Ignored for nested fields and localized fields.",
               "type": "boolean",
             },
             "maxCharacters": {
@@ -3741,7 +3741,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
             "createEnum": {
-              "docs": "Indicates whether GraphQL Enum should be created.",
+              "docs": "undefinedIndicates whether GraphQL Enum should be created.",
               "type": "boolean",
             },
             "defaultValue": {
@@ -3793,7 +3793,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "version": {
-              "docs": "The version of the team.",
+              "docs": "undefinedThe version of the team.",
               "type": "integer",
             },
           },
@@ -3821,7 +3821,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "isStarter": {
-              "docs": "True, if the template is a starter.",
+              "docs": "undefinedTrue, if the template is a starter.",
               "type": "boolean",
             },
             "name": {
@@ -3959,11 +3959,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "canCreateApps": {
-              "docs": "True when the user can create apps.",
+              "docs": "undefinedTrue when the user can create apps.",
               "type": "boolean",
             },
             "canCreateTeams": {
-              "docs": "True when the user can create teams.",
+              "docs": "undefinedTrue when the user can create teams.",
               "type": "boolean",
             },
           },
@@ -4020,7 +4020,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
             "isPublished": {
-              "docs": "Set it to true to autopublish the schema.",
+              "docs": "undefinedSet it to true to autopublish the schema.",
               "type": "boolean",
             },
             "previewUrls": {
@@ -4041,15 +4041,15 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "isDisabled": {
-              "docs": "Defines if the field is disabled.",
+              "docs": "undefinedDefines if the field is disabled.",
               "type": "boolean",
             },
             "isHidden": {
-              "docs": "Defines if the field is hidden.",
+              "docs": "undefinedDefines if the field is hidden.",
               "type": "boolean",
             },
             "isLocked": {
-              "docs": "Defines if the field is locked.",
+              "docs": "undefinedDefines if the field is locked.",
               "type": "boolean",
             },
             "name": {
@@ -4074,15 +4074,15 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "isDisabled": {
-              "docs": "Defines if the field is disabled.",
+              "docs": "undefinedDefines if the field is disabled.",
               "type": "boolean",
             },
             "isHidden": {
-              "docs": "Defines if the field is hidden.",
+              "docs": "undefinedDefines if the field is hidden.",
               "type": "boolean",
             },
             "isLocked": {
-              "docs": "Defines if the field is locked.",
+              "docs": "undefinedDefines if the field is locked.",
               "type": "boolean",
             },
             "name": {
@@ -4099,7 +4099,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "limit": {
-              "docs": "The number of monthly api calls.",
+              "docs": "undefinedThe number of monthly api calls.",
               "type": "integer",
             },
             "numDays": {
@@ -4127,7 +4127,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "isLocked": {
-              "docs": "Determines if the user is locked.",
+              "docs": "undefinedDetermines if the user is locked.",
               "type": "boolean",
             },
             "permissions": {
@@ -4140,11 +4140,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "value": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },
@@ -4160,7 +4160,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<UserDto>",
             },
             "total": {
-              "docs": "The total number of users.",
+              "docs": "undefinedThe total number of users.",
               "type": "integer",
             },
           },
@@ -4260,7 +4260,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "noUpdate": {
-              "docs": "Indicates if updates should not be allowed.",
+              "docs": "undefinedIndicates if updates should not be allowed.",
               "type": "optional<boolean>",
             },
             "noUpdateExpression": {
@@ -4276,7 +4276,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<map<string, WorkflowTransitionDto>>",
             },
             "validate": {
-              "docs": "True if the content should be validated when moving to this step.",
+              "docs": "undefinedTrue if the content should be validated when moving to this step.",
               "type": "optional<boolean>",
             },
           },
@@ -5179,7 +5179,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "optional<boolean>",
                   },
                   "isOptional": {
-                    "docs": "Set the value to true to make the language optional.",
+                    "docs": "undefinedSet the value to true to make the language optional.",
                     "type": "optional<boolean>",
                   },
                 },
@@ -5261,11 +5261,11 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "list<root.EditorDto>",
                   },
                   "hideDateTimeModeButton": {
-                    "docs": "Hide the datetime mode button.",
+                    "docs": "undefinedHide the datetime mode button.",
                     "type": "optional<boolean>",
                   },
                   "hideScheduler": {
-                    "docs": "Hide the scheduler for content items.",
+                    "docs": "undefinedHide the scheduler for content items.",
                     "type": "optional<boolean>",
                   },
                   "patterns": {
@@ -5398,11 +5398,11 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "checkReferrers": {
-                    "docs": "True to check referrers of deleted assets.",
+                    "docs": "undefinedTrue to check referrers of deleted assets.",
                     "type": "optional<boolean>",
                   },
                   "doNotScript": {
-                    "docs": "True to turn off scripting for faster inserts. Default: true.",
+                    "docs": "undefinedTrue to turn off scripting for faster inserts. Default: true.",
                     "type": "optional<boolean>",
                   },
                   "jobs": {
@@ -5410,7 +5410,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "optional<list<root.BulkUpdateAssetsJobDto>>",
                   },
                   "optimizeValidation": {
-                    "docs": "True to turn off costly validation: Folder checks. Default: true.",
+                    "docs": "undefinedTrue to turn off costly validation: Folder checks. Default: true.",
                     "type": "optional<boolean>",
                   },
                 },
@@ -6598,19 +6598,19 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "checkReferrers": {
-                    "docs": "True to check referrers of deleted contents.",
+                    "docs": "undefinedTrue to check referrers of deleted contents.",
                     "type": "optional<boolean>",
                   },
                   "doNotScript": {
-                    "docs": "True to turn off scripting for faster inserts. Default: true.",
+                    "docs": "undefinedTrue to turn off scripting for faster inserts. Default: true.",
                     "type": "optional<boolean>",
                   },
                   "doNotValidate": {
-                    "docs": "True to turn off validation for faster inserts. Default: false.",
+                    "docs": "undefinedTrue to turn off validation for faster inserts. Default: false.",
                     "type": "optional<boolean>",
                   },
                   "doNotValidateWorkflow": {
-                    "docs": "True to turn off validation of workflow rules. Default: false.",
+                    "docs": "undefinedTrue to turn off validation of workflow rules. Default: false.",
                     "type": "optional<boolean>",
                   },
                   "jobs": {
@@ -6618,11 +6618,11 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "list<root.BulkUpdateContentsJobDto>",
                   },
                   "optimizeValidation": {
-                    "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
+                    "docs": "undefinedTrue to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
                     "type": "optional<boolean>",
                   },
                   "publish": {
-                    "docs": "True to automatically publish the content.",
+                    "docs": "undefinedTrue to automatically publish the content.",
                     "type": "optional<boolean>",
                   },
                 },
@@ -7127,15 +7127,15 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "list<root.ContentData>",
                   },
                   "doNotScript": {
-                    "docs": "True to turn off scripting for faster inserts. Default: true.",
+                    "docs": "undefinedTrue to turn off scripting for faster inserts. Default: true.",
                     "type": "optional<boolean>",
                   },
                   "optimizeValidation": {
-                    "docs": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
+                    "docs": "undefinedTrue to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
                     "type": "optional<boolean>",
                   },
                   "publish": {
-                    "docs": "True to automatically publish the content.",
+                    "docs": "undefinedTrue to automatically publish the content.",
                     "type": "optional<boolean>",
                   },
                 },
@@ -7268,7 +7268,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "checkReferrers": {
-                    "docs": "True to check referrers of this content.",
+                    "docs": "undefinedTrue to check referrers of this content.",
                     "type": "optional<boolean>",
                   },
                   "dueTime": {
@@ -8743,7 +8743,7 @@ The client secret is auto generated on the server and returned. The client does 
                 ],
                 "properties": {
                   "isSingleton": {
-                    "docs": "Set to true to allow a single content item only.",
+                    "docs": "undefinedSet to true to allow a single content item only.",
                     "type": "boolean",
                   },
                   "name": {
@@ -9062,7 +9062,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "optional<list<string>>",
                   },
                   "validateOnPublish": {
-                    "docs": "True to validate the content items on publish.",
+                    "docs": "undefinedTrue to validate the content items on publish.",
                     "type": "boolean",
                   },
                 },
@@ -9136,11 +9136,11 @@ The client secret is auto generated on the server and returned. The client does 
                 ],
                 "properties": {
                   "noFieldDeletion": {
-                    "docs": "True, when fields should not be deleted.",
+                    "docs": "undefinedTrue, when fields should not be deleted.",
                     "type": "boolean",
                   },
                   "noFieldRecreation": {
-                    "docs": "True, when fields with different types should not be recreated.",
+                    "docs": "undefinedTrue, when fields with different types should not be recreated.",
                     "type": "boolean",
                   },
                 },

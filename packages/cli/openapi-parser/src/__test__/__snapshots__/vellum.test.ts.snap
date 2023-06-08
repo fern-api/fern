@@ -60,6 +60,8 @@ Used to list documents. Optionally filter on supported fields.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -105,6 +107,8 @@ Used to list documents. Optionally filter on supported fields.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -208,6 +212,8 @@ Used to retrieve a model version given its ID.
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -382,6 +388,8 @@ Upload a document to be indexed and used for search.
                       "value": {
                         "description": undefined,
                         "schema": {
+                          "maxLength": undefined,
+                          "minLength": 1,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -401,6 +409,8 @@ Upload a document to be indexed and used for search.
                     "value": {
                       "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": 1,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -416,6 +426,8 @@ Upload a document to be indexed and used for search.
                   "json": {
                     "description": "A human-friendly name for this document. Typically the filename.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": 1,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -443,6 +455,8 @@ Upload a document to be indexed and used for search.
                       "value": {
                         "description": undefined,
                         "schema": {
+                          "maxLength": undefined,
+                          "minLength": 1,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -559,6 +573,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The ID of the document.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -571,6 +587,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The human-readable name for the document.",
                 "schema": {
+                  "maxLength": 150,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -589,6 +607,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The unique ID of the document as represented in an external system and specified when it was originally uploaded.",
                     "schema": {
+                      "maxLength": 250,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -612,6 +632,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Vellum-generated ID that uniquely identifies this link.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -624,6 +646,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Vellum-generated ID that uniquely identifies the index this document is included in.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -662,6 +686,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The Vellum-generated ID of the completion.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -680,6 +706,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The external ID that was originally provided along with the generation request, which uniquely identifies this generation in an external system.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -694,6 +722,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The text generated by the LLM.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -740,6 +770,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The ID of the model version used to generate this completion.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -787,6 +819,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Details about why the request failed.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -840,6 +874,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The ID of the deployment. Must provide either this or deployment_name.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -860,6 +896,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The name of the deployment. Must provide either this or deployment_id.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": 1,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -921,6 +959,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
                 "key": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "map",
@@ -945,6 +985,8 @@ Upload a document to be indexed and used for search.
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": 1,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -1064,6 +1106,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The error message returned by the LLM provider.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1163,6 +1207,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The name of the base model used to create this model version, as identified by the LLM provider.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1235,6 +1281,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1307,6 +1355,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": undefined,
                     "key": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "map",
@@ -1341,6 +1391,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The template used to generate prompts for this model version.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1369,6 +1421,8 @@ Upload a document to be indexed and used for search.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1391,6 +1445,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Vellum-generated ID that uniquely identifies this model version.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1403,6 +1459,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Timestamp of when this model version was created.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1415,6 +1473,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Human-friendly name for this model version.",
                 "schema": {
+                  "maxLength": 150,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1453,6 +1513,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The unique id of this model version as it exists in the above provider's system.",
                 "schema": {
+                  "maxLength": 250,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1500,6 +1562,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The ID of the sandbox snapshot.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1571,6 +1635,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1602,6 +1668,8 @@ Upload a document to be indexed and used for search.
                 "value": {
                   "description": undefined,
                   "key": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "map",
@@ -1669,6 +1737,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1689,6 +1759,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1791,6 +1863,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Details about why the request failed.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1821,6 +1895,8 @@ Upload a document to be indexed and used for search.
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": 1,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -1851,6 +1927,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The ID of the index to search against. Must provide either this or index_name.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1871,6 +1949,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The name of the index to search against. Must provide either this or index_id.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": 1,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1885,6 +1965,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The query to search for.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": 1,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2058,6 +2140,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The text of the chunk that matched the search query.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2073,6 +2157,8 @@ Upload a document to be indexed and used for search.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2161,6 +2247,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Vellum-generated ID that uniquely identifies this document.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2179,6 +2267,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The external ID that was originally provided when uploading the document.",
                     "schema": {
+                      "maxLength": 250,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2193,6 +2283,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "A timestamp representing when this document was most recently uploaded.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2205,6 +2297,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Human-friendly name for this document.",
                 "schema": {
+                  "maxLength": 150,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2257,6 +2351,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2317,6 +2413,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The Vellum-generated ID of a previously generated completion. Must provide either this or external_id.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": 1,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2337,6 +2435,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The external ID that was originally provided when generating the completion that you'd now like to submit actuals for. Must provide either this or id.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": 1,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2357,6 +2457,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "Text representing what the completion _should_ have been.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2397,6 +2499,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2420,6 +2524,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2447,6 +2553,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The ID of the deployment. Must provide either this or deployment_name.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2467,6 +2575,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "The name of the deployment. Must provide either this or deployment_id.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": 1,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2507,6 +2617,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2537,6 +2649,8 @@ Upload a document to be indexed and used for search.
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": 1,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -2558,6 +2672,8 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": 1,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -2572,6 +2688,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "A human-friendly name for this document. Typically the filename.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": 1,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2584,6 +2702,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The file contents of the document.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2605,6 +2725,8 @@ Upload a document to be indexed and used for search.
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": 1,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -2629,6 +2751,8 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "The ID of the newly created document.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",

@@ -11,35 +11,35 @@ exports[`open api parser axle simple 1`] = `
           "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
           "properties": {
             "carrier": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "createdAt": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "email": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "firstName": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "lastName": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "modifiedAt": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "phone": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "policies": {
@@ -47,7 +47,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "list<string>",
             },
             "refreshedAt": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },
@@ -56,27 +56,27 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "addressLine1": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "addressLine2": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "city": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "country": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "postalCode": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "state": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -89,27 +89,27 @@ exports[`open api parser axle simple 1`] = `
               "type": "Address",
             },
             "domain": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "logoUrl": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "modifiedAt": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "phone": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },
@@ -126,7 +126,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "optional<integer>",
             },
             "label": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "limitPerAccident": {
@@ -138,7 +138,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "optional<integer>",
             },
             "property": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -287,39 +287,39 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "dateOfBirth": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "dateOfBirthYear": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "firstName": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "lastName": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "licenseNo": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "licenseState": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "licenseStatus": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "property": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
           },
@@ -328,7 +328,7 @@ exports[`open api parser axle simple 1`] = `
           "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
           "properties": {
             "account": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "address": {
@@ -336,7 +336,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "Address",
             },
             "carrier": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "coverages": {
@@ -344,19 +344,19 @@ exports[`open api parser axle simple 1`] = `
               "type": "list<Coverage>",
             },
             "createdAt": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "effectiveDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "expirationDate": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "insureds": {
@@ -368,11 +368,11 @@ exports[`open api parser axle simple 1`] = `
               "type": "boolean",
             },
             "modifiedAt": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "policyNumber": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "properties": {
@@ -380,7 +380,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "list<Property>",
             },
             "refreshedAt": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "thirdParties": {
@@ -416,7 +416,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "Vehicle",
             },
             "id": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "type": {
@@ -462,7 +462,7 @@ exports[`open api parser axle simple 1`] = `
           },
         },
         "Success": {
-          "docs": "Indicates whether the operation was performed successfully.",
+          "docs": "undefinedIndicates whether the operation was performed successfully.",
           "type": "boolean",
         },
         "ThirdParty": {
@@ -473,11 +473,11 @@ exports[`open api parser axle simple 1`] = `
               "type": "optional<Address>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "property": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "type": {
@@ -535,23 +535,23 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "bodyStyle": {
-              "docs": undefined,
+              "docs": "",
               "type": "optional<string>",
             },
             "make": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "model": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "vin": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
             "year": {
-              "docs": undefined,
+              "docs": "",
               "type": "string",
             },
           },
