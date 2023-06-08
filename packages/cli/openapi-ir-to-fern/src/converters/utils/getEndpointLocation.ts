@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { Endpoint } from "@fern-fern/openapi-ir-model/ir";
-import { camelCase, isEqual } from "lodash-es";
+import { camelCase, compact, isEqual, words } from "lodash-es";
 
 export interface EndpointLocation {
     file: RelativeFilePath;
@@ -39,8 +39,8 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     }
 
     // if both tag and operation ids are defined
-    const tagTokens = tag.split(/[^a-zA-Z0-9]+/);
-    const operationIdTokens = operationId.split(/[^a-zA-Z0-9]+/);
+    const tagTokens = tokenizeString(tag);
+    const operationIdTokens = tokenizeString(operationId);
 
     // add to __package__.yml if equal
     if (isEqual(tagTokens, operationIdTokens)) {
@@ -75,4 +75,17 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
         endpointId: camelCase(operationIdTokens.slice(fileParts.length).join("_")),
         tag,
     };
+}
+
+function tokenizeString(input: string): string[] {
+    // Handle camel case and snake case
+    let tokens = input.split(/(?=[A-Z])|_| /);
+
+    // Remove non-alphanumeric characters from each token
+    tokens = tokens.map((token) => words(token).join(""));
+
+    // Filter out empty tokens
+    tokens = compact(tokens);
+
+    return tokens;
 }

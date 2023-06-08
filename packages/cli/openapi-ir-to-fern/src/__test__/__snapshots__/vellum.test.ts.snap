@@ -112,43 +112,6 @@ Perform a search against a document index.
             },
             "url": "Predict",
           },
-          "submit-completion-actuals": {
-            "auth": true,
-            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
-
-Used to submit feedback regarding the quality of previously generated completions.
-
-**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-            "errors": [
-              "BadRequestError",
-              "NotFoundError",
-              "InternalServerError",
-            ],
-            "method": "POST",
-            "path": "/v1/submit-completion-actuals",
-            "request": {
-              "body": {
-                "properties": {
-                  "actuals": {
-                    "docs": "Feedback regarding the quality of previously generated completions",
-                    "type": "list<SubmitCompletionActualRequest>",
-                  },
-                  "deployment_id": {
-                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
-                    "type": "optional<string>",
-                  },
-                  "deployment_name": {
-                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "SubmitCompletionActualsRequestRequest",
-              "query-parameters": undefined,
-            },
-            "url": "Predict",
-          },
         },
       },
       "types": {
@@ -881,7 +844,7 @@ Upload a document to be indexed and used for search.
         "auth": false,
         "base-path": "",
         "endpoints": {
-          "retrieve": {
+          "model_versions_retrieve": {
             "auth": true,
             "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
@@ -902,6 +865,54 @@ Used to retrieve a model version given its ID.
               "type": "root.ModelVersionRead",
             },
             "url": "Default",
+          },
+        },
+      },
+    },
+    "submitCompletionActuals.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "submit_completion_actuals": {
+            "auth": true,
+            "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
+
+Used to submit feedback regarding the quality of previously generated completions.
+
+**Note:** Uses a base url of \`https://predict.vellum.ai\`.",
+            "errors": [
+              "root.BadRequestError",
+              "root.NotFoundError",
+              "root.InternalServerError",
+            ],
+            "method": "POST",
+            "path": "/v1/submit-completion-actuals",
+            "request": {
+              "body": {
+                "properties": {
+                  "actuals": {
+                    "docs": "Feedback regarding the quality of previously generated completions",
+                    "type": "list<root.SubmitCompletionActualRequest>",
+                  },
+                  "deployment_id": {
+                    "docs": "The ID of the deployment. Must provide either this or deployment_name.",
+                    "type": "optional<string>",
+                  },
+                  "deployment_name": {
+                    "docs": "The name of the deployment. Must provide either this or deployment_id.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "SubmitCompletionActualsRequestRequest",
+              "query-parameters": undefined,
+            },
+            "url": "Predict",
           },
         },
       },

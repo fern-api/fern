@@ -3146,7 +3146,7 @@ empty.
         "base-path": "",
         "display-name": "artifacts",
         "endpoints": {
-          "locate": {
+          "artifacts-locate": {
             "auth": true,
             "docs": "Gets the download URL for the artifact.",
             "errors": [
@@ -3175,7 +3175,7 @@ empty.
               "type": "root.ArtifactsLocateResponse",
             },
           },
-          "prepare": {
+          "artifacts-prepare": {
             "auth": true,
             "docs": "Creates an artifact and generates an upload URL for its data.
 ",
@@ -3408,7 +3408,7 @@ organization.
         "base-path": "",
         "display-name": "auth-tokens",
         "endpoints": {
-          "create": {
+          "auth-tokens-create": {
             "auth": true,
             "docs": "Creates a JWT corresponding to the requested token type for the
 authenticated user.
@@ -3487,7 +3487,7 @@ requesting an application access token (AAT).
               "type": "root.AuthTokensCreateResponse",
             },
           },
-          "delete": {
+          "auth-tokens-delete": {
             "auth": true,
             "docs": "Revokes the token that matches the given token ID issued under the
 given Dev organization.
@@ -3520,7 +3520,7 @@ JTI claim of the token in the authorization header.
               "query-parameters": undefined,
             },
           },
-          "get": {
+          "auth-tokens-get": {
             "auth": true,
             "docs": "Gets the token metadata corresponding to the given token ID under the
 given Dev organization.
@@ -3552,7 +3552,7 @@ given Dev organization.
               "type": "root.AuthTokensGetResponse",
             },
           },
-          "list": {
+          "auth-tokens-list": {
             "auth": true,
             "docs": "Gets the token metadata for all the tokens corresponding to the given
 token type issued for a given subject.
@@ -3600,7 +3600,7 @@ subject.
               "type": "root.AuthTokensListResponse",
             },
           },
-          "selfDelete": {
+          "auth-tokens-self-delete": {
             "auth": true,
             "docs": "Revokes all the tokens that matches the given token type created by the
 authenticated user.
@@ -3630,7 +3630,7 @@ authenticated user.
               "query-parameters": undefined,
             },
           },
-          "update": {
+          "auth-tokens-update": {
             "auth": true,
             "docs": "Updates token metadata of a token issued under a given Dev
 organization.
@@ -3681,7 +3681,7 @@ organization.
         "base-path": "",
         "display-name": "dev-users",
         "endpoints": {
-          "list": {
+          "dev-users-list": {
             "auth": true,
             "docs": "Lists users within your organization.",
             "errors": [
@@ -3740,7 +3740,7 @@ used.
               "type": "root.DevUsersListResponse",
             },
           },
-          "self": {
+          "dev-users-self": {
             "auth": true,
             "docs": "Gets the authenticated user's information.",
             "errors": [
@@ -3770,7 +3770,7 @@ used.
         "base-path": "",
         "display-name": "parts",
         "endpoints": {
-          "create": {
+          "parts-create": {
             "auth": true,
             "docs": "Creates new [part](https://devrev.ai/docs/product/parts).",
             "errors": [
@@ -3794,7 +3794,7 @@ used.
               "type": "root.PartsCreateResponse",
             },
           },
-          "delete": {
+          "parts-delete": {
             "auth": true,
             "docs": "Deletes a [part](https://devrev.ai/docs/product/parts).",
             "errors": [
@@ -3826,7 +3826,7 @@ used.
               "type": "root.parts-delete-response",
             },
           },
-          "get": {
+          "parts-get": {
             "auth": true,
             "docs": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
@@ -3856,7 +3856,7 @@ used.
               "type": "root.PartsGetResponse",
             },
           },
-          "list": {
+          "parts-list": {
             "auth": true,
             "docs": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
@@ -3920,7 +3920,7 @@ used.
               "type": "root.PartsListResponse",
             },
           },
-          "update": {
+          "parts-update": {
             "auth": true,
             "docs": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
@@ -3958,7 +3958,7 @@ used.
         "base-path": "",
         "display-name": "rev-orgs",
         "endpoints": {
-          "create": {
+          "rev-orgs-create": {
             "auth": true,
             "docs": "Creates a Rev organization in the authenticated user's Dev
 organization.
@@ -4014,7 +4014,7 @@ records.
               "type": "root.RevOrgsCreateResponse",
             },
           },
-          "delete": {
+          "rev-orgs-delete": {
             "auth": true,
             "docs": "Deletes the Rev organization.",
             "errors": [
@@ -4046,7 +4046,7 @@ records.
               "type": "root.rev-orgs-delete-response",
             },
           },
-          "get": {
+          "rev-orgs-get": {
             "auth": true,
             "docs": "Retrieves the Rev organization's information.",
             "errors": [
@@ -4075,7 +4075,7 @@ records.
               "type": "root.RevOrgsGetResponse",
             },
           },
-          "list": {
+          "rev-orgs-list": {
             "auth": true,
             "docs": "Gets the list of Rev organizations' information belonging to the
 authenticated user's Dev Organization which the user is also authorized
@@ -4165,7 +4165,7 @@ them.
               "type": "root.RevOrgsListResponse",
             },
           },
-          "update": {
+          "rev-orgs-update": {
             "auth": true,
             "docs": "Updates the Rev organization's information.",
             "errors": [
@@ -4236,7 +4236,7 @@ records.
         "base-path": "",
         "display-name": "tags",
         "endpoints": {
-          "create": {
+          "tags-create": {
             "auth": true,
             "docs": "Creates a new tag, which is used to create associations between objects
 and a logical concept denoted by the tag's name.
@@ -4280,7 +4280,7 @@ permitted.
               "type": "root.TagsCreateResponse",
             },
           },
-          "delete": {
+          "tags-delete": {
             "auth": true,
             "docs": "Deletes a tag.",
             "errors": [
@@ -4312,7 +4312,7 @@ permitted.
               "type": "root.tags-delete-response",
             },
           },
-          "get": {
+          "tags-get": {
             "auth": true,
             "docs": "Gets a tag's information.",
             "errors": [
@@ -4341,7 +4341,7 @@ permitted.
               "type": "root.TagsGetResponse",
             },
           },
-          "list": {
+          "tags-list": {
             "auth": true,
             "docs": "Lists the available tags.",
             "errors": [
@@ -4383,7 +4383,7 @@ used.
               "type": "root.TagsListResponse",
             },
           },
-          "update": {
+          "tags-update": {
             "auth": true,
             "docs": "Updates a tag's information.",
             "errors": [
@@ -4441,7 +4441,7 @@ tags.
         "base-path": "",
         "display-name": "timeline-entries",
         "endpoints": {
-          "create": {
+          "timeline-entries-create": {
             "auth": true,
             "docs": "Creates a new entry on an object's timeline.",
             "errors": [
@@ -4465,7 +4465,7 @@ tags.
               "type": "root.TimelineEntriesCreateResponse",
             },
           },
-          "get": {
+          "timeline-entries-get": {
             "auth": true,
             "docs": "Gets an entry on an object's timeline.",
             "errors": [
@@ -4494,7 +4494,7 @@ tags.
               "type": "root.TimelineEntriesGetResponse",
             },
           },
-          "list": {
+          "timeline-entries-list": {
             "auth": true,
             "docs": "Lists the timeline entries for an object.",
             "errors": [
@@ -4544,7 +4544,7 @@ used.
               "type": "root.TimelineEntriesListResponse",
             },
           },
-          "update": {
+          "timeline-entries-update": {
             "auth": true,
             "docs": "Updates an entry on an object's timeline.",
             "errors": [
@@ -4580,7 +4580,7 @@ used.
         "base-path": "",
         "display-name": "webhooks",
         "endpoints": {
-          "create": {
+          "webhooks-create": {
             "auth": true,
             "docs": "Creates a new webhook target.",
             "errors": [
@@ -4623,7 +4623,7 @@ response.
               "type": "root.WebhooksCreateResponse",
             },
           },
-          "delete": {
+          "webhooks-delete": {
             "auth": true,
             "docs": "Deletes the requested webhook.",
             "errors": [
@@ -4655,7 +4655,7 @@ response.
               "type": "root.webhooks-delete-response",
             },
           },
-          "get": {
+          "webhooks-get": {
             "auth": true,
             "docs": "Gets the requested webhook's information.",
             "errors": [
@@ -4684,7 +4684,7 @@ response.
               "type": "root.WebhooksGetResponse",
             },
           },
-          "list": {
+          "webhooks-list": {
             "auth": true,
             "docs": "Lists the webhooks.",
             "errors": [
@@ -4702,7 +4702,7 @@ response.
               "type": "root.WebhooksListResponse",
             },
           },
-          "update": {
+          "webhooks-update": {
             "auth": true,
             "docs": "Updates the requested webhook.",
             "errors": [
@@ -4770,7 +4770,7 @@ won't receive any object events until successfully verified.
         "base-path": "",
         "display-name": "works",
         "endpoints": {
-          "create": {
+          "works-create": {
             "auth": true,
             "docs": "Creates new work ([issue](https://devrev.ai/docs/product/build),
 [ticket](https://devrev.ai/docs/product/support)) item.
@@ -4796,7 +4796,7 @@ won't receive any object events until successfully verified.
               "type": "root.WorksCreateResponse",
             },
           },
-          "delete": {
+          "works-delete": {
             "auth": true,
             "docs": "Deletes a work item.",
             "errors": [
@@ -4828,7 +4828,7 @@ won't receive any object events until successfully verified.
               "type": "root.works-delete-response",
             },
           },
-          "export": {
+          "works-export": {
             "auth": true,
             "docs": "Exports a collection of work items.",
             "errors": [
@@ -4906,7 +4906,7 @@ organizations.
               "type": "root.WorksExportResponse",
             },
           },
-          "get": {
+          "works-get": {
             "auth": true,
             "docs": "Gets a work item's information.",
             "errors": [
@@ -4935,7 +4935,7 @@ organizations.
               "type": "root.WorksGetResponse",
             },
           },
-          "list": {
+          "works-list": {
             "auth": true,
             "docs": "Lists a collection of work items.",
             "errors": [
@@ -5026,7 +5026,7 @@ organizations.
               "type": "root.WorksListResponse",
             },
           },
-          "update": {
+          "works-update": {
             "auth": true,
             "docs": "Updates a work item's information.",
             "errors": [
