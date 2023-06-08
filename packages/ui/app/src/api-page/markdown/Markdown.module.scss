@@ -1,7 +1,7 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
 .container {
-    &,
+    >,
     :not(pre) {
         code {
             @apply px-2 py-1 rounded bg-white/10 before:content-none after:content-none;
