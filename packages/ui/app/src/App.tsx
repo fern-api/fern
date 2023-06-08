@@ -8,13 +8,15 @@ import "@blueprintjs/select/lib/css/blueprint-select.css";
 import "normalize.css";
 import { initializePosthog } from "./analytics/posthog";
 import styles from "./App.module.scss";
+import { CONTEXTS } from "./contexts";
 import { Docs } from "./docs/Docs";
 import { useAreFernFontsReady } from "./useAreFernFontsReady";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
 // this API key is client-side safe
-const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_API_KEY;
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+const POSTHOG_API_KEY = import.meta.env?.VITE_PUBLIC_POSTHOG_API_KEY ?? process.env.NEXT_PUBLIC_POSTHOG_API_KEY;
 if (POSTHOG_API_KEY != null) {
     initializePosthog(POSTHOG_API_KEY);
 }
@@ -27,7 +29,12 @@ export const App: React.FC = () => {
 
     return (
         <div className={styles.app}>
-            <Docs />
+            {CONTEXTS.reduceRight(
+                (children, Context) => (
+                    <Context>{children}</Context>
+                ),
+                <Docs />
+            )}
         </div>
     );
 };
