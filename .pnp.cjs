@@ -224,7 +224,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/ui/fe-bundle"\
       },\
       {\
-        "name": "next-app",\
+        "name": "@fern-api/next-app",\
         "reference": "workspace:packages/ui/next-app"\
       }\
     ],\
@@ -259,6 +259,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/login", ["workspace:packages/cli/login"]],\
       ["@fern-api/manage-docs-configuration", ["workspace:packages/cli/config-management/manage-docs-configuration"]],\
       ["@fern-api/manage-generator", ["workspace:packages/cli/config-management/manage-generator"]],\
+      ["@fern-api/next-app", ["workspace:packages/ui/next-app"]],\
       ["@fern-api/openapi-ir-to-fern", ["workspace:packages/cli/openapi-ir-to-fern"]],\
       ["@fern-api/openapi-migrator", ["workspace:packages/cli/openapi-migrator"]],\
       ["@fern-api/openapi-parser", ["workspace:packages/cli/openapi-parser"]],\
@@ -283,8 +284,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/yaml-formatter", ["workspace:packages/cli/yaml/formatter"]],\
       ["@fern-api/yaml-migrations", ["workspace:packages/cli/yaml/yaml-migrations"]],\
       ["@fern-api/yaml-schema", ["workspace:packages/cli/yaml/yaml-schema"]],\
-      ["fern", ["workspace:."]],\
-      ["next-app", ["workspace:packages/ui/next-app"]]\
+      ["fern", ["workspace:."]]\
     ],\
     "fallbackPool": [\
     ],\
@@ -5836,6 +5836,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-docs-configuration", "workspace:packages/cli/config-management/manage-docs-configuration"],\
             ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
+            ["@fern-api/next-app", "workspace:packages/ui/next-app"],\
             ["@fern-api/openapi-ir-to-fern", "workspace:packages/cli/openapi-ir-to-fern"],\
             ["@fern-api/openapi-migrator", "workspace:packages/cli/openapi-migrator"],\
             ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
@@ -6548,6 +6549,38 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/next-app", [\
+        ["workspace:packages/ui/next-app", {\
+          "packageLocation": "./packages/ui/next-app/",\
+          "packageDependencies": [\
+            ["@fern-api/next-app", "workspace:packages/ui/next-app"],\
+            ["@babel/core", "npm:7.19.1"],\
+            ["@babel/preset-env", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.19.1"],\
+            ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
+            ["@fern-api/ui", "workspace:packages/ui/app"],\
+            ["@tailwindcss/typography", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:0.5.9"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["@types/react-dom", "npm:18.0.6"],\
+            ["autoprefixer", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:10.4.13"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
+            ["next", "virtual:e20dbd22f86ad869d887f5682a74c9bc9159d78049a1fb151b4a2e5e17c414f89b6e6c8ced7634ddf7cd5be69b6f6387b27c5d3bbf1ef8ab4e0317dc04d1d869#npm:13.4.4"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["postcss", "npm:8.4.23"],\
+            ["prettier", "npm:2.7.1"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:5859ca6455b1300e5c14a40a0e9dfd22c3c72703e63a89ae86f290b9c13d7e92836c0c40bb85ba0f8a308601ec19634c366ca3f4bec5fed1a79eee5fbf98d0ae#npm:18.2.0"],\
+            ["sass", "npm:1.54.0"],\
+            ["stylelint", "npm:14.14.0"],\
+            ["tailwindcss", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:3.2.7"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -18891,51 +18924,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:255fbcc40410c6c73022e22e3f5cb86e864fccd79780a14aeadd68e1b5ccf17390275a18cb0dcb1d5315dc100a299350a5f00d0332619405c0e2ed4ce469d63c#npm:13.4.4", {\
-          "packageLocation": "./.yarn/__virtual__/next-virtual-428243da5a/0/cache/next-npm-13.4.4-eea4a310b2-d84686f3ca.zip/node_modules/next/",\
-          "packageDependencies": [\
-            ["next", "virtual:255fbcc40410c6c73022e22e3f5cb86e864fccd79780a14aeadd68e1b5ccf17390275a18cb0dcb1d5315dc100a299350a5f00d0332619405c0e2ed4ce469d63c#npm:13.4.4"],\
-            ["@next/env", "npm:13.4.4"],\
-            ["@next/swc-darwin-arm64", "npm:13.4.4"],\
-            ["@next/swc-darwin-x64", "npm:13.4.4"],\
-            ["@next/swc-linux-arm64-gnu", "npm:13.4.4"],\
-            ["@next/swc-linux-arm64-musl", "npm:13.4.4"],\
-            ["@next/swc-linux-x64-gnu", "npm:13.4.4"],\
-            ["@next/swc-linux-x64-musl", "npm:13.4.4"],\
-            ["@next/swc-win32-arm64-msvc", "npm:13.4.4"],\
-            ["@next/swc-win32-ia32-msvc", "npm:13.4.4"],\
-            ["@next/swc-win32-x64-msvc", "npm:13.4.4"],\
-            ["@opentelemetry/api", null],\
-            ["@swc/helpers", "npm:0.5.1"],\
-            ["@types/fibers", null],\
-            ["@types/opentelemetry__api", null],\
-            ["@types/react", "npm:18.0.20"],\
-            ["@types/react-dom", "npm:18.0.6"],\
-            ["@types/sass", null],\
-            ["busboy", "npm:1.6.0"],\
-            ["caniuse-lite", "npm:1.0.30001495"],\
-            ["fibers", null],\
-            ["postcss", "npm:8.4.14"],\
-            ["react", "npm:18.2.0"],\
-            ["react-dom", "virtual:5859ca6455b1300e5c14a40a0e9dfd22c3c72703e63a89ae86f290b9c13d7e92836c0c40bb85ba0f8a308601ec19634c366ca3f4bec5fed1a79eee5fbf98d0ae#npm:18.2.0"],\
-            ["sass", "npm:1.54.0"],\
-            ["styled-jsx", "virtual:4a753ed22f2e0a79b2c72c3d7c18b261b81d5b44ffd20ebf32b2ac15ae5fd2f07004d9201ea80bce134d60e9a06e26a0b5a1cc83725254caa1b98c519358fa71#npm:5.1.1"],\
-            ["zod", "npm:3.21.4"]\
-          ],\
-          "packagePeers": [\
-            "@opentelemetry/api",\
-            "@types/fibers",\
-            "@types/opentelemetry__api",\
-            "@types/react-dom",\
-            "@types/react",\
-            "@types/sass",\
-            "fibers",\
-            "react-dom",\
-            "react",\
-            "sass"\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:13.4.4", {\
           "packageLocation": "./.yarn/__virtual__/next-virtual-4a753ed22f/0/cache/next-npm-13.4.4-eea4a310b2-d84686f3ca.zip/node_modules/next/",\
           "packageDependencies": [\
@@ -18980,29 +18968,51 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "sass"\
           ],\
           "linkType": "HARD"\
-        }]\
-      ]],\
-      ["next-app", [\
-        ["workspace:packages/ui/next-app", {\
-          "packageLocation": "./packages/ui/next-app/",\
+        }],\
+        ["virtual:e20dbd22f86ad869d887f5682a74c9bc9159d78049a1fb151b4a2e5e17c414f89b6e6c8ced7634ddf7cd5be69b6f6387b27c5d3bbf1ef8ab4e0317dc04d1d869#npm:13.4.4", {\
+          "packageLocation": "./.yarn/__virtual__/next-virtual-b9c555836a/0/cache/next-npm-13.4.4-eea4a310b2-d84686f3ca.zip/node_modules/next/",\
           "packageDependencies": [\
-            ["next-app", "workspace:packages/ui/next-app"],\
-            ["@fern-api/ui", "workspace:packages/ui/app"],\
-            ["@tailwindcss/typography", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:0.5.9"],\
-            ["@types/node", "npm:18.7.18"],\
+            ["next", "virtual:e20dbd22f86ad869d887f5682a74c9bc9159d78049a1fb151b4a2e5e17c414f89b6e6c8ced7634ddf7cd5be69b6f6387b27c5d3bbf1ef8ab4e0317dc04d1d869#npm:13.4.4"],\
+            ["@next/env", "npm:13.4.4"],\
+            ["@next/swc-darwin-arm64", "npm:13.4.4"],\
+            ["@next/swc-darwin-x64", "npm:13.4.4"],\
+            ["@next/swc-linux-arm64-gnu", "npm:13.4.4"],\
+            ["@next/swc-linux-arm64-musl", "npm:13.4.4"],\
+            ["@next/swc-linux-x64-gnu", "npm:13.4.4"],\
+            ["@next/swc-linux-x64-musl", "npm:13.4.4"],\
+            ["@next/swc-win32-arm64-msvc", "npm:13.4.4"],\
+            ["@next/swc-win32-ia32-msvc", "npm:13.4.4"],\
+            ["@next/swc-win32-x64-msvc", "npm:13.4.4"],\
+            ["@opentelemetry/api", null],\
+            ["@swc/helpers", "npm:0.5.1"],\
+            ["@types/fibers", null],\
+            ["@types/opentelemetry__api", null],\
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", "npm:18.0.6"],\
-            ["autoprefixer", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:10.4.13"],\
-            ["eslint", "npm:8.26.0"],\
-            ["next", "virtual:255fbcc40410c6c73022e22e3f5cb86e864fccd79780a14aeadd68e1b5ccf17390275a18cb0dcb1d5315dc100a299350a5f00d0332619405c0e2ed4ce469d63c#npm:13.4.4"],\
-            ["postcss", "npm:8.4.23"],\
+            ["@types/sass", null],\
+            ["busboy", "npm:1.6.0"],\
+            ["caniuse-lite", "npm:1.0.30001495"],\
+            ["fibers", null],\
+            ["postcss", "npm:8.4.14"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:5859ca6455b1300e5c14a40a0e9dfd22c3c72703e63a89ae86f290b9c13d7e92836c0c40bb85ba0f8a308601ec19634c366ca3f4bec5fed1a79eee5fbf98d0ae#npm:18.2.0"],\
             ["sass", "npm:1.54.0"],\
-            ["tailwindcss", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:3.2.7"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+            ["styled-jsx", "virtual:4a753ed22f2e0a79b2c72c3d7c18b261b81d5b44ffd20ebf32b2ac15ae5fd2f07004d9201ea80bce134d60e9a06e26a0b5a1cc83725254caa1b98c519358fa71#npm:5.1.1"],\
+            ["zod", "npm:3.21.4"]\
           ],\
-          "linkType": "SOFT"\
+          "packagePeers": [\
+            "@opentelemetry/api",\
+            "@types/fibers",\
+            "@types/opentelemetry__api",\
+            "@types/react-dom",\
+            "@types/react",\
+            "@types/sass",\
+            "fibers",\
+            "react-dom",\
+            "react",\
+            "sass"\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["no-case", [\
