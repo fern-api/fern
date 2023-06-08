@@ -339,7 +339,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -359,7 +359,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -1088,7 +1088,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -1108,7 +1108,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -1699,7 +1699,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -1719,7 +1719,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -2266,7 +2266,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -2286,7 +2286,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -2697,7 +2697,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -2717,7 +2717,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -3273,7 +3273,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -3293,7 +3293,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -3856,7 +3856,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -3876,7 +3876,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -4212,7 +4212,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -4232,7 +4232,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -4836,7 +4836,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -4856,7 +4856,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -5462,7 +5462,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -5482,7 +5482,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -6118,7 +6118,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -6138,7 +6138,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -6846,7 +6846,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -6866,7 +6866,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -7217,7 +7217,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -7237,7 +7237,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -7598,7 +7598,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -7618,7 +7618,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -7840,7 +7840,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -7860,7 +7860,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -9609,7 +9609,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -9629,7 +9629,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -10434,7 +10434,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -10454,7 +10454,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "type": "optional",
                             "value": {
                               "description": undefined,
-                              "type": "optional",
+                              "type": "nullable",
                               "value": {
                                 "description": undefined,
                                 "schema": {
@@ -11271,7 +11271,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -11307,7 +11307,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -11359,7 +11359,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -11411,7 +11411,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -11548,7 +11548,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "AirBookingDetail": {
           "description": undefined,
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": undefined,
@@ -11753,7 +11753,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "AirShipmentDetail": {
           "description": undefined,
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": undefined,
@@ -11848,7 +11848,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "AirShipmentLeg": {
           "description": undefined,
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": undefined,
@@ -12256,7 +12256,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -14224,7 +14224,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -15438,7 +15438,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": "Optional. Name and address of company that is the notify party of the booking. If null, then this is the same as consignee.",
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": "Optional. Name and address of company that is the notify party of the booking. If null, then this is the same as consignee.",
                     "schema": {
@@ -16774,7 +16774,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "generatedName": "createCommercialInvoiceInvoiceNumber",
               "key": "invoice_number",
               "schema": {
-                "description": "Invoice number on the commercial invoice, typically used for display purposes. Uniqueness is based on the supplier Involved Party. There can be multiple commercial invoices with the same invoice_number only if they have different suppliers. ",
+                "description": "Invoice number on the commercial invoice, typically used for display purposes. Uniqueness is based on the supplier Involved Party. There can be multiple commercial invoices with the same invoice_number only if they have different suppliers.",
                 "schema": {
                   "type": "string",
                 },
@@ -21064,7 +21064,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": "A short message or description about the document",
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": "A short message or description about the document",
                     "schema": {
@@ -21100,7 +21100,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": "Date-time string when this document was archived. Null if not archived.",
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": "Date-time string when this document was archived. Null if not archived.",
                     "schema": {
@@ -21710,7 +21710,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": "Description of HS or HTS code classification.",
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": "Description of HS or HTS code classification.",
                     "schema": {
@@ -23130,7 +23130,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "OceanBookingDetail": {
           "description": undefined,
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": undefined,
@@ -23450,7 +23450,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "OceanShipmentDetail": {
           "description": undefined,
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": undefined,
@@ -23916,7 +23916,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Place": {
           "description": undefined,
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": undefined,
@@ -24179,7 +24179,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": "If the product has been archived, the time it was archived. If the product is still active this will be null.",
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": "If the product has been archived, the time it was archived. If the product is still active this will be null.",
                     "schema": {
@@ -26265,7 +26265,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "RailShipmentLeg": {
           "description": undefined,
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": undefined,
@@ -27560,7 +27560,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27580,7 +27580,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27600,7 +27600,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27620,7 +27620,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27640,7 +27640,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27660,7 +27660,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27680,7 +27680,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27700,7 +27700,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27720,7 +27720,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27740,7 +27740,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27760,7 +27760,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27780,7 +27780,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27800,7 +27800,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27820,7 +27820,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27840,7 +27840,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -27860,7 +27860,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -28420,7 +28420,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "description": "Date-time string when this leg was deleted. Null if not deleted.",
-                  "type": "optional",
+                  "type": "nullable",
                   "value": {
                     "description": "Date-time string when this leg was deleted. Null if not deleted.",
                     "schema": {
@@ -29174,7 +29174,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Terminal": {
           "description": "Name and address of a specific terminal within a port or airport.  Possibly null",
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": "Name and address of a specific terminal within a port or airport.  Possibly null",
@@ -29308,7 +29308,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "TruckingBookingDetail": {
           "description": undefined,
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": undefined,
@@ -29398,7 +29398,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "TruckingShipmentLeg": {
           "description": undefined,
-          "type": "optional",
+          "type": "nullable",
           "value": {
             "allOf": [],
             "description": undefined,
@@ -29430,7 +29430,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "type": "optional",
                   "value": {
                     "description": undefined,
-                    "type": "optional",
+                    "type": "nullable",
                     "value": {
                       "description": undefined,
                       "schema": {
@@ -29491,7 +29491,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "type": "optional",
                   "value": {
                     "description": undefined,
-                    "type": "optional",
+                    "type": "nullable",
                     "value": {
                       "description": undefined,
                       "schema": {
@@ -29511,7 +29511,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "type": "optional",
                   "value": {
                     "description": undefined,
-                    "type": "optional",
+                    "type": "nullable",
                     "value": {
                       "description": undefined,
                       "schema": {

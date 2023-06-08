@@ -92,6 +92,7 @@ export function convertSchemaObject(
         });
     }
 
+    // eslint-disable-next-line @typescript-eslint/prefer-string-starts-ends-with
     if (isListOfStrings(schema.type) && schema.type[1] != null && schema.type[0] != null) {
         const firstElement = schema.type[0];
         const secondElement = schema.type[1];
