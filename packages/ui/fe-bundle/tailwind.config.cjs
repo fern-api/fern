@@ -19,7 +19,7 @@ module.exports = {
                 "gray-light": colors.neutral[600],
                 "gray-medium": colors.neutral[700],
                 "gray-dark": colors.neutral[800],
-                border: colors.neutral[700],
+                border: "rgba(255, 255, 255, 10%)",
                 "text-default": "#fff",
                 "text-muted": colors.neutral[400],
             };

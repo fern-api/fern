@@ -33,7 +33,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className
             )}
         >
-            <div className="border-border flex h-10 items-center justify-between border-b bg-white/10 py-1 pl-3 pr-2">
+            <div className="border-border flex h-10 items-center justify-between border-b bg-white/5 py-1 pl-3 pr-2">
                 <div className="flex items-center gap-2">
                     <div className="text-xs uppercase tracking-wide text-neutral-300">{title}</div>
                     {titleRightContent}
