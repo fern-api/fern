@@ -18,7 +18,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, des
         <div className="flex flex-col gap-2 py-4">
             <div className="flex items-baseline gap-1">
                 <MonospaceText>{name}</MonospaceText>
-                <div className={classNames("text-xs", "text-text-muted", "dark:text-text-muted")}>
+                <div className={classNames("text-xs", "text-text-default", "dark:text-text-default")}>
                     <TypeShorthand type={type} plural={false} />
                 </div>
             </div>

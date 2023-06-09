@@ -5,12 +5,22 @@
     src: local("Berkeley Mono"), url("./fonts/BerkeleyMono-Regular.woff2") format("woff2");
 }
 
+@font-face {
+    font-family: Inter;
+    src: local("Inter"), url("./fonts/InterV.var.ttf") format("truetype");
+}
+
 .app {
     flex: 1;
     display: flex;
     height: 100vh;
+    font-family: Inter;
 
     :global {
+        p {
+            @apply text-text-default;
+        }
+
         code,
         pre {
             font-family: "Berkeley Mono";
