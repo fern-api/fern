@@ -280,7 +280,7 @@ jobs:
           command: sudo npm install --global vercel@latest
       - run:
           name: Pull Vercel environment information
-          command: vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
+          command: vercel pull --yes --environment=preview --token=${VERCEL_TOKEN}
       - run:
           name: Build project artifacts
           command: vercel build --token=${VERCEL_TOKEN}
