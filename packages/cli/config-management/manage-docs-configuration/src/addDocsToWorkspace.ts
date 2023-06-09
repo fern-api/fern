@@ -33,6 +33,9 @@ export async function addDocsToWorkspace({
             group.docs = {
                 domain: `${organization}.${process.env.DOCS_DOMAIN_SUFFIX}`,
             };
+            if (group.generators == null) {
+                group.generators = [];
+            }
         },
     });
     await writeFile(
