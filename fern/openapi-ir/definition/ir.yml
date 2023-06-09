@@ -256,11 +256,16 @@ types:
       int64: {}
       float: {}
       double: {}
-      string: {}
+      string: StringSchema
       datetime: {}
       date: {}
       base64: {}
       boolean: {}
+
+  StringSchema:
+    properties:
+      minLength: optional<integer>
+      maxLength: optional<integer>
 
   LiteralSchema:
     extends: WithDescription

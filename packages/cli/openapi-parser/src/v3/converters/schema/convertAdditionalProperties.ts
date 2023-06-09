@@ -21,14 +21,20 @@ export function convertAdditionalProperties({
         return wrapMap({
             wrapAsNullable,
             description,
-            keySchema: PrimitiveSchemaValue.string(),
+            keySchema: PrimitiveSchemaValue.string({
+                minLength: undefined,
+                maxLength: undefined,
+            }),
             valueSchema: Schema.unknown(),
         });
     }
     return wrapMap({
         wrapAsNullable,
         description,
-        keySchema: PrimitiveSchemaValue.string(),
+        keySchema: PrimitiveSchemaValue.string({
+            minLength: undefined,
+            maxLength: undefined,
+        }),
         valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
     });
 }

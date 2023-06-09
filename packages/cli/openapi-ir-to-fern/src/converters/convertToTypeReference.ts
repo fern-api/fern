@@ -74,10 +74,42 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         boolean: () => "boolean",
         _unknown: () => "unknown",
     });
+    const docsPrefix = PrimitiveSchemaValue._visit<string[]>(primitiveSchema.schema, {
+        int: () => [],
+        int64: () => [],
+        float: () => [],
+        double: () => [],
+        string: (value) => {
+            const prefixes = [];
+            if (value.minLength != null && value.minLength === 1) {
+                prefixes.push("non-empty");
+            }
+            if (value.maxLength != null) {
+                prefixes.push(`less than ${value.maxLength} characters`);
+            }
+            return prefixes;
+        },
+        datetime: () => [],
+        date: () => [],
+        base64: () => [],
+        boolean: () => [],
+        _unknown: () => [],
+    });
+
+    const prefixMarkdown = docsPrefix.map((prefix) => "`" + prefix + "`").join(" ");
+
+    let docs = undefined;
+    if (primitiveSchema.description != null && docsPrefix.length > 0) {
+        docs = `${prefixMarkdown} ${primitiveSchema.description}`;
+    } else if (primitiveSchema.description != null) {
+        docs = `${primitiveSchema.description}`;
+    } else if (docsPrefix.length > 0) {
+        docs = `${prefixMarkdown}`;
+    }
     return {
         typeReference: {
             type: typeReference,
-            docs: primitiveSchema.description ?? undefined,
+            docs,
         },
         additionalTypeDeclarations: {},
     };

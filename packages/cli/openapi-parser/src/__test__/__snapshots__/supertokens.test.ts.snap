@@ -28,6 +28,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -43,6 +45,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -58,6 +62,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -99,6 +105,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "schema": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -168,6 +176,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -213,6 +223,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -228,6 +240,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -243,6 +257,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -284,6 +300,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "schema": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -296,6 +314,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "schema": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -385,6 +405,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -400,6 +422,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -415,6 +439,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -434,6 +460,8 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -484,6 +512,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                                     "value": {
                                       "description": undefined,
                                       "schema": {
+                                        "maxLength": undefined,
+                                        "minLength": undefined,
                                         "type": "string",
                                       },
                                       "type": "primitive",
@@ -591,6 +621,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -606,6 +638,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -621,6 +655,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -662,6 +698,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "schema": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -752,6 +790,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -767,6 +807,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -782,6 +824,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -823,6 +867,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "schema": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -941,6 +987,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -956,6 +1004,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -971,6 +1021,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1012,6 +1064,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "schema": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1024,6 +1078,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "schema": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1155,6 +1211,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1170,6 +1228,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1185,6 +1245,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1204,6 +1266,8 @@ exports[`open api parser supertokens parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1282,6 +1346,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                         "schema": {
                           "description": undefined,
                           "schema": {
+                            "maxLength": undefined,
+                            "minLength": undefined,
                             "type": "string",
                           },
                           "type": "primitive",
@@ -1297,6 +1363,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -1350,6 +1418,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1365,6 +1435,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1380,6 +1452,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1421,6 +1495,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "schema": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1436,6 +1512,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -1567,6 +1645,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1582,6 +1662,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1597,6 +1679,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1763,6 +1847,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1778,6 +1864,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1793,6 +1881,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1872,6 +1962,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -1946,6 +2038,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1961,6 +2055,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1976,6 +2072,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2294,6 +2392,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2309,6 +2409,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2324,6 +2426,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2697,6 +2801,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2712,6 +2818,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2727,6 +2835,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2826,6 +2936,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2841,6 +2953,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2856,6 +2970,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2878,6 +2994,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3156,6 +3274,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3171,6 +3291,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3186,6 +3308,8 @@ Passing the optional deviceId signifies a resend code flow.
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3319,6 +3443,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3334,6 +3460,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3349,6 +3477,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3371,6 +3501,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3544,6 +3676,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3559,6 +3693,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3574,6 +3710,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3749,6 +3887,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3764,6 +3904,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3779,6 +3921,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3935,6 +4079,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3950,6 +4096,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3965,6 +4113,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4106,6 +4256,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4121,6 +4273,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4136,6 +4290,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4309,6 +4465,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4324,6 +4482,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4339,6 +4499,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4494,6 +4656,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4509,6 +4673,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4524,6 +4690,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4663,6 +4831,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4678,6 +4848,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4693,6 +4865,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4715,6 +4889,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4864,6 +5040,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4879,6 +5057,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4894,6 +5074,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4965,6 +5147,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -5057,6 +5241,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5072,6 +5258,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5087,6 +5275,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5177,6 +5367,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5192,6 +5384,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5207,6 +5401,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5255,6 +5451,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -5394,6 +5592,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5409,6 +5609,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5424,6 +5626,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5595,6 +5799,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5610,6 +5816,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5625,6 +5833,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5647,6 +5857,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5812,6 +6024,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5827,6 +6041,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5842,6 +6058,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5861,6 +6079,8 @@ Note that there is an invisible character at the end of the path, this was to av
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5950,6 +6170,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5965,6 +6187,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5980,6 +6204,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6002,6 +6228,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6152,6 +6380,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6167,6 +6397,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6182,6 +6414,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6272,6 +6506,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6287,6 +6523,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6302,6 +6540,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6408,6 +6648,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6423,6 +6665,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6438,6 +6682,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6529,6 +6775,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6544,6 +6792,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6559,6 +6809,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6581,6 +6833,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6596,6 +6850,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6681,6 +6937,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6696,6 +6954,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6711,6 +6971,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6875,6 +7137,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6890,6 +7154,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6905,6 +7171,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6996,6 +7264,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7011,6 +7281,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7026,6 +7298,8 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7045,6 +7319,8 @@ Note that there is an invisible character at the end of the path, this was to av
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -7137,6 +7413,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7152,6 +7430,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7167,6 +7447,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7304,6 +7586,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7319,6 +7603,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7334,6 +7620,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7437,6 +7725,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7452,6 +7742,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7467,6 +7759,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7614,6 +7908,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7629,6 +7925,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7644,6 +7942,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7791,6 +8091,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7806,6 +8108,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7821,6 +8125,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7840,6 +8146,8 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -7928,6 +8236,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7943,6 +8253,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7958,6 +8270,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -7977,6 +8291,8 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -8084,6 +8400,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8099,6 +8417,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8114,6 +8434,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8161,6 +8483,8 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -8249,6 +8573,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8264,6 +8590,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8279,6 +8607,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8298,6 +8628,8 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -8350,6 +8682,8 @@ e.g.:
                             "value": {
                               "description": undefined,
                               "schema": {
+                                "maxLength": undefined,
+                                "minLength": undefined,
                                 "type": "string",
                               },
                               "type": "primitive",
@@ -8404,6 +8738,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8419,6 +8755,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8434,6 +8772,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8481,6 +8821,8 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -8572,6 +8914,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8587,6 +8931,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8602,6 +8948,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8621,6 +8969,8 @@ e.g.:
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -8667,6 +9017,8 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -8708,6 +9060,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8723,6 +9077,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8738,6 +9094,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8853,6 +9211,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8868,6 +9228,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8883,6 +9245,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8936,6 +9300,8 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -8977,6 +9343,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -8992,6 +9360,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9007,6 +9377,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9219,6 +9591,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9234,6 +9608,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9249,6 +9625,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9487,6 +9865,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9502,6 +9882,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9517,6 +9899,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9674,6 +10058,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9689,6 +10075,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9704,6 +10092,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9969,6 +10359,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9984,6 +10376,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -9999,6 +10393,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10293,6 +10689,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10308,6 +10706,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10323,6 +10723,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10345,6 +10747,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10430,6 +10834,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10445,6 +10851,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10460,6 +10868,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10633,6 +11043,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10648,6 +11060,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10663,6 +11077,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10790,6 +11206,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10805,6 +11223,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10820,6 +11240,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10940,6 +11362,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10955,6 +11379,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -10970,6 +11396,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11107,6 +11535,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -11221,6 +11651,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11236,6 +11668,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11251,6 +11685,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11378,6 +11814,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11393,6 +11831,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11408,6 +11848,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11530,6 +11972,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11545,6 +11989,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11560,6 +12006,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11591,6 +12039,8 @@ e.g.:
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -11607,6 +12057,8 @@ e.g.:
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -11674,6 +12126,8 @@ e.g.:
                                   "value": {
                                     "description": undefined,
                                     "schema": {
+                                      "maxLength": undefined,
+                                      "minLength": undefined,
                                       "type": "string",
                                     },
                                     "type": "primitive",
@@ -11690,6 +12144,8 @@ e.g.:
                                   "value": {
                                     "description": undefined,
                                     "schema": {
+                                      "maxLength": undefined,
+                                      "minLength": undefined,
                                       "type": "string",
                                     },
                                     "type": "primitive",
@@ -11736,6 +12192,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -11781,6 +12239,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11796,6 +12256,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11811,6 +12273,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -11848,6 +12312,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -11864,6 +12330,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -11880,6 +12348,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -11905,6 +12375,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -11921,6 +12393,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -11937,6 +12411,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -12009,6 +12485,8 @@ e.g.:
                                   "value": {
                                     "description": undefined,
                                     "schema": {
+                                      "maxLength": undefined,
+                                      "minLength": undefined,
                                       "type": "string",
                                     },
                                     "type": "primitive",
@@ -12025,6 +12503,8 @@ e.g.:
                                   "value": {
                                     "description": undefined,
                                     "schema": {
+                                      "maxLength": undefined,
+                                      "minLength": undefined,
                                       "type": "string",
                                     },
                                     "type": "primitive",
@@ -12071,6 +12551,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -12124,6 +12606,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12139,6 +12623,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12154,6 +12640,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12176,6 +12664,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12191,6 +12681,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12275,6 +12767,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12290,6 +12784,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12305,6 +12801,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12377,6 +12875,8 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -12393,6 +12893,8 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -12471,6 +12973,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12486,6 +12990,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12501,6 +13007,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12532,6 +13040,8 @@ e.g.:
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -12586,6 +13096,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -12631,6 +13143,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12646,6 +13160,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12661,6 +13177,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12683,6 +13201,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12751,6 +13271,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12766,6 +13288,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12781,6 +13305,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12812,6 +13338,8 @@ e.g.:
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -12828,6 +13356,8 @@ e.g.:
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -12874,6 +13404,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -12899,6 +13431,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -12944,6 +13478,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12959,6 +13495,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12974,6 +13512,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -12996,6 +13536,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13056,6 +13598,8 @@ e.g.:
                               "value": {
                                 "description": undefined,
                                 "schema": {
+                                  "maxLength": undefined,
+                                  "minLength": undefined,
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -13134,6 +13678,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13170,6 +13716,8 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -13211,6 +13759,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13226,6 +13776,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13248,6 +13800,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13291,6 +13845,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -13521,6 +14077,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13536,6 +14094,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13575,6 +14135,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -13591,6 +14153,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -13661,6 +14225,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13676,6 +14242,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13698,6 +14266,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13782,6 +14352,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13797,6 +14369,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13899,6 +14473,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13914,6 +14490,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13936,6 +14514,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -13951,6 +14531,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14009,6 +14591,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14039,6 +14623,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14054,6 +14640,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14231,6 +14819,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14246,6 +14836,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14349,6 +14941,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14364,6 +14958,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14417,6 +15013,8 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -14458,6 +15056,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14473,6 +15073,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14526,6 +15128,8 @@ e.g.:
                       "value": {
                         "description": undefined,
                         "schema": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
                           "type": "string",
                         },
                         "type": "primitive",
@@ -14543,6 +15147,8 @@ e.g.:
                     "value": {
                       "description": undefined,
                       "key": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "map",
@@ -14585,6 +15191,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14600,6 +15208,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14649,6 +15259,8 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "schema": {
+                              "maxLength": undefined,
+                              "minLength": undefined,
                               "type": "string",
                             },
                             "type": "primitive",
@@ -14693,6 +15305,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14708,6 +15322,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14739,6 +15355,8 @@ e.g.:
                     "value": {
                       "description": undefined,
                       "schema": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
                         "type": "string",
                       },
                       "type": "primitive",
@@ -14820,6 +15438,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14835,6 +15455,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -14979,6 +15601,8 @@ e.g.:
         "codeId": {
           "description": "Uniquely identifies a code",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15067,6 +15691,8 @@ e.g.:
         "createJWTPayload": {
           "description": "The payload of the JWT, should be a JSON object.",
           "key": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "map",
@@ -15077,6 +15703,8 @@ e.g.:
         "deviceId": {
           "description": "A random identifier that should be stored on the device that started the sign in process.",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15084,6 +15712,8 @@ e.g.:
         "email": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15148,6 +15778,8 @@ e.g.:
         "handle": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15183,6 +15815,8 @@ e.g.:
         "invalidJSON": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15227,6 +15861,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -15243,6 +15879,8 @@ e.g.:
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -15259,6 +15897,8 @@ e.g.:
                 "value": {
                   "description": "Unique identifier for the JWK",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -15278,6 +15918,8 @@ e.g.:
                   "value": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -15291,6 +15933,8 @@ e.g.:
         "jwksDomain": {
           "description": "This is used as the value for the issuer claim in the JWT payload.",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15305,6 +15949,8 @@ e.g.:
         "linkCode": {
           "description": "URL-safe string that can be used to authenticate the user, without the deviceId",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15312,6 +15958,8 @@ e.g.:
         "message": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15347,6 +15995,8 @@ e.g.:
         "paginationToken": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15354,6 +16004,8 @@ e.g.:
         "password": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15438,6 +16090,8 @@ e.g.:
         "phoneNumber": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15445,6 +16099,8 @@ e.g.:
         "preAuthSessionId": {
           "description": "A random identifier that can be used to identify the login attempt/device.",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15466,6 +16122,8 @@ e.g.:
         "role": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15617,6 +16275,8 @@ e.g.:
         "thirdPartyId": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15736,6 +16396,8 @@ e.g.:
         "thirdPartyUserId": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15757,6 +16419,8 @@ e.g.:
         "token": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -15973,6 +16637,8 @@ e.g.:
         "userDataInDatabase": {
           "description": "should be a JSON object (not a JSON literal nor an array)",
           "key": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "map",
@@ -15983,6 +16649,8 @@ e.g.:
         "userDataInJWT": {
           "description": "should be a JSON object (not a JSON literal nor an array)",
           "key": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "map",
@@ -15993,6 +16661,8 @@ e.g.:
         "userId": {
           "description": undefined,
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -16000,6 +16670,8 @@ e.g.:
         "userInputCode": {
           "description": "This can be used to authenticate the user when paired with the deviceId",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -16007,6 +16679,8 @@ e.g.:
         "userMetadata": {
           "description": "should be a JSON object (not a JSON literal nor an array)",
           "key": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "map",
@@ -16017,6 +16691,8 @@ e.g.:
         "userMetadataUpdate": {
           "description": "should be a JSON object (not a JSON literal nor an array)",
           "key": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "map",

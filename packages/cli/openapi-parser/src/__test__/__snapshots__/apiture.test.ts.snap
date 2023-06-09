@@ -155,6 +155,8 @@ Transfers support recurring schedules, such as repeating every week or every mon
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": 256,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -470,6 +472,8 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": 256,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -564,6 +568,8 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": 256,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -837,6 +843,8 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": 36,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -860,6 +868,8 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "schema": {
                 "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the financial institution.",
                 "schema": {
+                  "maxLength": 2,
+                  "minLength": 2,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -946,6 +956,8 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "schema": {
                 "description": undefined,
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -960,6 +972,8 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1057,6 +1071,8 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": 512,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1171,6 +1187,8 @@ This information provides hints to clients, allowing bank customers to select tr
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1186,6 +1204,8 @@ This information provides hints to clients, allowing bank customers to select tr
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1299,6 +1319,8 @@ The default response lists only recent transactions. Normally, this is transacti
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": 256,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1329,6 +1351,8 @@ The default response lists only recent transactions. Normally, this is transacti
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1539,6 +1563,8 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": 512,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -1668,6 +1694,8 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                 "value": {
                   "description": undefined,
                   "schema": {
+                    "maxLength": 256,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2221,6 +2249,8 @@ Note: This operation requires an identity challenge if the financial institution
                 "value": {
                   "description": "The opaque cursor that specifies the starting location of this page of items.",
                   "schema": {
+                    "maxLength": 256,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2258,6 +2288,8 @@ Note: This operation requires an identity challenge if the financial institution
                 "value": {
                   "description": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
                   "schema": {
+                    "maxLength": 8000,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2571,6 +2603,8 @@ Note: This operation requires an identity challenge if the financial institution
               "schema": {
                 "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
                 "schema": {
+                  "maxLength": 80,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2697,6 +2731,8 @@ Note: This operation requires an identity challenge if the financial institution
                 "value": {
                   "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
                   "schema": {
+                    "maxLength": 80,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -2838,6 +2874,8 @@ Note: This operation requires an identity challenge if the financial institution
               "schema": {
                 "description": "The full name of the joint owner.",
                 "schema": {
+                  "maxLength": 50,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2905,6 +2943,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "accountNickname": {
           "description": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
           "schema": {
+            "maxLength": 50,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -3005,6 +3045,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "accountRoutingNumber": {
           "description": "An account ABA routing and transit number.",
           "schema": {
+            "maxLength": 9,
+            "minLength": 9,
             "type": "string",
           },
           "type": "primitive",
@@ -3088,6 +3130,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
                   "schema": {
+                    "maxLength": 256,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3292,6 +3336,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
                   "schema": {
+                    "maxLength": 20,
+                    "minLength": 2,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3308,6 +3354,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
                   "schema": {
+                    "maxLength": 2,
+                    "minLength": 2,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3321,6 +3369,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
                 "schema": {
+                  "maxLength": 10,
+                  "minLength": 5,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3337,6 +3387,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
                 "schema": {
+                  "maxLength": 2,
+                  "minLength": 2,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3358,6 +3410,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The first line of the postal address. In the US, this typically includes the building number and street name.",
                 "schema": {
+                  "maxLength": 35,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3373,6 +3427,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
                   "schema": {
+                    "maxLength": 35,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3386,6 +3442,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The city/town/municipality of the address.",
                 "schema": {
+                  "maxLength": 20,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3398,6 +3456,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
                 "schema": {
+                  "maxLength": 2,
+                  "minLength": 2,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3409,6 +3469,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "amountRange": {
           "description": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -3430,6 +3492,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                   "description": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3447,6 +3511,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                   "description": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3481,6 +3547,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                   "description": "A human-readable explanation specific to this occurrence of the problem.
 ",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3498,6 +3566,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                   "description": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -3569,6 +3639,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
                   "key": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "map",
@@ -3613,6 +3685,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                   "value": {
                     "description": undefined,
                     "schema": {
+                      "maxLength": 40,
+                      "minLength": undefined,
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3713,6 +3787,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "challengePromptId": {
           "description": "The unique ID of a prompt (such as a security question) in a challenge factor.",
           "schema": {
+            "maxLength": 48,
+            "minLength": 1,
             "type": "string",
           },
           "type": "primitive",
@@ -3743,6 +3819,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The text prompt of this security question.",
                 "schema": {
+                  "maxLength": 50,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3780,6 +3858,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "challengeToken": {
           "description": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
           "schema": {
+            "maxLength": 255,
+            "minLength": 8,
             "type": "string",
           },
           "type": "primitive",
@@ -3795,6 +3875,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "creditOrDebitValue": {
           "description": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -3825,6 +3907,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3969,6 +4053,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "dateRange": {
           "description": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -4030,6 +4116,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
                   "schema": {
+                    "maxLength": 256,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4092,6 +4180,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "fullAccountNumber": {
           "description": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
           "schema": {
+            "maxLength": 32,
+            "minLength": 1,
             "type": "string",
           },
           "type": "primitive",
@@ -4231,6 +4321,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "institutionId": {
           "description": "The unique immutable identifier of a financial institution.",
           "schema": {
+            "maxLength": 9,
+            "minLength": 2,
             "type": "string",
           },
           "type": "primitive",
@@ -4405,6 +4497,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The invitee's first name.",
                 "schema": {
+                  "maxLength": 32,
+                  "minLength": 1,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4417,6 +4511,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The invitee's last name name.",
                 "schema": {
+                  "maxLength": 32,
+                  "minLength": 1,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4432,6 +4528,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
                   "schema": {
+                    "maxLength": 4,
+                    "minLength": 4,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4445,6 +4543,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
                 "schema": {
+                  "maxLength": 100,
+                  "minLength": 8,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4457,6 +4557,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The invitee's email address.",
                 "schema": {
+                  "maxLength": 80,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4484,6 +4586,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "maskedAccountNumber": {
           "description": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
           "schema": {
+            "maxLength": 5,
+            "minLength": 2,
             "type": "string",
           },
           "type": "primitive",
@@ -4491,6 +4595,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "monetaryValue": {
           "description": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -4592,6 +4698,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
                   "schema": {
+                    "maxLength": 80,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -4713,6 +4821,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "positiveIntegerRange": {
           "description": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
           "schema": {
+            "maxLength": undefined,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -4768,6 +4878,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The product's product code. Codes are unique to the financial institution.",
                 "schema": {
+                  "maxLength": 16,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4780,6 +4892,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "A human-readable label for this banking product.",
                 "schema": {
+                  "maxLength": 48,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4792,6 +4906,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "A human-readable description of this banking product.",
                 "schema": {
+                  "maxLength": 400,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4891,6 +5007,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "readOnlyTimestamp": {
           "description": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
           "schema": {
+            "maxLength": 30,
+            "minLength": 20,
             "type": "string",
           },
           "type": "primitive",
@@ -4950,6 +5068,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "resourceId": {
           "description": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
           "schema": {
+            "maxLength": 48,
+            "minLength": 6,
             "type": "string",
           },
           "type": "primitive",
@@ -4967,6 +5087,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The financial institution's name.",
                 "schema": {
+                  "maxLength": 35,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4992,6 +5114,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
                 "schema": {
+                  "maxLength": 36,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5016,6 +5140,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "timeZoneId": {
           "description": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
           "schema": {
+            "maxLength": 36,
+            "minLength": undefined,
             "type": "string",
           },
           "type": "primitive",
@@ -5036,6 +5162,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5052,6 +5180,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5113,6 +5243,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The unique ID of this transaction's category.",
                 "schema": {
+                  "maxLength": 32,
+                  "minLength": 1,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5163,6 +5295,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "transactionCategoryLabel": {
           "description": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
           "schema": {
+            "maxLength": 64,
+            "minLength": 1,
             "type": "string",
           },
           "type": "primitive",
@@ -5235,6 +5369,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The URL for downloading the image of the front of the check.",
                   "schema": {
+                    "maxLength": 400,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5251,6 +5387,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The URL for downloading the image of the front of the check.",
                   "schema": {
+                    "maxLength": 400,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5273,6 +5411,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "This transaction's unique identifier.",
                 "schema": {
+                  "maxLength": 128,
+                  "minLength": 6,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5311,6 +5451,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5326,6 +5468,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5342,6 +5486,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5404,6 +5550,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The user-settable transaction memo.",
                   "schema": {
+                    "maxLength": 128,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5420,6 +5568,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The transaction description assigned by the transaction cleansing service.",
                   "schema": {
+                    "maxLength": 128,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5521,6 +5671,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The merchant\\'s name.",
                   "schema": {
+                    "maxLength": 32,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5537,6 +5689,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The merchant's website URL.",
                   "schema": {
+                    "maxLength": 400,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5553,6 +5707,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
                   "schema": {
+                    "maxLength": 400,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5757,6 +5913,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
                   "schema": {
+                    "maxLength": 80,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5813,6 +5971,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "schema": {
                 "description": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5841,6 +6001,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5857,6 +6019,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -5993,6 +6157,8 @@ The response may include dates prior to requested the start date, as that is use
                 "value": {
                   "description": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6069,6 +6235,8 @@ The response may include dates prior to requested the start date, as that is use
                 "value": {
                   "description": "A customer-defined memo to describe the transfer.",
                   "schema": {
+                    "maxLength": 128,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6300,6 +6468,8 @@ The response may include dates prior to requested the start date, as that is use
                 "value": {
                   "description": "The date/time the transfer was processed.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6316,6 +6486,8 @@ The response may include dates prior to requested the start date, as that is use
                 "value": {
                   "description": "The full name of the banking customer who last updated the transfer.",
                   "schema": {
+                    "maxLength": 48,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6350,6 +6522,8 @@ The response may include dates prior to requested the start date, as that is use
                 "value": {
                   "description": "The effective date the transfer is scheduled to debit the source account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6366,6 +6540,8 @@ The response may include dates prior to requested the start date, as that is use
                 "value": {
                   "description": "The effective the transfer is scheduled to credit the target account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6476,6 +6652,8 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
                 "value": {
                   "description": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6522,6 +6700,8 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
                 "value": {
                   "description": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
                   "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
                     "type": "string",
                   },
                   "type": "primitive",
@@ -6627,6 +6807,8 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "schema": {
                 "description": "The scheduled date of the calculated calendar recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -6639,6 +6821,8 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "schema": {
                 "description": "The effective date of the recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is \`credit\` and adjusted to after the scheduled date when the transfer direction is \`debit\`.",
                 "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
                   "type": "string",
                 },
                 "type": "primitive",
@@ -6926,6 +7110,8 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
                 "value": {
                   "description": "The clearing code used to identify the financial institution for select countries.",
                   "schema": {
+                    "maxLength": 12,
+                    "minLength": 3,
                     "type": "string",
                   },
                   "type": "primitive",

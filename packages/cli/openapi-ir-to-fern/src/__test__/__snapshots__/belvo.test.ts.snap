@@ -1456,7 +1456,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "identifier": {
-              "docs": "The document number of the customer's ID.
+              "docs": "\`non-empty\` \`less than 25 characters\` The document number of the customer's ID.
 ",
               "type": "string",
             },
@@ -1465,7 +1465,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypeOfpi",
             },
             "name": {
-              "docs": "The full name of the customer you want to create.
+              "docs": "\`less than 200 characters\` The full name of the customer you want to create.
 ",
               "type": "string",
             },
@@ -1498,7 +1498,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "identifier": {
-              "docs": "The document number of the customer's ID.
+              "docs": "\`non-empty\` \`less than 25 characters\` The document number of the customer's ID.
 ",
               "type": "string",
             },
@@ -1507,7 +1507,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypePse",
             },
             "name": {
-              "docs": "The full name of the customer you want to create.
+              "docs": "\`less than 200 characters\` The full name of the customer you want to create.
 ",
               "type": "string",
             },
@@ -1804,7 +1804,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypeOfpi",
             },
             "name": {
-              "docs": "The full name of the customer.
+              "docs": "\`less than 200 characters\` The full name of the customer.
 ",
               "type": "string",
             },
@@ -1899,7 +1899,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypePse",
             },
             "name": {
-              "docs": "The full name of the customer.
+              "docs": "\`less than 200 characters\` The full name of the customer.
 ",
               "type": "string",
             },
