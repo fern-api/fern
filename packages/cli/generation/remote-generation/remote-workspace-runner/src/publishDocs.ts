@@ -95,7 +95,9 @@ export async function publishDocs({
         })
     );
     if (registerDocsResponse.ok) {
-        context.logger.info(chalk.green("Published docs to " + domain));
+        context.logger.info(
+            chalk.green("Published docs to " + domain.startsWith("https://") ? domain : `https://${domain}`)
+        );
     } else {
         registerDocsResponse.error._visit<never>({
             unauthorizedError: () => {

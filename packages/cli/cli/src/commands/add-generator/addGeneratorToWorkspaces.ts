@@ -8,7 +8,7 @@ import yaml from "js-yaml";
 import { CliContext } from "../../cli-context/CliContext";
 
 export async function addGeneratorToWorkspaces({
-    project: { workspaces },
+    project: { workspaces, config },
     generatorName,
     groupName,
     cliContext,
@@ -22,7 +22,12 @@ export async function addGeneratorToWorkspaces({
         workspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (generatorName === "docs") {
-                    await addDocsToWorkspace({ workspace, groupName, context });
+                    await addDocsToWorkspace({
+                        organization: config.organization,
+                        workspace,
+                        groupName,
+                        context,
+                    });
                     return;
                 }
 

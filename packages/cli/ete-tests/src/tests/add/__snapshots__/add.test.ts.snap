@@ -246,7 +246,7 @@ groups:
   docs-group:
     generators: []
     docs:
-      domain: ''
+      domain: fern.dev.docs.buildwithfern.com
 ",
             "name": "generators.yml",
             "type": "file",

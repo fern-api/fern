@@ -16,10 +16,12 @@ const DEFAULT_DOCS_CONFIG: RawDocs.DocsConfiguration = {
 };
 
 export async function addDocsToWorkspace({
+    organization,
     workspace,
     groupName,
     context,
 }: {
+    organization: string;
     workspace: Workspace;
     groupName: string | undefined;
     context: TaskContext;
@@ -37,7 +39,7 @@ export async function addDocsToWorkspace({
                 context.failAndThrow(`Group ${groupName} already has docs configured.`);
             }
             group.docs = {
-                domain: "",
+                domain: `${organization}.${process.env.DOCS_DOMAIN_SUFFIX}`,
             };
         },
     });
