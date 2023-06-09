@@ -269,23 +269,51 @@ jobs:
             yarn generate-json-schema
             git --no-pager diff --exit-code
 
+  deploy-docs-preview:
+    docker:
+      - image: cimg/node:lts
+    resource_class: large
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Deploy docs (dev)
+          command: |
+            # Install Vercel CLI
+            sudo npm install --global vercel@latest
+
+            # Pull Vercel Environment Information
+            vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
+
+            # Build Project Artifacts
+            vercel build --token=${VERCEL_TOKEN}
+
+            # Deploy Project Artifacts to Vercel
+            vercel deploy --prebuilt --token=${VERCEL_TOKEN}
+
   deploy-docs-dev:
     docker:
       - image: cimg/node:lts
     resource_class: large
     steps:
       - checkout
-      - run:
-          name: Set nodeLinker to node-modules
-          command: |
-            # without this, multiple versions of react-query are included
-            # in the bundle
-            yarn config set nodeLinker node-modules
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Publish docs (dev)
-          command: yarn workspace @fern-api/fe-bundle deploy:staging
+          name: Deploy docs (dev)
+          command: |
+            # Install Vercel CLI
+            sudo npm install --global vercel@latest
+
+            # Pull Vercel Environment Information
+            vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
+
+            # Build Project Artifacts
+            vercel build --prod --token=${VERCEL_TOKEN}
+
+            # Deploy Project Artifacts to Vercel
+            vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
   deploy-docs:
     docker:
@@ -293,17 +321,22 @@ jobs:
     resource_class: large
     steps:
       - checkout
-      - run:
-          name: Set nodeLinker to node-modules
-          command: |
-            # without this, multiple versions of react-query are included
-            # in the bundle
-            yarn config set nodeLinker node-modules
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Publish docs (dev)
-          command: yarn workspace @fern-api/fe-bundle deploy:production
+          name: Deploy (prod)
+          command: |
+            # Install Vercel CLI
+            sudo npm install --global vercel@latest
+
+            # Pull Vercel Environment Information
+            vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
+
+            # Build Project Artifacts
+            vercel build --prod --token=${VERCEL_TOKEN}
+
+            # Deploy Project Artifacts to Vercel
+            vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
 workflows:
   version: 2
@@ -433,6 +466,10 @@ workflows:
           context:
             - fern-tokens
 
+      - deploy-docs-preview:
+          context:
+            - vercel-dev
+
       - deploy-docs-dev:
           filters:
             branches:
@@ -445,8 +482,7 @@ workflows:
             - test
             - ete-tests
           context:
-            - aws
-            - github
+            - vercel-dev
 
       - deploy-docs:
           filters:
@@ -465,8 +501,7 @@ workflows:
             - live-test-dev
             - live-test
           context:
-            - aws
-            - github
+            - vercel-dev
 
       - check-release-is-allowed:
           filters:
