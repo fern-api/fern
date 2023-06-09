@@ -97,7 +97,7 @@ Perform a search against a document index.
                     "type": "optional<SearchRequestOptionsRequest>",
                   },
                   "query": {
-                    "docs": "The query to search for.",
+                    "docs": "\`non-empty\` The query to search for.",
                     "type": "string",
                   },
                 },
@@ -855,7 +855,7 @@ Upload a document to be indexed and used for search.
                     "type": "optional<list<string>>",
                   },
                   "label": {
-                    "docs": "A human-friendly name for this document. Typically the filename.",
+                    "docs": "\`non-empty\` A human-friendly name for this document. Typically the filename.",
                     "type": "string",
                   },
                 },

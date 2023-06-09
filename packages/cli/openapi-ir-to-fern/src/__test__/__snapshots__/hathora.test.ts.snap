@@ -375,7 +375,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": "\`less than 100 characters\`",
+              "docs": "\`non-empty\` \`less than 100 characters\`",
               "type": "string",
             },
             "value": {

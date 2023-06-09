@@ -1456,7 +1456,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "identifier": {
-              "docs": "\`less than 25 characters\` The document number of the customer's ID.
+              "docs": "\`non-empty\` \`less than 25 characters\` The document number of the customer's ID.
 ",
               "type": "string",
             },
@@ -1498,7 +1498,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "identifier": {
-              "docs": "\`less than 25 characters\` The document number of the customer's ID.
+              "docs": "\`non-empty\` \`less than 25 characters\` The document number of the customer's ID.
 ",
               "type": "string",
             },

@@ -1049,11 +1049,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "string",
             },
             "firstName": {
-              "docs": "\`less than 32 characters\` The invitee's first name.",
+              "docs": "\`non-empty\` \`less than 32 characters\` The invitee's first name.",
               "type": "string",
             },
             "lastName": {
-              "docs": "\`less than 32 characters\` The invitee's last name name.",
+              "docs": "\`non-empty\` \`less than 32 characters\` The invitee's last name name.",
               "type": "string",
             },
             "sharedSecret": {
@@ -1277,7 +1277,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "The transaction categorization.",
           "properties": {
             "id": {
-              "docs": "\`less than 32 characters\` The unique ID of this transaction's category.",
+              "docs": "\`non-empty\` \`less than 32 characters\` The unique ID of this transaction's category.",
               "type": "string",
             },
             "label": {
@@ -2199,7 +2199,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "string",
         },
         "challengePromptId": {
-          "docs": "\`less than 48 characters\` The unique ID of a prompt (such as a security question) in a challenge factor.",
+          "docs": "\`non-empty\` \`less than 48 characters\` The unique ID of a prompt (such as a security question) in a challenge factor.",
           "type": "string",
         },
         "challengeToken": {
@@ -2215,7 +2215,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "string",
         },
         "fullAccountNumber": {
-          "docs": "\`less than 32 characters\` A full account number. This is the number that the customer uses to reference the account within the financial institution.",
+          "docs": "\`non-empty\` \`less than 32 characters\` A full account number. This is the number that the customer uses to reference the account within the financial institution.",
           "type": "string",
         },
         "institutionId": {
@@ -2247,7 +2247,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "string",
         },
         "transactionCategoryLabel": {
-          "docs": "\`less than 64 characters\` The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
+          "docs": "\`non-empty\` \`less than 64 characters\` The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
           "type": "string",
         },
       },

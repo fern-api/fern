@@ -81,7 +81,7 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         double: () => [],
         string: (value) => {
             const prefixes = [];
-            if (value.minLength != null && value.minLength === 0) {
+            if (value.minLength != null && value.minLength === 1) {
                 prefixes.push("non-empty");
             }
             if (value.maxLength != null) {
@@ -96,7 +96,7 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         _unknown: () => [],
     });
 
-    const prefixMarkdown = docsPrefix.map((prefix) => `\`${prefix}\``).join(" ");
+    const prefixMarkdown = docsPrefix.map((prefix) => "`" + prefix + "`").join(" ");
 
     let docs = undefined;
     if (primitiveSchema.description != null && docsPrefix.length > 0) {
