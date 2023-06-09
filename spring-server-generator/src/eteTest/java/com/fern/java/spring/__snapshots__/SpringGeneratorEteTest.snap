@@ -114,9 +114,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping(
-    path = "/auth",
-    consumes = "application/json",
-    produces = "application/json"
+    path = "/auth"
 )
 public interface AuthService {
   @GetMapping("")
@@ -140,15 +138,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping(
-    path = "/posts",
-    consumes = "application/json",
-    produces = "application/json"
+    path = "/posts"
 )
 public interface BlogService {
-  @PostMapping("/create")
+  @PostMapping(
+      value = "/create",
+      consumes = "application/json"
+  )
   void createPost(@RequestBody CreatePostRequest body);
 
-  @GetMapping("/{postId}")
+  @GetMapping(
+      value = "/{postId}",
+      produces = "application/json"
+  )
   BlogPost getPost(@PathVariable("postId") PostId postId) throws PostNotFoundError;
 }
 
@@ -1338,12 +1340,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping(
-    path = "/dummy",
-    consumes = "application/json",
-    produces = "application/json"
+    path = "/dummy"
 )
 public interface DummyServiceService {
-  @PostMapping("")
+  @PostMapping(
+      value = "",
+      consumes = "application/json"
+  )
   void getDummy(@RequestBody DummyId body);
 
   @GetMapping("/health")

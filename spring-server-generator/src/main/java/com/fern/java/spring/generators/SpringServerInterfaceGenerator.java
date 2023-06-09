@@ -87,8 +87,6 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(AnnotationSpec.builder(RequestMapping.class)
                         .addMember("path", "$S", basePath.isEmpty() ? "/" : basePath)
-                        .addMember("consumes", "$S", "application/json")
-                        .addMember("produces", "$S", "application/json")
                         .build());
         Map<EndpointName, MethodSpec> endpointToMethodSpec = new LinkedHashMap<>();
         httpService.getEndpoints().forEach(httpEndpoint -> {

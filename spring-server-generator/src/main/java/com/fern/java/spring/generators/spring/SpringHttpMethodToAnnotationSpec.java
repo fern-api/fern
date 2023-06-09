@@ -19,6 +19,7 @@ import com.fern.irV12.model.http.HttpEndpoint;
 import com.fern.irV12.model.http.HttpMethod;
 import com.fern.java.utils.HttpPathUtils;
 import com.squareup.javapoet.AnnotationSpec;
+import java.util.Optional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -28,48 +29,52 @@ import org.springframework.web.bind.annotation.PutMapping;
 public final class SpringHttpMethodToAnnotationSpec implements HttpMethod.Visitor<AnnotationSpec> {
 
     private final String path;
+    private final Optional<String> consumes;
+    private final Optional<String> produces;
 
     public SpringHttpMethodToAnnotationSpec(HttpEndpoint httpEndpoint) {
         this.path = HttpPathUtils.getPathWithCurlyBracedPathParams(httpEndpoint.getPath());
+        this.consumes = httpEndpoint.getRequestBody().map(_body -> "application/json");
+        this.produces = httpEndpoint.getResponse().map(_body -> "application/json");
     }
 
     @Override
     public AnnotationSpec visitGet() {
-        return AnnotationSpec.builder(GetMapping.class)
-                .addMember("value", "$S", path)
-                .build();
+        return build(AnnotationSpec.builder(GetMapping.class).addMember("value", "$S", path));
     }
 
     @Override
     public AnnotationSpec visitPost() {
-        return AnnotationSpec.builder(PostMapping.class)
-                .addMember("value", "$S", path)
-                .build();
+        return build(AnnotationSpec.builder(PostMapping.class).addMember("value", "$S", path));
     }
 
     @Override
     public AnnotationSpec visitPut() {
-        return AnnotationSpec.builder(PutMapping.class)
-                .addMember("value", "$S", path)
-                .build();
+        return build(AnnotationSpec.builder(PutMapping.class).addMember("value", "$S", path));
     }
 
     @Override
     public AnnotationSpec visitDelete() {
-        return AnnotationSpec.builder(DeleteMapping.class)
-                .addMember("value", "$S", path)
-                .build();
+        return build(AnnotationSpec.builder(DeleteMapping.class).addMember("value", "$S", path));
     }
 
     @Override
     public AnnotationSpec visitPatch() {
-        return AnnotationSpec.builder(PatchMapping.class)
-                .addMember("value", "$S", path)
-                .build();
+        return build(AnnotationSpec.builder(PatchMapping.class).addMember("value", "$S", path));
     }
 
     @Override
     public AnnotationSpec visitUnknown(String unknownType) {
         throw new RuntimeException("Encountered unknown HttpMethod: " + unknownType);
+    }
+
+    private AnnotationSpec build(AnnotationSpec.Builder annotationSpecBuilder) {
+        if (produces.isPresent()) {
+            annotationSpecBuilder.addMember("produces", "$S", produces.get());
+        }
+        if (consumes.isPresent()) {
+            annotationSpecBuilder.addMember("consumes", "$S", consumes.get());
+        }
+        return annotationSpecBuilder.build();
     }
 }
