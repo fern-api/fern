@@ -284,13 +284,8 @@ jobs:
       - node/install-packages:
           pkg-manager: yarn-berry
       - run:
-          name: Deploy
+          name: Deploy (dev)
           command: |
-            cd packages/ui/fe-bundle
-
-            # Build
-            yarn build --mode staging
-
             # Install Vercel CLI
             sudo npm install --global vercel@latest
 
