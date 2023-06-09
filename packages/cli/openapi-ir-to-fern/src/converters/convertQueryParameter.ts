@@ -49,9 +49,11 @@ function getQueryParameterTypeReference({
 
     if (schema.type === "reference") {
         const resolvedSchema = schemas[schema.schema];
+
         if (resolvedSchema == null) {
             throw new Error(`Failed to resolve schema=${schema.schema}`);
         }
+
         if (resolvedSchema.type === "array") {
             return {
                 value: convertToTypeReference({
@@ -64,6 +66,15 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true,
             };
+        } else if (resolvedSchema.type === "oneOf") {
+            // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
+            for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
+                return getQueryParameterTypeReference({
+                    schema,
+                    isPackageYml,
+                    schemas,
+                });
+            }
         }
     }
 
