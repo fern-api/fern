@@ -1,6 +1,6 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { MaybeLoadedDocs } from "./MaybeLoadedDocs";
-import { useCurrentUrl } from "./useCurrentDomain";
+import { useCurrentUrl } from "./useCurrentUrl";
 
 export const Docs: React.FC = () => {
     const url = useCurrentUrl();

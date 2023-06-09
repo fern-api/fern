@@ -11,11 +11,10 @@ const CSS_VARIABLES = {
     ACCENT_PRIMARY: "--accent-primary",
 } as const;
 
-// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const root = document.querySelector<HTMLElement>(":root")!;
-
 export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefinition): void {
     useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const root = document.querySelector<HTMLElement>(":root")!;
         const accentPrimary = docsDefinition.config.colors?.accentPrimary ?? DEFAULT_ACCENT_PRIMARY;
         root.style.setProperty(
             CSS_VARIABLES.ACCENT_PRIMARY,
