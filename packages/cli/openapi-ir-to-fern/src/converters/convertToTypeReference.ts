@@ -74,29 +74,36 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         boolean: () => "boolean",
         _unknown: () => "unknown",
     });
-    const docsPrefix = PrimitiveSchemaValue._visit<string | undefined>(primitiveSchema.schema, {
-        int: () => undefined,
-        int64: () => undefined,
-        float: () => undefined,
-        double: () => undefined,
+    const docsPrefix = PrimitiveSchemaValue._visit<string[]>(primitiveSchema.schema, {
+        int: () => [],
+        int64: () => [],
+        float: () => [],
+        double: () => [],
         string: (value) => {
-            let prefix = "";
+            const prefixes = [];
             if (value.minLength != null && value.minLength === 0) {
-                prefix += "`non-empty` ";
+                prefixes.push("non-empty");
             }
             if (value.maxLength != null) {
-                prefix += prefix += "`less than " + `${value.maxLength} characters` + "` ";
+                prefixes.push(`less than ${value.maxLength} characters`);
             }
-            return prefix;
+            return prefixes;
         },
-        datetime: () => undefined,
-        date: () => undefined,
-        base64: () => undefined,
-        boolean: () => undefined,
-        _unknown: () => undefined,
+        datetime: () => [],
+        date: () => [],
+        base64: () => [],
+        boolean: () => [],
+        _unknown: () => [],
     });
 
-    const docs = primitiveSchema.description == null ? docsPrefix : docsPrefix + primitiveSchema.description;
+    const prefixMarkdown = docsPrefix.map((prefix) => `\`${prefix}\``).join(" ");
+
+    let docs = undefined;
+    if (primitiveSchema.description != null) {
+        docs = `${prefixMarkdown} ${primitiveSchema.description}`;
+    } else if (docsPrefix.length > 0) {
+        docs = `${prefixMarkdown}`;
+    }
     return {
         typeReference: {
             type: typeReference,

@@ -44,11 +44,11 @@ exports[`open api parser devrev simple 1`] = `
           "docs": "The response to getting an artifact's download URL.",
           "properties": {
             "expires_at": {
-              "docs": "The expiration timestamp of the URL.",
+              "docs": " The expiration timestamp of the URL.",
               "type": "optional<string>",
             },
             "url": {
-              "docs": "The artifact's download URL.",
+              "docs": " The artifact's download URL.",
               "type": "string",
             },
           },
@@ -61,11 +61,11 @@ exports[`open api parser devrev simple 1`] = `
               "type": "list<ArtifactsPrepareResponseFormData>",
             },
             "id": {
-              "docs": "The generated artifact's ID.",
+              "docs": " The generated artifact's ID.",
               "type": "string",
             },
             "url": {
-              "docs": "The URL that the file's data should be uploaded to.",
+              "docs": " The URL that the file's data should be uploaded to.",
               "type": "string",
             },
           },
@@ -74,11 +74,11 @@ exports[`open api parser devrev simple 1`] = `
           "docs": undefined,
           "properties": {
             "key": {
-              "docs": "Key of the form field.",
+              "docs": " Key of the form field.",
               "type": "string",
             },
             "value": {
-              "docs": "Value corresponding to the key.",
+              "docs": " Value corresponding to the key.",
               "type": "string",
             },
           },
@@ -91,15 +91,15 @@ exports[`open api parser devrev simple 1`] = `
               "type": "optional<UserSummary>",
             },
             "created_date": {
-              "docs": "Timestamp when the object was created.",
+              "docs": " Timestamp when the object was created.",
               "type": "optional<string>",
             },
             "display_id": {
-              "docs": "Human-readable object ID unique to the Dev organization.",
+              "docs": " Human-readable object ID unique to the Dev organization.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": "Globally unique object ID.",
+              "docs": " Globally unique object ID.",
               "type": "string",
             },
             "modified_by": {
@@ -107,7 +107,7 @@ exports[`open api parser devrev simple 1`] = `
               "type": "optional<UserSummary>",
             },
             "modified_date": {
-              "docs": "Timestamp when the object was last modified.",
+              "docs": " Timestamp when the object was last modified.",
               "type": "optional<string>",
             },
           },
@@ -116,11 +116,11 @@ exports[`open api parser devrev simple 1`] = `
           "docs": undefined,
           "properties": {
             "display_id": {
-              "docs": "Human-readable object ID unique to the Dev organization.",
+              "docs": " Human-readable object ID unique to the Dev organization.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": "Globally unique object ID.",
+              "docs": " Globally unique object ID.",
               "type": "string",
             },
           },
@@ -143,7 +143,7 @@ login screen as a login option.
               "type": "optional<boolean>",
             },
             "id": {
-              "docs": "ID of the authentication connection.",
+              "docs": " ID of the authentication connection.",
               "type": "string",
             },
           },
@@ -180,15 +180,15 @@ authentication connection.
 ",
           "properties": {
             "client_id": {
-              "docs": "Client ID for the Azure authentication connection.",
+              "docs": " Client ID for the Azure authentication connection.",
               "type": "optional<string>",
             },
             "client_secret": {
-              "docs": "Client secret for the Azure authentication connection.",
+              "docs": " Client secret for the Azure authentication connection.",
               "type": "optional<string>",
             },
             "domain": {
-              "docs": "Domain URL of the Azure authentication connection.",
+              "docs": " Domain URL of the Azure authentication connection.",
               "type": "optional<string>",
             },
           },
@@ -199,16 +199,16 @@ authentication connection.
 ",
           "properties": {
             "client_id": {
-              "docs": "Client ID for the Google Apps authentication connection.",
+              "docs": " Client ID for the Google Apps authentication connection.",
               "type": "optional<string>",
             },
             "client_secret": {
-              "docs": "Client secret for the Google Apps authentication connection.
+              "docs": " Client secret for the Google Apps authentication connection.
 ",
               "type": "optional<string>",
             },
             "tenant_domain": {
-              "docs": "Tenant domain URL of the Google Apps authentication connection.
+              "docs": " Tenant domain URL of the Google Apps authentication connection.
 ",
               "type": "optional<string>",
             },
@@ -220,15 +220,15 @@ authentication connection.
 ",
           "properties": {
             "client_id": {
-              "docs": "Client ID for the OIDC authentication connection.",
+              "docs": " Client ID for the OIDC authentication connection.",
               "type": "optional<string>",
             },
             "client_secret": {
-              "docs": "Client secret for the OIDC authentication connection.",
+              "docs": " Client secret for the OIDC authentication connection.",
               "type": "optional<string>",
             },
             "issuer": {
-              "docs": "Issuer URL of the OIDC authentication connection.",
+              "docs": " Issuer URL of the OIDC authentication connection.",
               "type": "optional<string>",
             },
           },
@@ -239,11 +239,11 @@ authentication connection.
 ",
           "properties": {
             "sign_in_endpoint": {
-              "docs": "Sign In endpoint for the SAML authentication connection.",
+              "docs": " Sign In endpoint for the SAML authentication connection.",
               "type": "optional<string>",
             },
             "signing_cert": {
-              "docs": "Signing certificate for the SAML authentication connection.
+              "docs": " Signing certificate for the SAML authentication connection.
 ",
               "type": "optional<string>",
             },
@@ -303,17 +303,17 @@ for each authentication connection will depend on the type value.
           ],
           "properties": {
             "client_id": {
-              "docs": "An identifier that represents the application that requested the
+              "docs": " An identifier that represents the application that requested the
 token. Only applicable for application access tokens.
 ",
               "type": "optional<string>",
             },
             "expires_at": {
-              "docs": "The time at which the token expires.",
+              "docs": " The time at which the token expires.",
               "type": "optional<string>",
             },
             "issued_at": {
-              "docs": "The time at which the token was issued.",
+              "docs": " The time at which the token was issued.",
               "type": "optional<string>",
             },
             "requested_token_type": {
@@ -329,11 +329,11 @@ token. Only applicable for application access tokens.
               "type": "optional<AuthTokenStatus>",
             },
             "subject": {
-              "docs": "The subject of the token.",
+              "docs": " The subject of the token.",
               "type": "optional<string>",
             },
             "token_hint": {
-              "docs": "A hint that identifies the token.",
+              "docs": " A hint that identifies the token.",
               "type": "optional<string>",
             },
           },
@@ -480,30 +480,30 @@ requested token type.
 ",
           "properties": {
             "access_token": {
-              "docs": "The issued JSON Web Token (JWT) corresponding to the requested
+              "docs": " The issued JSON Web Token (JWT) corresponding to the requested
 token type.
 ",
               "type": "string",
             },
             "client_id": {
-              "docs": "An identifier that represents the application which is requesting
+              "docs": " An identifier that represents the application which is requesting
 the token. Only present in a response corresponding to an
 application access token (AAT).
 ",
               "type": "optional<string>",
             },
             "expires_in": {
-              "docs": "undefinedThe validity lifetime of the token specified in seconds since Unix
+              "docs": " The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
               "type": "integer",
             },
             "refresh_token": {
-              "docs": "A token to refresh the issued token.",
+              "docs": " A token to refresh the issued token.",
               "type": "optional<string>",
             },
             "scope": {
-              "docs": "The scopes associated with the issued token. A space-delimited list
+              "docs": " The scopes associated with the issued token. A space-delimited list
 of values in which the order of values does not matter.
 ",
               "type": "optional<string>",
@@ -536,11 +536,11 @@ of values in which the order of values does not matter.
           "docs": "Carries Rev org info.",
           "properties": {
             "display_name": {
-              "docs": "The display name of the Rev org.",
+              "docs": " The display name of the Rev org.",
               "type": "optional<string>",
             },
             "domain": {
-              "docs": "The domain of the Rev org.",
+              "docs": " The domain of the Rev org.",
               "type": "optional<string>",
             },
           },
@@ -551,7 +551,7 @@ issue a Rev session token.
 ",
           "properties": {
             "org_ref": {
-              "docs": "An identifier which uniquely identifies a Rev org.",
+              "docs": " An identifier which uniquely identifies a Rev org.",
               "type": "optional<string>",
             },
             "org_traits": {
@@ -559,11 +559,11 @@ issue a Rev session token.
               "type": "optional<AuthTokensOrgTraits>",
             },
             "rev_user_id": {
-              "docs": "The unique ID of the Rev user.",
+              "docs": " The unique ID of the Rev user.",
               "type": "optional<string>",
             },
             "user_ref": {
-              "docs": "An identifier which uniquely identifies a Rev user.",
+              "docs": " An identifier which uniquely identifies a Rev user.",
               "type": "string",
             },
             "user_traits": {
@@ -585,15 +585,15 @@ issue a Rev session token.
           "docs": "Carries Rev user info.",
           "properties": {
             "display_name": {
-              "docs": "The display name of the Rev user.",
+              "docs": " The display name of the Rev user.",
               "type": "optional<string>",
             },
             "email": {
-              "docs": "The email address of the Rev user.",
+              "docs": " The email address of the Rev user.",
               "type": "optional<string>",
             },
             "full_name": {
-              "docs": "The full name of the Rev user.",
+              "docs": " The full name of the Rev user.",
               "type": "optional<string>",
             },
           },
@@ -712,7 +712,7 @@ it would appear on the login button as 'Log in to abclogin'.
               "type": "optional<string>",
             },
             "id": {
-              "docs": "ID of the authentication connection which is to be updated.
+              "docs": " ID of the authentication connection which is to be updated.
 ",
               "type": "string",
             },
@@ -812,13 +812,13 @@ connection.
               "type": "list<DevUser>",
             },
             "next_cursor": {
-              "docs": "The cursor used to iterate subsequent results in accordance to the
+              "docs": " The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
               "type": "optional<string>",
             },
             "prev_cursor": {
-              "docs": "The cursor used to iterate preceding results in accordance to the
+              "docs": " The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
               "type": "optional<string>",
@@ -842,7 +842,7 @@ sort order. If not set, then no prior elements exist.
           ],
           "properties": {
             "target_close_date": {
-              "docs": "Timestamp when the enhancement is expected to be closed.",
+              "docs": " Timestamp when the enhancement is expected to be closed.",
               "type": "optional<string>",
             },
           },
@@ -871,11 +871,11 @@ sort order. If not set, then no prior elements exist.
               "type": "list<string>",
             },
             "field_name": {
-              "docs": "The field whose enum value is invalid.",
+              "docs": " The field whose enum value is invalid.",
               "type": "string",
             },
             "value": {
-              "docs": "The value that was received.",
+              "docs": " The value that was received.",
               "type": "string",
             },
           },
@@ -884,7 +884,7 @@ sort order. If not set, then no prior elements exist.
           "docs": undefined,
           "properties": {
             "field_name": {
-              "docs": "The missing field's name.",
+              "docs": " The missing field's name.",
               "type": "string",
             },
           },
@@ -923,11 +923,11 @@ sort order. If not set, then no prior elements exist.
           "docs": undefined,
           "properties": {
             "field_name": {
-              "docs": "The field whose value is not permitted.",
+              "docs": " The field whose value is not permitted.",
               "type": "string",
             },
             "reason": {
-              "docs": "The reason the value isn't permitted.",
+              "docs": " The reason the value isn't permitted.",
               "type": "optional<string>",
             },
           },
@@ -936,7 +936,7 @@ sort order. If not set, then no prior elements exist.
           "docs": undefined,
           "properties": {
             "message": {
-              "docs": "The message associated with the error.",
+              "docs": " The message associated with the error.",
               "type": "optional<string>",
             },
           },
@@ -970,7 +970,7 @@ sort order. If not set, then no prior elements exist.
           ],
           "properties": {
             "reference_id": {
-              "docs": "A unique ID that's generated for the error that can be used for
+              "docs": " A unique ID that's generated for the error that can be used for
 inquiry.
 ",
               "type": "optional<string>",
@@ -1042,7 +1042,7 @@ inquiry.
           ],
           "properties": {
             "retry_after": {
-              "docs": "undefinedThe number of seconds after which the client should retry.
+              "docs": " The number of seconds after which the client should retry.
 ",
               "type": "optional<integer>",
             },
@@ -1097,7 +1097,7 @@ inquiry.
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": "The ID of the part that was deleted.",
+              "docs": " The ID of the part that was deleted.",
               "type": "string",
             },
           },
@@ -1124,7 +1124,7 @@ inquiry.
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": "The ID of the Rev organization that was deleted.",
+              "docs": " The ID of the Rev organization that was deleted.",
               "type": "string",
             },
           },
@@ -1151,7 +1151,7 @@ inquiry.
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": "The ID of the tag that was deleted.",
+              "docs": " The ID of the tag that was deleted.",
               "type": "string",
             },
           },
@@ -1178,7 +1178,7 @@ inquiry.
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": "The ID of the timeline entry that was deleted.",
+              "docs": " The ID of the timeline entry that was deleted.",
               "type": "string",
             },
           },
@@ -1205,7 +1205,7 @@ inquiry.
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": "The ID of the webhook that was deleted.",
+              "docs": " The ID of the webhook that was deleted.",
               "type": "string",
             },
           },
@@ -1232,7 +1232,7 @@ inquiry.
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": "The ID of the work that was deleted.",
+              "docs": " The ID of the work that was deleted.",
               "type": "string",
             },
           },
@@ -1322,7 +1322,7 @@ always be returned in the specified sort-by order.
           ],
           "properties": {
             "display_name": {
-              "docs": "Name of the Organization.",
+              "docs": " Name of the Organization.",
               "type": "optional<string>",
             },
           },
@@ -1334,7 +1334,7 @@ always be returned in the specified sort-by order.
           ],
           "properties": {
             "display_name": {
-              "docs": "Name of the Organization.",
+              "docs": " Name of the Organization.",
               "type": "optional<string>",
             },
           },
@@ -1415,11 +1415,11 @@ always be returned in the specified sort-by order.
               "type": "optional<list<ArtifactSummary>>",
             },
             "description": {
-              "docs": "Description of the part.",
+              "docs": " Description of the part.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": "Name of the part.",
+              "docs": " Name of the part.",
               "type": "string",
             },
             "owned_by": {
@@ -1439,7 +1439,7 @@ always be returned in the specified sort-by order.
           ],
           "properties": {
             "name": {
-              "docs": "Name of the part.",
+              "docs": " Name of the part.",
               "type": "string",
             },
           },
@@ -1499,7 +1499,7 @@ always be returned in the specified sort-by order.
               "type": "optional<string>",
             },
             "name": {
-              "docs": "Name of the part.",
+              "docs": " Name of the part.",
               "type": "string",
             },
             "owned_by": {
@@ -1546,7 +1546,7 @@ always be returned in the specified sort-by order.
               "type": "list<string>",
             },
             "target_close_date": {
-              "docs": "Target close date by which enhancement is expected to be closed.
+              "docs": " Target close date by which enhancement is expected to be closed.
 ",
               "type": "optional<string>",
             },
@@ -1583,7 +1583,7 @@ always be returned in the specified sort-by order.
           "docs": undefined,
           "properties": {
             "next_cursor": {
-              "docs": "The cursor used to iterate subsequent results in accordance to the
+              "docs": " The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
               "type": "optional<string>",
@@ -1593,7 +1593,7 @@ sort order. If not set, then no later elements exist.
               "type": "list<Part>",
             },
             "prev_cursor": {
-              "docs": "The cursor used to iterate preceding results in accordance to the
+              "docs": " The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
               "type": "optional<string>",
@@ -1607,7 +1607,7 @@ sort order. If not set, then no prior elements exist.
               "type": "optional<string>",
             },
             "id": {
-              "docs": "The ID of the part to update.",
+              "docs": " The ID of the part to update.",
               "type": "string",
             },
             "name": {
@@ -1648,7 +1648,7 @@ sort order. If not set, then no prior elements exist.
           "docs": undefined,
           "properties": {
             "target_close_date": {
-              "docs": "Updates the target close date of the enhancement.",
+              "docs": " Updates the target close date of the enhancement.",
               "type": "optional<string>",
             },
           },
@@ -1688,15 +1688,15 @@ empty.
           ],
           "properties": {
             "description": {
-              "docs": "Description of the Rev organization.",
+              "docs": " Description of the Rev organization.",
               "type": "optional<string>",
             },
             "domain": {
-              "docs": "Company's domain name. Example - 'devrev.ai'.",
+              "docs": " Company's domain name. Example - 'devrev.ai'.",
               "type": "optional<string>",
             },
             "external_ref": {
-              "docs": "External ref is a unique identifier for the Rev (customer)
+              "docs": " External ref is a unique identifier for the Rev (customer)
 organization from your primary customer system of records. If none
 is specified, a system-generated identifier will be assigned to the
 organization.
@@ -1733,13 +1733,13 @@ organization.
 ",
           "properties": {
             "next_cursor": {
-              "docs": "The cursor used to iterate subsequent results in accordance to the
+              "docs": " The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
               "type": "optional<string>",
             },
             "prev_cursor": {
-              "docs": "The cursor used to iterate preceding results in accordance to the
+              "docs": " The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
               "type": "optional<string>",
@@ -1766,7 +1766,7 @@ sort order. If not set, then no prior elements exist.
           ],
           "properties": {
             "external_ref": {
-              "docs": "External ref is a mutable unique identifier for a user within the
+              "docs": " External ref is a mutable unique identifier for a user within the
 Rev organization from your primary customer record. If none is
 available, a good alternative is the email address/phone number
 which could uniquely identify the user. If none is specified, a
@@ -1784,11 +1784,11 @@ system-generated identifier will be assigned to the user.
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": "The ID of the tag.",
+              "docs": " The ID of the tag.",
               "type": "string",
             },
             "value": {
-              "docs": "The value for the object's association with the tag. If specified,
+              "docs": " The value for the object's association with the tag. If specified,
 the value must be one that's specified in the tag's allowed values.
 ",
               "type": "optional<string>",
@@ -1799,7 +1799,7 @@ the value must be one that's specified in the tag's allowed values.
           "docs": "Describes the current stage of a work item.",
           "properties": {
             "name": {
-              "docs": "Current stage name of the work item.",
+              "docs": " Current stage name of the work item.",
               "type": "string",
             },
           },
@@ -1808,7 +1808,7 @@ the value must be one that's specified in the tag's allowed values.
           "docs": "Sets an object's initial stage.",
           "properties": {
             "name": {
-              "docs": "The name of the stage.",
+              "docs": " The name of the stage.",
               "type": "optional<string>",
             },
           },
@@ -1817,7 +1817,7 @@ the value must be one that's specified in the tag's allowed values.
           "docs": "Updates an object's stage.",
           "properties": {
             "name": {
-              "docs": "The updated name of the stage, otherwise unchanged if not set.
+              "docs": " The updated name of the stage, otherwise unchanged if not set.
 ",
               "type": "optional<string>",
             },
@@ -1841,13 +1841,13 @@ provided when the association is made.
               "type": "optional<list<string>>",
             },
             "description": {
-              "docs": "An informative description for the tag that should provide context
+              "docs": " An informative description for the tag that should provide context
 on the tag's purpose and usage.
 ",
               "type": "optional<string>",
             },
             "name": {
-              "docs": "The name of the tag, which denotes the logical concept by which all
+              "docs": " The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
@@ -1862,7 +1862,7 @@ unique.
           ],
           "properties": {
             "name": {
-              "docs": "The name of the tag, which denotes the logical concept by which all
+              "docs": " The name of the tag, which denotes the logical concept by which all
 tagged objects will be associated. The name is guaranteed to be
 unique.
 ",
@@ -1878,7 +1878,7 @@ unique.
               "type": "TagSummary",
             },
             "value": {
-              "docs": "The value for the object's association with the tag.",
+              "docs": " The value for the object's association with the tag.",
               "type": "optional<string>",
             },
           },
@@ -1905,13 +1905,13 @@ unique.
           "docs": "The response to listing the tags.",
           "properties": {
             "next_cursor": {
-              "docs": "The cursor used to iterate subsequent results in accordance to the
+              "docs": " The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
               "type": "optional<string>",
             },
             "prev_cursor": {
-              "docs": "The cursor used to iterate preceding results in accordance to the
+              "docs": " The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
               "type": "optional<string>",
@@ -1996,7 +1996,7 @@ sort order. If not set, then no prior elements exist.
               "type": "optional<list<ArtifactSummary>>",
             },
             "body": {
-              "docs": "The comment's body. If the comment has been deleted, then no body
+              "docs": " The comment's body. If the comment has been deleted, then no body
 will appear in the response.
 ",
               "type": "optional<string>",
@@ -2029,7 +2029,7 @@ will appear in the response.
         "TimelineEntriesCreateRequest": {
           "base-properties": {
             "object": {
-              "docs": "The ID of the object to create the timeline entry for.",
+              "docs": " The ID of the object to create the timeline entry for.",
               "type": "string",
             },
             "visibility": {
@@ -2054,7 +2054,7 @@ will appear in the response.
               "type": "optional<list<string>>",
             },
             "body": {
-              "docs": "The comment's body.",
+              "docs": " The comment's body.",
               "type": "optional<string>",
             },
             "body_type": {
@@ -2099,13 +2099,13 @@ will appear in the response.
           "docs": "The response to listing timeline entries for an object.",
           "properties": {
             "next_cursor": {
-              "docs": "The cursor used to iterate subsequent results in accordance to the
+              "docs": " The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
               "type": "optional<string>",
             },
             "prev_cursor": {
-              "docs": "The cursor used to iterate preceding results in accordance to the
+              "docs": " The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
               "type": "optional<string>",
@@ -2119,7 +2119,7 @@ sort order. If not set, then no prior elements exist.
         "TimelineEntriesUpdateRequest": {
           "base-properties": {
             "id": {
-              "docs": "The ID of the timeline entry to update.",
+              "docs": " The ID of the timeline entry to update.",
               "type": "string",
             },
           },
@@ -2140,7 +2140,7 @@ sort order. If not set, then no prior elements exist.
               "type": "optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>",
             },
             "body": {
-              "docs": "The updated comment's body.",
+              "docs": " The updated comment's body.",
               "type": "optional<string>",
             },
             "body_type": {
@@ -2239,7 +2239,7 @@ default visibility.
           ],
           "properties": {
             "display_name": {
-              "docs": "The user's display name. The name is non-unique and mutable.
+              "docs": " The user's display name. The name is non-unique and mutable.
 ",
               "type": "optional<string>",
             },
@@ -2248,11 +2248,11 @@ default visibility.
               "type": "optional<ArtifactSummary>",
             },
             "email": {
-              "docs": "Email address of the user.",
+              "docs": " Email address of the user.",
               "type": "optional<string>",
             },
             "full_name": {
-              "docs": "Full name of the user.",
+              "docs": " Full name of the user.",
               "type": "optional<string>",
             },
             "phone_numbers": {
@@ -2272,7 +2272,7 @@ default visibility.
           ],
           "properties": {
             "display_name": {
-              "docs": "The user's display name. The name is non-unique and mutable.
+              "docs": " The user's display name. The name is non-unique and mutable.
 ",
               "type": "optional<string>",
             },
@@ -2281,11 +2281,11 @@ default visibility.
               "type": "optional<ArtifactSummary>",
             },
             "email": {
-              "docs": "Email address of the user.",
+              "docs": " Email address of the user.",
               "type": "optional<string>",
             },
             "full_name": {
-              "docs": "Full name of the user.",
+              "docs": " Full name of the user.",
               "type": "optional<string>",
             },
             "state": {
@@ -2374,7 +2374,7 @@ default visibility.
               "type": "optional<list<WebhookEventType>>",
             },
             "secret": {
-              "docs": "The secret to use for verifying webhook events.",
+              "docs": " The secret to use for verifying webhook events.",
               "type": "string",
             },
             "status": {
@@ -2382,7 +2382,7 @@ default visibility.
               "type": "WebhookStatus",
             },
             "url": {
-              "docs": "The URL of the webhook endpoint.",
+              "docs": " The URL of the webhook endpoint.",
               "type": "string",
             },
           },
@@ -2391,7 +2391,7 @@ default visibility.
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": "The event's ID.",
+              "docs": " The event's ID.",
               "type": "string",
             },
             "part_created": {
@@ -2443,7 +2443,7 @@ default visibility.
               "type": "optional<EventTimelineEntryUpdated>",
             },
             "timestamp": {
-              "docs": "Timestamp of the webhook's invocation for the event. Note this
+              "docs": " Timestamp of the webhook's invocation for the event. Note this
 should be used to protect against replay attacks, where the event
 should only be processed if the timestamp isn't stale by several
 seconds.
@@ -2467,7 +2467,7 @@ seconds.
               "type": "optional<EventWebhookDeleted>",
             },
             "webhook_id": {
-              "docs": "ID of the webhook for the event.",
+              "docs": " ID of the webhook for the event.",
               "type": "string",
             },
             "webhook_updated": {
@@ -2492,7 +2492,7 @@ seconds.
           "docs": undefined,
           "properties": {
             "challenge": {
-              "docs": "The challenge from the "verify" request, otherwise this should not
+              "docs": " The challenge from the "verify" request, otherwise this should not
 be set for other request types.
 ",
               "type": "optional<string>",
@@ -2603,7 +2603,7 @@ be set for other request types.
           "docs": undefined,
           "properties": {
             "challenge": {
-              "docs": "The challenge that must be echoed in the response.",
+              "docs": " The challenge that must be echoed in the response.",
               "type": "string",
             },
           },
@@ -2735,7 +2735,7 @@ event types. Note this is mutually exclusive with 'add' and
               "type": "optional<list<ArtifactSummary>>",
             },
             "body": {
-              "docs": "Body of the work object.",
+              "docs": " Body of the work object.",
               "type": "optional<string>",
             },
             "owned_by": {
@@ -2755,11 +2755,11 @@ event types. Note this is mutually exclusive with 'add' and
               "type": "optional<list<TagWithValue>>",
             },
             "target_close_date": {
-              "docs": "Timestamp when the work is expected to be complete.",
+              "docs": " Timestamp when the work is expected to be complete.",
               "type": "optional<string>",
             },
             "title": {
-              "docs": "Title of the work object.",
+              "docs": " Title of the work object.",
               "type": "string",
             },
           },
@@ -2782,7 +2782,7 @@ event types. Note this is mutually exclusive with 'add' and
         "WorksCreateRequest": {
           "base-properties": {
             "applies_to_part": {
-              "docs": "The [part](https://devrev.ai/docs/product/parts) that the work
+              "docs": " The [part](https://devrev.ai/docs/product/parts) that the work
 applies to. Specifying a part is required when creating tickets and
 issues.
 ",
@@ -2818,7 +2818,7 @@ issues.
               "type": "optional<string>",
             },
             "title": {
-              "docs": "Title of the work object.",
+              "docs": " Title of the work object.",
               "type": "string",
             },
           },
@@ -2843,7 +2843,7 @@ issues.
               "type": "optional<IssuePriority>",
             },
             "sprint": {
-              "docs": "The sprint that the issue belongs to.",
+              "docs": " The sprint that the issue belongs to.",
               "type": "optional<string>",
             },
           },
@@ -2852,11 +2852,11 @@ issues.
           "docs": undefined,
           "properties": {
             "group": {
-              "docs": "The group that the ticket is associated with.",
+              "docs": " The group that the ticket is associated with.",
               "type": "optional<string>",
             },
             "rev_org": {
-              "docs": "The Rev organization that the ticket is associated with.",
+              "docs": " The Rev organization that the ticket is associated with.",
               "type": "optional<string>",
             },
             "severity": {
@@ -2896,13 +2896,13 @@ issues.
           "docs": undefined,
           "properties": {
             "next_cursor": {
-              "docs": "The cursor used to iterate subsequent results in accordance to the
+              "docs": " The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
               "type": "optional<string>",
             },
             "prev_cursor": {
-              "docs": "The cursor used to iterate preceding results in accordance to the
+              "docs": " The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
               "type": "optional<string>",
@@ -2929,7 +2929,7 @@ sort order. If not set, then no prior elements exist.
               "type": "optional<string>",
             },
             "id": {
-              "docs": "The work's ID.",
+              "docs": " The work's ID.",
               "type": "string",
             },
             "owned_by": {
@@ -3032,7 +3032,7 @@ empty.
           "docs": undefined,
           "properties": {
             "group": {
-              "docs": "The group that the ticket is associated with.",
+              "docs": " The group that the ticket is associated with.",
               "type": "optional<string>",
             },
             "rev_org": {
@@ -3193,7 +3193,7 @@ empty.
               "body": {
                 "properties": {
                   "file_name": {
-                    "docs": "The name of the file that's being uploaded.",
+                    "docs": " The name of the file that's being uploaded.",
                     "type": "string",
                   },
                 },
@@ -3271,7 +3271,7 @@ connections can not be deleted using this method.
               "body": {
                 "properties": {
                   "id": {
-                    "docs": "ID of the authentication connection to be deleted.",
+                    "docs": " ID of the authentication connection to be deleted.",
                     "type": "string",
                   },
                 },
@@ -3355,7 +3355,7 @@ disabled.
               "body": {
                 "properties": {
                   "id": {
-                    "docs": "ID of the authentication connection to be toggled.",
+                    "docs": " ID of the authentication connection to be toggled.",
                     "type": "string",
                   },
                   "toggle": {
@@ -3431,7 +3431,7 @@ authenticated user.
                     "type": "optional<list<string>>",
                   },
                   "client_id": {
-                    "docs": "An identifier that represents the application which is requesting
+                    "docs": " An identifier that represents the application which is requesting
 the token. If no client_id is present in the request to generate an
 application access token (AAT), DevRev will generate a client_id.
 This client_id is only associated with an AAT.
@@ -3439,7 +3439,7 @@ This client_id is only associated with an AAT.
                     "type": "optional<string>",
                   },
                   "expires_in": {
-                    "docs": "undefinedThe expected validity lifetime of the token in number of days.
+                    "docs": " The expected validity lifetime of the token in number of days.
 ",
                     "type": "optional<integer>",
                   },
@@ -3456,14 +3456,14 @@ This client_id is only associated with an AAT.
                     "type": "optional<root.AuthTokensRevInfo>",
                   },
                   "scope": {
-                    "docs": "The requested set of scopes associated with the issued token. A
+                    "docs": " The requested set of scopes associated with the issued token. A
 space-delimited list of values in which the order of values does
 not matter.
 ",
                     "type": "optional<string>",
                   },
                   "subject_token": {
-                    "docs": "Represents the entity that requests the token. Not required when
+                    "docs": " Represents the entity that requests the token. Not required when
 requesting an application access token (AAT).
 ",
                     "type": "optional<string>",
@@ -3473,7 +3473,7 @@ requesting an application access token (AAT).
                     "type": "optional<root.AuthTokenSubjectTokenType>",
                   },
                   "token_hint": {
-                    "docs": "A hint that identifies the token.",
+                    "docs": " A hint that identifies the token.",
                     "type": "optional<string>",
                   },
                 },
@@ -3507,7 +3507,7 @@ given Dev organization.
               "body": {
                 "properties": {
                   "token_id": {
-                    "docs": "The unique identifier for the token under a given Dev organization.
+                    "docs": " The unique identifier for the token under a given Dev organization.
 If no token ID is provided, then the token ID will be set from the
 JTI claim of the token in the authorization header.
 ",
@@ -3650,11 +3650,11 @@ organization.
               "body": {
                 "properties": {
                   "token_hint": {
-                    "docs": "A hint that identifies the token.",
+                    "docs": " A hint that identifies the token.",
                     "type": "string",
                   },
                   "token_id": {
-                    "docs": "The unique identifier of the token under a given Dev organization.
+                    "docs": " The unique identifier of the token under a given Dev organization.
 ",
                     "type": "string",
                   },
@@ -3812,7 +3812,7 @@ used.
               "body": {
                 "properties": {
                   "id": {
-                    "docs": "The ID of the part to delete.",
+                    "docs": " The ID of the part to delete.",
                     "type": "string",
                   },
                 },
@@ -3977,15 +3977,15 @@ organization.
               "body": {
                 "properties": {
                   "description": {
-                    "docs": "Description of the Rev organization.",
+                    "docs": " Description of the Rev organization.",
                     "type": "optional<string>",
                   },
                   "display_name": {
-                    "docs": "Name of the Rev organization.",
+                    "docs": " Name of the Rev organization.",
                     "type": "string",
                   },
                   "domain": {
-                    "docs": "Company's domain name. Example - 'devrev.ai'.",
+                    "docs": " Company's domain name. Example - 'devrev.ai'.",
                     "type": "optional<string>",
                   },
                   "environment": {
@@ -3993,14 +3993,14 @@ organization.
                     "type": "optional<root.OrgEnvironment>",
                   },
                   "external_ref": {
-                    "docs": "External ref is a custom unique identifier which is a reference to
+                    "docs": " External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
 records.
 ",
                     "type": "optional<string>",
                   },
                   "tier": {
-                    "docs": "The tier of the RevOrg.",
+                    "docs": " The tier of the RevOrg.",
                     "type": "optional<string>",
                   },
                 },
@@ -4032,7 +4032,7 @@ records.
               "body": {
                 "properties": {
                   "id": {
-                    "docs": "The ID of Rev organization to delete.",
+                    "docs": " The ID of Rev organization to delete.",
                     "type": "string",
                   },
                 },
@@ -4183,15 +4183,15 @@ them.
               "body": {
                 "properties": {
                   "description": {
-                    "docs": "Description of the Rev organization.",
+                    "docs": " Description of the Rev organization.",
                     "type": "optional<string>",
                   },
                   "display_name": {
-                    "docs": "Customer chosen name for the Rev organization.",
+                    "docs": " Customer chosen name for the Rev organization.",
                     "type": "optional<string>",
                   },
                   "domain": {
-                    "docs": "Company's domain name. Example - 'devrev.ai'.",
+                    "docs": " Company's domain name. Example - 'devrev.ai'.",
                     "type": "optional<string>",
                   },
                   "environment": {
@@ -4199,18 +4199,18 @@ them.
                     "type": "optional<root.OrgEnvironment>",
                   },
                   "external_ref": {
-                    "docs": "External ref is a custom unique identifier which is a reference to
+                    "docs": " External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
 records.
 ",
                     "type": "optional<string>",
                   },
                   "id": {
-                    "docs": "The ID of Rev organization to update.",
+                    "docs": " The ID of Rev organization to update.",
                     "type": "string",
                   },
                   "tier": {
-                    "docs": "The tier of the RevOrg.",
+                    "docs": " The tier of the RevOrg.",
                     "type": "optional<string>",
                   },
                 },
@@ -4261,11 +4261,11 @@ permitted.
                     "type": "optional<list<string>>",
                   },
                   "description": {
-                    "docs": "The description for the tag.",
+                    "docs": " The description for the tag.",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": "The name for the tag, which must be unique across all tags.
+                    "docs": " The name for the tag, which must be unique across all tags.
 ",
                     "type": "string",
                   },
@@ -4298,7 +4298,7 @@ permitted.
               "body": {
                 "properties": {
                   "id": {
-                    "docs": "The ID of the tag to delete.",
+                    "docs": " The ID of the tag to delete.",
                     "type": "string",
                   },
                 },
@@ -4405,15 +4405,15 @@ used.
                     "type": "optional<root.TagsUpdateAllowedValues>",
                   },
                   "description": {
-                    "docs": "The updated description of the tag.",
+                    "docs": " The updated description of the tag.",
                     "type": "optional<string>",
                   },
                   "id": {
-                    "docs": "The ID of the tag to update.",
+                    "docs": " The ID of the tag to update.",
                     "type": "string",
                   },
                   "name": {
-                    "docs": "The updated name of the tag. The name must be unique across all
+                    "docs": " The updated name of the tag. The name must be unique across all
 tags.
 ",
                     "type": "optional<string>",
@@ -4601,7 +4601,7 @@ used.
                     "type": "optional<list<root.WebhookEventType>>",
                   },
                   "secret": {
-                    "docs": "The secret to use when verifying webhook events. If provided, the
+                    "docs": " The secret to use when verifying webhook events. If provided, the
 secret must be between 8 and 32 bytes (inclusive). If not set, a
 secret will be automatically generated and provided in the
 response.
@@ -4609,7 +4609,7 @@ response.
                     "type": "optional<string>",
                   },
                   "url": {
-                    "docs": "The URL of the webhook endpoint.",
+                    "docs": " The URL of the webhook endpoint.",
                     "type": "string",
                   },
                 },
@@ -4641,7 +4641,7 @@ response.
               "body": {
                 "properties": {
                   "id": {
-                    "docs": "ID for the webhook.",
+                    "docs": " ID for the webhook.",
                     "type": "string",
                   },
                 },
@@ -4728,11 +4728,11 @@ response.
                     "type": "optional<root.WebhooksUpdateRequestEventTypes>",
                   },
                   "id": {
-                    "docs": "ID for the webhook.",
+                    "docs": " ID for the webhook.",
                     "type": "string",
                   },
                   "secret": {
-                    "docs": "If provided, updates the secret that's used when verifying webhook
+                    "docs": " If provided, updates the secret that's used when verifying webhook
 events, which must be between 8 and 32 bytes (inclusive). Otherwise
 if empty, then a new secret is generated. If the webhook is active,
 then its status will transition to the 'unverified' state and it
@@ -4741,7 +4741,7 @@ won't receive any object events until successfully verified.
                     "type": "optional<string>",
                   },
                   "url": {
-                    "docs": "The webhook's updated URL. If the webhook is active, then the
+                    "docs": " The webhook's updated URL. If the webhook is active, then the
 webhook's status will transition to the 'unverified' state and it
 won't receive any object events until successfully verified.
 ",
@@ -4814,7 +4814,7 @@ won't receive any object events until successfully verified.
               "body": {
                 "properties": {
                   "id": {
-                    "docs": "The work's ID.",
+                    "docs": " The work's ID.",
                     "type": "string",
                   },
                 },

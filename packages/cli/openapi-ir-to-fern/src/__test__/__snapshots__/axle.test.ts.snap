@@ -11,35 +11,35 @@ exports[`open api parser axle simple 1`] = `
           "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
           "properties": {
             "carrier": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "createdAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "email": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "firstName": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "id": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "lastName": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "modifiedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "phone": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "policies": {
@@ -47,7 +47,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "list<string>",
             },
             "refreshedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
           },
@@ -56,27 +56,27 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "addressLine1": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "addressLine2": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "city": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "country": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "postalCode": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "state": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
           },
@@ -89,27 +89,27 @@ exports[`open api parser axle simple 1`] = `
               "type": "Address",
             },
             "domain": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "id": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "logoUrl": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "modifiedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "name": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "phone": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
           },
@@ -126,7 +126,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "optional<integer>",
             },
             "label": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "limitPerAccident": {
@@ -138,7 +138,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "optional<integer>",
             },
             "property": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
           },
@@ -192,7 +192,7 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "message": {
-              "docs": "Provides a reason for why the operation failed, if available.",
+              "docs": " Provides a reason for why the operation failed, if available.",
               "type": "optional<string>",
             },
             "success": {
@@ -218,11 +218,11 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "accessToken": {
-              "docs": "The token required for access to the requested Account and Policy objects.",
+              "docs": " The token required for access to the requested Account and Policy objects.",
               "type": "string",
             },
             "account": {
-              "docs": "The unique id for the Account object.",
+              "docs": " The unique id for the Account object.",
               "type": "string",
             },
             "policies": {
@@ -287,39 +287,39 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "dateOfBirth": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "dateOfBirthYear": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "firstName": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "lastName": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "licenseNo": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "licenseState": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "licenseStatus": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "property": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "type": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
           },
@@ -328,7 +328,7 @@ exports[`open api parser axle simple 1`] = `
           "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
           "properties": {
             "account": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "address": {
@@ -336,7 +336,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "Address",
             },
             "carrier": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "coverages": {
@@ -344,19 +344,19 @@ exports[`open api parser axle simple 1`] = `
               "type": "list<Coverage>",
             },
             "createdAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "effectiveDate": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "expirationDate": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "id": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "insureds": {
@@ -368,11 +368,11 @@ exports[`open api parser axle simple 1`] = `
               "type": "boolean",
             },
             "modifiedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "policyNumber": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "properties": {
@@ -380,7 +380,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "list<Property>",
             },
             "refreshedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "thirdParties": {
@@ -416,7 +416,7 @@ exports[`open api parser axle simple 1`] = `
               "type": "Vehicle",
             },
             "id": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "type": {
@@ -452,17 +452,17 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "ignitionToken": {
-              "docs": "The unique ID for the ignition session.",
+              "docs": " The unique ID for the ignition session.",
               "type": "string",
             },
             "ignitionUri": {
-              "docs": "The url you should direct the user to to link their account.",
+              "docs": " The url you should direct the user to to link their account.",
               "type": "string",
             },
           },
         },
         "Success": {
-          "docs": "undefinedIndicates whether the operation was performed successfully.",
+          "docs": " Indicates whether the operation was performed successfully.",
           "type": "boolean",
         },
         "ThirdParty": {
@@ -473,11 +473,11 @@ exports[`open api parser axle simple 1`] = `
               "type": "optional<Address>",
             },
             "name": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "property": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "type": {
@@ -510,23 +510,23 @@ exports[`open api parser axle simple 1`] = `
           "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
           "properties": {
             "email": {
-              "docs": "User's email address.",
+              "docs": " User's email address.",
               "type": "optional<string>",
             },
             "firstName": {
-              "docs": "User's first name.",
+              "docs": " User's first name.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": "Your application's unique user id.",
+              "docs": " Your application's unique user id.",
               "type": "string",
             },
             "lastName": {
-              "docs": "User's last name.",
+              "docs": " User's last name.",
               "type": "optional<string>",
             },
             "phone": {
-              "docs": "User's phone number in E.164 format.",
+              "docs": " User's phone number in E.164 format.",
               "type": "optional<string>",
             },
           },
@@ -535,23 +535,23 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "bodyStyle": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "make": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "model": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "vin": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "year": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
           },
@@ -661,7 +661,7 @@ exports[`open api parser axle simple 1`] = `
                     "type": "optional<map<string, unknown>>",
                   },
                   "redirectUri": {
-                    "docs": "The URI we should direct the user to after authenticating successfully.",
+                    "docs": " The URI we should direct the user to after authenticating successfully.",
                     "type": "optional<string>",
                   },
                   "user": {
@@ -669,7 +669,7 @@ exports[`open api parser axle simple 1`] = `
                     "type": "optional<root.User>",
                   },
                   "webhookUri": {
-                    "docs": "The URI we should send updates about this session or the resulting account to.",
+                    "docs": " The URI we should send updates about this session or the resulting account to.",
                     "type": "optional<string>",
                   },
                 },
@@ -746,7 +746,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "body": {
                 "properties": {
                   "authCode": {
-                    "docs": "The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
+                    "docs": " The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
                     "type": "string",
                   },
                 },

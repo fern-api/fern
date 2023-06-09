@@ -36,7 +36,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "host": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "port": {
@@ -71,7 +71,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "appName": {
-              "docs": "\`less than 32 characters\` ",
+              "docs": "\`less than 32 characters\`",
               "type": "string",
             },
             "authConfiguration": {
@@ -101,28 +101,28 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "clientId": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
           },
         },
         "AppId": {
-          "docs": "",
+          "docs": undefined,
           "type": "string",
         },
         "Application": {
           "docs": undefined,
           "properties": {
             "appId": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "appName": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "appSecret": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "authConfiguration": {
@@ -130,19 +130,19 @@ exports[`open api parser hathora simple 1`] = `
               "type": "ApplicationAuthConfiguration",
             },
             "createdAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "createdBy": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "deletedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "deletedBy": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "orgId": {
@@ -172,7 +172,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "clientId": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
           },
@@ -201,19 +201,19 @@ exports[`open api parser hathora simple 1`] = `
               "type": "BuildId",
             },
             "createdAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "createdBy": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "deletedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "finishedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "imageSize": {
@@ -225,7 +225,7 @@ exports[`open api parser hathora simple 1`] = `
               "type": "list<BuildRegionalContainerTagsItem>",
             },
             "startedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "status": {
@@ -242,7 +242,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "containerTag": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "region": {
@@ -325,11 +325,11 @@ exports[`open api parser hathora simple 1`] = `
               "type": "BuildId",
             },
             "createdAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "createdBy": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "deploymentId": {
@@ -375,11 +375,11 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": "\`less than 100 characters\` ",
+              "docs": "\`less than 100 characters\`",
               "type": "string",
             },
             "value": {
-              "docs": "\`less than 5000 characters\` ",
+              "docs": "\`less than 5000 characters\`",
               "type": "string",
             },
           },
@@ -396,7 +396,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "host": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "port": {
@@ -417,11 +417,11 @@ exports[`open api parser hathora simple 1`] = `
               "type": "AppId",
             },
             "createdAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "createdBy": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "initialConfig": {
@@ -474,7 +474,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "token": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
           },
@@ -483,7 +483,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "token": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
           },
@@ -492,7 +492,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "token": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
           },
@@ -544,7 +544,7 @@ exports[`open api parser hathora simple 1`] = `
           "type": "PickRoomExcludeKeyofRoomAllocations",
         },
         "OrgId": {
-          "docs": "",
+          "docs": undefined,
           "type": "string",
         },
         "PickRoomExcludeKeyofRoomAllocations": {
@@ -617,11 +617,11 @@ exports[`open api parser hathora simple 1`] = `
               "type": "double",
             },
             "host": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "idleSince": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "port": {
@@ -645,25 +645,25 @@ exports[`open api parser hathora simple 1`] = `
               "type": "double",
             },
             "startedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "startingAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "stoppingAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "terminatedAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
           },
         },
         "ProcessId": {
-          "docs": "",
+          "docs": undefined,
           "type": "string",
         },
         "ProcessWithRooms": {
@@ -799,21 +799,21 @@ exports[`open api parser hathora simple 1`] = `
               "type": "RoomAllocationId",
             },
             "scheduledAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "string",
             },
             "unscheduledAt": {
-              "docs": "",
+              "docs": undefined,
               "type": "optional<string>",
             },
           },
         },
         "RoomAllocationId": {
-          "docs": "",
+          "docs": undefined,
           "type": "string",
         },
         "RoomId": {
-          "docs": "",
+          "docs": undefined,
           "type": "string",
         },
         "RoomStatus": {
@@ -1043,7 +1043,7 @@ exports[`open api parser hathora simple 1`] = `
               "body": {
                 "properties": {
                   "idToken": {
-                    "docs": "",
+                    "docs": undefined,
                     "type": "string",
                   },
                 },
@@ -1075,7 +1075,7 @@ exports[`open api parser hathora simple 1`] = `
               "body": {
                 "properties": {
                   "nickname": {
-                    "docs": "",
+                    "docs": undefined,
                     "type": "string",
                   },
                 },
