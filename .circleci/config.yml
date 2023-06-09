@@ -468,8 +468,6 @@ workflows:
 
       - deploy-docs-preview:
           context:
-            - aws
-            - github
             - vercel-dev
 
       - deploy-docs-dev:
@@ -484,8 +482,6 @@ workflows:
             - test
             - ete-tests
           context:
-            - aws
-            - github
             - vercel-dev
 
       - deploy-docs:
@@ -505,8 +501,6 @@ workflows:
             - live-test-dev
             - live-test
           context:
-            - aws
-            - github
             - vercel-dev
 
       - check-release-is-allowed:
