@@ -467,6 +467,9 @@ workflows:
             - fern-tokens
 
       - deploy-docs-preview:
+          filters:
+            branches:
+              ignore: main
           context:
             - vercel-dev
 
@@ -501,7 +504,7 @@ workflows:
             - live-test-dev
             - live-test
           context:
-            - vercel-dev
+            - vercel-prod
 
       - check-release-is-allowed:
           filters:
