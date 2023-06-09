@@ -122,11 +122,11 @@ exports[`open api parser deel simple 1`] = `
           },
         },
         "AgreementsParamLimit": {
-          "docs": " Maximum number of records to return. This is supposed to be an integer but query parameters are string. Maximum is 50.",
+          "docs": "Maximum number of records to return. This is supposed to be an integer but query parameters are string. Maximum is 50.",
           "type": "string",
         },
         "AgreementsParamOffset": {
-          "docs": " Offset/index of record for the next page of records to return. This is supposed to be an integer but query parameters are string.",
+          "docs": "Offset/index of record for the next page of records to return. This is supposed to be an integer but query parameters are string.",
           "type": "string",
         },
         "AgreementsSearchForm": {
@@ -167,11 +167,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "message": {
-              "docs": " A description of the returned error",
+              "docs": "A description of the returned error",
               "type": "optional<string>",
             },
             "path": {
-              "docs": " The JSON path where input validation failed",
+              "docs": "The JSON path where input validation failed",
               "type": "optional<string>",
             },
           },
@@ -193,31 +193,31 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "api_req_id": {
-              "docs": " The request ID of the failed request",
+              "docs": "The request ID of the failed request",
               "type": "optional<string>",
             },
             "code": {
-              "docs": " The code of the source handler which produced the returned error",
+              "docs": "The code of the source handler which produced the returned error",
               "type": "optional<double>",
             },
             "docs": {
-              "docs": " A link to the official documentation for the requested endpoint resource",
+              "docs": "A link to the official documentation for the requested endpoint resource",
               "type": "optional<string>",
             },
             "method": {
-              "docs": " The HTTP method of the failed request",
+              "docs": "The HTTP method of the failed request",
               "type": "optional<string>",
             },
             "source": {
-              "docs": " The source handler which produced the returned error",
+              "docs": "The source handler which produced the returned error",
               "type": "optional<string>",
             },
             "status": {
-              "docs": " The status code of the response",
+              "docs": "The status code of the response",
               "type": "optional<double>",
             },
             "url": {
-              "docs": " The relative URL of the failed request",
+              "docs": "The relative URL of the failed request",
               "type": "optional<string>",
             },
           },
@@ -560,11 +560,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<TimesheetStatusEnum>",
             },
             "total_amount": {
-              "docs": " is equal to quantity times rate of active work statement + bonus in this record",
+              "docs": "is equal to quantity times rate of active work statement + bonus in this record",
               "type": "string",
             },
             "type": {
-              "docs": " Deprecated - it is always "work"",
+              "docs": "Deprecated - it is always "work"",
               "type": "string",
             },
             "worksheet": {
@@ -821,7 +821,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": " Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
+              "docs": "Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
               "type": "optional<double>",
             },
             "currency_code": {
@@ -829,7 +829,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "CurrencyCodeRequired",
             },
             "cycle_end": {
-              "docs": " Date invoice cycle ends.",
+              "docs": "Date invoice cycle ends.",
               "type": "double",
             },
             "cycle_end_type": {
@@ -837,7 +837,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "WorkStatementCycleEndTypeEnum",
             },
             "first_payment": {
-              "docs": " First payment amount.",
+              "docs": "First payment amount.",
               "type": "optional<double>",
             },
             "first_payment_date": {
@@ -853,7 +853,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<NoticePeriod>",
             },
             "pay_before_weekends": {
-              "docs": " If the payment due is on a weekend, pay on Friday.",
+              "docs": "If the payment due is on a weekend, pay on Friday.",
               "type": "optional<boolean>",
             },
             "payment_due_days": {
@@ -1008,11 +1008,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Customized attributes on contracts (Employee ID, Project code, etc).",
           "properties": {
             "name": {
-              "docs": " Custom field property name.",
+              "docs": "Custom field property name.",
               "type": "optional<string>",
             },
             "value": {
-              "docs": " Custom field property value.",
+              "docs": "Custom field property value.",
               "type": "optional<string>",
             },
           },
@@ -1057,11 +1057,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<double>",
             },
             "job_title_name": {
-              "docs": " You can enter new job title.",
+              "docs": "You can enter new job title.",
               "type": "optional<string>",
             },
             "pay_before_weekends": {
-              "docs": " If the payment due is on a weekend, pay on Friday.",
+              "docs": "If the payment due is on a weekend, pay on Friday.",
               "type": "optional<boolean>",
             },
             "payment_due_days": {
@@ -1077,15 +1077,15 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<WorkStatementScaleEnum>",
             },
             "scope_of_work": {
-              "docs": " Text to describe the scope of work of the contract.",
+              "docs": "Text to describe the scope of work of the contract.",
               "type": "optional<string>",
             },
             "seniority_id": {
-              "docs": " You can use a predefined seniority level ID.",
+              "docs": "You can use a predefined seniority level ID.",
               "type": "optional<double>",
             },
             "special_clause": {
-              "docs": " Text to describe any special clause in contract.",
+              "docs": "Text to describe any special clause in contract.",
               "type": "optional<string>",
             },
           },
@@ -1116,7 +1116,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "external_id": {
-              "docs": " A unique identifier for the object provided by an external system.",
+              "docs": "A unique identifier for the object provided by an external system.",
               "type": "string",
             },
           },
@@ -1144,7 +1144,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "EmailTypeRequired",
             },
             "message": {
-              "docs": " Message for the worker.",
+              "docs": "Message for the worker.",
               "type": "string",
             },
           },
@@ -1188,11 +1188,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "This is a model to make it easier to understand and restrict search parameters",
           "properties": {
             "after_cursor": {
-              "docs": " Return next page of results after given cursor.",
+              "docs": "Return next page of results after given cursor.",
               "type": "optional<string>",
             },
             "limit": {
-              "docs": " Return a page of results with given number of records.",
+              "docs": "Return a page of results with given number of records.",
               "type": "optional<string>",
             },
           },
@@ -1213,7 +1213,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "limit": {
-              "docs": " Return a page of results with given number of records.",
+              "docs": "Return a page of results with given number of records.",
               "type": "optional<string>",
             },
             "order_direction": {
@@ -1221,7 +1221,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<SortDirEnum>",
             },
             "search": {
-              "docs": " Include a contract if by name or contractor name contains given search term.",
+              "docs": "Include a contract if by name or contractor name contains given search term.",
               "type": "optional<string>",
             },
             "sort_by": {
@@ -1233,7 +1233,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<ContractSearchFormWithoutCursorStatuses>",
             },
             "team_id": {
-              "docs": " Filter contracts for given team ID; NOTE: technically ALL query parameters are strings or array of strings",
+              "docs": "Filter contracts for given team ID; NOTE: technically ALL query parameters are strings or array of strings",
               "type": "optional<string>",
             },
             "types": {
@@ -1302,7 +1302,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "client_signature": {
-              "docs": " Signature of client.",
+              "docs": "Signature of client.",
               "type": "string",
             },
             "contract_template_id": {
@@ -1412,11 +1412,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": " Unique identifier of a contract template",
+              "docs": "Unique identifier of a contract template",
               "type": "double",
             },
             "title": {
-              "docs": " Title of a contract template",
+              "docs": "Title of a contract template",
               "type": "string",
             },
           },
@@ -1429,7 +1429,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateString>",
             },
             "id": {
-              "docs": " Deel Contract ID.",
+              "docs": "Deel Contract ID.",
               "type": "optional<string>",
             },
           },
@@ -1637,7 +1637,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateString>",
             },
             "title": {
-              "docs": " The title of the contract.",
+              "docs": "The title of the contract.",
               "type": "string",
             },
             "who_reports": {
@@ -1728,7 +1728,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateString>",
             },
             "message": {
-              "docs": " A message for the termination",
+              "docs": "A message for the termination",
               "type": "optional<string>",
             },
             "terminate_now": {
@@ -1889,11 +1889,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "CountryCode",
             },
             "eor_support": {
-              "docs": " Identifies if Deel support EoR in this country.",
+              "docs": "Identifies if Deel support EoR in this country.",
               "type": "boolean",
             },
             "name": {
-              "docs": " Country name.",
+              "docs": "Country name.",
               "type": "string",
             },
             "state_type": {
@@ -1905,7 +1905,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "list<StateOfCountry>",
             },
             "visa_support": {
-              "docs": " Identifies if Deel provides visa support for employees being hired in this country.",
+              "docs": "Identifies if Deel provides visa support for employees being hired in this country.",
               "type": "boolean",
             },
           },
@@ -1939,27 +1939,27 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "end_date": {
-              "docs": " End date of employee's time off.",
+              "docs": "End date of employee's time off.",
               "type": "optional<string>",
             },
             "is_end_date_half_day": {
-              "docs": " Is the start day a half day?",
+              "docs": "Is the start day a half day?",
               "type": "optional<boolean>",
             },
             "is_start_date_half_day": {
-              "docs": " Is the start day a half day?",
+              "docs": "Is the start day a half day?",
               "type": "optional<boolean>",
             },
             "other_timeoff_name": {
-              "docs": " Custom name for this time off.",
+              "docs": "Custom name for this time off.",
               "type": "optional<string>",
             },
             "reason": {
-              "docs": " Description for employee's time off.",
+              "docs": "Description for employee's time off.",
               "type": "optional<string>",
             },
             "start_date": {
-              "docs": " Start date of employee's time off.",
+              "docs": "Start date of employee's time off.",
               "type": "optional<string>",
             },
             "type": {
@@ -1967,7 +1967,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "CreateTimeoffType",
             },
             "with_multiple_dates": {
-              "docs": " If true, then multiple time off days were requested. You must supply a start and end date. If false, end date is ignored",
+              "docs": "If true, then multiple time off days were requested. You must supply a start and end date. If false, end date is ignored",
               "type": "boolean",
             },
           },
@@ -2055,31 +2055,31 @@ exports[`open api parser deel simple 1`] = `
           },
         },
         "DateString": {
-          "docs": " Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
+          "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
           "type": "string",
         },
         "DateStringDefaultNow": {
-          "docs": " Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31. Defaults to current date",
+          "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31. Defaults to current date",
           "type": "string",
         },
         "DateStringRequired": {
-          "docs": " Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
+          "docs": "Short date in format ISO-8601 (YYYY-MM-DD). For example: 2022-12-31.",
           "type": "string",
         },
         "DateTimeString": {
-          "docs": " Long date-time format following ISO-8601",
+          "docs": "Long date-time format following ISO-8601",
           "type": "string",
         },
         "DateTimeStringRequired": {
-          "docs": " Long date-time format following ISO-8601",
+          "docs": "Long date-time format following ISO-8601",
           "type": "string",
         },
         "EmailType": {
-          "docs": " User's email address.",
+          "docs": "User's email address.",
           "type": "string",
         },
         "EmailTypeRequired": {
-          "docs": " Worker's email address.",
+          "docs": "Worker's email address.",
           "type": "string",
         },
         "EmployeeList": {
@@ -2239,51 +2239,51 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<PeopleClientLegalEntity>",
             },
             "completion_date": {
-              "docs": " The completion date of the employment.",
+              "docs": "The completion date of the employment.",
               "type": "optional<string>",
             },
             "contract_is_archived": {
-              "docs": " Indicates whether the employment's contract is archived.",
+              "docs": "Indicates whether the employment's contract is archived.",
               "type": "optional<boolean>",
             },
             "contract_status": {
-              "docs": " The contract status associated with the employment.",
+              "docs": "The contract status associated with the employment.",
               "type": "optional<string>",
             },
             "country": {
-              "docs": " The country associated with the employment.",
+              "docs": "The country associated with the employment.",
               "type": "optional<string>",
             },
             "email": {
-              "docs": " The email associated with the employment.",
+              "docs": "The email associated with the employment.",
               "type": "optional<string>",
             },
             "has_eor_termination": {
-              "docs": " Indicates whether the employment had an EOR termination.",
+              "docs": "Indicates whether the employment had an EOR termination.",
               "type": "optional<boolean>",
             },
             "hiring_status": {
-              "docs": " The hiring status associated with the employment.",
+              "docs": "The hiring status associated with the employment.",
               "type": "optional<string>",
             },
             "hiring_type": {
-              "docs": " The hiring type associated with the employment.",
+              "docs": "The hiring type associated with the employment.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " Unique identifier for the employment.",
+              "docs": "Unique identifier for the employment.",
               "type": "optional<string>",
             },
             "is_ended": {
-              "docs": " Indicates whether the employment has ended.",
+              "docs": "Indicates whether the employment has ended.",
               "type": "optional<boolean>",
             },
             "job_title": {
-              "docs": " The job title associated with the employment.",
+              "docs": "The job title associated with the employment.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": " The name of the employment.",
+              "docs": "The name of the employment.",
               "type": "optional<string>",
             },
             "payment": {
@@ -2291,15 +2291,15 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<PeoplePayment>",
             },
             "seniority": {
-              "docs": " The seniority level associated with the employment.",
+              "docs": "The seniority level associated with the employment.",
               "type": "optional<string>",
             },
             "start_date": {
-              "docs": " The start date of the employment.",
+              "docs": "The start date of the employment.",
               "type": "optional<string>",
             },
             "state": {
-              "docs": " The state associated with the employment.",
+              "docs": "The state associated with the employment.",
               "type": "optional<string>",
             },
             "team": {
@@ -2307,15 +2307,15 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<Team>",
             },
             "timezone": {
-              "docs": " The timezone associated with the employment.",
+              "docs": "The timezone associated with the employment.",
               "type": "optional<string>",
             },
             "voluntarily_left": {
-              "docs": " Indicates whether the employment was left voluntarily.",
+              "docs": "Indicates whether the employment was left voluntarily.",
               "type": "optional<boolean>",
             },
             "work_email": {
-              "docs": " The work email associated with the employment.",
+              "docs": "The work email associated with the employment.",
               "type": "optional<string>",
             },
           },
@@ -2357,15 +2357,15 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "current_approved": {
-              "docs": " Days off approved.",
+              "docs": "Days off approved.",
               "type": "optional<double>",
             },
             "days_requested": {
-              "docs": " Days off requested by employee.",
+              "docs": "Days off requested by employee.",
               "type": "optional<double>",
             },
             "over_annual_limit": {
-              "docs": " Too many days off requested by employee.",
+              "docs": "Too many days off requested by employee.",
               "type": "optional<boolean>",
             },
             "requests": {
@@ -2377,11 +2377,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<double>",
             },
             "yearly_limit": {
-              "docs": " Total number of days off allowed per year.",
+              "docs": "Total number of days off allowed per year.",
               "type": "optional<double>",
             },
             "yearly_requests": {
-              "docs": " Total number of time off requests this year.",
+              "docs": "Total number of time off requests this year.",
               "type": "optional<double>",
             },
           },
@@ -2436,11 +2436,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<EorContractCreatedHealthPlan>",
             },
             "id": {
-              "docs": " Id of the contract quote created",
+              "docs": "Id of the contract quote created",
               "type": "optional<string>",
             },
             "job_title": {
-              "docs": " Employee's job title.",
+              "docs": "Employee's job title.",
               "type": "optional<string>",
             },
             "seniority": {
@@ -2470,7 +2470,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": " Legal entity name.",
+              "docs": "Legal entity name.",
               "type": "optional<string>",
             },
           },
@@ -2479,15 +2479,15 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "currency": {
-              "docs": " Currency of gross annual salary.",
+              "docs": "Currency of gross annual salary.",
               "type": "optional<string>",
             },
             "salary": {
-              "docs": " Gross annual salary.",
+              "docs": "Gross annual salary.",
               "type": "optional<double>",
             },
             "variable_compensation": {
-              "docs": " Variable compensation acount or percentage.",
+              "docs": "Variable compensation acount or percentage.",
               "type": "optional<string>",
             },
             "variable_compensation_type": {
@@ -2509,19 +2509,19 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "email": {
-              "docs": " Employee's email.",
+              "docs": "Employee's email.",
               "type": "optional<string>",
             },
             "first_name": {
-              "docs": " Employee's first name.",
+              "docs": "Employee's first name.",
               "type": "optional<string>",
             },
             "last_name": {
-              "docs": " Employee's last name.",
+              "docs": "Employee's last name.",
               "type": "optional<string>",
             },
             "legal_name": {
-              "docs": " Employee's legal name.",
+              "docs": "Employee's legal name.",
               "type": "optional<string>",
             },
           },
@@ -2530,11 +2530,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "calculated_holidays": {
-              "docs": " Number of calculate holidays for this contract.",
+              "docs": "Number of calculate holidays for this contract.",
               "type": "optional<string>",
             },
             "country": {
-              "docs": " Country of employement.",
+              "docs": "Country of employement.",
               "type": "optional<string>",
             },
             "end_date": {
@@ -2546,7 +2546,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<double>",
             },
             "scope_of_work": {
-              "docs": " Scope of work description.",
+              "docs": "Scope of work description.",
               "type": "optional<string>",
             },
             "start_date": {
@@ -2558,11 +2558,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "time_off_type": {
-              "docs": " If you want to use standard number of holidays for this employee, choose "STANDARD". If you want to enter a specific number of holidays, choose "SPECIFIC" and enter the number of days in the holidays field.",
+              "docs": "If you want to use standard number of holidays for this employee, choose "STANDARD". If you want to enter a specific number of holidays, choose "SPECIFIC" and enter the number of days in the holidays field.",
               "type": "optional<string>",
             },
             "work_visa_required": {
-              "docs": " Do you require Deel to apply for work visa for this person?",
+              "docs": "Do you require Deel to apply for work visa for this person?",
               "type": "optional<boolean>",
             },
           },
@@ -2571,11 +2571,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": " Health plan ID",
+              "docs": "Health plan ID",
               "type": "optional<string>",
             },
             "name": {
-              "docs": " Health plan name",
+              "docs": "Health plan name",
               "type": "optional<string>",
             },
           },
@@ -2600,7 +2600,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "EorContractToCreateEmployment",
             },
             "health_plan_id": {
-              "docs": " Healthare plan Id. You can see available healthcare plans in the country guide endpoint.",
+              "docs": "Healthare plan Id. You can see available healthcare plans in the country guide endpoint.",
               "type": "optional<string>",
             },
             "job_title": {
@@ -2634,7 +2634,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": " Enter the Id of legal entity under which you want to hire this person. Use /legal-entities endpoint to retrieve a list of legal entities in your organization.",
+              "docs": "Enter the Id of legal entity under which you want to hire this person. Use /legal-entities endpoint to retrieve a list of legal entities in your organization.",
               "type": "optional<double>",
             },
           },
@@ -2652,11 +2652,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "currency": {
-              "docs": " Salary currency.",
+              "docs": "Salary currency.",
               "type": "optional<string>",
             },
             "salary": {
-              "docs": " Employee's gross annual salary.",
+              "docs": "Employee's gross annual salary.",
               "type": "optional<double>",
             },
             "variable_compensation": {
@@ -2677,19 +2677,19 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<EorContractToCreateEmployeeAddress>",
             },
             "email": {
-              "docs": " Employee's email address.",
+              "docs": "Employee's email address.",
               "type": "optional<string>",
             },
             "first_name": {
-              "docs": " Employee's first name.",
+              "docs": "Employee's first name.",
               "type": "string",
             },
             "last_name": {
-              "docs": " Employee's last name.",
+              "docs": "Employee's last name.",
               "type": "string",
             },
             "nationality": {
-              "docs": " Employee's nationality.",
+              "docs": "Employee's nationality.",
               "type": "string",
             },
           },
@@ -2698,7 +2698,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "city": {
-              "docs": " City name.",
+              "docs": "City name.",
               "type": "optional<string>",
             },
             "country": {
@@ -2710,11 +2710,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "street": {
-              "docs": " Street and number.",
+              "docs": "Street and number.",
               "type": "optional<string>",
             },
             "zip": {
-              "docs": " Zip code.",
+              "docs": "Zip code.",
               "type": "optional<string>",
             },
           },
@@ -2739,7 +2739,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<double>",
             },
             "scope_of_work": {
-              "docs": " Scope of work description.",
+              "docs": "Scope of work description.",
               "type": "optional<string>",
             },
             "start_date": {
@@ -2759,7 +2759,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<EorContractToCreateEmploymentType>",
             },
             "work_visa_required": {
-              "docs": " Do you require Deel to apply for work visa for this person?",
+              "docs": "Do you require Deel to apply for work visa for this person?",
               "type": "optional<boolean>",
             },
           },
@@ -2798,11 +2798,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Some countries require additional employee information for employment contracts.",
           "properties": {
             "dob": {
-              "docs": " Employee's date of birth.",
+              "docs": "Employee's date of birth.",
               "type": "optional<string>",
             },
             "gender": {
-              "docs": " Employee's gender.",
+              "docs": "Employee's gender.",
               "type": "optional<string>",
             },
             "worker_type": {
@@ -2830,7 +2830,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": " Enter the Id retrieved from the seniority lookup endpoint. Enter 34 for "Not Applicable".",
+              "docs": "Enter the Id retrieved from the seniority lookup endpoint. Enter 34 for "Not Applicable".",
               "type": "optional<double>",
             },
           },
@@ -2839,11 +2839,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "adjustments_information_box": {
-              "docs": " Country specific notes and information.",
+              "docs": "Country specific notes and information.",
               "type": "optional<string>",
             },
             "currency": {
-              "docs": " Country currency.",
+              "docs": "Country currency.",
               "type": "optional<string>",
             },
             "definite_contract": {
@@ -2855,7 +2855,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<EorCountryValidationsHealthInsurance>",
             },
             "hiring_guide_country_name": {
-              "docs": " Country name.",
+              "docs": "Country name.",
               "type": "optional<string>",
             },
             "holiday": {
@@ -2863,7 +2863,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<EorCountryValidationsHoliday>",
             },
             "insurance_fee": {
-              "docs": " Insurance fee.",
+              "docs": "Insurance fee.",
               "type": "optional<string>",
             },
             "part_time_holiday": {
@@ -2887,7 +2887,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<EorCountryValidationsSickDays>",
             },
             "start_date_buffer": {
-              "docs": " Calculate employee's minimum start date using the start date buffer. Today's date + (number of business days x start_date_buffer) = Minimum start date.",
+              "docs": "Calculate employee's minimum start date using the start date buffer. Today's date + (number of business days x start_date_buffer) = Minimum start date.",
               "type": "optional<double>",
             },
             "work_schedule": {
@@ -2955,7 +2955,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Range of the number of holidays.",
           "properties": {
             "min": {
-              "docs": " Minimum number of holidays required for a legally compliant contract.",
+              "docs": "Minimum number of holidays required for a legally compliant contract.",
               "type": "optional<string>",
             },
           },
@@ -2964,7 +2964,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Holiday type and range for part-time contracts.",
           "properties": {
             "min": {
-              "docs": " Minimum number of holidays required for a legally compliant contract.",
+              "docs": "Minimum number of holidays required for a legally compliant contract.",
               "type": "optional<string>",
             },
             "type": {
@@ -2997,11 +2997,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Probation period range for part-time contracts.",
           "properties": {
             "max": {
-              "docs": " Maximum probation days allowed for a legally compliant contract.",
+              "docs": "Maximum probation days allowed for a legally compliant contract.",
               "type": "optional<double>",
             },
             "min": {
-              "docs": " Minimum probation days required for a legally compliant contract.",
+              "docs": "Minimum probation days required for a legally compliant contract.",
               "type": "optional<double>",
             },
           },
@@ -3010,11 +3010,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Probation period range.",
           "properties": {
             "max": {
-              "docs": " Maximum probation days allowed for a legally compliant contract.",
+              "docs": "Maximum probation days allowed for a legally compliant contract.",
               "type": "optional<double>",
             },
             "min": {
-              "docs": " Minimum probation days required for a legally compliant contract.",
+              "docs": "Minimum probation days required for a legally compliant contract.",
               "type": "optional<string>",
             },
           },
@@ -3023,11 +3023,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Salary range.",
           "properties": {
             "max": {
-              "docs": " Maximum wage allowed for a legally compliant contract.",
+              "docs": "Maximum wage allowed for a legally compliant contract.",
               "type": "optional<string>",
             },
             "min": {
-              "docs": " Minimum wage for a legally compliant contract.",
+              "docs": "Minimum wage for a legally compliant contract.",
               "type": "optional<string>",
             },
           },
@@ -3036,11 +3036,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "max": {
-              "docs": " Maximum number of sick days allowed for a legally compliant contract.",
+              "docs": "Maximum number of sick days allowed for a legally compliant contract.",
               "type": "optional<string>",
             },
             "min": {
-              "docs": " Minimum number of sick days required for a legally compliant contract.",
+              "docs": "Minimum number of sick days required for a legally compliant contract.",
               "type": "optional<string>",
             },
           },
@@ -3084,19 +3084,19 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "other_leave_approved": {
-              "docs": " Other type of time off days approved.",
+              "docs": "Other type of time off days approved.",
               "type": "optional<string>",
             },
             "other_leave_requested": {
-              "docs": " Other type of time off requested by the employee.",
+              "docs": "Other type of time off requested by the employee.",
               "type": "optional<string>",
             },
             "other_leave_total": {
-              "docs": " Total number of other type of time off days requested, approved and used.",
+              "docs": "Total number of other type of time off days requested, approved and used.",
               "type": "optional<string>",
             },
             "other_leave_used": {
-              "docs": " Other type of time off days used by the employee.",
+              "docs": "Other type of time off days used by the employee.",
               "type": "optional<string>",
             },
             "rollover_type": {
@@ -3104,43 +3104,43 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<EorHolidaysRolloverType>",
             },
             "sick_leave_allowed": {
-              "docs": " Maximum sick leave allowed.",
+              "docs": "Maximum sick leave allowed.",
               "type": "optional<string>",
             },
             "sick_leave_approved": {
-              "docs": " Sick days approved.",
+              "docs": "Sick days approved.",
               "type": "optional<string>",
             },
             "sick_leave_requested": {
-              "docs": " Sick days requested by the employee.",
+              "docs": "Sick days requested by the employee.",
               "type": "optional<string>",
             },
             "sick_leave_total": {
-              "docs": " Total number of sick days requested, approved and used.",
+              "docs": "Total number of sick days requested, approved and used.",
               "type": "optional<string>",
             },
             "sick_leave_used": {
-              "docs": " Sick days used by the employee.",
+              "docs": "Sick days used by the employee.",
               "type": "optional<string>",
             },
             "vacation_allowed": {
-              "docs": " Minimum vacation allowed.",
+              "docs": "Minimum vacation allowed.",
               "type": "optional<string>",
             },
             "vacation_approved": {
-              "docs": " Vacation days approved.",
+              "docs": "Vacation days approved.",
               "type": "optional<string>",
             },
             "vacation_requested": {
-              "docs": " Vacation days requested by the employee.",
+              "docs": "Vacation days requested by the employee.",
               "type": "optional<string>",
             },
             "vacation_total": {
-              "docs": " Total number of vacation days requested, approved and used.",
+              "docs": "Total number of vacation days requested, approved and used.",
               "type": "optional<string>",
             },
             "vacation_used": {
-              "docs": " Vacation days used by the employee.",
+              "docs": "Vacation days used by the employee.",
               "type": "optional<string>",
             },
             "year": {
@@ -3213,11 +3213,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<boolean>",
             },
             "days_used_end_year": {
-              "docs": " Days used at the end year.",
+              "docs": "Days used at the end year.",
               "type": "optional<string>",
             },
             "days_used_start_year": {
-              "docs": " Days used at the start year.",
+              "docs": "Days used at the start year.",
               "type": "optional<string>",
             },
             "denial_reason": {
@@ -3225,7 +3225,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "end_date_is_half_day": {
-              "docs": " Indicates if the last day of time off is a half day.",
+              "docs": "Indicates if the last day of time off is a half day.",
               "type": "optional<boolean>",
             },
             "has_multiple_dates": {
@@ -3261,7 +3261,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateTimeString>",
             },
             "start_date_is_half_day": {
-              "docs": " Indicates if the first day of time off is a half day.",
+              "docs": "Indicates if the first day of time off is a half day.",
               "type": "optional<boolean>",
             },
             "status": {
@@ -3269,7 +3269,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "TimeoffsStatusEnum",
             },
             "total_days_used": {
-              "docs": " Total number of time off days used.",
+              "docs": "Total number of time off days used.",
               "type": "optional<string>",
             },
             "type": {
@@ -3406,7 +3406,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": " Amount to be paid. Must be a positive number.",
+              "docs": "Amount to be paid. Must be a positive number.",
               "type": "optional<double>",
             },
             "calculation_type": {
@@ -3418,7 +3418,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<CurrencyCodeRequired>",
             },
             "cycle_end": {
-              "docs": " Date invoice cycle ends.",
+              "docs": "Date invoice cycle ends.",
               "type": "optional<double>",
             },
             "cycle_end_type": {
@@ -3489,11 +3489,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "This object is used for linking file attachments to your records.",
           "properties": {
             "filename": {
-              "docs": " Original filename you used to upload using attachments end-point.",
+              "docs": "Original filename you used to upload using attachments end-point.",
               "type": "string",
             },
             "key": {
-              "docs": " You can call attachments end-point, get key and URL to upload your file.",
+              "docs": "You can call attachments end-point, get key and URL to upload your file.",
               "type": "string",
             },
           },
@@ -3502,7 +3502,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": "This is the file you will upload in a multi-part form.",
           "properties": {
             "file": {
-              "docs": " Upload the file you want to attach to this entry.",
+              "docs": "Upload the file you want to attach to this entry.",
               "type": "optional<string>",
             },
           },
@@ -3545,7 +3545,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "FinalPaymentCalculatedCalculationType",
             },
             "daily_rate": {
-              "docs": " The daily rate paid.",
+              "docs": "The daily rate paid.",
               "type": "string",
             },
             "last_cycle": {
@@ -3553,19 +3553,19 @@ exports[`open api parser deel simple 1`] = `
               "type": "FinalPaymentCalculatedLastCycle",
             },
             "remaining_days": {
-              "docs": " Dais remaining to end the contract.",
+              "docs": "Dais remaining to end the contract.",
               "type": "string",
             },
             "total": {
-              "docs": " Total amount to pay.",
+              "docs": "Total amount to pay.",
               "type": "string",
             },
             "workweek_end": {
-              "docs": " The day the work week starts, 0 to 6",
+              "docs": "The day the work week starts, 0 to 6",
               "type": "double",
             },
             "workweek_start": {
-              "docs": " The day the work week starts, 0 to 6",
+              "docs": "The day the work week starts, 0 to 6",
               "type": "double",
             },
           },
@@ -3691,7 +3691,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "deleted": {
-              "docs": " Confirms the deletion.",
+              "docs": "Confirms the deletion.",
               "type": "boolean",
             },
           },
@@ -3722,27 +3722,27 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<list<HealthInsuranceProviderAttachmentsItem>>",
             },
             "client_info_banner": {
-              "docs": " Health insurance info banner.",
+              "docs": "Health insurance info banner.",
               "type": "optional<string>",
             },
             "currency": {
-              "docs": " Payment currency.",
+              "docs": "Payment currency.",
               "type": "optional<string>",
             },
             "days_to_cancel": {
-              "docs": " Days to cancel the insurance.",
+              "docs": "Days to cancel the insurance.",
               "type": "optional<string>",
             },
             "ending_rule": {
-              "docs": " Insurance cycle ending rule.",
+              "docs": "Insurance cycle ending rule.",
               "type": "optional<string>",
             },
             "fixed_price": {
-              "docs": " URL to price info.",
+              "docs": "URL to price info.",
               "type": "optional<boolean>",
             },
             "home_page_url": {
-              "docs": " Insurance provider's home page url.",
+              "docs": "Insurance provider's home page url.",
               "type": "optional<string>",
             },
             "is_available_for_new_quotes": {
@@ -3754,7 +3754,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<boolean>",
             },
             "name": {
-              "docs": " Name of insurance provider.",
+              "docs": "Name of insurance provider.",
               "type": "optional<string>",
             },
             "plans": {
@@ -3762,11 +3762,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<list<HealthInsuranceProviderPlansItem>>",
             },
             "pricing_info_link": {
-              "docs": " URL to price info.",
+              "docs": "URL to price info.",
               "type": "optional<string>",
             },
             "type": {
-              "docs": " Insurance type.",
+              "docs": "Insurance type.",
               "type": "optional<string>",
             },
           },
@@ -3788,11 +3788,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "currency": {
-              "docs": " Insurance payment currency.",
+              "docs": "Insurance payment currency.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " Insurance plan id.",
+              "docs": "Insurance plan id.",
               "type": "optional<double>",
             },
             "is_enabled": {
@@ -3800,7 +3800,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<boolean>",
             },
             "name": {
-              "docs": " Insurance plan name.",
+              "docs": "Insurance plan name.",
               "type": "optional<string>",
             },
             "price": {
@@ -3846,7 +3846,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "contract_oid": {
-              "docs": " The Hris Direct employee contract ID",
+              "docs": "The Hris Direct employee contract ID",
               "type": "string",
             },
             "employee_number": {
@@ -3896,7 +3896,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "HrisContractPartTimeEmploymentType",
             },
             "part_time_percentage": {
-              "docs": " required if employmentType is "PART_TIME"",
+              "docs": "required if employmentType is "PART_TIME"",
               "type": "double",
             },
           },
@@ -4017,7 +4017,7 @@ exports[`open api parser deel simple 1`] = `
           ],
           "properties": {
             "id": {
-              "docs": " The Hris Direct employee ID",
+              "docs": "The Hris Direct employee ID",
               "type": "optional<string>",
             },
           },
@@ -4112,7 +4112,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "agreement_id": {
-              "docs": " MSA contract id (agreement).",
+              "docs": "MSA contract id (agreement).",
               "type": "double",
             },
           },
@@ -4158,11 +4158,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<double>",
             },
             "id": {
-              "docs": " Unique identifier of the invoice.",
+              "docs": "Unique identifier of the invoice.",
               "type": "double",
             },
             "invoice_id": {
-              "docs": " Unique oid of the invoice.",
+              "docs": "Unique oid of the invoice.",
               "type": "string",
             },
             "is_offcycle": {
@@ -4202,7 +4202,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "InvoiceStatusEnum",
             },
             "total": {
-              "docs": " Total invoice amount including Fee and VAT.",
+              "docs": "Total invoice amount including Fee and VAT.",
               "type": "double",
             },
             "vat_percentage": {
@@ -4465,7 +4465,7 @@ exports[`open api parser deel simple 1`] = `
           ],
         },
         "InvoiceAdjustmentStatusEnum": {
-          "docs": " status of invoice adjustment",
+          "docs": "status of invoice adjustment",
           "type": "string",
         },
         "InvoiceAdjustmentStatusEnumList": {
@@ -4476,11 +4476,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Details of invoice adjustment to create.",
           "properties": {
             "amount": {
-              "docs": " Amount to be paid. Must be a positive number.",
+              "docs": "Amount to be paid. Must be a positive number.",
               "type": "double",
             },
             "contract_id": {
-              "docs": " Id of a Deel contract.",
+              "docs": "Id of a Deel contract.",
               "type": "string",
             },
             "date_submitted": {
@@ -4488,7 +4488,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "DateStringRequired",
             },
             "description": {
-              "docs": " Description of the adjustment.",
+              "docs": "Description of the adjustment.",
               "type": "optional<string>",
             },
             "paymentCycleId": {
@@ -4741,15 +4741,15 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "contract_type": {
-              "docs": " Type of Deel contract.",
+              "docs": "Type of Deel contract.",
               "type": "string",
             },
             "id": {
-              "docs": " Unique identifier of a Deel contract.",
+              "docs": "Unique identifier of a Deel contract.",
               "type": "string",
             },
             "name": {
-              "docs": " Contract title.",
+              "docs": "Contract title.",
               "type": "optional<string>",
             },
           },
@@ -4816,15 +4816,15 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "expires_at": {
-              "docs": " Expiration date time of download URL.",
+              "docs": "Expiration date time of download URL.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " Requested invoice id to download.",
+              "docs": "Requested invoice id to download.",
               "type": "optional<string>",
             },
             "url": {
-              "docs": " URL to requested invoice to download.",
+              "docs": "URL to requested invoice to download.",
               "type": "optional<string>",
             },
           },
@@ -4968,11 +4968,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": " Unique identifier for the job title in Deel platform.",
+              "docs": "Unique identifier for the job title in Deel platform.",
               "type": "double",
             },
             "name": {
-              "docs": " Job title.",
+              "docs": "Job title.",
               "type": "string",
             },
           },
@@ -4998,7 +4998,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "cursor": {
-              "docs": " Use for pagination to get next set of records after the given cursor.",
+              "docs": "Use for pagination to get next set of records after the given cursor.",
               "type": "string",
             },
           },
@@ -5043,7 +5043,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Additional custom info about a contract",
           "properties": {
             "documents_required": {
-              "docs": " Require the contractor to upload necessary compliance documents as per their country’s labor laws.",
+              "docs": "Require the contractor to upload necessary compliance documents as per their country’s labor laws.",
               "type": "boolean",
             },
             "is_main_income": {
@@ -5056,11 +5056,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": " Amount to be paid for the milestone.",
+              "docs": "Amount to be paid for the milestone.",
               "type": "string",
             },
             "approval_requested": {
-              "docs": " Indicates if the contractor has requested the approval for the milestone.",
+              "docs": "Indicates if the contractor has requested the approval for the milestone.",
               "type": "boolean",
             },
             "created_at": {
@@ -5068,11 +5068,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateTimeString>",
             },
             "description": {
-              "docs": " Description of milestone.",
+              "docs": "Description of milestone.",
               "type": "string",
             },
             "id": {
-              "docs": " Unique identifier for the milestone.",
+              "docs": "Unique identifier for the milestone.",
               "type": "double",
             },
             "reported_by": {
@@ -5084,11 +5084,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<MilestoneReviewedBy>",
             },
             "status": {
-              "docs": " Current status of milestone.",
+              "docs": "Current status of milestone.",
               "type": "string",
             },
             "title": {
-              "docs": " Title of milestone.",
+              "docs": "Title of milestone.",
               "type": "string",
             },
           },
@@ -5119,15 +5119,15 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": " Amount to be paid for the milestone.",
+              "docs": "Amount to be paid for the milestone.",
               "type": "string",
             },
             "description": {
-              "docs": " Description of milestone.",
+              "docs": "Description of milestone.",
               "type": "string",
             },
             "title": {
-              "docs": " Title of milestone.",
+              "docs": "Title of milestone.",
               "type": "string",
             },
           },
@@ -5136,11 +5136,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Milestone creator.",
           "properties": {
             "full_name": {
-              "docs": " Reporter's full name.",
+              "docs": "Reporter's full name.",
               "type": "string",
             },
             "id": {
-              "docs": " Reporter's unique Deel id.",
+              "docs": "Reporter's unique Deel id.",
               "type": "double",
             },
           },
@@ -5177,11 +5177,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Reviewer's information.",
           "properties": {
             "full_name": {
-              "docs": " Reviewer's full name.",
+              "docs": "Reviewer's full name.",
               "type": "string",
             },
             "id": {
-              "docs": " Reviewer's unique Deel id.",
+              "docs": "Reviewer's unique Deel id.",
               "type": "double",
             },
           },
@@ -5235,20 +5235,20 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Monthly payment details for the user",
           "properties": {
             "count": {
-              "docs": " The number of monthly payments",
+              "docs": "The number of monthly payments",
               "type": "optional<integer>",
             },
           },
         },
         "NoticePeriod": {
-          "docs": " Days before to notice the termination of contract for eather party.",
+          "docs": "Days before to notice the termination of contract for eather party.",
           "type": "double",
         },
         "OffCyclePayment": {
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": " Amount of off-cycle payment.",
+              "docs": "Amount of off-cycle payment.",
               "type": "string",
             },
             "created_at": {
@@ -5264,7 +5264,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateTimeStringRequired>",
             },
             "description": {
-              "docs": " Description of the off-cycle payment entry.",
+              "docs": "Description of the off-cycle payment entry.",
               "type": "string",
             },
             "id": {
@@ -5315,11 +5315,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "full_name": {
-              "docs": " Full name of the creator.",
+              "docs": "Full name of the creator.",
               "type": "string",
             },
             "id": {
-              "docs": " Profile id of the creator.",
+              "docs": "Profile id of the creator.",
               "type": "double",
             },
           },
@@ -5328,19 +5328,19 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "full_name": {
-              "docs": " Full name of the reviewer.",
+              "docs": "Full name of the reviewer.",
               "type": "string",
             },
             "id": {
-              "docs": " Profile if of the reviewer.",
+              "docs": "Profile if of the reviewer.",
               "type": "double",
             },
             "remarks": {
-              "docs": " Remarks made during review process.",
+              "docs": "Remarks made during review process.",
               "type": "string",
             },
             "reviewed_at": {
-              "docs": " Date of review.",
+              "docs": "Date of review.",
               "type": "string",
             },
           },
@@ -5349,7 +5349,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Details of invoice adjustment to create.",
           "properties": {
             "amount": {
-              "docs": " Amount to be paid. Must be a positive number.",
+              "docs": "Amount to be paid. Must be a positive number.",
               "type": "double",
             },
             "date_submitted": {
@@ -5357,7 +5357,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "DateStringRequired",
             },
             "description": {
-              "docs": " Description of off-cycle payment.",
+              "docs": "Description of off-cycle payment.",
               "type": "optional<string>",
             },
           },
@@ -5469,7 +5469,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateTimeString>",
             },
             "id": {
-              "docs": " Unique identifier of the payment.",
+              "docs": "Unique identifier of the payment.",
               "type": "double",
             },
             "label": {
@@ -5493,7 +5493,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "PaymentStatusEnum",
             },
             "total": {
-              "docs": " Total paid.",
+              "docs": "Total paid.",
               "type": "double",
             },
             "workers": {
@@ -5526,27 +5526,27 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "contract_country": {
-              "docs": " Country of the contract.",
+              "docs": "Country of the contract.",
               "type": "optional<string>",
             },
             "contract_start_date": {
-              "docs": " Contract start date.",
+              "docs": "Contract start date.",
               "type": "optional<string>",
             },
             "contractor_email": {
-              "docs": " Worker's email.",
+              "docs": "Worker's email.",
               "type": "optional<string>",
             },
             "contractor_employee_name": {
-              "docs": " Worker's name.",
+              "docs": "Worker's name.",
               "type": "optional<string>",
             },
             "contractor_unique_identifier": {
-              "docs": " Worker's unique identifier.",
+              "docs": "Worker's unique identifier.",
               "type": "optional<string>",
             },
             "currency": {
-              "docs": " Currency code.",
+              "docs": "Currency code.",
               "type": "optional<string>",
             },
             "date": {
@@ -5570,7 +5570,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "invoice_number": {
-              "docs": " Invoice number.",
+              "docs": "Invoice number.",
               "type": "optional<string>",
             },
             "others": {
@@ -5586,7 +5586,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "payment_date": {
-              "docs": " Date of payment.",
+              "docs": "Date of payment.",
               "type": "optional<string>",
             },
             "pro_rata": {
@@ -5606,11 +5606,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "total": {
-              "docs": " Total due.",
+              "docs": "Total due.",
               "type": "optional<string>",
             },
             "total_payment_currency": {
-              "docs": " Total in payment currency.",
+              "docs": "Total in payment currency.",
               "type": "optional<string>",
             },
             "work": {
@@ -5782,7 +5782,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "name": {
-              "docs": " Worker's full name.",
+              "docs": "Worker's full name.",
               "type": "string",
             },
             "picUrl": {
@@ -5799,7 +5799,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": "People object representing a Deel",
           "properties": {
             "birth_date": {
-              "docs": " Date of birth of the user in ISO format (yyyy-mm-dd)",
+              "docs": "Date of birth of the user in ISO format (yyyy-mm-dd)",
               "type": "optional<string>",
             },
             "client_legal_entity": {
@@ -5807,7 +5807,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<PeopleClientLegalEntity>",
             },
             "completion_date": {
-              "docs": " Date when the user's current employment is expected to end in ISO format (yyyy-mm-ddThh:mm:ss.sssZ)",
+              "docs": "Date when the user's current employment is expected to end in ISO format (yyyy-mm-ddThh:mm:ss.sssZ)",
               "type": "optional<string>",
             },
             "contract_types": {
@@ -5815,31 +5815,31 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<list<string>>",
             },
             "country": {
-              "docs": " ISO 3166-1 alpha-2 code of the country where the user is located",
+              "docs": "ISO 3166-1 alpha-2 code of the country where the user is located",
               "type": "optional<string>",
             },
             "country_name": {
-              "docs": " Name of the country where the user is located",
+              "docs": "Name of the country where the user is located",
               "type": "optional<string>",
             },
             "department": {
-              "docs": " Name of the department that the user belongs to",
+              "docs": "Name of the department that the user belongs to",
               "type": "optional<string>",
             },
             "direct_manager": {
-              "docs": " Name of the user's direct manager",
+              "docs": "Name of the user's direct manager",
               "type": "optional<string>",
             },
             "direct_reports": {
-              "docs": " Names of the user's direct reports",
+              "docs": "Names of the user's direct reports",
               "type": "optional<string>",
             },
             "direct_reports_count": {
-              "docs": " Number of direct reports that the user has",
+              "docs": "Number of direct reports that the user has",
               "type": "optional<integer>",
             },
             "email": {
-              "docs": " Email address of the user",
+              "docs": "Email address of the user",
               "type": "optional<string>",
             },
             "employments": {
@@ -5847,39 +5847,39 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<list<Employment>>",
             },
             "first_name": {
-              "docs": " First name of the user",
+              "docs": "First name of the user",
               "type": "optional<string>",
             },
             "full_name": {
-              "docs": " Full name of the user",
+              "docs": "Full name of the user",
               "type": "optional<string>",
             },
             "has_deel_user": {
-              "docs": " Indicates whether the user has a Deel account or not",
+              "docs": "Indicates whether the user has a Deel account or not",
               "type": "optional<boolean>",
             },
             "hiring_status": {
-              "docs": " Hiring status of the user",
+              "docs": "Hiring status of the user",
               "type": "optional<string>",
             },
             "hiring_type": {
-              "docs": " Type of employment contract that the user has",
+              "docs": "Type of employment contract that the user has",
               "type": "optional<string>",
             },
             "hourly_report_total": {
-              "docs": " Total amount of hours worked by the user in ISO format (hh:mm:ss)",
+              "docs": "Total amount of hours worked by the user in ISO format (hh:mm:ss)",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " Unique identifier for the user",
+              "docs": "Unique identifier for the user",
               "type": "optional<string>",
             },
             "job_title": {
-              "docs": " Title of the user's role",
+              "docs": "Title of the user's role",
               "type": "optional<string>",
             },
             "last_name": {
-              "docs": " Last name of the user",
+              "docs": "Last name of the user",
               "type": "optional<string>",
             },
             "monthly_payment": {
@@ -5891,43 +5891,43 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<list<Payment>>",
             },
             "personal_email": {
-              "docs": " Personal email address of the user",
+              "docs": "Personal email address of the user",
               "type": "optional<string>",
             },
             "pic_url": {
-              "docs": " URL of the user's profile picture",
+              "docs": "URL of the user's profile picture",
               "type": "optional<string>",
             },
             "seniority": {
-              "docs": " Seniority level of the user's role",
+              "docs": "Seniority level of the user's role",
               "type": "optional<string>",
             },
             "start_date": {
-              "docs": " Date when the user started their current employment in ISO format (yyyy-mm-dd)",
+              "docs": "Date when the user started their current employment in ISO format (yyyy-mm-dd)",
               "type": "optional<string>",
             },
             "state": {
-              "docs": " State where the user is located",
+              "docs": "State where the user is located",
               "type": "optional<string>",
             },
             "team": {
-              "docs": " Name of the team that the user belongs to",
+              "docs": "Name of the team that the user belongs to",
               "type": "optional<string>",
             },
             "team_id": {
-              "docs": " Unique identifier for the team that the user belongs to",
+              "docs": "Unique identifier for the team that the user belongs to",
               "type": "optional<integer>",
             },
             "timezone": {
-              "docs": " Time zone of the user's location",
+              "docs": "Time zone of the user's location",
               "type": "optional<string>",
             },
             "work_email": {
-              "docs": " Work email address of the user",
+              "docs": "Work email address of the user",
               "type": "optional<string>",
             },
             "work_location": {
-              "docs": " Name of the user's work location",
+              "docs": "Name of the user's work location",
               "type": "optional<string>",
             },
           },
@@ -5936,11 +5936,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": " The unique identifier for the client legal entity.",
+              "docs": "The unique identifier for the client legal entity.",
               "type": "optional<integer>",
             },
             "name": {
-              "docs": " The name of the client legal entity.",
+              "docs": "The name of the client legal entity.",
               "type": "optional<string>",
             },
           },
@@ -5970,23 +5970,23 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<CountryCodeNulleable>",
             },
             "email": {
-              "docs": " Email address of the user",
+              "docs": "Email address of the user",
               "type": "optional<string>",
             },
             "first_name": {
-              "docs": " First name of the user",
+              "docs": "First name of the user",
               "type": "optional<string>",
             },
             "full_name": {
-              "docs": " Full name of the user",
+              "docs": "Full name of the user",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " Unique identifier for the user profile",
+              "docs": "Unique identifier for the user profile",
               "type": "optional<double>",
             },
             "last_name": {
-              "docs": " Last name of the user",
+              "docs": "Last name of the user",
               "type": "optional<string>",
             },
             "middle_name": {
@@ -5994,7 +5994,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "organization_id": {
-              "docs": " Unique identifier for the organization",
+              "docs": "Unique identifier for the organization",
               "type": "optional<double>",
             },
             "organization_name": {
@@ -6014,11 +6014,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "user_id": {
-              "docs": " Unique identifier for the user",
+              "docs": "Unique identifier for the user",
               "type": "optional<double>",
             },
             "username": {
-              "docs": " Username of the user",
+              "docs": "Username of the user",
               "type": "optional<string>",
             },
           },
@@ -6031,19 +6031,19 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "contract_name": {
-              "docs": " The name of the contract associated with the payment",
+              "docs": "The name of the contract associated with the payment",
               "type": "optional<string>",
             },
             "currency": {
-              "docs": " The currency code (ISO 4217) for the payment",
+              "docs": "The currency code (ISO 4217) for the payment",
               "type": "optional<string>",
             },
             "rate": {
-              "docs": " The payment rate",
+              "docs": "The payment rate",
               "type": "optional<integer>",
             },
             "scale": {
-              "docs": " The payment scale (e.g., hourly, weekly, monthly, etc.)",
+              "docs": "The payment scale (e.g., hourly, weekly, monthly, etc.)",
               "type": "optional<string>",
             },
           },
@@ -6052,7 +6052,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": " Fixed rate for this task.",
+              "docs": "Fixed rate for this task.",
               "type": "string",
             },
             "attachment": {
@@ -6064,11 +6064,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "DateStringRequired",
             },
             "description": {
-              "docs": " Task description.",
+              "docs": "Task description.",
               "type": "string",
             },
             "id": {
-              "docs": " Unique identifier of the task.",
+              "docs": "Unique identifier of the task.",
               "type": "double",
             },
             "status": {
@@ -6141,7 +6141,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": " Fixed rate for this task.",
+              "docs": "Fixed rate for this task.",
               "type": "string",
             },
             "attachment": {
@@ -6175,11 +6175,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "calculated_premium": {
-              "docs": " Cost for Deel Premium.",
+              "docs": "Cost for Deel Premium.",
               "type": "double",
             },
             "id": {
-              "docs": " Deel Premium plan id.",
+              "docs": "Deel Premium plan id.",
               "type": "string",
             },
             "misclassification_guarantee": {
@@ -6209,11 +6209,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "description": {
-              "docs": " Cover your legal defense costs.",
+              "docs": "Cover your legal defense costs.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": " Legal costs.",
+              "docs": "Legal costs.",
               "type": "optional<string>",
             },
           },
@@ -6222,11 +6222,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "description": {
-              "docs": " Get indemnity against tax authority penalties, liabilities and fines.",
+              "docs": "Get indemnity against tax authority penalties, liabilities and fines.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": " Penalties.",
+              "docs": "Penalties.",
               "type": "optional<string>",
             },
           },
@@ -6235,11 +6235,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "description": {
-              "docs": " Get indemnity against third parties up to $10k depending on the court's decision.",
+              "docs": "Get indemnity against third parties up to $10k depending on the court's decision.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": " Third-party liabilities.",
+              "docs": "Third-party liabilities.",
               "type": "optional<string>",
             },
           },
@@ -6248,11 +6248,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "agreement_reflects_relation": {
-              "docs": " Is the Contractor Agreement selected on the Deel Platform perfectly reflecting your organizations relation and actual working practices with the contractor?",
+              "docs": "Is the Contractor Agreement selected on the Deel Platform perfectly reflecting your organizations relation and actual working practices with the contractor?",
               "type": "string",
             },
             "contractor_characteristics": {
-              "docs": " Workers doing certain jobs may be considered to be employees by law, even if they would otherwise be considered independent contractors under common law. Is the work of this worker characterized as: Apprentice, Trainee, Labourer, Driver, Medical worker, Legal worker, Construction worker or someone working in the fields of Finance/Investment?",
+              "docs": "Workers doing certain jobs may be considered to be employees by law, even if they would otherwise be considered independent contractors under common law. Is the work of this worker characterized as: Apprentice, Trainee, Labourer, Driver, Medical worker, Legal worker, Construction worker or someone working in the fields of Finance/Investment?",
               "type": "string",
             },
           },
@@ -6273,19 +6273,19 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateStringRequired>",
             },
             "cycle_work_days": {
-              "docs": " Total days to be work.",
+              "docs": "Total days to be work.",
               "type": "optional<double>",
             },
             "daily_rate": {
-              "docs": " Daily rate to be paid.",
+              "docs": "Daily rate to be paid.",
               "type": "optional<double>",
             },
             "rate": {
-              "docs": " Rate to be paid.",
+              "docs": "Rate to be paid.",
               "type": "optional<double>",
             },
             "total": {
-              "docs": " Total to be paid.",
+              "docs": "Total to be paid.",
               "type": "optional<double>",
             },
             "work_week_end": {
@@ -6359,7 +6359,7 @@ exports[`open api parser deel simple 1`] = `
           ],
         },
         "PublicId": {
-          "docs": " The public UUID of the object",
+          "docs": "The public UUID of the object",
           "type": "string",
         },
         "ResponseEstimateFirstPayment": {
@@ -6388,7 +6388,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Seniority describes level of expertise at a job e.g. junior",
           "properties": {
             "id": {
-              "docs": " Unique identifier for seniority record",
+              "docs": "Unique identifier for seniority record",
               "type": "double",
             },
             "level": {
@@ -6396,7 +6396,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<double>",
             },
             "name": {
-              "docs": " Name of seniority level e.g. Mid (Individual Contributor Level 2)",
+              "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2)",
               "type": "string",
             },
           },
@@ -6418,15 +6418,15 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Seniority describes level of expertise at a job e.g. junior",
           "properties": {
             "id": {
-              "docs": " Unique identifier for seniority record.",
+              "docs": "Unique identifier for seniority record.",
               "type": "double",
             },
             "level": {
-              "docs": " Level of seniority level e.g. 2",
+              "docs": "Level of seniority level e.g. 2",
               "type": "double",
             },
             "name": {
-              "docs": " Name of seniority level e.g. Mid (Individual Contributor Level 2)",
+              "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2)",
               "type": "string",
             },
           },
@@ -6439,7 +6439,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateTimeString>",
             },
             "worker_signature": {
-              "docs": " Worker's signature.",
+              "docs": "Worker's signature.",
               "type": "string",
             },
             "worker_signed_at": {
@@ -6452,7 +6452,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "client_signature": {
-              "docs": " normally name of client is used as signature",
+              "docs": "normally name of client is used as signature",
               "type": "string",
             },
             "client_signed_at": {
@@ -6464,7 +6464,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateTimeString>",
             },
             "worker_signature": {
-              "docs": " Signatures of client representative.",
+              "docs": "Signatures of client representative.",
               "type": "string",
             },
             "worker_signed_at": {
@@ -6492,11 +6492,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "It may be called states, provinces, prefectures or regions, or none at all",
           "properties": {
             "code": {
-              "docs": " Territory code.",
+              "docs": "Territory code.",
               "type": "string",
             },
             "name": {
-              "docs": " Territory name.",
+              "docs": "Territory name.",
               "type": "string",
             },
           },
@@ -6518,11 +6518,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": " The unique identifier for the team.",
+              "docs": "The unique identifier for the team.",
               "type": "optional<integer>",
             },
             "name": {
-              "docs": " The name of the team.",
+              "docs": "The name of the team.",
               "type": "optional<string>",
             },
           },
@@ -6557,11 +6557,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "id": {
-              "docs": " Unique reference of a team",
+              "docs": "Unique reference of a team",
               "type": "double",
             },
             "name": {
-              "docs": " Name of a team",
+              "docs": "Name of a team",
               "type": "string",
             },
           },
@@ -6570,11 +6570,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "denial_reason": {
-              "docs": " Denial reason for the time off requested.",
+              "docs": "Denial reason for the time off requested.",
               "type": "optional<string>",
             },
             "is_approved": {
-              "docs": " Approve or decline employee's time off request.",
+              "docs": "Approve or decline employee's time off request.",
               "type": "boolean",
             },
           },
@@ -6600,7 +6600,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": "A item in attachments array. 2022-09-08 FE only allows for "SICK LEAVE"",
           "properties": {
             "file_extension": {
-              "docs": " The file name extension",
+              "docs": "The file name extension",
               "type": "optional<string>",
             },
             "id": {
@@ -6608,7 +6608,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<integer>",
             },
             "label": {
-              "docs": " The file name",
+              "docs": "The file name",
               "type": "optional<string>",
             },
           },
@@ -6621,7 +6621,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "double",
             },
             "is_employee": {
-              "docs": " Only valid for requester. True if requester is an employee.",
+              "docs": "Only valid for requester. True if requester is an employee.",
               "type": "optional<boolean>",
             },
             "name": {
@@ -6945,7 +6945,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": "Details of timesheet to create; a client, contractor or EOR may create a timesheet",
           "properties": {
             "contract_id": {
-              "docs": " Id of a Deel contract.",
+              "docs": "Id of a Deel contract.",
               "type": "string",
             },
             "date_submitted": {
@@ -6957,13 +6957,13 @@ exports[`open api parser deel simple 1`] = `
               "type": "string",
             },
             "quantity": {
-              "docs": " this is based on the scale of work statement of contract agreed e.g. 2 weeks",
+              "docs": "this is based on the scale of work statement of contract agreed e.g. 2 weeks",
               "type": "double",
             },
           },
         },
         "TimesheetStatusEnum": {
-          "docs": " Status of this entry.",
+          "docs": "Status of this entry.",
           "type": "string",
         },
         "TimesheetStatusEnumList": {
@@ -7048,11 +7048,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "api_version": {
-              "docs": " Deel API version. Currently Deel only has one version: v1.",
+              "docs": "Deel API version. Currently Deel only has one version: v1.",
               "type": "string",
             },
             "created_at": {
-              "docs": " Time at which the webhook was created.",
+              "docs": "Time at which the webhook was created.",
               "type": "string",
             },
             "description": {
@@ -7068,7 +7068,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<boolean>",
             },
             "id": {
-              "docs": " Webhook subscription's unique identifier.",
+              "docs": "Webhook subscription's unique identifier.",
               "type": "double",
             },
             "name": {
@@ -7084,11 +7084,11 @@ exports[`open api parser deel simple 1`] = `
               "type": "WebhookItemStatus",
             },
             "updated_at": {
-              "docs": " Time at which the webhook was updated.",
+              "docs": "Time at which the webhook was updated.",
               "type": "string",
             },
             "url": {
-              "docs": " Endpoint to receive webhook.",
+              "docs": "Endpoint to receive webhook.",
               "type": "string",
             },
           },
@@ -7312,7 +7312,7 @@ exports[`open api parser deel simple 1`] = `
           ],
         },
         "WorkerEmailType": {
-          "docs": " Worker's email address.",
+          "docs": "Worker's email address.",
           "type": "string",
         },
         "WorkerLegalEntity": {
@@ -7381,7 +7381,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "full_name": {
-              "docs": " Worker's full name.",
+              "docs": "Worker's full name.",
               "type": "optional<string>",
             },
             "id": {
@@ -10519,7 +10519,7 @@ exports[`open api parser deel simple 1`] = `
                     "type": "root.PatchWebhookRequestStatus",
                   },
                   "url": {
-                    "docs": " Endpoint to receive webhook.",
+                    "docs": "Endpoint to receive webhook.",
                     "type": "string",
                   },
                 },
@@ -10582,7 +10582,7 @@ exports[`open api parser deel simple 1`] = `
               "body": {
                 "properties": {
                   "api_version": {
-                    "docs": " Deel API version. Currently Deel only has one version: v1.",
+                    "docs": "Deel API version. Currently Deel only has one version: v1.",
                     "type": "string",
                   },
                   "description": {
@@ -10606,7 +10606,7 @@ exports[`open api parser deel simple 1`] = `
                     "type": "root.CreateWebhookRequestStatus",
                   },
                   "url": {
-                    "docs": " Endpoint to receive webhook.",
+                    "docs": "Endpoint to receive webhook.",
                     "type": "string",
                   },
                 },

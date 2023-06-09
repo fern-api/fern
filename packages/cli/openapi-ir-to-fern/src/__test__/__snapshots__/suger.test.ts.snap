@@ -186,7 +186,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "marketCode": {
-              "docs": " ISO Country Code",
+              "docs": "ISO Country Code",
               "type": "optional<string>",
             },
           },
@@ -195,7 +195,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "marketCode": {
-              "docs": " ISO Country Code",
+              "docs": "ISO Country Code",
               "type": "optional<string>",
             },
             "state": {
@@ -233,7 +233,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "currency": {
-              "docs": " ISO 4217 currency code",
+              "docs": "ISO 4217 currency code",
               "type": "optional<string>",
             },
             "markets": {
@@ -241,7 +241,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<string>>",
             },
             "price": {
-              "docs": " default 0",
+              "docs": "default 0",
               "type": "optional<double>",
             },
             "prices": {
@@ -258,7 +258,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "acceptBy": {
-              "docs": " in format YYYY-MM-DD",
+              "docs": "in format YYYY-MM-DD",
               "type": "optional<string>",
             },
             "acceptanceLinks": {
@@ -274,15 +274,15 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "end": {
-              "docs": " in format YYYY-MM-DD",
+              "docs": "in format YYYY-MM-DD",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " in format of "private-offer/private-offer-durable-id"",
+              "docs": "in format of "private-offer/private-offer-durable-id"",
               "type": "optional<string>",
             },
             "lastModified": {
-              "docs": " in format YYYY-MM-DD",
+              "docs": "in format YYYY-MM-DD",
               "type": "optional<string>",
             },
             "name": {
@@ -310,7 +310,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "start": {
-              "docs": " in format YYYY-MM-DD, if VariableStartDate = true, this field should be empty.",
+              "docs": "in format YYYY-MM-DD, if VariableStartDate = true, this field should be empty.",
               "type": "optional<string>",
             },
             "state": {
@@ -343,7 +343,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "beneficiaryId": {
-              "docs": " The Customer Billing Account ID.",
+              "docs": "The Customer Billing Account ID.",
               "type": "optional<string>",
             },
             "link": {
@@ -364,7 +364,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "id": {
-              "docs": " the customer billing account id.",
+              "docs": "the customer billing account id.",
               "type": "optional<string>",
             },
           },
@@ -401,7 +401,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "discountPercentage": {
-              "docs": " between 0 and 100",
+              "docs": "between 0 and 100",
               "type": "optional<double>",
             },
             "discountType": {
@@ -413,7 +413,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzurePriceAndAvailabilityPrivateOfferPlan>",
             },
             "plan": {
-              "docs": " in format of "plan/product-durable-id/plan-durable-id"",
+              "docs": "in format of "plan/product-durable-id/plan-durable-id"",
               "type": "optional<string>",
             },
             "planName": {
@@ -433,7 +433,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzurePriceAndAvailabilityPrivateOfferPlan>",
             },
             "product": {
-              "docs": " in format of "product/product-durable-id"",
+              "docs": "in format of "product/product-durable-id"",
               "type": "optional<string>",
             },
             "sugerOfferId": {
@@ -548,7 +548,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<AzureMarketplaceTermType>",
             },
             "value": {
-              "docs": " default 0",
+              "docs": "default 0",
               "type": "optional<double>",
             },
           },
@@ -705,7 +705,7 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "currencyCode": {
-              "docs": " ISO currency code, Three characters",
+              "docs": "ISO currency code, Three characters",
               "type": "optional<string>",
             },
             "openPrice": {
@@ -1101,7 +1101,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureTypeValue>>",
             },
             "resourceType": {
-              "docs": " ResourceType = FeatureAvailability",
+              "docs": "ResourceType = FeatureAvailability",
               "type": "optional<string>",
             },
             "subscriptionAudiences": {
@@ -1726,7 +1726,7 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<string>",
             },
             "isBaseSchedule": {
-              "docs": " There is only one base schedule.",
+              "docs": "There is only one base schedule.",
               "type": "optional<boolean>",
             },
             "marketCodes": {
@@ -1948,14 +1948,14 @@ exports[`open api parser suger simple 1`] = `
           "docs": undefined,
           "properties": {
             "key": {
-              "docs": " One part of a key-value pair that makes up a tag. A key is a label that acts
+              "docs": "One part of a key-value pair that makes up a tag. A key is a label that acts
 like a category for the specific tag values.
 
 This member is required.",
               "type": "optional<string>",
             },
             "value": {
-              "docs": " One part of a key-value pair that makes up a tag. A value acts as a descriptor
+              "docs": "One part of a key-value pair that makes up a tag. A value acts as a descriptor
 within a tag category (key). The value can be empty or null.
 
 This member is required.",
@@ -1980,11 +1980,11 @@ This member is required.",
           "docs": undefined,
           "properties": {
             "dimension": {
-              "docs": " Dimension identifier",
+              "docs": "Dimension identifier",
               "type": "optional<string>",
             },
             "effectiveStartTime": {
-              "docs": " Time in UTC when the usage event occurred",
+              "docs": "Time in UTC when the usage event occurred",
               "type": "optional<string>",
             },
             "error": {
@@ -1992,23 +1992,23 @@ This member is required.",
               "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventConflictResponse>",
             },
             "messageTime": {
-              "docs": " Time this message was created in UTC",
+              "docs": "Time this message was created in UTC",
               "type": "optional<string>",
             },
             "planId": {
-              "docs": " Plan associated with the purchased offer",
+              "docs": "Plan associated with the purchased offer",
               "type": "optional<string>",
             },
             "quantity": {
-              "docs": " Number of units consumed",
+              "docs": "Number of units consumed",
               "type": "optional<double>",
             },
             "resourceId": {
-              "docs": " Identifier of the resource against which usage is emitted",
+              "docs": "Identifier of the resource against which usage is emitted",
               "type": "optional<string>",
             },
             "resourceUri": {
-              "docs": " Identifier of the managed app resource against which usage is emitted",
+              "docs": "Identifier of the managed app resource against which usage is emitted",
               "type": "optional<string>",
             },
             "status": {
@@ -2016,7 +2016,7 @@ This member is required.",
               "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventStatusEnum>",
             },
             "usageEventId": {
-              "docs": " Unique identifier associated with the usage event",
+              "docs": "Unique identifier associated with the usage event",
               "type": "optional<string>",
             },
           },
@@ -2051,31 +2051,31 @@ This member is required.",
           "docs": undefined,
           "properties": {
             "dimension": {
-              "docs": " Dimension identifier",
+              "docs": "Dimension identifier",
               "type": "optional<string>",
             },
             "effectiveStartTime": {
-              "docs": " Time in UTC when the usage event occurred",
+              "docs": "Time in UTC when the usage event occurred",
               "type": "optional<string>",
             },
             "messageTime": {
-              "docs": " Time this message was created in UTC",
+              "docs": "Time this message was created in UTC",
               "type": "optional<string>",
             },
             "planId": {
-              "docs": " Plan associated with the purchased offer",
+              "docs": "Plan associated with the purchased offer",
               "type": "optional<string>",
             },
             "quantity": {
-              "docs": " Number of units consumed",
+              "docs": "Number of units consumed",
               "type": "optional<double>",
             },
             "resourceId": {
-              "docs": " Identifier of the resource against which usage is emitted",
+              "docs": "Identifier of the resource against which usage is emitted",
               "type": "optional<string>",
             },
             "resourceUri": {
-              "docs": " Identifier of the managed app resource against which usage is emitted",
+              "docs": "Identifier of the managed app resource against which usage is emitted",
               "type": "optional<string>",
             },
             "status": {
@@ -2083,7 +2083,7 @@ This member is required.",
               "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1UsageEventStatusEnum>",
             },
             "usageEventId": {
-              "docs": " Unique identifier associated with the usage event",
+              "docs": "Unique identifier associated with the usage event",
               "type": "optional<string>",
             },
           },
@@ -2566,7 +2566,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
           "docs": undefined,
           "properties": {
             "operationId": {
-              "docs": " OperationId: The Operation.operation_id value from the request.",
+              "docs": "OperationId: The Operation.operation_id value from the request.",
               "type": "optional<string>",
             },
             "status": {
@@ -2594,11 +2594,11 @@ request succeeded or failed.",
               "type": "optional<list<ServicecontrolReportError>>",
             },
             "serviceConfigId": {
-              "docs": " ServiceConfigId: The actual config id used to process the request.",
+              "docs": "ServiceConfigId: The actual config id used to process the request.",
               "type": "optional<string>",
             },
             "serviceRolloutId": {
-              "docs": " ServiceRolloutId: The current service rollout id used to process the
+              "docs": "ServiceRolloutId: The current service rollout id used to process the
 request.",
               "type": "optional<string>",
             },
@@ -2608,7 +2608,7 @@ request.",
           "docs": undefined,
           "properties": {
             "code": {
-              "docs": " Code: The status code, which should be an enum value of
+              "docs": "Code: The status code, which should be an enum value of
 google.rpc.Code.",
               "type": "optional<integer>",
             },
@@ -2618,7 +2618,7 @@ common set of message types for APIs to use.",
               "type": "optional<list<list<integer>>>",
             },
             "message": {
-              "docs": " Message: A developer-facing error message, which should be in
+              "docs": "Message: A developer-facing error message, which should be in
 English. Any user-facing error message should be localized and sent
 in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
@@ -2629,7 +2629,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "creditAmountIncrement": {
-              "docs": " The amount to be added to the credit amount.",
+              "docs": "The amount to be added to the credit amount.",
               "type": "optional<double>",
             },
             "entitlementID": {
@@ -2641,7 +2641,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "newCreditAmount": {
-              "docs": " The new credit amount after the increment.",
+              "docs": "The new credit amount after the increment.",
               "type": "optional<double>",
             },
             "organizationID": {
@@ -2658,7 +2658,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "expires_in": {
-              "docs": " The token expires in 1 hour",
+              "docs": "The token expires in 1 hour",
               "type": "optional<integer>",
             },
             "token_type": {
@@ -2671,11 +2671,11 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "awsAccountID": {
-              "docs": " The AWS Account ID of the buyer in AWS Marketplace",
+              "docs": "The AWS Account ID of the buyer in AWS Marketplace",
               "type": "optional<string>",
             },
             "awsCustomerID": {
-              "docs": " The AWS Customer ID of the buyer in AWS Marketplace",
+              "docs": "The AWS Customer ID of the buyer in AWS Marketplace",
               "type": "optional<string>",
             },
             "companyInfo": {
@@ -2683,7 +2683,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedCompanyInfo>",
             },
             "dataFeedAccountID": {
-              "docs": " The Account ID in AWS Marketplace Data Feed service",
+              "docs": "The Account ID in AWS Marketplace Data Feed service",
               "type": "optional<string>",
             },
           },
@@ -2696,19 +2696,19 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedAwsIntegrationCredential>",
             },
             "partnerId": {
-              "docs": " The partner ID of the ISV/Seller in AWS Partner Network.",
+              "docs": "The partner ID of the ISV/Seller in AWS Partner Network.",
               "type": "optional<string>",
             },
             "s3BucketName": {
-              "docs": " The Name of the S3 bucket for AWS APN Customer Engagement Program (ACE) to sync the leads & opportunities.",
+              "docs": "The Name of the S3 bucket for AWS APN Customer Engagement Program (ACE) to sync the leads & opportunities.",
               "type": "optional<string>",
             },
             "s3BucketRegion": {
-              "docs": " The region of the S3 bucket for AWS APN Customer Engagement Program (ACE) to sync the leads & opportunities.",
+              "docs": "The region of the S3 bucket for AWS APN Customer Engagement Program (ACE) to sync the leads & opportunities.",
               "type": "optional<string>",
             },
             "secretKey": {
-              "docs": " The secret key used to store the AzureIntegrationCredential in AWS Secret manager. for internal usage only.",
+              "docs": "The secret key used to store the AzureIntegrationCredential in AWS Secret manager. for internal usage only.",
               "type": "optional<string>",
             },
           },
@@ -2717,15 +2717,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "accessKeyId": {
-              "docs": " The access key ID of the IAM user for Suger service to access the client's AWS services.",
+              "docs": "The access key ID of the IAM user for Suger service to access the client's AWS services.",
               "type": "optional<string>",
             },
             "iamUserArn": {
-              "docs": " The ARN of the IAM user for Suger service to access the client's AWS services.",
+              "docs": "The ARN of the IAM user for Suger service to access the client's AWS services.",
               "type": "optional<string>",
             },
             "secretAccessKey": {
-              "docs": " The secret access key of the IAM user for Suger service to access the client's AWS services.",
+              "docs": "The secret access key of the IAM user for Suger service to access the client's AWS services.",
               "type": "optional<string>",
             },
           },
@@ -2734,43 +2734,43 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": "The data struct to store integration info for Suger service to access the client's AWS services.",
           "properties": {
             "externalID": {
-              "docs": " The external ID for assuming IAM role. If empty, means no external ID set or needed. Otherwise, it should be auth_id in table identity.organization.",
+              "docs": "The external ID for assuming IAM role. If empty, means no external ID set or needed. Otherwise, it should be auth_id in table identity.organization.",
               "type": "optional<string>",
             },
             "iamRoleArn": {
-              "docs": " The AWS IAM role for Suger service to assume to access the client's AWS services.",
+              "docs": "The AWS IAM role for Suger service to assume to access the client's AWS services.",
               "type": "optional<string>",
             },
             "marketplaceStartDate": {
-              "docs": " AWS Marketplace start date which comes from MDFS Full-Sync.",
+              "docs": "AWS Marketplace start date which comes from MDFS Full-Sync.",
               "type": "optional<string>",
             },
             "mcasFullSyncDone": {
-              "docs": " Is AWS Marketplace Commerce Analytics Service (MCAS) full-sync done.",
+              "docs": "Is AWS Marketplace Commerce Analytics Service (MCAS) full-sync done.",
               "type": "optional<boolean>",
             },
             "mcasIamRoleArn": {
-              "docs": " IAM role ARN to allow AWS Marketplace to write to the S3 bucket and publish notifications to the SNS topic.",
+              "docs": "IAM role ARN to allow AWS Marketplace to write to the S3 bucket and publish notifications to the SNS topic.",
               "type": "optional<string>",
             },
             "mcasS3Bucket": {
-              "docs": " S3 bucket for AWS Marketplace Commerce Analytics Service (MCAS)",
+              "docs": "S3 bucket for AWS Marketplace Commerce Analytics Service (MCAS)",
               "type": "optional<string>",
             },
             "mcasSnsTopic": {
-              "docs": " SNS topic ARN for AWS Marketplace Commerce Analytics Service (MCAS)",
+              "docs": "SNS topic ARN for AWS Marketplace Commerce Analytics Service (MCAS)",
               "type": "optional<string>",
             },
             "mdfsFullSyncDone": {
-              "docs": " Is AWS Marketplace Data Feeds Service (MDFS) full-sync done.",
+              "docs": "Is AWS Marketplace Data Feeds Service (MDFS) full-sync done.",
               "type": "optional<boolean>",
             },
             "mdfsKmsKeyArn": {
-              "docs": " KMS Key ARN for the S3 bucket of AWS Marketplace Data Feeds Service (MDFS)",
+              "docs": "KMS Key ARN for the S3 bucket of AWS Marketplace Data Feeds Service (MDFS)",
               "type": "optional<string>",
             },
             "mdfsS3BucketArn": {
-              "docs": " S3 bucket ARN for AWS Marketplace Data Feeds Service (MDFS)",
+              "docs": "S3 bucket ARN for AWS Marketplace Data Feeds Service (MDFS)",
               "type": "optional<string>",
             },
             "policyArns": {
@@ -2778,7 +2778,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<string>>",
             },
             "revenueRecordFullSyncDone": {
-              "docs": " Is AWS Marketplace Revenue Record full-sync done.",
+              "docs": "Is AWS Marketplace Revenue Record full-sync done.",
               "type": "optional<boolean>",
             },
           },
@@ -2807,7 +2807,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedAwsSaasProductVersion>>",
             },
             "dataFeedProductId": {
-              "docs": " The product Id in AWS Marketplace Data Feed Service.",
+              "docs": "The product Id in AWS Marketplace Data Feed Service.",
               "type": "optional<string>",
             },
             "productId": {
@@ -3028,7 +3028,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedCompanyInfo>",
             },
             "emailId": {
-              "docs": " Email address",
+              "docs": "Email address",
               "type": "optional<string>",
             },
             "objectId": {
@@ -3036,7 +3036,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "puid": {
-              "docs": " ID of the user, used as External ID of suger IdentityBuyer.",
+              "docs": "ID of the user, used as External ID of suger IdentityBuyer.",
               "type": "optional<string>",
             },
             "tenantId": {
@@ -3070,7 +3070,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "cmaFullSyncDone": {
-              "docs": " Is Azure Commercial Marketplace Analytics (CMA) full-sync done.",
+              "docs": "Is Azure Commercial Marketplace Analytics (CMA) full-sync done.",
               "type": "optional<boolean>",
             },
             "credential": {
@@ -3078,7 +3078,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedAzureIntegrationCredential>",
             },
             "secretKey": {
-              "docs": " The secret key used to store the AzureIntegrationCredential in AWS Secret manager. for internal usage only.",
+              "docs": "The secret key used to store the AzureIntegrationCredential in AWS Secret manager. for internal usage only.",
               "type": "optional<string>",
             },
           },
@@ -3099,11 +3099,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "expiresOn": {
-              "docs": " The time when the access token expires.",
+              "docs": "The time when the access token expires.",
               "type": "optional<string>",
             },
             "refreshToken": {
-              "docs": " The refresh token used to refresh the access token.",
+              "docs": "The refresh token used to refresh the access token.",
               "type": "optional<string>",
             },
             "tenantID": {
@@ -3322,11 +3322,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedAzureAdIdentifier>",
             },
             "collectableAmount": {
-              "docs": " The amount that the seller can collect. It excludes the marketplace commision fee.",
+              "docs": "The amount that the seller can collect. It excludes the marketplace commision fee.",
               "type": "optional<double>",
             },
             "disbursedAmount": {
-              "docs": " The amount that has been disbursed to the seller account.",
+              "docs": "The amount that has been disbursed to the seller account.",
               "type": "optional<double>",
             },
             "gcpBuyer": {
@@ -3334,7 +3334,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedGcpMarketplaceUserAccount>",
             },
             "invoicedAmount": {
-              "docs": " The amount that the buyer has got invoiced.",
+              "docs": "The amount that the buyer has got invoiced.",
               "type": "optional<double>",
             },
           },
@@ -3351,35 +3351,35 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "isUserCreated": {
-              "docs": " Whether this commit dimension is newly created by user when creating AWS Marketplace Contract private offer.",
+              "docs": "Whether this commit dimension is newly created by user when creating AWS Marketplace Contract private offer.",
               "type": "optional<boolean>",
             },
             "key": {
-              "docs": " API name of the dimension",
+              "docs": "API name of the dimension",
               "type": "optional<string>",
             },
             "length": {
-              "docs": " The term length for the commit amount, such as 6 months, or 1 year. length is used together with timeUnit",
+              "docs": "The term length for the commit amount, such as 6 months, or 1 year. length is used together with timeUnit",
               "type": "optional<integer>",
             },
             "maximumUsers": {
-              "docs": " The maximum number of users for PER_USER commit",
+              "docs": "The maximum number of users for PER_USER commit",
               "type": "optional<integer>",
             },
             "minimumUsers": {
-              "docs": " The minimum number of users for PER_USER commit",
+              "docs": "The minimum number of users for PER_USER commit",
               "type": "optional<integer>",
             },
             "name": {
-              "docs": " Display name of the dimension",
+              "docs": "Display name of the dimension",
               "type": "optional<string>",
             },
             "quantity": {
-              "docs": " The quantity of this commit.",
+              "docs": "The quantity of this commit.",
               "type": "optional<integer>",
             },
             "rate": {
-              "docs": " The commit amount.",
+              "docs": "The commit amount.",
               "type": "optional<double>",
             },
             "timeUnit": {
@@ -3519,7 +3519,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "autoRenew": {
-              "docs": " Is this Entitlement Auto Renew enabled.",
+              "docs": "Is this Entitlement Auto Renew enabled.",
               "type": "optional<boolean>",
             },
             "awsEntitlements": {
@@ -3531,11 +3531,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedAzureMarketplaceSubscription>>",
             },
             "collectableAmount": {
-              "docs": " The amount that the seller can collect. It excludes the marketplace commision fee.",
+              "docs": "The amount that the seller can collect. It excludes the marketplace commision fee.",
               "type": "optional<double>",
             },
             "commitAmount": {
-              "docs": " The amount that the buyer has committed to pay. It can be the sum of payment installments if applicable.",
+              "docs": "The amount that the buyer has committed to pay. It can be the sum of payment installments if applicable.",
               "type": "optional<double>",
             },
             "commits": {
@@ -3543,7 +3543,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedCommitDimension>>",
             },
             "currency": {
-              "docs": " The default Currency is USD.",
+              "docs": "The default Currency is USD.",
               "type": "optional<string>",
             },
             "dimensions": {
@@ -3551,11 +3551,11 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedMeteringDimension>>",
             },
             "disbursedAmount": {
-              "docs": " The amount that has been disbursed to the seller account.",
+              "docs": "The amount that has been disbursed to the seller account.",
               "type": "optional<double>",
             },
             "discount": {
-              "docs": " The rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
+              "docs": "The rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
               "type": "optional<double>",
             },
             "eulaType": {
@@ -3575,7 +3575,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedGcpPurchasePlan>>",
             },
             "invoicedAmount": {
-              "docs": " The amount that the buyer has got invoiced.",
+              "docs": "The amount that the buyer has got invoiced.",
               "type": "optional<double>",
             },
             "paymentInstallments": {
@@ -3795,7 +3795,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "icon": {
-              "docs": " In format of "base64://..."",
+              "docs": "In format of "base64://..."",
               "type": "optional<string>",
             },
             "searchCategories": {
@@ -3819,7 +3819,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedGcpCommerceProducerSupportSpec>",
             },
             "title": {
-              "docs": " The product title.",
+              "docs": "The product title.",
               "type": "optional<string>",
             },
           },
@@ -3828,15 +3828,15 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "currencyCode": {
-              "docs": " ISO currency code, Three UPPER_CASE characters",
+              "docs": "ISO currency code, Three UPPER_CASE characters",
               "type": "optional<string>",
             },
             "nanos": {
-              "docs": " Decimal part of the price. For example, 2000000 = 0.002, 200000000 = 0.2",
+              "docs": "Decimal part of the price. For example, 2000000 = 0.002, 200000000 = 0.2",
               "type": "optional<integer>",
             },
             "units": {
-              "docs": " Integer part of the price.",
+              "docs": "Integer part of the price.",
               "type": "optional<integer>",
             },
           },
@@ -3928,7 +3928,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "endUsageAmount": {
-              "docs": " The usage amount below which this tier is effective.",
+              "docs": "The usage amount below which this tier is effective.",
               "type": "optional<double>",
             },
             "price": {
@@ -3936,7 +3936,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedGcpCommerceProducerPrice>",
             },
             "startUsageAmount": {
-              "docs": " The usage amount beyond which this tier is effective.",
+              "docs": "The usage amount beyond which this tier is effective.",
               "type": "optional<double>",
             },
           },
@@ -3945,11 +3945,11 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "displayQuantity": {
-              "docs": " Default value is 1.",
+              "docs": "Default value is 1.",
               "type": "optional<integer>",
             },
             "metricId": {
-              "docs": " the usage metering dimension key",
+              "docs": "the usage metering dimension key",
               "type": "optional<string>",
             },
             "priceTiers": {
@@ -3976,7 +3976,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "description": {
-              "docs": " Description: A detailed description of the metric, which can be used in documentation.",
+              "docs": "Description: A detailed description of the metric, which can be used in documentation.",
               "type": "optional<string>",
             },
             "displayName": {
@@ -3992,7 +3992,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " The usage metering dimension key, in format of "{plan_key}_{usage_dimension_key}"",
+              "docs": "The usage metering dimension key, in format of "{plan_key}_{usage_dimension_key}"",
               "type": "optional<string>",
             },
             "metricKind": {
@@ -4000,7 +4000,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": " Name: The resource name of the metric descriptor, in format of "{service_name}/{plan_key}_{usage_dimension_key}"",
+              "docs": "Name: The resource name of the metric descriptor, in format of "{service_name}/{plan_key}_{usage_dimension_key}"",
               "type": "optional<string>",
             },
             "reportingUnit": {
@@ -4051,7 +4051,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<SharedGcpCommerceProducerPurchaseMetric>>",
             },
             "name": {
-              "docs": " In format of "{product-name}.endpoints.{provider-id}.cloud.goog"",
+              "docs": "In format of "{product-name}.endpoints.{provider-id}.cloud.goog"",
               "type": "optional<string>",
             },
             "producerProjectId": {
@@ -4059,7 +4059,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "title": {
-              "docs": " The Product title",
+              "docs": "The Product title",
               "type": "optional<string>",
             },
           },
@@ -4097,23 +4097,23 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "partnerId": {
-              "docs": " The GCP Marketplace Partner ID, it is also called as Provider ID somewhere.",
+              "docs": "The GCP Marketplace Partner ID, it is also called as Provider ID somewhere.",
               "type": "optional<string>",
             },
             "pubsubTopic": {
-              "docs": " The resource name of the Pub/Sub topic to receive notifications from Google when a user signs up for your service, purchases a plan, or changes an existing plan.",
+              "docs": "The resource name of the Pub/Sub topic to receive notifications from Google when a user signs up for your service, purchases a plan, or changes an existing plan.",
               "type": "optional<string>",
             },
             "reportBucket": {
-              "docs": " The GCP storage bucket name to store the GCP Marketplace reports.",
+              "docs": "The GCP storage bucket name to store the GCP Marketplace reports.",
               "type": "optional<string>",
             },
             "reportFullSyncDone": {
-              "docs": " Is GCP Marketplace Report full-sync done.",
+              "docs": "Is GCP Marketplace Report full-sync done.",
               "type": "optional<boolean>",
             },
             "reportStartDate": {
-              "docs": " The UTC date when GCP Marketplace reprots start to generate.",
+              "docs": "The UTC date when GCP Marketplace reprots start to generate.",
               "type": "optional<string>",
             },
             "serviceAccountEmail": {
@@ -4134,7 +4134,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "project": {
-              "docs": " The project name with format \`projects/\`.",
+              "docs": "The project name with format \`projects/\`.",
               "type": "optional<string>",
             },
           },
@@ -4143,7 +4143,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "docs": undefined,
           "properties": {
             "account": {
-              "docs": " The resource name of the account that this entitlement is based on, if any, in format ""providers/{provider_id}/accounts/{account_id}"",
+              "docs": "The resource name of the account that this entitlement is based on, if any, in format ""providers/{provider_id}/accounts/{account_id}"",
               "type": "optional<string>",
             },
             "consumers": {
@@ -4155,7 +4155,7 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " Entitlement Id generated by GCP Marketplace. For Marketplace pub/sub event.",
+              "docs": "Entitlement Id generated by GCP Marketplace. For Marketplace pub/sub event.",
               "type": "optional<string>",
             },
             "inputProperties": {
@@ -4163,30 +4163,30 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<list<integer>>",
             },
             "messageToUser": {
-              "docs": " Provider-supplied message that is displayed to the end user. Currently this is used to communicate progress and ETA for
+              "docs": "Provider-supplied message that is displayed to the end user. Currently this is used to communicate progress and ETA for
 provisioning. This field can be updated only when a user is waiting for an action from the provider, i.e. entitlement state is
 EntitlementState.ENTITLEMENT_ACTIVATION_REQUESTED or EntitlementState.ENTITLEMENT_PENDING_PLAN_CHANGE_APPROVAL. This field is cleared automatically when the entitlement state changes.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": " The resource name of the entitlement. Entitlement names have the form \`providers/{provider_id}/entitlements/{entitlement_id}\`.",
+              "docs": "The resource name of the entitlement. Entitlement names have the form \`providers/{provider_id}/entitlements/{entitlement_id}\`.",
               "type": "optional<string>",
             },
             "newOfferDuration": {
-              "docs": " in ISO 8601 duration format, such as "P2Y3M". For Marketplace pub/sub event.",
+              "docs": "in ISO 8601 duration format, such as "P2Y3M". For Marketplace pub/sub event.",
               "type": "optional<string>",
             },
             "newOfferEndTime": {
-              "docs": " Output only. The end time of the new offer. Field is empty if the pending plan change is not moving to an offer.
+              "docs": "Output only. The end time of the new offer. Field is empty if the pending plan change is not moving to an offer.
 If the offer was created with a term instead of a specified end date, this field is empty.",
               "type": "optional<string>",
             },
             "newOfferStartTime": {
-              "docs": " Output only. The start time of the new offer. Field is empty if the pending plan change is not moving to an offer.",
+              "docs": "Output only. The start time of the new offer. Field is empty if the pending plan change is not moving to an offer.",
               "type": "optional<string>",
             },
             "newPendingOffer": {
-              "docs": " The name of the offer the entitlement is switching to upon a pending plan change. Only exists if the
+              "docs": "The name of the offer the entitlement is switching to upon a pending plan change. Only exists if the
 pending plan change is moving to an offer. Format:
 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR
 'projects/{project}/services/{service}/standardOffers/{offer-id}',
@@ -4194,51 +4194,51 @@ depending on whether the offer is private or public.",
               "type": "optional<string>",
             },
             "newPendingOfferDuration": {
-              "docs": " The offer duration of the new offer in ISO 8601 duration format. Field is empty if the pending plan
+              "docs": "The offer duration of the new offer in ISO 8601 duration format. Field is empty if the pending plan
 change is not moving to an offer since the entitlement is not pending, only the plan change is pending.",
               "type": "optional<string>",
             },
             "newPendingPlan": {
-              "docs": " The identifier of the pending new plan. Required if the product has plans and the entitlement has a pending plan change.",
+              "docs": "The identifier of the pending new plan. Required if the product has plans and the entitlement has a pending plan change.",
               "type": "optional<string>",
             },
             "newPlan": {
-              "docs": " When the buyer changes plan, For Marketplace pub/sub event.",
+              "docs": "When the buyer changes plan, For Marketplace pub/sub event.",
               "type": "optional<string>",
             },
             "offer": {
-              "docs": " The name of the offer that was procured. Field is empty if order was not made using an offer. Format:
+              "docs": "The name of the offer that was procured. Field is empty if order was not made using an offer. Format:
 'projects/{project}/services/{service}/privateOffers/{offer-id}' OR 'projects/{project}/services/{service}/standardOffers/{offer-id}',
 depending on whether the offer is private or public.",
               "type": "optional<string>",
             },
             "offerDuration": {
-              "docs": " The offer duration of the current offer in ISO 8601 duration format. Field is empty if entitlement was not made using an offer, such as "P1Y", "P2M"",
+              "docs": "The offer duration of the current offer in ISO 8601 duration format. Field is empty if entitlement was not made using an offer, such as "P1Y", "P2M"",
               "type": "optional<string>",
             },
             "offerEndTime": {
-              "docs": " Output only. End time for the Offer association corresponding to this entitlement. The field is only populated if the entitlement is currently associated with an Offer.",
+              "docs": "Output only. End time for the Offer association corresponding to this entitlement. The field is only populated if the entitlement is currently associated with an Offer.",
               "type": "optional<string>",
             },
             "plan": {
-              "docs": " The identifier of the plan that was procured. Required if the product has plans.",
+              "docs": "The identifier of the plan that was procured. Required if the product has plans.",
               "type": "optional<string>",
             },
             "product": {
-              "docs": " The identifier of the entity that was purchased. This may actually represent a product, quote, or offer.
+              "docs": "The identifier of the entity that was purchased. This may actually represent a product, quote, or offer.
 For Private offer, "projects/project-id/services/product-id.endpoints.partner-id.cloud.goog/privateOffers/private-offer-id"",
               "type": "optional<string>",
             },
             "productExternalName": {
-              "docs": " The identifier of the product that was procured.",
+              "docs": "The identifier of the product that was procured.",
               "type": "optional<string>",
             },
             "provider": {
-              "docs": " The ID of the service provider under Cloud Commerce platform that this entitlement was created against.",
+              "docs": "The ID of the service provider under Cloud Commerce platform that this entitlement was created against.",
               "type": "optional<string>",
             },
             "quoteExternalName": {
-              "docs": " The identifier of the quote that was used to procure, such as the private offer Id. Empty if the order is not purchased using a quote.",
+              "docs": "The identifier of the quote that was used to procure, such as the private offer Id. Empty if the order is not purchased using a quote.",
               "type": "optional<string>",
             },
             "state": {
@@ -4246,15 +4246,15 @@ For Private offer, "projects/project-id/services/product-id.endpoints.partner-id
               "type": "optional<SharedGcpMarketplaceEntitlementState>",
             },
             "subscriptionEndTime": {
-              "docs": " The End time for the subscription corresponding to this entitlement.",
+              "docs": "The End time for the subscription corresponding to this entitlement.",
               "type": "optional<string>",
             },
             "updateTime": {
-              "docs": " The last update timestamp. It is the endTime for the cancelled entitlement.",
+              "docs": "The last update timestamp. It is the endTime for the cancelled entitlement.",
               "type": "optional<string>",
             },
             "usageReportingId": {
-              "docs": " The consumerId to use when reporting usage through the Service Control API. See the consumerId field at
+              "docs": "The consumerId to use when reporting usage through the Service Control API. See the consumerId field at
 Reporting Metrics (https://cloud.google.com/service-control/reporting-metrics) for more details.
 This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
@@ -4318,7 +4318,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " GCP Marketplace User Account ID.",
+              "docs": "GCP Marketplace User Account ID.",
               "type": "optional<string>",
             },
             "inputProperties": {
@@ -4326,11 +4326,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<integer>>",
             },
             "name": {
-              "docs": " The resource name of the account. Account names have the form providers/{provider_id}/accounts/{account_id}.",
+              "docs": "The resource name of the account. Account names have the form providers/{provider_id}/accounts/{account_id}.",
               "type": "optional<string>",
             },
             "provider": {
-              "docs": " The identifier of the service provider (SaaS Seller) that this account was created against.",
+              "docs": "The identifier of the service provider (SaaS Seller) that this account was created against.",
               "type": "optional<string>",
             },
             "state": {
@@ -4338,7 +4338,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedGcpMarketplaceUserAccountState>",
             },
             "updateTime": {
-              "docs": " RFC3339 UTC timestamp",
+              "docs": "RFC3339 UTC timestamp",
               "type": "optional<string>",
             },
             "userInfo": {
@@ -4355,7 +4355,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "reason": {
-              "docs": " An explanation for the state of the approval.",
+              "docs": "An explanation for the state of the approval.",
               "type": "optional<string>",
             },
             "state": {
@@ -4363,7 +4363,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedGcpMarketplaceUserAccountApprovalState>",
             },
             "updateTime": {
-              "docs": " RFC3339 UTC timestamp",
+              "docs": "RFC3339 UTC timestamp",
               "type": "optional<string>",
             },
           },
@@ -4416,7 +4416,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " Nullable, GCP Marketplace Product UUID",
+              "docs": "Nullable, GCP Marketplace Product UUID",
               "type": "optional<string>",
             },
             "listingSpec": {
@@ -4428,11 +4428,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedGcpProductMarketplace>",
             },
             "name": {
-              "docs": " In format of "projects/{project-number}/listings/{product-name}.endpoints.{provider-id}.cloud.goog"",
+              "docs": "In format of "projects/{project-number}/listings/{product-name}.endpoints.{provider-id}.cloud.goog"",
               "type": "optional<string>",
             },
             "service": {
-              "docs": " In format of "services/{product-name}.endpoints.{provider-id}.cloud.goog"",
+              "docs": "In format of "services/{product-name}.endpoints.{provider-id}.cloud.goog"",
               "type": "optional<string>",
             },
             "serviceConfig": {
@@ -4455,7 +4455,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": " The Plan key.",
+              "docs": "The Plan key.",
               "type": "optional<string>",
             },
             "priceInfo": {
@@ -4467,7 +4467,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedGcpPurchasePlanPurchaseMode>",
             },
             "title": {
-              "docs": " The Plan title",
+              "docs": "The Plan title",
               "type": "optional<string>",
             },
           },
@@ -4490,7 +4490,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<string>>",
             },
             "user_identity": {
-              "docs": " The user's obfuscated GAIA ID, which can be used to initiate Open ID Connect.",
+              "docs": "The user's obfuscated GAIA ID, which can be used to initiate Open ID Connect.",
               "type": "optional<string>",
             },
           },
@@ -4533,7 +4533,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "acquiredOn": {
-              "docs": " UTC timestamp on receiving the auth response",
+              "docs": "UTC timestamp on receiving the auth response",
               "type": "optional<integer>",
             },
             "expiresIn": {
@@ -4554,7 +4554,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedHubspotCrmCredential>",
             },
             "portalId": {
-              "docs": " Hubspot Account Id",
+              "docs": "Hubspot Account Id",
               "type": "optional<integer>",
             },
             "secretKey": {
@@ -4820,7 +4820,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": " Display name of the dimension",
+              "docs": "Display name of the dimension",
               "type": "optional<string>",
             },
             "rate": {
@@ -4940,11 +4940,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<GithubComSugerioMarketplaceServiceAzureSdkMarketplacemeteringv1BatchUsageEventOkResponse>",
             },
             "commitAmount": {
-              "docs": " The amount of the commit if applicable.",
+              "docs": "The amount of the commit if applicable.",
               "type": "optional<double>",
             },
             "creditAmount": {
-              "docs": " The amount of the credit if applicable.",
+              "docs": "The amount of the credit if applicable.",
               "type": "optional<double>",
             },
             "creditRecords": {
@@ -4956,7 +4956,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<map<string, double>>",
             },
             "endTime": {
-              "docs": " time in UTC when the UsageRecordReport ends",
+              "docs": "time in UTC when the UsageRecordReport ends",
               "type": "optional<string>",
             },
             "gcpMeteringResponse": {
@@ -4972,7 +4972,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<map<string, double>>",
             },
             "startTime": {
-              "docs": " time in UTC when the UsageRecordReport starts",
+              "docs": "time in UTC when the UsageRecordReport starts",
               "type": "optional<string>",
             },
             "usageRecordGroupIds": {
@@ -4980,19 +4980,19 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<string>>",
             },
             "usedCommitAmount": {
-              "docs": " The amount of the used commit before the this usage record report if applicable.",
+              "docs": "The amount of the used commit before the this usage record report if applicable.",
               "type": "optional<double>",
             },
             "usedCommitAmountIncrement": {
-              "docs": " The amount of the used commit increment in this usage record report if applicable.",
+              "docs": "The amount of the used commit increment in this usage record report if applicable.",
               "type": "optional<double>",
             },
             "usedCreditAmount": {
-              "docs": " The amount of the used credit before the this usage record report if applicable.",
+              "docs": "The amount of the used credit before the this usage record report if applicable.",
               "type": "optional<double>",
             },
             "usedCreditAmountIncrement": {
-              "docs": " The amount of the used credit increment in this usage record report if applicable.",
+              "docs": "The amount of the used credit increment in this usage record report if applicable.",
               "type": "optional<double>",
             },
           },
@@ -5017,7 +5017,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedEntityType>",
             },
             "eventID": {
-              "docs": " notification event id.",
+              "docs": "notification event id.",
               "type": "optional<string>",
             },
             "eventStatus": {
@@ -5025,7 +5025,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<SharedNotificationEventStatus>",
             },
             "lastUpdateTime": {
-              "docs": " timestamp of the event when it is updated.",
+              "docs": "timestamp of the event when it is updated.",
               "type": "optional<string>",
             },
             "message": {
@@ -5033,11 +5033,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "organizationID": {
-              "docs": " suger organization id.",
+              "docs": "suger organization id.",
               "type": "optional<string>",
             },
             "timestamp": {
-              "docs": " timestamp of the event when it is scheduled or created.",
+              "docs": "timestamp of the event when it is scheduled or created.",
               "type": "optional<string>",
             },
           },
@@ -5168,7 +5168,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedMeteringDimension>>",
             },
             "discount": {
-              "docs": " The rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
+              "docs": "The rate of discount (0 ~ 1.0), such as 0.1 which is 10% off. 0 which is no discount.",
               "type": "optional<double>",
             },
             "eulaType": {
@@ -5192,7 +5192,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedPaymentInstallment>>",
             },
             "privateOfferUrl": {
-              "docs": " The URL of the private offer sent to buyers to accept. Only applicable for private offer.",
+              "docs": "The URL of the private offer sent to buyers to accept. Only applicable for private offer.",
               "type": "optional<string>",
             },
             "refundCancelationPolicy": {
@@ -5228,7 +5228,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "baseAgreementId": {
-              "docs": " Applicable for AWS Marketplace only, when the IsAgreementBasedOffer is true.",
+              "docs": "Applicable for AWS Marketplace only, when the IsAgreementBasedOffer is true.",
               "type": "optional<string>",
             },
             "contacts": {
@@ -5236,11 +5236,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<list<SharedContact>>",
             },
             "isAgreementBasedOffer": {
-              "docs": " Applicable for AWS Marketplace only, If this offer is agreement based offer.",
+              "docs": "Applicable for AWS Marketplace only, If this offer is agreement based offer.",
               "type": "optional<boolean>",
             },
             "isRenewalOffer": {
-              "docs": " Applicable for AWS Marketplace only, If this offer is renewal offer.",
+              "docs": "Applicable for AWS Marketplace only, If this offer is renewal offer.",
               "type": "optional<boolean>",
             },
             "notifications": {
@@ -5257,7 +5257,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": " Operation ID.",
+              "docs": "Operation ID.",
               "type": "optional<string>",
             },
             "message": {
@@ -5358,7 +5358,7 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": " The revenue amount for the revenue report",
+              "docs": "The revenue amount for the revenue report",
               "type": "optional<double>",
             },
             "buyerID": {
@@ -5366,15 +5366,15 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "collectableAmount": {
-              "docs": " The revenue amount that the seller/ISV can collect.",
+              "docs": "The revenue amount that the seller/ISV can collect.",
               "type": "optional<double>",
             },
             "currency": {
-              "docs": " The currency of the revenue in ISO 4217 format, such as "USD".",
+              "docs": "The currency of the revenue in ISO 4217 format, such as "USD".",
               "type": "optional<string>",
             },
             "date": {
-              "docs": " The date for the revenue report",
+              "docs": "The date for the revenue report",
               "type": "optional<string>",
             },
             "disburseAmount": {
@@ -5583,7 +5583,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "subdomain": {
-              "docs": " User defined when setting up the integration",
+              "docs": "User defined when setting up the integration",
               "type": "optional<string>",
             },
           },
@@ -5645,7 +5645,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "scope": {
-              "docs": " The scope of the access token. multiple scopes are separated by comma.",
+              "docs": "The scope of the access token. multiple scopes are separated by comma.",
               "type": "optional<string>",
             },
             "team": {
@@ -5692,15 +5692,15 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "creditCount": {
-              "docs": " The count of this dimension usage records that are handled as credit.",
+              "docs": "The count of this dimension usage records that are handled as credit.",
               "type": "optional<double>",
             },
             "includedCount": {
-              "docs": " The count of this dimension usage records that are handled as included in IncludedBaseQuantity",
+              "docs": "The count of this dimension usage records that are handled as included in IncludedBaseQuantity",
               "type": "optional<double>",
             },
             "reportedCount": {
-              "docs": " The count of this dimension usage records that are reported to cloud vendors.",
+              "docs": "The count of this dimension usage records that are reported to cloud vendors.",
               "type": "optional<double>",
             },
           },
@@ -5778,7 +5778,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "endTime": {
-              "docs": " nullable",
+              "docs": "nullable",
               "type": "optional<string>",
             },
             "entitlementTermID": {
@@ -5923,7 +5923,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<double>",
             },
             "endTime": {
-              "docs": " nullable",
+              "docs": "nullable",
               "type": "optional<string>",
             },
             "entitlementID": {
@@ -6022,11 +6022,11 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "endTime": {
-              "docs": " nullable",
+              "docs": "nullable",
               "type": "optional<string>",
             },
             "expireTime": {
-              "docs": " nullable",
+              "docs": "nullable",
               "type": "optional<string>",
             },
             "externalID": {
@@ -6423,7 +6423,7 @@ This field is present only if the product has usage-based billing configured.",
               "type": "optional<string>",
             },
             "valid": {
-              "docs": " Valid is true if Time is not NULL",
+              "docs": "Valid is true if Time is not NULL",
               "type": "optional<boolean>",
             },
           },
@@ -6432,19 +6432,19 @@ This field is present only if the product has usage-based billing configured.",
           "docs": undefined,
           "properties": {
             "customerIdentifier": {
-              "docs": " The customer identifier is a handle to each unique customer in an application.
+              "docs": "The customer identifier is a handle to each unique customer in an application.
 Customer identifiers are obtained through the ResolveCustomer operation in AWS
 Marketplace Metering Service.",
               "type": "optional<string>",
             },
             "dimension": {
-              "docs": " The dimension for which the given entitlement applies. Dimensions represent
+              "docs": "The dimension for which the given entitlement applies. Dimensions represent
 categories of capacity in a product and are specified when the product is listed
 in AWS Marketplace.",
               "type": "optional<string>",
             },
             "expirationDate": {
-              "docs": " The expiration date represents the minimum date through which this entitlement
+              "docs": "The expiration date represents the minimum date through which this entitlement
 is expected to remain valid. For contractual products listed on AWS Marketplace,
 the expiration date is the date at which the customer will renew or cancel their
 contract. Customers who are opting to renew their contract will still have
@@ -6452,7 +6452,7 @@ entitlements with an expiration date.",
               "type": "optional<string>",
             },
             "productCode": {
-              "docs": " The product code for which the given entitlement applies. Product codes are
+              "docs": "The product code for which the given entitlement applies. Product codes are
 provided by AWS Marketplace when the product listing is created.",
               "type": "optional<string>",
             },
@@ -6466,7 +6466,7 @@ provided by AWS Marketplace when the product listing is created.",
           "docs": undefined,
           "properties": {
             "allocatedUsageQuantity": {
-              "docs": " The total quantity allocated to this bucket of usage.
+              "docs": "The total quantity allocated to this bucket of usage.
 
 This member is required.",
               "type": "optional<integer>",
@@ -6482,26 +6482,26 @@ tags, this parameter can be left out.",
           "docs": undefined,
           "properties": {
             "customerIdentifier": {
-              "docs": " The CustomerIdentifier is obtained through the ResolveCustomer operation and
+              "docs": "The CustomerIdentifier is obtained through the ResolveCustomer operation and
 represents an individual buyer in your application.
 
 This member is required.",
               "type": "optional<string>",
             },
             "dimension": {
-              "docs": " During the process of registering a product on AWS Marketplace, dimensions are
+              "docs": "During the process of registering a product on AWS Marketplace, dimensions are
 specified. These represent different units of value in your application.
 
 This member is required.",
               "type": "optional<string>",
             },
             "quantity": {
-              "docs": " The quantity of usage consumed by the customer for the given dimension and time.
+              "docs": "The quantity of usage consumed by the customer for the given dimension and time.
 Defaults to 0 if not specified.",
               "type": "optional<integer>",
             },
             "timestamp": {
-              "docs": " Timestamp, in UTC, for which the usage is being reported. Your application can
+              "docs": "Timestamp, in UTC, for which the usage is being reported. Your application can
 meter usage for up to one hour in the past. Make sure the timestamp value is not
 before the start of the software usage.
 
@@ -6519,7 +6519,7 @@ must equal the Quantity of the UsageRecord.",
           "docs": undefined,
           "properties": {
             "meteringRecordId": {
-              "docs": " The MeteringRecordId is a unique identifier for this metering event.",
+              "docs": "The MeteringRecordId is a unique identifier for this metering event.",
               "type": "optional<string>",
             },
             "status": {
@@ -6671,7 +6671,7 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "id": {
-                    "docs": " The ID of the API Client.",
+                    "docs": "The ID of the API Client.",
                     "type": "string",
                   },
                   "organizationID": {
@@ -6679,7 +6679,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "type": "string",
                   },
                   "secret": {
-                    "docs": " The secret of the API Client.",
+                    "docs": "The secret of the API Client.",
                     "type": "string",
                   },
                 },
@@ -6832,7 +6832,7 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "creditAmountIncrement": {
-                    "docs": " The amount to be added to the credit amount.",
+                    "docs": "The amount to be added to the credit amount.",
                     "type": "double",
                   },
                   "entitlementID": {
@@ -7709,7 +7709,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "type": "string",
                   },
                   "id": {
-                    "docs": " uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
+                    "docs": "uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
                     "type": "optional<string>",
                   },
                   "metaInfo": {
@@ -8210,15 +8210,15 @@ the same customer, dimension, and time, but a different quantity.",
               "body": {
                 "properties": {
                   "buyerID": {
-                    "docs": " Optional, if available, return the report for the Buyer.",
+                    "docs": "Optional, if available, return the report for the Buyer.",
                     "type": "optional<string>",
                   },
                   "entitlementID": {
-                    "docs": " Optional, if available, return the report for the Entitlement.",
+                    "docs": "Optional, if available, return the report for the Entitlement.",
                     "type": "optional<string>",
                   },
                   "organizationID": {
-                    "docs": " Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
+                    "docs": "Required. If the productID & entitlementID are emtpy, return the report for the entire Organization.",
                     "type": "string",
                   },
                   "partner": {
@@ -8226,7 +8226,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "type": "root.SharedGetRevenueReportParamsPartner",
                   },
                   "productID": {
-                    "docs": " Optional, if available, return the report for the Product.",
+                    "docs": "Optional, if available, return the report for the Product.",
                     "type": "optional<string>",
                   },
                   "reportType": {
