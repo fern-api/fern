@@ -27,6 +27,8 @@ import { validateWorkspaces } from "./commands/validate/validateWorkspaces";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
+import { isURL } from "./utils/isUrl";
+import { loadOpenAPIFromUrl } from "./utils/loadOpenAPIFromUrl";
 
 interface GlobalCliOptions {
     "log-level": LogLevel;
@@ -166,7 +168,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             yargs
                 .option("openapi", {
                     type: "string",
-                    description: "(Alpha) Path to existing OpenAPI spec",
+                    description: "Filepath or url to an existing OpenAPI spec",
                 })
                 .option("organization", {
                     alias: "org",
@@ -176,7 +178,12 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
             if (argv.openapi != null) {
-                absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
+                if (isURL(argv.openapi)) {
+                    const tmpFilepath = await loadOpenAPIFromUrl({ url: argv.openapi, cliContext });
+                    absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
+                } else {
+                    absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
+                }
                 const pathExists = await doesPathExist(absoluteOpenApiPath);
                 if (!pathExists) {
                     cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`);

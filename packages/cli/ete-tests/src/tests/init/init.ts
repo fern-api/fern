@@ -4,17 +4,17 @@ import { runFernCli } from "../../utils/runFernCli";
 
 export async function init({
     directory,
-    openApiPath,
-}: { directory?: AbsoluteFilePath; openApiPath?: string } = {}): Promise<AbsoluteFilePath> {
+    openApiArg,
+}: { directory?: AbsoluteFilePath; openApiArg?: string } = {}): Promise<AbsoluteFilePath> {
     if (directory == null) {
         const tmpDir = await tmp.dir();
         directory = AbsoluteFilePath.of(tmpDir.path);
     }
 
     const cliArgs = ["init", "--organization", "fern"];
-    if (openApiPath != null) {
-        cliArgs.push("--openapi", openApiPath);
-        cliArgs.push("--log-level", "error");
+    if (openApiArg != null) {
+        cliArgs.push("--openapi", openApiArg);
+        cliArgs.push("--log-level", "debug");
     }
 
     await runFernCli(cliArgs, {

@@ -168,6 +168,784 @@ components:
 ]
 `;
 
+exports[`fern init init openapi url 1`] = `
+[
+  {
+    "contents": [
+      {
+        "contents": [
+          {
+            "contents": "default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.6.0
+        output:
+          location: local-file-system
+          path: ../../generated/typescript
+      - name: fernapi/fern-openapi
+        version: 0.0.26
+        output:
+          location: local-file-system
+          path: ../../generated/openapi
+",
+            "name": "generators.yml",
+            "type": "file",
+          },
+          {
+            "contents": [
+              {
+                "contents": "openapi: 3.0.2
+info:
+  title: Texel API
+  version: 0.1.0
+paths:
+  /dreambooth/status/{job_id}:
+    get:
+      tags:
+        - dreambooth
+      summary: Status
+      operationId: status_dreambooth_status__job_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Job Id
+          name: job_id
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /dreambooth/result/{job_id}:
+    get:
+      tags:
+        - dreambooth
+      summary: Result
+      operationId: result_dreambooth_result__job_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Job Id
+          name: job_id
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /dreambooth/inference:
+    post:
+      tags:
+        - dreambooth
+      summary: Run inference with a dreambooth model
+      description: >-
+        Run inference on a pretrained model. The status of the job can be
+        checked using the job_id.
+      operationId: inference_dreambooth_inference_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InferenceRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DreamboothResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /dreambooth/train:
+    post:
+      tags:
+        - dreambooth
+      summary: Train a dreambooth model with instance images
+      description: >-
+        Train a new model using the provided local images and prompts. The model
+        will be trained asynchronously and the response will contain a job_id.
+        The status of the job can be checked using the job_id.
+      operationId: train_dreambooth_train_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DreamboothTrainRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DreamboothResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /dreambooth/train_v2:
+    post:
+      tags:
+        - dreambooth
+      summary: Train a dreambooth model with URL images
+      description: >-
+        Train a new model using the provided images URL and prompts. The model
+        will be trained asynchronously and the response will contain a job_id.
+        The status of the job can be checked using the job_id.
+      operationId: train_v2_dreambooth_train_v2_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DreamboothTrainRequestV2'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DreamboothResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /video_encoder/status/{job_id}:
+    get:
+      tags:
+        - video encoder
+      summary: Get job status using job id
+      operationId: status_video_encoder_status__job_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Job Id
+          name: job_id
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /video_encoder/status_client_id/{client_id}:
+    get:
+      tags:
+        - video encoder
+      summary: Get job status using client id
+      operationId: status_video_encoder_status_client_id__client_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Client Id
+          name: client_id
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /video_encoder/encode:
+    post:
+      tags:
+        - video encoder
+      summary: Encode
+      operationId: encode_video_encoder_encode_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoEncoderRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /stable_diffusion/:
+    post:
+      tags:
+        - Stable Diffusion
+      summary: Run a prompt through Stable Diffusion
+      description: >-
+        Provide a prompt and optionally a negative prompt. The input will be run
+        through Stable Diffusion to return an output image.
+      operationId: infer_stable_diffusion__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/routers__stable_diffusion__Prompt'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /esm/:
+    post:
+      tags:
+        - ESM
+      summary: Run a protein sequence through esmfold
+      description: Provide a protein sequence. The result will be returned as a pdb
+      operationId: infer_esm__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProteinRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /v1/embeddings/:
+    post:
+      tags:
+        - Embeddings
+      summary: Generate embeddings for a text string given a model
+      description: Provide a text string and model as input to generate embeddings.
+      operationId: infer_v1_embeddings__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmbeddingRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /:
+    get:
+      summary: Root
+      operationId: root__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+components:
+  schemas:
+    ControlNet:
+      title: ControlNet
+      required:
+        - model
+        - image_url
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/ControlNetModel'
+        image_url:
+          title: Image Url
+          type: string
+        scale:
+          title: Scale
+          type: number
+          default: 1
+        preprocessor:
+          $ref: '#/components/schemas/ControlNetPreprocessor'
+        params:
+          title: Params
+          type: object
+    ControlNetModel:
+      title: ControlNetModel
+      enum:
+        - canny
+        - ip2p
+        - inpaint
+        - mlsd
+        - depth
+        - normalbae
+        - seg
+        - lineart
+        - lineart_anime
+        - openpose
+        - scribble
+        - softedge
+        - shuffle
+        - tile
+      type: string
+      description: An enumeration.
+    ControlNetPreprocessor:
+      title: ControlNetPreprocessor
+      enum:
+        - HED
+        - midas
+        - MLSD
+        - openpose
+        - openpose_face
+        - openpose_face_only
+        - openpose_full
+        - openpose_hand
+        - pidi_net
+        - normal_bae
+        - lineart
+        - lineart_anime
+        - canny
+        - content_shuffle
+        - zoe
+        - mediapipe_face
+        - sam
+      type: string
+      description: An enumeration.
+    DreamboothResponse:
+      title: DreamboothResponse
+      required:
+        - job_id
+        - status
+      type: object
+      properties:
+        job_id:
+          title: Job Id
+          type: string
+        status:
+          title: Status
+          type: string
+    DreamboothTrainRequest:
+      title: DreamboothTrainRequest
+      required:
+        - training_params
+      type: object
+      properties:
+        training_params:
+          $ref: '#/components/schemas/TrainingParams'
+        inference_request:
+          $ref: '#/components/schemas/InferenceRequest'
+        callback:
+          title: Callback
+          type: string
+          default: ''
+    DreamboothTrainRequestV2:
+      title: DreamboothTrainRequestV2
+      required:
+        - images_url
+        - prompts
+        - class_name
+      type: object
+      properties:
+        images_url:
+          title: Images Url
+          type: array
+          items:
+            type: string
+        prompts:
+          title: Prompts
+          type: array
+          items:
+            $ref: '#/components/schemas/routers__dreambooth__Prompt'
+        class_name:
+          title: Class Name
+          type: string
+        callback:
+          title: Callback
+          type: string
+    EmbeddingRequest:
+      title: EmbeddingRequest
+      required:
+        - input
+        - model
+      type: object
+      properties:
+        input:
+          title: Input
+          type: string
+        model:
+          title: Model
+          type: string
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    Img2Img:
+      title: Img2Img
+      required:
+        - image_url
+      type: object
+      properties:
+        image_url:
+          title: Image Url
+          type: string
+        denoising_strength:
+          title: Denoising Strength
+          type: number
+          default: 0.75
+    InPaint:
+      title: InPaint
+      required:
+        - image_url
+        - mask_url
+      type: object
+      properties:
+        image_url:
+          title: Image Url
+          type: string
+        mask_url:
+          title: Mask Url
+          type: string
+        denoising_strength:
+          title: Denoising Strength
+          type: number
+          default: 0.75
+    InferenceParams:
+      title: InferenceParams
+      type: object
+      properties:
+        steps:
+          title: Steps
+          type: integer
+          default: 50
+        seed:
+          title: Seed
+          type: integer
+          default: 1337
+        cfg_scale:
+          title: Cfg Scale
+          type: number
+          default: 7.5
+        width:
+          title: Width
+          type: integer
+          default: 512
+        height:
+          title: Height
+          type: integer
+          default: 512
+    InferenceRequest:
+      title: InferenceRequest
+      required:
+        - prompts
+      type: object
+      properties:
+        model:
+          title: Model
+          allOf:
+            - $ref: '#/components/schemas/Model'
+          default:
+            name: runwayml/stable-diffusion-v1-5
+            revision: main
+        prompts:
+          title: Prompts
+          type: array
+          items:
+            $ref: '#/components/schemas/routers__dreambooth__Prompt'
+        inference_params:
+          title: Inference Params
+          allOf:
+            - $ref: '#/components/schemas/InferenceParams'
+          default:
+            steps: 50
+            seed: 1337
+            cfg_scale: 7.5
+            width: 512
+            height: 512
+        enable_safe_mode:
+          title: Enable Safe Mode
+          type: boolean
+          default: false
+        img2img:
+          $ref: '#/components/schemas/Img2Img'
+        inpaint:
+          $ref: '#/components/schemas/InPaint'
+        controlnets:
+          title: Controlnets
+          type: array
+          items:
+            $ref: '#/components/schemas/ControlNet'
+          default: []
+        callback:
+          title: Callback
+          type: string
+          default: ''
+    Model:
+      title: Model
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+          default: runwayml/stable-diffusion-v1-5
+        revision:
+          title: Revision
+          type: string
+          default: main
+    ProteinRequest:
+      title: ProteinRequest
+      required:
+        - sequence
+      type: object
+      properties:
+        sequence:
+          title: Sequence
+          type: string
+    TrainingParams:
+      title: TrainingParams
+      required:
+        - images_url
+        - class_name
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/Model'
+        images_url:
+          title: Images Url
+          type: array
+          items:
+            type: string
+        max_train_steps:
+          title: Max Train Steps
+          type: integer
+          default: 0
+        class_name:
+          title: Class Name
+          type: string
+        class_images_url:
+          title: Class Images Url
+          type: array
+          items:
+            type: string
+          default: []
+        instance_name:
+          title: Instance Name
+          type: string
+          default: sks
+    ValidationError:
+      title: ValidationError
+      required:
+        - loc
+        - msg
+        - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    VideoEncoderRequest:
+      title: VideoEncoderRequest
+      required:
+        - input_url
+        - output_url
+      type: object
+      properties:
+        input_url:
+          title: Input Url
+          type: string
+        output_url:
+          title: Output Url
+          type: string
+        video_encoder_codec:
+          title: Video Encoder Codec
+          type: string
+          default: hevc_nvenc
+        video_encoder_preset:
+          title: Video Encoder Preset
+          type: string
+          default: p4
+        video_encoder_cq:
+          title: Video Encoder Cq
+          type: integer
+          default: 27
+        callback:
+          title: Callback
+          type: string
+        content_type:
+          title: Content Type
+          type: string
+        client_job_id:
+          title: Client Job Id
+          type: string
+    routers__dreambooth__Prompt:
+      title: Prompt
+      required:
+        - complete
+      type: object
+      properties:
+        complete:
+          title: Complete
+          type: string
+        negative:
+          title: Negative
+          type: string
+        count:
+          title: Count
+          type: integer
+          default: 1
+        id:
+          title: Id
+          type: string
+    routers__stable_diffusion__Prompt:
+      title: Prompt
+      required:
+        - prompt
+      type: object
+      properties:
+        prompt:
+          title: Prompt
+          type: string
+        negative_prompt:
+          title: Negative Prompt
+          type: string
+        model:
+          title: Model
+          type: string
+          default: runwayml/stable-diffusion-v1-5
+        count:
+          title: Count
+          type: integer
+          default: 1
+        steps:
+          title: Steps
+          type: integer
+          default: 50
+        guidance_scale:
+          title: Guidance Scale
+          type: number
+          default: 7.5
+        width:
+          title: Width
+          type: integer
+          default: 512
+        height:
+          title: Height
+          type: integer
+          default: 512
+  securitySchemes:
+    HTTPBearer:
+      type: http
+      scheme: bearer
+",
+                "name": "openapi.yml",
+                "type": "file",
+              },
+            ],
+            "name": "openapi",
+            "type": "directory",
+          },
+        ],
+        "name": "api",
+        "type": "directory",
+      },
+      {
+        "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+    ],
+    "name": "fern",
+    "type": "directory",
+  },
+]
+`;
+
 exports[`fern init no existing fern directory 1`] = `
 [
   {
