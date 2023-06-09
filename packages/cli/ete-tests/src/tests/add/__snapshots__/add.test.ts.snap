@@ -215,7 +215,8 @@ errors:
           {
             "contents": [
               {
-                "contents": "navigation:
+                "contents": "title: fern
+navigation:
   - api: API Reference
 colors:
   accentPrimary: '#ffffff'
@@ -246,7 +247,7 @@ groups:
   docs-group:
     generators: []
     docs:
-      domain: ''
+      domain: fern.dev.docs.buildwithfern.com
 ",
             "name": "generators.yml",
             "type": "file",

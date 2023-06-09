@@ -7,19 +7,13 @@ import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
-const DEFAULT_DOCS_CONFIG: RawDocs.DocsConfiguration = {
-    navigation: [{ api: "API Reference" }],
-    colors: {
-        accentPrimary: "#ffffff",
-    },
-    logo: "./logo.png",
-};
-
 export async function addDocsToWorkspace({
+    organization,
     workspace,
     groupName,
     context,
 }: {
+    organization: string;
     workspace: Workspace;
     groupName: string | undefined;
     context: TaskContext;
@@ -37,7 +31,7 @@ export async function addDocsToWorkspace({
                 context.failAndThrow(`Group ${groupName} already has docs configured.`);
             }
             group.docs = {
-                domain: "",
+                domain: `${organization}.${process.env.DOCS_DOMAIN_SUFFIX}`,
             };
         },
     });
@@ -52,7 +46,18 @@ export async function addDocsToWorkspace({
 
         await writeFile(
             join(docsDefinitionPath, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
-            yaml.dump(DEFAULT_DOCS_CONFIG)
+            yaml.dump(getDocsConfig(organization))
         );
     }
+}
+
+function getDocsConfig(organization: string): RawDocs.DocsConfiguration {
+    return {
+        title: organization,
+        navigation: [{ api: "API Reference" }],
+        colors: {
+            accentPrimary: "#ffffff",
+        },
+        logo: "./logo.png",
+    };
 }
