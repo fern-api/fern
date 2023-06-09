@@ -35,7 +35,12 @@ describe("fern init", () => {
             RelativeFilePath.of("openapi"),
             RelativeFilePath.of("petstore-openapi.yml")
         );
-        const pathOfDirectory = await init({ openApiPath });
+        const pathOfDirectory = await init({ openApiArg: openApiPath });
+        expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
+    }, 60_000);
+
+    it("init openapi url", async () => {
+        const pathOfDirectory = await init({ openApiArg: "https://api.texel.ai/openapi.json" });
         expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 });
