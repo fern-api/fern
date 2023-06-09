@@ -467,13 +467,6 @@ workflows:
             - fern-tokens
 
       - deploy-docs-preview:
-          requires:
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-            - ete-tests
           context:
             - aws
             - github
