@@ -372,15 +372,23 @@ export class GeneratedGenericAPISdkErrorImpl
                                     ),
                                     undefined,
                                     [
-                                        ts.factory.createCallExpression(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createIdentifier(
-                                                    GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME
+                                        ts.factory.createTemplateExpression(
+                                            ts.factory.createTemplateHead("Status code: "),
+                                            [
+                                                ts.factory.createTemplateSpan(
+                                                    ts.factory.createCallExpression(
+                                                        ts.factory.createPropertyAccessExpression(
+                                                            ts.factory.createIdentifier(
+                                                                GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME
+                                                            ),
+                                                            ts.factory.createIdentifier("toString")
+                                                        ),
+                                                        undefined,
+                                                        []
+                                                    ),
+                                                    ts.factory.createTemplateTail("")
                                                 ),
-                                                ts.factory.createIdentifier("toString")
-                                            ),
-                                            undefined,
-                                            []
+                                            ]
                                         ),
                                     ]
                                 )
@@ -408,20 +416,25 @@ export class GeneratedGenericAPISdkErrorImpl
                                     ),
                                     undefined,
                                     [
-                                        ts.factory.createCallExpression(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createIdentifier("JSON"),
-                                                ts.factory.createIdentifier("stringify")
-                                            ),
-                                            undefined,
-                                            [
-                                                ts.factory.createIdentifier(
-                                                    GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
+                                        ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Body: "), [
+                                            ts.factory.createTemplateSpan(
+                                                ts.factory.createCallExpression(
+                                                    ts.factory.createPropertyAccessExpression(
+                                                        ts.factory.createIdentifier("JSON"),
+                                                        ts.factory.createIdentifier("stringify")
+                                                    ),
+                                                    undefined,
+                                                    [
+                                                        ts.factory.createIdentifier(
+                                                            GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
+                                                        ),
+                                                        ts.factory.createIdentifier("undefined"),
+                                                        ts.factory.createNumericLiteral("2"),
+                                                    ]
                                                 ),
-                                                ts.factory.createIdentifier("undefined"),
-                                                ts.factory.createNumericLiteral("2"),
-                                            ]
-                                        ),
+                                                ts.factory.createTemplateTail("")
+                                            ),
+                                        ]),
                                     ]
                                 )
                             ),
