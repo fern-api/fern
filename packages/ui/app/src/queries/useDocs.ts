@@ -1,5 +1,3 @@
-"use client";
-
 // TODO this should be server side
 
 import { Loadable } from "@fern-api/loadable";
