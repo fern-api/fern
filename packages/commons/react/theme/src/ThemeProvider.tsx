@@ -80,8 +80,3 @@ export const ThemeProvider: React.FC<ThemeProvider.Props> = ({ children, theme, 
 export function useIsDarkTheme(): boolean {
     return useContext(ThemeContext)().isDarkTheme;
 }
-
-export function useBackgroundColor(): string {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return useIsDarkTheme() ? styles.backgroundColorDark! : styles.backgroundColor!;
-}

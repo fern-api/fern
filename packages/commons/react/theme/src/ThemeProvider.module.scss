@@ -1,21 +1,8 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
-$background-color: #fafafa;
-$background-color-dark: $black;
-
-:export {
-    backgroundColor: $background-color;
-    backgroundColorDark: $background-color-dark;
-}
-
 .container {
     display: flex;
     flex-direction: column;
     flex: 1;
-    background-color: $background-color;
     min-width: 0;
-
-    &:global(.#{$ns}-dark) {
-        background-color: $background-color-dark;
-    }
 }

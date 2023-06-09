@@ -142,14 +142,18 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                         {...containerCallbacks}
                         className={classNames(
                             "flex gap-1 items-center cursor-pointer px-2 py-1 transition",
-                            isHovering ? "text-text-default" : "text-text-muted"
+                            isHovering ? "text-text-default" : "text-text-default"
                         )}
                         onClick={toggleIsCollapsed}
                     >
                         <Icon
-                            className={classNames("transition", isHovering ? "text-text-default" : "text-text-muted", {
-                                "rotate-45": isCollapsed,
-                            })}
+                            className={classNames(
+                                "transition",
+                                isHovering ? "text-text-default" : "text-text-default",
+                                {
+                                    "rotate-45": isCollapsed,
+                                }
+                            )}
                             icon={IconNames.CROSS}
                         />
                         <div

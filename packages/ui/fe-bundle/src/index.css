@@ -7,13 +7,18 @@
     .prose a,
     a:hover,
     .prose a:hover {
-        @apply text-accentPrimary;
-
-        text-decoration: underline;
+        @apply transition;
+        @apply pb-[2px];
+        @apply text-white hover:text-accentPrimary;
+        @apply border-b border-border hover:border-accentPrimary;
     }
 
     a,
     .prose a {
         text-decoration: none;
+    }
+
+    ::selection {
+        @apply bg-accentPrimary/20;
     }
 }

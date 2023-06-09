@@ -1,2 +1,2 @@
 export { ThemedDialog } from "./ThemedDialog";
-export { ThemeProvider, useBackgroundColor, useIsDarkTheme } from "./ThemeProvider";
+export { ThemeProvider, useIsDarkTheme } from "./ThemeProvider";

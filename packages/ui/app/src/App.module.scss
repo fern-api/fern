@@ -11,6 +11,10 @@
     height: 100vh;
 
     :global {
+        p {
+            @apply text-text-default;
+        }
+
         code,
         pre {
             font-family: "Berkeley Mono";

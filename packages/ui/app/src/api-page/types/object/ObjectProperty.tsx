@@ -81,7 +81,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                 <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                     <MonospaceText>{property.key}</MonospaceText>
                 </div>
-                <div className={classNames("text-xs", "text-text-muted", "dark:text-text-muted")}>
+                <div className={classNames("text-xs", "text-text-default", "dark:text-text-default")}>
                     <TypeShorthand type={property.valueType} plural={false} />
                 </div>
             </div>

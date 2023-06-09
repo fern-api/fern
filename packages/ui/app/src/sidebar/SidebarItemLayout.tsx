@@ -30,7 +30,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({
     return (
         <Text
             ellipsize
-            className={classNames(className, "flex shrink-0 items-center h-[30px] min-w-0 text-text-muted", {
+            className={classNames(className, "flex shrink-0 items-center h-[30px] min-w-0 text-text-default", {
                 "cursor-pointer": isClickable,
                 "bg-accentHighlight relative": isSelected,
             })}
