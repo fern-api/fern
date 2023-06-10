@@ -85,7 +85,7 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
                 prefixes.push("non-empty");
             }
             if (value.maxLength != null) {
-                prefixes.push(`less than ${value.maxLength + 1} characters`);
+                prefixes.push(`<= ${value.maxLength} characters`);
             }
             return prefixes;
         },
