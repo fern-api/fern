@@ -97,7 +97,7 @@ Perform a search against a document index.
                     "type": "optional<SearchRequestOptionsRequest>",
                   },
                   "query": {
-                    "docs": "\`non-empty\` The query to search for.",
+                    "docs": "The query to search for. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -164,7 +164,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "\`less than 150 characters\` The human-readable name for the document.",
+              "docs": "The human-readable name for the document. \`less than 150 characters\` ",
               "type": "string",
             },
           },
@@ -449,7 +449,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "ModelVersionExecConfigRead",
             },
             "external_id": {
-              "docs": "\`less than 250 characters\` The unique id of this model version as it exists in the above provider's system.",
+              "docs": "The unique id of this model version as it exists in the above provider's system. \`less than 250 characters\` ",
               "type": "string",
             },
             "id": {
@@ -457,7 +457,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "\`less than 150 characters\` Human-friendly name for this model version.",
+              "docs": "Human-friendly name for this model version. \`less than 150 characters\` ",
               "type": "string",
             },
             "model_type": {
@@ -694,7 +694,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "optional<list<string>>",
             },
             "label": {
-              "docs": "\`less than 150 characters\` Human-friendly name for this document.",
+              "docs": "Human-friendly name for this document. \`less than 150 characters\` ",
               "type": "string",
             },
             "last_uploaded_at": {
@@ -855,7 +855,7 @@ Upload a document to be indexed and used for search.
                     "type": "optional<list<string>>",
                   },
                   "label": {
-                    "docs": "\`non-empty\` A human-friendly name for this document. Typically the filename.",
+                    "docs": "A human-friendly name for this document. Typically the filename. \`non-empty\` ",
                     "type": "string",
                   },
                 },
