@@ -66,7 +66,7 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true,
             };
-        } else if (resolvedSchema.type === "oneOf") {
+        } else if (resolvedSchema.type === "oneOf" && resolvedSchema.oneOf.type === "undisciminated") {
             // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
             for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
                 return getQueryParameterTypeReference({
@@ -107,6 +107,15 @@ function getQueryParameterTypeReference({
                 }),
                 allowMultiple: true,
             };
+        } else if (schema.value.type === "oneOf" && schema.value.oneOf.type === "undisciminated") {
+            // TODO(dsinghvi): HACKHACK picks first union type in oneOf for query params
+            for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
+                return getQueryParameterTypeReference({
+                    schema: Schema.optional({ value: oneOfSchema, description: undefined }),
+                    isPackageYml,
+                    schemas,
+                });
+            }
         }
         return {
             value: convertToTypeReference({
