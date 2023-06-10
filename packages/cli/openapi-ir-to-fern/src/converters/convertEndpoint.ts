@@ -51,6 +51,10 @@ export function convertEndpoint({
     const queryParameters: Record<string, RawSchemas.HttpQueryParameterSchema> = {};
     for (const queryParameter of endpoint.queryParameters) {
         const convertedQueryParameter = convertQueryParameter({ queryParameter, isPackageYml, schemas });
+        if (convertedQueryParameter == null) {
+            // TODO(dsinghvi): HACKHACK we are just excluding certain query params from the SDK
+            continue;
+        }
         queryParameters[queryParameter.name] = convertedQueryParameter.value;
         additionalTypeDeclarations = {
             ...additionalTypeDeclarations,

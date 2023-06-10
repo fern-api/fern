@@ -17,8 +17,11 @@ export function convertQueryParameter({
     queryParameter: QueryParameter;
     isPackageYml: boolean;
     schemas: Record<SchemaId, Schema>;
-}): ConvertedQueryParameter {
+}): ConvertedQueryParameter | undefined {
     const typeReference = getQueryParameterTypeReference({ schema: queryParameter.schema, isPackageYml, schemas });
+    if (typeReference == null) {
+        return undefined;
+    }
     return {
         value: {
             docs: queryParameter.description ?? undefined,
@@ -44,7 +47,7 @@ function getQueryParameterTypeReference({
     schema: Schema;
     isPackageYml: boolean;
     schemas: Record<SchemaId, Schema>;
-}): QueryParameterTypeReference {
+}): QueryParameterTypeReference | undefined {
     const prefix = isPackageYml ? undefined : ROOT_PREFIX;
 
     if (schema.type === "reference") {
@@ -75,6 +78,8 @@ function getQueryParameterTypeReference({
                     schemas,
                 });
             }
+        } else if (resolvedSchema.type === "object") {
+            return undefined;
         }
     }
 
@@ -116,6 +121,8 @@ function getQueryParameterTypeReference({
                     schemas,
                 });
             }
+        } else if (schema.value.type === "object") {
+            return undefined;
         }
         return {
             value: convertToTypeReference({
