@@ -1456,8 +1456,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "identifier": {
-              "docs": "\`non-empty\` \`less than 25 characters\` The document number of the customer's ID.
-",
+              "docs": "The document number of the customer's ID.
+ \`non-empty\` \`less than 26 characters\` ",
               "type": "string",
             },
             "identifier_type": {
@@ -1465,8 +1465,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypeOfpi",
             },
             "name": {
-              "docs": "\`less than 200 characters\` The full name of the customer you want to create.
-",
+              "docs": "The full name of the customer you want to create.
+ \`less than 201 characters\` ",
               "type": "string",
             },
             "phone": {
@@ -1498,8 +1498,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "string",
             },
             "identifier": {
-              "docs": "\`non-empty\` \`less than 25 characters\` The document number of the customer's ID.
-",
+              "docs": "The document number of the customer's ID.
+ \`non-empty\` \`less than 26 characters\` ",
               "type": "string",
             },
             "identifier_type": {
@@ -1507,8 +1507,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypePse",
             },
             "name": {
-              "docs": "\`less than 200 characters\` The full name of the customer you want to create.
-",
+              "docs": "The full name of the customer you want to create.
+ \`less than 201 characters\` ",
               "type": "string",
             },
             "phone": {
@@ -1804,8 +1804,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypeOfpi",
             },
             "name": {
-              "docs": "\`less than 200 characters\` The full name of the customer.
-",
+              "docs": "The full name of the customer.
+ \`less than 201 characters\` ",
               "type": "string",
             },
             "phone": {
@@ -1899,8 +1899,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "type": "EnumCustomerIdentifierTypePse",
             },
             "name": {
-              "docs": "\`less than 200 characters\` The full name of the customer.
-",
+              "docs": "The full name of the customer.
+ \`less than 201 characters\` ",
               "type": "string",
             },
             "phone": {

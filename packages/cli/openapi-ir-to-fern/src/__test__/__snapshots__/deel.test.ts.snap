@@ -1144,7 +1144,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "EmailTypeRequired",
             },
             "message": {
-              "docs": "\`non-empty\` Message for the worker.",
+              "docs": "Message for the worker. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -1209,7 +1209,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<ContractSearchFormWithoutCursorCurrencies>",
             },
             "external_id": {
-              "docs": "\`less than 255 characters\` Filter contracts for given external ID",
+              "docs": "Filter contracts for given external ID \`less than 256 characters\` ",
               "type": "optional<string>",
             },
             "limit": {
@@ -1893,7 +1893,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "\`non-empty\` Country name.",
+              "docs": "Country name. \`non-empty\` ",
               "type": "string",
             },
             "state_type": {
@@ -1911,7 +1911,7 @@ exports[`open api parser deel simple 1`] = `
           },
         },
         "CountryCode": {
-          "docs": "\`less than 2 characters\` Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code.",
+          "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code. \`less than 3 characters\` ",
           "type": "string",
         },
         "CountryCodeList": {
@@ -1919,7 +1919,7 @@ exports[`open api parser deel simple 1`] = `
           "type": "list<CountryCode>",
         },
         "CountryCodeNulleable": {
-          "docs": "\`less than 2 characters\` Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code.",
+          "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code. \`less than 3 characters\` ",
           "type": "string",
         },
         "CountryList": {
@@ -2030,7 +2030,7 @@ exports[`open api parser deel simple 1`] = `
           },
         },
         "CurrencyCode": {
-          "docs": "\`less than 3 characters\` Currency code.",
+          "docs": "Currency code. \`less than 4 characters\` ",
           "type": "string",
         },
         "CurrencyCodeList": {
@@ -2038,7 +2038,7 @@ exports[`open api parser deel simple 1`] = `
           "type": "list<CurrencyCodeRequired>",
         },
         "CurrencyCodeRequired": {
-          "docs": "\`less than 3 characters\`",
+          "docs": "\`less than 4 characters\`",
           "type": "string",
         },
         "CurrencyList": {
@@ -3833,7 +3833,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "currency": {
-              "docs": "\`less than 3 characters\`",
+              "docs": "\`less than 4 characters\`",
               "type": "string",
             },
             "gross_annual_salary": {
@@ -3967,31 +3967,31 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "country": {
-              "docs": "\`less than 2 characters\`",
+              "docs": "\`less than 3 characters\`",
               "type": "string",
             },
             "email": {
-              "docs": "\`less than 255 characters\`",
+              "docs": "\`less than 256 characters\`",
               "type": "string",
             },
             "first_name": {
-              "docs": "\`less than 100 characters\`",
+              "docs": "\`less than 101 characters\`",
               "type": "string",
             },
             "last_name": {
-              "docs": "\`less than 100 characters\`",
+              "docs": "\`less than 101 characters\`",
               "type": "string",
             },
             "nationality": {
-              "docs": "\`less than 2 characters\`",
+              "docs": "\`less than 3 characters\`",
               "type": "string",
             },
             "state": {
-              "docs": "\`non-empty\` \`less than 50 characters\`",
+              "docs": "\`non-empty\` \`less than 51 characters\`",
               "type": "optional<string>",
             },
             "work_email": {
-              "docs": "\`less than 255 characters\`",
+              "docs": "\`less than 256 characters\`",
               "type": "string",
             },
           },
@@ -4393,15 +4393,15 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateString>",
             },
             "invoice_id": {
-              "docs": "\`less than 10 characters\`",
+              "docs": "\`less than 11 characters\`",
               "type": "optional<string>",
             },
             "limit": {
-              "docs": "\`less than 2 characters\` Return a page of results with given number of records.",
+              "docs": "Return a page of results with given number of records. \`less than 3 characters\` ",
               "type": "optional<string>",
             },
             "offset": {
-              "docs": "\`less than 2 characters\`",
+              "docs": "\`less than 3 characters\`",
               "type": "optional<string>",
             },
             "order_direction": {
@@ -4409,7 +4409,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<SortDirEnum>",
             },
             "reporter_id": {
-              "docs": "\`less than 10 characters\`",
+              "docs": "\`less than 11 characters\`",
               "type": "optional<string>",
             },
             "statuses": {
@@ -6141,7 +6141,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": "\`non-empty\` Fixed rate for this task.",
+              "docs": "Fixed rate for this task. \`non-empty\` ",
               "type": "string",
             },
             "attachment": {
@@ -6396,7 +6396,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<double>",
             },
             "name": {
-              "docs": "\`non-empty\` Name of seniority level e.g. Mid (Individual Contributor Level 2)",
+              "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2) \`non-empty\` ",
               "type": "string",
             },
           },
@@ -6426,7 +6426,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "double",
             },
             "name": {
-              "docs": "\`non-empty\` Name of seniority level e.g. Mid (Individual Contributor Level 2)",
+              "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2) \`non-empty\` ",
               "type": "string",
             },
           },
@@ -6492,11 +6492,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "It may be called states, provinces, prefectures or regions, or none at all",
           "properties": {
             "code": {
-              "docs": "\`non-empty\` Territory code.",
+              "docs": "Territory code. \`non-empty\` ",
               "type": "string",
             },
             "name": {
-              "docs": "\`non-empty\` Territory name.",
+              "docs": "Territory name. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -6870,15 +6870,15 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateString>",
             },
             "invoice_id": {
-              "docs": "\`less than 10 characters\`",
+              "docs": "\`less than 11 characters\`",
               "type": "optional<string>",
             },
             "limit": {
-              "docs": "\`less than 2 characters\` Return a page of results with given number of records.",
+              "docs": "Return a page of results with given number of records. \`less than 3 characters\` ",
               "type": "optional<string>",
             },
             "offset": {
-              "docs": "\`less than 2 characters\`",
+              "docs": "\`less than 3 characters\`",
               "type": "optional<string>",
             },
             "order_direction": {
@@ -6886,7 +6886,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<SortDirEnum>",
             },
             "reporter_id": {
-              "docs": "\`less than 10 characters\`",
+              "docs": "\`less than 11 characters\`",
               "type": "optional<string>",
             },
             "statuses": {
@@ -7381,7 +7381,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "full_name": {
-              "docs": "\`non-empty\` Worker's full name.",
+              "docs": "Worker's full name. \`non-empty\` ",
               "type": "optional<string>",
             },
             "id": {

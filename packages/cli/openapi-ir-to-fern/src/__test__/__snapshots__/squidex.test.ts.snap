@@ -60,7 +60,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": "\`non-empty\` The name of the field. Must be unique within the schema.",
+              "docs": "The name of the field. Must be unique within the schema. \`non-empty\` ",
               "type": "string",
             },
             "partitioning": {
@@ -77,11 +77,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "apiKey": {
-              "docs": "\`non-empty\` The API key to grant access to Squidex.",
+              "docs": "The API key to grant access to Squidex. \`non-empty\` ",
               "type": "string",
             },
             "appId": {
-              "docs": "\`non-empty\` The application ID.",
+              "docs": "The application ID. \`non-empty\` ",
               "type": "string",
             },
             "delete": {
@@ -93,7 +93,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "indexName": {
-              "docs": "\`non-empty\` The name of the index.",
+              "docs": "The name of the index. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -656,7 +656,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "contributorId": {
-              "docs": "\`non-empty\` The id or email of the user to add to the app.",
+              "docs": "The id or email of the user to add to the app. \`non-empty\` ",
               "type": "string",
             },
             "invite": {
@@ -673,7 +673,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "connectionString": {
-              "docs": "\`non-empty\` The connection string to the storage account.",
+              "docs": "The connection string to the storage account. \`non-empty\` ",
               "type": "string",
             },
             "payload": {
@@ -681,7 +681,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "queue": {
-              "docs": "\`non-empty\` The name of the queue.",
+              "docs": "The name of the queue. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -1007,7 +1007,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "planId": {
-              "docs": "\`non-empty\` The new plan id.",
+              "docs": "The new plan id. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -1093,7 +1093,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "text": {
-              "docs": "\`non-empty\` The comment text.",
+              "docs": "The comment text. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -1349,7 +1349,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "data": {
-              "docs": "\`non-empty\` The content data.",
+              "docs": "The content data. \`non-empty\` ",
               "type": "string",
             },
             "publish": {
@@ -1357,7 +1357,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "schema": {
-              "docs": "\`non-empty\` The name of the schema.",
+              "docs": "The name of the schema. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -1455,11 +1455,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "apiKey": {
-              "docs": "\`non-empty\` The api key to authenticate to your discourse server.",
+              "docs": "The api key to authenticate to your discourse server. \`non-empty\` ",
               "type": "string",
             },
             "apiUsername": {
-              "docs": "\`non-empty\` The api username to authenticate to your discourse server.",
+              "docs": "The api username to authenticate to your discourse server. \`non-empty\` ",
               "type": "string",
             },
             "category": {
@@ -1467,7 +1467,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<integer>",
             },
             "text": {
-              "docs": "\`non-empty\` The text as markdown.",
+              "docs": "The text as markdown. \`non-empty\` ",
               "type": "string",
             },
             "title": {
@@ -1479,7 +1479,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<integer>",
             },
             "url": {
-              "docs": "\`non-empty\` The url to the discourse server.",
+              "docs": "The url to the discourse server. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -1509,11 +1509,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "host": {
-              "docs": "\`non-empty\` The url to the instance or cluster.",
+              "docs": "The url to the instance or cluster. \`non-empty\` ",
               "type": "string",
             },
             "indexName": {
-              "docs": "\`non-empty\` The name of the index.",
+              "docs": "The name of the index. \`non-empty\` ",
               "type": "string",
             },
             "password": {
@@ -1530,27 +1530,27 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "messageBody": {
-              "docs": "\`non-empty\` The message body.",
+              "docs": "The message body. \`non-empty\` ",
               "type": "string",
             },
             "messageFrom": {
-              "docs": "\`non-empty\` The email sending address.",
+              "docs": "The email sending address. \`non-empty\` ",
               "type": "string",
             },
             "messageSubject": {
-              "docs": "\`non-empty\` The subject line for this email message.",
+              "docs": "The subject line for this email message. \`non-empty\` ",
               "type": "string",
             },
             "messageTo": {
-              "docs": "\`non-empty\` The email message will be sent to.",
+              "docs": "The email message will be sent to. \`non-empty\` ",
               "type": "string",
             },
             "serverHost": {
-              "docs": "\`non-empty\` The IP address or host to the SMTP server.",
+              "docs": "The IP address or host to the SMTP server. \`non-empty\` ",
               "type": "string",
             },
             "serverPassword": {
-              "docs": "\`non-empty\` The password for the SMTP server.",
+              "docs": "The password for the SMTP server. \`non-empty\` ",
               "type": "string",
             },
             "serverPort": {
@@ -1558,7 +1558,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "integer",
             },
             "serverUsername": {
-              "docs": "\`non-empty\` The username for the SMTP server.",
+              "docs": "The username for the SMTP server. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -1575,7 +1575,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "message": {
-              "docs": "\`non-empty\` Error message.",
+              "docs": "Error message. \`non-empty\` ",
               "type": "string",
             },
             "statusCode": {
@@ -1615,7 +1615,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "\`non-empty\` The name of the event consumer.",
+              "docs": "The name of the event consumer. \`non-empty\` ",
               "type": "string",
             },
             "position": {
@@ -1644,11 +1644,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "apiKey": {
-              "docs": "\`non-empty\` The API key to grant access to Squidex.",
+              "docs": "The API key to grant access to Squidex. \`non-empty\` ",
               "type": "string",
             },
             "serviceId": {
-              "docs": "\`non-empty\` The ID of the fastly service.",
+              "docs": "The ID of the fastly service. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -1702,7 +1702,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "\`non-empty\` The name of the field. Must be unique within the schema.",
+              "docs": "The name of the field. Must be unique within the schema. \`non-empty\` ",
               "type": "string",
             },
             "nested": {
@@ -1710,7 +1710,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<NestedFieldDto>>",
             },
             "partitioning": {
-              "docs": "\`non-empty\` Defines the partitioning of the field.",
+              "docs": "Defines the partitioning of the field. \`non-empty\` ",
               "type": "string",
             },
             "properties": {
@@ -1843,7 +1843,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "field": {
-              "docs": "\`non-empty\` The field to update.",
+              "docs": "The field to update. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -2029,7 +2029,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "accessToken": {
-              "docs": "\`non-empty\` The self issued access token.",
+              "docs": "The self issued access token. \`non-empty\` ",
               "type": "string",
             },
             "canonicalUrl": {
@@ -2037,7 +2037,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "content": {
-              "docs": "\`non-empty\` The content, either html or markdown.",
+              "docs": "The content, either html or markdown. \`non-empty\` ",
               "type": "string",
             },
             "isHtml": {
@@ -2053,7 +2053,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "title": {
-              "docs": "\`non-empty\` The title, used for the url.",
+              "docs": "The title, used for the url. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -2081,7 +2081,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "\`non-empty\` The name of the field. Must be unique within the schema.",
+              "docs": "The name of the field. Must be unique within the schema. \`non-empty\` ",
               "type": "string",
             },
             "properties": {
@@ -2098,7 +2098,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "text": {
-              "docs": "\`non-empty\` The text to send.",
+              "docs": "The text to send. \`non-empty\` ",
               "type": "string",
             },
             "url": {
@@ -2106,7 +2106,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "user": {
-              "docs": "\`non-empty\` The user id or email.",
+              "docs": "The user id or email. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -2185,11 +2185,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "host": {
-              "docs": "\`non-empty\` The url to the instance or cluster.",
+              "docs": "The url to the instance or cluster. \`non-empty\` ",
               "type": "string",
             },
             "indexName": {
-              "docs": "\`non-empty\` The name of the index.",
+              "docs": "The name of the index. \`non-empty\` ",
               "type": "string",
             },
             "password": {
@@ -2335,11 +2335,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "token": {
-              "docs": "\`non-empty\` The prerender token from your account.",
+              "docs": "The prerender token from your account. \`non-empty\` ",
               "type": "string",
             },
             "url": {
-              "docs": "\`non-empty\` The url to recache.",
+              "docs": "The url to recache. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -2552,7 +2552,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "href": {
-              "docs": "\`non-empty\` The link url.",
+              "docs": "The link url. \`non-empty\` ",
               "type": "string",
             },
             "metadata": {
@@ -2560,7 +2560,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "method": {
-              "docs": "\`non-empty\` The link method.",
+              "docs": "The link method. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -3120,7 +3120,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "createdBy": {
-              "docs": "\`non-empty\` The user that has created the schema.",
+              "docs": "The user that has created the schema. \`non-empty\` ",
               "type": "string",
             },
             "fieldRules": {
@@ -3156,11 +3156,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "lastModifiedBy": {
-              "docs": "\`non-empty\` The user that has updated the schema.",
+              "docs": "The user that has updated the schema. \`non-empty\` ",
               "type": "string",
             },
             "name": {
-              "docs": "\`non-empty\` The name of the schema. Unique within the app.",
+              "docs": "The name of the schema. Unique within the app. \`non-empty\` ",
               "type": "string",
             },
             "previewUrls": {
@@ -3283,7 +3283,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "script": {
-              "docs": "\`non-empty\` The script to render.",
+              "docs": "The script to render. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -3351,11 +3351,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "ActionTypeEnum",
             },
             "connectionString": {
-              "docs": "\`non-empty\` The connection string to the Azure SignalR.",
+              "docs": "The connection string to the Azure SignalR. \`non-empty\` ",
               "type": "string",
             },
             "hubName": {
-              "docs": "\`non-empty\` The name of the hub.",
+              "docs": "The name of the hub. \`non-empty\` ",
               "type": "string",
             },
             "methodName": {
@@ -3393,11 +3393,11 @@ exports[`open api parser squidex simple 1`] = `
             },
             "event": "unknown",
             "eventId": {
-              "docs": "\`non-empty\` The unique event id.",
+              "docs": "The unique event id. \`non-empty\` ",
               "type": "string",
             },
             "eventName": {
-              "docs": "\`non-empty\` The name of the event.",
+              "docs": "The name of the event. \`non-empty\` ",
               "type": "string",
             },
             "skipReasons": {
@@ -3405,7 +3405,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "list<SkipReason>",
             },
             "uniqueId": {
-              "docs": "\`non-empty\` The the unique id of the simulated event.",
+              "docs": "The the unique id of the simulated event. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -3490,11 +3490,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "text": {
-              "docs": "\`non-empty\` The text that is sent as message to slack.",
+              "docs": "The text that is sent as message to slack. \`non-empty\` ",
               "type": "string",
             },
             "webhookUrl": {
-              "docs": "\`non-empty\` The slack webhook url.",
+              "docs": "The slack webhook url. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -3898,15 +3898,15 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "accessSecret": {
-              "docs": "\`non-empty\`  The generated access secret.",
+              "docs": " The generated access secret. \`non-empty\` ",
               "type": "string",
             },
             "accessToken": {
-              "docs": "\`non-empty\`  The generated access token.",
+              "docs": " The generated access token. \`non-empty\` ",
               "type": "string",
             },
             "text": {
-              "docs": "\`non-empty\` The text that is sent as tweet to twitter.",
+              "docs": "The text that is sent as tweet to twitter. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -3915,7 +3915,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "apiKey": {
-              "docs": "\`non-empty\` The api key.",
+              "docs": "The api key. \`non-empty\` ",
               "type": "string",
             },
             "delete": {
@@ -3927,11 +3927,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "host": {
-              "docs": "\`non-empty\` The url to the instance or cluster.",
+              "docs": "The url to the instance or cluster. \`non-empty\` ",
               "type": "string",
             },
             "indexName": {
-              "docs": "\`non-empty\` The name of the index.",
+              "docs": "The name of the index. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -3987,7 +3987,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "text": {
-              "docs": "\`non-empty\` The comment text.",
+              "docs": "The comment text. \`non-empty\` ",
               "type": "string",
             },
             "url": {
@@ -4053,7 +4053,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "\`non-empty\` The name of the field. Must be unique within the schema.",
+              "docs": "The name of the field. Must be unique within the schema. \`non-empty\` ",
               "type": "string",
             },
             "nested": {
@@ -4086,7 +4086,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "\`non-empty\` The name of the field. Must be unique within the schema.",
+              "docs": "The name of the field. Must be unique within the schema. \`non-empty\` ",
               "type": "string",
             },
             "properties": {
@@ -4219,7 +4219,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "url": {
-              "docs": "\`non-empty\` The url to the webhook.",
+              "docs": "The url to the webhook. \`non-empty\` ",
               "type": "string",
             },
           },
@@ -4771,7 +4771,7 @@ You will be assigned as owner of the new app automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "\`non-empty\` The name of the app.",
+                    "docs": "The name of the app. \`non-empty\` ",
                     "type": "string",
                   },
                   "template": {
@@ -4811,7 +4811,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "id": {
-                    "docs": "\`non-empty\` The ID of the client.",
+                    "docs": "The ID of the client. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -4874,7 +4874,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "language": {
-                    "docs": "\`non-empty\` The language to add.",
+                    "docs": "The language to add. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -4909,7 +4909,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "\`non-empty\` The role name.",
+                    "docs": "The role name. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -4944,7 +4944,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "\`non-empty\` The name of the workflow.",
+                    "docs": "The name of the workflow. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -5308,7 +5308,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "initial": {
-                    "docs": "\`non-empty\` The initial step.",
+                    "docs": "The initial step. \`non-empty\` ",
                     "type": "string",
                   },
                   "name": {
@@ -5918,7 +5918,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "folderName": {
-                    "docs": "\`non-empty\` The name of the folder.",
+                    "docs": "The name of the folder. \`non-empty\` ",
                     "type": "string",
                   },
                   "parentId": {
@@ -6101,7 +6101,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "folderName": {
-                    "docs": "\`non-empty\` The name of the folder.",
+                    "docs": "The name of the folder. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -6218,7 +6218,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "tagName": {
-                    "docs": "\`non-empty\` The new name for the tag.",
+                    "docs": "The new name for the tag. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -6391,7 +6391,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "optional<string>",
                   },
                   "url": {
-                    "docs": "\`non-empty\` The url to the restore file.",
+                    "docs": "The url to the restore file. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -7276,7 +7276,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "optional<string>",
                   },
                   "status": {
-                    "docs": "\`non-empty\` The new status.",
+                    "docs": "The new status. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -8747,7 +8747,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "boolean",
                   },
                   "name": {
-                    "docs": "\`non-empty\` The name of the schema.",
+                    "docs": "The name of the schema. \`non-empty\` ",
                     "type": "string",
                   },
                   "type": {
@@ -9711,7 +9711,7 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "\`non-empty\` The name of the team.",
+                    "docs": "The name of the team. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -9746,7 +9746,7 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "\`non-empty\` The name of the team.",
+                    "docs": "The name of the team. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -9841,11 +9841,11 @@ You will be assigned as owner of the new team automatically.",
                     "type": "optional<string>",
                   },
                   "targetLanguage": {
-                    "docs": "\`non-empty\` The target language.",
+                    "docs": "The target language. \`non-empty\` ",
                     "type": "string",
                   },
                   "text": {
-                    "docs": "\`non-empty\` The text to translate.",
+                    "docs": "The text to translate. \`non-empty\` ",
                     "type": "string",
                   },
                 },
@@ -9981,15 +9981,15 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "displayName": {
-                    "docs": "\`non-empty\` The display name (usually first name and last name) of the user.",
+                    "docs": "The display name (usually first name and last name) of the user. \`non-empty\` ",
                     "type": "string",
                   },
                   "email": {
-                    "docs": "\`non-empty\` The email of the user. Unique value.",
+                    "docs": "The email of the user. Unique value. \`non-empty\` ",
                     "type": "string",
                   },
                   "password": {
-                    "docs": "\`non-empty\` The password of the user.",
+                    "docs": "The password of the user. \`non-empty\` ",
                     "type": "string",
                   },
                   "permissions": {
@@ -10028,11 +10028,11 @@ You will be assigned as owner of the new team automatically.",
               "body": {
                 "properties": {
                   "displayName": {
-                    "docs": "\`non-empty\` The display name (usually first name and last name) of the user.",
+                    "docs": "The display name (usually first name and last name) of the user. \`non-empty\` ",
                     "type": "string",
                   },
                   "email": {
-                    "docs": "\`non-empty\` The email of the user. Unique value.",
+                    "docs": "The email of the user. Unique value. \`non-empty\` ",
                     "type": "string",
                   },
                   "password": {

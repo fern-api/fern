@@ -74,7 +74,7 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         boolean: () => "boolean",
         _unknown: () => "unknown",
     });
-    const docsPrefix = PrimitiveSchemaValue._visit<string[]>(primitiveSchema.schema, {
+    const docsSuffix = PrimitiveSchemaValue._visit<string[]>(primitiveSchema.schema, {
         int: () => [],
         int64: () => [],
         float: () => [],
@@ -85,7 +85,7 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
                 prefixes.push("non-empty");
             }
             if (value.maxLength != null) {
-                prefixes.push(`less than ${value.maxLength} characters`);
+                prefixes.push(`less than ${value.maxLength + 1} characters`);
             }
             return prefixes;
         },
@@ -96,15 +96,15 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         _unknown: () => [],
     });
 
-    const prefixMarkdown = docsPrefix.map((prefix) => "`" + prefix + "`").join(" ");
+    const suffixMarkdown = docsSuffix.map((prefix) => "`" + prefix + "`").join(" ");
 
     let docs = undefined;
-    if (primitiveSchema.description != null && docsPrefix.length > 0) {
-        docs = `${prefixMarkdown} ${primitiveSchema.description}`;
+    if (primitiveSchema.description != null && docsSuffix.length > 0) {
+        docs = `${primitiveSchema.description} ${suffixMarkdown} `;
     } else if (primitiveSchema.description != null) {
         docs = `${primitiveSchema.description}`;
-    } else if (docsPrefix.length > 0) {
-        docs = `${prefixMarkdown}`;
+    } else if (docsSuffix.length > 0) {
+        docs = `${suffixMarkdown}`;
     }
     return {
         typeReference: {
