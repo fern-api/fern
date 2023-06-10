@@ -164,7 +164,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "The human-readable name for the document. \`less than 150 characters\` ",
+              "docs": "The human-readable name for the document. \`less than 151 characters\` ",
               "type": "string",
             },
           },
@@ -449,7 +449,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "ModelVersionExecConfigRead",
             },
             "external_id": {
-              "docs": "The unique id of this model version as it exists in the above provider's system. \`less than 250 characters\` ",
+              "docs": "The unique id of this model version as it exists in the above provider's system. \`less than 251 characters\` ",
               "type": "string",
             },
             "id": {
@@ -457,7 +457,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "Human-friendly name for this model version. \`less than 150 characters\` ",
+              "docs": "Human-friendly name for this model version. \`less than 151 characters\` ",
               "type": "string",
             },
             "model_type": {
@@ -694,7 +694,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "optional<list<string>>",
             },
             "label": {
-              "docs": "Human-friendly name for this document. \`less than 150 characters\` ",
+              "docs": "Human-friendly name for this document. \`less than 151 characters\` ",
               "type": "string",
             },
             "last_uploaded_at": {

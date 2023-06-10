@@ -71,7 +71,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "appName": {
-              "docs": "\`less than 32 characters\`",
+              "docs": "\`less than 33 characters\`",
               "type": "string",
             },
             "authConfiguration": {
@@ -375,11 +375,11 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": "\`non-empty\` \`less than 100 characters\`",
+              "docs": "\`non-empty\` \`less than 101 characters\`",
               "type": "string",
             },
             "value": {
-              "docs": "\`less than 5000 characters\`",
+              "docs": "\`less than 5001 characters\`",
               "type": "string",
             },
           },
