@@ -13,6 +13,12 @@ specify a group using the `--group` option.
 You can specify a version using the `--version` option. This version string is
 used when publishing SDKs to registries (e.g. npm).
 
+### Running locally
+
+By default, the generation runs in the cloud. If you want to run it on your local machine, you can use the `--local` option. _This will run the compiler in a Docker container._
+
+To keep the container after the compiler is done, use the `--keepDocker` option.
+
 ## `fern check`
 
 `fern check` will validate that your API is valid.
