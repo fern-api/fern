@@ -26,10 +26,16 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "dev": "yarn compile && next dev",
-    "build": "yarn compile && next build",
-    "start": "yarn compile && next start",
-    "lint": "yarn compile && next lint"
+    "env:fern-dev": "env-cmd -r .env-cmdrc.cjs -e fern-dev",
+    "env:fern-prod": "env-cmd -r .env-cmdrc.cjs -e fern-prod",
+    "dev:fern-dev": "yarn compile && yarn env:fern-dev next dev",
+    "dev:fern-prod": "yarn compile && yarn env:fern-prod next dev",
+    "build:fern-dev": "yarn compile && yarn env:fern-dev next build",
+    "build:fern-prod": "yarn compile && yarn env:fern-prod next build",
+    "start:fern-dev": "yarn compile && yarn env:fern-dev next start",
+    "start:fern-prod": "yarn compile && yarn env:fern-prod next start",
+    "lint:fern-dev": "yarn compile && yarn env:fern-dev next lint",
+    "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint"
   },
   "dependencies": {
     "@fern-api/ui": "workspace:*",
@@ -48,6 +54,7 @@
     "@types/react-dom": "^18.0.6",
     "autoprefixer": "^10.4.13",
     "depcheck": "^1.4.3",
+    "env-cmd": "toddbluhm/env-cmd",
     "eslint": "^8.26.0",
     "jest": "^29.4.0",
     "organize-imports-cli": "^0.10.0",
