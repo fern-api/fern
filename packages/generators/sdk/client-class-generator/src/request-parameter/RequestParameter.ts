@@ -3,7 +3,7 @@ import { SdkClientClassContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface RequestParameter {
-    getInitialStatements: (context: SdkClientClassContext) => ts.Statement[];
+    getInitialStatements: (context: SdkClientClassContext, args: { variablesInScope: string[] }) => ts.Statement[];
     getParameterDeclaration: (
         context: SdkClientClassContext,
         opts?: { typeIntersection?: ts.TypeNode; excludeInitializers?: boolean }

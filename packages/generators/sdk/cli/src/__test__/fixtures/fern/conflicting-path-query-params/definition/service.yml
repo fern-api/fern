@@ -1,0 +1,13 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    post:
+      path: "/{id}"
+      path-parameters:
+        id: string
+      method: POST
+      request:
+        name: MyRequest
+        query-parameters:
+          id: string

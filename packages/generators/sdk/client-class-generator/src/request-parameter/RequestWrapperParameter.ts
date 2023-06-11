@@ -1,10 +1,20 @@
 import { HttpHeader, QueryParameter } from "@fern-fern/ir-model/http";
-import { GeneratedRequestWrapper, SdkClientClassContext } from "@fern-typescript/contexts";
+import {
+    GeneratedRequestWrapper,
+    RequestWrapperNonBodyProperty,
+    SdkClientClassContext,
+} from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
+type DefaultNonBodyKeyName = string & {
+    __DefaultNonBodyKeyName: void;
+};
+
 export class RequestWrapperParameter extends AbstractRequestParameter {
     private static BODY_VARIABLE_NAME = "_body";
+
+    private nonBodyKeyAliases: Record<DefaultNonBodyKeyName, string> = {};
 
     protected getParameterType(context: SdkClientClassContext): {
         type: ts.TypeNode;
@@ -19,7 +29,12 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         };
     }
 
-    public getInitialStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getInitialStatements(
+        context: SdkClientClassContext,
+        { variablesInScope }: { variablesInScope: string[] }
+    ): ts.Statement[] {
+        this.nonBodyKeyAliases = {};
+
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
         const nonBodyKeys = generatedRequestWrapper.getNonBodyKeys(context);
 
@@ -27,15 +42,28 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             return [];
         }
 
-        const bindingElements: ts.BindingElement[] = nonBodyKeys.map((nonBodyKey) =>
-            ts.factory.createBindingElement(
+        const usedNames = new Set(variablesInScope);
+        const getNonConflictingName = (name: string) => {
+            while (usedNames.has(name)) {
+                name = `${name}_`;
+            }
+            usedNames.add(name);
+            return name;
+        };
+
+        const bindingElements: ts.BindingElement[] = nonBodyKeys.map((nonBodyKey) => {
+            const defaultName = this.getDefaultVariableNameForNonBodyProperty(nonBodyKey);
+            const nonConflictingName = getNonConflictingName(defaultName);
+            this.nonBodyKeyAliases[defaultName] = nonConflictingName;
+
+            return ts.factory.createBindingElement(
                 undefined,
-                nonBodyKey.safeName !== nonBodyKey.propertyName
+                nonConflictingName !== nonBodyKey.propertyName
                     ? ts.factory.createIdentifier(nonBodyKey.propertyName)
                     : undefined,
-                ts.factory.createIdentifier(nonBodyKey.safeName)
-            )
-        );
+                nonConflictingName
+            );
+        });
 
         if (this.endpoint.requestBody != null) {
             bindingElements.push(
@@ -43,12 +71,12 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                     ? ts.factory.createBindingElement(
                           ts.factory.createToken(ts.SyntaxKind.DotDotDotToken),
                           undefined,
-                          ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME)
+                          RequestWrapperParameter.BODY_VARIABLE_NAME
                       )
                     : ts.factory.createBindingElement(
                           undefined,
                           generatedRequestWrapper.getReferencedBodyPropertyName(),
-                          ts.factory.createIdentifier(RequestWrapperParameter.BODY_VARIABLE_NAME)
+                          RequestWrapperParameter.BODY_VARIABLE_NAME
                       )
             );
         }
@@ -95,7 +123,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         return generatedRequestWrapper.withQueryParameter({
             queryParameter,
             referenceToQueryParameterProperty: ts.factory.createIdentifier(
-                generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter).safeName
+                this.getAliasForNonBodyProperty(generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter))
             ),
             context,
             callback,
@@ -111,17 +139,34 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         }
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
         return ts.factory.createIdentifier(
-            generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter).safeName
+            this.getAliasForNonBodyProperty(generatedRequestWrapper.getPropertyNameOfQueryParameter(queryParameter))
         );
     }
 
     public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
         return ts.factory.createIdentifier(
-            this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header).safeName
+            this.getAliasForNonBodyProperty(
+                this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header)
+            )
         );
     }
 
     private getGeneratedRequestWrapper(context: SdkClientClassContext): GeneratedRequestWrapper {
         return context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
+    }
+
+    private getDefaultVariableNameForNonBodyProperty(
+        nonBodyProperty: RequestWrapperNonBodyProperty
+    ): DefaultNonBodyKeyName {
+        return nonBodyProperty.safeName as DefaultNonBodyKeyName;
+    }
+
+    private getAliasForNonBodyProperty(nonBodyProperty: RequestWrapperNonBodyProperty): string {
+        const defaultName = this.getDefaultVariableNameForNonBodyProperty(nonBodyProperty);
+        const alias = this.nonBodyKeyAliases[defaultName];
+        if (alias == null) {
+            throw new Error("Could not locate alias for: " + defaultName);
+        }
+        return alias;
     }
 }

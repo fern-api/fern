@@ -93,7 +93,14 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         const statements: ts.Statement[] = [];
 
         if (this.requestParameter != null) {
-            statements.push(...this.requestParameter.getInitialStatements(context));
+            statements.push(
+                ...this.requestParameter.getInitialStatements(context, {
+                    variablesInScope: this.getEndpointParameters(context, {
+                        requestParameterIntersection: undefined,
+                        excludeInitializers: false,
+                    }).map((param) => param.name),
+                })
+            );
         }
 
         statements.push(...this.queryParams.getBuildStatements(context));

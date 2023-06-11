@@ -68,6 +68,7 @@ const FIXTURES: FixtureInfo[] = [
             includeOtherInUnionTypes: true,
         },
         targetRuntime: JavaScriptRuntime.NODE,
+        only: true,
     },
     {
         path: "nursery-status-code",
@@ -195,6 +196,13 @@ const FIXTURES: FixtureInfo[] = [
         customConfig: {
             treatUnknownAsAny: true,
         },
+    },
+    {
+        path: "conflicting-path-query-params",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
     },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
