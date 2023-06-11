@@ -2595,7 +2595,6 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-docs-configuration": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
-    "@fern-api/next-app": "workspace:*"
     "@fern-api/openapi-ir-to-fern": "workspace:*"
     "@fern-api/openapi-migrator": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
@@ -3266,7 +3265,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/next-app@workspace:*, @fern-api/next-app@workspace:packages/ui/next-app":
+"@fern-api/next-app@workspace:packages/ui/next-app":
   version: 0.0.0-use.local
   resolution: "@fern-api/next-app@workspace:packages/ui/next-app"
   dependencies:
