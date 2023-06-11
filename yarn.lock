@@ -9270,7 +9270,7 @@ env-cmd@toddbluhm/env-cmd:
     jsonc-parser: ~2.2.1
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
-    mrlint: ^0.0.121
+    mrlint: ^0.0.122
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     react: ^18.2.0
@@ -9282,8 +9282,6 @@ env-cmd@toddbluhm/env-cmd:
     typescript: 4.6.4
   dependenciesMeta:
     jsonc-parser@2.2.1:
-      unplugged: true
-    vite:
       unplugged: true
   languageName: unknown
   linkType: soft
@@ -12861,12 +12859,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.121":
-  version: 0.0.121
-  resolution: "mrlint@npm:0.0.121"
+"mrlint@npm:^0.0.122":
+  version: 0.0.122
+  resolution: "mrlint@npm:0.0.122"
   bin:
     mrlint: cli.cjs
-  checksum: 8cc7a3df4a3e1309457c3553b390227ae5aade1d3aa08981b298325fdf4093939263709565f4bd9b2d97d2fdc2a93713cfe8876b9001d4dc441269b0e1b3023c
+  checksum: a384c16d54def6932046f093f0a1cb79ada0fbf2cbba1cec0cd88e8a62cb60a2aa102f8854c29db3bcea1f3e755952f7798f9457906e4a8a24b6a6b56083f98d
   languageName: node
   linkType: hard
 

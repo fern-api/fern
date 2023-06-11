@@ -13,7 +13,7 @@ export const LoadedDocs: React.FC = () => {
     return (
         <div
             className="relative flex min-h-0 flex-1 flex-col bg-cover"
-            style={{ backgroundImage: `url('${nebulaImage}')` }}
+            style={{ backgroundImage: `url('${nebulaImage.src}')` }}
         >
             <Head>
                 {docsDefinition.config.title != null && <title>{docsDefinition.config.title}</title>}
