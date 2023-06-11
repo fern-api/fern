@@ -52,7 +52,6 @@
     { "path": "../demo-setup" },
     { "path": "../scripts" },
     { "path": "../ui/app" },
-    { "path": "../ui/deploy" },
-    { "path": "../ui/fe-bundle" }
+    { "path": "../ui/deploy" }
   ]
 }

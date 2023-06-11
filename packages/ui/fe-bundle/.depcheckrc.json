@@ -5,12 +5,10 @@
     "@babel/core",
     "@babel/preset-env",
     "@babel/preset-typescript",
-    "vite",
     "@types/react",
+    "@types/react-dom",
     "autoprefixer",
-    "postcss",
-    "tailwindcss",
-    "@tailwindcss/typography"
+    "postcss"
   ],
   "ignore-patterns": ["lib"]
 }
