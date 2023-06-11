@@ -258,12 +258,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("local", {
                     boolean: true,
-                    hidden: true,
                     default: false,
                 })
                 .option("keepDocker", {
                     boolean: true,
-                    hidden: true,
                     default: false,
                 }),
         async (argv) => {
