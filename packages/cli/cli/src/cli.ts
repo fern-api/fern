@@ -259,10 +259,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("local", {
                     boolean: true,
                     default: false,
+                    description: "Run the generator(s) locally, using Docker"
                 })
                 .option("keepDocker", {
                     boolean: true,
                     default: false,
+                    description: "Prevent auto-deletion of the Docker containers."
                 }),
         async (argv) => {
             await generateWorkspaces({
