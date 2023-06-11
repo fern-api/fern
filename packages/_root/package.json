@@ -39,7 +39,6 @@
     "@fern-api/docs-configuration": "workspace:*",
     "@fern-api/docs-deploy": "workspace:*",
     "@fern-api/ete-tests": "workspace:*",
-    "@fern-api/fe-bundle": "workspace:*",
     "@fern-api/fonts": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",

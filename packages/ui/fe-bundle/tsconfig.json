@@ -1,6 +1,16 @@
 {
   "extends": "../../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "allowJs": true,
+    "incremental": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "plugins": [{ "name": "next" }]
+  },
   "include": ["./src"],
-  "references": [{ "path": "../app" }, { "path": "../deploy" }]
+  "exclude": ["node_modules"],
+  "references": [{ "path": "../app" }]
 }

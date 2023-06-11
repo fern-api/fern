@@ -1,8 +1,0 @@
-{
-  "github": {
-    "silent": true
-  },
-  "git": {
-    "deploymentEnabled": false
-  }
-}
