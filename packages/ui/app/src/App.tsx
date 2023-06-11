@@ -5,6 +5,7 @@ import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import classNames from "classnames";
 import "normalize.css";
+import { useEffect } from "react";
 import { initializePosthog } from "./analytics/posthog";
 import styles from "./App.module.scss";
 import { CONTEXTS } from "./contexts";
@@ -15,11 +16,14 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 // this API key is client-side safe
 const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_API_KEY;
-if (POSTHOG_API_KEY != null) {
-    initializePosthog(POSTHOG_API_KEY);
-}
 
 export const App: React.FC = () => {
+    useEffect(() => {
+        if (POSTHOG_API_KEY != null) {
+            initializePosthog(POSTHOG_API_KEY);
+        }
+    }, []);
+
     const areFontsReady = useAreFernFontsReady();
     if (!areFontsReady) {
         return null;
