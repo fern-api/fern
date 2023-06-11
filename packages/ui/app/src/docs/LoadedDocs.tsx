@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import Head from "next/head";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { Sidebar } from "../sidebar/Sidebar";
 import { DocsMainContent } from "./DocsMainContent";
@@ -10,22 +10,17 @@ export const LoadedDocs: React.FC = () => {
     const { docsDefinition, resolveFile } = useDocsContext();
     useCustomTheme(docsDefinition);
 
-    useEffect(() => {
-        document.title = docsDefinition.config.title ?? "Documentation";
-
-        if (docsDefinition.config.favicon != null) {
-            const faviconElement = document.getElementById("favicon");
-            if (faviconElement != null) {
-                (faviconElement as HTMLLinkElement).href = resolveFile(docsDefinition.config.favicon);
-            }
-        }
-    }, [docsDefinition.config.favicon, docsDefinition.config.title, resolveFile]);
-
     return (
         <div
             className="relative flex min-h-0 flex-1 flex-col bg-cover"
             style={{ backgroundImage: `url('${nebulaImage}')` }}
         >
+            <Head>
+                {docsDefinition.config.title != null && <title>{docsDefinition.config.title}</title>}
+                {docsDefinition.config.favicon != null && (
+                    <link rel="icon" id="favicon" href={resolveFile(docsDefinition.config.favicon)}></link>
+                )}
+            </Head>
             <Header />
             <div className="flex min-h-0 flex-1">
                 <div className="flex w-64">

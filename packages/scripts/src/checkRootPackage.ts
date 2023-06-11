@@ -5,7 +5,7 @@ import produce from "immer";
 import isEqual from "lodash-es/isEqual";
 import path from "path";
 import process from "process";
-import { getAllPackages } from "./getAllPackages";
+import { getAllPackages, YarnPackage } from "./getAllPackages";
 
 const COMPILE_ROOT_PACKAGE = "@fern-api/compile-root";
 
@@ -20,17 +20,22 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
     const pathToRootPackageJson = path.join(rootPackage.location, "package.json");
     const rootPackageJsonStr = await readFile(pathToRootPackageJson);
     const rootPackageJson: Record<string, unknown> = JSON.parse(rootPackageJsonStr.toString());
+
     const oldDependencies = rootPackageJson.dependencies as Record<string, string>;
-    const newDependencies = packages
-        .map((p) => p.name)
-        .filter((name) => name !== COMPILE_ROOT_PACKAGE)
-        .reduce(
-            (dependencies, name) => ({
-                ...dependencies,
-                [name]: "workspace:*",
-            }),
-            {}
-        );
+
+    const packagesToDependOn = await asyncFilter(packages, async (p) => {
+        if (p.name === COMPILE_ROOT_PACKAGE) {
+            return false;
+        }
+        return doesPackageEmit(p);
+    });
+    const newDependencies = packagesToDependOn.reduce(
+        (dependencies, p) => ({
+            ...dependencies,
+            [p.name]: "workspace:*",
+        }),
+        {}
+    );
 
     if (isEqual(oldDependencies, newDependencies)) {
         return;
@@ -62,4 +67,16 @@ export async function checkRootPackage({ shouldFix }: { shouldFix: boolean }): P
     await execa("yarn", ["install"]);
     // eslint-disable-next-line no-console
     console.log(chalk.green(`Updated ${COMPILE_ROOT_PACKAGE}`));
+}
+
+async function asyncFilter<T>(items: T[], predicate: (item: T) => Promise<boolean>): Promise<T[]> {
+    const predicateResults = await Promise.all(items.map(predicate));
+    return items.filter((_item, i) => predicateResults[i]);
+}
+
+async function doesPackageEmit(p: YarnPackage): Promise<boolean> {
+    const tsConfigLocation = path.join(p.location, "tsconfig.json");
+    const tsConfigStr = (await readFile(tsConfigLocation)).toString();
+    const tsConfigJson = JSON.parse(tsConfigStr);
+    return tsConfigJson?.compilerOptions?.noEmit !== true;
 }

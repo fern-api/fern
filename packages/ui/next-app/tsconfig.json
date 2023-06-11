@@ -6,6 +6,7 @@
     "rootDir": "src",
     "allowJs": true,
     "incremental": true,
+    "noEmit": true,
     "jsx": "preserve",
     "plugins": [{ "name": "next" }]
   },
