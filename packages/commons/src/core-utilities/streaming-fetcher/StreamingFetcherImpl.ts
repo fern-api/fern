@@ -157,6 +157,18 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
         },
     };
 
+    public getHeader = {
+        _invoke: this.withExportedName(
+            "getHeader",
+            (getHeader) =>
+                ({ referenceToRequest, header }: { referenceToRequest: ts.Expression; header: string }) =>
+                    ts.factory.createCallExpression(getHeader.getExpression(), undefined, [
+                        referenceToRequest,
+                        ts.factory.createStringLiteral(header),
+                    ])
+        ),
+    };
+
     private getReferenceToTypeInStreamingFetcherModule(typeName: string) {
         return this.withExportedName(
             "StreamingFetcher",

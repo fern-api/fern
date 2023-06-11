@@ -27,6 +27,10 @@ export interface StreamingFetcher {
     readonly StreamingFetchFunction: {
         _getReferenceToType: () => ts.TypeNode;
     };
+
+    readonly getHeader: {
+        _invoke: (args: { referenceToRequest: ts.Expression; header: string }) => ts.Expression;
+    };
 }
 
 export declare namespace StreamingFetcher {

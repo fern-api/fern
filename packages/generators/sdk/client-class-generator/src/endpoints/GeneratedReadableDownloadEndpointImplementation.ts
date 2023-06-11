@@ -23,6 +23,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
     private static READABLE_RESPONSE_KEY = "data";
     private static CONTENT_TYPE_RESPONSE_KEY = "contentType";
     private static CONTENT_LENGTH_RESPONSE_KEY = "contentLengthInBytes";
+    private static CONTENT_LENGTH_VARIABLE_NAME = "_contentLength";
 
     public readonly endpoint: HttpEndpoint;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -186,6 +187,27 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
 
         if (this.includeContentHeadersOnResponse) {
             statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(
+                                    GeneratedReadableDownloadEndpointImplementation.CONTENT_LENGTH_VARIABLE_NAME
+                                ),
+                                undefined,
+                                undefined,
+                                context.base.coreUtilities.streamingFetcher.getHeader._invoke({
+                                    referenceToRequest: ts.factory.createIdentifier(
+                                        GeneratedReadableDownloadEndpointImplementation.RESPONSE_VARIABLE_NAME
+                                    ),
+                                    header: "Content-Length",
+                                })
+                            ),
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                ),
                 ts.factory.createReturnStatement(
                     ts.factory.createObjectLiteralExpression(
                         [
@@ -207,30 +229,16 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
                                 ),
                                 ts.factory.createConditionalExpression(
                                     ts.factory.createBinaryExpression(
-                                        ts.factory.createElementAccessExpression(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createIdentifier(
-                                                    GeneratedReadableDownloadEndpointImplementation.RESPONSE_VARIABLE_NAME
-                                                ),
-                                                context.base.coreUtilities.streamingFetcher.StreamingFetcher.Response
-                                                    .properties.headers
-                                            ),
-                                            ts.factory.createStringLiteral("Content-Length")
+                                        ts.factory.createIdentifier(
+                                            GeneratedReadableDownloadEndpointImplementation.CONTENT_LENGTH_VARIABLE_NAME
                                         ),
                                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
                                         ts.factory.createNull()
                                     ),
                                     ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                                     ts.factory.createCallExpression(ts.factory.createIdentifier("Number"), undefined, [
-                                        ts.factory.createElementAccessExpression(
-                                            ts.factory.createPropertyAccessExpression(
-                                                ts.factory.createIdentifier(
-                                                    GeneratedReadableDownloadEndpointImplementation.RESPONSE_VARIABLE_NAME
-                                                ),
-                                                context.base.coreUtilities.streamingFetcher.StreamingFetcher.Response
-                                                    .properties.headers
-                                            ),
-                                            ts.factory.createStringLiteral("Content-Length")
+                                        ts.factory.createIdentifier(
+                                            GeneratedReadableDownloadEndpointImplementation.CONTENT_LENGTH_VARIABLE_NAME
                                         ),
                                     ]),
                                     ts.factory.createToken(ts.SyntaxKind.ColonToken),
@@ -241,16 +249,12 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
                                 ts.factory.createIdentifier(
                                     GeneratedReadableDownloadEndpointImplementation.CONTENT_TYPE_RESPONSE_KEY
                                 ),
-                                ts.factory.createElementAccessExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createIdentifier(
-                                            GeneratedReadableDownloadEndpointImplementation.RESPONSE_VARIABLE_NAME
-                                        ),
-                                        context.base.coreUtilities.streamingFetcher.StreamingFetcher.Response.properties
-                                            .headers
+                                context.base.coreUtilities.streamingFetcher.getHeader._invoke({
+                                    referenceToRequest: ts.factory.createIdentifier(
+                                        GeneratedReadableDownloadEndpointImplementation.RESPONSE_VARIABLE_NAME
                                     ),
-                                    ts.factory.createStringLiteral("Content-Type")
-                                )
+                                    header: "Content-Type",
+                                })
                             ),
                         ],
                         true
