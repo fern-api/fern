@@ -96,6 +96,33 @@ groups:
 Note that a `config.importPath` setting is _not_ required if the user does not require
 any cross-package imports.
 
+## Alias
+
+A Fern alias is simply translated into a Go type alias, such that the types can be used
+interchangeably. For example,
+
+```yaml
+types:
+  String: string
+  Foo:
+    properties:
+      name: String
+```
+
+```go
+// string.go
+
+type String = string
+```
+
+```go
+// foo.go
+
+type Foo struct {
+	Name String `json:"name"`
+}
+```
+
 ## Unions
 
 Unions are represented as a `struct`, where exactly one of its fields
@@ -166,6 +193,11 @@ func Run(u *Union) error {
 }
 ```
 
+Note that the generated visitor does _not_ include methods for the union's extended
+and/or base properties because these values can always be set alongside the union
+properties, where only one can be set. Put simply, the user of the union can access
+the extended and/or base properties just like an ordinary object's properties.
+
 ## Undiscriminated Unions
 
 Fern supports undiscriminated unions, which function exactly how it sounds - the
@@ -209,6 +241,7 @@ like the following:
 package api
 
 type Union struct {
+  typeName         string
   Type             *Type
   String           string
   IntegerOptional  *int
@@ -218,6 +251,11 @@ type Union struct {
   DoubleSet        []float64
 }
 ```
+
+Note that the `typeName` discriminant is un-exported; it is only used to distinguish which
+value is actually set so that the generated visitor and `json.Marshaler` implementation can
+act accordingly. The user will not have access to this value because it's an undiscriminated
+union.
 
 ## Enums
 
