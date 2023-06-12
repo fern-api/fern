@@ -20,6 +20,8 @@ export function isSchemaEqual(a: Schema, b: Schema): boolean {
         return isObjectEqual(a, b);
     } else if (a.type === "map" && b.type === "map") {
         return isPrimitiveSchemaValueEqual(a.key, b.key) && isSchemaEqual(a.value, b.value);
+    } else if (a.type === "literal" && b.type === "literal") {
+        return a.value === b.value;
     }
     return false;
 }
