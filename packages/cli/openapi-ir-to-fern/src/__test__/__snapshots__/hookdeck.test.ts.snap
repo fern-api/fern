@@ -27,21 +27,8 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "AlertStrategy",
             },
-            "type": {
-              "docs": "An alert rule must be of type \`alert\`",
-              "type": "AlertRuleType",
-            },
+            "type": "literal<"alert">",
           },
-        },
-        "AlertRuleType": {
-          "docs": "An alert rule must be of type \`alert\`",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "alert",
-              "value": "alert",
-            },
-          ],
         },
         "AlertStrategy": {
           "docs": "Alert strategy to use",
@@ -1726,21 +1713,8 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Delay to introduce in MS",
               "type": "integer",
             },
-            "type": {
-              "docs": "A delay rule must be of type \`delay\`",
-              "type": "DelayRuleType",
-            },
+            "type": "literal<"delay">",
           },
-        },
-        "DelayRuleType": {
-          "docs": "A delay rule must be of type \`delay\`",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "delay",
-              "value": "delay",
-            },
-          ],
         },
         "DeletedBookmarkResponse": {
           "docs": undefined,
@@ -1824,10 +1798,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the workspace",
               "type": "string",
             },
-            "type": {
-              "docs": undefined,
-              "type": "DeliveryIssueType",
-            },
+            "type": "literal<"delivery">",
             "updated_at": {
               "docs": "ISO timestamp for when the issue was last updated",
               "type": "string",
@@ -1876,16 +1847,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "string",
             },
           },
-        },
-        "DeliveryIssueType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "delivery",
-              "value": "delivery",
-            },
-          ],
         },
         "DeliveryIssueWithData": {
           "docs": "Delivery issue",
@@ -1946,25 +1907,12 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the workspace",
               "type": "string",
             },
-            "type": {
-              "docs": undefined,
-              "type": "DeliveryIssueWithDataType",
-            },
+            "type": "literal<"delivery">",
             "updated_at": {
               "docs": "ISO timestamp for when the issue was last updated",
               "type": "string",
             },
           },
-        },
-        "DeliveryIssueWithDataType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "delivery",
-              "value": "delivery",
-            },
-          ],
         },
         "Destination": {
           "docs": "Associated [Destination](#destination-object) object",
@@ -2400,21 +2348,8 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<ConnectionFilterProperty>",
             },
-            "type": {
-              "docs": "A filter rule must be of type \`filter\`",
-              "type": "FilterRuleType",
-            },
+            "type": "literal<"filter">",
           },
-        },
-        "FilterRuleType": {
-          "docs": "A filter rule must be of type \`filter\`",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "filter",
-              "value": "filter",
-            },
-          ],
         },
         "FilteredMeta": {
           "docs": undefined,
@@ -2456,16 +2391,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetAttemptsRequestOrderByGetAttemptsRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-          ],
-        },
         "GetBookmarksRequestDirGetBookmarksRequestDir": {
           "docs": undefined,
           "enum": [
@@ -2478,16 +2403,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "name": "desc",
               "value": "desc",
-            },
-          ],
-        },
-        "GetBookmarksRequestOrderByGetBookmarksRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
             },
           ],
         },
@@ -2506,16 +2421,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetConnectionsRequestOrderByGetConnectionsRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-          ],
-        },
         "GetDestinationsRequestDirGetDestinationsRequestDir": {
           "docs": undefined,
           "enum": [
@@ -2528,16 +2433,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "name": "desc",
               "value": "desc",
-            },
-          ],
-        },
-        "GetDestinationsRequestOrderByGetDestinationsRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
             },
           ],
         },
@@ -2556,16 +2451,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetEventBulkRetriesRequestOrderByGetEventBulkRetriesRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-          ],
-        },
         "GetEventsRequestDirGetEventsRequestDir": {
           "docs": undefined,
           "enum": [
@@ -2578,16 +2463,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "name": "desc",
               "value": "desc",
-            },
-          ],
-        },
-        "GetEventsRequestInclude": {
-          "docs": "Include the data object in the event model",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "data",
-              "value": "data",
             },
           ],
         },
@@ -2623,16 +2498,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "name": "desc",
               "value": "desc",
-            },
-          ],
-        },
-        "GetIgnoredEventBulkRetriesRequestOrderByGetIgnoredEventBulkRetriesRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
             },
           ],
         },
@@ -2861,16 +2726,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRequestBulkRetriesRequestOrderByGetRequestBulkRetriesRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-          ],
-        },
         "GetRequestEventsRequestDirGetRequestEventsRequestDir": {
           "docs": undefined,
           "enum": [
@@ -2883,16 +2738,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "name": "desc",
               "value": "desc",
-            },
-          ],
-        },
-        "GetRequestEventsRequestInclude": {
-          "docs": "Include the data object in the event model",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "data",
-              "value": "data",
             },
           ],
         },
@@ -2931,16 +2776,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRequestIgnoredEventsRequestOrderByGetRequestIgnoredEventsRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-          ],
-        },
         "GetRequestsRequestDirGetRequestsRequestDir": {
           "docs": undefined,
           "enum": [
@@ -2953,16 +2788,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "name": "desc",
               "value": "desc",
-            },
-          ],
-        },
-        "GetRequestsRequestInclude": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "data",
-              "value": "data",
             },
           ],
         },
@@ -3011,16 +2836,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRulesetsRequestOrderByGetRulesetsRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-          ],
-        },
         "GetSourcesRequestDirGetSourcesRequestDir": {
           "docs": undefined,
           "enum": [
@@ -3033,16 +2848,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "name": "desc",
               "value": "desc",
-            },
-          ],
-        },
-        "GetSourcesRequestOrderByGetSourcesRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
             },
           ],
         },
@@ -3091,16 +2896,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetTransformationExecutionsRequestOrderByGetTransformationExecutionsRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
-            },
-          ],
-        },
         "GetTransformationsRequestDirGetTransformationsRequestDir": {
           "docs": undefined,
           "enum": [
@@ -3113,16 +2908,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "name": "desc",
               "value": "desc",
-            },
-          ],
-        },
-        "GetTransformationsRequestOrderByGetTransformationsRequestOrderBy": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created_at",
-              "value": "created_at",
             },
           ],
         },
@@ -3830,32 +3615,10 @@ exports[`open api parser hookdeck simple 1`] = `
           "discriminated": false,
           "docs": undefined,
           "union": [
-            {
-              "docs": undefined,
-              "type": "OrderByDirectionOrderByDirection",
-            },
-            {
-              "docs": undefined,
-              "type": "OrderByDirectionOrderByDirection",
-            },
-            {
-              "docs": undefined,
-              "type": "OrderByDirectionOrderByDirection",
-            },
-            {
-              "docs": undefined,
-              "type": "OrderByDirectionOrderByDirection",
-            },
-          ],
-        },
-        "OrderByDirectionOrderByDirection": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "DESC",
-              "value": "DESC",
-            },
+            "literal<"asc">",
+            "literal<"desc">",
+            "literal<"ASC">",
+            "literal<"DESC">",
           ],
         },
         "RawBody": {
@@ -4146,21 +3909,8 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "RetryStrategy",
             },
-            "type": {
-              "docs": "A retry rule must be of type \`retry\`",
-              "type": "RetryRuleType",
-            },
+            "type": "literal<"retry">",
           },
-        },
-        "RetryRuleType": {
-          "docs": "A retry rule must be of type \`retry\`",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "retry",
-              "value": "retry",
-            },
-          ],
         },
         "RetryStrategy": {
           "docs": "Algorithm to use when calculating delay between retries",
@@ -4620,10 +4370,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
               "type": "optional<string>",
             },
-            "type": {
-              "docs": "A transformation rule must be of type \`transformation\`",
-              "type": "TransformFullType",
-            },
+            "type": "literal<"transform">",
           },
         },
         "TransformFullTransformation": {
@@ -4643,16 +4390,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
         },
-        "TransformFullType": {
-          "docs": "A transformation rule must be of type \`transformation\`",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "transform",
-              "value": "transform",
-            },
-          ],
-        },
         "TransformReference": {
           "docs": undefined,
           "properties": {
@@ -4660,21 +4397,8 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
               "type": "string",
             },
-            "type": {
-              "docs": "A transformation rule must be of type \`transformation\`",
-              "type": "TransformReferenceType",
-            },
+            "type": "literal<"transform">",
           },
-        },
-        "TransformReferenceType": {
-          "docs": "A transformation rule must be of type \`transformation\`",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "transform",
-              "value": "transform",
-            },
-          ],
         },
         "TransformRule": {
           "discriminated": false,
@@ -5021,10 +4745,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the workspace",
               "type": "string",
             },
-            "type": {
-              "docs": undefined,
-              "type": "TransformationIssueType",
-            },
+            "type": "literal<"transformation">",
             "updated_at": {
               "docs": "ISO timestamp for when the issue was last updated",
               "type": "string",
@@ -5069,16 +4790,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<string>",
             },
           },
-        },
-        "TransformationIssueType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "transformation",
-              "value": "transformation",
-            },
-          ],
         },
         "TransformationIssueWithData": {
           "docs": "Transformation issue",
@@ -5139,25 +4850,12 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the workspace",
               "type": "string",
             },
-            "type": {
-              "docs": undefined,
-              "type": "TransformationIssueWithDataType",
-            },
+            "type": "literal<"transformation">",
             "updated_at": {
               "docs": "ISO timestamp for when the issue was last updated",
               "type": "string",
             },
           },
-        },
-        "TransformationIssueWithDataType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "transformation",
-              "value": "transformation",
-            },
-          ],
         },
         "TransformationPaginatedResult": {
           "docs": undefined,
@@ -5505,7 +5203,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetAttemptsRequestOrderByGetAttemptsRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -5667,7 +5365,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetBookmarksRequestOrderByGetBookmarksRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -5899,7 +5597,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetEventBulkRetriesRequestOrderByGetEventBulkRetriesRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -6069,7 +5767,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIgnoredEventBulkRetriesRequestOrderByGetIgnoredEventBulkRetriesRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -6239,7 +5937,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestBulkRetriesRequestOrderByGetRequestBulkRetriesRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -6447,7 +6145,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetConnectionsRequestOrderByGetConnectionsRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "paused_at": {
                   "allow-multiple": undefined,
@@ -6790,7 +6488,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetDestinationsRequestOrderByGetDestinationsRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -7044,7 +6742,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "include": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetEventsRequestInclude>",
+                  "type": "optional<literal<"data">>",
                 },
                 "issue_id": {
                   "allow-multiple": undefined,
@@ -8100,7 +7798,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "include": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestEventsRequestInclude>",
+                  "type": "optional<literal<"data">>",
                 },
                 "issue_id": {
                   "allow-multiple": undefined,
@@ -8217,7 +7915,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestIgnoredEventsRequestOrderByGetRequestIgnoredEventsRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -8307,7 +8005,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "include": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestsRequestInclude>",
+                  "type": "optional<literal<"data">>",
                 },
                 "ingested_at": {
                   "allow-multiple": undefined,
@@ -8545,7 +8243,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRulesetsRequestOrderByGetRulesetsRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -8798,7 +8496,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetSourcesRequestOrderByGetSourcesRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -9043,7 +8741,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetTransformationExecutionsRequestOrderByGetTransformationExecutionsRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -9103,7 +8801,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetTransformationsRequestOrderByGetTransformationsRequestOrderBy>",
+                  "type": "optional<literal<"created_at">>",
                 },
                 "prev": {
                   "allow-multiple": undefined,

@@ -711,16 +711,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
-        "StatusEnum": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "ACTIVE",
-              "value": "ACTIVE",
-            },
-          ],
-        },
+        "StatusEnum": "literal<"ACTIVE">",
         "SubmitCompletionActualRequest": {
           "docs": undefined,
           "properties": {

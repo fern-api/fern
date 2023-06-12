@@ -4513,16 +4513,6 @@ exports[`open api parser flexport simple 1`] = `
             },
           ],
         },
-        "InvoiceIndexRequestSort": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "due_date",
-              "value": "due_date",
-            },
-          ],
-        },
         "InvoiceIndexResponse": {
           "docs": undefined,
           "properties": {
@@ -6425,16 +6415,6 @@ exports[`open api parser flexport simple 1`] = `
               "docs": undefined,
               "name": "cancelled",
               "value": "cancelled",
-            },
-          ],
-        },
-        "PurchaseOrderIndexRequestSort": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "id",
-              "value": "id",
             },
           ],
         },
@@ -10467,7 +10447,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "sort": {
                   "allow-multiple": undefined,
                   "docs": "Sort results by the specified field.",
-                  "type": "optional<root.InvoiceIndexRequestSort>",
+                  "type": "optional<literal<"due_date">>",
                 },
               },
             },
@@ -11036,7 +11016,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "sort": {
                   "allow-multiple": undefined,
                   "docs": "Sort results by the specified field (only \`id\` is supported at this time)",
-                  "type": "optional<root.PurchaseOrderIndexRequestSort>",
+                  "type": "optional<literal<"id">>",
                 },
               },
             },

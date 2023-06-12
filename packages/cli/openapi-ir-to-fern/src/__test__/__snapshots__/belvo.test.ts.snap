@@ -2490,16 +2490,7 @@ We return one of the following enum values:
             },
           ],
         },
-        "EnumBankAccountHolderTypePse": {
-          "docs": "The type of bank account to create in Belvo. For business bank accounts, this field must the set to \`BUSINESS\`.",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "BUSINESS",
-              "value": "BUSINESS",
-            },
-          ],
-        },
+        "EnumBankAccountHolderTypePse": "literal<"BUSINESS">",
         "EnumBankAccountPixAccountTypeOfpi": {
           "docs": "The type of bank account. Can be either:
 
@@ -2880,20 +2871,7 @@ You can send through one of the following values:
             },
           ],
         },
-        "EnumIncomeSourceType": {
-          "docs": "The type of source we generate income insights from.
-We return one of the following enum values:
-
-  - \`BANK\`
-",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "BANK",
-              "value": "BANK",
-            },
-          ],
-        },
+        "EnumIncomeSourceType": "literal<"BANK">",
         "EnumIncomeStreamConfidence": {
           "docs": "Belvo's level of confidence for future incomes.
 
@@ -3047,31 +3025,8 @@ Can be either:
             },
           ],
         },
-        "EnumIncomeVerificationAccountHolderType": {
-          "docs": "The type of account holder. Can be:
-
-  - \`INDIVIDUAL\`",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "INDIVIDUAL",
-              "value": "INDIVIDUAL",
-            },
-          ],
-        },
-        "EnumIncomeVerificationType": {
-          "docs": "The direction of the transaction:
-  
-- \`INFLOW\` indicates money coming into the account.
-",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "INFLOW",
-              "value": "INFLOW",
-            },
-          ],
-        },
+        "EnumIncomeVerificationAccountHolderType": "literal<"INDIVIDUAL">",
+        "EnumIncomeVerificationType": "literal<"INFLOW">",
         "EnumInstitutionIntegrationType": {
           "docs": "The type of technology used to access the institution. We return one of the following values:
 
@@ -3282,21 +3237,7 @@ You can send through one or more of the following values:
             },
           ],
         },
-        "EnumInvoiceDianInvoiceType": {
-          "docs": "The fiscal institution's classification of the invoice.
-
-For Colombia's DIAN, we return one of the following values:
-
-  - \`Factura Electrónica de Venta\`
-",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "FacturaElectronicaDeVenta",
-              "value": "Factura Electrónica de Venta",
-            },
-          ],
-        },
+        "EnumInvoiceDianInvoiceType": "literal<"Factura Electrónica de Venta">",
         "EnumInvoiceDianPaymentMethod": {
           "docs": "The payment method used for this invoice, as defined by the legal entity of the country.
 
@@ -3639,18 +3580,7 @@ We return one of the following values:
             },
           ],
         },
-        "EnumReceivableTransactionFeeType": {
-          "docs": "The type of fee applied to the transaction. We return one of the following values:
-
-  - \`TRANSACTION_FEE\`",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "TRANSACTION_FEE",
-              "value": "TRANSACTION_FEE",
-            },
-          ],
-        },
+        "EnumReceivableTransactionFeeType": "literal<"TRANSACTION_FEE">",
         "EnumReceivableTransactionStatus": {
           "docs": "The status of the transaction. Can be either:
 
@@ -3739,20 +3669,7 @@ We return one of the following values:
             },
           ],
         },
-        "EnumRecurringExpenseFrequency": {
-          "docs": "The frequency at which this recurring expense occurs.
-
-
-ℹ️ **Note:** Belvo only identifies \`MONTHLY\` frequencies.
-",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MONTHLY",
-              "value": "MONTHLY",
-            },
-          ],
-        },
+        "EnumRecurringExpenseFrequency": "literal<"MONTHLY">",
         "EnumRecurringExpensePaymentType": {
           "docs": "The type of recurring expense. We return one of the following values:
 

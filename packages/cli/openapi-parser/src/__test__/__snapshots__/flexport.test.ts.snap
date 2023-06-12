@@ -3688,17 +3688,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                 "type": "nullable",
                 "value": {
                   "description": undefined,
-                  "generatedName": "InvoiceIndexRequestSort",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "due_date",
-                      "nameOverride": undefined,
-                      "value": "due_date",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "due_date",
                 },
               },
             },
@@ -9158,17 +9149,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "nullable",
                 "value": {
                   "description": undefined,
-                  "generatedName": "PurchaseOrderIndexRequestSort",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "id",
-                      "nameOverride": undefined,
-                      "value": "id",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "id",
                 },
               },
             },

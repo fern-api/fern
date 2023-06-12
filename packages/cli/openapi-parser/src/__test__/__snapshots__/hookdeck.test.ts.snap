@@ -1107,34 +1107,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetAttemptsRequestOrderByGetAttemptsRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetAttemptsRequestOrderByGetAttemptsRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -1709,34 +1691,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetBookmarksRequestOrderByGetBookmarksRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetBookmarksRequestOrderByGetBookmarksRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -2803,34 +2767,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetDestinationsRequestOrderByGetDestinationsRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetDestinationsRequestOrderByGetDestinationsRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -4970,17 +4916,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "description": "Include the data object in the event model",
-                  "generatedName": "GetEventsRequestInclude",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "data",
-                      "nameOverride": undefined,
-                      "value": "data",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "data",
                 },
               },
             },
@@ -7197,17 +7134,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "description": "Include the data object in the event model",
-                          "generatedName": "GetEventBulkRetriesRequestQueryInclude",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "data",
-                              "nameOverride": undefined,
-                              "value": "data",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "data",
                         },
                       },
                     },
@@ -7452,34 +7380,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetEventBulkRetriesRequestOrderByGetEventBulkRetriesRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetEventBulkRetriesRequestOrderByGetEventBulkRetriesRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -11076,34 +10986,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetIgnoredEventBulkRetriesRequestOrderByGetIgnoredEventBulkRetriesRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetIgnoredEventBulkRetriesRequestOrderByGetIgnoredEventBulkRetriesRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -16012,17 +15904,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "description": undefined,
-                  "generatedName": "GetRequestsRequestInclude",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "data",
-                      "nameOverride": undefined,
-                      "value": "data",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "data",
                 },
               },
             },
@@ -17695,17 +17578,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "description": "Include the data object in the event model",
-                  "generatedName": "GetRequestEventsRequestInclude",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "data",
-                      "nameOverride": undefined,
-                      "value": "data",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "data",
                 },
               },
             },
@@ -18005,34 +17879,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRequestIgnoredEventsRequestOrderByGetRequestIgnoredEventsRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRequestIgnoredEventsRequestOrderByGetRequestIgnoredEventsRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -19696,17 +19552,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRequestBulkRetriesRequestQueryInclude",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "data",
-                              "nameOverride": undefined,
-                              "value": "data",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "data",
                         },
                       },
                     },
@@ -19924,34 +19771,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRequestBulkRetriesRequestOrderByGetRequestBulkRetriesRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRequestBulkRetriesRequestOrderByGetRequestBulkRetriesRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -22869,34 +22698,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRulesetsRequestOrderByGetRulesetsRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRulesetsRequestOrderByGetRulesetsRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -23966,34 +23777,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetSourcesRequestOrderByGetSourcesRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetSourcesRequestOrderByGetSourcesRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -24742,34 +24535,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetTransformationsRequestOrderByGetTransformationsRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetTransformationsRequestOrderByGetTransformationsRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -25990,34 +25765,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetTransformationExecutionsRequestOrderByGetTransformationExecutionsRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetTransformationExecutionsRequestOrderByGetTransformationExecutionsRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -26844,34 +26601,16 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetConnectionsRequestOrderByGetConnectionsRequestOrderBy",
-                        "nameOverride": undefined,
-                        "type": "enum",
-                        "values": [
-                          {
-                            "description": undefined,
-                            "generatedName": "created_at",
-                            "nameOverride": undefined,
-                            "value": "created_at",
-                          },
-                        ],
+                        "type": "literal",
+                        "value": "created_at",
                       },
                       {
                         "description": undefined,
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetConnectionsRequestOrderByGetConnectionsRequestOrderByItem",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "created_at",
-                              "nameOverride": undefined,
-                              "value": "created_at",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "created_at",
                         },
                       },
                     ],
@@ -28529,17 +28268,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": "An alert rule must be of type \`alert\`",
-                "generatedName": "AlertRuleType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "alert",
-                    "nameOverride": undefined,
-                    "value": "alert",
-                  },
-                ],
+                "type": "literal",
+                "value": "alert",
               },
             },
             {
@@ -29954,17 +29684,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": "A delay rule must be of type \`delay\`",
-                "generatedName": "DelayRuleType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "delay",
-                    "nameOverride": undefined,
-                    "value": "delay",
-                  },
-                ],
+                "type": "literal",
+                "value": "delay",
               },
             },
             {
@@ -30262,17 +29983,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
-                "generatedName": "DeliveryIssueType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "delivery",
-                    "nameOverride": undefined,
-                    "value": "delivery",
-                  },
-                ],
+                "type": "literal",
+                "value": "delivery",
               },
             },
             {
@@ -30659,17 +30371,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
-                "generatedName": "DeliveryIssueWithDataType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "delivery",
-                    "nameOverride": undefined,
-                    "value": "delivery",
-                  },
-                ],
+                "type": "literal",
+                "value": "delivery",
               },
             },
             {
@@ -32141,17 +31844,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": "A filter rule must be of type \`filter\`",
-                "generatedName": "FilterRuleType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "filter",
-                    "nameOverride": undefined,
-                    "value": "filter",
-                  },
-                ],
+                "type": "literal",
+                "value": "filter",
               },
             },
             {
@@ -33840,59 +33534,23 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "schemas": [
               {
                 "description": undefined,
-                "generatedName": "OrderByDirectionOrderByDirection",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "asc",
-                    "nameOverride": undefined,
-                    "value": "asc",
-                  },
-                ],
+                "type": "literal",
+                "value": "asc",
               },
               {
                 "description": undefined,
-                "generatedName": "OrderByDirectionOrderByDirection",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "desc",
-                    "nameOverride": undefined,
-                    "value": "desc",
-                  },
-                ],
+                "type": "literal",
+                "value": "desc",
               },
               {
                 "description": undefined,
-                "generatedName": "OrderByDirectionOrderByDirection",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "ASC",
-                    "nameOverride": undefined,
-                    "value": "ASC",
-                  },
-                ],
+                "type": "literal",
+                "value": "ASC",
               },
               {
                 "description": undefined,
-                "generatedName": "OrderByDirectionOrderByDirection",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "DESC",
-                    "nameOverride": undefined,
-                    "value": "DESC",
-                  },
-                ],
+                "type": "literal",
+                "value": "DESC",
               },
             ],
             "type": "undisciminated",
@@ -34680,17 +34338,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": "A retry rule must be of type \`retry\`",
-                "generatedName": "RetryRuleType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "retry",
-                    "nameOverride": undefined,
-                    "value": "retry",
-                  },
-                ],
+                "type": "literal",
+                "value": "retry",
               },
             },
             {
@@ -35903,17 +35552,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": "A transformation rule must be of type \`transformation\`",
-                "generatedName": "TransformFullType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "transform",
-                    "nameOverride": undefined,
-                    "value": "transform",
-                  },
-                ],
+                "type": "literal",
+                "value": "transform",
               },
             },
             {
@@ -36034,17 +35674,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": "A transformation rule must be of type \`transformation\`",
-                "generatedName": "TransformReferenceType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "transform",
-                    "nameOverride": undefined,
-                    "value": "transform",
-                  },
-                ],
+                "type": "literal",
+                "value": "transform",
               },
             },
             {
@@ -37134,17 +36765,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
-                "generatedName": "TransformationIssueType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "transformation",
-                    "nameOverride": undefined,
-                    "value": "transformation",
-                  },
-                ],
+                "type": "literal",
+                "value": "transformation",
               },
             },
             {
@@ -37515,17 +37137,8 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
-                "generatedName": "TransformationIssueWithDataType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "transformation",
-                    "nameOverride": undefined,
-                    "value": "transformation",
-                  },
-                ],
+                "type": "literal",
+                "value": "transformation",
               },
             },
             {
