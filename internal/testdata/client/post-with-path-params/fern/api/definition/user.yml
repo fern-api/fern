@@ -1,0 +1,22 @@
+# Simple test for generating a client with both path parameters and a body.
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    setName:
+      method: POST
+      path: /{userId}/set-name
+      path-parameters:
+        userId: string
+      request: string
+
+    setNameV2:
+      method: POST
+      path: /{userId}/set-name-v2
+      path-parameters:
+        userId: string
+      request:
+        name: SetNameRequest
+        body:
+          properties:
+            userName: string
