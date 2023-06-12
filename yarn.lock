@@ -3732,7 +3732,6 @@ __metadata:
     react-icons: ^4.9.0
     react-intersection-observer: ^9.4.3
     react-markdown: ^8.0.5
-    react-router-dom: ^6.4.3
     react-syntax-highlighter: ^15.5.0
     rehype-raw: ^6.1.1
     remark-gfm: ^3.0.1
