@@ -17,6 +17,18 @@ type Client interface {
 	User() UserClient
 }
 
+// NewClient constructs a new Client.
+func NewClient(baseURL string, doer Doer, opts ...ClientOption) (Client, error) {
+	// TODO: Apply all the client options.
+	userClient, err := NewUserClient(baseURL, doer, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &client{
+		user: userClient,
+	}, nil
+}
+
 // CreateUserRequest is the request shape for creating users.
 type CreateUserRequest struct {
 	Name string `json:"name"`
@@ -32,4 +44,47 @@ type User struct {
 type UserClient interface {
 	GetUser(ctx context.Context, userId string) (*User, error)
 	CreateUser(ctx context.Context, request *CreateUserRequest) (*User, error)
+}
+
+// NewUserClient constructs a new UserClient.
+func NewUserClient(baseURL string, doer Doer, opts ...ClientOption) (UserClient, error) {
+	// TODO: Apply all the client options.
+	return &userClient{
+		getUser:    newGetUserEndpoint(baseURL, doer),
+		createUser: newCreateUserEndpoint(baseURL, doer),
+	}, nil
+}
+
+type client struct {
+	echo func(context.Context, string) (string, error)
+	user UserClient
+}
+
+func (c *client) Echo(ctx context.Context, message string) (string, error) {
+	return c.echo(ctx, message)
+}
+
+func (c *client) User() UserClient {
+	return c.user
+}
+
+type userClient struct {
+	getUser    func(context.Context, string) (*User, error)
+	createUser func(context.Context, *CreateUserRequest) (*User, error)
+}
+
+func (u *userClient) GetUser(ctx context.Context, userId string) (*User, error) {
+	return u.getUser(ctx, userId)
+}
+
+func (u *userClient) CreateUser(ctx context.Context, request *CreateUserRequest) (*User, error) {
+	return u.createUser(ctx, request)
+}
+
+func newGetUserEndpoint(baseURL string, doer Doer) func(context.Context, string) (*User, error) {
+	return nil
+}
+
+func newCreateUserEndpoint(baseURL string, doer Doer) func(context.Context, *CreateUserRequest) (*User, error) {
+	return nil
 }
