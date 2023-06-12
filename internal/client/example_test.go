@@ -43,6 +43,22 @@ func TestExampleClient(t *testing.T) {
 				request := new(FooRequest)
 				require.NoError(t, json.Unmarshal(bytes, request))
 
+				if request.Id == "error" {
+					// Return a typed error so we can verify the behavior
+					// of the error decoder.
+					notFoundError := &UserNotFoundError{
+						StatusCode:      http.StatusNotFound,
+						RequestedUserId: "error",
+					}
+					bytes, err = json.Marshal(notFoundError)
+					require.NoError(t, err)
+
+					w.WriteHeader(http.StatusNotFound)
+					_, err = w.Write(bytes)
+					require.NoError(t, err)
+					return
+				}
+
 				response := &FooResponse{
 					Id: request.Id,
 				}
@@ -68,6 +84,20 @@ func TestExampleClient(t *testing.T) {
 		},
 	)
 	require.NoError(t, err)
-
 	assert.Equal(t, "fern", response.Id)
+
+	_, err = client.Foo(
+		context.Background(),
+		&FooRequest{
+			Id:             "error",
+			XExampleHeader: "received",
+			Limit:          10,
+		},
+	)
+	require.Error(t, err)
+
+	userNotFoundError, ok := err.(*UserNotFoundError)
+	require.True(t, ok)
+	assert.Equal(t, http.StatusNotFound, userNotFoundError.StatusCode)
+	assert.Equal(t, "error", userNotFoundError.RequestedUserId)
 }

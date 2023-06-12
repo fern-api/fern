@@ -135,15 +135,16 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 		queryParams.Add("limit", strconv.Itoa(request.Limit))
 
 		// Modify the URL if any query params were specified.
+		endpointURL := fooURL
 		if len(queryParams) > 0 {
-			fooURL += "?" + queryParams.Encode()
+			endpointURL += "?" + queryParams.Encode()
 		}
 
 		response := new(FooResponse)
 		if err := doRequest(
 			ctx,
 			client,
-			fooURL,
+			endpointURL,
 			http.MethodPost,
 			request,
 			response,
