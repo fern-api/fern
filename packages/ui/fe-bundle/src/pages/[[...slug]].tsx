@@ -20,9 +20,9 @@ export default function Docs({ url, pathname }: Docs.Props): JSX.Element {
 }
 
 export const getServerSideProps: GetServerSideProps<Docs.Props> = async (context) => {
-    const host = context.req.headers.host;
+    const host = context.req.headers["x-fern-host"] ?? context.req.headers.host;
     if (host == null) {
-        throw new Error("Request host is not defined");
+        throw new Error("Host header is not defined");
     }
     return {
         props: {
