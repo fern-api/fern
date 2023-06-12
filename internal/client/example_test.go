@@ -46,8 +46,7 @@ func TestExampleClient(t *testing.T) {
 				if request.Id == "error" {
 					// Return a typed error so we can verify the behavior
 					// of the error decoder.
-					notFoundError := &UserNotFoundError{
-						StatusCode:      http.StatusNotFound,
+					notFoundError := &UserNotFoundErrorBody{
 						RequestedUserId: "error",
 					}
 					bytes, err = json.Marshal(notFoundError)
@@ -96,8 +95,7 @@ func TestExampleClient(t *testing.T) {
 	)
 	require.Error(t, err)
 
-	userNotFoundError, ok := err.(*UserNotFoundError)
+	userNotFoundError, ok := err.(*UserNotFoundErrorBody)
 	require.True(t, ok)
-	assert.Equal(t, http.StatusNotFound, userNotFoundError.StatusCode)
 	assert.Equal(t, "error", userNotFoundError.RequestedUserId)
 }

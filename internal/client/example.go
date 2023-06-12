@@ -94,7 +94,7 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 		decoder := json.NewDecoder(body)
 		switch statusCode {
 		case 404:
-			value := new(UserNotFoundError)
+			value := new(UserNotFoundErrorBody)
 			if err := decoder.Decode(value); err != nil {
 				// TODO: The server responded with an error in a different shape
 				// than what was expected.
@@ -103,7 +103,6 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 				// to decode error?
 				return err
 			}
-			value.StatusCode = statusCode
 			return value
 		}
 		// The error didn't match any of the known status codes,
