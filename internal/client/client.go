@@ -60,13 +60,14 @@ func doRequest(
 	method string,
 	request any,
 	response any,
+	endpointHeaders http.Header,
 	errorDecoder func(int, io.Reader) error,
 ) error {
 	requestBytes, err := json.Marshal(request)
 	if err != nil {
 		return err
 	}
-	req, err := newRequest(ctx, url, method, bytes.NewReader(requestBytes))
+	req, err := newRequest(ctx, url, method, endpointHeaders, bytes.NewReader(requestBytes))
 	if err != nil {
 		return err
 	}
@@ -121,6 +122,7 @@ func newRequest(
 	ctx context.Context,
 	url string,
 	method string,
+	endpointHeaders http.Header,
 	requestBody io.Reader,
 ) (*http.Request, error) {
 	req, err := http.NewRequest(method, url, requestBody)
@@ -130,6 +132,9 @@ func newRequest(
 	req = req.WithContext(ctx)
 	for name, value := range fernHeaders {
 		req.Header.Set(name, value)
+	}
+	for name, values := range endpointHeaders {
+		req.Header[name] = values
 	}
 	return req, nil
 }

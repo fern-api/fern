@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -24,6 +25,13 @@ func TestExampleClient(t *testing.T) {
 				for header, value := range fernHeaders {
 					assert.Equal(t, value, r.Header.Get(header))
 				}
+				assert.Equal(t, "received", r.Header.Get("X-Example-Header"))
+
+				// Verify that we received the query parameters.
+				urlValues := r.URL.Query()
+				limit, err := strconv.Atoi(urlValues.Get("limit"))
+				require.NoError(t, err)
+				assert.Equal(t, 10, limit)
 
 				// This is the only registered endpoint for now,
 				// so we just check that the path suffix matches.
@@ -54,7 +62,9 @@ func TestExampleClient(t *testing.T) {
 	response, err := client.Foo(
 		context.Background(),
 		&FooRequest{
-			Id: "fern",
+			Id:             "fern",
+			XExampleHeader: "received",
+			Limit:          10,
 		},
 	)
 	require.NoError(t, err)

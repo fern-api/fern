@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -14,13 +15,14 @@ import (
 type FooRequest struct {
 	Id string `json:"id"`
 
-	// ExampleHeader is an example for what gets generated when
+	// XExampleHeader is an example for what gets generated when
 	// the user specifies headers in their request object.
-	ExampleHeader string `json:"-"`
+	XExampleHeader string `json:"-"`
 
-	// ExampleQuery is an example for what gets generated when
-	// the user specifies query-parameters in their request object.
-	ExampleQuery string `json:"-"`
+	// Limit is an example for what gets generated when
+	// the user specifies query-parameters in their request
+	// object.
+	Limit int `json:"-"`
 }
 
 // FooResponse is a response from the Foo endpoint.
@@ -45,14 +47,14 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 	for _, opt := range opts {
 		opt(options)
 	}
-	url, err := url.Parse(baseURL)
+	parsedURL, err := url.Parse(baseURL)
 	if err != nil {
 		return nil, err
 	}
 
 	// The following line is only generated if the Fern
 	// definition has a basePath set.
-	baseURL = strings.TrimRight(url.String(), "/") + "/example"
+	baseURL = strings.TrimRight(parsedURL.String(), "/") + "/example"
 
 	// TODO: Everything prefixed with the name of the endpoint could
 	// be placed in its own un-exported helper function and called like:
@@ -122,12 +124,32 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 	// parameters, then the request argument(s) will need to be applied to
 	// the fooURL, as needed.
 	fooImpl := func(ctx context.Context, request *FooRequest) (*FooResponse, error) {
-		// TODO: Apply the foo options to the call.
-		// We need to classify different types of foo options, such
-		// as query builders, headers, etc. That way it's easy to
-		// recognize what we need to do (at runtime) for the given option.
+		// Consolidate all of the request's headers into a http.Header.
+		endpointHeaders := make(http.Header)
+		if request.XExampleHeader != "" {
+			endpointHeaders.Set("X-Example-Header", request.XExampleHeader)
+		}
+		// Include all of the query parameters. In this example, the query
+		// parameter is required so it's always set.
+		queryParams := make(url.Values)
+		queryParams.Add("limit", strconv.Itoa(request.Limit))
+
+		// Modify the URL if any query params were specified.
+		if len(queryParams) > 0 {
+			fooURL += "?" + queryParams.Encode()
+		}
+
 		response := new(FooResponse)
-		if err := doRequest(ctx, client, fooURL, http.MethodPost, request, response, fooErrorDeserializer); err != nil {
+		if err := doRequest(
+			ctx,
+			client,
+			fooURL,
+			http.MethodPost,
+			request,
+			response,
+			endpointHeaders,
+			fooErrorDeserializer,
+		); err != nil {
 			return nil, err
 		}
 		return response, nil
