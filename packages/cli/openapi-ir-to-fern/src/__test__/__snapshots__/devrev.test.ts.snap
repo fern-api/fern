@@ -463,17 +463,6 @@ token. Only applicable for application access tokens.
             },
           ],
         },
-        "AuthTokenTokenType": {
-          "docs": "The type of the issued token. Bearer is the only supported token type.
-",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "bearer",
-              "value": "bearer",
-            },
-          ],
-        },
         "AuthTokensCreateResponse": {
           "docs": "Response for the request to create a new token corresponding to the
 requested token type.
@@ -510,7 +499,7 @@ of values in which the order of values does not matter.
             },
             "token_type": {
               "docs": undefined,
-              "type": "AuthTokenTokenType",
+              "type": "auth-token-token-type",
             },
           },
         },
@@ -949,19 +938,9 @@ sort order. If not set, then no prior elements exist.
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "ErrorForbiddenType",
+              "type": "error-forbidden-type",
             },
           },
-        },
-        "ErrorForbiddenType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "forbidden",
-              "value": "forbidden",
-            },
-          ],
         },
         "ErrorInternalServerError": {
           "docs": undefined,
@@ -977,19 +956,9 @@ inquiry.
             },
             "type": {
               "docs": undefined,
-              "type": "ErrorInternalServerErrorType",
+              "type": "error-internal-server-error-type",
             },
           },
-        },
-        "ErrorInternalServerErrorType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "internal_error",
-              "value": "internal_error",
-            },
-          ],
         },
         "ErrorNotFound": {
           "docs": undefined,
@@ -999,19 +968,9 @@ inquiry.
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "ErrorNotFoundType",
+              "type": "error-not-found-type",
             },
           },
-        },
-        "ErrorNotFoundType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "not_found",
-              "value": "not_found",
-            },
-          ],
         },
         "ErrorServiceUnavailable": {
           "docs": undefined,
@@ -1021,19 +980,9 @@ inquiry.
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "ErrorServiceUnavailableType",
+              "type": "error-service-unavailable-type",
             },
           },
-        },
-        "ErrorServiceUnavailableType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "service_unavailable",
-              "value": "service_unavailable",
-            },
-          ],
         },
         "ErrorTooManyRequests": {
           "docs": undefined,
@@ -1048,19 +997,9 @@ inquiry.
             },
             "type": {
               "docs": undefined,
-              "type": "ErrorTooManyRequestsType",
+              "type": "error-too-many-requests-type",
             },
           },
-        },
-        "ErrorTooManyRequestsType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "too_many_requests",
-              "value": "too_many_requests",
-            },
-          ],
         },
         "ErrorUnauthorized": {
           "docs": undefined,
@@ -1070,19 +1009,9 @@ inquiry.
           "properties": {
             "type": {
               "docs": undefined,
-              "type": "ErrorUnauthorizedType",
+              "type": "error-unauthorized-type",
             },
           },
-        },
-        "ErrorUnauthorizedType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "unauthenticated",
-              "value": "unauthenticated",
-            },
-          ],
         },
         "EventPartCreated": {
           "docs": undefined,
@@ -1370,16 +1299,6 @@ always be returned in the specified sort-by order.
               "type": "RevOrgSummary",
             },
           },
-        },
-        "OrgType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "rev_org",
-              "value": "rev_org",
-            },
-          ],
         },
         "Part": {
           "base-properties": {},
@@ -2034,7 +1953,7 @@ will appear in the response.
             },
             "visibility": {
               "docs": undefined,
-              "type": "optional<TimelineEntryVisibility>",
+              "type": "optional<timeline-entry-visibility>",
             },
           },
           "discriminant": "type",
@@ -2066,16 +1985,6 @@ will appear in the response.
               "type": "optional<map<string, unknown>>",
             },
           },
-        },
-        "TimelineEntriesCreateRequestType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "timeline_comment",
-              "value": "timeline_comment",
-            },
-          ],
         },
         "TimelineEntriesCreateResponse": {
           "docs": "The response to creating a timeline entry for an object.",
@@ -2175,16 +2084,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
             },
           },
         },
-        "TimelineEntriesUpdateRequestType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "timeline_comment",
-              "value": "timeline_comment",
-            },
-          ],
-        },
         "TimelineEntriesUpdateResponse": {
           "docs": "The response to updating a timeline entry.",
           "properties": {
@@ -2208,29 +2107,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "TimelineEntryBase": {
           "docs": undefined,
           "type": "AtomBase",
-        },
-        "TimelineEntryType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "timeline_comment",
-              "value": "timeline_comment",
-            },
-          ],
-        },
-        "TimelineEntryVisibility": {
-          "docs": "The visibility of the entry. If 'private', then the entry is only
-visible to the creator, otherwise if not set, then the entry has
-default visibility.
-",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "private",
-              "value": "private",
-            },
-          ],
         },
         "UserBase": {
           "docs": undefined,
@@ -3059,6 +2935,7 @@ empty.
           "docs": undefined,
           "type": "map<string, unknown>",
         },
+        "auth-token-token-type": "literal<"bearer">",
         "empty": {
           "docs": undefined,
           "type": "map<string, unknown>",
@@ -3075,22 +2952,28 @@ empty.
           "docs": undefined,
           "type": "map<string, unknown>",
         },
+        "error-forbidden-type": "literal<"forbidden">",
         "error-internal-server-error-internal-error": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
+        "error-internal-server-error-type": "literal<"internal_error">",
         "error-not-found-not-found": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
+        "error-not-found-type": "literal<"not_found">",
         "error-service-unavailable-service-unavailable": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
+        "error-service-unavailable-type": "literal<"service_unavailable">",
         "error-too-many-requests-too-many-requests": {
           "docs": undefined,
           "type": "map<string, unknown>",
         },
+        "error-too-many-requests-type": "literal<"too_many_requests">",
+        "error-unauthorized-type": "literal<"unauthenticated">",
         "error-unauthorized-unauthenticated": {
           "docs": undefined,
           "type": "map<string, unknown>",
@@ -3099,6 +2982,7 @@ empty.
           "docs": "External identity of a user.",
           "type": "map<string, unknown>",
         },
+        "org-type": "literal<"rev_org">",
         "parts-create-request-product": {
           "docs": undefined,
           "type": "map<string, unknown>",
@@ -3127,6 +3011,10 @@ empty.
           "docs": "The response for deleting a tag.",
           "type": "map<string, unknown>",
         },
+        "timeline-entries-create-request-type": "literal<"timeline_comment">",
+        "timeline-entries-update-request-type": "literal<"timeline_comment">",
+        "timeline-entry-type": "literal<"timeline_comment">",
+        "timeline-entry-visibility": "literal<"private">",
         "webhooks-delete-response": {
           "docs": "The response to deleting the webhook.",
           "type": "map<string, unknown>",

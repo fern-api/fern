@@ -4721,17 +4721,8 @@ token. Only applicable for application access tokens.
         "auth-token-token-type": {
           "description": "The type of the issued token. Bearer is the only supported token type.
 ",
-          "generatedName": "AuthTokenTokenType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "bearer",
-              "nameOverride": undefined,
-              "value": "bearer",
-            },
-          ],
+          "type": "literal",
+          "value": "bearer",
         },
         "auth-tokens-create-request": {
           "allOf": [],
@@ -6315,17 +6306,8 @@ sort order. If not set, then no prior elements exist.
         },
         "error-forbidden-type": {
           "description": undefined,
-          "generatedName": "ErrorForbiddenType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "forbidden",
-              "nameOverride": undefined,
-              "value": "forbidden",
-            },
-          ],
+          "type": "literal",
+          "value": "forbidden",
         },
         "error-internal-server-error": {
           "allOf": [
@@ -6392,17 +6374,8 @@ inquiry.
         },
         "error-internal-server-error-type": {
           "description": undefined,
-          "generatedName": "ErrorInternalServerErrorType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "internal_error",
-              "nameOverride": undefined,
-              "value": "internal_error",
-            },
-          ],
+          "type": "literal",
+          "value": "internal_error",
         },
         "error-not-found": {
           "allOf": [
@@ -6449,17 +6422,8 @@ inquiry.
         },
         "error-not-found-type": {
           "description": undefined,
-          "generatedName": "ErrorNotFoundType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "not_found",
-              "nameOverride": undefined,
-              "value": "not_found",
-            },
-          ],
+          "type": "literal",
+          "value": "not_found",
         },
         "error-service-unavailable": {
           "allOf": [
@@ -6506,17 +6470,8 @@ inquiry.
         },
         "error-service-unavailable-type": {
           "description": undefined,
-          "generatedName": "ErrorServiceUnavailableType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "service_unavailable",
-              "nameOverride": undefined,
-              "value": "service_unavailable",
-            },
-          ],
+          "type": "literal",
+          "value": "service_unavailable",
         },
         "error-too-many-requests": {
           "allOf": [
@@ -6580,17 +6535,8 @@ inquiry.
         },
         "error-too-many-requests-type": {
           "description": undefined,
-          "generatedName": "ErrorTooManyRequestsType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "too_many_requests",
-              "nameOverride": undefined,
-              "value": "too_many_requests",
-            },
-          ],
+          "type": "literal",
+          "value": "too_many_requests",
         },
         "error-unauthorized": {
           "allOf": [
@@ -6625,17 +6571,8 @@ inquiry.
         },
         "error-unauthorized-type": {
           "description": undefined,
-          "generatedName": "ErrorUnauthorizedType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "unauthenticated",
-              "nameOverride": undefined,
-              "value": "unauthenticated",
-            },
-          ],
+          "type": "literal",
+          "value": "unauthenticated",
         },
         "error-unauthorized-unauthenticated": {
           "description": undefined,
@@ -7301,17 +7238,8 @@ always be returned in the specified sort-by order.
         },
         "org-type": {
           "description": undefined,
-          "generatedName": "OrgType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "rev_org",
-              "nameOverride": undefined,
-              "value": "rev_org",
-            },
-          ],
+          "type": "literal",
+          "value": "rev_org",
         },
         "part": {
           "oneOf": {
@@ -9715,17 +9643,8 @@ will appear in the response.
         },
         "timeline-entries-create-request-type": {
           "description": undefined,
-          "generatedName": "TimelineEntriesCreateRequestType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "timeline_comment",
-              "nameOverride": undefined,
-              "value": "timeline_comment",
-            },
-          ],
+          "type": "literal",
+          "value": "timeline_comment",
         },
         "timeline-entries-create-response": {
           "allOf": [],
@@ -10035,17 +9954,8 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "timeline-entries-update-request-type": {
           "description": undefined,
-          "generatedName": "TimelineEntriesUpdateRequestType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "timeline_comment",
-              "nameOverride": undefined,
-              "value": "timeline_comment",
-            },
-          ],
+          "type": "literal",
+          "value": "timeline_comment",
         },
         "timeline-entries-update-response": {
           "allOf": [],
@@ -10100,34 +10010,16 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "timeline-entry-type": {
           "description": undefined,
-          "generatedName": "TimelineEntryType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "timeline_comment",
-              "nameOverride": undefined,
-              "value": "timeline_comment",
-            },
-          ],
+          "type": "literal",
+          "value": "timeline_comment",
         },
         "timeline-entry-visibility": {
           "description": "The visibility of the entry. If 'private', then the entry is only
 visible to the creator, otherwise if not set, then the entry has
 default visibility.
 ",
-          "generatedName": "TimelineEntryVisibility",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "private",
-              "nameOverride": undefined,
-              "value": "private",
-            },
-          ],
+          "type": "literal",
+          "value": "private",
         },
         "user-base": {
           "allOf": [

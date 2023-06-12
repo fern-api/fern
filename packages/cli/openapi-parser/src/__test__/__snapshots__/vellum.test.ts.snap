@@ -2382,17 +2382,8 @@ Upload a document to be indexed and used for search.
         },
         "StatusEnum": {
           "description": undefined,
-          "generatedName": "StatusEnum",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "ACTIVE",
-              "nameOverride": undefined,
-              "value": "ACTIVE",
-            },
-          ],
+          "type": "literal",
+          "value": "ACTIVE",
         },
         "SubmitCompletionActualRequest": {
           "allOf": [],

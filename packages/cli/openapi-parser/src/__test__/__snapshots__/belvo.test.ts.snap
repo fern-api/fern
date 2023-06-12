@@ -22923,17 +22923,8 @@ We return one of the following enum values:
         },
         "EnumBankAccountHolderTypePse": {
           "description": "The type of bank account to create in Belvo. For business bank accounts, this field must the set to \`BUSINESS\`.",
-          "generatedName": "EnumBankAccountHolderTypePse",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "BUSINESS",
-              "nameOverride": undefined,
-              "value": "BUSINESS",
-            },
-          ],
+          "type": "literal",
+          "value": "BUSINESS",
         },
         "EnumBankAccountPixAccountTypeOfpi": {
           "description": "The type of bank account. Can be either:
@@ -23520,17 +23511,8 @@ We return one of the following enum values:
 
   - \`BANK\`
 ",
-          "generatedName": "EnumIncomeSourceType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "BANK",
-              "nameOverride": undefined,
-              "value": "BANK",
-            },
-          ],
+          "type": "literal",
+          "value": "BANK",
         },
         "EnumIncomeStreamConfidence": {
           "description": "Belvo's level of confidence for future incomes.
@@ -23721,17 +23703,8 @@ Can be either:
           "description": "The type of account holder. Can be:
 
   - \`INDIVIDUAL\`",
-          "generatedName": "EnumIncomeVerificationAccountHolderType",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "INDIVIDUAL",
-              "nameOverride": undefined,
-              "value": "INDIVIDUAL",
-            },
-          ],
+          "type": "literal",
+          "value": "INDIVIDUAL",
         },
         "EnumIncomeVerificationType": {
           "description": "The direction of the transaction:
@@ -23744,17 +23717,8 @@ Can be either:
   
 - \`INFLOW\` indicates money coming into the account.
 ",
-            "generatedName": "EnumIncomeVerificationType",
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [
-              {
-                "description": undefined,
-                "generatedName": "INFLOW",
-                "nameOverride": undefined,
-                "value": "INFLOW",
-              },
-            ],
+            "type": "literal",
+            "value": "INFLOW",
           },
         },
         "EnumInstitutionIntegrationType": {
@@ -24028,17 +23992,8 @@ For Colombia's DIAN, we return one of the following values:
 
   - \`Factura Electrónica de Venta\`
 ",
-            "generatedName": "EnumInvoiceDianInvoiceType",
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [
-              {
-                "description": undefined,
-                "generatedName": "FacturaElectronicaDeVenta",
-                "nameOverride": undefined,
-                "value": "Factura Electrónica de Venta",
-              },
-            ],
+            "type": "literal",
+            "value": "Factura Electrónica de Venta",
           },
         },
         "EnumInvoiceDianPaymentMethod": {
@@ -24558,17 +24513,8 @@ We return one of the following values:
             "description": "The type of fee applied to the transaction. We return one of the following values:
 
   - \`TRANSACTION_FEE\`",
-            "generatedName": "EnumReceivableTransactionFeeType",
-            "nameOverride": undefined,
-            "type": "enum",
-            "values": [
-              {
-                "description": undefined,
-                "generatedName": "TRANSACTION_FEE",
-                "nameOverride": undefined,
-                "value": "TRANSACTION_FEE",
-              },
-            ],
+            "type": "literal",
+            "value": "TRANSACTION_FEE",
           },
         },
         "EnumReceivableTransactionStatus": {
@@ -24710,17 +24656,8 @@ We return one of the following values:
 
 ℹ️ **Note:** Belvo only identifies \`MONTHLY\` frequencies.
 ",
-          "generatedName": "EnumRecurringExpenseFrequency",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "MONTHLY",
-              "nameOverride": undefined,
-              "value": "MONTHLY",
-            },
-          ],
+          "type": "literal",
+          "value": "MONTHLY",
         },
         "EnumRecurringExpensePaymentType": {
           "description": "The type of recurring expense. We return one of the following values:

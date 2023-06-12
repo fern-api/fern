@@ -1848,16 +1848,7 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
         },
-        "GeolocationFieldEditor": {
-          "docs": "",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "Map",
-              "value": "Map",
-            },
-          ],
-        },
+        "GeolocationFieldEditor": "literal<"Map">",
         "GeolocationFieldPropertiesDto": {
           "docs": undefined,
           "properties": {
@@ -3936,22 +3927,13 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
         },
-        "UiFieldEditor": {
-          "docs": "",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "Separator",
-              "value": "Separator",
-            },
-          ],
-        },
+        "UIFieldEditor": "literal<"Separator">",
         "UiFieldPropertiesDto": {
           "docs": undefined,
           "properties": {
             "editor": {
               "docs": undefined,
-              "type": "UiFieldEditor",
+              "type": "UIFieldEditor",
             },
           },
         },

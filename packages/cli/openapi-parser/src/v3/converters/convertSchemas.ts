@@ -12,6 +12,7 @@ import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditional
 import { convertArray } from "./schema/convertArray";
 import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./schema/convertDiscriminatedOneOf";
 import { convertEnum } from "./schema/convertEnum";
+import { convertLiteral } from "./schema/convertLiteral";
 import { convertNumber } from "./schema/convertNumber";
 import { convertObject } from "./schema/convertObject";
 import { convertUndiscriminatedOneOf } from "./schema/convertUndiscriminatedOneOf";
@@ -84,6 +85,15 @@ export function convertSchemaObject(
                 description,
             });
         }
+
+        if (schema.enum.length === 1 && schema.enum[0] != null) {
+            return convertLiteral({
+                wrapAsNullable,
+                value: schema.enum[0],
+                description,
+            });
+        }
+
         return convertEnum({
             nameOverride,
             generatedName,

@@ -47,25 +47,12 @@ exports[`open api parser hathora simple 1`] = `
               "docs": undefined,
               "type": "RoomId",
             },
-            "status": {
-              "docs": undefined,
-              "type": "ActiveConnectionInfoStatus",
-            },
+            "status": "literal<"active">",
             "transportType": {
               "docs": undefined,
               "type": "TransportType",
             },
           },
-        },
-        "ActiveConnectionInfoStatus": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "active",
-              "value": "active",
-            },
-          ],
         },
         "AppConfig": {
           "docs": undefined,
@@ -852,21 +839,8 @@ exports[`open api parser hathora simple 1`] = `
               "docs": undefined,
               "type": "RoomId",
             },
-            "status": {
-              "docs": undefined,
-              "type": "StartingConnectionInfoStatus",
-            },
+            "status": "literal<"starting">",
           },
-        },
-        "StartingConnectionInfoStatus": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "starting",
-              "value": "starting",
-            },
-          ],
         },
         "TailLines": {
           "docs": undefined,

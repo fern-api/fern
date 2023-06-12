@@ -419,21 +419,8 @@ exports[`open api parser axle simple 1`] = `
               "docs": undefined,
               "type": "string",
             },
-            "type": {
-              "docs": undefined,
-              "type": "PropertyType",
-            },
+            "type": "literal<"vehicle">",
           },
-        },
-        "PropertyType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "vehicle",
-              "value": "vehicle",
-            },
-          ],
         },
         "StartIgnitionResponse": {
           "docs": "",

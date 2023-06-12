@@ -1475,10 +1475,7 @@ exports[`open api parser deel simple 1`] = `
               "docs": undefined,
               "type": "ContractToCreateOngoingTimeBasedCompensationDetails",
             },
-            "type": {
-              "docs": undefined,
-              "type": "ContractToCreateOngoingTimeBasedType",
-            },
+            "type": "literal<"ongoing_time_based">",
           },
         },
         "ContractToCreateOngoingTimeBasedCompensationDetails": {
@@ -1488,16 +1485,6 @@ exports[`open api parser deel simple 1`] = `
             "CompensationDetailsOfContractToCreateOngoingTimeBased",
           ],
           "properties": {},
-        },
-        "ContractToCreateOngoingTimeBasedType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "ongoing_time_based",
-              "value": "ongoing_time_based",
-            },
-          ],
         },
         "ContractToCreatePayAsYouGoTimeBased": {
           "docs": undefined,
@@ -1509,10 +1496,7 @@ exports[`open api parser deel simple 1`] = `
               "docs": undefined,
               "type": "ContractToCreatePayAsYouGoTimeBasedCompensationDetails",
             },
-            "type": {
-              "docs": undefined,
-              "type": "ContractToCreatePayAsYouGoTimeBasedType",
-            },
+            "type": "literal<"pay_as_you_go_time_based">",
           },
         },
         "ContractToCreatePayAsYouGoTimeBasedCompensationDetails": {
@@ -1522,16 +1506,6 @@ exports[`open api parser deel simple 1`] = `
             "CompensationDetailsOfContractToCreatePayAsYouGoTimeBased",
           ],
           "properties": {},
-        },
-        "ContractToCreatePayAsYouGoTimeBasedType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "pay_as_you_go_time_based",
-              "value": "pay_as_you_go_time_based",
-            },
-          ],
         },
         "ContractToCreatePaygMilestones": {
           "docs": undefined,
@@ -1543,21 +1517,8 @@ exports[`open api parser deel simple 1`] = `
               "docs": undefined,
               "type": "CompensationDetailsOfContractToCreateShared",
             },
-            "type": {
-              "docs": undefined,
-              "type": "ContractToCreatePaygMilestonesType",
-            },
+            "type": "literal<"payg_milestones">",
           },
-        },
-        "ContractToCreatePaygMilestonesType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "payg_milestones",
-              "value": "payg_milestones",
-            },
-          ],
         },
         "ContractToCreatePaygTasks": {
           "docs": undefined,
@@ -1569,21 +1530,8 @@ exports[`open api parser deel simple 1`] = `
               "docs": undefined,
               "type": "CompensationDetailsOfContractToCreateShared",
             },
-            "type": {
-              "docs": undefined,
-              "type": "ContractToCreatePaygTasksType",
-            },
+            "type": "literal<"payg_tasks">",
           },
-        },
-        "ContractToCreatePaygTasksType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "payg_tasks",
-              "value": "payg_tasks",
-            },
-          ],
         },
         "ContractToCreateShared": {
           "docs": "Details of contract to create",
@@ -3869,21 +3817,8 @@ exports[`open api parser deel simple 1`] = `
             "HrisContractBase",
           ],
           "properties": {
-            "employment_type": {
-              "docs": undefined,
-              "type": "HrisContractFullTimeEmploymentType",
-            },
+            "employment_type": "literal<"FULL_TIME">",
           },
-        },
-        "HrisContractFullTimeEmploymentType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "FULL_TIME",
-              "value": "FULL_TIME",
-            },
-          ],
         },
         "HrisContractPartTime": {
           "docs": undefined,
@@ -3891,25 +3826,12 @@ exports[`open api parser deel simple 1`] = `
             "HrisContractBase",
           ],
           "properties": {
-            "employment_type": {
-              "docs": undefined,
-              "type": "HrisContractPartTimeEmploymentType",
-            },
+            "employment_type": "literal<"PART_TIME">",
             "part_time_percentage": {
               "docs": "required if employmentType is "PART_TIME"",
               "type": "double",
             },
           },
-        },
-        "HrisContractPartTimeEmploymentType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "PART_TIME",
-              "value": "PART_TIME",
-            },
-          ],
         },
         "HrisDirectEmployee": {
           "docs": undefined,
@@ -5362,16 +5284,7 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
-        "OffCyclePaymentTypeEnum": {
-          "docs": "Type for Off-cycle payments",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "offcycle",
-              "value": "offcycle",
-            },
-          ],
-        },
+        "OffCyclePaymentTypeEnum": "literal<"offcycle">",
         "OrganizationList": {
           "docs": undefined,
           "type": "list<BasicOrganization>",
@@ -7008,16 +6921,7 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
-        "TimesheetTypeEnum": {
-          "docs": "Type for timesheet",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "work",
-              "value": "work",
-            },
-          ],
-        },
+        "TimesheetTypeEnum": "literal<"work">",
         "TimesheetTypeEnumList": {
           "docs": undefined,
           "type": "list<TimesheetTypeEnum>",

@@ -80,17 +80,8 @@ exports[`open api parser dopt parse open api 1`] = `
                   "key": "kind",
                   "schema": {
                     "description": undefined,
-                    "generatedName": "FindBlocksResponseKind",
-                    "nameOverride": undefined,
-                    "type": "enum",
-                    "values": [
-                      {
-                        "description": undefined,
-                        "generatedName": "block",
-                        "nameOverride": undefined,
-                        "value": "block",
-                      },
-                    ],
+                    "type": "literal",
+                    "value": "block",
                   },
                 },
                 {
@@ -234,87 +225,33 @@ exports[`open api parser dopt parse open api 1`] = `
                       "schemas": [
                         {
                           "description": undefined,
-                          "generatedName": "FindBlocksResponseTypeFindBlocksResponseType",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "custom",
-                              "nameOverride": undefined,
-                              "value": "custom",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "custom",
                         },
                         {
                           "description": undefined,
-                          "generatedName": "FindBlocksResponseTypeFindBlocksResponseType",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "modal",
-                              "nameOverride": undefined,
-                              "value": "modal",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "modal",
                         },
                         {
                           "description": undefined,
-                          "generatedName": "FindBlocksResponseTypeFindBlocksResponseType",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "checklist",
-                              "nameOverride": undefined,
-                              "value": "checklist",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "checklist",
                         },
                         {
                           "description": undefined,
-                          "generatedName": "FindBlocksResponseTypeFindBlocksResponseType",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "checklistItem",
-                              "nameOverride": undefined,
-                              "value": "checklistItem",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "checklistItem",
                         },
                         {
                           "description": undefined,
-                          "generatedName": "FindBlocksResponseTypeFindBlocksResponseType",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "tour",
-                              "nameOverride": undefined,
-                              "value": "tour",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "tour",
                         },
                         {
                           "description": undefined,
-                          "generatedName": "FindBlocksResponseTypeFindBlocksResponseType",
-                          "nameOverride": undefined,
-                          "type": "enum",
-                          "values": [
-                            {
-                              "description": undefined,
-                              "generatedName": "tourItem",
-                              "nameOverride": undefined,
-                              "value": "tourItem",
-                            },
-                          ],
+                          "type": "literal",
+                          "value": "tourItem",
                         },
                       ],
                       "type": "undisciminated",
@@ -361,17 +298,8 @@ exports[`open api parser dopt parse open api 1`] = `
                                 "key": "type",
                                 "schema": {
                                   "description": undefined,
-                                  "generatedName": "FindBlocksResponseFieldsItemFindBlocksResponseFieldsItemType",
-                                  "nameOverride": undefined,
-                                  "type": "enum",
-                                  "values": [
-                                    {
-                                      "description": undefined,
-                                      "generatedName": "string",
-                                      "nameOverride": undefined,
-                                      "value": "string",
-                                    },
-                                  ],
+                                  "type": "literal",
+                                  "value": "string",
                                 },
                               },
                               {
@@ -421,17 +349,8 @@ exports[`open api parser dopt parse open api 1`] = `
                                 "key": "type",
                                 "schema": {
                                   "description": undefined,
-                                  "generatedName": "FindBlocksResponseFieldsItemFindBlocksResponseFieldsItemType",
-                                  "nameOverride": undefined,
-                                  "type": "enum",
-                                  "values": [
-                                    {
-                                      "description": undefined,
-                                      "generatedName": "number",
-                                      "nameOverride": undefined,
-                                      "value": "number",
-                                    },
-                                  ],
+                                  "type": "literal",
+                                  "value": "number",
                                 },
                               },
                               {
@@ -479,17 +398,8 @@ exports[`open api parser dopt parse open api 1`] = `
                                 "key": "type",
                                 "schema": {
                                   "description": undefined,
-                                  "generatedName": "FindBlocksResponseFieldsItemFindBlocksResponseFieldsItemType",
-                                  "nameOverride": undefined,
-                                  "type": "enum",
-                                  "values": [
-                                    {
-                                      "description": undefined,
-                                      "generatedName": "boolean",
-                                      "nameOverride": undefined,
-                                      "value": "boolean",
-                                    },
-                                  ],
+                                  "type": "literal",
+                                  "value": "boolean",
                                 },
                               },
                               {
@@ -684,17 +594,8 @@ exports[`open api parser dopt parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "description": undefined,
-                  "generatedName": "GetFlowRequestInclude",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "block",
-                      "nameOverride": undefined,
-                      "value": "block",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "block",
                 },
               },
             },
@@ -745,17 +646,8 @@ exports[`open api parser dopt parse open api 1`] = `
                   "key": "kind",
                   "schema": {
                     "description": undefined,
-                    "generatedName": "GetFlowResponseKind",
-                    "nameOverride": undefined,
-                    "type": "enum",
-                    "values": [
-                      {
-                        "description": undefined,
-                        "generatedName": "flow",
-                        "nameOverride": undefined,
-                        "value": "flow",
-                      },
-                    ],
+                    "type": "literal",
+                    "value": "flow",
                   },
                 },
                 {
@@ -764,17 +656,8 @@ exports[`open api parser dopt parse open api 1`] = `
                   "key": "type",
                   "schema": {
                     "description": undefined,
-                    "generatedName": "GetFlowResponseType",
-                    "nameOverride": undefined,
-                    "type": "enum",
-                    "values": [
-                      {
-                        "description": undefined,
-                        "generatedName": "flow",
-                        "nameOverride": undefined,
-                        "value": "flow",
-                      },
-                    ],
+                    "type": "literal",
+                    "value": "flow",
                   },
                 },
                 {
@@ -889,17 +772,8 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "kind",
                             "schema": {
                               "description": undefined,
-                              "generatedName": "GetFlowResponseBlocksItemKind",
-                              "nameOverride": undefined,
-                              "type": "enum",
-                              "values": [
-                                {
-                                  "description": undefined,
-                                  "generatedName": "block",
-                                  "nameOverride": undefined,
-                                  "value": "block",
-                                },
-                              ],
+                              "type": "literal",
+                              "value": "block",
                             },
                           },
                           {
@@ -1043,87 +917,33 @@ exports[`open api parser dopt parse open api 1`] = `
                                 "schemas": [
                                   {
                                     "description": undefined,
-                                    "generatedName": "GetFlowResponseBlocksItemTypeGetFlowResponseBlocksItemType",
-                                    "nameOverride": undefined,
-                                    "type": "enum",
-                                    "values": [
-                                      {
-                                        "description": undefined,
-                                        "generatedName": "custom",
-                                        "nameOverride": undefined,
-                                        "value": "custom",
-                                      },
-                                    ],
+                                    "type": "literal",
+                                    "value": "custom",
                                   },
                                   {
                                     "description": undefined,
-                                    "generatedName": "GetFlowResponseBlocksItemTypeGetFlowResponseBlocksItemType",
-                                    "nameOverride": undefined,
-                                    "type": "enum",
-                                    "values": [
-                                      {
-                                        "description": undefined,
-                                        "generatedName": "modal",
-                                        "nameOverride": undefined,
-                                        "value": "modal",
-                                      },
-                                    ],
+                                    "type": "literal",
+                                    "value": "modal",
                                   },
                                   {
                                     "description": undefined,
-                                    "generatedName": "GetFlowResponseBlocksItemTypeGetFlowResponseBlocksItemType",
-                                    "nameOverride": undefined,
-                                    "type": "enum",
-                                    "values": [
-                                      {
-                                        "description": undefined,
-                                        "generatedName": "checklist",
-                                        "nameOverride": undefined,
-                                        "value": "checklist",
-                                      },
-                                    ],
+                                    "type": "literal",
+                                    "value": "checklist",
                                   },
                                   {
                                     "description": undefined,
-                                    "generatedName": "GetFlowResponseBlocksItemTypeGetFlowResponseBlocksItemType",
-                                    "nameOverride": undefined,
-                                    "type": "enum",
-                                    "values": [
-                                      {
-                                        "description": undefined,
-                                        "generatedName": "checklistItem",
-                                        "nameOverride": undefined,
-                                        "value": "checklistItem",
-                                      },
-                                    ],
+                                    "type": "literal",
+                                    "value": "checklistItem",
                                   },
                                   {
                                     "description": undefined,
-                                    "generatedName": "GetFlowResponseBlocksItemTypeGetFlowResponseBlocksItemType",
-                                    "nameOverride": undefined,
-                                    "type": "enum",
-                                    "values": [
-                                      {
-                                        "description": undefined,
-                                        "generatedName": "tour",
-                                        "nameOverride": undefined,
-                                        "value": "tour",
-                                      },
-                                    ],
+                                    "type": "literal",
+                                    "value": "tour",
                                   },
                                   {
                                     "description": undefined,
-                                    "generatedName": "GetFlowResponseBlocksItemTypeGetFlowResponseBlocksItemType",
-                                    "nameOverride": undefined,
-                                    "type": "enum",
-                                    "values": [
-                                      {
-                                        "description": undefined,
-                                        "generatedName": "tourItem",
-                                        "nameOverride": undefined,
-                                        "value": "tourItem",
-                                      },
-                                    ],
+                                    "type": "literal",
+                                    "value": "tourItem",
                                   },
                                 ],
                                 "type": "undisciminated",
@@ -1170,17 +990,8 @@ exports[`open api parser dopt parse open api 1`] = `
                                           "key": "type",
                                           "schema": {
                                             "description": undefined,
-                                            "generatedName": "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemType",
-                                            "nameOverride": undefined,
-                                            "type": "enum",
-                                            "values": [
-                                              {
-                                                "description": undefined,
-                                                "generatedName": "string",
-                                                "nameOverride": undefined,
-                                                "value": "string",
-                                              },
-                                            ],
+                                            "type": "literal",
+                                            "value": "string",
                                           },
                                         },
                                         {
@@ -1230,17 +1041,8 @@ exports[`open api parser dopt parse open api 1`] = `
                                           "key": "type",
                                           "schema": {
                                             "description": undefined,
-                                            "generatedName": "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemType",
-                                            "nameOverride": undefined,
-                                            "type": "enum",
-                                            "values": [
-                                              {
-                                                "description": undefined,
-                                                "generatedName": "number",
-                                                "nameOverride": undefined,
-                                                "value": "number",
-                                              },
-                                            ],
+                                            "type": "literal",
+                                            "value": "number",
                                           },
                                         },
                                         {
@@ -1288,17 +1090,8 @@ exports[`open api parser dopt parse open api 1`] = `
                                           "key": "type",
                                           "schema": {
                                             "description": undefined,
-                                            "generatedName": "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemType",
-                                            "nameOverride": undefined,
-                                            "type": "enum",
-                                            "values": [
-                                              {
-                                                "description": undefined,
-                                                "generatedName": "boolean",
-                                                "nameOverride": undefined,
-                                                "value": "boolean",
-                                              },
-                                            ],
+                                            "type": "literal",
+                                            "value": "boolean",
                                           },
                                         },
                                         {
@@ -1387,59 +1180,23 @@ exports[`open api parser dopt parse open api 1`] = `
                   "schemas": [
                     {
                       "description": undefined,
-                      "generatedName": "FlowIntentRequestIntentFlowIntentRequestIntent",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "finish",
-                          "nameOverride": undefined,
-                          "value": "finish",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "finish",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "FlowIntentRequestIntentFlowIntentRequestIntent",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "stop",
-                          "nameOverride": undefined,
-                          "value": "stop",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "stop",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "FlowIntentRequestIntentFlowIntentRequestIntent",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "reset",
-                          "nameOverride": undefined,
-                          "value": "reset",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "reset",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "FlowIntentRequestIntentFlowIntentRequestIntent",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "start",
-                          "nameOverride": undefined,
-                          "value": "start",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "start",
                     },
                   ],
                   "type": "undisciminated",
@@ -1559,31 +1316,13 @@ exports[`open api parser dopt parse open api 1`] = `
                   "schemas": [
                     {
                       "description": undefined,
-                      "generatedName": "BadRequestErrorResponseBodyCodeBadRequestErrorResponseBodyCode",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "invalid_request_error",
-                          "nameOverride": undefined,
-                          "value": "invalid_request_error",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "invalid_request_error",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "BadRequestErrorResponseBodyCodeBadRequestErrorResponseBodyCode",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "intent_request_error",
-                          "nameOverride": undefined,
-                          "value": "intent_request_error",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "intent_request_error",
                     },
                   ],
                   "type": "undisciminated",
@@ -1787,59 +1526,23 @@ exports[`open api parser dopt parse open api 1`] = `
                   "schemas": [
                     {
                       "description": undefined,
-                      "generatedName": "FlowIntentRequestParamsIntentFlowIntentRequestParamsIntent",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "finish",
-                          "nameOverride": undefined,
-                          "value": "finish",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "finish",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "FlowIntentRequestParamsIntentFlowIntentRequestParamsIntent",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "stop",
-                          "nameOverride": undefined,
-                          "value": "stop",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "stop",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "FlowIntentRequestParamsIntentFlowIntentRequestParamsIntent",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "reset",
-                          "nameOverride": undefined,
-                          "value": "reset",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "reset",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "FlowIntentRequestParamsIntentFlowIntentRequestParamsIntent",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "start",
-                          "nameOverride": undefined,
-                          "value": "start",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "start",
                     },
                   ],
                   "type": "undisciminated",
@@ -1935,17 +1638,8 @@ exports[`open api parser dopt parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "generatedName": "GetFlowQueryStringInclude",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "block",
-                      "nameOverride": undefined,
-                      "value": "block",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "block",
                 },
               },
             },
@@ -2060,17 +1754,8 @@ exports[`open api parser dopt parse open api 1`] = `
                   "schemas": [
                     {
                       "description": undefined,
-                      "generatedName": "InternalServerErrorResponseBodyCodeInternalServerErrorResponseBodyCode",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "internal_server_error",
-                          "nameOverride": undefined,
-                          "value": "internal_server_error",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "internal_server_error",
                     },
                   ],
                   "type": "undisciminated",
@@ -2113,17 +1798,8 @@ exports[`open api parser dopt parse open api 1`] = `
                   "schemas": [
                     {
                       "description": undefined,
-                      "generatedName": "NotFoundErrorResponseBodyCodeNotFoundErrorResponseBodyCode",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "not_found_error",
-                          "nameOverride": undefined,
-                          "value": "not_found_error",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "not_found_error",
                     },
                   ],
                   "type": "undisciminated",
@@ -2166,17 +1842,8 @@ exports[`open api parser dopt parse open api 1`] = `
                   "schemas": [
                     {
                       "description": undefined,
-                      "generatedName": "TimeoutErrorResponseBodyCodeTimeoutErrorResponseBodyCode",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "internal_server_error",
-                          "nameOverride": undefined,
-                          "value": "internal_server_error",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "internal_server_error",
                     },
                   ],
                   "type": "undisciminated",
@@ -2219,17 +1886,8 @@ exports[`open api parser dopt parse open api 1`] = `
                   "schemas": [
                     {
                       "description": undefined,
-                      "generatedName": "UnauthorizedErrorResponseBodyCodeUnauthorizedErrorResponseBodyCode",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "unauthorized_error",
-                          "nameOverride": undefined,
-                          "value": "unauthorized_error",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "unauthorized_error",
                     },
                   ],
                   "type": "undisciminated",
