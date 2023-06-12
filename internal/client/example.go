@@ -16,7 +16,7 @@ type FooRequest struct {
 
 // FooResponse is a response from the Foo endpoint.
 type FooResponse struct {
-	Success bool `json:"success"`
+	Id string `json:"id"`
 }
 
 // ExampleClient is an example for a generated client interface
