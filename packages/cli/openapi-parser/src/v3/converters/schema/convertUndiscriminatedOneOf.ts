@@ -2,6 +2,7 @@ import { Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { convertSchema } from "../convertSchemas";
+import { convertEnum } from "./convertEnum";
 
 export function convertUndiscriminatedOneOf({
     nameOverride,
@@ -23,6 +24,34 @@ export function convertUndiscriminatedOneOf({
     const convertedSubtypes = subtypes.map((schema) => {
         return convertSchema(schema, false, context, [...breadcrumbs, nameOverride ?? generatedName]);
     });
+
+    const everySubTypeIsLiteral = Object.entries(convertedSubtypes).every(([_, schema]) => {
+        return schema.type === "literal";
+    });
+    if (everySubTypeIsLiteral) {
+        const enumDescriptions: Record<string, { description: string }> = {};
+        const enumValues: string[] = [];
+        Object.entries(convertedSubtypes).forEach(([_, schema]) => {
+            if (schema.type === "literal") {
+                enumValues.push(schema.value);
+                if (schema.description != null) {
+                    enumDescriptions[schema.value] = {
+                        description: schema.description,
+                    };
+                }
+            }
+        });
+        return convertEnum({
+            nameOverride,
+            generatedName,
+            wrapAsNullable,
+            description,
+            fernEnum: enumDescriptions,
+            enumVarNames: undefined,
+            enumValues,
+        });
+    }
+
     return wrapUndiscriminantedOneOf({
         nameOverride,
         generatedName,

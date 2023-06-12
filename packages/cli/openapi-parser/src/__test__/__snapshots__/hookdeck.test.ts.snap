@@ -33527,35 +33527,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "type": "object",
         },
         "OrderByDirection": {
-          "oneOf": {
-            "description": undefined,
-            "generatedName": "OrderByDirection",
-            "nameOverride": undefined,
-            "schemas": [
-              {
-                "description": undefined,
-                "type": "literal",
-                "value": "asc",
-              },
-              {
-                "description": undefined,
-                "type": "literal",
-                "value": "desc",
-              },
-              {
-                "description": undefined,
-                "type": "literal",
-                "value": "ASC",
-              },
-              {
-                "description": undefined,
-                "type": "literal",
-                "value": "DESC",
-              },
-            ],
-            "type": "undisciminated",
-          },
-          "type": "oneOf",
+          "description": undefined,
+          "generatedName": "OrderByDirection",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "description": undefined,
+              "generatedName": "asc",
+              "nameOverride": undefined,
+              "value": "asc",
+            },
+            {
+              "description": undefined,
+              "generatedName": "desc",
+              "nameOverride": undefined,
+              "value": "desc",
+            },
+            {
+              "description": undefined,
+              "generatedName": "ASC",
+              "nameOverride": undefined,
+              "value": "ASC",
+            },
+            {
+              "description": undefined,
+              "generatedName": "DESC",
+              "nameOverride": undefined,
+              "value": "DESC",
+            },
+          ],
         },
         "RawBody": {
           "allOf": [],
