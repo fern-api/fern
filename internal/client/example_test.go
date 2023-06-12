@@ -20,7 +20,7 @@ func TestExampleClient(t *testing.T) {
 		http.HandlerFunc(
 			func(w http.ResponseWriter, r *http.Request) {
 				// Verify the method and headers are what we expect.
-				assert.Equal(t, "GET", r.Method)
+				assert.Equal(t, "POST", r.Method)
 				for header, value := range fernHeaders {
 					assert.Equal(t, value, r.Header.Get(header))
 				}

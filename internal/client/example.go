@@ -118,7 +118,7 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 		// as query builders, headers, etc. That way it's easy to
 		// recognize what we need to do (at runtime) for the given option.
 		response := new(FooResponse)
-		if err := doRequest(ctx, client, fooURL, "GET", request, response, fooErrorDeserializer); err != nil {
+		if err := doRequest(ctx, client, fooURL, "POST", request, response, fooErrorDeserializer); err != nil {
 			return nil, err
 		}
 		return response, nil
