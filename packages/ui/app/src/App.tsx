@@ -23,8 +23,7 @@ export declare namespace App {
 
 export const App: React.FC<App.Props> = ({ url, pathname }) => {
     useEffect(() => {
-        if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null) {
-            console.log("process.env.NEXT_PUBLIC_POSTHOG_API_KEY", process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
+        if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
         }
     }, []);
