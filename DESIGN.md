@@ -394,3 +394,143 @@ on the same `Foo` type within its `UnmarshalJSON` method).
 With this, the user cannot mutate the value of the `value` literal, it will _always_
 be set to `"fern"` (as long as it's [de]serialized from JSON), and they can access it
 with the idiomatic `Value()` getter.
+
+## Client
+
+Every one of the Fern services receives its own generated client interface, and they
+are consolidated into a single `Client` type that the user can interact with.
+
+### Options
+
+There are a few different ways that endpoints can specify parameters, some of which
+can coexist. In Go, positional parameters are ideally treated as _required_ parameters,
+such that the user must provide a valid value in order to call the function. When
+a parameter is optional, the idiomatic approach is to use functional options, like so:
+
+```go
+type RunOption func(*runOptions)
+
+func WithDryRun() RunOption {
+  return func(opts *runOptions) {
+    opts.dryRun = true
+  }
+}
+
+type Runner interface {
+  Run(name string, opts ...RunOption) error
+}
+
+type runOptions struct {
+  dryRun bool
+}
+```
+
+In this case, the `Run` function _requires_ a `name`, but the user can optionally
+set the `dryRun` option with the `WithDryRun` option.
+
+With that said, we can generate more idiomatic method signatures if endpoint-specific
+authorization or headers are specified.
+
+For example, consider the following Fern definition:
+
+```yaml
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getUser:
+      auth: true
+      method: GET
+      path: /{userId}
+      path-parameters:
+        userId: string
+      request:
+        name: GetUserRequest
+        query-parameters:
+          shallow: optional<boolean>
+      response: GetUserResponse
+```
+
+The generated client looks like the following:
+
+```go
+type GetUserRequest struct {
+  Shallow *bool
+}
+
+type GetUserOption interface {
+  // ...
+}
+
+func GetUserWithAuthorization(bearer string) GetUserOption {
+  // ...
+}
+
+type UserClient interface {
+  GetUser(ctx context.Context, userId string, request *GetUserRequest, opts ...GetUserOption) (*GetUserResponse, error)
+}
+```
+
+With this, the user can call the API like so:
+
+```go
+func Run(ctx context.Context) error {
+  client := NewUserClient(...)
+  request := &GetUserRequest{
+    Shallow: ptr.Bool(true),
+  }
+  response, err := client.GetUser(ctx, "user-123", request, GetUserWithAuthorization("<token>"))
+  if err != nil {
+    return err
+  }
+  // Use response ...
+  return nil
+}
+```
+
+#### Considerations
+
+There's a few things about this API that need to be considered.
+
+##### Optional Query Parameters
+
+For `GET` endpoints, the `request` is not always required - it might just be a series of optional
+query parameters that adapt the behavior of the endpoint (e.g. `limit`). In that case, the caller
+always needs to specify a value for `GetUserRequest` which isn't ideal:
+
+```go
+_, err := client.GetUser(ctx, "user-123", nil)
+if err := nil {
+  return err
+}
+```
+
+We _could_ include the request as another option, but it's a lot less discoverable if there are any
+required parameters within the request (i.e. for both a body or a query parameter).
+
+##### Client-Server Consistency
+
+Functional options also end up creating an inconsistency on the server-side. If client-side call options
+are later introduced that don't translate well to the server-side (e.g. a retry backoff policy), then it
+doesn't make sense to provide the same option type on the server API. But if we support custom headers
+via a functional option, then how does the server access these headers?
+
+One option is to support separate types for client-side and server-side options (e.g. `GetUserCallOption`
+and `GetUserHandlerOption`), but this could get fairly bloated. Alternatively, we use a context-based
+approach to set and retrieve headers, and drop the functional option altogether.
+
+```go
+func GetUserWithFooHeader(ctx context.Context, foo string) context.Context {
+  // Set the header on the context.
+}
+```
+
+But this is a lot less discoverable because the context-based option isn't suggested by the generated
+function signature at all - the user needs to know that it exists and mutate the `context.Context`
+before issuing the call.
+
+##### Fern Generator Consistency
+
+Other Fern generators (e.g. Java and Typescript) include _all_ of the `request` fields (including headers)
+in the endpoint's request. For consistency, we could do the same thing here, but we still need to fit
+authorization and custom headers in alongside the `request`.
