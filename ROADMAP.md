@@ -20,9 +20,17 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Add unsafe words to the Fern compiler (i.e. Go keywords).
 - [x] Polish (e.g. better method receiver identifiers)
 - [x] Generate a basic `go.mod`, `go.sum`, etc (similar to Fern's Typescript generator's `package.json`)
-- [] API review
+- [ ] API review
 
 ## Client
 
-- [] Design client API
-- [] Generate documentation for all relevant types
+- [ ] Design client API
+- [ ] Generate error types (w/ `errorInstanceId` constant)
+- [ ] Generate error decoders (w/ discrimination strategy)
+- [ ] Generate options (w/ path and query parameters, and custom headers)
+- [ ] Generate authorization options
+- [ ] Generate client (w/ root endpoints and nested service endpoints)
+- [ ] Generate documentation for all relevant types
+- [ ] Generate examples
+- [ ] Support optional client/endpoint variables (e.g. namespace)
+- [ ] Support environment settings (e.g. a `Production` URL)
