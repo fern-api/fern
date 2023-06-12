@@ -34,6 +34,12 @@ describe("valid-navigation", () => {
                 severity: "error",
             },
             {
+                message: "a.yml is specified more than once.",
+                nodePath: ["navigation"],
+                relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
+                severity: "error",
+            },
+            {
                 message: "Missing b.yml",
                 nodePath: ["navigation"],
                 relativeFilepath: RelativeFilePath.of("invalid-folder-list/__package__.yml"),
