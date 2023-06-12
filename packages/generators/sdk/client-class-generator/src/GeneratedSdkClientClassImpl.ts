@@ -50,7 +50,7 @@ export declare namespace GeneratedSdkClientClassImpl {
 
 export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static OPTIONS_INTERFACE_NAME = "Options";
-    private static OPTIONS_PRIVATE_MEMBER = "options";
+    private static OPTIONS_PRIVATE_MEMBER = "_options";
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     private static BEARER_OPTION_PROPERTY_NAME = "token";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";

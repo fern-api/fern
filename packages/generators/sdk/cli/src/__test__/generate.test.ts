@@ -68,7 +68,6 @@ const FIXTURES: FixtureInfo[] = [
             includeOtherInUnionTypes: true,
         },
         targetRuntime: JavaScriptRuntime.NODE,
-        only: true,
     },
     {
         path: "nursery-status-code",
