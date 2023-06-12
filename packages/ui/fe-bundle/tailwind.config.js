@@ -12,6 +12,7 @@ module.exports = {
         extend: {},
         colors: ({ colors }) => {
             return {
+                ...colors,
                 accentPrimary: withOpacity("--accent-primary"),
                 accentHighlight: "rgba(var(--accent-primary), 10%)",
                 background: "#111418",
