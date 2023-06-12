@@ -48,8 +48,6 @@ export const ValidNavigationRule: Rule = {
                         }
                     }
 
-                    const actualItems = new Set(navigation);
-
                     const expectedItems = directoryToChildren[dirname(relativeFilepath)];
                     if (expectedItems == null) {
                         throw new Error(`Could not find expected contents of ${relativeFilepath}`);
@@ -57,7 +55,8 @@ export const ValidNavigationRule: Rule = {
 
                     const violations: RuleViolation[] = [];
 
-                    for (const actualItem of actualItems) {
+                    const seen = new Set<string>();
+                    for (const actualItem of navigation) {
                         if (actualItem === FERN_PACKAGE_MARKER_FILENAME) {
                             violations.push({
                                 severity: "error",
@@ -68,11 +67,17 @@ export const ValidNavigationRule: Rule = {
                                 severity: "error",
                                 message: `Unexpected item: ${actualItem}`,
                             });
+                        } else if (seen.has(actualItem)) {
+                            violations.push({
+                                severity: "error",
+                                message: `${actualItem} is specified more than once.`,
+                            });
                         }
+                        seen.add(actualItem);
                     }
 
                     for (const expectedItem of expectedItems) {
-                        if (!actualItems.has(expectedItem)) {
+                        if (!seen.has(expectedItem)) {
                             violations.push({
                                 severity: "error",
                                 message: `Missing ${expectedItem}`,
