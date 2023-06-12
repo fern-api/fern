@@ -3612,13 +3612,28 @@ exports[`open api parser hookdeck simple 1`] = `
           },
         },
         "OrderByDirection": {
-          "discriminated": false,
           "docs": undefined,
-          "union": [
-            "literal<"asc">",
-            "literal<"desc">",
-            "literal<"ASC">",
-            "literal<"DESC">",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "asc",
+              "value": "asc",
+            },
+            {
+              "docs": undefined,
+              "name": "desc",
+              "value": "desc",
+            },
+            {
+              "docs": undefined,
+              "name": "ASC",
+              "value": "ASC",
+            },
+            {
+              "docs": undefined,
+              "name": "DESC",
+              "value": "DESC",
+            },
           ],
         },
         "RawBody": {
