@@ -241,6 +241,13 @@ export function convertSchemaObject(
 
     // treat anyOf as undiscrminated unions
     if (schema.anyOf != null && schema.anyOf.length > 0) {
+        if (schema.anyOf.length === 2 && schema.anyOf[0] != null && schema.anyOf[1] != null) {
+            if (!isReferenceObject(schema.anyOf[0]) && (schema.anyOf[0].type as unknown) === "null") {
+                return convertSchema(schema.anyOf[1], true, context, breadcrumbs);
+            } else if (!isReferenceObject(schema.anyOf[1]) && (schema.anyOf[1].type as unknown) === "null") {
+                return convertSchema(schema.anyOf[0], true, context, breadcrumbs);
+            }
+        }
         return convertUndiscriminatedOneOf({
             nameOverride,
             generatedName,
