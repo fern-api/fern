@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"net/http"
 	"net/url"
 	"strings"
 )
@@ -12,6 +13,14 @@ import (
 // FooRequest is a request for calling the Foo endpoint.
 type FooRequest struct {
 	Id string `json:"id"`
+
+	// ExampleHeader is an example for what gets generated when
+	// the user specifies headers in their request object.
+	ExampleHeader string `json:"-"`
+
+	// ExampleQuery is an example for what gets generated when
+	// the user specifies query-parameters in their request object.
+	ExampleQuery string `json:"-"`
 }
 
 // FooResponse is a response from the Foo endpoint.
@@ -26,7 +35,7 @@ type FooResponse struct {
 // the rest of Fern's generators). The caller simply gets the
 // *FooResponse as-is, and that's it.
 type ExampleClient interface {
-	Foo(context.Context, *FooRequest, ...FooOption) (*FooResponse, error)
+	Foo(context.Context, *FooRequest) (*FooResponse, error)
 }
 
 // NewExampleClient returns a new ExampleClient suitable
@@ -112,13 +121,13 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 	// on the type of endpoint. For example, if the endpoint has path
 	// parameters, then the request argument(s) will need to be applied to
 	// the fooURL, as needed.
-	fooImpl := func(ctx context.Context, request *FooRequest, opts ...FooOption) (*FooResponse, error) {
+	fooImpl := func(ctx context.Context, request *FooRequest) (*FooResponse, error) {
 		// TODO: Apply the foo options to the call.
 		// We need to classify different types of foo options, such
 		// as query builders, headers, etc. That way it's easy to
 		// recognize what we need to do (at runtime) for the given option.
 		response := new(FooResponse)
-		if err := doRequest(ctx, client, fooURL, "POST", request, response, fooErrorDeserializer); err != nil {
+		if err := doRequest(ctx, client, fooURL, http.MethodPost, request, response, fooErrorDeserializer); err != nil {
 			return nil, err
 		}
 		return response, nil
@@ -131,10 +140,10 @@ func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (Exampl
 
 // exampleClient implements the ExampleClient interface.
 type exampleClient struct {
-	foo func(context.Context, *FooRequest, ...FooOption) (*FooResponse, error)
+	foo func(context.Context, *FooRequest) (*FooResponse, error)
 }
 
 // Foo calls the foo endpoint with the given request.
-func (e *exampleClient) Foo(ctx context.Context, request *FooRequest, opts ...FooOption) (*FooResponse, error) {
-	return e.foo(ctx, request, opts...)
+func (e *exampleClient) Foo(ctx context.Context, request *FooRequest) (*FooResponse, error) {
+	return e.foo(ctx, request)
 }

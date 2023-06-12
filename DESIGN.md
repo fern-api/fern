@@ -534,3 +534,13 @@ before issuing the call.
 Other Fern generators (e.g. Java and Typescript) include _all_ of the `request` fields (including headers)
 in the endpoint's request. For consistency, we could do the same thing here, but we still need to fit
 authorization and custom headers in alongside the `request`.
+
+#### Current Design (6-12-23)
+
+For now, the current design is to maintain consistency with the other generators - request headers and
+query parameters are included in the generated request object.
+
+Custom headers can be set and retrieved using a context-based approach (to satisfy client-server consistency),
+and nothing in particular is done for the authorization option because it's just another ordinary header that
+can be set by the same mechanism. This means that the functional option based approach (outlined above) is not
+included for now.
