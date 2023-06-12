@@ -6,8 +6,14 @@ type WindowWithFernDocs = typeof window & {
     };
 };
 
-export function useCurrentUrl(): string | undefined {
-    const [url, setUrl] = useState(process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? window.location.href);
+export declare namespace useCurrentUrl {
+    export interface Props {
+        windowUrl: string;
+    }
+}
+
+export function useCurrentUrl({ windowUrl }: useCurrentUrl.Props): string {
+    const [url, setUrl] = useState(process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? windowUrl);
 
     useEffect(() => {
         (window as WindowWithFernDocs).FernDocs = {

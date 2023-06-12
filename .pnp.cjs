@@ -11677,7 +11677,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["debug", "virtual:142ba651bd70dac073ff3db3802f4ea29eff00d44224dd3049edf764b3f7df3c6422788fa486ce2f45a8f2e710e5925abafab7126fee39d5d57a83f2087201ff#npm:4.3.4"],\
             ["@types/supports-color", null],\
             ["ms", "npm:2.1.2"],\
-            ["supports-color", "npm:9.2.2"]\
+            ["supports-color", "npm:8.1.1"]\
           ],\
           "packagePeers": [\
             "@types/supports-color"\
@@ -11690,7 +11690,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["debug", "virtual:55a75d6b53eecd7db4cd99f7cd21a62e8acccdc5f5ca6f93b58377ad5035bc5edd0b12c9d7bc7e9b2b35a852dfc912166d29b6102b57b60527bfcee563b1b4f6#npm:2.6.9"],\
             ["@types/supports-color", null],\
             ["ms", "npm:2.0.0"],\
-            ["supports-color", "npm:9.2.2"]\
+            ["supports-color", "npm:8.1.1"]\
           ],\
           "packagePeers": [\
             "@types/supports-color"\
@@ -11703,7 +11703,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["debug", "virtual:d9426786c635bc4b52511d6cc4b56156f50d780a698c0e20fc6caf10d3be51cbf176e79cff882f4d42a23ff4d0f89fe94222849578214e7fbae0f2754c82af02#npm:3.2.7"],\
             ["@types/supports-color", null],\
             ["ms", "npm:2.1.3"],\
-            ["supports-color", "npm:9.2.2"]\
+            ["supports-color", "npm:8.1.1"]\
           ],\
           "packagePeers": [\
             "@types/supports-color"\

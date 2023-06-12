@@ -5,7 +5,7 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"#supports-color@npm:supports-color@9.2.2, supports-color@npm:*":
+"#supports-color@npm:supports-color@9.2.2":
   version: 9.2.2
   resolution: "supports-color@npm:9.2.2"
   checksum: 976d84877402fc38c1d43b1fde20b0a8dc0283273f21cfebe4ff7507d27543cdfbeec7db108a96b82d694465f06d64e8577562b05d0520b41710088e0a33cc50
@@ -15922,7 +15922,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"supports-color@npm:^8.0.0":
+"supports-color@npm:^8.0.0, supports-color@npm:^8.1.1":
   version: 8.1.1
   resolution: "supports-color@npm:8.1.1"
   dependencies:
