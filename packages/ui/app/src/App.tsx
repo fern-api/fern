@@ -14,13 +14,17 @@ import { useAreFernFontsReady } from "./useAreFernFontsReady";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
-// this API key is client-side safe
-const POSTHOG_API_KEY = process.env.NEXT_PUBLIC_POSTHOG_API_KEY;
+export declare namespace App {
+    export interface Props {
+        url: string;
+        pathname: string;
+    }
+}
 
-export const App: React.FC = () => {
+export const App: React.FC<App.Props> = ({ url, pathname }) => {
     useEffect(() => {
-        if (POSTHOG_API_KEY != null) {
-            initializePosthog(POSTHOG_API_KEY);
+        if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
+            initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
         }
     }, []);
 
@@ -35,7 +39,7 @@ export const App: React.FC = () => {
                 (children, Context) => (
                     <Context>{children}</Context>
                 ),
-                <Docs />
+                <Docs url={url} pathname={pathname} />
             )}
         </div>
     );

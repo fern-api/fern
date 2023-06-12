@@ -1,11 +1,14 @@
-import { NonIdealState } from "@blueprintjs/core";
 import { MaybeLoadedDocs } from "./MaybeLoadedDocs";
 import { useCurrentUrl } from "./useCurrentUrl";
 
-export const Docs: React.FC = () => {
-    const url = useCurrentUrl();
-    if (url == null) {
-        return <NonIdealState title="Domain not found" />;
+export declare namespace Docs {
+    export interface Props {
+        url: string;
+        pathname: string;
     }
-    return <MaybeLoadedDocs url={url} />;
+}
+
+export const Docs: React.FC<Docs.Props> = ({ url: windowUrl, pathname }) => {
+    const url = useCurrentUrl({ windowUrl });
+    return <MaybeLoadedDocs url={url} pathname={pathname} />;
 };
