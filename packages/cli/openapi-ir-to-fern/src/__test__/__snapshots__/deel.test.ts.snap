@@ -238,7 +238,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "id": {
-              "docs": "\`non-empty\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
               "type": "string",
             },
             "invitations": {
@@ -270,7 +270,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateTimeString>",
             },
             "title": {
-              "docs": "\`non-empty\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
               "type": "string",
             },
             "type": {
@@ -478,7 +478,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "double",
             },
             "name": {
-              "docs": "\`non-empty\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
               "type": "string",
             },
           },
@@ -491,7 +491,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "double",
             },
             "name": {
-              "docs": "\`non-empty\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
               "type": "string",
             },
           },
@@ -894,7 +894,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "id": {
-              "docs": "\`non-empty\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
               "type": "string",
             },
             "invitations": {
@@ -942,7 +942,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateTimeString>",
             },
             "title": {
-              "docs": "\`non-empty\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
               "type": "string",
             },
             "type": {
@@ -1144,7 +1144,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "EmailTypeRequired",
             },
             "message": {
-              "docs": "Message for the worker. \`non-empty\` ",
+              "docs": "Message for the worker. <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -1209,7 +1209,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<ContractSearchFormWithoutCursorCurrencies>",
             },
             "external_id": {
-              "docs": "Filter contracts for given external ID \`<= 255 characters\` ",
+              "docs": "Filter contracts for given external ID <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
               "type": "optional<string>",
             },
             "limit": {
@@ -1841,7 +1841,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "boolean",
             },
             "name": {
-              "docs": "Country name. \`non-empty\` ",
+              "docs": "Country name. <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "state_type": {
@@ -1859,7 +1859,7 @@ exports[`open api parser deel simple 1`] = `
           },
         },
         "CountryCode": {
-          "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code. \`<= 2 characters\` ",
+          "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code. <span style="white-space: nowrap">\`<= 2 characters\`</span> ",
           "type": "string",
         },
         "CountryCodeList": {
@@ -1867,7 +1867,7 @@ exports[`open api parser deel simple 1`] = `
           "type": "list<CountryCode>",
         },
         "CountryCodeNulleable": {
-          "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code. \`<= 2 characters\` ",
+          "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code. <span style="white-space: nowrap">\`<= 2 characters\`</span> ",
           "type": "string",
         },
         "CountryList": {
@@ -1972,13 +1972,13 @@ exports[`open api parser deel simple 1`] = `
               "type": "CurrencyCodeRequired",
             },
             "name": {
-              "docs": "\`non-empty\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
               "type": "string",
             },
           },
         },
         "CurrencyCode": {
-          "docs": "Currency code. \`<= 3 characters\` ",
+          "docs": "Currency code. <span style="white-space: nowrap">\`<= 3 characters\`</span> ",
           "type": "string",
         },
         "CurrencyCodeList": {
@@ -1986,7 +1986,7 @@ exports[`open api parser deel simple 1`] = `
           "type": "list<CurrencyCodeRequired>",
         },
         "CurrencyCodeRequired": {
-          "docs": "\`<= 3 characters\`",
+          "docs": "<span style="white-space: nowrap">\`<= 3 characters\`</span>",
           "type": "string",
         },
         "CurrencyList": {
@@ -3781,7 +3781,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "currency": {
-              "docs": "\`<= 3 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 3 characters\`</span>",
               "type": "string",
             },
             "gross_annual_salary": {
@@ -3889,31 +3889,31 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "country": {
-              "docs": "\`<= 2 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 2 characters\`</span>",
               "type": "string",
             },
             "email": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
             "first_name": {
-              "docs": "\`<= 100 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 100 characters\`</span>",
               "type": "string",
             },
             "last_name": {
-              "docs": "\`<= 100 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 100 characters\`</span>",
               "type": "string",
             },
             "nationality": {
-              "docs": "\`<= 2 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 2 characters\`</span>",
               "type": "string",
             },
             "state": {
-              "docs": "\`non-empty\` \`<= 50 characters\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 50 characters\`</span>",
               "type": "optional<string>",
             },
             "work_email": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
           },
@@ -4315,15 +4315,15 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateString>",
             },
             "invoice_id": {
-              "docs": "\`<= 10 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 10 characters\`</span>",
               "type": "optional<string>",
             },
             "limit": {
-              "docs": "Return a page of results with given number of records. \`<= 2 characters\` ",
+              "docs": "Return a page of results with given number of records. <span style="white-space: nowrap">\`<= 2 characters\`</span> ",
               "type": "optional<string>",
             },
             "offset": {
-              "docs": "\`<= 2 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 2 characters\`</span>",
               "type": "optional<string>",
             },
             "order_direction": {
@@ -4331,7 +4331,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<SortDirEnum>",
             },
             "reporter_id": {
-              "docs": "\`<= 10 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 10 characters\`</span>",
               "type": "optional<string>",
             },
             "statuses": {
@@ -6054,7 +6054,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "amount": {
-              "docs": "Fixed rate for this task. \`non-empty\` ",
+              "docs": "Fixed rate for this task. <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "attachment": {
@@ -6309,7 +6309,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<double>",
             },
             "name": {
-              "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2) \`non-empty\` ",
+              "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2) <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -6339,7 +6339,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "double",
             },
             "name": {
-              "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2) \`non-empty\` ",
+              "docs": "Name of seniority level e.g. Mid (Individual Contributor Level 2) <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -6405,11 +6405,11 @@ exports[`open api parser deel simple 1`] = `
           "docs": "It may be called states, provinces, prefectures or regions, or none at all",
           "properties": {
             "code": {
-              "docs": "Territory code. \`non-empty\` ",
+              "docs": "Territory code. <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "name": {
-              "docs": "Territory name. \`non-empty\` ",
+              "docs": "Territory name. <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -6783,15 +6783,15 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<DateString>",
             },
             "invoice_id": {
-              "docs": "\`<= 10 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 10 characters\`</span>",
               "type": "optional<string>",
             },
             "limit": {
-              "docs": "Return a page of results with given number of records. \`<= 2 characters\` ",
+              "docs": "Return a page of results with given number of records. <span style="white-space: nowrap">\`<= 2 characters\`</span> ",
               "type": "optional<string>",
             },
             "offset": {
-              "docs": "\`<= 2 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 2 characters\`</span>",
               "type": "optional<string>",
             },
             "order_direction": {
@@ -6799,7 +6799,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<SortDirEnum>",
             },
             "reporter_id": {
-              "docs": "\`<= 10 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 10 characters\`</span>",
               "type": "optional<string>",
             },
             "statuses": {
@@ -7248,7 +7248,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<EmailType>",
             },
             "full_name": {
-              "docs": "\`non-empty\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span>",
               "type": "string",
             },
             "id": {
@@ -7285,7 +7285,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "full_name": {
-              "docs": "Worker's full name. \`non-empty\` ",
+              "docs": "Worker's full name. <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "id": {

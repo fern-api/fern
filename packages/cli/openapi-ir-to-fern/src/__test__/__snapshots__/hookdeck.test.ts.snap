@@ -612,7 +612,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<string>",
             },
             "name": {
-              "docs": "Name for the destination \`<= 155 characters\` ",
+              "docs": "Name for the destination <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
               "type": "string",
             },
             "path_forwarding_disabled": {
@@ -661,7 +661,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<boolean>",
             },
             "name": {
-              "docs": "Name for the ruleset \`<= 155 characters\` ",
+              "docs": "Name for the ruleset <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
               "type": "string",
             },
             "rules": {
@@ -674,7 +674,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "Source input object",
           "properties": {
             "name": {
-              "docs": "A unique name for the source \`<= 155 characters\` ",
+              "docs": "A unique name for the source <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
               "type": "string",
             },
           },
@@ -850,7 +850,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": undefined,
           "union": [
             {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
             {
@@ -944,7 +944,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "Filter by destination IDs",
           "union": [
             {
-              "docs": "Destination ID \`<= 255 characters\` ",
+              "docs": "Destination ID <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
               "type": "string",
             },
             {
@@ -958,7 +958,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": undefined,
           "union": [
             {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
             {
@@ -972,7 +972,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": undefined,
           "union": [
             {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
             {
@@ -1004,7 +1004,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "Filter by event IDs",
           "union": [
             {
-              "docs": "Event ID \`<= 255 characters\` ",
+              "docs": "Event ID <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
               "type": "string",
             },
             {
@@ -1018,7 +1018,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": undefined,
           "union": [
             {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
             {
@@ -1136,7 +1136,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "Filter by source IDs",
           "union": [
             {
-              "docs": "Source ID \`<= 255 characters\` ",
+              "docs": "Source ID <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
               "type": "string",
             },
             {
@@ -1203,7 +1203,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "Filter by webhook connection IDs",
           "union": [
             {
-              "docs": "Webhook ID \`<= 255 characters\` ",
+              "docs": "Webhook ID <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
               "type": "string",
             },
             {
@@ -1220,7 +1220,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<CreateIgnoredEventBulkRetryRequestQueryCause>",
             },
             "transformation_id": {
-              "docs": "The associated transformation ID (only applicable to the cause \`TRANSFORMATION_FAILED\`) \`<= 255 characters\` ",
+              "docs": "The associated transformation ID (only applicable to the cause \`TRANSFORMATION_FAILED\`) <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
               "type": "optional<string>",
             },
             "webhook_id": {
@@ -1234,7 +1234,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "The cause of the ignored event",
           "union": [
             {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
             {
@@ -1248,7 +1248,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "Connection ID of the ignored event",
           "union": [
             {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
             {
@@ -1385,7 +1385,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": undefined,
           "union": [
             {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
             {
@@ -1503,7 +1503,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "Filter by requests IDs",
           "union": [
             {
-              "docs": "Request ID \`<= 255 characters\` ",
+              "docs": "Request ID <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
               "type": "string",
             },
             {
@@ -1668,7 +1668,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "Filter by source IDs",
           "union": [
             {
-              "docs": "Source ID \`<= 255 characters\` ",
+              "docs": "Source ID <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
               "type": "string",
             },
             {
@@ -4897,7 +4897,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<boolean>",
             },
             "name": {
-              "docs": "Name for the ruleset \`<= 155 characters\` ",
+              "docs": "Name for the ruleset <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
               "type": "string",
             },
             "rules": {
@@ -5017,7 +5017,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<string>",
             },
             "name": {
-              "docs": "Name for the destination \`<= 155 characters\` ",
+              "docs": "Name for the destination <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
               "type": "string",
             },
             "path_forwarding_disabled": {
@@ -5066,7 +5066,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<boolean>",
             },
             "name": {
-              "docs": "Name for the ruleset \`<= 155 characters\` ",
+              "docs": "Name for the ruleset <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
               "type": "string",
             },
             "rules": {
@@ -5079,7 +5079,7 @@ exports[`open api parser hookdeck simple 1`] = `
           "docs": "Source input object",
           "properties": {
             "name": {
-              "docs": "A unique name for the source \`<= 155 characters\` ",
+              "docs": "A unique name for the source <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
               "type": "string",
             },
           },
@@ -5243,19 +5243,19 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "event_data_id": {
-                    "docs": "ID of the event data to bookmark \`<= 255 characters\` ",
+                    "docs": "ID of the event data to bookmark <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
                     "type": "string",
                   },
                   "label": {
-                    "docs": "Descriptive name of the bookmark \`<= 255 characters\` ",
+                    "docs": "Descriptive name of the bookmark <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
                     "type": "string",
                   },
                   "name": {
-                    "docs": "A unique, human-friendly name for the bookmark \`<= 155 characters\` ",
+                    "docs": "A unique, human-friendly name for the bookmark <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "optional<string>",
                   },
                   "webhook_id": {
-                    "docs": "ID of the associated connection \`<= 255 characters\` ",
+                    "docs": "ID of the associated connection <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
                     "type": "string",
                   },
                 },
@@ -5440,19 +5440,19 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "event_data_id": {
-                    "docs": "ID of the event data to bookmark \`<= 255 characters\` ",
+                    "docs": "ID of the event data to bookmark <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
                     "type": "optional<string>",
                   },
                   "label": {
-                    "docs": "Descriptive name of the bookmark \`<= 255 characters\` ",
+                    "docs": "Descriptive name of the bookmark <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": "A unique, human-friendly name for the bookmark \`<= 155 characters\` ",
+                    "docs": "A unique, human-friendly name for the bookmark <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "optional<string>",
                   },
                   "webhook_id": {
-                    "docs": "ID of the associated connection \`<= 255 characters\` ",
+                    "docs": "ID of the associated connection <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
                     "type": "optional<string>",
                   },
                 },
@@ -6030,7 +6030,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": "A unique name of the connection for the source \`<= 155 characters\` ",
+                    "docs": "A unique name of the connection for the source <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                   "rules": {
@@ -6250,7 +6250,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "Unique name of the connection for the source \`<= 155 characters\` ",
+                    "docs": "Unique name of the connection for the source <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "optional<string>",
                   },
                   "rules": {
@@ -6298,7 +6298,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": "A unique name of the connection for the source \`<= 155 characters\` ",
+                    "docs": "A unique name of the connection for the source <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                   "rules": {
@@ -6382,7 +6382,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": "Name for the destination \`<= 155 characters\` ",
+                    "docs": "Name for the destination <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                   "path_forwarding_disabled": {
@@ -6556,7 +6556,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": "Name for the destination \`<= 155 characters\` ",
+                    "docs": "Name for the destination <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                   "path_forwarding_disabled": {
@@ -6604,7 +6604,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": "Name for the destination \`<= 155 characters\` ",
+                    "docs": "Name for the destination <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                   "path_forwarding_disabled": {
@@ -7129,7 +7129,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<root.CreateIssueTriggerRequestConfigs>",
                   },
                   "name": {
-                    "docs": "Optional unique name to use as reference when using the API \`<= 255 characters\` ",
+                    "docs": "Optional unique name to use as reference when using the API <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
                     "type": "optional<string>",
                   },
                   "type": {
@@ -7319,7 +7319,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": "Optional unique name to use as reference when using the API \`<= 255 characters\` ",
+                    "docs": "Optional unique name to use as reference when using the API <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
                     "type": "optional<string>",
                   },
                 },
@@ -7355,7 +7355,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<root.UpsertIssueTriggerRequestConfigs>",
                   },
                   "name": {
-                    "docs": "Required unique name to use as reference when using the API \`<= 255 characters\` ",
+                    "docs": "Required unique name to use as reference when using the API <span style="white-space: nowrap">\`<= 255 characters\`</span> ",
                     "type": "string",
                   },
                   "type": {
@@ -8154,7 +8154,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<boolean>",
                   },
                   "name": {
-                    "docs": "Name for the ruleset \`<= 155 characters\` ",
+                    "docs": "Name for the ruleset <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                   "rules": {
@@ -8306,7 +8306,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<boolean>",
                   },
                   "name": {
-                    "docs": "Name for the ruleset \`<= 155 characters\` ",
+                    "docs": "Name for the ruleset <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "optional<string>",
                   },
                   "rules": {
@@ -8342,7 +8342,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<boolean>",
                   },
                   "name": {
-                    "docs": "Name for the ruleset \`<= 155 characters\` ",
+                    "docs": "Name for the ruleset <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                   "rules": {
@@ -8406,7 +8406,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "A unique name for the source \`<= 155 characters\` ",
+                    "docs": "A unique name for the source <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                 },
@@ -8555,7 +8555,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": "A unique name for the source \`<= 155 characters\` ",
+                    "docs": "A unique name for the source <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "optional<string>",
                   },
                 },
@@ -8583,7 +8583,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "name": {
-                    "docs": "A unique name for the source \`<= 155 characters\` ",
+                    "docs": "A unique name for the source <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                 },
@@ -8631,7 +8631,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<map<string, root.CreateTransformationRequestEnvValue>>",
                   },
                   "name": {
-                    "docs": "A unique, human-friendly name for the transformation \`<= 155 characters\` ",
+                    "docs": "A unique, human-friendly name for the transformation <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                 },
@@ -8892,7 +8892,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<map<string, root.UpdateTransformationRequestEnvValue>>",
                   },
                   "name": {
-                    "docs": "A unique, human-friendly name for the transformation \`<= 155 characters\` ",
+                    "docs": "A unique, human-friendly name for the transformation <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "optional<string>",
                   },
                 },
@@ -8928,7 +8928,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<map<string, root.UpsertTransformationRequestEnvValue>>",
                   },
                   "name": {
-                    "docs": "A unique, human-friendly name for the transformation \`<= 155 characters\` ",
+                    "docs": "A unique, human-friendly name for the transformation <span style="white-space: nowrap">\`<= 155 characters\`</span> ",
                     "type": "string",
                   },
                 },
