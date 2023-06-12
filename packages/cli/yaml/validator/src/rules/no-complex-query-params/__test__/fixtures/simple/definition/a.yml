@@ -34,3 +34,4 @@ service:
           g: optional<AliasOfAliasOfObject>
           h: MadeUpType
           i: optional<Color>
+          j: literal<"hello world">
