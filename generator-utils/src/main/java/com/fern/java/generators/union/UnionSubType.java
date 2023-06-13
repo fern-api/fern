@@ -112,7 +112,7 @@ public abstract class UnionSubType {
     }
 
     public final Optional<MethodSpec> getHashCodeMethod() {
-        return ObjectMethodFactory.createHashCodeMethod(getFieldSpecs(), false);
+        return ObjectMethodFactory.createHashCodeMethod(getFieldSpecs());
     }
 
     public final MethodSpec getToStringMethod() {

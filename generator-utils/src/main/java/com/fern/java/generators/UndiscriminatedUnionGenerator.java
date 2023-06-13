@@ -156,7 +156,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
     }
 
     private MethodSpec generateHashCode() {
-        return ObjectMethodFactory.createHashCodeMethod(List.of(VALUE_FIELD_SPEC), false)
+        return ObjectMethodFactory.createHashCodeMethod(List.of(VALUE_FIELD_SPEC))
                 .get();
     }
 

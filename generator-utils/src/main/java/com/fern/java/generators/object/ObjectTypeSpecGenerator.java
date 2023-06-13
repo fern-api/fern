@@ -59,7 +59,6 @@ public final class ObjectTypeSpecGenerator {
                 .addFields(allEnrichedProperties.stream()
                         .map(EnrichedObjectProperty::fieldSpec)
                         .collect(Collectors.toList()))
-                .addField(int.class, HashCodeConstants.CACHED_HASH_CODE_FIELD_NAME, Modifier.PRIVATE)
                 .addSuperinterfaces(interfaces.stream()
                         .map(ImplementsInterface::interfaceClassName)
                         .collect(Collectors.toList()))
@@ -112,8 +111,8 @@ public final class ObjectTypeSpecGenerator {
         return ObjectMethodFactory.createHashCodeMethod(
                 allEnrichedProperties.stream()
                         .map(EnrichedObjectProperty::fieldSpec)
-                        .collect(Collectors.toList()),
-                true);
+                        .collect(Collectors.toList())
+        );
     }
 
     private MethodSpec generateToString() {
@@ -127,9 +126,5 @@ public final class ObjectTypeSpecGenerator {
     private Optional<ObjectBuilder> generateBuilder() {
         BuilderGenerator builderGenerator = new BuilderGenerator(objectClassName, allEnrichedProperties, isSerialized);
         return builderGenerator.generate();
-    }
-
-    private static final class HashCodeConstants {
-        private static final String CACHED_HASH_CODE_FIELD_NAME = "_cachedHashCode";
     }
 }

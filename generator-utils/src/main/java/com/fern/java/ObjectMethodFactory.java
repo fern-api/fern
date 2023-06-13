@@ -86,7 +86,7 @@ public class ObjectMethodFactory {
         return equalToMethodBuilder.addStatement("return " + expression).build();
     }
 
-    public static Optional<MethodSpec> createHashCodeMethod(List<FieldSpec> fieldSpecs, boolean caching) {
+    public static Optional<MethodSpec> createHashCodeMethod(List<FieldSpec> fieldSpecs) {
         if (fieldSpecs.isEmpty()) {
             return Optional.empty();
         }
@@ -96,19 +96,7 @@ public class ObjectMethodFactory {
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(int.class);
-        if (caching) {
-            hashCodeBuilder
-                    .beginControlFlow("if ($L == 0)", HashCodeConstants.CACHED_HASH_CODE_FIELD_NAME)
-                    .addStatement(
-                            "$L = $T.hash($L)",
-                            HashCodeConstants.CACHED_HASH_CODE_FIELD_NAME,
-                            Objects.class,
-                            commaDelimitedFields)
-                    .endControlFlow()
-                    .addStatement("return $L", HashCodeConstants.CACHED_HASH_CODE_FIELD_NAME);
-        } else {
-            hashCodeBuilder.addStatement("return $T.hash($L)", Objects.class, commaDelimitedFields);
-        }
+        hashCodeBuilder.addStatement("return $T.hash($L)", Objects.class, commaDelimitedFields);
         return Optional.of(hashCodeBuilder.build());
     }
 
@@ -177,8 +165,6 @@ public class ObjectMethodFactory {
 
     private static final class HashCodeConstants {
         private static final String HASHCODE_METHOD_NAME = "hashCode";
-
-        private static final String CACHED_HASH_CODE_FIELD_NAME = "_cachedHashCode";
     }
 
     private static final class ToStringConstants {

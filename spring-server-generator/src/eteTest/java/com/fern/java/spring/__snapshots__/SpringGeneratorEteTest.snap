@@ -336,8 +336,6 @@ public final class CreatePostRequest {
 
   private final int switch_;
 
-  private int _cachedHashCode;
-
   CreatePostRequest(String title, Author author, String content, PostType postType, int switch_) {
     this.title = title;
     this.author = author;
@@ -383,10 +381,7 @@ public final class CreatePostRequest {
 
   @Override
   public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.title, this.author, this.content, this.postType, this.switch_);
-    }
-    return _cachedHashCode;
+    return Objects.hash(this.title, this.author, this.content, this.postType, this.switch_);
   }
 
   @Override
@@ -773,8 +768,6 @@ public final class BlogPost {
 
   private final String content;
 
-  private int _cachedHashCode;
-
   BlogPost(PostId id, PostType type, String title, Author author, String content) {
     this.id = id;
     this.type = type;
@@ -820,10 +813,7 @@ public final class BlogPost {
 
   @Override
   public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.id, this.type, this.title, this.author, this.content);
-    }
-    return _cachedHashCode;
+    return Objects.hash(this.id, this.type, this.title, this.author, this.content);
   }
 
   @Override
@@ -953,8 +943,6 @@ public final class GeneratorIdAndVersion {
 
   private final String version;
 
-  private int _cachedHashCode;
-
   GeneratorIdAndVersion(String id, String version) {
     this.id = id;
     this.version = version;
@@ -982,10 +970,7 @@ public final class GeneratorIdAndVersion {
 
   @Override
   public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.id, this.version);
-    }
-    return _cachedHashCode;
+    return Objects.hash(this.id, this.version);
   }
 
   @Override
@@ -1122,8 +1107,6 @@ import java.util.Objects;
 public final class PostNotFoundErrorBody {
   private final PostId id;
 
-  private int _cachedHashCode;
-
   PostNotFoundErrorBody(PostId id) {
     this.id = id;
   }
@@ -1145,10 +1128,7 @@ public final class PostNotFoundErrorBody {
 
   @Override
   public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.id);
-    }
-    return _cachedHashCode;
+    return Objects.hash(this.id);
   }
 
   @Override
@@ -1250,8 +1230,6 @@ import java.util.Objects;
 public final class UnauthorizedErrorBody {
   private final String reason;
 
-  private int _cachedHashCode;
-
   UnauthorizedErrorBody(String reason) {
     this.reason = reason;
   }
@@ -1273,10 +1251,7 @@ public final class UnauthorizedErrorBody {
 
   @Override
   public int hashCode() {
-    if (_cachedHashCode == 0) {
-      _cachedHashCode = Objects.hash(this.reason);
-    }
-    return _cachedHashCode;
+    return Objects.hash(this.reason);
   }
 
   @Override

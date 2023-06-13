@@ -836,8 +836,6 @@ public final class CreatePostRequest {
 
     private final List<List<String>> list;
 
-    private int _cachedHashCode;
-
     CreatePostRequest(
             String title,
             Author author,
@@ -908,11 +906,8 @@ public final class CreatePostRequest {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(
-                    this.title, this.author, this.content, this.postType, this.switch_, this.ratings, this.list);
-        }
-        return _cachedHashCode;
+        return Objects.hash(
+                this.title, this.author, this.content, this.postType, this.switch_, this.ratings, this.list);
     }
 
     @Override
@@ -1093,8 +1088,6 @@ import java.util.Objects;
 public final class GetPostRequest {
     private final String dummy;
 
-    private int _cachedHashCode;
-
     GetPostRequest(String dummy) {
         this.dummy = dummy;
     }
@@ -1119,10 +1112,7 @@ public final class GetPostRequest {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.dummy);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.dummy);
     }
 
     @Override
@@ -1376,8 +1366,6 @@ public final class BlogPost {
 
     private final String lit;
 
-    private int _cachedHashCode;
-
     BlogPost(String id, PostType type, String title, Author author, String content, String lit) {
         this.id = id;
         this.type = type;
@@ -1437,10 +1425,7 @@ public final class BlogPost {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.id, this.type, this.title, this.author, this.content, this.lit);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.id, this.type, this.title, this.author, this.content, this.lit);
     }
 
     @Override
@@ -1582,8 +1567,6 @@ public final class GeneratorIdAndVersion {
 
     private final String version;
 
-    private int _cachedHashCode;
-
     GeneratorIdAndVersion(String id, String version) {
         this.id = id;
         this.version = version;
@@ -1611,10 +1594,7 @@ public final class GeneratorIdAndVersion {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.id, this.version);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.id, this.version);
     }
 
     @Override
@@ -1692,8 +1672,6 @@ import java.util.Objects;
 public final class PostNotFoundErrorBody {
     private final String id;
 
-    private int _cachedHashCode;
-
     PostNotFoundErrorBody(String id) {
         this.id = id;
     }
@@ -1715,10 +1693,7 @@ public final class PostNotFoundErrorBody {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.id);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.id);
     }
 
     @Override
@@ -1810,8 +1785,6 @@ import java.util.Objects;
 public final class UnauthorizedErrorBody {
     private final String reason;
 
-    private int _cachedHashCode;
-
     UnauthorizedErrorBody(String reason) {
         this.reason = reason;
     }
@@ -1833,10 +1806,7 @@ public final class UnauthorizedErrorBody {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.reason);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.reason);
     }
 
     @Override
@@ -2186,8 +2156,6 @@ public final class Device {
 
     private final Optional<Long> updatedAt;
 
-    private int _cachedHashCode;
-
     Device(
             Optional<String> id,
             Optional<Platform> platform,
@@ -2312,23 +2280,20 @@ public final class Device {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(
-                    this.id,
-                    this.platform,
-                    this.onesignalPlayerId,
-                    this.xiaomiToken,
-                    this.oppoToken,
-                    this.vivoToken,
-                    this.huaweiToken,
-                    this.fcmToken,
-                    this.ravenId,
-                    this.deviceSid,
-                    this.notificationsDisabled,
-                    this.createdAt,
-                    this.updatedAt);
-        }
-        return _cachedHashCode;
+        return Objects.hash(
+                this.id,
+                this.platform,
+                this.onesignalPlayerId,
+                this.xiaomiToken,
+                this.oppoToken,
+                this.vivoToken,
+                this.huaweiToken,
+                this.fcmToken,
+                this.ravenId,
+                this.deviceSid,
+                this.notificationsDisabled,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @Override
@@ -2715,8 +2680,6 @@ public final class BulkSendEventRequest {
 
     private final List<BatchEvent> batch;
 
-    private int _cachedHashCode;
-
     BulkSendEventRequest(Optional<String> idempotencyKey, String event, List<BatchEvent> batch) {
         this.idempotencyKey = idempotencyKey;
         this.event = event;
@@ -2761,10 +2724,7 @@ public final class BulkSendEventRequest {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.idempotencyKey, this.event, this.batch);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.idempotencyKey, this.event, this.batch);
     }
 
     @Override
@@ -2911,8 +2871,6 @@ public final class SendEventRequest {
 
     private final Optional<EventOverride> override;
 
-    private int _cachedHashCode;
-
     SendEventRequest(
             Optional<String> idempotencyKey,
             String event,
@@ -2997,11 +2955,7 @@ public final class SendEventRequest {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode =
-                    Objects.hash(this.idempotencyKey, this.event, this.data, this.user, this.scheduleAt, this.override);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.idempotencyKey, this.event, this.data, this.user, this.scheduleAt, this.override);
     }
 
     @Override
@@ -3213,8 +3167,6 @@ public final class Attachment {
 
     private final String url;
 
-    private int _cachedHashCode;
-
     Attachment(String fileName, String content, String url) {
         this.fileName = fileName;
         this.content = content;
@@ -3248,10 +3200,7 @@ public final class Attachment {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.fileName, this.content, this.url);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.fileName, this.content, this.url);
     }
 
     @Override
@@ -3351,8 +3300,6 @@ public final class BatchEvent {
 
     private final Optional<EventOverride> override;
 
-    private int _cachedHashCode;
-
     BatchEvent(Map<String, Object> data, Optional<User> user, Optional<EventOverride> override) {
         this.data = data;
         this.user = user;
@@ -3393,10 +3340,7 @@ public final class BatchEvent {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.data, this.user, this.override);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.data, this.user, this.override);
     }
 
     @Override
@@ -3486,8 +3430,6 @@ import java.util.Objects;
 public final class ChannelOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    private int _cachedHashCode;
-
     ChannelOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
@@ -3510,10 +3452,7 @@ public final class ChannelOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.scheduleAt);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt);
     }
 
     @Override
@@ -3581,8 +3520,6 @@ public final class EmailMessage {
 
     private final String subject;
 
-    private int _cachedHashCode;
-
     EmailMessage(String text, String htmlBody, String subject) {
         this.text = text;
         this.htmlBody = htmlBody;
@@ -3616,10 +3553,7 @@ public final class EmailMessage {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.text, this.htmlBody, this.subject);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.text, this.htmlBody, this.subject);
     }
 
     @Override
@@ -3724,8 +3658,6 @@ public final class EmailOverride implements IChannelOverride {
 
     private final EmailMessage message;
 
-    private int _cachedHashCode;
-
     EmailOverride(
             long scheduleAt,
             EmailRecipient from,
@@ -3789,11 +3721,7 @@ public final class EmailOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode =
-                    Objects.hash(this.scheduleAt, this.from, this.cc, this.bcc, this.attachments, this.message);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt, this.from, this.cc, this.bcc, this.attachments, this.message);
     }
 
     @Override
@@ -3975,8 +3903,6 @@ public final class EmailRecipient {
 
     private final String address;
 
-    private int _cachedHashCode;
-
     EmailRecipient(String name, String address) {
         this.name = name;
         this.address = address;
@@ -4004,10 +3930,7 @@ public final class EmailRecipient {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.name, this.address);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.name, this.address);
     }
 
     @Override
@@ -4107,8 +4030,6 @@ public final class EventOverride {
 
     private final Map<String, ProviderOverride> providers;
 
-    private int _cachedHashCode;
-
     EventOverride(
             Optional<EmailOverride> email,
             Optional<SmsOverride> sms,
@@ -4203,20 +4124,17 @@ public final class EventOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(
-                    this.email,
-                    this.sms,
-                    this.whatsapp,
-                    this.push,
-                    this.webhook,
-                    this.voice,
-                    this.slack,
-                    this.inApp,
-                    this.telegram,
-                    this.providers);
-        }
-        return _cachedHashCode;
+        return Objects.hash(
+                this.email,
+                this.sms,
+                this.whatsapp,
+                this.push,
+                this.webhook,
+                this.voice,
+                this.slack,
+                this.inApp,
+                this.telegram,
+                this.providers);
     }
 
     @Override
@@ -4416,8 +4334,6 @@ import java.util.Objects;
 public final class InAppOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    private int _cachedHashCode;
-
     InAppOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
@@ -4440,10 +4356,7 @@ public final class InAppOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.scheduleAt);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt);
     }
 
     @Override
@@ -4509,8 +4422,6 @@ public final class Param {
 
     private final String value;
 
-    private int _cachedHashCode;
-
     Param(String name, String value) {
         this.name = name;
         this.value = value;
@@ -4538,10 +4449,7 @@ public final class Param {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.name, this.value);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.name, this.value);
     }
 
     @Override
@@ -4632,8 +4540,6 @@ public final class ProviderOverride {
 
     private final List<Param> headers;
 
-    private int _cachedHashCode;
-
     ProviderOverride(
             Map<String, Object> payload,
             List<Param> formParams,
@@ -4688,11 +4594,7 @@ public final class ProviderOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode =
-                    Objects.hash(this.payload, this.formParams, this.queryParams, this.pathParams, this.headers);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.payload, this.formParams, this.queryParams, this.pathParams, this.headers);
     }
 
     @Override
@@ -4835,8 +4737,6 @@ import java.util.Objects;
 public final class PushOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    private int _cachedHashCode;
-
     PushOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
@@ -4859,10 +4759,7 @@ public final class PushOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.scheduleAt);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt);
     }
 
     @Override
@@ -4928,8 +4825,6 @@ public final class SendEventResponse {
 
     private final boolean success;
 
-    private int _cachedHashCode;
-
     SendEventResponse(String id, boolean success) {
         this.id = id;
         this.success = success;
@@ -4957,10 +4852,7 @@ public final class SendEventResponse {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.id, this.success);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.id, this.success);
     }
 
     @Override
@@ -5040,8 +4932,6 @@ public final class SlackMessage {
 
     private final Object blocks;
 
-    private int _cachedHashCode;
-
     SlackMessage(String text, Object blocks) {
         this.text = text;
         this.blocks = blocks;
@@ -5069,10 +4959,7 @@ public final class SlackMessage {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.text, this.blocks);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.text, this.blocks);
     }
 
     @Override
@@ -5152,8 +5039,6 @@ public final class SlackOverride implements IChannelOverride {
 
     private final SlackMessage message;
 
-    private int _cachedHashCode;
-
     SlackOverride(long scheduleAt, SlackMessage message) {
         this.scheduleAt = scheduleAt;
         this.message = message;
@@ -5182,10 +5067,7 @@ public final class SlackOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.scheduleAt, this.message);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt, this.message);
     }
 
     @Override
@@ -5263,8 +5145,6 @@ import java.util.Objects;
 public final class SmsMessage {
     private final String text;
 
-    private int _cachedHashCode;
-
     SmsMessage(String text) {
         this.text = text;
     }
@@ -5286,10 +5166,7 @@ public final class SmsMessage {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.text);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.text);
     }
 
     @Override
@@ -5357,8 +5234,6 @@ public final class SmsOverride implements IChannelOverride {
 
     private final SmsMessage message;
 
-    private int _cachedHashCode;
-
     SmsOverride(long scheduleAt, String sender, SmsMessage message) {
         this.scheduleAt = scheduleAt;
         this.sender = sender;
@@ -5393,10 +5268,7 @@ public final class SmsOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.scheduleAt, this.sender, this.message);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt, this.sender, this.message);
     }
 
     @Override
@@ -5488,8 +5360,6 @@ import java.util.Objects;
 public final class TelegramOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    private int _cachedHashCode;
-
     TelegramOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
@@ -5512,10 +5382,7 @@ public final class TelegramOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.scheduleAt);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt);
     }
 
     @Override
@@ -5605,8 +5472,6 @@ public final class User {
     private final Optional<String> fcmTopic;
 
     private final Optional<String> fcmDeviceGroup;
-
-    private int _cachedHashCode;
 
     User(
             Optional<String> userId,
@@ -5735,22 +5600,19 @@ public final class User {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(
-                    this.userId,
-                    this.email,
-                    this.mobile,
-                    this.whatsappMobile,
-                    this.onesignalExternalId,
-                    this.onesignalPlayerIds,
-                    this.fcmTokens,
-                    this.iosTokens,
-                    this.slack,
-                    this.telegram,
-                    this.fcmTopic,
-                    this.fcmDeviceGroup);
-        }
-        return _cachedHashCode;
+        return Objects.hash(
+                this.userId,
+                this.email,
+                this.mobile,
+                this.whatsappMobile,
+                this.onesignalExternalId,
+                this.onesignalPlayerIds,
+                this.fcmTokens,
+                this.iosTokens,
+                this.slack,
+                this.telegram,
+                this.fcmTopic,
+                this.fcmDeviceGroup);
     }
 
     @Override
@@ -5975,8 +5837,6 @@ import java.util.Objects;
 public final class VoiceOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    private int _cachedHashCode;
-
     VoiceOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
@@ -5999,10 +5859,7 @@ public final class VoiceOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.scheduleAt);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt);
     }
 
     @Override
@@ -6066,8 +5923,6 @@ import java.util.Objects;
 public final class WebhookOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    private int _cachedHashCode;
-
     WebhookOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
@@ -6090,10 +5945,7 @@ public final class WebhookOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.scheduleAt);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt);
     }
 
     @Override
@@ -6159,8 +6011,6 @@ public final class WhatsappOverride implements IChannelOverride {
 
     private final SmsMessage message;
 
-    private int _cachedHashCode;
-
     WhatsappOverride(long scheduleAt, SmsMessage message) {
         this.scheduleAt = scheduleAt;
         this.message = message;
@@ -6189,10 +6039,7 @@ public final class WhatsappOverride implements IChannelOverride {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.scheduleAt, this.message);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.scheduleAt, this.message);
     }
 
     @Override
@@ -6367,8 +6214,6 @@ public final class CreateUserRequest {
 
     private final Optional<String> whatsApp;
 
-    private int _cachedHashCode;
-
     CreateUserRequest(String userId, Optional<String> mobile, Optional<String> email, Optional<String> whatsApp) {
         this.userId = userId;
         this.mobile = mobile;
@@ -6418,10 +6263,7 @@ public final class CreateUserRequest {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.userId, this.mobile, this.email, this.whatsApp);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.userId, this.mobile, this.email, this.whatsApp);
     }
 
     @Override
@@ -6595,8 +6437,6 @@ import java.util.Objects;
 public final class ChannelPreference {
     private final boolean disabled;
 
-    private int _cachedHashCode;
-
     ChannelPreference(boolean disabled) {
         this.disabled = disabled;
     }
@@ -6618,10 +6458,7 @@ public final class ChannelPreference {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.disabled);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.disabled);
     }
 
     @Override
@@ -6699,8 +6536,6 @@ public final class ChannelPreferences {
 
     private final Optional<ChannelPreference> teams;
 
-    private int _cachedHashCode;
-
     ChannelPreferences(
             Optional<ChannelPreference> sms,
             Optional<ChannelPreference> push,
@@ -6771,11 +6606,7 @@ public final class ChannelPreferences {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode =
-                    Objects.hash(this.sms, this.push, this.whatsapp, this.email, this.slack, this.voice, this.teams);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.sms, this.push, this.whatsapp, this.email, this.slack, this.voice, this.teams);
     }
 
     @Override
@@ -6943,8 +6774,6 @@ public final class RavenUser {
 
     private final Optional<Long> updatedAt;
 
-    private int _cachedHashCode;
-
     RavenUser(
             String userId,
             Optional<String> userSid,
@@ -7070,23 +6899,20 @@ public final class RavenUser {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(
-                    this.userId,
-                    this.userSid,
-                    this.onesignalExternalId,
-                    this.mobile,
-                    this.email,
-                    this.whatsappMobile,
-                    this.slack,
-                    this.telegram,
-                    this.fcmTokens,
-                    this.onesignalPlayerIds,
-                    this.iosTokens,
-                    this.createdAt,
-                    this.updatedAt);
-        }
-        return _cachedHashCode;
+        return Objects.hash(
+                this.userId,
+                this.userSid,
+                this.onesignalExternalId,
+                this.mobile,
+                this.email,
+                this.whatsappMobile,
+                this.slack,
+                this.telegram,
+                this.fcmTokens,
+                this.onesignalPlayerIds,
+                this.iosTokens,
+                this.createdAt,
+                this.updatedAt);
     }
 
     @Override
@@ -7422,8 +7248,6 @@ public final class SlackProfile {
 
     private final Optional<String> channelId;
 
-    private int _cachedHashCode;
-
     SlackProfile(String accessToken, Optional<String> email, Optional<String> channelId) {
         this.accessToken = accessToken;
         this.email = email;
@@ -7457,10 +7281,7 @@ public final class SlackProfile {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.accessToken, this.email, this.channelId);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.accessToken, this.email, this.channelId);
     }
 
     @Override
@@ -7565,8 +7386,6 @@ import java.util.Objects;
 public final class TelegramProfile {
     private final String chatId;
 
-    private int _cachedHashCode;
-
     TelegramProfile(String chatId) {
         this.chatId = chatId;
     }
@@ -7588,10 +7407,7 @@ public final class TelegramProfile {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.chatId);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.chatId);
     }
 
     @Override
@@ -7659,8 +7475,6 @@ public final class UserPreferences {
 
     private final Optional<ChannelPreferences> channelPreferences;
 
-    private int _cachedHashCode;
-
     UserPreferences(Optional<Channel> preferredChannel, Optional<ChannelPreferences> channelPreferences) {
         this.preferredChannel = preferredChannel;
         this.channelPreferences = channelPreferences;
@@ -7688,10 +7502,7 @@ public final class UserPreferences {
 
     @Override
     public int hashCode() {
-        if (_cachedHashCode == 0) {
-            _cachedHashCode = Objects.hash(this.preferredChannel, this.channelPreferences);
-        }
-        return _cachedHashCode;
+        return Objects.hash(this.preferredChannel, this.channelPreferences);
     }
 
     @Override
