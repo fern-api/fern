@@ -55,6 +55,9 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
     [GeneratorName.GO_MODEL]: {
         version: "0.0.1",
     },
+    [GeneratorName.GO_SDK]: {
+        version: "0.0.1",
+    },
     [GeneratorName.OPENAPI]: {
         version: "0.0.28",
         config: {

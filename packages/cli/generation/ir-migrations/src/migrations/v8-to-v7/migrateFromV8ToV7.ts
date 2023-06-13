@@ -30,6 +30,7 @@ export const V8_TO_V7_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
     migrateBackwards: (v8): IrVersions.V7.ir.IntermediateRepresentation => {
         return {

@@ -31,6 +31,7 @@ export const V3_TO_V2_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNotCreatedYet,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
     migrateBackwards: (v3): IrVersions.V2.ir.IntermediateRepresentation => {
         const newTypes = [...v3.types];
