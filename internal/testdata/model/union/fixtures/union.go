@@ -14,6 +14,14 @@ type Union struct {
 	Bar  *Bar
 }
 
+func NewUnionFromFoo(value *Foo) *Union {
+	return &Union{Type: "foo", Foo: value}
+}
+
+func NewUnionFromBar(value *Bar) *Union {
+	return &Union{Type: "bar", Bar: value}
+}
+
 func (u *Union) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

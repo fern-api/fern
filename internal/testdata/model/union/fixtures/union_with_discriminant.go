@@ -14,6 +14,14 @@ type UnionWithDiscriminant struct {
 	Bar *Bar
 }
 
+func NewUnionWithDiscriminantFromFoo(value *Foo) *UnionWithDiscriminant {
+	return &UnionWithDiscriminant{Type: "foo", Foo: value}
+}
+
+func NewUnionWithDiscriminantFromBar(value *Bar) *UnionWithDiscriminant {
+	return &UnionWithDiscriminant{Type: "bar", Bar: value}
+}
+
 func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`

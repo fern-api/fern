@@ -13,6 +13,14 @@ type SdkRequestShape struct {
 	Wrapper         *SdkRequestWrapper
 }
 
+func NewSdkRequestShapeFromJustRequestBody(value *HttpRequestBodyReference) *SdkRequestShape {
+	return &SdkRequestShape{Type: "justRequestBody", JustRequestBody: value}
+}
+
+func NewSdkRequestShapeFromWrapper(value *SdkRequestWrapper) *SdkRequestShape {
+	return &SdkRequestShape{Type: "wrapper", Wrapper: value}
+}
+
 func (s *SdkRequestShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

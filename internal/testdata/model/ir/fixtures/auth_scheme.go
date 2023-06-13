@@ -14,6 +14,18 @@ type AuthScheme struct {
 	Header *HeaderAuthScheme
 }
 
+func NewAuthSchemeFromBearer(value *BearerAuthScheme) *AuthScheme {
+	return &AuthScheme{Type: "bearer", Bearer: value}
+}
+
+func NewAuthSchemeFromBasic(value *BasicAuthScheme) *AuthScheme {
+	return &AuthScheme{Type: "basic", Basic: value}
+}
+
+func NewAuthSchemeFromHeader(value *HeaderAuthScheme) *AuthScheme {
+	return &AuthScheme{Type: "header", Header: value}
+}
+
 func (a *AuthScheme) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`

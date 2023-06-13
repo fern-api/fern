@@ -441,6 +441,23 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P("}")
 	t.writer.P()
 
+	// Implement the constructors.
+	for _, unionType := range union.Types {
+		fieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		if unionType.Shape.SingleProperty != nil && unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
+			// The constructor for a literal shouldn't take any arguments.
+			literal := unionType.Shape.SingleProperty.Type.Container.Literal
+			fieldName = unionType.DiscriminantValue.Name.CamelCase.SafeName
+			t.writer.P("func New", t.typeName, "With", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "() *", t.typeName, "{")
+			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.Name.OriginalName, "\", ", fieldName, ": ", literalToValue(literal), "}")
+		} else {
+			t.writer.P("func New", t.typeName, "From", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(value ", singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), ") *", t.typeName, "{")
+			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.Name.OriginalName, "\", ", fieldName, ": value}")
+		}
+		t.writer.P("}")
+		t.writer.P()
+	}
+
 	receiver := typeNameToReceiver(t.typeName)
 
 	// Implement the getter methods.
@@ -669,6 +686,8 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	}
 	t.writer.P("}")
 	t.writer.P()
+
+	// TODO: Implement the constructors.
 
 	receiver := typeNameToReceiver(t.typeName)
 

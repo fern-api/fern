@@ -16,6 +16,26 @@ type Type struct {
 	UndiscriminatedUnion *UndiscriminatedUnionTypeDeclaration
 }
 
+func NewTypeFromAlias(value *AliasTypeDeclaration) *Type {
+	return &Type{Type: "alias", Alias: value}
+}
+
+func NewTypeFromEnum(value *EnumTypeDeclaration) *Type {
+	return &Type{Type: "enum", Enum: value}
+}
+
+func NewTypeFromObject(value *ObjectTypeDeclaration) *Type {
+	return &Type{Type: "object", Object: value}
+}
+
+func NewTypeFromUnion(value *UnionTypeDeclaration) *Type {
+	return &Type{Type: "union", Union: value}
+}
+
+func NewTypeFromUndiscriminatedUnion(value *UndiscriminatedUnionTypeDeclaration) *Type {
+	return &Type{Type: "undiscriminatedUnion", UndiscriminatedUnion: value}
+}
+
 func (t *Type) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`

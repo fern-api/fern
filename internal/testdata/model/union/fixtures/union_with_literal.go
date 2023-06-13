@@ -14,6 +14,10 @@ type UnionWithLiteral struct {
 	base     string
 }
 
+func NewUnionWithLiteralWithFern() *UnionWithLiteral {
+	return &UnionWithLiteral{Type: "fern", fern: "fern"}
+}
+
 func (u *UnionWithLiteral) Extended() string {
 	return u.extended
 }

@@ -13,6 +13,14 @@ type FileUploadRequestProperty struct {
 	BodyProperty *InlinedRequestBodyProperty
 }
 
+func NewFileUploadRequestPropertyFromFile(value *FileProperty) *FileUploadRequestProperty {
+	return &FileUploadRequestProperty{Type: "file", File: value}
+}
+
+func NewFileUploadRequestPropertyFromBodyProperty(value *InlinedRequestBodyProperty) *FileUploadRequestProperty {
+	return &FileUploadRequestProperty{Type: "bodyProperty", BodyProperty: value}
+}
+
 func (f *FileUploadRequestProperty) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

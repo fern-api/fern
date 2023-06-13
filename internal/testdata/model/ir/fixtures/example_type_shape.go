@@ -15,6 +15,22 @@ type ExampleTypeShape struct {
 	Union  *ExampleSingleUnionType
 }
 
+func NewExampleTypeShapeFromAlias(value *ExampleAliasType) *ExampleTypeShape {
+	return &ExampleTypeShape{Type: "alias", Alias: value}
+}
+
+func NewExampleTypeShapeFromEnum(value *ExampleEnumType) *ExampleTypeShape {
+	return &ExampleTypeShape{Type: "enum", Enum: value}
+}
+
+func NewExampleTypeShapeFromObject(value *ExampleObjectType) *ExampleTypeShape {
+	return &ExampleTypeShape{Type: "object", Object: value}
+}
+
+func NewExampleTypeShapeFromUnion(value *ExampleSingleUnionType) *ExampleTypeShape {
+	return &ExampleTypeShape{Type: "union", Union: value}
+}
+
 func (e *ExampleTypeShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

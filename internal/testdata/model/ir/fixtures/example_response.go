@@ -13,6 +13,14 @@ type ExampleResponse struct {
 	Error *ExampleEndpointErrorResponse
 }
 
+func NewExampleResponseFromOk(value *ExampleEndpointSuccessResponse) *ExampleResponse {
+	return &ExampleResponse{Type: "ok", Ok: value}
+}
+
+func NewExampleResponseFromError(value *ExampleEndpointErrorResponse) *ExampleResponse {
+	return &ExampleResponse{Type: "error", Error: value}
+}
+
 func (e *ExampleResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

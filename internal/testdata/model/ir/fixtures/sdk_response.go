@@ -15,6 +15,22 @@ type SdkResponse struct {
 	FileDownload   *FileDownloadResponse
 }
 
+func NewSdkResponseFromJson(value *JsonResponse) *SdkResponse {
+	return &SdkResponse{Type: "json", Json: value}
+}
+
+func NewSdkResponseFromStreaming(value *StreamingResponse) *SdkResponse {
+	return &SdkResponse{Type: "streaming", Streaming: value}
+}
+
+func NewSdkResponseFromMaybeStreaming(value *MaybeStreamingResponse) *SdkResponse {
+	return &SdkResponse{Type: "maybeStreaming", MaybeStreaming: value}
+}
+
+func NewSdkResponseFromFileDownload(value *FileDownloadResponse) *SdkResponse {
+	return &SdkResponse{Type: "fileDownload", FileDownload: value}
+}
+
 func (s *SdkResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

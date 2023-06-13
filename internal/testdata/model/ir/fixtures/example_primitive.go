@@ -21,6 +21,38 @@ type ExamplePrimitive struct {
 	Uuid     uuid.UUID
 }
 
+func NewExamplePrimitiveFromInteger(value int) *ExamplePrimitive {
+	return &ExamplePrimitive{Type: "integer", Integer: value}
+}
+
+func NewExamplePrimitiveFromDouble(value float64) *ExamplePrimitive {
+	return &ExamplePrimitive{Type: "double", Double: value}
+}
+
+func NewExamplePrimitiveFromString(value string) *ExamplePrimitive {
+	return &ExamplePrimitive{Type: "string", String: value}
+}
+
+func NewExamplePrimitiveFromBoolean(value bool) *ExamplePrimitive {
+	return &ExamplePrimitive{Type: "boolean", Boolean: value}
+}
+
+func NewExamplePrimitiveFromLong(value int64) *ExamplePrimitive {
+	return &ExamplePrimitive{Type: "long", Long: value}
+}
+
+func NewExamplePrimitiveFromDatetime(value time.Time) *ExamplePrimitive {
+	return &ExamplePrimitive{Type: "datetime", Datetime: value}
+}
+
+func NewExamplePrimitiveFromDate(value time.Time) *ExamplePrimitive {
+	return &ExamplePrimitive{Type: "date", Date: value}
+}
+
+func NewExamplePrimitiveFromUuid(value uuid.UUID) *ExamplePrimitive {
+	return &ExamplePrimitive{Type: "uuid", Uuid: value}
+}
+
 func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

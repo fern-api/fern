@@ -13,6 +13,14 @@ type Environments struct {
 	MultipleBaseUrls *MultipleBaseUrlsEnvironments
 }
 
+func NewEnvironmentsFromSingleBaseUrl(value *SingleBaseUrlEnvironments) *Environments {
+	return &Environments{Type: "singleBaseUrl", SingleBaseUrl: value}
+}
+
+func NewEnvironmentsFromMultipleBaseUrls(value *MultipleBaseUrlsEnvironments) *Environments {
+	return &Environments{Type: "multipleBaseUrls", MultipleBaseUrls: value}
+}
+
 func (e *Environments) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

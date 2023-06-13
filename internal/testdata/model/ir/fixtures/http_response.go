@@ -13,6 +13,14 @@ type HttpResponse struct {
 	FileDownload *FileDownloadResponse
 }
 
+func NewHttpResponseFromJson(value *JsonResponse) *HttpResponse {
+	return &HttpResponse{Type: "json", Json: value}
+}
+
+func NewHttpResponseFromFileDownload(value *FileDownloadResponse) *HttpResponse {
+	return &HttpResponse{Type: "fileDownload", FileDownload: value}
+}
+
 func (h *HttpResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

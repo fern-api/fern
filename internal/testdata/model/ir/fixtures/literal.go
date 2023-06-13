@@ -12,6 +12,10 @@ type Literal struct {
 	String string
 }
 
+func NewLiteralFromString(value string) *Literal {
+	return &Literal{Type: "string", String: value}
+}
+
 func (l *Literal) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

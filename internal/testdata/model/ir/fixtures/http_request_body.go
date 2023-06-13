@@ -14,6 +14,18 @@ type HttpRequestBody struct {
 	FileUpload         *FileUploadRequest
 }
 
+func NewHttpRequestBodyFromInlinedRequestBody(value *InlinedRequestBody) *HttpRequestBody {
+	return &HttpRequestBody{Type: "inlinedRequestBody", InlinedRequestBody: value}
+}
+
+func NewHttpRequestBodyFromReference(value *HttpRequestBodyReference) *HttpRequestBody {
+	return &HttpRequestBody{Type: "reference", Reference: value}
+}
+
+func NewHttpRequestBodyFromFileUpload(value *FileUploadRequest) *HttpRequestBody {
+	return &HttpRequestBody{Type: "fileUpload", FileUpload: value}
+}
+
 func (h *HttpRequestBody) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

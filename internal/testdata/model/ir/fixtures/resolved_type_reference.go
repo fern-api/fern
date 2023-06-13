@@ -15,6 +15,22 @@ type ResolvedTypeReference struct {
 	Unknown   any
 }
 
+func NewResolvedTypeReferenceFromContainer(value *ContainerType) *ResolvedTypeReference {
+	return &ResolvedTypeReference{Type: "container", Container: value}
+}
+
+func NewResolvedTypeReferenceFromNamed(value *ResolvedNamedType) *ResolvedTypeReference {
+	return &ResolvedTypeReference{Type: "named", Named: value}
+}
+
+func NewResolvedTypeReferenceFromPrimitive(value PrimitiveType) *ResolvedTypeReference {
+	return &ResolvedTypeReference{Type: "primitive", Primitive: value}
+}
+
+func NewResolvedTypeReferenceFromUnknown(value any) *ResolvedTypeReference {
+	return &ResolvedTypeReference{Type: "unknown", Unknown: value}
+}
+
 func (r *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`

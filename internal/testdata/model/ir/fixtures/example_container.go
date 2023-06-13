@@ -15,6 +15,22 @@ type ExampleContainer struct {
 	Map      []*ExampleKeyValuePair
 }
 
+func NewExampleContainerFromList(value []*ExampleTypeReference) *ExampleContainer {
+	return &ExampleContainer{Type: "list", List: value}
+}
+
+func NewExampleContainerFromSet(value []*ExampleTypeReference) *ExampleContainer {
+	return &ExampleContainer{Type: "set", Set: value}
+}
+
+func NewExampleContainerFromOptional(value *ExampleTypeReference) *ExampleContainer {
+	return &ExampleContainer{Type: "optional", Optional: value}
+}
+
+func NewExampleContainerFromMap(value []*ExampleKeyValuePair) *ExampleContainer {
+	return &ExampleContainer{Type: "map", Map: value}
+}
+
 func (e *ExampleContainer) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

@@ -14,6 +14,10 @@ type NestedUnion struct {
 	One  *ExampleType
 }
 
+func NewNestedUnionFromOne(value *ExampleType) *NestedUnion {
+	return &NestedUnion{Type: "one", One: value}
+}
+
 func (n *NestedUnion) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

@@ -14,6 +14,18 @@ type SingleUnionTypeProperties struct {
 	NoProperties           any
 }
 
+func NewSingleUnionTypePropertiesFromSamePropertiesAsObject(value *DeclaredTypeName) *SingleUnionTypeProperties {
+	return &SingleUnionTypeProperties{PropertiesType: "samePropertiesAsObject", SamePropertiesAsObject: value}
+}
+
+func NewSingleUnionTypePropertiesFromSingleProperty(value *SingleUnionTypeProperty) *SingleUnionTypeProperties {
+	return &SingleUnionTypeProperties{PropertiesType: "singleProperty", SingleProperty: value}
+}
+
+func NewSingleUnionTypePropertiesFromNoProperties(value any) *SingleUnionTypeProperties {
+	return &SingleUnionTypeProperties{PropertiesType: "noProperties", NoProperties: value}
+}
+
 func (s *SingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		PropertiesType string `json:"_type"`

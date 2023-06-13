@@ -13,6 +13,14 @@ type ErrorDiscriminationStrategy struct {
 	Property   *ErrorDiscriminationByPropertyStrategy
 }
 
+func NewErrorDiscriminationStrategyFromStatusCode(value any) *ErrorDiscriminationStrategy {
+	return &ErrorDiscriminationStrategy{Type: "statusCode", StatusCode: value}
+}
+
+func NewErrorDiscriminationStrategyFromProperty(value *ErrorDiscriminationByPropertyStrategy) *ErrorDiscriminationStrategy {
+	return &ErrorDiscriminationStrategy{Type: "property", Property: value}
+}
+
 func (e *ErrorDiscriminationStrategy) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

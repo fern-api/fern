@@ -13,6 +13,14 @@ type UnionWithPrimitive struct {
 	String  string
 }
 
+func NewUnionWithPrimitiveFromBoolean(value bool) *UnionWithPrimitive {
+	return &UnionWithPrimitive{Type: "boolean", Boolean: value}
+}
+
+func NewUnionWithPrimitiveFromString(value string) *UnionWithPrimitive {
+	return &UnionWithPrimitive{Type: "string", String: value}
+}
+
 func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

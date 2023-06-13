@@ -16,6 +16,26 @@ type ContainerType struct {
 	Literal  *Literal
 }
 
+func NewContainerTypeFromList(value *TypeReference) *ContainerType {
+	return &ContainerType{Type: "list", List: value}
+}
+
+func NewContainerTypeFromMap(value *MapType) *ContainerType {
+	return &ContainerType{Type: "map", Map: value}
+}
+
+func NewContainerTypeFromOptional(value *TypeReference) *ContainerType {
+	return &ContainerType{Type: "optional", Optional: value}
+}
+
+func NewContainerTypeFromSet(value *TypeReference) *ContainerType {
+	return &ContainerType{Type: "set", Set: value}
+}
+
+func NewContainerTypeFromLiteral(value *Literal) *ContainerType {
+	return &ContainerType{Type: "literal", Literal: value}
+}
+
 func (c *ContainerType) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`

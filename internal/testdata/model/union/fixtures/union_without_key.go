@@ -14,6 +14,14 @@ type UnionWithoutKey struct {
 	Bar *Bar
 }
 
+func NewUnionWithoutKeyFromFoo(value *Foo) *UnionWithoutKey {
+	return &UnionWithoutKey{Type: "foo", Foo: value}
+}
+
+func NewUnionWithoutKeyFromBar(value *Bar) *UnionWithoutKey {
+	return &UnionWithoutKey{Type: "bar", Bar: value}
+}
+
 func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

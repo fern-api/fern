@@ -15,6 +15,22 @@ type ExampleTypeReferenceShape struct {
 	Named     *ExampleNamedType
 }
 
+func NewExampleTypeReferenceShapeFromPrimitive(value *ExamplePrimitive) *ExampleTypeReferenceShape {
+	return &ExampleTypeReferenceShape{Type: "primitive", Primitive: value}
+}
+
+func NewExampleTypeReferenceShapeFromContainer(value *ExampleContainer) *ExampleTypeReferenceShape {
+	return &ExampleTypeReferenceShape{Type: "container", Container: value}
+}
+
+func NewExampleTypeReferenceShapeFromUnknown(value any) *ExampleTypeReferenceShape {
+	return &ExampleTypeReferenceShape{Type: "unknown", Unknown: value}
+}
+
+func NewExampleTypeReferenceShapeFromNamed(value *ExampleNamedType) *ExampleTypeReferenceShape {
+	return &ExampleTypeReferenceShape{Type: "named", Named: value}
+}
+
 func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

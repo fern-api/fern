@@ -13,6 +13,14 @@ type UnionWithUnknown struct {
 	Unknown any
 }
 
+func NewUnionWithUnknownFromFoo(value *Foo) *UnionWithUnknown {
+	return &UnionWithUnknown{Type: "foo", Foo: value}
+}
+
+func NewUnionWithUnknownFromUnknown(value any) *UnionWithUnknown {
+	return &UnionWithUnknown{Type: "unknown", Unknown: value}
+}
+
 func (u *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

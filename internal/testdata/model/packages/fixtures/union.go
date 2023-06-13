@@ -16,6 +16,22 @@ type Union struct {
 	AnotherBar   *bar.Bar
 }
 
+func NewUnionFromValue(value *Value) *Union {
+	return &Union{Type: "value", Value: value}
+}
+
+func NewUnionFromAnotherValue(value *Value) *Union {
+	return &Union{Type: "anotherValue", AnotherValue: value}
+}
+
+func NewUnionFromBar(value *bar.Bar) *Union {
+	return &Union{Type: "bar", Bar: value}
+}
+
+func NewUnionFromAnotherBar(value *bar.Bar) *Union {
+	return &Union{Type: "anotherBar", AnotherBar: value}
+}
+
 func (u *Union) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

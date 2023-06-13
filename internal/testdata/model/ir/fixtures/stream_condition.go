@@ -17,6 +17,14 @@ type StreamCondition struct {
 	RequestPropertyKey string
 }
 
+func NewStreamConditionFromQueryParameterKey(value string) *StreamCondition {
+	return &StreamCondition{Type: "queryParameterKey", QueryParameterKey: value}
+}
+
+func NewStreamConditionFromRequestPropertyKey(value string) *StreamCondition {
+	return &StreamCondition{Type: "requestPropertyKey", RequestPropertyKey: value}
+}
+
 func (s *StreamCondition) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

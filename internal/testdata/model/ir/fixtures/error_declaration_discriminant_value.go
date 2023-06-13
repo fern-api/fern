@@ -13,6 +13,14 @@ type ErrorDeclarationDiscriminantValue struct {
 	StatusCode any
 }
 
+func NewErrorDeclarationDiscriminantValueFromProperty(value *NameAndWireValue) *ErrorDeclarationDiscriminantValue {
+	return &ErrorDeclarationDiscriminantValue{Type: "property", Property: value}
+}
+
+func NewErrorDeclarationDiscriminantValueFromStatusCode(value any) *ErrorDeclarationDiscriminantValue {
+	return &ErrorDeclarationDiscriminantValue{Type: "statusCode", StatusCode: value}
+}
+
 func (e *ErrorDeclarationDiscriminantValue) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

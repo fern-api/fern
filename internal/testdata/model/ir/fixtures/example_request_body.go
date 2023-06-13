@@ -13,6 +13,14 @@ type ExampleRequestBody struct {
 	Reference          *ExampleTypeReference
 }
 
+func NewExampleRequestBodyFromInlinedRequestBody(value *ExampleInlinedRequestBody) *ExampleRequestBody {
+	return &ExampleRequestBody{Type: "inlinedRequestBody", InlinedRequestBody: value}
+}
+
+func NewExampleRequestBodyFromReference(value *ExampleTypeReference) *ExampleRequestBody {
+	return &ExampleRequestBody{Type: "reference", Reference: value}
+}
+
 func (e *ExampleRequestBody) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
