@@ -13,6 +13,7 @@ func (f *fileWriter) WriteClient(service *ir.HttpService) error {
 	return nil
 }
 
+// WriteError writes the structured error types.
 func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	var (
 		typeName   = errorDeclaration.Name.Name.PascalCase.UnsafeName
@@ -68,5 +69,14 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("}")
 	f.P()
 
+	// Implement the json.Marshaler.
+	f.P("func (", receiver, "*", typeName, ") MarshalJSON() ([]byte, error) {")
+	if isLiteral {
+		f.P("return json.Marshal(", literal, ")")
+	} else {
+		f.P("return json.Marshal(", receiver, ".Body)")
+	}
+	f.P("}")
+	f.P()
 	return nil
 }
