@@ -3,12 +3,14 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v2/resources/read";
 import classNames from "classnames";
 import "normalize.css";
 import { useEffect } from "react";
 import { initializePosthog } from "./analytics/posthog";
 import styles from "./App.module.scss";
 import { CONTEXTS } from "./contexts";
+import { DocsContextProvider } from "./docs-context/DocsContextProvider";
 import { Docs } from "./docs/Docs";
 import { useAreFernFontsReady } from "./useAreFernFontsReady";
 
@@ -16,12 +18,11 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 export declare namespace App {
     export interface Props {
-        url: string;
-        pathname: string;
+        docs: FernRegistryDocsRead.LoadDocsForUrlResponse.Raw;
     }
 }
 
-export const App: React.FC<App.Props> = ({ url, pathname }) => {
+export const App: React.FC<App.Props> = ({ docs }) => {
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
@@ -39,7 +40,9 @@ export const App: React.FC<App.Props> = ({ url, pathname }) => {
                 (children, Context) => (
                     <Context>{children}</Context>
                 ),
-                <Docs url={url} pathname={pathname} />
+                <DocsContextProvider docsDefinition={docs.definition} basePath={docs.baseUrl.basePath ?? undefined}>
+                    <Docs />
+                </DocsContextProvider>
             )}
         </div>
     );

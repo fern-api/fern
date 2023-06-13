@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
@@ -15,7 +15,7 @@ import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
     export interface Props {
-        property: FernRegistryApiRead.ObjectProperty;
+        property: FernRegistryApiRead.ObjectProperty.Raw;
     }
 }
 
@@ -86,7 +86,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                 </div>
             </div>
             <div className="flex flex-col">
-                <Description description={description} />
+                <Description description={description ?? undefined} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions type={property.valueType} isCollapsible />
                 </TypeDefinitionContext.Provider>

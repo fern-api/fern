@@ -1,9 +1,10 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 import { PageMargins } from "../../page-margins/PageMargins";
+import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { useApiPageContext } from "../api-page-context/useApiPageContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
@@ -22,7 +23,7 @@ import { QueryParametersSection } from "./QueryParametersSection";
 
 export declare namespace EndpointContent {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition;
+        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
         slug: string;
     }
 }
@@ -89,10 +90,10 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                             {environmentUrl}
                             {endpoint.path.parts.map((part, index) => (
                                 <React.Fragment key={index}>
-                                    {part._visit<JSX.Element | string | null>({
-                                        literal: (literal) => literal,
+                                    {visitDiscriminatedUnion(part, "type")._visit<JSX.Element | string | null>({
+                                        literal: (literal) => literal.value,
                                         pathParameter: (pathParameter) => (
-                                            <EndpointPathParameter pathParameter={pathParameter} />
+                                            <EndpointPathParameter pathParameter={pathParameter.value} />
                                         ),
                                         _other: () => null,
                                     })}

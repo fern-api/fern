@@ -1,8 +1,8 @@
-import { assertNever, noop } from "@fern-api/core-utils";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { assertNever, assertNeverNoThrow, noop } from "@fern-api/core-utils";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import React, { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { assertVoidNoThrow } from "../../../utils/assertVoidNoThrow";
+import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
 import { getEndpointEnvironmentUrl } from "../../endpoints/getEndpointEnvironmentUrl";
 import { JsonExampleContext, JsonExampleContextValue } from "../json-example/contexts/JsonExampleContext";
 import { JsonPropertyPath } from "../json-example/contexts/JsonPropertyPath";
@@ -16,8 +16,8 @@ import { CurlParameter } from "./CurlParameter";
 
 export declare namespace CurlExample {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition;
-        example: FernRegistryApiRead.ExampleEndpointCall;
+        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
+        example: FernRegistryApiRead.ExampleEndpointCall.Raw;
         selectedProperty: JsonPropertyPath | undefined;
         parent: HTMLElement | undefined;
     }
@@ -41,7 +41,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
     const partsExcludingCurlCommand = useMemo(() => {
         const parts: CurlExamplePart[] = [];
 
-        if (endpoint.method !== FernRegistryApiRead.HttpMethod.Get) {
+        if (endpoint.method !== "GET") {
             parts.push({
                 type: "line",
                 value: <CurlParameter paramKey="-X" value={endpoint.method.toUpperCase()} doNotStringifyValue />,
@@ -65,7 +65,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
 
         const requestContentType =
             endpoint.request != null
-                ? endpoint.request.type._visit({
+                ? visitDiscriminatedUnion(endpoint.request.type, "type")._visit({
                       object: () => "application/json",
                       reference: () => "application/json",
                       fileUpload: () => "multipart/form-data",
@@ -80,7 +80,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
         }
 
         if (apiDefinition.auth != null && endpoint.authed) {
-            apiDefinition.auth._visit({
+            visitDiscriminatedUnion(apiDefinition.auth, "type")._visit({
                 basicAuth: ({ usernameName = "username", passwordName = "password" }) => {
                     parts.push({
                         type: "line",
@@ -151,7 +151,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
                     );
                     break;
                 default:
-                    assertVoidNoThrow(endpoint.request.type.type);
+                    assertNeverNoThrow(endpoint.request.type);
             }
         }
 

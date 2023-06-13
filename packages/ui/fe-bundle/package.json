@@ -38,7 +38,10 @@
     "lint:fern-prod": "yarn compile && yarn env:fern-prod next lint"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/ui": "workspace:*",
+    "@fern-fern/registry-browser": "0.0.1004",
+    "immer": "^9.0.15",
     "next": "^13.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

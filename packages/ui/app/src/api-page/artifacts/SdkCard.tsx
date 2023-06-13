@@ -1,18 +1,19 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
 import { useMemo } from "react";
+import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { NodeJsLogo } from "./sdk-logos/NodeJsLogo";
 import { SdkCardLayout } from "./SdkCardLayout";
 
 export declare namespace SdkCard {
     export interface Props {
-        sdk: FernRegistryDocsRead.PublishedSdk;
+        sdk: FernRegistryDocsRead.PublishedSdk.Raw;
     }
 }
 
 interface SdkRenderInfo {
     icon: JSX.Element;
     title: string;
-    githubRepo: FernRegistryDocsRead.GitHubRepo;
+    githubRepo: FernRegistryDocsRead.GitHubRepo.Raw;
     packageName: string;
     version: string;
 }
@@ -20,7 +21,7 @@ interface SdkRenderInfo {
 export const SdkCard: React.FC<SdkCard.Props> = ({ sdk }) => {
     const renderInfo = useMemo(
         () =>
-            sdk._visit<SdkRenderInfo | undefined>({
+            visitDiscriminatedUnion(sdk, "type")._visit<SdkRenderInfo | undefined>({
                 npm: (npm) => ({
                     icon: <NodeJsLogo />,
                     title: "Node.js",

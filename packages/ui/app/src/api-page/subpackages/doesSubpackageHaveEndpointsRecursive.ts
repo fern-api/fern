@@ -1,8 +1,10 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 
 export function doesSubpackageHaveEndpointsRecursive(
-    subpackageId: FernRegistryApiRead.SubpackageId,
-    resolveSubpackage: (subpackageId: FernRegistryApiRead.SubpackageId) => FernRegistryApiRead.ApiDefinitionSubpackage
+    subpackageId: FernRegistryApiRead.SubpackageId.Raw,
+    resolveSubpackage: (
+        subpackageId: FernRegistryApiRead.SubpackageId.Raw
+    ) => FernRegistryApiRead.ApiDefinitionSubpackage.Raw
 ): boolean {
     const subpackage = resolveSubpackage(subpackageId);
     if (subpackage.endpoints.length > 0) {

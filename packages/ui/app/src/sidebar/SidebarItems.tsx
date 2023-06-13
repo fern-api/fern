@@ -1,6 +1,7 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
+import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
 import { ApiSidebarSection } from "./ApiSidebarSection";
 import { PageSidebarItem } from "./PageSidebarItem";
 import { SidebarDocsSection } from "./SidebarDocsSection";
@@ -8,7 +9,7 @@ import { SidebarDocsSection } from "./SidebarDocsSection";
 export declare namespace SidebarItems {
     export interface Props {
         slug: string;
-        navigationItems: FernRegistryDocsRead.NavigationItem[];
+        navigationItems: FernRegistryDocsRead.NavigationItem.Raw[];
     }
 }
 
@@ -16,7 +17,7 @@ export const SidebarItems: React.FC<SidebarItems.Props> = ({ slug, navigationIte
     return (
         <div className="flex flex-col">
             {navigationItems.map((navigationItem) =>
-                navigationItem._visit({
+                visitDiscriminatedUnion(navigationItem, "type")._visit({
                     page: (pageMetadata) => (
                         <PageSidebarItem
                             key={pageMetadata.urlSlug}

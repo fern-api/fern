@@ -1,14 +1,28 @@
-import { MaybeLoadedDocs } from "./MaybeLoadedDocs";
-import { useCurrentUrl } from "./useCurrentUrl";
+import { useDocsContext } from "../docs-context/useDocsContext";
+import { Sidebar } from "../sidebar/Sidebar";
+import { DocsMainContent } from "./DocsMainContent";
+import { Header } from "./Header";
+import nebulaImage from "./nebula.png";
+import { useCustomTheme } from "./useCustomTheme";
 
-export declare namespace Docs {
-    export interface Props {
-        url: string;
-        pathname: string;
-    }
-}
+export const Docs: React.FC = () => {
+    const { docsDefinition } = useDocsContext();
+    useCustomTheme(docsDefinition);
 
-export const Docs: React.FC<Docs.Props> = ({ url: windowUrl, pathname }) => {
-    const url = useCurrentUrl({ windowUrl });
-    return <MaybeLoadedDocs url={url} pathname={pathname} />;
+    return (
+        <div
+            className="relative flex min-h-0 flex-1 flex-col bg-cover"
+            style={{ backgroundImage: `url('${nebulaImage.src}')` }}
+        >
+            <Header />
+            <div className="flex min-h-0 flex-1">
+                <div className="flex w-64">
+                    <Sidebar />
+                </div>
+                <div className="flex min-w-0 flex-1 flex-col">
+                    <DocsMainContent />
+                </div>
+            </div>
+        </div>
+    );
 };

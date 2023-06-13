@@ -1,9 +1,9 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import { getEndpointTitleAsString } from "./getEndpointTitleAsString";
 
 export declare namespace EndpointTitle {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition;
+        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
     }
 }
 

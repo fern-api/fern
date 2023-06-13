@@ -1,19 +1,19 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import { PackagePath } from "../commons/PackagePath";
 
 export class TypeIdToPackagePathCache {
-    private cache: Record<FernRegistryApiRead.TypeId, PackagePath> = {};
+    private cache: Record<FernRegistryApiRead.TypeId.Raw, PackagePath> = {};
 
     constructor(
-        apiDefinition: FernRegistryApiRead.ApiDefinition,
+        apiDefinition: FernRegistryApiRead.ApiDefinition.Raw,
         resolveSubpackageById: (
-            subpackageId: FernRegistryApiRead.SubpackageId
-        ) => FernRegistryApiRead.ApiDefinitionSubpackage
+            subpackageId: FernRegistryApiRead.SubpackageId.Raw
+        ) => FernRegistryApiRead.ApiDefinitionSubpackage.Raw
     ) {
         this.addPackageToCache(apiDefinition.rootPackage, resolveSubpackageById, []);
     }
 
-    public get(typeId: FernRegistryApiRead.TypeId): PackagePath {
+    public get(typeId: FernRegistryApiRead.TypeId.Raw): PackagePath {
         const packagePath = this.cache[typeId];
         if (packagePath == null) {
             throw new Error("Type ID does not exist: " + typeId);
@@ -22,10 +22,10 @@ export class TypeIdToPackagePathCache {
     }
 
     private addPackageToCache(
-        package_: FernRegistryApiRead.ApiDefinitionPackage,
+        package_: FernRegistryApiRead.ApiDefinitionPackage.Raw,
         resolveSubpackageById: (
-            subpackageId: FernRegistryApiRead.SubpackageId
-        ) => FernRegistryApiRead.ApiDefinitionSubpackage,
+            subpackageId: FernRegistryApiRead.SubpackageId.Raw
+        ) => FernRegistryApiRead.ApiDefinitionSubpackage.Raw,
         packagePath: PackagePath
     ): void {
         for (const typeId of package_.types) {

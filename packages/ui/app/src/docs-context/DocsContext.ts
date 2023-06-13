@@ -1,6 +1,5 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
 import React from "react";
 import { ResolvedUrlPath } from "./url-path-resolver/UrlPathResolver";
 
@@ -9,9 +8,9 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
 });
 
 export interface DocsContextValue {
-    resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
-    resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
-    resolveFile: (fileId: FernRegistryDocsRead.FileId) => FernRegistryDocsRead.Url;
+    resolveApi: (apiId: string) => FernRegistryApiRead.ApiDefinition.Raw;
+    resolvePage: (pageId: FernRegistryDocsRead.PageId.Raw) => FernRegistryDocsRead.PageContent.Raw;
+    resolveFile: (fileId: FernRegistryDocsRead.FileId.Raw) => FernRegistryDocsRead.Url.Raw;
 
     navigateToPath: (slug: string) => void;
     registerNavigateToPathListener: (slug: string, listener: () => void) => () => void;
@@ -20,7 +19,7 @@ export interface DocsContextValue {
     onScrollToPath: (slug: string) => void;
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 
-    docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    docsDefinition: FernRegistryDocsRead.DocsDefinition.Raw;
     basePath: string;
     resolvedPathFromUrl: ResolvedUrlPath | undefined;
     nextPath: ResolvedUrlPath | undefined;

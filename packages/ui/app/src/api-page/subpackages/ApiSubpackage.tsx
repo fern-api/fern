@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { PageMargins } from "../../page-margins/PageMargins";
 import { ApiPackageContents } from "../ApiPackageContents";
@@ -7,7 +7,7 @@ import { SubpackageTitle } from "./SubpackageTitle";
 
 export declare namespace ApiSubpackage {
     export interface Props {
-        subpackageId: FernRegistryApiRead.SubpackageId;
+        subpackageId: FernRegistryApiRead.SubpackageId.Raw;
         slug: string;
     }
 }

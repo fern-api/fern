@@ -1,13 +1,14 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import React from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
 import { InternalTypeDefinition } from "../type-definition/InternalTypeDefinition";
 import { ListTypeContextProvider } from "./ListTypeContextProvider";
 import { MapTypeContextProvider } from "./MapTypeContextProvider";
 
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {
-        type: FernRegistryApiRead.TypeReference;
+        type: FernRegistryApiRead.TypeReference.Raw;
         isCollapsible: boolean;
         className?: string;
     }
@@ -20,8 +21,8 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
-    return type._visit<JSX.Element | null>({
-        id: (typeId) => (
+    return visitDiscriminatedUnion(type, "type")._visit<JSX.Element | null>({
+        id: ({ value: typeId }) => (
             <InternalTypeDefinition
                 key={typeId}
                 typeShape={resolveTypeById(typeId).shape}

@@ -1,6 +1,5 @@
-import { FernRegistry } from "@fern-fern/registry-browser";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { DocsContext, DocsContextValue } from "./DocsContext";
@@ -9,14 +8,12 @@ import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
-        pathname: string;
-        docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        docsDefinition: FernRegistryDocsRead.DocsDefinition.Raw;
         basePath: string | undefined;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
-    pathname,
     docsDefinition,
     basePath = "/",
     children,
@@ -25,11 +22,12 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const urlPathResolver = useMemo(() => new UrlPathResolverImpl(docsDefinition), [docsDefinition]);
 
     const resolvedPathFromUrl = useMemo(() => {
-        let path = pathname;
+        // TODO should we use useLocation?
+        let path = window.location.pathname;
         path = path.replace(new RegExp(`^${basePath}`), "");
         path = removeLeadingAndTrailingSlashes(path);
         return urlPathResolver.resolveSlug(path);
-    }, [basePath, pathname, urlPathResolver]);
+    }, [basePath, urlPathResolver]);
 
     const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
     // handle redirects
@@ -51,7 +49,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     );
 
     const resolveApi = useCallback(
-        (apiId: FernRegistry.ApiDefinitionId): FernRegistryApiRead.ApiDefinition => {
+        (apiId: string): FernRegistryApiRead.ApiDefinition.Raw => {
             const api = docsDefinition.apis[apiId];
             if (api == null) {
                 throw new Error("API does not exist: " + apiId);
@@ -62,7 +60,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     );
 
     const resolvePage = useCallback(
-        (pageId: FernRegistryDocsRead.PageId): FernRegistryDocsRead.PageContent => {
+        (pageId: FernRegistryDocsRead.PageId.Raw): FernRegistryDocsRead.PageContent.Raw => {
             const page = docsDefinition.pages[pageId];
             if (page == null) {
                 throw new Error("Page does not exist: " + pageId);
@@ -73,7 +71,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     );
 
     const resolveFile = useCallback(
-        (fileId: FernRegistryDocsRead.FileId): FernRegistryDocsRead.Url => {
+        (fileId: FernRegistryDocsRead.FileId.Raw): FernRegistryDocsRead.Url.Raw => {
             const file = docsDefinition.files[fileId];
             if (file == null) {
                 throw new Error("File does not exist: " + fileId);

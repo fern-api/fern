@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { EndpointTitle } from "../api-page/endpoints/EndpointTitle";
 import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
@@ -6,7 +6,7 @@ import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 export declare namespace EndpointSidebarItem {
     export interface Props {
         slug: string;
-        endpoint: FernRegistryApiRead.EndpointDefinition;
+        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
     }
 }
 

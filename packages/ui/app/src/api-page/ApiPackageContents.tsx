@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { SeparatedElements } from "../commons/SeparatedElements";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
@@ -9,7 +9,7 @@ import { doesSubpackageHaveEndpointsRecursive } from "./subpackages/doesSubpacka
 
 export declare namespace ApiPackageContents {
     export interface Props {
-        package: FernRegistryApiRead.ApiDefinitionPackage;
+        package: FernRegistryApiRead.ApiDefinitionPackage.Raw;
         slug: string;
     }
 }

@@ -1,7 +1,7 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
 import { useEffect } from "react";
 
-const DEFAULT_ACCENT_PRIMARY: FernRegistryDocsRead.RgbColor = {
+const DEFAULT_ACCENT_PRIMARY: FernRegistryDocsRead.RgbColor.Raw = {
     r: 129,
     g: 140,
     b: 248,
@@ -11,7 +11,7 @@ const CSS_VARIABLES = {
     ACCENT_PRIMARY: "--accent-primary",
 } as const;
 
-export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefinition): void {
+export function useCustomTheme(docsDefinition: FernRegistryDocsRead.DocsDefinition.Raw): void {
     useEffect(() => {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const root = document.querySelector<HTMLElement>(":root")!;

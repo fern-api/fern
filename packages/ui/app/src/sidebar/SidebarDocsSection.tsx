@@ -1,4 +1,4 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
 import { NonClickableSidebarGroupTitle } from "./NonClickableSidebarGroupTitle";
 import { SidebarGroup } from "./SidebarGroup";
 import { SidebarItems } from "./SidebarItems";
@@ -6,7 +6,7 @@ import { SidebarItems } from "./SidebarItems";
 export declare namespace SidebarDocsSection {
     export interface Props {
         slug: string;
-        section: FernRegistryDocsRead.DocsSection;
+        section: FernRegistryDocsRead.DocsSection.Raw;
     }
 }
 

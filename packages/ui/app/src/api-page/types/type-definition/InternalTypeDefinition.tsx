@@ -1,10 +1,11 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { useBooleanState, useIsHovering } from "@fern-api/react-commons";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
@@ -19,7 +20,7 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: FernRegistryApiRead.TypeShape;
+        typeShape: FernRegistryApiRead.TypeShape.Raw;
         isCollapsible: boolean;
     }
 }
@@ -36,7 +37,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
 
     const collapsableContent = useMemo(
         () =>
-            typeShape._visit<CollapsibleContent | undefined>({
+            visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
                 alias: () => undefined,
                 object: (object) => ({
                     elements: getAllObjectProperties(object, resolveTypeById).map((property) => (

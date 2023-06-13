@@ -1,9 +1,10 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
 import { ReferencedTypePreviewPart } from "./ReferencedTypePreviewPart";
 
 export declare namespace TypeShorthand {
     export interface Props {
-        type: FernRegistryApiRead.TypeReference;
+        type: FernRegistryApiRead.TypeReference.Raw;
         plural: boolean;
         withArticle?: boolean;
     }
@@ -15,10 +16,12 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, wit
 
     return (
         <>
-            {type._visit<JSX.Element | string>({
-                id: (typeId) => <ReferencedTypePreviewPart typeId={typeId} plural={plural} withArticle={withArticle} />,
-                primitive: (primitive) => {
-                    return primitive._visit({
+            {visitDiscriminatedUnion(type, "type")._visit<JSX.Element | string>({
+                id: ({ value: typeId }) => (
+                    <ReferencedTypePreviewPart typeId={typeId} plural={plural} withArticle={withArticle} />
+                ),
+                primitive: ({ value: primitive }) => {
+                    return visitDiscriminatedUnion(primitive, "type")._visit({
                         string: () => (plural ? "strings" : maybeWithArticle("a", "string")),
                         integer: () => (plural ? "integers" : maybeWithArticle("an", "integer")),
                         double: () => (plural ? "doubles" : maybeWithArticle("a", "double")),
@@ -63,8 +66,8 @@ export const TypeShorthand: React.FC<TypeShorthand.Props> = ({ type, plural, wit
                     );
                 },
                 literal: (literal) =>
-                    literal._visit({
-                        stringLiteral: (value) => `"${value}"`,
+                    visitDiscriminatedUnion(literal.value, "type")._visit({
+                        stringLiteral: (value) => `"${value.value}"`,
                         _other: () => "<unknown>",
                     }),
                 unknown: () => "any",

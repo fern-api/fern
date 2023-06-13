@@ -1,10 +1,10 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
 import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 
 export declare namespace PageSidebarItem {
     export interface Props {
         slug: string;
-        pageMetadata: FernRegistryDocsRead.PageMetadata;
+        pageMetadata: FernRegistryDocsRead.PageMetadata.Raw;
     }
 }
 
