@@ -1,6 +1,5 @@
 import { App } from "@fern-api/ui";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v2/resources/read";
-import { GetServerSideProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
@@ -26,11 +25,3 @@ export default function Docs({ docs, pathname }: Docs.Props): JSX.Element {
         </main>
     );
 }
-
-export const getServerSideProps: GetServerSideProps<Pick<Docs.Props, "pathname">> = async (context) => {
-    return {
-        props: {
-            pathname: context.query.slug != null ? (context.query.slug as string[]).join("/") : "",
-        },
-    };
-};
