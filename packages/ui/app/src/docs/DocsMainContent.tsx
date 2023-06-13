@@ -7,10 +7,10 @@ import { MarkdownPage } from "../markdown-page/MarkdownPage";
 import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
 
 export const DocsMainContent: React.FC = () => {
-    const { resolvedPathFromUrl, docsDefinition, basePath } = useDocsContext();
+    const { resolvedPathFromUrl, docsDefinition, basePath, pathname } = useDocsContext();
 
     if (resolvedPathFromUrl == null) {
-        if (location.pathname === basePath) {
+        if (pathname === basePath) {
             return <RedirectToFirstNavigationItem items={docsDefinition.config.navigation.items} slug="" />;
         }
         return <NonIdealState title="404" />;

@@ -133,6 +133,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolvedPathFromUrl,
             nextPath,
             previousPath,
+            pathname,
         }),
         [
             basePath,
@@ -141,6 +142,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             navigateToPathListeners.registerListener,
             nextPath,
             onScrollToPath,
+            pathname,
             previousPath,
             resolveApi,
             resolveFile,
