@@ -1,7 +1,7 @@
 module.exports = {
     "fern-dev": {
         NEXT_PUBLIC_FDR_ORIGIN: "https://registry-dev.buildwithfern.com",
-        NEXT_PUBLIC_POSTHOG_API_KEY: null,
+        NEXT_PUBLIC_POSTHOG_API_KEY: "",
     },
     "fern-prod": {
         NEXT_PUBLIC_FDR_ORIGIN: "https://registry.buildwithfern.com",

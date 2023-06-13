@@ -1190,7 +1190,7 @@ exports[`open api parser suger simple 1`] = `
             },
             "resourceType": {
               "docs": undefined,
-              "type": "optional<AzureProductListingResourceType>",
+              "type": "optional<literal<"AzureListing">>",
             },
             "shortDescription": {
               "docs": undefined,
@@ -1301,16 +1301,6 @@ exports[`open api parser suger simple 1`] = `
             },
           ],
         },
-        "AzureProductListingResourceType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "AzureListing",
-              "value": "AzureListing",
-            },
-          ],
-        },
         "AzureProductPackageConfiguration": {
           "docs": undefined,
           "properties": {
@@ -1336,19 +1326,9 @@ exports[`open api parser suger simple 1`] = `
             },
             "resourceType": {
               "docs": undefined,
-              "type": "optional<AzureProductPackageConfigurationResourceType>",
+              "type": "optional<literal<"AzureSoftwareAsAServicePackageConfiguration">>",
             },
           },
-        },
-        "AzureProductPackageConfigurationResourceType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "AzureSoftwareAsAServicePackageConfiguration",
-              "value": "AzureSoftwareAsAServicePackageConfiguration",
-            },
-          ],
         },
         "AzureProductProperty": {
           "docs": undefined,
@@ -1444,7 +1424,7 @@ exports[`open api parser suger simple 1`] = `
             },
             "resourceType": {
               "docs": undefined,
-              "type": "optional<AzureProductSetupResourceType>",
+              "type": "optional<literal<"AzureProductSetup">>",
             },
             "sellingOption": {
               "docs": undefined,
@@ -1477,16 +1457,6 @@ exports[`open api parser suger simple 1`] = `
               "docs": undefined,
               "name": "ContactMe",
               "value": "contact-me",
-            },
-          ],
-        },
-        "AzureProductSetupResourceType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "AzureProductSetup",
-              "value": "AzureProductSetup",
             },
           ],
         },
@@ -1534,7 +1504,7 @@ exports[`open api parser suger simple 1`] = `
             },
             "resourceType": {
               "docs": undefined,
-              "type": "optional<AzureProductSubmissionResourceType>",
+              "type": "optional<literal<"Submission">>",
             },
             "resources": {
               "docs": undefined,
@@ -1557,16 +1527,6 @@ exports[`open api parser suger simple 1`] = `
               "type": "optional<list<AzureVariantResource>>",
             },
           },
-        },
-        "AzureProductSubmissionResourceType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "Submission",
-              "value": "Submission",
-            },
-          ],
         },
         "AzureProductSubmissionState": {
           "docs": undefined,
@@ -3505,16 +3465,6 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
           ],
         },
-        "SharedCreateIntegrationParamsService": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MARKETPLACE",
-              "value": "MARKETPLACE",
-            },
-          ],
-        },
         "SharedEntitlementInfo": {
           "docs": undefined,
           "properties": {
@@ -3753,7 +3703,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "listingType": {
               "docs": undefined,
-              "type": "optional<SharedGcpCommerceProducerListingSpecListingType>",
+              "type": "optional<literal<"BillingIntegratedManagedService">>",
             },
             "marketingSpec": {
               "docs": undefined,
@@ -3764,16 +3714,6 @@ in the google.rpc.Status.details field, or localized by the client.",
               "type": "optional<SharedGcpCommerceProducerPurchaseSpec>",
             },
           },
-        },
-        "SharedGcpCommerceProducerListingSpecListingType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "BillingIntegratedManagedService",
-              "value": "BillingIntegratedManagedService",
-            },
-          ],
         },
         "SharedGcpCommerceProducerMarketingSpec": {
           "docs": undefined,
@@ -3892,7 +3832,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "properties": {
             "period": {
               "docs": undefined,
-              "type": "optional<SharedGcpCommerceProducerPriceSubscriptionPeriod>",
+              "type": "optional<literal<"ONE_YEAR">>",
             },
             "price": {
               "docs": "the Monthly subscription fee as commit.",
@@ -3900,29 +3840,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "taxCategoryOverride": {
               "docs": undefined,
-              "type": "optional<SharedGcpCommerceProducerPriceSubscriptionTaxCategoryOverride>",
+              "type": "optional<literal<"TAX_CATEGORY_UNSPECIFIED">>",
             },
           },
-        },
-        "SharedGcpCommerceProducerPriceSubscriptionPeriod": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "ONE_YEAR",
-              "value": "ONE_YEAR",
-            },
-          ],
-        },
-        "SharedGcpCommerceProducerPriceSubscriptionTaxCategoryOverride": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "TAX_CATEGORY_UNSPECIFIED",
-              "value": "TAX_CATEGORY_UNSPECIFIED",
-            },
-          ],
         },
         "SharedGcpCommerceProducerPriceTier": {
           "docs": undefined,
@@ -3958,19 +3878,9 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "taxCategoryOverride": {
               "docs": undefined,
-              "type": "optional<SharedGcpCommerceProducerPriceUsageTaxCategoryOverride>",
+              "type": "optional<literal<"TAX_CATEGORY_UNSPECIFIED">>",
             },
           },
-        },
-        "SharedGcpCommerceProducerPriceUsageTaxCategoryOverride": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "TAX_CATEGORY_UNSPECIFIED",
-              "value": "TAX_CATEGORY_UNSPECIFIED",
-            },
-          ],
         },
         "SharedGcpCommerceProducerPurchaseMetric": {
           "docs": undefined,
@@ -4425,7 +4335,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "marketplace": {
               "docs": undefined,
-              "type": "optional<SharedGcpProductMarketplace>",
+              "type": "optional<literal<"marketplaces/google-cloud">>",
             },
             "name": {
               "docs": "In format of "projects/{project-number}/listings/{product-name}.endpoints.{provider-id}.cloud.goog"",
@@ -4441,16 +4351,6 @@ This field is present only if the product has usage-based billing configured.",
             },
           },
         },
-        "SharedGcpProductMarketplace": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MarketplacesGoogleCloud",
-              "value": "marketplaces/google-cloud",
-            },
-          ],
-        },
         "SharedGcpPurchasePlan": {
           "docs": undefined,
           "properties": {
@@ -4464,23 +4364,13 @@ This field is present only if the product has usage-based billing configured.",
             },
             "purchaseMode": {
               "docs": undefined,
-              "type": "optional<SharedGcpPurchasePlanPurchaseMode>",
+              "type": "optional<literal<"PURCHASE_MODE_PUBLIC">>",
             },
             "title": {
               "docs": "The Plan title",
               "type": "optional<string>",
             },
           },
-        },
-        "SharedGcpPurchasePlanPurchaseMode": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "PURCHASE_MODE_PUBLIC",
-              "value": "PURCHASE_MODE_PUBLIC",
-            },
-          ],
         },
         "SharedGcpUserInfo": {
           "docs": undefined,
@@ -4512,16 +4402,6 @@ This field is present only if the product has usage-based billing configured.",
               "docs": undefined,
               "name": "GCP",
               "value": "GCP",
-            },
-          ],
-        },
-        "SharedGetRevenueReportParamsService": {
-          "docs": "Required.",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MARKETPLACE",
-              "value": "MARKETPLACE",
             },
           ],
         },
@@ -4657,7 +4537,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "service": {
               "docs": undefined,
-              "type": "optional<SharedIdentityIntegrationService>",
+              "type": "optional<literal<"MARKETPLACE">>",
             },
             "status": {
               "docs": undefined,
@@ -4682,16 +4562,6 @@ This field is present only if the product has usage-based billing configured.",
               "docs": undefined,
               "name": "GCP",
               "value": "GCP",
-            },
-          ],
-        },
-        "SharedIdentityIntegrationService": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MARKETPLACE",
-              "value": "MARKETPLACE",
             },
           ],
         },
@@ -5278,19 +5148,9 @@ This field is present only if the product has usage-based billing configured.",
             },
             "type": {
               "docs": undefined,
-              "type": "optional<SharedOperationType>",
+              "type": "optional<shared.OperationType>",
             },
           },
-        },
-        "SharedOperationType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "OperationType_TemporalWorkflow",
-              "value": "TemporalWorkflow",
-            },
-          ],
         },
         "SharedPaymentInstallment": {
           "docs": undefined,
@@ -5678,16 +5538,6 @@ This field is present only if the product has usage-based billing configured.",
             },
           ],
         },
-        "SharedUpdateIntegrationParamsService": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MARKETPLACE",
-              "value": "MARKETPLACE",
-            },
-          ],
-        },
         "SharedUsageCount": {
           "docs": undefined,
           "properties": {
@@ -5831,7 +5681,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "service": {
               "docs": undefined,
-              "type": "optional<SharedWorkloadEntitlementService>",
+              "type": "optional<literal<"MARKETPLACE">>",
             },
             "startTime": {
               "docs": undefined,
@@ -5864,16 +5714,6 @@ This field is present only if the product has usage-based billing configured.",
               "docs": undefined,
               "name": "GCP",
               "value": "GCP",
-            },
-          ],
-        },
-        "SharedWorkloadEntitlementService": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MARKETPLACE",
-              "value": "MARKETPLACE",
             },
           ],
         },
@@ -5964,7 +5804,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "service": {
               "docs": undefined,
-              "type": "optional<SharedWorkloadEntitlementTermService>",
+              "type": "optional<literal<"MARKETPLACE">>",
             },
             "startTime": {
               "docs": undefined,
@@ -5997,16 +5837,6 @@ This field is present only if the product has usage-based billing configured.",
               "docs": undefined,
               "name": "GCP",
               "value": "GCP",
-            },
-          ],
-        },
-        "SharedWorkloadEntitlementTermService": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MARKETPLACE",
-              "value": "MARKETPLACE",
             },
           ],
         },
@@ -6075,7 +5905,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "service": {
               "docs": undefined,
-              "type": "optional<SharedWorkloadOfferService>",
+              "type": "optional<literal<"MARKETPLACE">>",
             },
             "status": {
               "docs": undefined,
@@ -6145,16 +5975,6 @@ This field is present only if the product has usage-based billing configured.",
               "docs": undefined,
               "name": "GCP",
               "value": "GCP",
-            },
-          ],
-        },
-        "SharedWorkloadOfferService": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MARKETPLACE",
-              "value": "MARKETPLACE",
             },
           ],
         },
@@ -6266,7 +6086,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "service": {
               "docs": undefined,
-              "type": "optional<SharedWorkloadProductService>",
+              "type": "optional<literal<"MARKETPLACE">>",
             },
             "status": {
               "docs": undefined,
@@ -6326,16 +6146,6 @@ This field is present only if the product has usage-based billing configured.",
               "docs": undefined,
               "name": "USAGE_BASED",
               "value": "USAGE_BASED",
-            },
-          ],
-        },
-        "SharedWorkloadProductService": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MARKETPLACE",
-              "value": "MARKETPLACE",
             },
           ],
         },
@@ -6648,6 +6458,7 @@ the same customer, dimension, and time, but a different quantity.",
           "docs": undefined,
           "type": "map<string, unknown>",
         },
+        "shared.OperationType": "literal<"TemporalWorkflow">",
       },
     },
     "api.yml": {
@@ -7148,10 +6959,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "docs": undefined,
                     "type": "root.SharedCreateIntegrationParamsPartner",
                   },
-                  "service": {
-                    "docs": undefined,
-                    "type": "root.SharedCreateIntegrationParamsService",
-                  },
+                  "service": "literal<"MARKETPLACE">",
                 },
               },
               "headers": undefined,
@@ -7283,7 +7091,7 @@ the same customer, dimension, and time, but a different quantity.",
                   "service": {
                     "docs": undefined,
                     "name": "sharedUpdateIntegrationParamsService",
-                    "type": "root.SharedUpdateIntegrationParamsService",
+                    "type": "literal<"MARKETPLACE">",
                   },
                 },
               },
@@ -8233,10 +8041,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "docs": undefined,
                     "type": "root.SharedRevenueReportType",
                   },
-                  "service": {
-                    "docs": "Required.",
-                    "type": "root.SharedGetRevenueReportParamsService",
-                  },
+                  "service": "literal<"MARKETPLACE">",
                 },
               },
               "headers": undefined,

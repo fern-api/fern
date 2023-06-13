@@ -20776,17 +20776,8 @@ You will retrieve all apps, where you are assigned as a contributor.",
         },
         "GeolocationFieldEditor": {
           "description": "",
-          "generatedName": "GeolocationFieldEditor",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "Map",
-              "nameOverride": undefined,
-              "value": "Map",
-            },
-          ],
+          "type": "literal",
+          "value": "Map",
         },
         "GeolocationFieldPropertiesDto": {
           "allOf": [],
@@ -27101,17 +27092,8 @@ You will retrieve all apps, where you are assigned as a contributor.",
         },
         "UIFieldEditor": {
           "description": "",
-          "generatedName": "UiFieldEditor",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "Separator",
-              "nameOverride": undefined,
-              "value": "Separator",
-            },
-          ],
+          "type": "literal",
+          "value": "Separator",
         },
         "UIFieldPropertiesDto": {
           "allOf": [],

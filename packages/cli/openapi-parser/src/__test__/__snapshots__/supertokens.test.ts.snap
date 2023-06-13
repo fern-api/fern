@@ -2338,17 +2338,8 @@ exports[`open api parser supertokens parse open api 1`] = `
                           "type": "optional",
                           "value": {
                             "description": undefined,
-                            "generatedName": "PasswordlessTryUseCodeResponsePasswordlessTryUseCodeResponseStatus",
-                            "nameOverride": undefined,
-                            "type": "enum",
-                            "values": [
-                              {
-                                "description": undefined,
-                                "generatedName": "RESTART_FLOW_ERROR",
-                                "nameOverride": undefined,
-                                "value": "RESTART_FLOW_ERROR",
-                              },
-                            ],
+                            "type": "literal",
+                            "value": "RESTART_FLOW_ERROR",
                           },
                         },
                       },
@@ -5106,17 +5097,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "type": "optional",
                     "value": {
                       "description": undefined,
-                      "generatedName": "EmailPasswordGetPasswordResetRequestMethod",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "token",
-                          "nameOverride": undefined,
-                          "value": "token",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "token",
                     },
                   },
                 },
@@ -6727,17 +6709,8 @@ Note that there is an invisible character at the end of the path, this was to av
                     "type": "optional",
                     "value": {
                       "description": undefined,
-                      "generatedName": "EmailVerificationVerifyTokenRemoveResponseStatus",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "OK",
-                          "nameOverride": undefined,
-                          "value": "OK",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "OK",
                     },
                   },
                 },
@@ -7003,17 +6976,8 @@ Note that there is an invisible character at the end of the path, this was to av
                     "type": "optional",
                     "value": {
                       "description": undefined,
-                      "generatedName": "EmailVerificationVerifyRequestMethod",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "token",
-                          "nameOverride": undefined,
-                          "value": "token",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "token",
                     },
                   },
                 },
@@ -7216,17 +7180,8 @@ Note that there is an invisible character at the end of the path, this was to av
                     "type": "optional",
                     "value": {
                       "description": undefined,
-                      "generatedName": "EmailVerificationVerifyRemoveResponseStatus",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "OK",
-                          "nameOverride": undefined,
-                          "value": "OK",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "OK",
                     },
                   },
                 },
@@ -12835,17 +12790,8 @@ e.g.:
                     "type": "optional",
                     "value": {
                       "description": undefined,
-                      "generatedName": "GetAllDashboardUsersResponseStatus",
-                      "nameOverride": undefined,
-                      "type": "enum",
-                      "values": [
-                        {
-                          "description": undefined,
-                          "generatedName": "OK",
-                          "nameOverride": undefined,
-                          "value": "OK",
-                        },
-                      ],
+                      "type": "literal",
+                      "value": "OK",
                     },
                   },
                 },
@@ -15676,17 +15622,8 @@ e.g.:
         },
         "createJWTAlgorithm": {
           "description": "The algorithm to use when creating the JWT.",
-          "generatedName": "CreateJwtAlgorithm",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "RS256",
-              "nameOverride": undefined,
-              "value": "RS256",
-            },
-          ],
+          "type": "literal",
+          "value": "RS256",
         },
         "createJWTPayload": {
           "description": "The payload of the JWT, should be a JSON object.",
@@ -15786,31 +15723,13 @@ e.g.:
         },
         "helloResponse": {
           "description": undefined,
-          "generatedName": "HelloResponse",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "Hello",
-              "nameOverride": undefined,
-              "value": "Hello",
-            },
-          ],
+          "type": "literal",
+          "value": "Hello",
         },
         "internalError": {
           "description": undefined,
-          "generatedName": "InternalError",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "InternalError",
-              "nameOverride": undefined,
-              "value": "Internal Error",
-            },
-          ],
+          "type": "literal",
+          "value": "Internal Error",
         },
         "invalidJSON": {
           "description": undefined,
@@ -15966,31 +15885,13 @@ e.g.:
         },
         "methodNotSupported": {
           "description": undefined,
-          "generatedName": "MethodNotSupported",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "MethodNotSupported",
-              "nameOverride": undefined,
-              "value": "Method not supported",
-            },
-          ],
+          "type": "literal",
+          "value": "Method not supported",
         },
         "notFound": {
           "description": undefined,
-          "generatedName": "NotFound",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "NotFound",
-              "nameOverride": undefined,
-              "value": "Not Found",
-            },
-          ],
+          "type": "literal",
+          "value": "Not Found",
         },
         "paginationToken": {
           "description": undefined,
@@ -16107,17 +16008,8 @@ e.g.:
         },
         "requestUnauthorised": {
           "description": undefined,
-          "generatedName": "RequestUnauthorised",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "InvalidApiKey",
-              "nameOverride": undefined,
-              "value": "Invalid API key",
-            },
-          ],
+          "type": "literal",
+          "value": "Invalid API key",
         },
         "role": {
           "description": undefined,
@@ -16202,17 +16094,8 @@ e.g.:
         },
         "statusOK": {
           "description": undefined,
-          "generatedName": "StatusOk",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "OK",
-              "nameOverride": undefined,
-              "value": "OK",
-            },
-          ],
+          "type": "literal",
+          "value": "OK",
         },
         "statusOKResponse": {
           "allOf": [],
@@ -16229,17 +16112,8 @@ e.g.:
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "generatedName": "StatusOkResponseStatus",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "OK",
-                      "nameOverride": undefined,
-                      "value": "OK",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "OK",
                 },
               },
             },
@@ -16427,31 +16301,13 @@ e.g.:
         },
         "tokenTheftResponse": {
           "description": undefined,
-          "generatedName": "TokenTheftResponse",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "TOKEN_THEFT_DETECTED",
-              "nameOverride": undefined,
-              "value": "TOKEN_THEFT_DETECTED",
-            },
-          ],
+          "type": "literal",
+          "value": "TOKEN_THEFT_DETECTED",
         },
         "tryRefreshTokenResponse": {
           "description": undefined,
-          "generatedName": "TryRefreshTokenResponse",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "TRY_REFRESH_TOKEN",
-              "nameOverride": undefined,
-              "value": "TRY_REFRESH_TOKEN",
-            },
-          ],
+          "type": "literal",
+          "value": "TRY_REFRESH_TOKEN",
         },
         "unauthorisedMessageResponse": {
           "allOf": [],
@@ -16498,17 +16354,8 @@ e.g.:
         },
         "unauthorisedResponse": {
           "description": undefined,
-          "generatedName": "UnauthorisedResponse",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "UNAUTHORISED",
-              "nameOverride": undefined,
-              "value": "UNAUTHORISED",
-            },
-          ],
+          "type": "literal",
+          "value": "UNAUTHORISED",
         },
         "unknownRoleResponse": {
           "allOf": [],
@@ -16525,17 +16372,8 @@ e.g.:
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "generatedName": "UnknownRoleResponseStatus",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "UNKNOWN_ROLE_ERROR",
-                      "nameOverride": undefined,
-                      "value": "UNKNOWN_ROLE_ERROR",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "UNKNOWN_ROLE_ERROR",
                 },
               },
             },
@@ -16557,17 +16395,8 @@ e.g.:
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "generatedName": "UnknownUserIdResponseStatus",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "UNKNOWN_USER_ID_ERROR",
-                      "nameOverride": undefined,
-                      "value": "UNKNOWN_USER_ID_ERROR",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "UNKNOWN_USER_ID_ERROR",
                 },
               },
             },
@@ -16715,17 +16544,8 @@ e.g.:
                 "type": "optional",
                 "value": {
                   "description": undefined,
-                  "generatedName": "WrongCredentialsResponseStatus",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "WRONG_CREDENTIALS_ERROR",
-                      "nameOverride": undefined,
-                      "value": "WRONG_CREDENTIALS_ERROR",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "WRONG_CREDENTIALS_ERROR",
                 },
               },
             },

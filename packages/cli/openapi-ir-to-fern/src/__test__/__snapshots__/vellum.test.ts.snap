@@ -97,7 +97,7 @@ Perform a search against a document index.
                     "type": "optional<SearchRequestOptionsRequest>",
                   },
                   "query": {
-                    "docs": "The query to search for. \`non-empty\` ",
+                    "docs": "The query to search for. <span style="white-space: nowrap">\`non-empty\`</span> ",
                     "type": "string",
                   },
                 },
@@ -164,7 +164,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "The human-readable name for the document. \`<= 150 characters\` ",
+              "docs": "The human-readable name for the document. <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
               "type": "string",
             },
           },
@@ -449,7 +449,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "ModelVersionExecConfigRead",
             },
             "external_id": {
-              "docs": "The unique id of this model version as it exists in the above provider's system. \`<= 250 characters\` ",
+              "docs": "The unique id of this model version as it exists in the above provider's system. <span style="white-space: nowrap">\`<= 250 characters\`</span> ",
               "type": "string",
             },
             "id": {
@@ -457,7 +457,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "string",
             },
             "label": {
-              "docs": "Human-friendly name for this model version. \`<= 150 characters\` ",
+              "docs": "Human-friendly name for this model version. <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
               "type": "string",
             },
             "model_type": {
@@ -694,7 +694,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "type": "optional<list<string>>",
             },
             "label": {
-              "docs": "Human-friendly name for this document. \`<= 150 characters\` ",
+              "docs": "Human-friendly name for this document. <span style="white-space: nowrap">\`<= 150 characters\`</span> ",
               "type": "string",
             },
             "last_uploaded_at": {
@@ -711,16 +711,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
-        "StatusEnum": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "ACTIVE",
-              "value": "ACTIVE",
-            },
-          ],
-        },
+        "StatusEnum": "literal<"ACTIVE">",
         "SubmitCompletionActualRequest": {
           "docs": undefined,
           "properties": {
@@ -855,7 +846,7 @@ Upload a document to be indexed and used for search.
                     "type": "optional<list<string>>",
                   },
                   "label": {
-                    "docs": "A human-friendly name for this document. Typically the filename. \`non-empty\` ",
+                    "docs": "A human-friendly name for this document. Typically the filename. <span style="white-space: nowrap">\`non-empty\`</span> ",
                     "type": "string",
                   },
                 },

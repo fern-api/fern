@@ -1,33 +1,35 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { DocsContext, DocsContextValue } from "./DocsContext";
 import { UrlPathResolverImpl } from "./url-path-resolver/UrlPathResolver";
 import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
+        pathname: string;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         basePath: string | undefined;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
+    pathname,
     docsDefinition,
     basePath = "/",
     children,
 }) => {
+    const router = useRouter();
     const urlPathResolver = useMemo(() => new UrlPathResolverImpl(docsDefinition), [docsDefinition]);
 
-    const location = useLocation();
     const resolvedPathFromUrl = useMemo(() => {
-        let path = location.pathname;
+        let path = pathname;
         path = path.replace(new RegExp(`^${basePath}`), "");
         path = removeLeadingAndTrailingSlashes(path);
         return urlPathResolver.resolveSlug(path);
-    }, [basePath, location.pathname, urlPathResolver]);
+    }, [basePath, pathname, urlPathResolver]);
 
     const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
     // handle redirects
@@ -83,14 +85,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug: selectedPath?.slug });
 
-    const navigate = useNavigate();
     const [justNavigated, setJustNavigated] = useState(false);
     const navigateToPath = useCallback(
         (slug: string) => {
             const path = urlPathResolver.resolveSlugOrThrow(slug);
             setJustNavigated(true);
             setSelectedPath(path);
-            navigate(path.slug);
+            void router.push(path.slug);
             navigateToPathListeners.invokeListeners(slug);
 
             const timeout = setTimeout(() => {
@@ -100,7 +101,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 clearTimeout(timeout);
             };
         },
-        [navigate, navigateToPathListeners, urlPathResolver]
+        [navigateToPathListeners, router, urlPathResolver]
     );
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug: selectedPath?.slug });
@@ -112,10 +113,10 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             }
             const path = urlPathResolver.resolveSlugOrThrow(slug);
             setSelectedPath(path);
-            navigate(slug, { replace: true });
+            void router.push(path.slug, undefined, { shallow: true });
             scrollToPathListeners.invokeListeners(slug);
         },
-        [justNavigated, navigate, scrollToPathListeners, selectedPath?.slug, urlPathResolver]
+        [justNavigated, router, scrollToPathListeners, selectedPath?.slug, urlPathResolver]
     );
 
     const contextValue = useCallback(

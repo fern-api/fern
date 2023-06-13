@@ -11045,17 +11045,8 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
-                "generatedName": "ContractToCreateOngoingTimeBasedType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "ongoing_time_based",
-                    "nameOverride": undefined,
-                    "value": "ongoing_time_based",
-                  },
-                ],
+                "type": "literal",
+                "value": "ongoing_time_based",
               },
             },
           ],
@@ -11112,17 +11103,8 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
-                "generatedName": "ContractToCreatePayAsYouGoTimeBasedType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "pay_as_you_go_time_based",
-                    "nameOverride": undefined,
-                    "value": "pay_as_you_go_time_based",
-                  },
-                ],
+                "type": "literal",
+                "value": "pay_as_you_go_time_based",
               },
             },
           ],
@@ -11162,17 +11144,8 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
-                "generatedName": "ContractToCreatePaygMilestonesType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "payg_milestones",
-                    "nameOverride": undefined,
-                    "value": "payg_milestones",
-                  },
-                ],
+                "type": "literal",
+                "value": "payg_milestones",
               },
             },
           ],
@@ -11212,17 +11185,8 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
-                "generatedName": "ContractToCreatePaygTasksType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "payg_tasks",
-                    "nameOverride": undefined,
-                    "value": "payg_tasks",
-                  },
-                ],
+                "type": "literal",
+                "value": "payg_tasks",
               },
             },
           ],
@@ -17923,17 +17887,8 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "employment_type",
               "schema": {
                 "description": undefined,
-                "generatedName": "HrisContractFullTimeEmploymentType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "FULL_TIME",
-                    "nameOverride": undefined,
-                    "value": "FULL_TIME",
-                  },
-                ],
+                "type": "literal",
+                "value": "FULL_TIME",
               },
             },
           ],
@@ -17960,17 +17915,8 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "employment_type",
               "schema": {
                 "description": undefined,
-                "generatedName": "HrisContractPartTimeEmploymentType",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "PART_TIME",
-                    "nameOverride": undefined,
-                    "value": "PART_TIME",
-                  },
-                ],
+                "type": "literal",
+                "value": "PART_TIME",
               },
             },
             {
@@ -21729,17 +21675,8 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "OffCyclePaymentTypeEnum": {
           "description": "Type for Off-cycle payments",
-          "generatedName": "OffCyclePaymentTypeEnum",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "offcycle",
-              "nameOverride": undefined,
-              "value": "offcycle",
-            },
-          ],
+          "type": "literal",
+          "value": "offcycle",
         },
         "OrganizationList": {
           "description": undefined,
@@ -26836,17 +26773,8 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetTypeEnum": {
           "description": "Type for timesheet",
-          "generatedName": "TimesheetTypeEnum",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "work",
-              "nameOverride": undefined,
-              "value": "work",
-            },
-          ],
+          "type": "literal",
+          "value": "work",
         },
         "TimesheetTypeEnumList": {
           "description": undefined,

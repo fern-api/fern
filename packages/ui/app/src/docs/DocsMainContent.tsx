@@ -1,15 +1,12 @@
 import { NonIdealState } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
-import { useLocation } from "react-router-dom";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { ApiPage } from "../api-page/ApiPage";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MarkdownPage } from "../markdown-page/MarkdownPage";
-import { RedirectToFirstApiItem } from "./RedirectToFirstApiItem";
 import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
 
 export const DocsMainContent: React.FC = () => {
-    const location = useLocation();
     const { resolvedPathFromUrl, docsDefinition, basePath } = useDocsContext();
 
     if (resolvedPathFromUrl == null) {
@@ -28,7 +25,7 @@ export const DocsMainContent: React.FC = () => {
                     apiSection={resolvedPathFromUrl.apiSection}
                     apiSlug={resolvedPathFromUrl.slug}
                 >
-                    <RedirectToFirstApiItem />
+                    <ApiPage />
                 </ApiDefinitionContextProvider>
             );
         case "clientLibraries":

@@ -13548,17 +13548,8 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "description": "Key management method to use for this wallet.",
-                  "generatedName": "CreateWalletRequestKeyManagementMode",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "managed",
-                      "nameOverride": undefined,
-                      "value": "managed",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "managed",
                 },
               },
             },
@@ -19651,17 +19642,8 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "description": "Revocation registry type (specify CL_ACCUM)",
-                  "generatedName": "IndyRevRegDefRevocDefType",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "CL_ACCUM",
-                      "nameOverride": undefined,
-                      "value": "CL_ACCUM",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "CL_ACCUM",
                 },
               },
             },
@@ -21088,17 +21070,8 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "description": "Revocation registry type (specify CL_ACCUM)",
-                  "generatedName": "IssuerRevRegRecordRevocDefType",
-                  "nameOverride": undefined,
-                  "type": "enum",
-                  "values": [
-                    {
-                      "description": undefined,
-                      "generatedName": "CL_ACCUM",
-                      "nameOverride": undefined,
-                      "value": "CL_ACCUM",
-                    },
-                  ],
+                  "type": "literal",
+                  "value": "CL_ACCUM",
                 },
               },
             },

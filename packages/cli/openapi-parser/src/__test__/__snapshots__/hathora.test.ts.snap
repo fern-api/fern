@@ -3421,17 +3421,8 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "status",
               "schema": {
                 "description": undefined,
-                "generatedName": "ActiveConnectionInfoStatus",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "active",
-                    "nameOverride": undefined,
-                    "value": "active",
-                  },
-                ],
+                "type": "literal",
+                "value": "active",
               },
             },
             {
@@ -5276,17 +5267,8 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "status",
               "schema": {
                 "description": undefined,
-                "generatedName": "StartingConnectionInfoStatus",
-                "nameOverride": undefined,
-                "type": "enum",
-                "values": [
-                  {
-                    "description": undefined,
-                    "generatedName": "starting",
-                    "nameOverride": undefined,
-                    "value": "starting",
-                  },
-                ],
+                "type": "literal",
+                "value": "starting",
               },
             },
             {

@@ -747,16 +747,6 @@ exports[`open api parser aries simple 1`] = `
           "docs": "Optional metadata to attach to the connection created with the invitation",
           "properties": {},
         },
-        "CreateWalletRequestKeyManagementMode": {
-          "docs": "Key management method to use for this wallet.",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "managed",
-              "value": "managed",
-            },
-          ],
-        },
         "CreateWalletRequestWalletDispatchType": {
           "docs": "Webhook target dispatch type for this wallet.             default - Dispatch only to webhooks associated with this wallet.             base - Dispatch only to webhooks associated with the base wallet.             both - Dispatch to both webhook targets.",
           "enum": [
@@ -3005,8 +2995,8 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "revocDefType": {
-              "docs": "Revocation registry type (specify CL_ACCUM)",
-              "type": "optional<IndyRevRegDefRevocDefType>",
+              "docs": undefined,
+              "type": "optional<literal<"CL_ACCUM">>",
             },
             "tag": {
               "docs": "Revocation registry tag",
@@ -3021,16 +3011,6 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
           },
-        },
-        "IndyRevRegDefRevocDefType": {
-          "docs": "Revocation registry type (specify CL_ACCUM)",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "CL_ACCUM",
-              "value": "CL_ACCUM",
-            },
-          ],
         },
         "IndyRevRegDefValue": {
           "docs": undefined,
@@ -3345,8 +3325,8 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
             "revoc_def_type": {
-              "docs": "Revocation registry type (specify CL_ACCUM)",
-              "type": "optional<IssuerRevRegRecordRevocDefType>",
+              "docs": undefined,
+              "type": "optional<literal<"CL_ACCUM">>",
             },
             "revoc_reg_def": {
               "docs": undefined,
@@ -3385,16 +3365,6 @@ exports[`open api parser aries simple 1`] = `
               "type": "optional<string>",
             },
           },
-        },
-        "IssuerRevRegRecordRevocDefType": {
-          "docs": "Revocation registry type (specify CL_ACCUM)",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "CL_ACCUM",
-              "value": "CL_ACCUM",
-            },
-          ],
         },
         "IssuerRevRegRecordRevocRegDef": {
           "docs": "Revocation registry definition",
@@ -9696,8 +9666,8 @@ exports[`open api parser aries simple 1`] = `
                     "type": "optional<string>",
                   },
                   "key_management_mode": {
-                    "docs": "Key management method to use for this wallet.",
-                    "type": "optional<root.CreateWalletRequestKeyManagementMode>",
+                    "docs": undefined,
+                    "type": "optional<literal<"managed">>",
                   },
                   "label": {
                     "docs": "Label for this wallet. This label is publicized            (self-attested) to other agents as part of forming a connection.",

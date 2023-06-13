@@ -12,6 +12,7 @@ import { convertAdditionalProperties, wrapMap } from "./schema/convertAdditional
 import { convertArray } from "./schema/convertArray";
 import { convertDiscriminatedOneOf, convertDiscriminatedOneOfWithVariants } from "./schema/convertDiscriminatedOneOf";
 import { convertEnum } from "./schema/convertEnum";
+import { convertLiteral } from "./schema/convertLiteral";
 import { convertNumber } from "./schema/convertNumber";
 import { convertObject } from "./schema/convertObject";
 import { convertUndiscriminatedOneOf } from "./schema/convertUndiscriminatedOneOf";
@@ -84,6 +85,15 @@ export function convertSchemaObject(
                 description,
             });
         }
+
+        if (schema.enum.length === 1 && schema.enum[0] != null) {
+            return convertLiteral({
+                wrapAsNullable,
+                value: schema.enum[0],
+                description,
+            });
+        }
+
         return convertEnum({
             nameOverride,
             generatedName,
@@ -241,6 +251,19 @@ export function convertSchemaObject(
 
     // treat anyOf as undiscrminated unions
     if (schema.anyOf != null && schema.anyOf.length > 0) {
+        if (schema.anyOf.length === 1 && schema.anyOf[0] != null) {
+            const convertedSchema = convertSchema(schema.anyOf[0], wrapAsNullable, context, breadcrumbs);
+            return maybeInjectDescription(convertedSchema, description);
+        }
+
+        if (schema.anyOf.length === 2 && schema.anyOf[0] != null && schema.anyOf[1] != null) {
+            if (!isReferenceObject(schema.anyOf[0]) && (schema.anyOf[0].type as unknown) === "null") {
+                return convertSchema(schema.anyOf[1], true, context, breadcrumbs);
+            } else if (!isReferenceObject(schema.anyOf[1]) && (schema.anyOf[1].type as unknown) === "null") {
+                return convertSchema(schema.anyOf[0], true, context, breadcrumbs);
+            }
+        }
+
         return convertUndiscriminatedOneOf({
             nameOverride,
             generatedName,

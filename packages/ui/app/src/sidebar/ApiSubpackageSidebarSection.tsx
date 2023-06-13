@@ -36,12 +36,13 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         [contentsHeight]
     );
 
+    const isSelected = selectedPath != null && selectedPath.slug === slug;
+    const isChildSelected = selectedPath != null && selectedPath.slug.startsWith(`${slug}/`);
+    const isOpen = isSelected || isChildSelected || contentsHeight == null;
+
     if (!hasEndpoints) {
         return null;
     }
-
-    const isSelected = selectedPath != null && selectedPath.slug.startsWith(slug);
-    const isOpen = isSelected || contentsHeight == null;
 
     return (
         <SidebarGroup

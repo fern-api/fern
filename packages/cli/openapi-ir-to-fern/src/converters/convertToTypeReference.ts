@@ -96,8 +96,9 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         _unknown: () => [],
     });
 
-    const suffixMarkdown = docsSuffix.map((prefix) => "`" + prefix + "`").join(" ");
-
+    const suffixMarkdown = docsSuffix
+        .map((prefix) => `<span style="white-space: nowrap">\`${prefix}\`</span>`)
+        .join(" ");
     let docs = undefined;
     if (primitiveSchema.description != null && docsSuffix.length > 0) {
         docs = `${primitiveSchema.description} ${suffixMarkdown} `;

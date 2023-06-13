@@ -5,7 +5,7 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"#supports-color@npm:supports-color@9.2.2, supports-color@npm:*":
+"#supports-color@npm:supports-color@9.2.2":
   version: 9.2.2
   resolution: "supports-color@npm:9.2.2"
   checksum: 976d84877402fc38c1d43b1fde20b0a8dc0283273f21cfebe4ff7507d27543cdfbeec7db108a96b82d694465f06d64e8577562b05d0520b41710088e0a33cc50
@@ -3732,7 +3732,6 @@ __metadata:
     react-icons: ^4.9.0
     react-intersection-observer: ^9.4.3
     react-markdown: ^8.0.5
-    react-router-dom: ^6.4.3
     react-syntax-highlighter: ^15.5.0
     rehype-raw: ^6.1.1
     remark-gfm: ^3.0.1
@@ -15922,7 +15921,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"supports-color@npm:^8.0.0":
+"supports-color@npm:^8.0.0, supports-color@npm:^8.1.1":
   version: 8.1.1
   resolution: "supports-color@npm:8.1.1"
   dependencies:
