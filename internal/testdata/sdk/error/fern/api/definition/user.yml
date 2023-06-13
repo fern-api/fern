@@ -1,0 +1,18 @@
+# Simple test for generating client/server errors.
+errors:
+  UserNotFoundError:
+    status-code: 404
+    type: UserNotFoundErrorBody
+
+  NotImplementedError:
+    status-code: 501
+    type: string
+
+  TeapotError:
+    status-code: 418
+    type: list<string>
+
+types:
+  UserNotFoundErrorBody:
+    properties:
+      requestedUserId: string
