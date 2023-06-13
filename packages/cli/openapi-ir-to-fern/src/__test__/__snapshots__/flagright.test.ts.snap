@@ -186,7 +186,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "optional<BusinessOptional>",
                   },
                   "userId": {
-                    "docs": "Transaction ID the event pertains to \`non-empty\` ",
+                    "docs": "Transaction ID the event pertains to <span style="white-space: nowrap">\`non-empty\`</span> ",
                     "type": "string",
                   },
                 },
@@ -344,7 +344,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "double",
                   },
                   "transactionId": {
-                    "docs": "Transaction ID the event pertains to \`non-empty\` ",
+                    "docs": "Transaction ID the event pertains to <span style="white-space: nowrap">\`non-empty\`</span> ",
                     "type": "string",
                   },
                   "transactionState": {
@@ -420,7 +420,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "optional<UserOptional>",
                   },
                   "userId": {
-                    "docs": "Transaction ID the event pertains to \`non-empty\` ",
+                    "docs": "Transaction ID the event pertains to <span style="white-space: nowrap">\`non-empty\`</span> ",
                     "type": "string",
                   },
                 },
@@ -437,11 +437,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
       },
       "types": {
+        "ACHPaymentMethod": "literal<"ACH">",
         "AchDetails": {
           "docs": "Model for ACH payment method",
           "properties": {
             "accountNumber": {
-              "docs": "Bank account number of the individual \`non-empty\` ",
+              "docs": "Bank account number of the individual <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "bankAddress": {
@@ -449,7 +450,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<Address>",
             },
             "bankName": {
-              "docs": "Name of the bank \`non-empty\` ",
+              "docs": "Name of the bank <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "beneficiaryName": {
@@ -458,27 +459,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
             "method": {
               "docs": undefined,
-              "type": "AchPaymentMethod",
+              "type": "ACHPaymentMethod",
             },
             "name": {
               "docs": "Name of the account holder",
               "type": "optional<string>",
             },
             "routingNumber": {
-              "docs": "Routing number of the bank \`non-empty\` ",
+              "docs": "Routing number of the bank <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
           },
-        },
-        "AchPaymentMethod": {
-          "docs": "Classify the method of payment as "ACH" for ACHDetails",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "ACH",
-              "value": "ACH",
-            },
-          ],
         },
         "AcquisitionChannel": {
           "docs": "Model for User acquisition channel",
@@ -523,19 +514,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "list<unknown>",
             },
             "city": {
-              "docs": "City of the user's residence address \`non-empty\` ",
+              "docs": "City of the user's residence address <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "country": {
-              "docs": "User's country of residence \`non-empty\` ",
+              "docs": "User's country of residence <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "postcode": {
-              "docs": "Post code of the user's residence address \`non-empty\` ",
+              "docs": "Post code of the user's residence address <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "state": {
-              "docs": "State of the user's residence address \`non-empty\` ",
+              "docs": "State of the user's residence address <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "tags": {
@@ -622,7 +613,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "double",
             },
             "userId": {
-              "docs": "Unique user ID for the user \`non-empty\` ",
+              "docs": "Unique user ID for the user <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -743,7 +734,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for business user risk score response",
           "properties": {
             "userId": {
-              "docs": "user ID the risk score pertains to \`non-empty\` ",
+              "docs": "user ID the risk score pertains to <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -784,7 +775,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<CardExpiry>",
             },
             "cardFingerprint": {
-              "docs": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider \`non-empty\` ",
+              "docs": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "cardFunding": {
@@ -796,7 +787,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<CountryCode>",
             },
             "cardLast4Digits": {
-              "docs": "Last 4 digits of Card \`<= 4 characters\` ",
+              "docs": "Last 4 digits of Card <span style="white-space: nowrap">\`<= 4 characters\`</span> ",
               "type": "optional<string>",
             },
             "cardType": {
@@ -820,7 +811,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<string>",
             },
             "transactionReferenceField": {
-              "docs": "Reference for the transaction \`non-empty\` ",
+              "docs": "Reference for the transaction <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
           },
@@ -929,7 +920,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<string>",
             },
             "country": {
-              "docs": "\`<= 2 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 2 characters\`</span>",
               "type": "optional<string>",
             },
             "id": {
@@ -946,17 +937,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
-        "CardPaymentMethod": {
-          "docs": "Classify the method of payment as "Card" for CardDetails
-",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "CARD",
-              "value": "CARD",
-            },
-          ],
-        },
+        "CardPaymentMethod": "literal<"CARD">",
         "CaseClosedDetails": {
           "docs": undefined,
           "properties": {
@@ -1014,7 +995,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "double",
             },
             "transactionId": {
-              "docs": "Transaction ID the case pertains to \`non-empty\` ",
+              "docs": "Transaction ID the case pertains to <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "userId": {
@@ -1131,16 +1112,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
         },
-        "CheckPaymentMethod": {
-          "docs": "Classify the method of payment as "CHECK" for CheckDetails",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "CHECK",
-              "value": "CHECK",
-            },
-          ],
-        },
+        "CheckPaymentMethod": "literal<"CHECK">",
         "CompanyFinancialDetails": {
           "docs": "Model for business user company financial details",
           "properties": {
@@ -1166,7 +1138,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<list<string>>",
             },
             "legalName": {
-              "docs": "Legal name of the company \`non-empty\` ",
+              "docs": "Legal name of the company <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "mainProductsServicesSold": {
@@ -1238,7 +1210,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "CountryCode",
             },
             "registrationIdentifier": {
-              "docs": "Commercial registry registration number for the company in its registration country \`non-empty\` ",
+              "docs": "Commercial registry registration number for the company in its registration country <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "tags": {
@@ -1255,15 +1227,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for a generic consumer name",
           "properties": {
             "firstName": {
-              "docs": "First name of the user \`non-empty\` ",
+              "docs": "First name of the user <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "lastName": {
-              "docs": "Last name of the user \`non-empty\` ",
+              "docs": "Last name of the user <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "middleName": {
-              "docs": "Middle name of the user \`non-empty\` ",
+              "docs": "Middle name of the user <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
           },
@@ -1272,7 +1244,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for consumer user risk score response",
           "properties": {
             "userId": {
-              "docs": "user ID the risk score pertains to \`non-empty\` ",
+              "docs": "user ID the risk score pertains to <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -3933,7 +3905,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for device data",
           "properties": {
             "appVersion": {
-              "docs": "The version of the app your user is using on their device at a given timestamp for an event or transaction \`non-empty\` ",
+              "docs": "The version of the app your user is using on their device at a given timestamp for an event or transaction <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "batteryLevel": {
@@ -3941,7 +3913,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<double>",
             },
             "deviceIdentifier": {
-              "docs": "Device identifier number \`non-empty\` ",
+              "docs": "Device identifier number <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "deviceLatitude": {
@@ -3953,23 +3925,23 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<double>",
             },
             "deviceMaker": {
-              "docs": "The maker of the device at a given timestamp for an event or transaction \`non-empty\` ",
+              "docs": "The maker of the device at a given timestamp for an event or transaction <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "deviceModel": {
-              "docs": "The model of the device at a given timestamp for an event or transaction \`non-empty\` ",
+              "docs": "The model of the device at a given timestamp for an event or transaction <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "deviceYear": {
-              "docs": "The year the device was manufactured at a given timestamp for an event or transaction \`non-empty\` ",
+              "docs": "The year the device was manufactured at a given timestamp for an event or transaction <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "ipAddress": {
-              "docs": "IP address of the device at a given timestamp for an event or transaction \`non-empty\` ",
+              "docs": "IP address of the device at a given timestamp for an event or transaction <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "operatingSystem": {
-              "docs": "Operating system of the device at a given timestamp for an event or transaction \`non-empty\` ",
+              "docs": "Operating system of the device at a given timestamp for an event or transaction <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "vpnUsed": {
@@ -3994,7 +3966,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "RuleAction",
             },
             "ruleDescription": {
-              "docs": "Description of the rule \`non-empty\` ",
+              "docs": "Description of the rule <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "ruleHit": {
@@ -4006,7 +3978,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<RuleHitMeta>",
             },
             "ruleId": {
-              "docs": "Unique rule identifier \`non-empty\` ",
+              "docs": "Unique rule identifier <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "ruleInstanceId": {
@@ -4014,7 +3986,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "string",
             },
             "ruleName": {
-              "docs": "Name of the rule \`non-empty\` ",
+              "docs": "Name of the rule <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -4027,15 +3999,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "RuleFailureException",
             },
             "ruleDescription": {
-              "docs": "Description of the rule \`non-empty\` ",
+              "docs": "Description of the rule <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "ruleId": {
-              "docs": "Unique rule identifier \`non-empty\` ",
+              "docs": "Unique rule identifier <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "ruleName": {
-              "docs": "Name of the rule \`non-empty\` ",
+              "docs": "Name of the rule <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -4053,21 +4025,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
-        "GeneralBankAccountPaymentMethod": {
-          "docs": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "GENERIC_BANK_ACCOUNT",
-              "value": "GENERIC_BANK_ACCOUNT",
-            },
-          ],
-        },
+        "GeneralBankAccountPaymentMethod": "literal<"GENERIC_BANK_ACCOUNT">",
         "GenericBankAccountDetails": {
           "docs": "Model for any generic bank account",
           "properties": {
             "accountNumber": {
-              "docs": "Bank account number \`non-empty\` ",
+              "docs": "Bank account number <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "accountType": {
@@ -4083,7 +4046,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<string>",
             },
             "bankName": {
-              "docs": "Name of the bank \`non-empty\` ",
+              "docs": "Name of the bank <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "method": {
@@ -4120,7 +4083,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "RuleAction",
             },
             "ruleDescription": {
-              "docs": "Description of the rule \`non-empty\` ",
+              "docs": "Description of the rule <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "ruleHitMeta": {
@@ -4128,7 +4091,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<RuleHitMeta>",
             },
             "ruleId": {
-              "docs": "Unique rule identifier \`non-empty\` ",
+              "docs": "Unique rule identifier <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "ruleInstanceId": {
@@ -4136,16 +4099,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "string",
             },
             "ruleName": {
-              "docs": "Name of the rule \`non-empty\` ",
+              "docs": "Name of the rule <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
         },
+        "IBANPaymentMethod": "literal<"IBAN">",
         "IbanDetails": {
           "docs": "Standardized model for Bank Details",
           "properties": {
             "BIC": {
-              "docs": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc. \`non-empty\` ",
+              "docs": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc. <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "IBAN": {
@@ -4161,7 +4125,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<string>",
             },
             "bankName": {
-              "docs": "Name of the bank \`non-empty\` ",
+              "docs": "Name of the bank <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "country": {
@@ -4170,7 +4134,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
             "method": {
               "docs": undefined,
-              "type": "IbanPaymentMethod",
+              "type": "IBANPaymentMethod",
             },
             "name": {
               "docs": "Name of the bank account holder",
@@ -4185,17 +4149,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<Tag>",
             },
           },
-        },
-        "IbanPaymentMethod": {
-          "docs": "Classify the method of payment as "IBAN" for IBANDetails
-",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "IBAN",
-              "value": "IBAN",
-            },
-          ],
         },
         "KycStatus": {
           "docs": undefined,
@@ -4256,11 +4209,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<double>",
             },
             "documentNumber": {
-              "docs": "User's unique identity document number such as passport number \`non-empty\` ",
+              "docs": "User's unique identity document number such as passport number <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "documentType": {
-              "docs": "User's identity document type such as passport, national ID etc. \`non-empty\` ",
+              "docs": "User's identity document type such as passport, national ID etc. <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "nameOnDocument": {
@@ -4492,7 +4445,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for Mpesa payment method",
           "properties": {
             "businessShortCode": {
-              "docs": "Business code \`non-empty\` ",
+              "docs": "Business code <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "method": {
@@ -4539,16 +4492,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           ],
         },
-        "MpesaPaymentMethod": {
-          "docs": "Classify the method of payment as "Mpesa" for MpesaDetails",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "MPESA",
-              "value": "MPESA",
-            },
-          ],
-        },
+        "MpesaPaymentMethod": "literal<"MPESA">",
         "PaymentMethod": {
           "docs": undefined,
           "enum": [
@@ -4607,7 +4551,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "boolean",
             },
             "pepCountry": {
-              "docs": "\`<= 2 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 2 characters\`</span>",
               "type": "optional<string>",
             },
           },
@@ -4751,11 +4695,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": undefined,
           "properties": {
             "exceptionDescription": {
-              "docs": "Name of the rule \`non-empty\` ",
+              "docs": "Name of the rule <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "exceptionName": {
-              "docs": "Unique rule identifier \`non-empty\` ",
+              "docs": "Unique rule identifier <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -4895,6 +4839,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "SWIFTPaymentMethod": "literal<"SWIFT">",
         "SanctionsDetails": {
           "docs": undefined,
           "properties": {
@@ -4961,7 +4906,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "docs": "Model for SWIFT payment method",
           "properties": {
             "accountNumber": {
-              "docs": "Account number \`non-empty\` ",
+              "docs": "Account number <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "accountType": {
@@ -4973,12 +4918,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<Address>",
             },
             "bankName": {
-              "docs": "Name of the bank \`non-empty\` ",
+              "docs": "Name of the bank <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "method": {
               "docs": undefined,
-              "type": "SwiftPaymentMethod",
+              "type": "SWIFTPaymentMethod",
             },
             "name": {
               "docs": "Name of the account holder",
@@ -4989,30 +4934,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<string>",
             },
             "swiftCode": {
-              "docs": "SWIFT code of the financial institution \`non-empty\` ",
+              "docs": "SWIFT code of the financial institution <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
           },
-        },
-        "SwiftPaymentMethod": {
-          "docs": "Classify the method of payment as "SWIFT" for SWIFTDetails",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "SWIFT",
-              "value": "SWIFT",
-            },
-          ],
         },
         "Tag": {
           "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
           "properties": {
             "key": {
-              "docs": "Key value when you are creating a custom variable \`non-empty\` ",
+              "docs": "Key value when you are creating a custom variable <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "value": {
-              "docs": "Value for a given key when you are creating a custom variable \`non-empty\` ",
+              "docs": "Value for a given key when you are creating a custom variable <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -5079,7 +5014,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "double",
             },
             "transactionId": {
-              "docs": "Unique transaction identifier \`non-empty\` ",
+              "docs": "Unique transaction identifier <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
             "type": {
@@ -5340,7 +5275,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<boolean>",
             },
             "reference": {
-              "docs": "Reference field for the transaction indicating the purpose of the transaction etc. \`non-empty\` ",
+              "docs": "Reference field for the transaction indicating the purpose of the transaction etc. <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "relatedTransactionIds": {
@@ -5457,40 +5392,31 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
+        "UPIPaymentMethod": "literal<"UPI">",
         "UpiDetails": {
           "docs": "Model for UPI payment method",
           "properties": {
             "bankProvider": {
-              "docs": "Bank provider name \`non-empty\` ",
+              "docs": "Bank provider name <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "interfaceProvider": {
-              "docs": "Interface provider name \`non-empty\` ",
+              "docs": "Interface provider name <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "method": {
               "docs": undefined,
-              "type": "UpiPaymentMethod",
+              "type": "UPIPaymentMethod",
             },
             "name": {
               "docs": "Name of the account holder",
               "type": "optional<string>",
             },
             "upiID": {
-              "docs": "UPI Id number \`non-empty\` ",
+              "docs": "UPI Id number <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
-        },
-        "UpiPaymentMethod": {
-          "docs": "Classify the method of payment as "UPI" for UPIDetails",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "UPI",
-              "value": "UPI",
-            },
-          ],
         },
         "User": {
           "docs": "Model for User details",
@@ -5512,7 +5438,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<UserDetails>",
             },
             "userId": {
-              "docs": "Unique user ID \`non-empty\` ",
+              "docs": "Unique user ID <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
             },
           },
@@ -5761,7 +5687,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "optional<Tag>",
             },
             "walletId": {
-              "docs": "Unique ID of the wallet \`non-empty\` ",
+              "docs": "Unique ID of the wallet <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
             "walletPhoneNumber": {
@@ -5774,16 +5700,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
         },
-        "WalletPaymentMethod": {
-          "docs": "Classify the method of payment as "Wallet" for WalletDetails",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "WALLET",
-              "value": "WALLET",
-            },
-          ],
-        },
+        "WalletPaymentMethod": "literal<"WALLET">",
         "WebhookEvent": {
           "docs": undefined,
           "properties": {

@@ -940,17 +940,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ACHPaymentMethod": {
           "description": "Classify the method of payment as "ACH" for ACHDetails",
-          "generatedName": "AchPaymentMethod",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "ACH",
-              "nameOverride": undefined,
-              "value": "ACH",
-            },
-          ],
+          "type": "literal",
+          "value": "ACH",
         },
         "AcquisitionChannel": {
           "description": "Model for User acquisition channel",
@@ -2470,17 +2461,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "CardPaymentMethod": {
           "description": "Classify the method of payment as "Card" for CardDetails
 ",
-          "generatedName": "CardPaymentMethod",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "CARD",
-              "nameOverride": undefined,
-              "value": "CARD",
-            },
-          ],
+          "type": "literal",
+          "value": "CARD",
         },
         "CaseClosedDetails": {
           "allOf": [],
@@ -2948,17 +2930,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CheckPaymentMethod": {
           "description": "Classify the method of payment as "CHECK" for CheckDetails",
-          "generatedName": "CheckPaymentMethod",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "CHECK",
-              "nameOverride": undefined,
-              "value": "CHECK",
-            },
-          ],
+          "type": "literal",
+          "value": "CHECK",
         },
         "CompanyFinancialDetails": {
           "allOf": [],
@@ -7223,17 +7196,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "GeneralBankAccountPaymentMethod": {
           "description": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
-          "generatedName": "GeneralBankAccountPaymentMethod",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "GENERIC_BANK_ACCOUNT",
-              "nameOverride": undefined,
-              "value": "GENERIC_BANK_ACCOUNT",
-            },
-          ],
+          "type": "literal",
+          "value": "GENERIC_BANK_ACCOUNT",
         },
         "GenericBankAccountDetails": {
           "allOf": [],
@@ -7717,17 +7681,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "IBANPaymentMethod": {
           "description": "Classify the method of payment as "IBAN" for IBANDetails
 ",
-          "generatedName": "IbanPaymentMethod",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "IBAN",
-              "nameOverride": undefined,
-              "value": "IBAN",
-            },
-          ],
+          "type": "literal",
+          "value": "IBAN",
         },
         "KYCStatus": {
           "description": undefined,
@@ -8581,17 +8536,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "MpesaPaymentMethod": {
           "description": "Classify the method of payment as "Mpesa" for MpesaDetails",
-          "generatedName": "MpesaPaymentMethod",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "MPESA",
-              "nameOverride": undefined,
-              "value": "MPESA",
-            },
-          ],
+          "type": "literal",
+          "value": "MPESA",
         },
         "PEPStatus": {
           "allOf": [],
@@ -9344,17 +9290,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "SWIFTPaymentMethod": {
           "description": "Classify the method of payment as "SWIFT" for SWIFTDetails",
-          "generatedName": "SwiftPaymentMethod",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "SWIFT",
-              "nameOverride": undefined,
-              "value": "SWIFT",
-            },
-          ],
+          "type": "literal",
+          "value": "SWIFT",
         },
         "SanctionsDetails": {
           "allOf": [],
@@ -10972,17 +10909,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "UPIPaymentMethod": {
           "description": "Classify the method of payment as "UPI" for UPIDetails",
-          "generatedName": "UpiPaymentMethod",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "UPI",
-              "nameOverride": undefined,
-              "value": "UPI",
-            },
-          ],
+          "type": "literal",
+          "value": "UPI",
         },
         "User": {
           "allOf": [
@@ -11760,17 +11688,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "WalletPaymentMethod": {
           "description": "Classify the method of payment as "Wallet" for WalletDetails",
-          "generatedName": "WalletPaymentMethod",
-          "nameOverride": undefined,
-          "type": "enum",
-          "values": [
-            {
-              "description": undefined,
-              "generatedName": "WALLET",
-              "nameOverride": undefined,
-              "value": "WALLET",
-            },
-          ],
+          "type": "literal",
+          "value": "WALLET",
         },
         "WebhookEvent": {
           "allOf": [],
