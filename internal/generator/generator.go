@@ -95,7 +95,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 	switch mode {
 	case ModeModel:
 		for _, irType := range ir.Types {
-			fileInfo := fileInfoForTypeDeclaration(ir.ApiName, irType)
+			fileInfo := fileInfoForType(ir.ApiName, irType.Name.FernFilepath, irType.Name.Name)
 			writer := newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
@@ -116,7 +116,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 			return nil, errors.New("this generator only supports the status-code error discrimination strategy")
 		}
 		for _, irError := range ir.Errors {
-			fileInfo := fileInfoForErrorDeclaration(ir.ApiName, irError)
+			fileInfo := fileInfoForType(ir.ApiName, irError.Name.FernFilepath, irError.Name.Name)
 			writer := newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
@@ -133,6 +133,29 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 			files = append(files, file)
 		}
 		for _, irService := range ir.Services {
+			// Generate the in-lined request types.
+			for _, irEndpoint := range irService.Endpoints {
+				if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
+					// This endpoint doesn't have any in-lined request types that need to be generated.
+					continue
+				}
+				fileInfo := fileInfoForType(ir.ApiName, irService.Name.FernFilepath, irEndpoint.SdkRequest.Shape.Wrapper.WrapperName)
+				writer := newFileWriter(
+					fileInfo.filename,
+					fileInfo.packageName,
+					g.config.ImportPath,
+					ir.Types,
+				)
+				if err := writer.WriteRequestType(irEndpoint); err != nil {
+					return nil, err
+				}
+				file, err := writer.File()
+				if err != nil {
+					return nil, err
+				}
+				files = append(files, file)
+			}
+			// Generate the core client interface.
 			fileInfo := fileInfoForClient(ir.ApiName, irService)
 			writer := newFileWriter(
 				fileInfo.filename,
@@ -182,33 +205,12 @@ type fileInfo struct {
 	packageName string
 }
 
-// TODO: Consolidate the fileInfo mapper helpers.
-func fileInfoForTypeDeclaration(apiName *ir.Name, typeDeclaration *ir.TypeDeclaration) *fileInfo {
+func fileInfoForType(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *ir.Name) *fileInfo {
 	var packages []string
-	for _, packageName := range typeDeclaration.Name.FernFilepath.PackagePath {
+	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
 	}
-	typeName := typeDeclaration.Name.Name.SnakeCase.UnsafeName
-	if len(packages) == 0 {
-		// This type didn't declare a package, so it belongs at the top-level.
-		// The top-level package uses the API's name as its package declaration.
-		return &fileInfo{
-			filename:    fmt.Sprintf("%s.go", typeName),
-			packageName: strings.ToLower(apiName.CamelCase.SafeName),
-		}
-	}
-	return &fileInfo{
-		filename:    fmt.Sprintf("%s.go", filepath.Join(append(packages, typeName)...)),
-		packageName: packages[len(packages)-1],
-	}
-}
-
-func fileInfoForErrorDeclaration(apiName *ir.Name, errorDeclaration *ir.ErrorDeclaration) *fileInfo {
-	var packages []string
-	for _, packageName := range errorDeclaration.Name.FernFilepath.PackagePath {
-		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
-	}
-	typeName := errorDeclaration.Name.Name.SnakeCase.UnsafeName
+	typeName := name.SnakeCase.UnsafeName
 	if len(packages) == 0 {
 		// This type didn't declare a package, so it belongs at the top-level.
 		// The top-level package uses the API's name as its package declaration.

@@ -13,6 +13,14 @@ func (f *fileWriter) WriteClient(service *ir.HttpService) error {
 	return nil
 }
 
+// WriteRequestType writes a type dedicated to the in-lined request (if any).
+func (f *fileWriter) WriteRequestType(endpoint *ir.HttpEndpoint) error {
+	// At this point, we've already verified that the given endpoint's request
+	// is a wrapper, so we can safely access it without any nil-checks.
+	f.P("type ", endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName, " struct {}")
+	return nil
+}
+
 // WriteError writes the structured error types.
 func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	var (
