@@ -14,6 +14,18 @@ type AnotherUnion struct {
 	Foo           *Foo
 }
 
+func NewAnotherUnionFromString(value string) *AnotherUnion {
+	return &AnotherUnion{typeName: "string", String: value}
+}
+
+func NewAnotherUnionWithStringLiteral() *AnotherUnion {
+	return &AnotherUnion{typeName: "stringLiteral", stringLiteral: "fern"}
+}
+
+func NewAnotherUnionFromFoo(value *Foo) *AnotherUnion {
+	return &AnotherUnion{typeName: "foo", Foo: value}
+}
+
 func (a *AnotherUnion) StringLiteral() string {
 	return a.stringLiteral
 }

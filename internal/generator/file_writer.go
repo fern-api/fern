@@ -687,7 +687,18 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P("}")
 	t.writer.P()
 
-	// TODO: Implement the constructors.
+	// Implement the constructors.
+	for _, member := range members {
+		if member.isLiteral {
+			t.writer.P("func New", t.typeName, "With", strings.Title(member.field), "() *", t.typeName, "{")
+			t.writer.P("return &", t.typeName, "{typeName: \"", member.caseName, "\", ", member.field, ": ", member.literal, "}")
+		} else {
+			t.writer.P("func New", t.typeName, "From", member.field, "(value ", member.value, ") *", t.typeName, "{")
+			t.writer.P("return &", t.typeName, "{typeName: \"", member.caseName, "\", ", member.field, ": value}")
+		}
+		t.writer.P("}")
+		t.writer.P()
+	}
 
 	receiver := typeNameToReceiver(t.typeName)
 

@@ -13,6 +13,14 @@ type UnionWithLiteral struct {
 	String        string
 }
 
+func NewUnionWithLiteralWithStringLiteral() *UnionWithLiteral {
+	return &UnionWithLiteral{typeName: "stringLiteral", stringLiteral: "fern"}
+}
+
+func NewUnionWithLiteralFromString(value string) *UnionWithLiteral {
+	return &UnionWithLiteral{typeName: "string", String: value}
+}
+
 func (u *UnionWithLiteral) StringLiteral() string {
 	return u.stringLiteral
 }

@@ -21,6 +21,46 @@ type Union struct {
 	stringLiteral    string
 }
 
+func NewUnionFromFoo(value *Foo) *Union {
+	return &Union{typeName: "foo", Foo: value}
+}
+
+func NewUnionFromBar(value *Bar) *Union {
+	return &Union{typeName: "bar", Bar: value}
+}
+
+func NewUnionFromBaz(value *Baz) *Union {
+	return &Union{typeName: "baz", Baz: value}
+}
+
+func NewUnionFromString(value string) *Union {
+	return &Union{typeName: "string", String: value}
+}
+
+func NewUnionFromIntegerOptional(value *int) *Union {
+	return &Union{typeName: "integerOptional", IntegerOptional: value}
+}
+
+func NewUnionFromStringBooleanMap(value map[string]bool) *Union {
+	return &Union{typeName: "stringBooleanMap", StringBooleanMap: value}
+}
+
+func NewUnionFromStringList(value []string) *Union {
+	return &Union{typeName: "stringList", StringList: value}
+}
+
+func NewUnionFromStringListList(value [][]string) *Union {
+	return &Union{typeName: "stringListList", StringListList: value}
+}
+
+func NewUnionFromDoubleSet(value []float64) *Union {
+	return &Union{typeName: "doubleSet", DoubleSet: value}
+}
+
+func NewUnionWithStringLiteral() *Union {
+	return &Union{typeName: "stringLiteral", stringLiteral: "fern"}
+}
+
 func (u *Union) StringLiteral() string {
 	return u.stringLiteral
 }
