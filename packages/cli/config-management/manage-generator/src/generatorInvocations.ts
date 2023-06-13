@@ -56,7 +56,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.0.1",
     },
     [GeneratorName.OPENAPI]: {
-        version: "0.0.27",
+        version: "0.0.28",
         config: {
             format: "yaml",
         },
