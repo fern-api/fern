@@ -108,11 +108,9 @@ public final class ObjectTypeSpecGenerator {
     }
 
     private Optional<MethodSpec> generateHashCode() {
-        return ObjectMethodFactory.createHashCodeMethod(
-                allEnrichedProperties.stream()
-                        .map(EnrichedObjectProperty::fieldSpec)
-                        .collect(Collectors.toList())
-        );
+        return ObjectMethodFactory.createHashCodeMethod(allEnrichedProperties.stream()
+                .map(EnrichedObjectProperty::fieldSpec)
+                .collect(Collectors.toList()));
     }
 
     private MethodSpec generateToString() {
