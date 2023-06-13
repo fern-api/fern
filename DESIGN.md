@@ -544,3 +544,91 @@ Custom headers can be set and retrieved using a context-based approach (to satis
 and nothing in particular is done for the authorization option because it's just another ordinary header that
 can be set by the same mechanism. This means that the functional option based approach (outlined above) is not
 included for now.
+
+## API Review (6-13-23)
+
+- [ ] Consider adding a doc strings for literal getter methods (e.g. `// Fern returns the "fern" literal.`)
+- [ ] Add a configuration option for generating enums that preserve the string representation (e.g. "FOUR" if the Fern definition only goes up to "THREE").
+- [ ] Add extended and base properties to union constructors.
+- [ ] Consider splitting unions with base and/or extended properties into separate types. For example,
+
+```yaml
+types:
+  Union:
+    union:
+      foo:
+        type: Foo
+        key: foo
+      bar:
+        type: Bar
+        key: bar
+
+  UnionWithLiteral:
+    extends: Baz
+    base-properties:
+      base: literal<"base">
+    union:
+      fern: literal<"fern">
+      foo: literal<"foo">
+
+  Foo:
+    properties:
+      name: string
+
+  Bar:
+    properties:
+      name: string
+
+  Baz:
+    properties:
+      extended: literal<"extended">
+```
+
+```go
+// union.go
+
+type Union struct {
+  Type string
+  Foo  *UnionFoo
+  Bar  *UnionBar
+}
+
+type UnionFoo struct {
+  *Foo
+
+  Docs string `json:"docs"`
+}
+
+type UnionBar struct {
+  *Bar
+
+  Docs string `json:"docs"`
+}
+```
+
+```go
+// union_with_literal.go
+
+type UnionWithLiteral struct {
+  Type string
+  Fern *UnionWithLiteralFern
+}
+
+type UnionWithLiteralFern struct {
+  extended string
+  base     string
+  fern     string
+}
+
+func (u *UnionWithLiteralFern) Extended() string {
+  return u.extended
+}
+
+func (u *UnionWithLiteralFern) Base() string {
+  return u.base
+}
+
+func (*UnionWithLiteralFern) Fern() string {
+  return "fern"
+}
+```
