@@ -19,8 +19,6 @@
     { "path": "../init" },
     { "path": "../logger" },
     { "path": "../login" },
-    { "path": "../openapi-ir-to-fern" },
-    { "path": "../openapi-parser" },
     { "path": "../posthog-manager" },
     { "path": "../project-loader" },
     { "path": "../register" },

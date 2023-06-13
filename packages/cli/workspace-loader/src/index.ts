@@ -10,3 +10,4 @@ export {
     type Workspace,
 } from "./types/Workspace";
 export * from "./utils";
+export { convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";

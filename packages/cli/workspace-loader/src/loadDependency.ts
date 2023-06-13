@@ -1,5 +1,10 @@
-import { noop, visitObject } from "@fern-api/core-utils";
-import { DependenciesConfiguration, Dependency } from "@fern-api/dependencies-configuration";
+import { assertNever, noop, visitObject } from "@fern-api/core-utils";
+import {
+    DependenciesConfiguration,
+    Dependency,
+    LocalApiDependency,
+    VersionedDependency,
+} from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { parseVersion } from "@fern-api/semver-utils";
@@ -16,7 +21,8 @@ import tar from "tar";
 import tmp from "tmp-promise";
 import { loadWorkspace } from "./loadWorkspace";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { FernDefinition } from "./types/Workspace";
+import { FernDefinition, FernWorkspace } from "./types/Workspace";
+import { convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
 
 const FIDDLE = createFiddleService();
 
@@ -64,12 +70,26 @@ export async function loadDependency({
         await context.runInteractiveTask(
             { name: `Download ${stringifyDependency(dependency)}` },
             async (contextForDependency) => {
-                definition = await validateDependencyAndGetDefinition({
-                    context: contextForDependency,
-                    rootApiFile,
-                    dependency,
-                    cliVersion,
-                });
+                switch (dependency.type) {
+                    case "version":
+                        definition = await validateVersionedDependencyAndGetDefinition({
+                            context: contextForDependency,
+                            rootApiFile,
+                            dependency,
+                            cliVersion,
+                        });
+                        return;
+                    case "local":
+                        definition = await validateLocalDependencyAndGetDefinition({
+                            context: contextForDependency,
+                            rootApiFile,
+                            dependency,
+                            cliVersion,
+                        });
+                        return;
+                    default:
+                        assertNever(dependency);
+                }
             }
         );
     }
@@ -81,13 +101,53 @@ export async function loadDependency({
     }
 }
 
-async function validateDependencyAndGetDefinition({
+async function validateLocalDependencyAndGetDefinition({
     dependency,
     context,
     rootApiFile,
     cliVersion,
 }: {
-    dependency: Dependency;
+    dependency: LocalApiDependency;
+    context: TaskContext;
+    rootApiFile: RootApiFileSchema;
+    cliVersion: string;
+}): Promise<FernDefinition | undefined> {
+    // parse workspace
+    context.logger.info("Parsing...");
+    const loadDependencyWorkspaceResult = await loadWorkspace({
+        absolutePathToWorkspace: dependency.absoluteFilepath,
+        context,
+        cliVersion,
+    });
+    if (!loadDependencyWorkspaceResult.didSucceed) {
+        context.failWithoutThrowing("Failed to load api definition", loadDependencyWorkspaceResult.failures);
+        return undefined;
+    }
+
+    const workspaceOfDependency =
+        loadDependencyWorkspaceResult.workspace.type === "fern"
+            ? loadDependencyWorkspaceResult.workspace
+            : await convertOpenApiWorkspaceToFernWorkspace(loadDependencyWorkspaceResult.workspace, context);
+
+    // ensure root api files are equivalent
+    const areRootApiFilesEquivalent = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
+    if (!areRootApiFilesEquivalent) {
+        context.failWithoutThrowing(
+            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different`
+        );
+        return undefined;
+    }
+
+    return workspaceOfDependency.definition;
+}
+
+async function validateVersionedDependencyAndGetDefinition({
+    dependency,
+    context,
+    rootApiFile,
+    cliVersion,
+}: {
+    dependency: VersionedDependency;
     context: TaskContext;
     rootApiFile: RootApiFileSchema;
     cliVersion: string;
@@ -183,6 +243,21 @@ async function validateDependencyAndGetDefinition({
     }
 
     // ensure root api files are equivalent
+    const areRootApiFilesEquivalent = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
+    if (!areRootApiFilesEquivalent) {
+        context.failWithoutThrowing(
+            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different`
+        );
+        return undefined;
+    }
+
+    return workspaceOfDependency.definition;
+}
+
+async function getAreRootApiFilesEquivalent(
+    rootApiFile: RootApiFileSchema,
+    workspaceOfDependency: FernWorkspace
+): Promise<boolean> {
     let areRootApiFilesEquivalent = true as boolean;
     await visitObject(rootApiFile, {
         name: noop,
@@ -216,14 +291,7 @@ async function validateDependencyAndGetDefinition({
         "path-parameters": noop,
         variables: noop,
     });
-    if (!areRootApiFilesEquivalent) {
-        context.failWithoutThrowing(
-            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different`
-        );
-        return undefined;
-    }
-
-    return workspaceOfDependency.definition;
+    return areRootApiFilesEquivalent;
 }
 
 async function downloadDependency({
@@ -248,5 +316,12 @@ async function downloadDependency({
 }
 
 function stringifyDependency(dependency: Dependency): string {
-    return `@${dependency.organization}/${dependency.apiName}`;
+    switch (dependency.type) {
+        case "version":
+            return `@${dependency.organization}/${dependency.apiName}`;
+        case "local":
+            return `${dependency.path}`;
+        default:
+            assertNever(dependency);
+    }
 }

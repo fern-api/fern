@@ -18,11 +18,13 @@ describe("convertDependenciesConfiguration", () => {
         const expectedDependenciesConfiguration: DependenciesConfiguration = {
             dependencies: {
                 "@fern/ir-types": {
+                    type: "version",
                     apiName: "ir-types",
                     organization: "fern",
                     version: "0.0.1",
                 },
                 "@fern/fiddle": {
+                    type: "version",
                     apiName: "fiddle",
                     organization: "fern",
                     version: "0.2.0",
