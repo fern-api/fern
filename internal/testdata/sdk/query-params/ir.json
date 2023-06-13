@@ -157,7 +157,39 @@
                             "allowMultiple": false
                         }
                     ],
-                    "headers": [],
+                    "headers": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "name": {
+                                    "originalName": "X-Endpoint-Header",
+                                    "camelCase": {
+                                        "unsafeName": "xEndpointHeader",
+                                        "safeName": "xEndpointHeader"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "x_endpoint_header",
+                                        "safeName": "x_endpoint_header"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "X_ENDPOINT_HEADER",
+                                        "safeName": "X_ENDPOINT_HEADER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "XEndpointHeader",
+                                        "safeName": "XEndpointHeader"
+                                    }
+                                },
+                                "wireValue": "X-Endpoint-Header"
+                            },
+                            "valueType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            }
+                        }
+                    ],
                     "sdkRequest": {
                         "shape": {
                             "wrapperName": {

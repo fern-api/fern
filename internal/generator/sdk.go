@@ -14,10 +14,33 @@ func (f *fileWriter) WriteClient(service *ir.HttpService) error {
 }
 
 // WriteRequestType writes a type dedicated to the in-lined request (if any).
-func (f *fileWriter) WriteRequestType(endpoint *ir.HttpEndpoint) error {
+func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) error {
 	// At this point, we've already verified that the given endpoint's request
 	// is a wrapper, so we can safely access it without any nil-checks.
-	f.P("type ", endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName, " struct {}")
+	var (
+		typeName = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+		// receiver   = typeNameToReceiver(typeName)
+		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+	)
+
+	f.P("type ", typeName, " struct {")
+	for _, header := range endpoint.Headers {
+		f.P(header.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath), "`json:\"-\"`")
+	}
+	for _, queryParam := range endpoint.QueryParameters {
+		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+		if queryParam.AllowMultiple {
+			// TODO: If the query parameter can be specified multiple times, it's not enough to just define it
+			// as a list. Otherwise, it's indistinguishable from a single query parameter with a list value.
+			//
+			// We'll need to track how the query parameter is applied at the call-site.
+			value = fmt.Sprintf("[]%s", value)
+		}
+		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, "`json:\"-\"`")
+	}
+	// TODO: Write the body parameters, if any.
+	f.P("}")
+	f.P()
 	return nil
 }
 

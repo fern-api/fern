@@ -8,5 +8,7 @@ service:
       path: /all
       request:
         name: GetAllUsersRequest
+        headers:
+          X-Endpoint-Header: string
         query-parameters:
           limit: optional<integer>

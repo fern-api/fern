@@ -146,7 +146,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 					g.config.ImportPath,
 					ir.Types,
 				)
-				if err := writer.WriteRequestType(irEndpoint); err != nil {
+				if err := writer.WriteRequestType(irService.Name.FernFilepath, irEndpoint); err != nil {
 					return nil, err
 				}
 				file, err := writer.File()
