@@ -1,6 +1,6 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 import { PageMargins } from "../../page-margins/PageMargins";
@@ -30,7 +30,7 @@ export declare namespace EndpointContent {
 
 export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slug }) => {
     const isInitialMount = useRef(true);
-    useLayoutEffect(() => {
+    useEffect(() => {
         isInitialMount.current = false;
     }, []);
 

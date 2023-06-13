@@ -4,6 +4,7 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v2/resources/read";
+import "@fontsource/ibm-plex-mono";
 import classNames from "classnames";
 import "normalize.css";
 import { useEffect } from "react";
@@ -12,27 +13,22 @@ import styles from "./App.module.scss";
 import { CONTEXTS } from "./contexts";
 import { DocsContextProvider } from "./docs-context/DocsContextProvider";
 import { Docs } from "./docs/Docs";
-import { useAreFernFontsReady } from "./useAreFernFontsReady";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
 export declare namespace App {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse.Raw;
+        pathname: string;
     }
 }
 
-export const App: React.FC<App.Props> = ({ docs }) => {
+export const App: React.FC<App.Props> = ({ docs, pathname }) => {
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
         }
     }, []);
-
-    const areFontsReady = useAreFernFontsReady();
-    if (!areFontsReady) {
-        return null;
-    }
 
     return (
         <div className={classNames(styles.app, "bg-background")}>
@@ -40,7 +36,11 @@ export const App: React.FC<App.Props> = ({ docs }) => {
                 (children, Context) => (
                     <Context>{children}</Context>
                 ),
-                <DocsContextProvider docsDefinition={docs.definition} basePath={docs.baseUrl.basePath ?? undefined}>
+                <DocsContextProvider
+                    docsDefinition={docs.definition}
+                    basePath={docs.baseUrl.basePath ?? undefined}
+                    pathname={pathname}
+                >
                     <Docs />
                 </DocsContextProvider>
             )}

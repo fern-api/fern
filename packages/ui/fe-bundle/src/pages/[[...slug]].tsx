@@ -14,10 +14,11 @@ const REGISTRY_SERVICE = new FernRegistryClient({
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse.Raw;
+        pathname: string;
     }
 }
 
-export default function Docs({ docs }: Docs.Props): JSX.Element {
+export default function Docs({ docs, pathname }: Docs.Props): JSX.Element {
     return (
         <main className={inter.className}>
             <Head>
@@ -26,7 +27,7 @@ export default function Docs({ docs }: Docs.Props): JSX.Element {
                     <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]}></link>
                 )}
             </Head>
-            <App docs={docs} />
+            <App docs={docs} pathname={pathname} />
         </main>
     );
 }
@@ -54,6 +55,7 @@ export const getServerSideProps: GetServerSideProps<Docs.Props> = async (context
                 allowUnrecognizedEnumValues: true,
                 allowUnrecognizedUnionMembers: true,
             }),
+            pathname: context.query.slug != null ? (context.query.slug as string[]).join("/") : "",
         },
     };
 };

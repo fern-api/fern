@@ -3706,7 +3706,6 @@ __metadata:
     "@blueprintjs/popover2": ^1.8.0
     "@blueprintjs/select": ^4.4.2
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fonts": "workspace:*"
     "@fern-api/loadable": "workspace:*"
     "@fern-api/react-commons": "workspace:*"
     "@fern-api/routing-utils": "workspace:*"

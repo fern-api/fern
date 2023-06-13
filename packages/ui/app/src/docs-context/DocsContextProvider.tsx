@@ -10,24 +10,25 @@ export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition.Raw;
         basePath: string | undefined;
+        pathname: string;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
     basePath = "/",
+    pathname,
     children,
 }) => {
     const router = useRouter();
     const urlPathResolver = useMemo(() => new UrlPathResolverImpl(docsDefinition), [docsDefinition]);
 
     const resolvedPathFromUrl = useMemo(() => {
-        // TODO should we use useLocation?
-        let path = window.location.pathname;
+        let path = pathname;
         path = path.replace(new RegExp(`^${basePath}`), "");
         path = removeLeadingAndTrailingSlashes(path);
         return urlPathResolver.resolveSlug(path);
-    }, [basePath, urlPathResolver]);
+    }, [basePath, urlPathResolver, pathname]);
 
     const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
     // handle redirects

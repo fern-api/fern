@@ -6773,7 +6773,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@blueprintjs/popover2", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:1.8.0"],\
             ["@blueprintjs/select", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.5.1"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fonts", "workspace:packages/commons/react/fonts"],\
             ["@fern-api/loadable", "workspace:packages/commons/loadable"],\
             ["@fern-api/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fern-api/routing-utils", "workspace:packages/commons/react/routing-utils"],\
