@@ -7,7 +7,6 @@ import "../styles/globals.css";
 export declare namespace CustomApp {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse.Raw;
-        pathname: string;
     }
 }
 
@@ -15,13 +14,13 @@ const REGISTRY_SERVICE = new FernRegistryClient({
     environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
 });
 
-export default function CustomApp({ Component, pageProps, docs, pathname }: AppProps & CustomApp.Props): JSX.Element {
+export default function CustomApp({ Component, pageProps, docs }: AppProps & CustomApp.Props): JSX.Element {
     return (
         <>
             <Head>
                 <title>Documentation</title>
             </Head>
-            <Component {...pageProps} docs={docs} pathname={pathname} />
+            <Component {...pageProps} docs={docs} />
         </>
     );
 }
@@ -51,6 +50,5 @@ CustomApp.getInitialProps = async (context: AppContext): Promise<AppInitialProps
             allowUnrecognizedEnumValues: true,
             allowUnrecognizedUnionMembers: true,
         }),
-        pathname: context.ctx.query.slug != null ? (context.ctx.query.slug as string[]).join("/") : "",
     };
 };
