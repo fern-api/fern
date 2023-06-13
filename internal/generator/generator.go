@@ -2,6 +2,7 @@ package generator
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -111,6 +112,9 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 			files = append(files, file)
 		}
 	case ModeClient:
+		if ir.ErrorDiscriminationStrategy != nil && ir.ErrorDiscriminationStrategy.StatusCode == nil {
+			return nil, errors.New("this generator only supports the status-code error discrimination strategy")
+		}
 		for _, irError := range ir.Errors {
 			fileInfo := fileInfoForErrorDeclaration(ir.ApiName, irError)
 			writer := newFileWriter(
