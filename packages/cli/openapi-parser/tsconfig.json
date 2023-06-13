@@ -7,7 +7,6 @@
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
     { "path": "../logger" },
-    { "path": "../task-context" },
-    { "path": "../yaml/validator" }
+    { "path": "../task-context" }
   ]
 }

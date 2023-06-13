@@ -1,7 +1,8 @@
-import { VALID_NAME_REGEX } from "@fern-api/validator";
 import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../../extensions/getFernEnum";
+
+const VALID_NAME_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9_]*$");
 
 export function convertEnum({
     nameOverride,
