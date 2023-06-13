@@ -63,11 +63,15 @@ func doRequest(
 	endpointHeaders http.Header,
 	errorDecoder func(int, io.Reader) error,
 ) error {
-	requestBytes, err := json.Marshal(request)
-	if err != nil {
-		return err
+	var requestBody io.Reader
+	if request != nil {
+		requestBytes, err := json.Marshal(request)
+		if err != nil {
+			return err
+		}
+		requestBody = bytes.NewReader(requestBytes)
 	}
-	req, err := newRequest(ctx, url, method, endpointHeaders, bytes.NewReader(requestBytes))
+	req, err := newRequest(ctx, url, method, endpointHeaders, requestBody)
 	if err != nil {
 		return err
 	}
