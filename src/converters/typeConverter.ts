@@ -313,13 +313,16 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
             };
         },
         optional: (optionalType) => {
-            return { 
+            return {
                 ...convertTypeReference(optionalType),
                 nullable: true,
             };
         },
-        literal: () => {
-            throw new Error("Literals are not supported");
+        literal: (literalType) => {
+            return {
+                type: "string",
+                enum: [literalType.string],
+            };
         },
         _unknown: () => {
             throw new Error("Encountered unknown containerType: " + containerType._type);
