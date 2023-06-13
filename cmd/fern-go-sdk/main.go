@@ -8,7 +8,7 @@ import (
 const usage = `Generate Go clients from your Fern API definition.
 
 Usage:
-  fern-go-client <config_file_path>
+  fern-go-sdk <config_file_path>
 
 Flags:
   -h, --help     Print this help and exit.

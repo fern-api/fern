@@ -7,9 +7,9 @@ import (
 )
 
 const (
-	commandName       = "fern-go-client"
+	commandName       = "fern-go-sdk"
 	configFilename    = "config.json"
-	testdataPath      = "../../internal/testdata/client"
+	testdataPath      = "../../internal/testdata/sdk"
 	fixturesDirectory = "fixtures"
 	outputDirectory   = "temp"
 )

@@ -22,7 +22,7 @@ const (
 	fernLanguageHeader = "X-Fern-Language"
 
 	// fernSDKName specifies the name of this Fern SDK.
-	fernSDKName       = "fern-go-client"
+	fernSDKName       = "fern-go-sdk"
 	fernSDKNameHeader = "X-Fern-SDK-Name"
 
 	// fernSDKVersion specifies the version of this Fern SDK.
