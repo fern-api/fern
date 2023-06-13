@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { assertNever } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
@@ -69,7 +70,9 @@ export class UrlPathResolverImpl {
     private urlSlugTree: UrlSlugTree;
 
     constructor(docsDefinition: FernRegistryDocsRead.DocsDefinition.Raw) {
+        console.log(Date.now(), "Building UrlSlugTree");
         this.urlSlugTree = new UrlSlugTree(docsDefinition);
+        console.log(Date.now(), "Built UrlSlugTree");
     }
 
     public resolveSlug(slug: string): ResolvedUrlPath | undefined {
