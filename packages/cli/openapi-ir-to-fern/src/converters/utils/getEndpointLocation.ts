@@ -25,9 +25,11 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     const operationId = endpoint.operationId;
 
     if (operationId == null) {
-        throw new Error(
-            `${endpoint.method} ${endpoint.path} must specify either operationId or x-fern-sdk-method-name`
-        );
+        // TODO(dsinghvi): warn that using path and method to generate id
+        return {
+            file: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
+            endpointId: camelCase(`${endpoint.method}_${endpoint.path.split("/").join("_")}`),
+        };
     }
 
     // if tag is null and operation is defined, add to __package__.yml
