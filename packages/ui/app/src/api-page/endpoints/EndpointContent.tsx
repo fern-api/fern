@@ -85,7 +85,7 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
                     </div>
                     <div className="flex items-center gap-2">
                         <EndpointMethodPill endpoint={endpoint} />
-                        <MonospaceText className="text-text-default flex">
+                        <MonospaceText className="text-text-default">
                             {environmentUrl}
                             {endpoint.path.parts.map((part, index) => (
                                 <React.Fragment key={index}>

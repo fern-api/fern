@@ -1,4 +1,3 @@
-import { H1 } from "@blueprintjs/core";
 import { useMemo } from "react";
 import { Markdown } from "../api-page/markdown/Markdown";
 import { BottomNavigationButtons } from "../bottom-navigation-buttons/BottomNavigationButtons";
@@ -20,7 +19,7 @@ export const MarkdownPage: React.FC<MarkdownPage.Props> = ({ path }) => {
     return (
         <div className="flex justify-center gap-20 overflow-y-auto px-20 pt-20">
             <div className="w-[750px]">
-                <H1 className="mb-10">{path.page.title}</H1>
+                <div className="mb-8 text-4xl font-semibold">{path.page.title}</div>
                 <Markdown>{page.markdown}</Markdown>
                 <BottomNavigationButtons />
                 <div className="h-20" />

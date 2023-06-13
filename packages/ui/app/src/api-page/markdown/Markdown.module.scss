@@ -1,14 +1,14 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
 .container {
-    >,
-    :not(pre) {
-        code {
-            @apply px-2 py-1 rounded bg-white/10 before:content-none after:content-none;
-        }
+    code {
+        font-family: "Berkeley Mono";
+        @apply px-2 py-1 rounded before:content-none after:content-none;
+        @apply bg-white/10 #{!important};
     }
 
-    .code {
-        font-family: "Berkeley Mono";
+    pre code {
+        @apply p-0;
+        @apply bg-[transparent] #{!important};
     }
 }
