@@ -484,6 +484,106 @@
                 },
                 "_type": "container"
             }
+        },
+        "error_user:UpgradeError": {
+            "name": {
+                "name": {
+                    "originalName": "UpgradeError",
+                    "camelCase": {
+                        "unsafeName": "upgradeError",
+                        "safeName": "upgradeError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "upgrade_error",
+                        "safeName": "upgrade_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPGRADE_ERROR",
+                        "safeName": "UPGRADE_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpgradeError",
+                        "safeName": "UpgradeError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "errorId": "error_user:UpgradeError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "UpgradeError",
+                    "camelCase": {
+                        "unsafeName": "upgradeError",
+                        "safeName": "upgradeError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "upgrade_error",
+                        "safeName": "upgrade_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPGRADE_ERROR",
+                        "safeName": "UPGRADE_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UpgradeError",
+                        "safeName": "UpgradeError"
+                    }
+                },
+                "wireValue": "UpgradeError"
+            },
+            "statusCode": 426,
+            "type": {
+                "container": {
+                    "literal": {
+                        "string": "upgrade",
+                        "type": "string"
+                    },
+                    "_type": "literal"
+                },
+                "_type": "container"
+            }
         }
     },
     "services": {},
@@ -586,7 +686,8 @@
             "errors": [
                 "error_user:UserNotFoundError",
                 "error_user:NotImplementedError",
-                "error_user:TeapotError"
+                "error_user:TeapotError",
+                "error_user:UpgradeError"
             ],
             "subpackages": [],
             "hasEndpointsInTree": false

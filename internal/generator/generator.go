@@ -111,6 +111,23 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 			files = append(files, file)
 		}
 	case ModeClient:
+		for _, irError := range ir.Errors {
+			fileInfo := fileInfoForErrorDeclaration(ir.ApiName, irError)
+			writer := newFileWriter(
+				fileInfo.filename,
+				fileInfo.packageName,
+				g.config.ImportPath,
+				ir.Types,
+			)
+			if err := writer.WriteError(irError); err != nil {
+				return nil, err
+			}
+			file, err := writer.File()
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, file)
+		}
 		for _, irService := range ir.Services {
 			fileInfo := fileInfoForClient(ir.ApiName, irService)
 			writer := newFileWriter(
@@ -161,12 +178,33 @@ type fileInfo struct {
 	packageName string
 }
 
+// TODO: Consolidate the fileInfo mapper helpers.
 func fileInfoForTypeDeclaration(apiName *ir.Name, typeDeclaration *ir.TypeDeclaration) *fileInfo {
 	var packages []string
 	for _, packageName := range typeDeclaration.Name.FernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
 	}
 	typeName := typeDeclaration.Name.Name.SnakeCase.UnsafeName
+	if len(packages) == 0 {
+		// This type didn't declare a package, so it belongs at the top-level.
+		// The top-level package uses the API's name as its package declaration.
+		return &fileInfo{
+			filename:    fmt.Sprintf("%s.go", typeName),
+			packageName: strings.ToLower(apiName.CamelCase.SafeName),
+		}
+	}
+	return &fileInfo{
+		filename:    fmt.Sprintf("%s.go", filepath.Join(append(packages, typeName)...)),
+		packageName: packages[len(packages)-1],
+	}
+}
+
+func fileInfoForErrorDeclaration(apiName *ir.Name, errorDeclaration *ir.ErrorDeclaration) *fileInfo {
+	var packages []string
+	for _, packageName := range errorDeclaration.Name.FernFilepath.PackagePath {
+		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
+	}
+	typeName := errorDeclaration.Name.Name.SnakeCase.UnsafeName
 	if len(packages) == 0 {
 		// This type didn't declare a package, so it belongs at the top-level.
 		// The top-level package uses the API's name as its package declaration.

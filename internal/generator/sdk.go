@@ -10,19 +10,20 @@ func (f *fileWriter) WriteClient(service *ir.HttpService) error {
 
 func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("type ", errorDeclaration.Name.Name.PascalCase.UnsafeName, " struct {")
-	f.P("StatusCode int `json:\"-\"`")
+	f.P("StatusCode int")
 	if errorDeclaration.Type == nil {
 		// This error doesn't have a body, so we only need to include the status code.
 		f.P("}")
 		f.P()
 		return nil
 	}
-	if errorDeclaration.Type.Named != nil {
-		// TODO: Write out the properties specified on the given type.
-	}
-	// TODO: Otherwise, need to use a [de]serialization strategy similar to undiscriminated unions
-	// for the built-in types.
+	importPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+	value := typeReferenceToGoType(errorDeclaration.Type, f.types, f.imports, f.baseImportPath, importPath)
+	f.P("Body ", value)
 	f.P("}")
 	f.P()
+
+	// TODO: Generate the [un]marshaler logic.
+	// literal = literalToValue(unionMember.Type.Container.Literal)
 	return nil
 }

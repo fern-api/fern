@@ -12,6 +12,10 @@ errors:
     status-code: 418
     type: list<string>
 
+  UpgradeError:
+    status-code: 426
+    type: literal<"upgrade">
+
 types:
   UserNotFoundErrorBody:
     properties:
