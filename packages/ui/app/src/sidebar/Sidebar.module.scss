@@ -1,7 +1,5 @@
 @import "~@blueprintjs/core/lib/scss/variables";
 
-.scrollingContainer.hideScrollbar {
-    &::-webkit-scrollbar {
-        display: none;
-    }
+.scrollingContainer:not(:hover)::-webkit-scrollbar {
+    display: none;
 }
