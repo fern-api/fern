@@ -2,9 +2,9 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace, OpenAPIWorkspace } from "@fern-api/workspace-loader";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
+import { FernWorkspace, OpenAPIWorkspace } from "../types/Workspace";
 
 export async function convertOpenApiWorkspaceToFernWorkspace(
     openapiWorkspace: OpenAPIWorkspace,

@@ -1,0 +1,615 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Dopt Users API",
+    "description": "The Dopt Users API",
+    "version": "0.0.0"
+  },
+  "components": {
+    "schemas": {
+      "BadRequestErrorResponseBody": {
+        "title": "BadRequestErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["invalid_request_error"]
+              },
+              {
+                "type": "string",
+                "enum": ["intent_request_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      },
+      "IdentifyBatchRequestBody": {
+        "maxItems": 100,
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "identifier": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "properties": {
+              "type": "object",
+              "additionalProperties": {}
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "identifier": {
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  "properties": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                },
+                "required": ["identifier", "properties"]
+              }
+            }
+          },
+          "required": ["identifier", "properties"]
+        }
+      },
+      "IdentifyBatchResponseBody": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": ["count"]
+      },
+      "IdentifyGroupRequestBody": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "required": ["identifier", "properties"]
+      },
+      "IdentifyRequestBody": {
+        "type": "object",
+        "additionalProperties": {}
+      },
+      "IdentifyRequestParams": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "type": "string"
+          }
+        },
+        "required": ["identifier"]
+      },
+      "IdentifySegmentRequestBody": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["identify"]
+              },
+              "userId": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "traits": {
+                "type": "object",
+                "additionalProperties": {}
+              }
+            },
+            "required": ["type", "userId", "traits"]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["group"]
+              },
+              "groupId": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "userId": {
+                "minLength": 1,
+                "type": "string"
+              },
+              "traits": {
+                "type": "object",
+                "additionalProperties": {}
+              }
+            },
+            "required": ["type", "groupId", "userId", "traits"]
+          }
+        ]
+      },
+      "IdentifySegmentResponseBody": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        },
+        "required": ["count"]
+      },
+      "IdentifyUserRequestBody": {
+        "type": "object",
+        "properties": {
+          "identifier": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {}
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "identifier": {
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "properties": {
+                  "type": "object",
+                  "additionalProperties": {}
+                }
+              },
+              "required": ["identifier", "properties"]
+            }
+          }
+        },
+        "required": ["identifier", "properties"]
+      },
+      "InternalServerErrorResponseBody": {
+        "title": "InternalServerErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["internal_server_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      },
+      "NotFoundErrorResponseBody": {
+        "title": "NotFoundErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["not_found_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      },
+      "SegmentCommon": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "traits": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "required": ["userId", "traits"]
+      },
+      "SegmentGroup": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["group"]
+          },
+          "groupId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "userId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "traits": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "required": ["type", "groupId", "userId", "traits"]
+      },
+      "SegmentIdentify": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["identify"]
+          },
+          "userId": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "traits": {
+            "type": "object",
+            "additionalProperties": {}
+          }
+        },
+        "required": ["type", "userId", "traits"]
+      },
+      "TimeoutErrorResponseBody": {
+        "title": "TimeoutErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["internal_server_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      },
+      "UnauthorizedErrorResponseBody": {
+        "title": "UnauthorizedErrorResponseBody",
+        "type": "object",
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": ["unauthorized_error"]
+              }
+            ]
+          },
+          "details": {
+            "type": "string"
+          }
+        },
+        "required": ["code", "details"]
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-Api-Key"
+      }
+    }
+  },
+  "paths": {
+    "/identify": {
+      "post": {
+        "operationId": "identifyUser",
+
+        "description": "Identifies a user with Dopt using the request body",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentifyUserRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful User Identify"
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identify/group": {
+      "post": {
+        "operationId": "identifyGroup",
+
+        "description": "Identifies a group with Dopt using the request body",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentifyGroupRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Group Identify"
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identify/batch": {
+      "post": {
+        "operationId": "identifyBatch",
+
+        "description": "Identifies an array (batch) of users with Dopt using the request body",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentifyBatchRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentifyBatchResponseBody"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identify/segment": {
+      "post": {
+        "operationId": "identifySegment",
+
+        "description": "(INTERNAL) Identifies a user with Dopt when called by Segment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentifySegmentRequestBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful User Identify"
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identify/{identifier}": {
+      "post": {
+        "operationId": "identify",
+
+        "description": "(DEPRECATED) Identifies a user with Dopt using the request URL",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentifyRequestBody"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "path",
+            "name": "identifier",
+            "required": true
+          }
+        ],
+        "deprecated": true,
+        "responses": {
+          "204": {
+            "description": "Successful User Identify"
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestErrorResponseBody"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnauthorizedErrorResponseBody"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalServerErrorResponseBody"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://users.dopt.com"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Identify",
+      "description": "Identify related end-points"
+    },
+    {
+      "name": "Internal",
+      "description": "Internal Users related end-points"
+    },
+    {
+      "name": "Internal Client",
+      "description": "Internal Users related end-points for the Dopt client"
+    },
+    {
+      "name": "External Debug",
+      "description": "External endpoint for debugging internals"
+    }
+  ]
+}

@@ -2429,8 +2429,6 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-docs-configuration": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
-    "@fern-api/openapi-ir-to-fern": "workspace:*"
-    "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
@@ -3278,7 +3276,6 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-api/validator": "workspace:*"
     "@fern-fern/openapi-ir-model": 0.0.74
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -3796,6 +3793,8 @@ __metadata:
     "@fern-api/docs-configuration": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
+    "@fern-api/openapi-ir-to-fern": "workspace:*"
+    "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/services": "workspace:*"

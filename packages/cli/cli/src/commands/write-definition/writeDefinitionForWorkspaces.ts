@@ -1,13 +1,12 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-configuration";
 import { Project } from "@fern-api/project-loader";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { formatDefinitionFile } from "@fern-api/yaml-formatter";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { entries } from "lodash-es";
 import { CliContext } from "../../cli-context/CliContext";
-import { convertOpenApiWorkspaceToFernWorkspace } from "../../utils/convertOpenApiWorkspaceToFernWorkspace";
 
 export async function writeDefinitionForWorkspaces({
     project,
