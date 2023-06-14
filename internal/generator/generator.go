@@ -113,6 +113,9 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 			files = append(files, file)
 		}
 	case ModeClient:
+		if g.config.ImportPath == "" {
+			return nil, errors.New("the SDK requires an import path configuration")
+		}
 		if ir.ErrorDiscriminationStrategy != nil && ir.ErrorDiscriminationStrategy.StatusCode == nil {
 			return nil, errors.New("this generator only supports the status-code error discrimination strategy")
 		}

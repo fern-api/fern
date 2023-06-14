@@ -2,16 +2,30 @@
 
 package api
 
+import (
+	errors "errors"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/path-params/fixtures/core"
+	io "io"
+)
+
 type UserClient interface{}
 
 type getUserEndpoint struct {
 	url    string
-	client HTTPClient
+	client core.HTTPClient
 }
 
-func newgetUserEndpoint(url string, client HTTPClient) *getUserEndpoint {
+func newgetUserEndpoint(url string, client core.HTTPClient) *getUserEndpoint {
 	return &getUserEndpoint{
 		url:    url,
 		client: client,
 	}
+}
+
+func (g *getUserEndpoint) decodeError(statusCode int, body io.Reader) error {
+	bytes, err := io.ReadAll(body)
+	if err != nil {
+		return err
+	}
+	return errors.New(string(bytes))
 }

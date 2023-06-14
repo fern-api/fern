@@ -6,6 +6,7 @@ import (
 	"go/format"
 	"go/parser"
 	"go/token"
+	"path"
 	"strconv"
 	"strings"
 
@@ -46,6 +47,10 @@ func newFileWriter(
 	imports.Add("encoding/json")
 	imports.Add("strconv")
 	imports.Add("time")
+
+	// Add an import to the core utilities package generated for
+	// the SDK.
+	imports.Add(path.Join(baseImportPath, "core"))
 
 	// Manually specify the UUID path so that we can use
 	// the uuid alias.

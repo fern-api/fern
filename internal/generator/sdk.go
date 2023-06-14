@@ -22,21 +22,21 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 		importPath  = path.Join(f.baseImportPath, "core")
 	)
 	// We have at least one auth scheme, so we need to generate the ClientOption.
-	f.P("type ClientOption func(*clientOptions)")
+	f.P("type ClientOption func(*ClientOptions)")
 	f.P()
 
-	f.P("type clientOptions struct {")
+	f.P("type ClientOptions struct {")
 	for _, authScheme := range authSchemes {
 		if authScheme.Bearer != nil {
-			f.P("bearer string")
+			f.P("Bearer string")
 		}
 		if authScheme.Basic != nil {
-			f.P("username string")
-			f.P("password string")
+			f.P("Username string")
+			f.P("Password string")
 		}
 		if authScheme.Header != nil {
 			f.P(
-				authScheme.Header.Name.Name.CamelCase.SafeName,
+				authScheme.Header.Name.Name.CamelCase.UnsafeName,
 				" ",
 				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath),
 			)
@@ -71,12 +71,12 @@ func (f *fileWriter) writeEndpoint(endpoint *ir.HttpEndpoint) error {
 	)
 	f.P("type ", typeName, " struct {")
 	f.P("url string")
-	f.P("client HTTPClient")
+	f.P("client core.HTTPClient")
 	f.P("}")
 	f.P()
 
 	// Generate the constructor.
-	f.P("func new", typeName, "(url string, client HTTPClient) *", typeName, " {")
+	f.P("func new", typeName, "(url string, client core.HTTPClient) *", typeName, " {")
 	f.P("return &", typeName, "{")
 	f.P("url: url,")
 	f.P("client: client,")

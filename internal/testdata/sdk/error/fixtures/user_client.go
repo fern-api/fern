@@ -5,6 +5,7 @@ package api
 import (
 	json "encoding/json"
 	errors "errors"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 	io "io"
 )
 
@@ -12,10 +13,10 @@ type UserClient interface{}
 
 type getEndpoint struct {
 	url    string
-	client HTTPClient
+	client core.HTTPClient
 }
 
-func newgetEndpoint(url string, client HTTPClient) *getEndpoint {
+func newgetEndpoint(url string, client core.HTTPClient) *getEndpoint {
 	return &getEndpoint{
 		url:    url,
 		client: client,
@@ -63,10 +64,10 @@ func (g *getEndpoint) decodeError(statusCode int, body io.Reader) error {
 
 type updateEndpoint struct {
 	url    string
-	client HTTPClient
+	client core.HTTPClient
 }
 
-func newupdateEndpoint(url string, client HTTPClient) *updateEndpoint {
+func newupdateEndpoint(url string, client core.HTTPClient) *updateEndpoint {
 	return &updateEndpoint{
 		url:    url,
 		client: client,
