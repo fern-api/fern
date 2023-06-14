@@ -12,3 +12,4 @@ service:
           X-Endpoint-Header: string
         query-parameters:
           limit: optional<integer>
+      response: string

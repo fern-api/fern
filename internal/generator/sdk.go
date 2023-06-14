@@ -92,7 +92,7 @@ func (f *fileWriter) WriteClient(service *ir.HttpService) error {
 	f.P()
 
 	for _, endpoint := range service.Endpoints {
-		if err := f.writeEndpoint(endpoint); err != nil {
+		if err := f.writeEndpoint(service.Name.FernFilepath, endpoint); err != nil {
 			return err
 		}
 	}
@@ -100,11 +100,12 @@ func (f *fileWriter) WriteClient(service *ir.HttpService) error {
 }
 
 // writeEndpoint writes the endpoint type, which includes its error decoder and call methods.
-func (f *fileWriter) writeEndpoint(endpoint *ir.HttpEndpoint) error {
+func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) error {
 	// Generate the type definition.
 	var (
-		typeName = fmt.Sprintf("%sEndpoint", endpoint.Name.CamelCase.UnsafeName)
-		receiver = typeNameToReceiver(typeName)
+		typeName   = fmt.Sprintf("%sEndpoint", endpoint.Name.CamelCase.UnsafeName)
+		receiver   = typeNameToReceiver(typeName)
+		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 	)
 	f.P("type ", typeName, " struct {")
 	f.P("url string")
@@ -146,6 +147,41 @@ func (f *fileWriter) writeEndpoint(endpoint *ir.HttpEndpoint) error {
 	f.P("return errors.New(string(bytes))")
 	f.P("}")
 	f.P()
+
+	// Generate the Call method.
+	var responseType string
+	if endpoint.Response != nil {
+		if endpoint.Response.Json == nil {
+			return fmt.Errorf("the SDK generator only supports JSON-based responses, but found %q", endpoint.Response.Type)
+		}
+		responseType = typeReferenceToGoType(endpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
+	}
+
+	// TODO: Add path parameters and request body, if any.
+	parameters := "ctx context.Context"
+
+	// TODO: What about endpoints without a response value?
+	responseInitializerFormat := "var response %s"
+	if named := endpoint.Response.Json.ResponseBodyType.Named; named != nil && isPointer(f.types[named.TypeId]) {
+		responseInitializerFormat = "response := new(%s)"
+	}
+
+	f.P("func (", receiver, "*", typeName, ") Call(", parameters, ") (", responseType, ", error) {")
+	f.P(fmt.Sprintf(responseInitializerFormat, strings.TrimLeft(responseType, "*")))
+	f.P("if err := core.DoRequest(")
+	f.P("ctx,")
+	f.P(receiver, ".client,")
+	f.P(receiver, ".url,")
+	f.P("http.MethodGet,") // TODO: Support all other HTTP method types.
+	f.P("nil,")            // TODO: Support request body, if any.
+	f.P("response,")
+	f.P("nil,") // TODO: Support request's http.Headers, if any.
+	f.P(receiver, ".decodeError,")
+	f.P("); err != nil {")
+	f.P("return response, err")
+	f.P("}")
+	f.P("return response, nil")
+	f.P("}")
 
 	return nil
 }
@@ -223,9 +259,9 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 	var (
 		// At this point, we've already verified that the given endpoint's request
 		// is a wrapper, so we can safely access it without any nil-checks.
-		bodyField = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
-		typeName  = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
-		// receiver   = typeNameToReceiver(typeName)
+		bodyField  = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
+		typeName   = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+		receiver   = typeNameToReceiver(typeName)
 		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 	)
 
@@ -258,7 +294,6 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 	f.P()
 
 	// Implement the getter methods.
-	receiver := typeNameToReceiver(typeName)
 	for _, literal := range literals {
 		f.P("func (", receiver, " *", typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
 		f.P("return ", receiver, ".", literal.Name.CamelCase.SafeName)

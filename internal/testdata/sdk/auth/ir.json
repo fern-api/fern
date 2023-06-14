@@ -149,6 +149,20 @@
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
                     "errors": [],
                     "examples": []
                 }

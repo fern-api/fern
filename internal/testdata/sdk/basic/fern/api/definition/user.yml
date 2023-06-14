@@ -6,3 +6,4 @@ service:
     get:
       method: GET
       path: ""
+      response: string

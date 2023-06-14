@@ -41,8 +41,10 @@ func newFileWriter(
 	// These imports are removed from the generated output if
 	// they aren't used.
 	imports := make(imports)
+	imports.Add("context")
 	imports.Add("errors")
 	imports.Add("fmt")
+	imports.Add("net/http")
 	imports.Add("io")
 	imports.Add("encoding/json")
 	imports.Add("strconv")

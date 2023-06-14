@@ -8,3 +8,4 @@ service:
       path: /{userId}
       path-parameters:
         userId: string
+      response: string

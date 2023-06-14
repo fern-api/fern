@@ -3,10 +3,12 @@
 package api
 
 import (
+	context "context"
 	json "encoding/json"
 	errors "errors"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 	io "io"
+	http "net/http"
 )
 
 type UserClient interface{}
@@ -62,6 +64,23 @@ func (g *getEndpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
+func (g *getEndpoint) Call(ctx context.Context) (string, error) {
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		g.client,
+		g.url,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		g.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
 type updateEndpoint struct {
 	url    string
 	client core.HTTPClient
@@ -90,4 +109,21 @@ func (u *updateEndpoint) decodeError(statusCode int, body io.Reader) error {
 		return err
 	}
 	return errors.New(string(bytes))
+}
+
+func (u *updateEndpoint) Call(ctx context.Context) (string, error) {
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.client,
+		u.url,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		u.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }

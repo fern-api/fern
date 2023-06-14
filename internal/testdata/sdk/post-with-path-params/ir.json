@@ -334,6 +334,20 @@
                             }
                         }
                     },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
                     "errors": [],
                     "examples": []
                 },
@@ -558,6 +572,20 @@
                                 "safeName": "Request"
                             }
                         }
+                    },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
                     },
                     "errors": [],
                     "examples": []
@@ -832,6 +860,144 @@
                             }
                         }
                     },
+                    "response": {
+                        "responseBodyType": {
+                            "name": {
+                                "originalName": "SetNameRequestV3Body",
+                                "camelCase": {
+                                    "unsafeName": "setNameRequestV3Body",
+                                    "safeName": "setNameRequestV3Body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "set_name_request_v_3_body",
+                                    "safeName": "set_name_request_v_3_body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SET_NAME_REQUEST_V_3_BODY",
+                                    "safeName": "SET_NAME_REQUEST_V_3_BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SetNameRequestV3Body",
+                                    "safeName": "SetNameRequestV3Body"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "user",
+                                    "camelCase": {
+                                        "unsafeName": "user",
+                                        "safeName": "user"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "user",
+                                        "safeName": "user"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "USER",
+                                        "safeName": "USER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "User",
+                                        "safeName": "User"
+                                    }
+                                }
+                            },
+                            "typeId": "type_user:SetNameRequestV3Body",
+                            "_type": "named"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "name": {
+                                "originalName": "SetNameRequestV3Body",
+                                "camelCase": {
+                                    "unsafeName": "setNameRequestV3Body",
+                                    "safeName": "setNameRequestV3Body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "set_name_request_v_3_body",
+                                    "safeName": "set_name_request_v_3_body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SET_NAME_REQUEST_V_3_BODY",
+                                    "safeName": "SET_NAME_REQUEST_V_3_BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SetNameRequestV3Body",
+                                    "safeName": "SetNameRequestV3Body"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "user",
+                                    "camelCase": {
+                                        "unsafeName": "user",
+                                        "safeName": "user"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "user",
+                                        "safeName": "user"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "USER",
+                                        "safeName": "USER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "User",
+                                        "safeName": "User"
+                                    }
+                                }
+                            },
+                            "typeId": "type_user:SetNameRequestV3Body",
+                            "_type": "named"
+                        },
+                        "type": "json"
+                    },
                     "errors": [],
                     "examples": []
                 },
@@ -1049,6 +1215,20 @@
                             }
                         }
                     },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
                     "errors": [],
                     "examples": []
                 },
@@ -1265,6 +1445,20 @@
                                 "safeName": "Request"
                             }
                         }
+                    },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
                     },
                     "errors": [],
                     "examples": []

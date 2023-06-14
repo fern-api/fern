@@ -45,8 +45,8 @@ type HTTPClient interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
-// doRequest issues a JSON request to the given url.
-func doRequest(
+// DoRequest issues a JSON request to the given url.
+func DoRequest(
 	ctx context.Context,
 	client HTTPClient,
 	url string,

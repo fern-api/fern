@@ -3,9 +3,11 @@
 package api
 
 import (
+	context "context"
 	errors "errors"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/auth/fixtures/core"
 	io "io"
+	http "net/http"
 )
 
 type UserClient interface{}
@@ -28,4 +30,21 @@ func (g *getEndpoint) decodeError(statusCode int, body io.Reader) error {
 		return err
 	}
 	return errors.New(string(bytes))
+}
+
+func (g *getEndpoint) Call(ctx context.Context) (string, error) {
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		g.client,
+		g.url,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		g.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }

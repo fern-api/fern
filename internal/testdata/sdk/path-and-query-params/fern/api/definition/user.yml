@@ -12,3 +12,4 @@ service:
         name: GetUserRequest
         query-parameters:
           shallow: optional<boolean>
+      response: string

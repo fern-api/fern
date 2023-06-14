@@ -3,9 +3,11 @@
 package api
 
 import (
+	context "context"
 	errors "errors"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
 	io "io"
+	http "net/http"
 )
 
 type UserClient interface{}
@@ -30,6 +32,23 @@ func (s *setNameEndpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
+func (s *setNameEndpoint) Call(ctx context.Context) (string, error) {
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		s.client,
+		s.url,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		s.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
 type setNameV2Endpoint struct {
 	url    string
 	client core.HTTPClient
@@ -48,6 +67,23 @@ func (s *setNameV2Endpoint) decodeError(statusCode int, body io.Reader) error {
 		return err
 	}
 	return errors.New(string(bytes))
+}
+
+func (s *setNameV2Endpoint) Call(ctx context.Context) (string, error) {
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		s.client,
+		s.url,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		s.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 type setNameV3Endpoint struct {
@@ -70,6 +106,23 @@ func (s *setNameV3Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
+func (s *setNameV3Endpoint) Call(ctx context.Context) (*SetNameRequestV3Body, error) {
+	response := new(SetNameRequestV3Body)
+	if err := core.DoRequest(
+		ctx,
+		s.client,
+		s.url,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		s.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
 type setNameV4Endpoint struct {
 	url    string
 	client core.HTTPClient
@@ -90,6 +143,23 @@ func (s *setNameV4Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
+func (s *setNameV4Endpoint) Call(ctx context.Context) (string, error) {
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		s.client,
+		s.url,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		s.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
 type setNameV5Endpoint struct {
 	url    string
 	client core.HTTPClient
@@ -108,4 +178,21 @@ func (s *setNameV5Endpoint) decodeError(statusCode int, body io.Reader) error {
 		return err
 	}
 	return errors.New(string(bytes))
+}
+
+func (s *setNameV5Endpoint) Call(ctx context.Context) (string, error) {
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		s.client,
+		s.url,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		s.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
