@@ -1,3 +1,8 @@
+#### Looking to generate client libraries from your OpenAPI spec?
+[Get started](https://buildwithfern.com/docs/getting-started) self-service or ☎️ [schedule a call](https://calendly.com/meetdannysheridan/intro) to learn more.
+
+---
+
 <a href="https://www.buildwithfern.com/">
   <img src="header.png" alt="header" />
 </a>
