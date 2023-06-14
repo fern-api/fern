@@ -21,10 +21,12 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 		authSchemes = auth.Schemes
 		importPath  = path.Join(f.baseImportPath, "core")
 	)
+
 	// We have at least one auth scheme, so we need to generate the ClientOption.
 	f.P("type ClientOption func(*ClientOptions)")
 	f.P()
 
+	// Generate the exported ClientOptions type that all clients can act upon.
 	f.P("type ClientOptions struct {")
 	for _, authScheme := range authSchemes {
 		if authScheme.Bearer != nil {
@@ -36,7 +38,7 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 		}
 		if authScheme.Header != nil {
 			f.P(
-				authScheme.Header.Name.Name.CamelCase.UnsafeName,
+				authScheme.Header.Name.Name.PascalCase.UnsafeName,
 				" ",
 				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath),
 			)
@@ -44,6 +46,41 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 	}
 	f.P("}")
 	f.P()
+
+	// Generat the authorization functional options.
+	for _, authScheme := range authSchemes {
+		if authScheme.Bearer != nil {
+			f.P("func ClientWithAuthBearer(bearer string) ClientOption {")
+			f.P("return func(opts *ClientOptions) {")
+			f.P("opts.Bearer = bearer")
+			f.P("}")
+			f.P("}")
+			f.P()
+		}
+		if authScheme.Basic != nil {
+			f.P("func ClientWithAuthBasic(username, password string) ClientOption {")
+			f.P("return func(opts *ClientOptions) {")
+			f.P("opts.Username = username")
+			f.P("opts.Password = password")
+			f.P("}")
+			f.P("}")
+			f.P()
+		}
+		if authScheme.Header != nil {
+			var (
+				optionName = fmt.Sprintf("ClientWithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)
+				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
+				param      = authScheme.Header.Name.Name.CamelCase.SafeName
+				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+			)
+			f.P("func ", optionName, "(", param, " ", value, ") ClientOption {")
+			f.P("return func(opts *ClientOptions) {")
+			f.P("opts.", field, " = ", param)
+			f.P("}")
+			f.P("}")
+			f.P()
+		}
+	}
 	return nil
 }
 
