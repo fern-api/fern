@@ -1,4 +1,4 @@
-package client
+package core
 
 import (
 	"bytes"
@@ -44,9 +44,6 @@ var fernHeaders = map[string]string{
 type HTTPClient interface {
 	Do(*http.Request) (*http.Response, error)
 }
-
-// ClientOption adapts the behavior of a Fern client.
-type ClientOption func(*clientOptions)
 
 // doRequest issues a JSON request to the given url.
 func doRequest(

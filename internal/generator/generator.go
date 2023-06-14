@@ -116,6 +116,27 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 		if ir.ErrorDiscriminationStrategy != nil && ir.ErrorDiscriminationStrategy.StatusCode == nil {
 			return nil, errors.New("this generator only supports the status-code error discrimination strategy")
 		}
+		// Generate the core API files.
+		files = append(files, newCoreFile())
+		if ir.Auth != nil && len(ir.Auth.Schemes) > 0 {
+			fileInfo := fileInfoForCoreClientOptions()
+			writer := newFileWriter(
+				fileInfo.filename,
+				fileInfo.packageName,
+				g.config.ImportPath,
+				ir.Types,
+				ir.Errors,
+			)
+			if err := writer.WriteCoreClientOptions(ir.Auth); err != nil {
+				return nil, err
+			}
+			file, err := writer.File()
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, file)
+		}
+		// Generate the error types, if any.
 		for _, irError := range ir.Errors {
 			fileInfo := fileInfoForType(ir.ApiName, irError.Name.FernFilepath, irError.Name.Name)
 			writer := newFileWriter(
@@ -158,7 +179,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 				}
 				files = append(files, file)
 			}
-			// Generate the core client interface.
+			// Generate the client interface.
 			fileInfo := fileInfoForClient(ir.ApiName, irService)
 			writer := newFileWriter(
 				fileInfo.filename,
@@ -204,9 +225,23 @@ func readIR(irFilename string) (*ir.IntermediateRepresentation, error) {
 	return ir, nil
 }
 
+func newCoreFile() *File {
+	return &File{
+		Path:    "core/core.go",
+		Content: []byte(coreFile),
+	}
+}
+
 type fileInfo struct {
 	filename    string
 	packageName string
+}
+
+func fileInfoForCoreClientOptions() *fileInfo {
+	return &fileInfo{
+		filename:    "core/client_option.go",
+		packageName: "core",
+	}
 }
 
 func fileInfoForType(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *ir.Name) *fileInfo {

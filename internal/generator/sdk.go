@@ -1,12 +1,51 @@
 package generator
 
 import (
+	_ "embed"
 	"errors"
 	"fmt"
+	"path"
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
 )
+
+//go:embed sdk/core/core.go
+var coreFile string
+
+// WriteCore writes the core utilities required by the generated
+// service code. This includes the ClientOption type, auth options,
+// and HTTPClient interface declaration.
+func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
+	var (
+		authSchemes = auth.Schemes
+		importPath  = path.Join(f.baseImportPath, "core")
+	)
+	// We have at least one auth scheme, so we need to generate the ClientOption.
+	f.P("type ClientOption func(*clientOptions)")
+	f.P()
+
+	f.P("type clientOptions struct {")
+	for _, authScheme := range authSchemes {
+		if authScheme.Bearer != nil {
+			f.P("bearer string")
+		}
+		if authScheme.Basic != nil {
+			f.P("username string")
+			f.P("password string")
+		}
+		if authScheme.Header != nil {
+			f.P(
+				authScheme.Header.Name.Name.CamelCase.SafeName,
+				" ",
+				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath),
+			)
+		}
+	}
+	f.P("}")
+	f.P()
+	return nil
+}
 
 // WriteClient writes a client for interacting with the given service.
 // This file includes all of the service's endpoints so that their
