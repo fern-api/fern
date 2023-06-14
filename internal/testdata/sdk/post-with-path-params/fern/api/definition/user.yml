@@ -46,3 +46,14 @@ service:
         headers:
           X-Endpoint-Header: string
         body: list<string>
+
+    setNameV5:
+      method: POST
+      path: /{userId}/set-name-v5
+      path-parameters:
+        userId: string
+      request:
+        name: SetNameRequestV5
+        headers:
+          X-Endpoint-Header: string
+        body: literal<"fern">

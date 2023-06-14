@@ -2,7 +2,24 @@
 
 package api
 
+import (
+	json "encoding/json"
+)
+
 type SetNameRequestV4 struct {
 	XEndpointHeader string   `json:"-"`
 	Body            []string `json:"-"`
+}
+
+func (s *SetNameRequestV4) UnmarshalJSON(data []byte) error {
+	var body []string
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	s.Body = body
+	return nil
+}
+
+func (s *SetNameRequestV4) MarshalJSON() ([]byte, error) {
+	return json.Marshal(s.Body)
 }
