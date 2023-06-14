@@ -15,7 +15,7 @@ describe("convertDependenciesConfiguration", () => {
         const dependenciesConfiguration = await convertDependenciesConfiguration({
             rawDependenciesConfiguration,
             context: createMockTaskContext(),
-            absolutePathToWorkspace: AbsoluteFilePath.of(""),
+            absolutePathToWorkspace: AbsoluteFilePath.of("/path/to/workspace"),
         });
         const expectedDependenciesConfiguration: DependenciesConfiguration = {
             dependencies: {

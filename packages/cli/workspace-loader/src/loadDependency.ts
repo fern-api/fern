@@ -349,6 +349,9 @@ function stringifyDependency(dependency: Dependency): string {
     }
 }
 
-function removeUndefined(val: any): any {
+function removeUndefined(val: unknown): unknown {
+    if (val === undefined) {
+        return undefined;
+    }
     return JSON.parse(JSON.stringify(val));
 }
