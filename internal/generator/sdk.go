@@ -1,6 +1,7 @@
 package generator
 
 import (
+	"errors"
 	"fmt"
 	"strings"
 
@@ -10,37 +11,6 @@ import (
 // WriteClient writes a client for interacting with the given service.
 func (f *fileWriter) WriteClient(service *ir.HttpService) error {
 	f.P("type ", service.Name.FernFilepath.File.PascalCase.UnsafeName, "Client interface {}")
-	return nil
-}
-
-// WriteRequestType writes a type dedicated to the in-lined request (if any).
-func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) error {
-	// At this point, we've already verified that the given endpoint's request
-	// is a wrapper, so we can safely access it without any nil-checks.
-	var (
-		typeName = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
-		// receiver   = typeNameToReceiver(typeName)
-		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
-	)
-
-	f.P("type ", typeName, " struct {")
-	for _, header := range endpoint.Headers {
-		f.P(header.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath), "`json:\"-\"`")
-	}
-	for _, queryParam := range endpoint.QueryParameters {
-		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.imports, f.baseImportPath, importPath)
-		if queryParam.AllowMultiple {
-			// TODO: If the query parameter can be specified multiple times, it's not enough to just define it
-			// as a list. Otherwise, it's indistinguishable from a single query parameter with a list value.
-			//
-			// We'll need to track how the query parameter is applied at the call-site.
-			value = fmt.Sprintf("[]%s", value)
-		}
-		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, "`json:\"-\"`")
-	}
-	// TODO: Write the body parameters, if any.
-	f.P("}")
-	f.P()
 	return nil
 }
 
@@ -110,4 +80,111 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("}")
 	f.P()
 	return nil
+}
+
+// WriteRequestType writes a type dedicated to the in-lined request (if any).
+func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) error {
+	var (
+		// At this point, we've already verified that the given endpoint's request
+		// is a wrapper, so we can safely access it without any nil-checks.
+		typeName = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+		// receiver   = typeNameToReceiver(typeName)
+		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+	)
+
+	f.P("type ", typeName, " struct {")
+	for _, header := range endpoint.Headers {
+		f.P(header.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath), "`json:\"-\"`")
+	}
+	for _, queryParam := range endpoint.QueryParameters {
+		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+		if queryParam.AllowMultiple {
+			// TODO: If the query parameter can be specified multiple times, it's not enough to just define it
+			// as a list. Otherwise, it's indistinguishable from a single query parameter with a list value.
+			//
+			// We'll need to track how the query parameter is applied at the call-site.
+			value = fmt.Sprintf("[]%s", value)
+		}
+		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, "`json:\"-\"`")
+	}
+	if endpoint.RequestBody == nil {
+		// If the request doesn't have a body, we don't need any custom [de]serialization logic.
+		f.P("}")
+		f.P()
+		return nil
+	}
+	_, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath)
+	if err != nil {
+		return err
+	}
+	// TODO: Add getter methods and custom [de]serialization logic if any literals exist.
+	f.P("}")
+	f.P()
+	return nil
+}
+
+func requestBodyToFieldDeclaration(
+	requestBody *ir.HttpRequestBody,
+	writer *fileWriter,
+	importPath string,
+) ([]*literal, error) {
+	visitor := &requestBodyVisitor{
+		baseImportPath: writer.baseImportPath,
+		importPath:     importPath,
+		imports:        writer.imports,
+		types:          writer.types,
+		writer:         writer,
+	}
+	if err := requestBody.Accept(visitor); err != nil {
+		return nil, err
+	}
+	return visitor.literals, nil
+}
+
+type requestBodyVisitor struct {
+	literals       []*literal
+	baseImportPath string
+	importPath     string
+	imports        imports
+	types          map[ir.TypeId]*ir.TypeDeclaration
+	writer         *fileWriter
+}
+
+func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
+	typeVisitor := &typeVisitor{
+		typeName:       inlinedRequestBody.Name.PascalCase.UnsafeName,
+		baseImportPath: r.baseImportPath,
+		importPath:     r.importPath,
+		writer:         r.writer,
+	}
+	objectTypeDeclaration := inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
+	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */)
+	r.literals = literals
+	return nil
+}
+
+func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReference) error {
+	return nil
+}
+
+func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) error {
+	return errors.New("file upload requests are not yet supported")
+}
+
+// inlinedRequestBodyToObjectTypeDeclaration maps the given inlined request body
+// into an object type declaration so that we can reuse the functionality required
+// to write object properties for a generated object.
+func inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody *ir.InlinedRequestBody) *ir.ObjectTypeDeclaration {
+	properties := make([]*ir.ObjectProperty, len(inlinedRequestBody.Properties))
+	for i, property := range inlinedRequestBody.Properties {
+		properties[i] = &ir.ObjectProperty{
+			Docs:      property.Docs,
+			Name:      property.Name,
+			ValueType: property.ValueType,
+		}
+	}
+	return &ir.ObjectTypeDeclaration{
+		Extends:    inlinedRequestBody.Extends,
+		Properties: properties,
+	}
 }
