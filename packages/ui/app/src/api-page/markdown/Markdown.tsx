@@ -20,7 +20,7 @@ const REHYPE_PLUGINS = [rehypeRaw];
 
 const PRISM_CLASSNAME_REGEX = /language-(\w+)/;
 
-export const Markdown: React.FC<Markdown.Props> = ({ children, className }) => {
+export const Markdown = React.memo<Markdown.Props>(function Markdown({ children, className }) {
     return (
         <ReactMarkdown
             className={classNames(className, styles.container, "prose prose-sm dark:prose-invert max-w-none")}
@@ -50,9 +50,17 @@ export const Markdown: React.FC<Markdown.Props> = ({ children, className }) => {
                         </Code>
                     );
                 },
+                table({ node, ...props }) {
+                    // eslint-disable-next-line @blueprintjs/html-components
+                    return <table {...props} className={classNames(props.className, "block overflow-x-auto")} />;
+                },
+                h1: ({ node, ...props }) => {
+                    // eslint-disable-next-line @blueprintjs/html-components
+                    return <h1 {...props} className={classNames(props.className, "mt-10")} />;
+                },
             }}
         >
             {children}
         </ReactMarkdown>
     );
-};
+});
