@@ -26,7 +26,10 @@ func (f *fileWriter) WriteClient(service *ir.HttpService) error {
 // writeEndpoint writes the endpoint type, which includes its error decoder and call methods.
 func (f *fileWriter) writeEndpoint(endpoint *ir.HttpEndpoint) error {
 	// Generate the type definition.
-	typeName := fmt.Sprintf("%sEndpoint", endpoint.Name.CamelCase.UnsafeName)
+	var (
+		typeName = fmt.Sprintf("%sEndpoint", endpoint.Name.CamelCase.UnsafeName)
+		receiver = typeNameToReceiver(typeName)
+	)
 	f.P("type ", typeName, " struct {")
 	f.P("url string")
 	f.P("client HTTPClient")
@@ -39,6 +42,32 @@ func (f *fileWriter) writeEndpoint(endpoint *ir.HttpEndpoint) error {
 	f.P("url: url,")
 	f.P("client: client,")
 	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Generate the error decoder.
+	f.P("func (", receiver, "*", typeName, ") decodeError(statusCode int, body io.Reader) error {")
+	if len(endpoint.Errors) > 0 {
+		f.P("decoder := json.NewDecoder(body)")
+		f.P("switch statusCode {")
+		for _, responseError := range endpoint.Errors {
+			errorDeclaration := f.errors[responseError.Error.ErrorId]
+			f.P("case ", errorDeclaration.StatusCode, ":")
+			f.P("value := new(", errorDeclaration.Name.Name.PascalCase.UnsafeName, ")")
+			f.P("if err := decoder.Decode(value); err != nil {")
+			f.P("return err")
+			f.P("}")
+			f.P("value.StatusCode = statusCode")
+			f.P("return value")
+		}
+		// Close the switch statement.
+		f.P("}")
+	}
+	f.P("bytes, err := io.ReadAll(body)")
+	f.P("if err != nil {")
+	f.P("return err")
+	f.P("}")
+	f.P("return errors.New(string(bytes))")
 	f.P("}")
 	f.P()
 

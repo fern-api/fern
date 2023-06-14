@@ -1,3 +1,7 @@
 name: api
+imports:
+  user: user.yml
 error-discrimination:
   strategy: status-code
+errors:
+  - user.UpgradeError 

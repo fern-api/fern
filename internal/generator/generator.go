@@ -71,7 +71,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 	// First write all of the package-level documentation, if any (i.e. in a doc.go file).
 	if ir.RootPackage != nil && ir.RootPackage.Docs != nil && len(*ir.RootPackage.Docs) > 0 {
 		fileInfo := fileInfoForPackage(ir.ApiName, ir.RootPackage.FernFilepath)
-		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil)
+		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil)
 		writer.WriteDocs(ir.RootPackage.Docs)
 		file, err := writer.DocsFile()
 		if err != nil {
@@ -84,7 +84,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 			continue
 		}
 		fileInfo := fileInfoForPackage(ir.ApiName, subpackage.FernFilepath)
-		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil)
+		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil)
 		writer.WriteDocs(subpackage.Docs)
 		file, err := writer.DocsFile()
 		if err != nil {
@@ -101,6 +101,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 				fileInfo.packageName,
 				g.config.ImportPath,
 				ir.Types,
+				ir.Errors,
 			)
 			if err := writer.WriteType(irType); err != nil {
 				return nil, err
@@ -122,6 +123,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 				fileInfo.packageName,
 				g.config.ImportPath,
 				ir.Types,
+				ir.Errors,
 			)
 			if err := writer.WriteError(irError); err != nil {
 				return nil, err
@@ -145,6 +147,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 					fileInfo.packageName,
 					g.config.ImportPath,
 					ir.Types,
+					ir.Errors,
 				)
 				if err := writer.WriteRequestType(irService.Name.FernFilepath, irEndpoint); err != nil {
 					return nil, err
@@ -162,6 +165,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 				fileInfo.packageName,
 				g.config.ImportPath,
 				ir.Types,
+				ir.Errors,
 			)
 			if err := writer.WriteClient(irService); err != nil {
 				return nil, err

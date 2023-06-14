@@ -20,3 +20,26 @@ types:
   UserNotFoundErrorBody:
     properties:
       requestedUserId: string
+
+service:
+  base-path: /
+  auth: false
+  endpoints:
+    get:
+      path: /{id}
+      path-parameters:
+        id: string
+      method: GET
+      response: string
+      errors:
+        - UserNotFoundError
+        - NotImplementedError
+        - TeapotError
+
+    update:
+      path: /{id}
+      path-parameters:
+        id: string
+      method: POST
+      request: string
+      response: string

@@ -28,7 +28,7 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Generate error types
 - [x] Generate endpoint request types
 - [x] Generate endpoint structures
-- [ ] Generate endpoint error decoders
+- [x] Generate endpoint error decoders
 - [ ] Generate endpoint call method
 - [ ] Generate options (w/ path and query parameters, and custom headers)
 - [ ] Generate authorization options

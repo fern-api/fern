@@ -25,6 +25,7 @@ type fileWriter struct {
 	baseImportPath string
 	imports        imports
 	types          map[ir.TypeId]*ir.TypeDeclaration
+	errors         map[ir.ErrorId]*ir.ErrorDeclaration
 	buffer         *bytes.Buffer
 }
 
@@ -33,12 +34,15 @@ func newFileWriter(
 	packageName string,
 	baseImportPath string,
 	types map[ir.TypeId]*ir.TypeDeclaration,
+	errors map[ir.ErrorId]*ir.ErrorDeclaration,
 ) *fileWriter {
 	// The default set of imports used in the generated output.
 	// These imports are removed from the generated output if
 	// they aren't used.
 	imports := make(imports)
+	imports.Add("errors")
 	imports.Add("fmt")
+	imports.Add("io")
 	imports.Add("encoding/json")
 	imports.Add("strconv")
 	imports.Add("time")
@@ -53,6 +57,7 @@ func newFileWriter(
 		baseImportPath: baseImportPath,
 		imports:        imports,
 		types:          types,
+		errors:         errors,
 		buffer:         new(bytes.Buffer),
 	}
 }
@@ -68,7 +73,7 @@ func (f *fileWriter) P(elements ...any) {
 // File formats and writes the content stored in the writer's buffer into a *File.
 func (f *fileWriter) File() (*File, error) {
 	// Start with the package declaration and import statements.
-	header := newFileWriter(f.filename, f.packageName, f.baseImportPath, f.types)
+	header := newFileWriter(f.filename, f.packageName, f.baseImportPath, f.types, f.errors)
 	header.P(fileHeader)
 	header.P("package ", f.packageName)
 	header.P("import (")
