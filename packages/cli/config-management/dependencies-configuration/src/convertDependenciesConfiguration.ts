@@ -23,7 +23,19 @@ export async function convertDependenciesConfiguration({
 
     const dependencies: Record<string, Dependency> = {};
     for (const [coordinate, versionOrPath] of Object.entries(rawDependenciesConfiguration.dependencies)) {
-        if (isCoordinate(coordinate)) {
+        if (isPath(versionOrPath)) {
+            const pathToApi = AbsoluteFilePath.of(path.join(absolutePathToWorkspace, versionOrPath));
+            if (await doesPathExist(pathToApi)) {
+                dependencies[coordinate] = {
+                    type: "local",
+                    absoluteFilepath: pathToApi,
+                    path: versionOrPath,
+                };
+            } else {
+                // don't throw so we can log all failures
+                context.failWithoutThrowing(`Path to ${coordinate} dependency does not exist: ${pathToApi}`);
+            }
+        } else {
             const unprefixedCoordinate = coordinate.substring(1);
             const splitCoordinate = unprefixedCoordinate.split("/");
             const organization = splitCoordinate[0];
@@ -39,18 +51,6 @@ export async function convertDependenciesConfiguration({
                 // don't throw so we can log all failures
                 context.failWithoutThrowing(`Failed to parse dependency: ${coordinate}`);
             }
-        } else {
-            const pathToApi = AbsoluteFilePath.of(path.join(absolutePathToWorkspace, versionOrPath));
-            if (await doesPathExist(pathToApi)) {
-                dependencies[coordinate] = {
-                    type: "local",
-                    absoluteFilepath: pathToApi,
-                    path: versionOrPath,
-                };
-            } else {
-                // don't throw so we can log all failures
-                context.failWithoutThrowing(`Path to ${coordinate} dependency does not exist: ${pathToApi}`);
-            }
         }
     }
 
@@ -63,7 +63,7 @@ export async function convertDependenciesConfiguration({
     };
 }
 
-const COORDINATE_PATTERN = /^@[\w-]+\/[\w-]+$/;
-function isCoordinate(input: string): boolean {
-    return COORDINATE_PATTERN.test(input);
+const RELATIVE_PATH_UP_ONE_DIRECTORY_PATTERN = /^\.\.\/.*$/;
+function isPath(value: string): boolean {
+    return RELATIVE_PATH_UP_ONE_DIRECTORY_PATTERN.test(value);
 }
