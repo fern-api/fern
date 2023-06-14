@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { PropsWithChildren, useContext, useMemo } from "react";
-import { SidebarContext, SidebarContextValue } from "./context/SidebarContext";
+import { SidebarDepthContext, SidebarDepthContextValue } from "./context/SidebarDepthContext";
 
 export declare namespace SidebarGroup {
     export type Props = PropsWithChildren<{
@@ -10,9 +10,9 @@ export declare namespace SidebarGroup {
 }
 
 export const SidebarGroup: React.FC<SidebarGroup.Props> = ({ title, includeTopMargin = false, children }) => {
-    const sidebarContext = useContext(SidebarContext);
+    const sidebarContext = useContext(SidebarDepthContext);
     const contextValue = useMemo(
-        (): SidebarContextValue => ({ depth: sidebarContext != null ? sidebarContext.depth + 1 : 0 }),
+        (): SidebarDepthContextValue => ({ depth: sidebarContext != null ? sidebarContext.depth + 1 : 0 }),
         [sidebarContext]
     );
 
@@ -23,11 +23,11 @@ export const SidebarGroup: React.FC<SidebarGroup.Props> = ({ title, includeTopMa
             })}
         >
             {title}
-            <SidebarContext.Provider value={contextValue}>
+            <SidebarDepthContext.Provider value={contextValue}>
                 <div className="flex">
                     <div className="flex min-w-0 flex-1 flex-col">{children}</div>
                 </div>
-            </SidebarContext.Provider>
+            </SidebarDepthContext.Provider>
         </div>
     );
 };
