@@ -1,5 +1,5 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { useCallback, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
@@ -26,19 +26,9 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         [resolveSubpackageById, subpackage.subpackageId]
     );
 
-    const [contentsHeight, setContentsHeight] = useState<number>();
-    const setContentsRef = useCallback(
-        (ref: HTMLElement | null) => {
-            if (contentsHeight == null && ref != null) {
-                setContentsHeight(ref.getBoundingClientRect().height);
-            }
-        },
-        [contentsHeight]
-    );
-
     const isSelected = selectedPath != null && selectedPath.slug === slug;
     const isChildSelected = selectedPath != null && selectedPath.slug.startsWith(`${slug}/`);
-    const isOpen = isSelected || isChildSelected || contentsHeight == null;
+    const isOpen = isSelected || isChildSelected;
 
     if (!hasEndpoints) {
         return null;
@@ -55,13 +45,7 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
                 />
             }
         >
-            <div
-                ref={setContentsRef}
-                className="flex flex-col overflow-hidden transition-[height] duration-500"
-                style={{ height: isOpen ? contentsHeight : 0 }}
-            >
-                <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />
-            </div>
+            {isOpen && <ApiPackageSidebarSectionContents package={subpackage} slug={slug} />}
         </SidebarGroup>
     );
 };
