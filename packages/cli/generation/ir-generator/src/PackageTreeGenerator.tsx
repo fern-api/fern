@@ -49,11 +49,11 @@ export class PackageTreeGenerator {
     }
 
     public addType(typeId: TypeId, type: TypeDeclaration): void {
-        insertIntoSortedArray(this.getPackageForFernFilepath(type.name.fernFilepath).types, typeId);
+        this.getPackageForFernFilepath(type.name.fernFilepath).types.push(typeId);
     }
 
     public addError(errorId: ErrorId, error: ErrorDeclaration): void {
-        insertIntoSortedArray(this.getPackageForFernFilepath(error.name.fernFilepath).errors, errorId);
+        this.getPackageForFernFilepath(error.name.fernFilepath).errors.push(errorId);
     }
 
     public addService(serviceId: ServiceId, service: HttpService): void {
@@ -193,7 +193,7 @@ export class PackageTreeGenerator {
                 navigationConfig: undefined,
             };
             this.subpackages[newParentId] = newParent;
-            insertIntoSortedArray(parent.subpackages, newParentId);
+            parent.subpackages.push(newParentId);
             nextParent = newParent;
         }
 
@@ -214,15 +214,4 @@ function isEqualIgnoreOrder(a: string[], b: string[]) {
     }
 
     return true;
-}
-
-function insertIntoSortedArray<T>(array: T[], item: T): void {
-    let index;
-    for (index = 0; index < array.length; index++) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        if (array[index]! > item) {
-            break;
-        }
-    }
-    array.splice(index, 0, item);
 }
