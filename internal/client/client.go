@@ -48,6 +48,8 @@ type HTTPClient interface {
 // ClientOption adapts the behavior of a Fern client.
 type ClientOption func(*clientOptions)
 
+type clientOptions struct{}
+
 // doRequest issues a JSON request to the given url.
 func doRequest(
 	ctx context.Context,

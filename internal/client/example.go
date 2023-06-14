@@ -42,7 +42,7 @@ type ExampleClient interface {
 
 // NewExampleClient returns a new ExampleClient suitable
 // for calling the example API.
-func NewExampleClient(baseURL string, client Doer, opts ...ClientOption) (ExampleClient, error) {
+func NewExampleClient(baseURL string, client HTTPClient, opts ...ClientOption) (ExampleClient, error) {
 	options := new(clientOptions)
 	for _, opt := range opts {
 		opt(options)

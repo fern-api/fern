@@ -36,9 +36,9 @@ type Client interface {
 }
 
 // NewClient constructs a new Client.
-func NewClient(baseURL string, doer Doer, opts ...ClientOption) (Client, error) {
+func NewClient(baseURL string, httpClient HTTPClient, opts ...ClientOption) (Client, error) {
 	// TODO: Apply all the client options.
-	userClient, err := newUserClient(path.Join(baseURL, "users"), doer, opts...)
+	userClient, err := newUserClient(path.Join(baseURL, "users"), httpClient, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -67,11 +67,11 @@ type UserClient interface {
 }
 
 // newUserClient constructs a new UserClient.
-func newUserClient(baseURL string, doer Doer, opts ...ClientOption) (UserClient, error) {
+func newUserClient(baseURL string, client HTTPClient, opts ...ClientOption) (UserClient, error) {
 	// TODO: Apply all the client options.
 	return &userClient{
-		getUser:    newGetUserEndpoint(baseURL, doer).Call,
-		createUser: newCreateUserEndpoint(baseURL, doer).Call,
+		getUser:    newGetUserEndpoint(baseURL, client).Call,
+		createUser: newCreateUserEndpoint(baseURL, client).Call,
 	}, nil
 }
 
@@ -90,13 +90,13 @@ func (u *userClient) CreateUser(ctx context.Context, request *CreateUserRequest)
 
 type getUserEndpoint struct {
 	url    string
-	client Doer
+	client HTTPClient
 }
 
-func newGetUserEndpoint(url string, doer Doer) *getUserEndpoint {
+func newGetUserEndpoint(url string, client HTTPClient) *getUserEndpoint {
 	return &getUserEndpoint{
 		url:    url,
-		client: doer,
+		client: client,
 	}
 }
 
@@ -138,13 +138,13 @@ func (g *getUserEndpoint) decodeError(statusCode int, body io.Reader) error {
 
 type createUserEndpoint struct {
 	url    string
-	client Doer
+	client HTTPClient
 }
 
-func newCreateUserEndpoint(url string, doer Doer) *createUserEndpoint {
+func newCreateUserEndpoint(url string, client HTTPClient) *createUserEndpoint {
 	return &createUserEndpoint{
 		url:    url,
-		client: doer,
+		client: client,
 	}
 }
 
