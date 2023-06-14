@@ -3,3 +3,63 @@
 package api
 
 type UserClient interface{}
+
+type setNameEndpoint struct {
+	url    string
+	client HTTPClient
+}
+
+func newsetNameEndpoint(url string, client HTTPClient) *setNameEndpoint {
+	return &setNameEndpoint{
+		url:    url,
+		client: client,
+	}
+}
+
+type setNameV2Endpoint struct {
+	url    string
+	client HTTPClient
+}
+
+func newsetNameV2Endpoint(url string, client HTTPClient) *setNameV2Endpoint {
+	return &setNameV2Endpoint{
+		url:    url,
+		client: client,
+	}
+}
+
+type setNameV3Endpoint struct {
+	url    string
+	client HTTPClient
+}
+
+func newsetNameV3Endpoint(url string, client HTTPClient) *setNameV3Endpoint {
+	return &setNameV3Endpoint{
+		url:    url,
+		client: client,
+	}
+}
+
+type setNameV4Endpoint struct {
+	url    string
+	client HTTPClient
+}
+
+func newsetNameV4Endpoint(url string, client HTTPClient) *setNameV4Endpoint {
+	return &setNameV4Endpoint{
+		url:    url,
+		client: client,
+	}
+}
+
+type setNameV5Endpoint struct {
+	url    string
+	client HTTPClient
+}
+
+func newsetNameV5Endpoint(url string, client HTTPClient) *setNameV5Endpoint {
+	return &setNameV5Endpoint{
+		url:    url,
+		client: client,
+	}
+}

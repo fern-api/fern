@@ -3,7 +3,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: latest
+        version: 0.10.25-rc0
         output:
           location: local-file-system
           path: ../../fixtures

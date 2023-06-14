@@ -81,7 +81,219 @@
             },
             "headers": [],
             "pathParameters": [],
-            "endpoints": []
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "getUser",
+                        "camelCase": {
+                            "unsafeName": "getUser",
+                            "safeName": "getUser"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_user",
+                            "safeName": "get_user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_USER",
+                            "safeName": "GET_USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetUser",
+                            "safeName": "GetUser"
+                        }
+                    },
+                    "auth": false,
+                    "method": "GET",
+                    "path": {
+                        "head": "/",
+                        "parts": [
+                            {
+                                "pathParameter": "userId",
+                                "tail": ""
+                            }
+                        ]
+                    },
+                    "fullPath": {
+                        "head": "/users/",
+                        "parts": [
+                            {
+                                "pathParameter": "userId",
+                                "tail": ""
+                            }
+                        ]
+                    },
+                    "pathParameters": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "originalName": "userId",
+                                "camelCase": {
+                                    "unsafeName": "userId",
+                                    "safeName": "userId"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_id",
+                                    "safeName": "user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_ID",
+                                    "safeName": "USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserId",
+                                    "safeName": "UserId"
+                                }
+                            },
+                            "valueType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "location": "ENDPOINT"
+                        }
+                    ],
+                    "allPathParameters": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "originalName": "userId",
+                                "camelCase": {
+                                    "unsafeName": "userId",
+                                    "safeName": "userId"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "user_id",
+                                    "safeName": "user_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "USER_ID",
+                                    "safeName": "USER_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UserId",
+                                    "safeName": "UserId"
+                                }
+                            },
+                            "valueType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "location": "ENDPOINT"
+                        }
+                    ],
+                    "queryParameters": [
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "name": {
+                                    "originalName": "shallow",
+                                    "camelCase": {
+                                        "unsafeName": "shallow",
+                                        "safeName": "shallow"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "shallow",
+                                        "safeName": "shallow"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SHALLOW",
+                                        "safeName": "SHALLOW"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Shallow",
+                                        "safeName": "Shallow"
+                                    }
+                                },
+                                "wireValue": "shallow"
+                            },
+                            "valueType": {
+                                "container": {
+                                    "optional": {
+                                        "primitive": "BOOLEAN",
+                                        "_type": "primitive"
+                                    },
+                                    "_type": "optional"
+                                },
+                                "_type": "container"
+                            },
+                            "allowMultiple": false
+                        }
+                    ],
+                    "headers": [],
+                    "sdkRequest": {
+                        "shape": {
+                            "wrapperName": {
+                                "originalName": "GetUserRequest",
+                                "camelCase": {
+                                    "unsafeName": "getUserRequest",
+                                    "safeName": "getUserRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "get_user_request",
+                                    "safeName": "get_user_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "GET_USER_REQUEST",
+                                    "safeName": "GET_USER_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "GetUserRequest",
+                                    "safeName": "GetUserRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "errors": [],
+                    "examples": []
+                }
+            ]
         }
     },
     "constants": {
@@ -199,6 +411,7 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

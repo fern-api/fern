@@ -24,10 +24,12 @@ The following outlines a roadmap for the development of the Go generator.
 
 ## Client
 
-- [ ] Design client API
+- [x] Design client API
 - [x] Generate error types
-- [ ] Generate endpoint request types
-- [ ] Generate error decoders
+- [x] Generate endpoint request types
+- [x] Generate endpoint structures
+- [ ] Generate endpoint error decoders
+- [ ] Generate endpoint call method
 - [ ] Generate options (w/ path and query parameters, and custom headers)
 - [ ] Generate authorization options
 - [ ] Generate client (w/ root endpoints and nested service endpoints)

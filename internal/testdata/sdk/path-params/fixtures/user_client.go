@@ -4,13 +4,13 @@ package api
 
 type UserClient interface{}
 
-type getAllUsersEndpoint struct {
+type getUserEndpoint struct {
 	url    string
 	client HTTPClient
 }
 
-func newgetAllUsersEndpoint(url string, client HTTPClient) *getAllUsersEndpoint {
-	return &getAllUsersEndpoint{
+func newgetUserEndpoint(url string, client HTTPClient) *getUserEndpoint {
+	return &getUserEndpoint{
 		url:    url,
 		client: client,
 	}

@@ -9,8 +9,39 @@ import (
 )
 
 // WriteClient writes a client for interacting with the given service.
+// This file includes all of the service's endpoints so that their
+// implementation(s) are visible within the same file.
 func (f *fileWriter) WriteClient(service *ir.HttpService) error {
 	f.P("type ", service.Name.FernFilepath.File.PascalCase.UnsafeName, "Client interface {}")
+	f.P()
+
+	for _, endpoint := range service.Endpoints {
+		if err := f.writeEndpoint(endpoint); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// writeEndpoint writes the endpoint type, which includes its error decoder and call methods.
+func (f *fileWriter) writeEndpoint(endpoint *ir.HttpEndpoint) error {
+	// Generate the type definition.
+	typeName := fmt.Sprintf("%sEndpoint", endpoint.Name.CamelCase.UnsafeName)
+	f.P("type ", typeName, " struct {")
+	f.P("url string")
+	f.P("client HTTPClient")
+	f.P("}")
+	f.P()
+
+	// Generate the constructor.
+	f.P("func new", typeName, "(url string, client HTTPClient) *", typeName, " {")
+	f.P("return &", typeName, "{")
+	f.P("url: url,")
+	f.P("client: client,")
+	f.P("}")
+	f.P("}")
+	f.P()
+
 	return nil
 }
 
