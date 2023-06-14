@@ -87,14 +87,15 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 	var (
 		// At this point, we've already verified that the given endpoint's request
 		// is a wrapper, so we can safely access it without any nil-checks.
-		typeName = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+		bodyField = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
+		typeName  = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
 		// receiver   = typeNameToReceiver(typeName)
 		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 	)
 
 	f.P("type ", typeName, " struct {")
 	for _, header := range endpoint.Headers {
-		f.P(header.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath), "`json:\"-\"`")
+		f.P(header.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath), " `json:\"-\"`")
 	}
 	for _, queryParam := range endpoint.QueryParameters {
 		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.imports, f.baseImportPath, importPath)
@@ -105,7 +106,7 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 			// We'll need to track how the query parameter is applied at the call-site.
 			value = fmt.Sprintf("[]%s", value)
 		}
-		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, "`json:\"-\"`")
+		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\"`")
 	}
 	if endpoint.RequestBody == nil {
 		// If the request doesn't have a body, we don't need any custom [de]serialization logic.
@@ -113,11 +114,12 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 		f.P()
 		return nil
 	}
-	_, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath)
+	_, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField)
 	if err != nil {
 		return err
 	}
 	// TODO: Add getter methods and custom [de]serialization logic if any literals exist.
+	// TODO: Add custom [de]serialization logic if the body is a reference.
 	f.P("}")
 	f.P()
 	return nil
@@ -127,8 +129,10 @@ func requestBodyToFieldDeclaration(
 	requestBody *ir.HttpRequestBody,
 	writer *fileWriter,
 	importPath string,
+	bodyField string,
 ) ([]*literal, error) {
 	visitor := &requestBodyVisitor{
+		bodyField:      bodyField,
 		baseImportPath: writer.baseImportPath,
 		importPath:     importPath,
 		imports:        writer.imports,
@@ -143,6 +147,7 @@ func requestBodyToFieldDeclaration(
 
 type requestBodyVisitor struct {
 	literals       []*literal
+	bodyField      string
 	baseImportPath string
 	importPath     string
 	imports        imports
@@ -164,6 +169,13 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 }
 
 func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReference) error {
+	// For references, we include the type in a field that matches the configured body key.
+	r.writer.P(
+		r.bodyField,
+		" ",
+		typeReferenceToGoType(reference.RequestBodyType, r.types, r.imports, r.baseImportPath, r.importPath),
+		" `json:\"-\"`",
+	)
 	return nil
 }
 

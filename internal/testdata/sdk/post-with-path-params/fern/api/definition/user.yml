@@ -1,4 +1,8 @@
 # Simple test for generating a client with both path parameters and a body.
+types:
+  SetNameRequestV3Body:
+    properties:
+      userName: string
 service:
   base-path: /users
   auth: false
@@ -20,3 +24,25 @@ service:
         body:
           properties:
             userName: string
+
+    setNameV3:
+      method: POST
+      path: /{userId}/set-name-v3
+      path-parameters:
+        userId: string
+      request:
+        name: SetNameRequestV3
+        headers:
+          X-Endpoint-Header: string
+        body: SetNameRequestV3Body
+
+    setNameV4:
+      method: POST
+      path: /{userId}/set-name-v4
+      path-parameters:
+        userId: string
+      request:
+        name: SetNameRequestV4
+        headers:
+          X-Endpoint-Header: string
+        body: list<string>
