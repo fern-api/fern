@@ -1,3 +1,4 @@
+import { Text } from "@blueprintjs/core";
 import { marked } from "marked";
 import { useMemo } from "react";
 
@@ -16,13 +17,14 @@ export const TableOfContents: React.FC<TableOfContents.Props> = ({ markdown }) =
             <div className="medium mb-3 uppercase">On this page</div>
             <div className="flex flex-col gap-3">
                 {headings.map((heading, index) => (
-                    <div
+                    <Text
                         key={index}
                         className="text-text-default cursor-pointer transition hover:text-neutral-300"
                         style={{ marginLeft: 8 * (heading.depth - minDepth) }}
+                        ellipsize
                     >
                         {heading.text}
-                    </div>
+                    </Text>
                 ))}
             </div>
         </div>

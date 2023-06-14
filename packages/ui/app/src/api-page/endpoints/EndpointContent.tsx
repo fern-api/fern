@@ -1,13 +1,10 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { useDocsContext } from "../../docs-context/useDocsContext";
 import { PageMargins } from "../../page-margins/PageMargins";
-import { useApiPageContext } from "../api-page-context/useApiPageContext";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
-import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
 import { EndpointMethodPill } from "./EndpointMethodPill";
@@ -23,16 +20,14 @@ import { QueryParametersSection } from "./QueryParametersSection";
 export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
-        slug: string;
+        setContainerRef: (ref: HTMLElement | null) => void;
     }
 }
 
-export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slug }) => {
-    const isInitialMount = useRef(true);
-    useLayoutEffect(() => {
-        isInitialMount.current = false;
-    }, []);
-
+export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
+    endpoint,
+    setContainerRef,
+}) {
     const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
     const onHoverRequestProperty = useCallback(
         (jsonPropertyPath: JsonPropertyPath, { isHovering }: { isHovering: boolean }) => {
@@ -46,23 +41,6 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
         },
         [setHoveredResponsePropertyPath]
     );
-
-    const { isInVerticalCenter, setTargetRef } = useApiPageCenterElement({ slug });
-    const { onScrollToPath } = useDocsContext();
-    const { containerRef: apiPageContainerRef } = useApiPageContext();
-    useEffect(() => {
-        if (!isInVerticalCenter) {
-            return;
-        }
-
-        const handler = () => {
-            onScrollToPath(slug);
-        };
-        apiPageContainerRef?.addEventListener("scroll", handler, false);
-        return () => {
-            apiPageContainerRef?.removeEventListener("scroll", handler);
-        };
-    }, [apiPageContainerRef, isInVerticalCenter, onScrollToPath, slug]);
 
     const [titleHeight, setTitleHeight] = useState<number>();
     const setTitleRef = useCallback(
@@ -78,14 +56,14 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
 
     return (
         <PageMargins>
-            <div className="flex min-w-0 flex-1 gap-20" ref={setTargetRef}>
+            <div className="flex min-w-0 flex-1 gap-20" ref={setContainerRef}>
                 <div className="flex flex-1 flex-col">
                     <div className="pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
                     <div className="flex items-center gap-2">
                         <EndpointMethodPill endpoint={endpoint} />
-                        <MonospaceText className="text-text-default flex">
+                        <MonospaceText className="text-text-default">
                             {environmentUrl}
                             {endpoint.path.parts.map((part, index) => (
                                 <React.Fragment key={index}>
@@ -152,4 +130,4 @@ export const EndpointContent: React.FC<EndpointContent.Props> = ({ endpoint, slu
             </div>
         </PageMargins>
     );
-};
+});

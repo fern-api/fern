@@ -2,7 +2,7 @@ import { Text } from "@blueprintjs/core";
 import { useIsHovering } from "@fern-api/react-commons";
 import classNames from "classnames";
 import { useContext } from "react";
-import { SidebarContext } from "./context/SidebarContext";
+import { SidebarDepthContext } from "./context/SidebarDepthContext";
 
 export declare namespace SidebarItemLayout {
     export interface Props {
@@ -25,7 +25,7 @@ export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({
 
     const isClickable = onClick != null || onDoubleClick != null;
 
-    const sidebarContext = useContext(SidebarContext);
+    const sidebarContext = useContext(SidebarDepthContext);
 
     return (
         <Text

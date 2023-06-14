@@ -1,6 +1,6 @@
 import { useIsDarkTheme } from "@fern-api/theme";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { routeros, sunburst } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { routeros, sunburst } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 
 export declare namespace SyntaxHighlightedCodeExample {
     export interface Props {

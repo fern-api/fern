@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    a,
+    .prose a,
+    a:hover,
+    .prose a:hover {
+        @apply transition;
+        @apply pb-[2px];
+        @apply text-white hover:text-accentPrimary;
+        @apply no-underline border-b border-border hover:border-accentPrimary;
+    }
+
+    a,
+    .prose a {
+        text-decoration: none;
+    }
+
+    ::selection {
+        @apply bg-accentPrimary/20;
+    }
+}
