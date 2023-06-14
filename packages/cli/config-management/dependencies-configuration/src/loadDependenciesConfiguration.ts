@@ -16,6 +16,7 @@ export async function loadDependenciesConfiguration({
         context,
     });
     return convertDependenciesConfiguration({
+        absolutePathToWorkspace,
         rawDependenciesConfiguration,
         context,
     });

@@ -130,10 +130,12 @@ async function validateLocalDependencyAndGetDefinition({
             : await convertOpenApiWorkspaceToFernWorkspace(loadDependencyWorkspaceResult.workspace, context);
 
     // ensure root api files are equivalent
-    const areRootApiFilesEquivalent = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
-    if (!areRootApiFilesEquivalent) {
+    const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
+    if (!equal) {
         context.failWithoutThrowing(
-            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different`
+            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
+                ", "
+            )}]`
         );
         return undefined;
     }
@@ -243,10 +245,12 @@ async function validateVersionedDependencyAndGetDefinition({
     }
 
     // ensure root api files are equivalent
-    const areRootApiFilesEquivalent = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
-    if (!areRootApiFilesEquivalent) {
+    const { equal, differences } = await getAreRootApiFilesEquivalent(rootApiFile, workspaceOfDependency);
+    if (!equal) {
         context.failWithoutThrowing(
-            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different`
+            `Failed to incorporate dependency because ${ROOT_API_FILENAME} is meaningfully different for the following keys: [${differences.join(
+                ", "
+            )}]`
         );
         return undefined;
     }
@@ -257,41 +261,60 @@ async function validateVersionedDependencyAndGetDefinition({
 async function getAreRootApiFilesEquivalent(
     rootApiFile: RootApiFileSchema,
     workspaceOfDependency: FernWorkspace
-): Promise<boolean> {
+): Promise<{ equal: boolean; differences: string[] }> {
     let areRootApiFilesEquivalent = true as boolean;
+    const differences: string[] = [];
     await visitObject(rootApiFile, {
         name: noop,
         imports: noop,
         "display-name": noop,
         auth: (auth) => {
-            areRootApiFilesEquivalent &&= isEqual(auth, workspaceOfDependency.definition.rootApiFile.contents.auth);
+            const isAuthEquals = isEqual(auth, workspaceOfDependency.definition.rootApiFile.contents.auth);
+            if (!isAuthEquals) {
+                differences.push("auth");
+            }
+            areRootApiFilesEquivalent &&= isAuthEquals;
         },
         "auth-schemes": (auth) => {
-            areRootApiFilesEquivalent &&= isEqual(
+            const authSchemeEquals = isEqual(
                 auth,
-                workspaceOfDependency.definition.rootApiFile.contents["auth-schemes"]
+                removeUndefined(workspaceOfDependency.definition.rootApiFile.contents["auth-schemes"])
             );
+            if (!authSchemeEquals) {
+                differences.push("auth-schemes");
+            }
+            areRootApiFilesEquivalent &&= authSchemeEquals;
         },
         docs: noop,
         headers: noop,
         "default-environment": noop,
         environments: noop,
         "error-discrimination": (errorDiscrimination) => {
-            areRootApiFilesEquivalent &&= isEqual(
+            const errorDiscriminationIsEqual = isEqual(
                 errorDiscrimination,
-                workspaceOfDependency.definition.rootApiFile.contents["error-discrimination"]
+                removeUndefined(workspaceOfDependency.definition.rootApiFile.contents["error-discrimination"])
             );
+            if (!errorDiscriminationIsEqual) {
+                differences.push("error-discrimination");
+            }
+            areRootApiFilesEquivalent &&= errorDiscriminationIsEqual;
         },
         audiences: noop,
         errors: noop,
         "base-path": (basePath) => {
-            areRootApiFilesEquivalent &&=
-                basePath === workspaceOfDependency.definition.rootApiFile.contents["base-path"];
+            const basePathsAreEqual = basePath === workspaceOfDependency.definition.rootApiFile.contents["base-path"];
+            if (!basePathsAreEqual) {
+                differences.push("base-path");
+            }
+            areRootApiFilesEquivalent &&= basePathsAreEqual;
         },
         "path-parameters": noop,
         variables: noop,
     });
-    return areRootApiFilesEquivalent;
+    return {
+        equal: areRootApiFilesEquivalent,
+        differences,
+    };
 }
 
 async function downloadDependency({
@@ -324,4 +347,8 @@ function stringifyDependency(dependency: Dependency): string {
         default:
             assertNever(dependency);
     }
+}
+
+function removeUndefined(val: any): any {
+    return JSON.parse(JSON.stringify(val));
 }

@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { convertDependenciesConfiguration } from "../convertDependenciesConfiguration";
 import { DependenciesConfiguration } from "../DependenciesConfiguration";
@@ -14,6 +15,7 @@ describe("convertDependenciesConfiguration", () => {
         const dependenciesConfiguration = await convertDependenciesConfiguration({
             rawDependenciesConfiguration,
             context: createMockTaskContext(),
+            absolutePathToWorkspace: AbsoluteFilePath.of(""),
         });
         const expectedDependenciesConfiguration: DependenciesConfiguration = {
             dependencies: {
