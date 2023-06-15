@@ -17500,6 +17500,9 @@ If you try to access older information than what we can access, we will return a
     "error-discrimination": {
       "strategy": "status-code",
     },
+    "imports": {
+      "root": "__package__.yml",
+    },
     "name": "api",
   },
 }

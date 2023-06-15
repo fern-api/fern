@@ -60,6 +60,9 @@ function getRootApiFile(openApiFile: OpenAPIFile, environment: Environment | und
     const globalHeaders = getGlobalHeaders(openApiFile);
 
     const rootApiFile: RootApiFileSchema = {
+        imports: {
+            root: "__package__.yml",
+        },
         name: "api",
         "display-name": openApiFile.title ?? undefined,
         "error-discrimination": {

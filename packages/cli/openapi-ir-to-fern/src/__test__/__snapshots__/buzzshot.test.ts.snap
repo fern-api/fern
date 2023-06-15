@@ -927,6 +927,9 @@ exports[`open api parser buzzshot simple 1`] = `
     "error-discrimination": {
       "strategy": "status-code",
     },
+    "imports": {
+      "root": "__package__.yml",
+    },
     "name": "api",
   },
 }

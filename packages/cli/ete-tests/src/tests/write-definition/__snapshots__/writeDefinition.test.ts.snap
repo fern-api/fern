@@ -31,7 +31,9 @@ errors: {}
     "type": "file",
   },
   {
-    "contents": "name: api
+    "contents": "imports:
+  root: __package__.yml
+name: api
 display-name: Swagger Petstore
 error-discrimination:
   strategy: status-code

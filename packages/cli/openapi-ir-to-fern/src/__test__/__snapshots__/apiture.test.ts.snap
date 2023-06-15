@@ -3173,6 +3173,9 @@ Note: This operation requires an identity challenge if the financial institution
     "error-discrimination": {
       "strategy": "status-code",
     },
+    "imports": {
+      "root": "__package__.yml",
+    },
     "name": "api",
   },
 }

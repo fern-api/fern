@@ -922,6 +922,9 @@ Used to retrieve a model version given its ID.
     "error-discrimination": {
       "strategy": "status-code",
     },
+    "imports": {
+      "root": "__package__.yml",
+    },
     "name": "api",
   },
 }

@@ -11535,6 +11535,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
     "error-discrimination": {
       "strategy": "status-code",
     },
+    "imports": {
+      "root": "__package__.yml",
+    },
     "name": "api",
   },
 }
