@@ -5763,6 +5763,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "error-discrimination": {
       "strategy": "status-code",
     },
+    "imports": {
+      "root": "__package__.yml",
+    },
     "name": "api",
   },
 }

@@ -782,6 +782,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "type": "string",
       },
     },
+    "imports": {
+      "root": "__package__.yml",
+    },
     "name": "api",
   },
 }

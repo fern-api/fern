@@ -10161,6 +10161,9 @@ You will be assigned as owner of the new team automatically.",
     "error-discrimination": {
       "strategy": "status-code",
     },
+    "imports": {
+      "root": "__package__.yml",
+    },
     "name": "api",
     "variables": {
       "appName": {
