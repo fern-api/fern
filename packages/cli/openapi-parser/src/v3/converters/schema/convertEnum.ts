@@ -80,6 +80,9 @@ function generateEnumNameFromValue(value: string): string {
     if (maybeParsedNumber != null) {
         return convertNumberToSnakeCase(maybeParsedNumber) ?? value;
     } else {
+        if (value.toLowerCase() === "n/a") {
+            return "NOT_APPLICABLE";
+        }
         return upperFirst(camelCase(value));
     }
 }
