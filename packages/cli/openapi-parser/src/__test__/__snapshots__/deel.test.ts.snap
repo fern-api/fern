@@ -6256,6 +6256,7 @@ exports[`open api parser deel parse open api 1`] = `
       "schemas": {
         "Agreement": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Agreement",
           "nameOverride": undefined,
@@ -6306,6 +6307,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "msa",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "AgreementMsa",
                 "nameOverride": undefined,
@@ -6348,6 +6350,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "client_legal_entity",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "AgreementClientLegalEntity",
                 "nameOverride": undefined,
@@ -6388,6 +6391,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "provider_legal_entity",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "AgreementProviderLegalEntity",
                 "nameOverride": undefined,
@@ -6439,6 +6443,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "AgreementListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AgreementListContainer",
           "nameOverride": undefined,
@@ -6496,6 +6501,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "AgreementsSearchForm": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Convenient model to encapsulate query parameters to get a list of agreements.",
           "generatedName": "AgreementsSearchForm",
           "nameOverride": undefined,
@@ -6557,6 +6563,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "AlternateEmailItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AlternateEmailItem",
           "nameOverride": undefined,
@@ -6603,6 +6610,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ApiError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ApiError",
           "nameOverride": undefined,
@@ -6648,6 +6656,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ApiErrorContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ApiErrorContainer",
           "nameOverride": undefined,
@@ -6695,6 +6704,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ApiErrorRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ApiErrorRequest",
           "nameOverride": undefined,
@@ -6826,6 +6836,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "BasicContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BasicContract",
           "nameOverride": undefined,
@@ -7047,6 +7058,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "BasicInvoiceAdjustment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BasicInvoiceAdjustment",
           "nameOverride": undefined,
@@ -7256,6 +7268,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "BasicInvoiceAdjustmentWorksheet",
                   "nameOverride": undefined,
@@ -7322,6 +7335,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "BasicInvoiceAdjustmentReviewedBy",
                   "nameOverride": undefined,
@@ -7391,6 +7405,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "contract",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "BasicInvoiceAdjustmentContract",
                 "nameOverride": undefined,
@@ -7446,6 +7461,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "payment_cycle",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "BasicInvoiceAdjustmentPaymentCycle",
                 "nameOverride": undefined,
@@ -7486,6 +7502,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "reported_by",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "BasicInvoiceAdjustmentReportedBy",
                 "nameOverride": undefined,
@@ -7525,6 +7542,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "BasicLegalEntity": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BasicLegalEntity",
           "nameOverride": undefined,
@@ -7586,6 +7604,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "BasicOrganization": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BasicOrganization",
           "nameOverride": undefined,
@@ -7621,6 +7640,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "BasicTeam": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BasicTeam",
           "nameOverride": undefined,
@@ -7656,6 +7676,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "BasicTimesheet": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BasicTimesheet",
           "nameOverride": undefined,
@@ -7867,6 +7888,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "BasicTimesheetWorksheet",
                   "nameOverride": undefined,
@@ -7933,6 +7955,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "BasicTimesheetReviewedBy",
                   "nameOverride": undefined,
@@ -8002,6 +8025,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "contract",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "BasicTimesheetContract",
                 "nameOverride": undefined,
@@ -8060,6 +8084,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "BasicTimesheetPaymentCycle",
                   "nameOverride": undefined,
@@ -8109,6 +8134,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "reported_by",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "BasicTimesheetReportedBy",
                 "nameOverride": undefined,
@@ -8151,6 +8177,7 @@ exports[`open api parser deel parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "ClientLegalEntity",
             "nameOverride": undefined,
@@ -8254,6 +8281,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ClientOfBasicContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ClientOfBasicContract",
           "nameOverride": undefined,
@@ -8283,6 +8311,7 @@ exports[`open api parser deel parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "ClientOfContract",
             "nameOverride": undefined,
@@ -8358,6 +8387,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "CompensationDetailsOfContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CompensationDetailsOfContract",
           "nameOverride": undefined,
@@ -8491,6 +8521,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "CompensationDetailsOfContractToCreate_Shared": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CompensationDetailsOfContractToCreateShared",
           "nameOverride": undefined,
@@ -8658,6 +8689,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "CompensationDetailsOfContractToCreate_ongoing_time_based": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CompensationDetailsOfContractToCreateOngoingTimeBased",
           "nameOverride": undefined,
@@ -8692,6 +8724,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "CompensationDetailsOfContractToCreate_pay_as_you_go_time_based": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CompensationDetailsOfContractToCreatePayAsYouGoTimeBased",
           "nameOverride": undefined,
@@ -8726,6 +8759,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "Contract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Contract",
           "nameOverride": undefined,
@@ -9058,6 +9092,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractContainer",
           "nameOverride": undefined,
@@ -9080,6 +9115,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractContainer_ongoing_time_based": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractContainerOngoingTimeBased",
           "nameOverride": undefined,
@@ -9102,6 +9138,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractContainer_pay_as_you_go_time_based": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractContainerPayAsYouGoTimeBased",
           "nameOverride": undefined,
@@ -9124,6 +9161,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractContainer_payg_milestones": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractContainerPaygMilestones",
           "nameOverride": undefined,
@@ -9146,6 +9184,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractContainer_payg_tasks": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractContainerPaygTasks",
           "nameOverride": undefined,
@@ -9168,6 +9207,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractCustomField": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Customized attributes on contracts (Employee ID, Project code, etc).",
           "generatedName": "ContractCustomField",
           "nameOverride": undefined,
@@ -9213,6 +9253,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractDetailsToAmend": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "You can specify any combination of data points that need changing.",
           "generatedName": "ContractDetailsToAmend",
           "nameOverride": undefined,
@@ -9511,6 +9552,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractDocumentContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractDocumentContainer",
           "nameOverride": undefined,
@@ -9533,6 +9575,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractExternalIdPatchedContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractExternalIdPatchedContainer",
           "nameOverride": undefined,
@@ -9563,6 +9606,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractExternalIdToPatch": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractExternalIdToPatch",
           "nameOverride": undefined,
@@ -9606,6 +9650,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractInvitationToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractInvitationToCreate",
           "nameOverride": undefined,
@@ -9642,6 +9687,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractInvitationToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractInvitationToCreateContainer",
           "nameOverride": undefined,
@@ -9676,6 +9722,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractListContainer",
           "nameOverride": undefined,
@@ -9747,6 +9794,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractSearchFormWithCursor": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This is a model to make it easier to understand and restrict search parameters",
           "generatedName": "ContractSearchFormWithCursor",
           "nameOverride": undefined,
@@ -9792,6 +9840,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractSearchFormWithoutCursor": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This is a model to make it easier to understand and restrict search parameters",
           "generatedName": "ContractSearchFormWithoutCursor",
           "nameOverride": undefined,
@@ -10051,6 +10100,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractSignatureToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractSignatureToCreate",
           "nameOverride": undefined,
@@ -10094,6 +10144,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractSignatureToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractSignatureToCreateContainer",
           "nameOverride": undefined,
@@ -10238,6 +10289,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractTemplateListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractTemplateListContainer",
           "nameOverride": undefined,
@@ -10264,6 +10316,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractTemplateSummary": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractTemplateSummary",
           "nameOverride": undefined,
@@ -10299,6 +10352,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractTerminationResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractTerminationResult",
           "nameOverride": undefined,
@@ -10343,6 +10397,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractTerminationResultContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractTerminationResultContainer",
           "nameOverride": undefined,
@@ -10365,6 +10420,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractToAmendDetailsContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToAmendDetailsContainer",
           "nameOverride": undefined,
@@ -10430,6 +10486,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToCreateContainer",
           "nameOverride": undefined,
@@ -10452,6 +10509,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractToCreateContainer_ongoing_time_based": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToCreateContainerOngoingTimeBased",
           "nameOverride": undefined,
@@ -10474,6 +10532,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractToCreateContainer_pay_as_you_go_time_based": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToCreateContainerPayAsYouGoTimeBased",
           "nameOverride": undefined,
@@ -10496,6 +10555,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractToCreateContainer_payg_milestones": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToCreateContainerPaygMilestones",
           "nameOverride": undefined,
@@ -10518,6 +10578,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractToCreateContainer_payg_tasks": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToCreateContainerPaygTasks",
           "nameOverride": undefined,
@@ -10540,6 +10601,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractToCreate_Shared": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of contract to create",
           "generatedName": "ContractToCreateShared",
           "nameOverride": undefined,
@@ -10681,6 +10743,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "client",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "ContractToCreateSharedClient",
                 "nameOverride": undefined,
@@ -10691,6 +10754,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "legal_entity",
                     "schema": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Choose the Deel legal entity for this contract. Use legal entity endpoint to retrieve a list of legal entities in your organization.",
                       "generatedName": "ContractToCreateSharedClientLegalEntity",
                       "nameOverride": undefined,
@@ -10717,6 +10781,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "team",
                     "schema": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Choose the Deel team for this contract. Use teams endpoint to retrieve a list of teams in your organization.",
                       "generatedName": "ContractToCreateSharedClientTeam",
                       "nameOverride": undefined,
@@ -10747,6 +10812,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "job_title",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Worker's job title. You can enter a custom job title or use a pre-defiled job title using the Id retrieved in job-titles endpoint.",
                 "generatedName": "ContractToCreateSharedJobTitle",
                 "nameOverride": undefined,
@@ -10809,6 +10875,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": "Job seniority level. Please use the seniority levels endpoint to retrieve the list of seniority levels.",
                     "generatedName": "ContractToCreateSharedSeniority",
                     "nameOverride": undefined,
@@ -10920,6 +10987,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": "Worker properties",
                     "generatedName": "ContractToCreateSharedWorker",
                     "nameOverride": undefined,
@@ -11005,6 +11073,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToCreateOngoingTimeBased",
           "nameOverride": undefined,
@@ -11030,6 +11099,16 @@ exports[`open api parser deel parse open api 1`] = `
                     "nameOverride": undefined,
                     "schema": "CompensationDetailsOfContractToCreate_ongoing_time_based",
                     "type": "reference",
+                  },
+                ],
+                "allOfPropertyConflicts": [
+                  {
+                    "allOfSchemaIds": [
+                      "CompensationDetailsOfContractToCreate_Shared",
+                      "CompensationDetailsOfContractToCreate_ongoing_time_based",
+                    ],
+                    "conflictingTypeSignatures": false,
+                    "propertyKey": "amount",
                   },
                 ],
                 "description": undefined,
@@ -11063,6 +11142,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToCreatePayAsYouGoTimeBased",
           "nameOverride": undefined,
@@ -11088,6 +11168,16 @@ exports[`open api parser deel parse open api 1`] = `
                     "nameOverride": undefined,
                     "schema": "CompensationDetailsOfContractToCreate_pay_as_you_go_time_based",
                     "type": "reference",
+                  },
+                ],
+                "allOfPropertyConflicts": [
+                  {
+                    "allOfSchemaIds": [
+                      "CompensationDetailsOfContractToCreate_Shared",
+                      "CompensationDetailsOfContractToCreate_pay_as_you_go_time_based",
+                    ],
+                    "conflictingTypeSignatures": false,
+                    "propertyKey": "amount",
                   },
                 ],
                 "description": undefined,
@@ -11121,6 +11211,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToCreatePaygMilestones",
           "nameOverride": undefined,
@@ -11162,6 +11253,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToCreatePaygTasks",
           "nameOverride": undefined,
@@ -11194,6 +11286,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractToTerminate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToTerminate",
           "nameOverride": undefined,
@@ -11254,6 +11347,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ContractToTerminateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContractToTerminateContainer",
           "nameOverride": undefined,
@@ -11464,6 +11558,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "Country": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Country",
           "nameOverride": undefined,
@@ -11605,6 +11700,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "CountryListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CountryListContainer",
           "nameOverride": undefined,
@@ -11627,6 +11723,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "CreateTimeoff": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateTimeoff",
           "nameOverride": undefined,
@@ -11783,6 +11880,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "CreateTimeoffContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateTimeoffContainer",
           "nameOverride": undefined,
@@ -11805,6 +11903,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "CreateWebhookRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateWebhookRequest",
           "nameOverride": undefined,
@@ -11939,6 +12038,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "Currency": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Currency",
           "nameOverride": undefined,
@@ -12017,6 +12117,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "CurrencyListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CurrencyListContainer",
           "nameOverride": undefined,
@@ -12118,6 +12219,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EmployeeList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmployeeList",
           "nameOverride": undefined,
@@ -12402,6 +12504,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "EmployeeListPaymentsItem",
                     "nameOverride": undefined,
@@ -12509,6 +12612,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "EmployeeListClientLegalEntity",
                   "nameOverride": undefined,
@@ -12633,6 +12737,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "EmployeeListMonthlyPayment",
                   "nameOverride": undefined,
@@ -12663,6 +12768,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EmployeeListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmployeeListContainer",
           "nameOverride": undefined,
@@ -12689,6 +12795,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "Employment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Employment",
           "nameOverride": undefined,
@@ -13065,6 +13172,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EmploymentDetailsOfContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmploymentDetailsOfContract",
           "nameOverride": undefined,
@@ -13179,6 +13287,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorClientTimeoffRequests": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorClientTimeoffRequests",
           "nameOverride": undefined,
@@ -13301,6 +13410,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorClientTimeoffs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorClientTimeoffs",
           "nameOverride": undefined,
@@ -13339,6 +13449,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorClientTimeoffsContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorClientTimeoffsContainer",
           "nameOverride": undefined,
@@ -13361,6 +13472,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorContractCreated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorContractCreated",
           "nameOverride": undefined,
@@ -13461,6 +13573,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "EorContractCreatedEmployment",
                   "nameOverride": undefined,
@@ -13643,6 +13756,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "EorContractCreatedClient",
                   "nameOverride": undefined,
@@ -13656,6 +13770,7 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "allOf": [],
+                          "allOfPropertyConflicts": [],
                           "description": undefined,
                           "generatedName": "EorContractCreatedClientLegalEntity",
                           "nameOverride": undefined,
@@ -13697,6 +13812,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "EorContractCreatedCompensationDetails",
                   "nameOverride": undefined,
@@ -13789,6 +13905,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "EorContractCreatedEmployee",
                   "nameOverride": undefined,
@@ -13882,6 +13999,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "EorContractCreatedHealthPlan",
                     "nameOverride": undefined,
@@ -13950,6 +14068,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorContractCreatedContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorContractCreatedContainer",
           "nameOverride": undefined,
@@ -13972,6 +14091,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorContractToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorContractToCreate",
           "nameOverride": undefined,
@@ -13985,6 +14105,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "EorContractToCreateEmployee",
                   "nameOverride": undefined,
@@ -14061,6 +14182,7 @@ exports[`open api parser deel parse open api 1`] = `
                           "type": "nullable",
                           "value": {
                             "allOf": [],
+                            "allOfPropertyConflicts": [],
                             "description": undefined,
                             "generatedName": "EorContractToCreateEmployeeAddress",
                             "nameOverride": undefined,
@@ -14175,6 +14297,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "employment",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EorContractToCreateEmployment",
                 "nameOverride": undefined,
@@ -14412,6 +14535,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "seniority",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EorContractToCreateSeniority",
                 "nameOverride": undefined,
@@ -14442,6 +14566,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "client",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EorContractToCreateClient",
                 "nameOverride": undefined,
@@ -14455,6 +14580,7 @@ exports[`open api parser deel parse open api 1`] = `
                       "type": "optional",
                       "value": {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "EorContractToCreateClientLegalEntity",
                         "nameOverride": undefined,
@@ -14489,6 +14615,7 @@ exports[`open api parser deel parse open api 1`] = `
                       "type": "optional",
                       "value": {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "EorContractToCreateClientTeam",
                         "nameOverride": undefined,
@@ -14528,6 +14655,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "compensation_details",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EorContractToCreateCompensationDetails",
                 "nameOverride": undefined,
@@ -14624,6 +14752,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": "Some countries require additional employee information for employment contracts.",
                     "generatedName": "EorContractToCreateQuoteAdditionalFields",
                     "nameOverride": undefined,
@@ -14722,6 +14851,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorContractToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorContractToCreateContainer",
           "nameOverride": undefined,
@@ -14744,6 +14874,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorCountryValidations": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorCountryValidations",
           "nameOverride": undefined,
@@ -14757,6 +14888,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Range of the number of holidays.",
                   "generatedName": "EorCountryValidationsHoliday",
                   "nameOverride": undefined,
@@ -14793,6 +14925,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Holiday type and range for part-time contracts.",
                   "generatedName": "EorCountryValidationsPartTimeHoliday",
                   "nameOverride": undefined,
@@ -14864,6 +14997,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "EorCountryValidationsSickDays",
                   "nameOverride": undefined,
@@ -14918,6 +15052,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Salary range.",
                   "generatedName": "EorCountryValidationsSalary",
                   "nameOverride": undefined,
@@ -14972,6 +15107,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Probation period range.",
                   "generatedName": "EorCountryValidationsProbation",
                   "nameOverride": undefined,
@@ -15024,6 +15160,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Probation period range for part-time contracts.",
                   "generatedName": "EorCountryValidationsPartTimeProbation",
                   "nameOverride": undefined,
@@ -15074,6 +15211,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Employee's Work schedule in days and hours.",
                   "generatedName": "EorCountryValidationsWorkSchedule",
                   "nameOverride": undefined,
@@ -15087,6 +15225,7 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "allOf": [],
+                          "allOfPropertyConflicts": [],
                           "description": undefined,
                           "generatedName": "EorCountryValidationsWorkScheduleDays",
                           "nameOverride": undefined,
@@ -15123,6 +15262,7 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "allOf": [],
+                          "allOfPropertyConflicts": [],
                           "description": undefined,
                           "generatedName": "EorCountryValidationsWorkScheduleHours",
                           "nameOverride": undefined,
@@ -15234,6 +15374,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Conditions to make definitive contract.",
                   "generatedName": "EorCountryValidationsDefiniteContract",
                   "nameOverride": undefined,
@@ -15324,6 +15465,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "EorCountryValidationsHealthInsurance",
                     "nameOverride": undefined,
@@ -15377,6 +15519,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorCountryValidationsContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorCountryValidationsContainer",
           "nameOverride": undefined,
@@ -15399,6 +15542,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorEntitlementListItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Entitlement Item for a given year.",
           "generatedName": "EorEntitlementListItem",
           "nameOverride": undefined,
@@ -15711,6 +15855,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorEntitlements": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Time-off Entitlements for EOR contracts.",
           "generatedName": "EorEntitlements",
           "nameOverride": undefined,
@@ -15737,6 +15882,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorEntitlementsContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorEntitlementsContainer",
           "nameOverride": undefined,
@@ -15809,6 +15955,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorTimeoffsBaseItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorTimeoffsBaseItem",
           "nameOverride": undefined,
@@ -16154,6 +16301,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorTimeoffsContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorTimeoffsContainer",
           "nameOverride": undefined,
@@ -16176,6 +16324,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorTimeoffsEmployeeItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorTimeoffsEmployeeItem",
           "nameOverride": undefined,
@@ -16311,6 +16460,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorTimeoffsItem",
           "nameOverride": undefined,
@@ -16504,6 +16654,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EorTimeoffsItemContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EorTimeoffsItemContainer",
           "nameOverride": undefined,
@@ -16526,6 +16677,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EstimateFirstPayment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of pro rata payment to create.",
           "generatedName": "EstimateFirstPayment",
           "nameOverride": undefined,
@@ -16575,6 +16727,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "compensation_details",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "EstimateFirstPaymentCompensationDetails",
                 "nameOverride": undefined,
@@ -16779,6 +16932,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "EstimateFirstPaymentContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EstimateFirstPaymentContainer",
           "nameOverride": undefined,
@@ -16801,6 +16955,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ExchangeRates": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ExchangeRates",
           "nameOverride": undefined,
@@ -16850,6 +17005,7 @@ exports[`open api parser deel parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "This object is used for linking file attachments to your records.",
             "generatedName": "FileAttachmentInfo",
             "nameOverride": undefined,
@@ -16888,6 +17044,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "FileObject": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This is the file you will upload in a multi-part form.",
           "generatedName": "FileObject",
           "nameOverride": undefined,
@@ -16953,6 +17110,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "FinalPaymentCalculated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FinalPaymentCalculated",
           "nameOverride": undefined,
@@ -17005,6 +17163,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "last_cycle",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "The last payment cycle.",
                 "generatedName": "FinalPaymentCalculatedLastCycle",
                 "nameOverride": undefined,
@@ -17130,6 +17289,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "FinalPaymentCalculatedContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FinalPaymentCalculatedContainer",
           "nameOverride": undefined,
@@ -17152,6 +17312,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "FirstPaymentDate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "First payment date",
           "generatedName": "FirstPaymentDate",
           "nameOverride": undefined,
@@ -17178,6 +17339,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "GenericReportReviewCreated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenericReportReviewCreated",
           "nameOverride": undefined,
@@ -17230,6 +17392,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "GenericReportReviewCreatedContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenericReportReviewCreatedContainer",
           "nameOverride": undefined,
@@ -17264,6 +17427,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "GenericResultCreated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenericResultCreated",
           "nameOverride": undefined,
@@ -17274,6 +17438,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "data",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GenericResultCreatedData",
                 "nameOverride": undefined,
@@ -17299,6 +17464,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "GenericResultDeleted": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenericResultDeleted",
           "nameOverride": undefined,
@@ -17309,6 +17475,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "data",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GenericResultDeletedData",
                 "nameOverride": undefined,
@@ -17334,6 +17501,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "GenericResultUpdated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenericResultUpdated",
           "nameOverride": undefined,
@@ -17344,6 +17512,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "data",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "GenericResultUpdatedData",
                 "nameOverride": undefined,
@@ -17369,6 +17538,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "HealthInsuranceProvider": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Health insurance provider.",
           "generatedName": "HealthInsuranceProvider",
           "nameOverride": undefined,
@@ -17543,6 +17713,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "HealthInsuranceProviderAttachmentsItem",
                     "nameOverride": undefined,
@@ -17633,6 +17804,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "HealthInsuranceProviderPlansItem",
                     "nameOverride": undefined,
@@ -17764,6 +17936,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "HrisCompensation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisCompensation",
           "nameOverride": undefined,
@@ -17799,6 +17972,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "HrisContractBase": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisContractBase",
           "nameOverride": undefined,
@@ -17877,6 +18051,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisContractFullTime",
           "nameOverride": undefined,
@@ -17905,6 +18080,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisContractPartTime",
           "nameOverride": undefined,
@@ -17936,6 +18112,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "HrisDirectEmployee": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisDirectEmployee",
           "nameOverride": undefined,
@@ -18055,6 +18232,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "HrisDirectEmployeeVacationInfo",
                     "nameOverride": undefined,
@@ -18096,6 +18274,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "HrisDirectEmployeeContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisDirectEmployeeContainer",
           "nameOverride": undefined,
@@ -18118,6 +18297,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "HrisDirectEmployeeDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisDirectEmployeeDetails",
           "nameOverride": undefined,
@@ -18238,6 +18418,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisDirectEmployeeResponse",
           "nameOverride": undefined,
@@ -18265,6 +18446,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "HrisJobInformationBase": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisJobInformationBase",
           "nameOverride": undefined,
@@ -18295,6 +18477,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisJobInformationTitleId",
           "nameOverride": undefined,
@@ -18325,6 +18508,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisJobInformationTitleName",
           "nameOverride": undefined,
@@ -18348,6 +18532,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "HrisTeamInformation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HrisTeamInformation",
           "nameOverride": undefined,
@@ -18381,6 +18566,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InputToCreateFileRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InputToCreateFileRef",
           "nameOverride": undefined,
@@ -18391,6 +18577,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "data",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "InputToCreateFileRefData",
                 "nameOverride": undefined,
@@ -18417,6 +18604,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InputToCreatePgoTask": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InputToCreatePgoTask",
           "nameOverride": undefined,
@@ -18439,6 +18627,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InputToDeletePgoTask": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InputToDeletePgoTask",
           "nameOverride": undefined,
@@ -18461,6 +18650,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InputToPatchContractExternalId": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InputToPatchContractExternalId",
           "nameOverride": undefined,
@@ -18483,6 +18673,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InputToShieldContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InputToShieldContract",
           "nameOverride": undefined,
@@ -18493,6 +18684,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "data",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "InputToShieldContractData",
                 "nameOverride": undefined,
@@ -18518,6 +18710,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvitationsOfBasicContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvitationsOfBasicContract",
           "nameOverride": undefined,
@@ -18561,6 +18754,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "Invoice": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Invoice",
           "nameOverride": undefined,
@@ -18920,6 +19114,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustment",
           "nameOverride": undefined,
@@ -18928,6 +19123,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentApprover": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentApprover",
           "nameOverride": undefined,
@@ -18989,6 +19185,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentApproversContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentApproversContainer",
           "nameOverride": undefined,
@@ -19011,6 +19208,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentContainer",
           "nameOverride": undefined,
@@ -19033,6 +19231,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentCreated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of invoice adjustment created.",
           "generatedName": "InvoiceAdjustmentCreated",
           "nameOverride": undefined,
@@ -19122,6 +19321,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentCreatedContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentCreatedContainer",
           "nameOverride": undefined,
@@ -19156,6 +19356,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentListContainer",
           "nameOverride": undefined,
@@ -19191,6 +19392,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentReviewToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentReviewToCreate",
           "nameOverride": undefined,
@@ -19247,6 +19449,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentReviewToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentReviewToCreateContainer",
           "nameOverride": undefined,
@@ -19269,6 +19472,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentReviewsToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentReviewsToCreate",
           "nameOverride": undefined,
@@ -19338,6 +19542,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentReviewsToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentReviewsToCreateContainer",
           "nameOverride": undefined,
@@ -19360,6 +19565,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentSearchContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This is a model to make it easier to understand and restrict search parameters",
           "generatedName": "InvoiceAdjustmentSearchContainer",
           "nameOverride": undefined,
@@ -19643,6 +19849,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of invoice adjustment to create.",
           "generatedName": "InvoiceAdjustmentToCreate",
           "nameOverride": undefined,
@@ -19742,6 +19949,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentToCreateContainer",
           "nameOverride": undefined,
@@ -19781,6 +19989,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentToCreateWithFile",
           "nameOverride": undefined,
@@ -19789,6 +19998,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentToUpdate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of invoice adjustment to update.",
           "generatedName": "InvoiceAdjustmentToUpdate",
           "nameOverride": undefined,
@@ -19828,6 +20038,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceAdjustmentToUpdateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceAdjustmentToUpdateContainer",
           "nameOverride": undefined,
@@ -20118,6 +20329,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceContract",
           "nameOverride": undefined,
@@ -20223,6 +20435,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceContractor": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceContractor",
           "nameOverride": undefined,
@@ -20246,6 +20459,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceDownloadContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceDownloadContainer",
           "nameOverride": undefined,
@@ -20268,6 +20482,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceDownloadObject": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceDownloadObject",
           "nameOverride": undefined,
@@ -20343,6 +20558,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceListContainer",
           "nameOverride": undefined,
@@ -20365,6 +20581,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "InvoiceObject": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceObject",
           "nameOverride": undefined,
@@ -20549,6 +20766,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "JobTitle": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "JobTitle",
           "nameOverride": undefined,
@@ -20596,6 +20814,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "JobTitleListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "JobTitleListContainer",
           "nameOverride": undefined,
@@ -20619,6 +20838,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "page",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "JobTitleListContainerPage",
                 "nameOverride": undefined,
@@ -20670,6 +20890,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "LegalEntityListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LegalEntityListContainer",
           "nameOverride": undefined,
@@ -20725,6 +20946,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MetaDataOfContractToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Additional custom info about a contract",
           "generatedName": "MetaDataOfContractToCreate",
           "nameOverride": undefined,
@@ -20762,6 +20984,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "Milestone": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Milestone",
           "nameOverride": undefined,
@@ -20813,6 +21036,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Reviewer's information.",
                   "generatedName": "MilestoneReviewedBy",
                   "nameOverride": undefined,
@@ -20854,6 +21078,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "reported_by",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Milestone creator.",
                 "generatedName": "MilestoneReportedBy",
                 "nameOverride": undefined,
@@ -20948,6 +21173,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MilestoneContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MilestoneContainer",
           "nameOverride": undefined,
@@ -20982,6 +21208,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MilestoneListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MilestoneListContainer",
           "nameOverride": undefined,
@@ -21004,6 +21231,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MilestoneProperties": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MilestoneProperties",
           "nameOverride": undefined,
@@ -21055,6 +21283,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MilestoneReviewToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MilestoneReviewToCreate",
           "nameOverride": undefined,
@@ -21111,6 +21340,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MilestoneReviewToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MilestoneReviewToCreateContainer",
           "nameOverride": undefined,
@@ -21133,6 +21363,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MilestoneReviewsToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MilestoneReviewsToCreate",
           "nameOverride": undefined,
@@ -21205,6 +21436,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MilestoneReviewsToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MilestoneReviewsToCreateContainer",
           "nameOverride": undefined,
@@ -21235,6 +21467,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MilestoneToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MilestoneToCreateContainer",
           "nameOverride": undefined,
@@ -21274,6 +21507,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MilestoneToCreateFormWithFile",
           "nameOverride": undefined,
@@ -21282,6 +21516,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "MonthlyPayment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Monthly payment details for the user",
           "generatedName": "MonthlyPayment",
           "nameOverride": undefined,
@@ -21314,6 +21549,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "OffCyclePayment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OffCyclePayment",
           "nameOverride": undefined,
@@ -21437,6 +21673,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "OffCyclePaymentReviewedBy",
                   "nameOverride": undefined,
@@ -21506,6 +21743,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "reported_by",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "OffCyclePaymentReportedBy",
                 "nameOverride": undefined,
@@ -21545,6 +21783,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "OffCyclePaymentContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OffCyclePaymentContainer",
           "nameOverride": undefined,
@@ -21579,6 +21818,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "OffCyclePaymentListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OffCyclePaymentListContainer",
           "nameOverride": undefined,
@@ -21601,6 +21841,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "OffCyclePaymentToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of invoice adjustment to create.",
           "generatedName": "OffCyclePaymentToCreate",
           "nameOverride": undefined,
@@ -21653,6 +21894,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "OffCyclePaymentToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OffCyclePaymentToCreateContainer",
           "nameOverride": undefined,
@@ -21692,6 +21934,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "OrganizationListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OrganizationListContainer",
           "nameOverride": undefined,
@@ -21714,6 +21957,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "OutputToCreateFileRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OutputToCreateFileRef",
           "nameOverride": undefined,
@@ -21751,6 +21995,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "OutputToCreateFileRefContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OutputToCreateFileRefContainer",
           "nameOverride": undefined,
@@ -21773,6 +22018,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PageInfo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PageInfo",
           "nameOverride": undefined,
@@ -21808,6 +22054,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PageInfoWithoutCursor": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PageInfoWithoutCursor",
           "nameOverride": undefined,
@@ -21829,6 +22076,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PageInfoWithoutCursorNew": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PageInfoWithoutCursorNew",
           "nameOverride": undefined,
@@ -21874,6 +22122,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PatchWebhookRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PatchWebhookRequest",
           "nameOverride": undefined,
@@ -21994,6 +22243,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "Payment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Payment",
           "nameOverride": undefined,
@@ -22119,6 +22369,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PaymentBreakDown": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentBreakDown",
           "nameOverride": undefined,
@@ -22632,6 +22883,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PaymentBreakDownContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentBreakDownContainer",
           "nameOverride": undefined,
@@ -22670,6 +22922,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PaymentListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentListContainer",
           "nameOverride": undefined,
@@ -22692,6 +22945,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PaymentMethod": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentMethod",
           "nameOverride": undefined,
@@ -22818,6 +23072,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PaymentObject": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentObject",
           "nameOverride": undefined,
@@ -22860,6 +23115,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PaymentStatementInitiatedWebhook": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentStatementInitiatedWebhook",
           "nameOverride": undefined,
@@ -22933,6 +23189,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PaymentWorker": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentWorker",
           "nameOverride": undefined,
@@ -23008,6 +23265,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "People": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "People object representing a Deel",
           "generatedName": "People",
           "nameOverride": undefined,
@@ -23613,6 +23871,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PeopleClientLegalEntity": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PeopleClientLegalEntity",
           "nameOverride": undefined,
@@ -23656,6 +23915,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PeopleContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PeopleContainer",
           "nameOverride": undefined,
@@ -23682,6 +23942,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PeopleMe": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "People object representing a Deel",
           "generatedName": "PeopleMe",
           "nameOverride": undefined,
@@ -23998,6 +24259,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PeoplePayment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PeoplePayment",
           "nameOverride": undefined,
@@ -24077,6 +24339,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PgoTask": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PgoTask",
           "nameOverride": undefined,
@@ -24169,6 +24432,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PgoTaskReviewsByIdToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PgoTaskReviewsByIdToCreate",
           "nameOverride": undefined,
@@ -24225,6 +24489,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PgoTaskReviewsToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PgoTaskReviewsToCreate",
           "nameOverride": undefined,
@@ -24297,6 +24562,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PgoTaskToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PgoTaskToCreate",
           "nameOverride": undefined,
@@ -24368,6 +24634,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PgoTaskToDelete": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PgoTaskToDelete",
           "nameOverride": undefined,
@@ -24419,6 +24686,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PremiumResultAdded": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PremiumResultAdded",
           "nameOverride": undefined,
@@ -24455,6 +24723,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "misclassification_guarantee",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PremiumResultAddedMisclassificationGuarantee",
                 "nameOverride": undefined,
@@ -24505,6 +24774,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "penalties",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PremiumResultAddedPenalties",
                 "nameOverride": undefined,
@@ -24555,6 +24825,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "third_party_liabilities",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "PremiumResultAddedThirdPartyLiabilities",
                 "nameOverride": undefined,
@@ -24604,6 +24875,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PremiumResultAddedContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PremiumResultAddedContainer",
           "nameOverride": undefined,
@@ -24626,6 +24898,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PremiumToAdd": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PremiumToAdd",
           "nameOverride": undefined,
@@ -24663,6 +24936,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "PremiumToAddContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PremiumToAddContainer",
           "nameOverride": undefined,
@@ -24685,6 +24959,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ProRata": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of the pro rata for the first payment",
           "generatedName": "ProRata",
           "nameOverride": undefined,
@@ -24924,6 +25199,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer",
           "nameOverride": undefined,
@@ -24946,6 +25222,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "RequestBodyToCreatePgoTaskReviewsReviewsContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RequestBodyToCreatePgoTaskReviewsReviewsContainer",
           "nameOverride": undefined,
@@ -24968,6 +25245,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ResponseEstimateFirstPayment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ResponseEstimateFirstPayment",
           "nameOverride": undefined,
@@ -25015,6 +25293,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "ResponseEstimateFirstPaymentContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ResponseEstimateFirstPaymentContainer",
           "nameOverride": undefined,
@@ -25040,6 +25319,7 @@ exports[`open api parser deel parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Seniority describes level of expertise at a job e.g. junior",
             "generatedName": "Seniority",
             "nameOverride": undefined,
@@ -25108,6 +25388,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "SeniorityListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SeniorityListContainer",
           "nameOverride": undefined,
@@ -25130,6 +25411,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "SeniorityRequired": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Seniority describes level of expertise at a job e.g. junior",
           "generatedName": "SeniorityRequired",
           "nameOverride": undefined,
@@ -25177,6 +25459,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "SignaturesOfBasicContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SignaturesOfBasicContract",
           "nameOverride": undefined,
@@ -25226,6 +25509,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "SignaturesOfContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SignaturesOfContract",
           "nameOverride": undefined,
@@ -25322,6 +25606,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "StateOfCountry": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "It may be called states, provinces, prefectures or regions, or none at all",
           "generatedName": "StateOfCountry",
           "nameOverride": undefined,
@@ -25371,6 +25656,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TaskListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaskListContainer",
           "nameOverride": undefined,
@@ -25393,6 +25679,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "Team": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Team",
           "nameOverride": undefined,
@@ -25448,6 +25735,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TeamListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TeamListContainer",
           "nameOverride": undefined,
@@ -25470,6 +25758,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TeamOfBasicContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TeamOfBasicContract",
           "nameOverride": undefined,
@@ -25513,6 +25802,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TeamOfContract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TeamOfContract",
           "nameOverride": undefined,
@@ -25548,6 +25838,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimeoffReview": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimeoffReview",
           "nameOverride": undefined,
@@ -25587,6 +25878,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimeoffToReviewContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimeoffToReviewContainer",
           "nameOverride": undefined,
@@ -25622,6 +25914,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimeoffTypeListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimeoffTypeListContainer",
           "nameOverride": undefined,
@@ -25656,6 +25949,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimeoffsAttachmentsItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A item in attachments array. 2022-09-08 FE only allows for "SICK LEAVE"",
           "generatedName": "TimeoffsAttachmentsItem",
           "nameOverride": undefined,
@@ -25717,6 +26011,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimeoffsProfile": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimeoffsProfile",
           "nameOverride": undefined,
@@ -25871,6 +26166,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Timesheet",
           "nameOverride": undefined,
@@ -25885,6 +26181,7 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "array",
             "value": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "TimesheetAccountingRefsItem",
               "nameOverride": undefined,
@@ -25912,6 +26209,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "TimesheetAccountingRefsItemMappingCategory",
                       "nameOverride": undefined,
@@ -25956,6 +26254,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetApprover": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetApprover",
           "nameOverride": undefined,
@@ -26017,6 +26316,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetApproversContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetApproversContainer",
           "nameOverride": undefined,
@@ -26039,6 +26339,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetContainer",
           "nameOverride": undefined,
@@ -26104,6 +26405,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetListContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetListContainer",
           "nameOverride": undefined,
@@ -26139,6 +26441,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetReviewToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetReviewToCreate",
           "nameOverride": undefined,
@@ -26195,6 +26498,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetReviewToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetReviewToCreateContainer",
           "nameOverride": undefined,
@@ -26217,6 +26521,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetReviewsToCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetReviewsToCreate",
           "nameOverride": undefined,
@@ -26286,6 +26591,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetReviewsToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetReviewsToCreateContainer",
           "nameOverride": undefined,
@@ -26308,6 +26614,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetSearchContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This is a model to make it easier to understand and restrict search parameters",
           "generatedName": "TimesheetSearchContainer",
           "nameOverride": undefined,
@@ -26566,6 +26873,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetSharedProperties": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of timesheet to create; a client, contractor or EOR may create a timesheet",
           "generatedName": "TimesheetSharedProperties",
           "nameOverride": undefined,
@@ -26661,6 +26969,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetToCreateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetToCreateContainer",
           "nameOverride": undefined,
@@ -26708,6 +27017,7 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetToCreateWithFile",
           "nameOverride": undefined,
@@ -26716,6 +27026,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetToUpdate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of timesheet to create; a client, contractor or EOR may update a timesheet",
           "generatedName": "TimesheetToUpdate",
           "nameOverride": undefined,
@@ -26751,6 +27062,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "TimesheetToUpdateContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimesheetToUpdateContainer",
           "nameOverride": undefined,
@@ -26839,6 +27151,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "WebhookItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WebhookItem",
           "nameOverride": undefined,
@@ -27033,6 +27346,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "WebhookItemResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WebhookItemResponse",
           "nameOverride": undefined,
@@ -27055,6 +27369,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "WebhookListResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WebhookListResponse",
           "nameOverride": undefined,
@@ -27332,6 +27647,7 @@ exports[`open api parser deel parse open api 1`] = `
         },
         "WorkerLegalEntity": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorkerLegalEntity",
           "nameOverride": undefined,
@@ -27385,6 +27701,7 @@ exports[`open api parser deel parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "WorkerOfBasicContract",
             "nameOverride": undefined,
@@ -27471,6 +27788,7 @@ exports[`open api parser deel parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "WorkerOfContract",
             "nameOverride": undefined,

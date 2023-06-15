@@ -15440,6 +15440,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "schemas": {
         "AccessToResourceDenied": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when you try to access Belvo's resource without the correct permissions.",
           "generatedName": "AccessToResourceDenied",
           "nameOverride": undefined,
@@ -15515,6 +15516,7 @@ For \`access_to_resource_denied\` errors, the description is:
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Details regarding the account.
 
 **Note**: For our recurring expenses resource, this account relates to the account that was analyzed to generate the recurring expenses report.
@@ -15937,6 +15939,7 @@ For example: \`0444/45722-0\`.
         },
         "AccountsBalance": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the current and available balances for the account.
 ",
           "generatedName": "AccountsBalance",
@@ -16028,6 +16031,7 @@ The present value required to pay off the loan, as provided by the institution.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "The credit options associated with this account.",
             "generatedName": "AccountsCreditData",
             "nameOverride": undefined,
@@ -16236,6 +16240,7 @@ The present value required to pay off the loan, as provided by the institution.
         },
         "AccountsFundsData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AccountsFundsData",
           "nameOverride": undefined,
@@ -16372,6 +16377,7 @@ The present value required to pay off the loan, as provided by the institution.
         },
         "AccountsFundsDataPublicIdentifications": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AccountsFundsDataPublicIdentifications",
           "nameOverride": undefined,
@@ -16416,6 +16422,7 @@ The present value required to pay off the loan, as provided by the institution.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "The loan options associated with this account.",
             "generatedName": "AccountsLoanData",
             "nameOverride": undefined,
@@ -16941,6 +16948,7 @@ The minimum amount required to pay to avoid generating interest.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Breakdown of the fees applied to the loan.",
             "generatedName": "AccountsLoanDataFees",
             "nameOverride": undefined,
@@ -16977,6 +16985,7 @@ The minimum amount required to pay to avoid generating interest.
         },
         "AccountsLoanDataInterestRate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Breakdown of the interest applied to the loan.",
           "generatedName": "AccountsLoanDataInterestRate",
           "nameOverride": undefined,
@@ -17033,6 +17042,7 @@ The minimum amount required to pay to avoid generating interest.
         },
         "AccountsPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AccountsPaginatedResponse",
           "nameOverride": undefined,
@@ -17132,6 +17142,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Additional details regarding the receivables account, if applicable.",
             "generatedName": "AccountsReceivablesData",
             "nameOverride": undefined,
@@ -17204,6 +17215,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "AnnualCostsAndDeductionsStatementBusiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the reported annual costs and applicable deductions.",
           "generatedName": "AnnualCostsAndDeductionsStatementBusiness",
           "nameOverride": undefined,
@@ -17273,6 +17285,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "AnnualIncomeStatementBusiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the reported annual incomes, deductions, and final balances of the tax payer.",
           "generatedName": "AnnualIncomeStatementBusiness",
           "nameOverride": undefined,
@@ -17354,6 +17367,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "AnnualIncomeStatementIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the reported annual incomes, deductions, and final balances of the tax payer.",
           "generatedName": "AnnualIncomeStatementIndividual",
           "nameOverride": undefined,
@@ -17415,6 +17429,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "AnnualTotalsIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the tax payers total exempt, deducted, and ordinary net incomes.",
           "generatedName": "AnnualTotalsIndividual",
           "nameOverride": undefined,
@@ -17472,6 +17487,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "AsynchronousAccepted202": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AsynchronousAccepted202",
           "nameOverride": undefined,
@@ -17499,6 +17515,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "Balance": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Balance",
           "nameOverride": undefined,
@@ -17655,6 +17672,7 @@ The ISO-8601 timestamp when the data point was collected.
         },
         "BalancesPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BalancesPaginatedResponse",
           "nameOverride": undefined,
@@ -17751,6 +17769,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "BalancesRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BalancesRequest",
           "nameOverride": undefined,
@@ -17859,6 +17878,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "BankAccountBusinessPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BankAccountBusinessPse",
           "nameOverride": undefined,
@@ -18018,6 +18038,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "BankAccountDetailsOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BankAccountDetailsOfpi",
           "nameOverride": undefined,
@@ -18081,6 +18102,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "BankAccountDetailsOfpiPix": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BankAccountDetailsOfpiPix",
           "nameOverride": undefined,
@@ -18117,6 +18139,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "BankAccountDetailsOpenFinance": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BankAccountDetailsOpenFinance",
           "nameOverride": undefined,
@@ -18180,6 +18203,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "BankAccountDetailsOpenFinancePix": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BankAccountDetailsOpenFinancePix",
           "nameOverride": undefined,
@@ -18216,6 +18240,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "BankAccountHolderRequestOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the business bank account holder.",
           "generatedName": "BankAccountHolderRequestOfpi",
           "nameOverride": undefined,
@@ -18270,6 +18295,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "BankAccountInformationContentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the payer's institution",
           "generatedName": "BankAccountInformationContentPse",
           "nameOverride": undefined,
@@ -18297,6 +18323,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "BankAccountInformationPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the payer's bank account. Belvo returns this object when the payer's bank account information is not saved in the Belvo database.",
           "generatedName": "BankAccountInformationPse",
           "nameOverride": undefined,
@@ -18323,6 +18350,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "BankAccountOfpiResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BankAccountOfpiResponse",
           "nameOverride": undefined,
@@ -18459,6 +18487,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
         },
         "BankAccountPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BankAccountPaginatedResponse",
           "nameOverride": undefined,
@@ -18582,6 +18611,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "BeneficiaryBankAccountOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BeneficiaryBankAccountOfpi",
           "nameOverride": undefined,
@@ -18695,6 +18725,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "BeneficiaryBankAccountPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BeneficiaryBankAccountPse",
           "nameOverride": undefined,
@@ -18783,6 +18814,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "Categorization": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Categorization",
           "nameOverride": undefined,
@@ -18813,6 +18845,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CategorizationBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CategorizationBody",
           "nameOverride": undefined,
@@ -19039,6 +19072,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CategorizationBodyRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CategorizationBodyRequest",
           "nameOverride": undefined,
@@ -19223,6 +19257,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Additional data regarding the merchant involved in the transaction.
 ",
             "generatedName": "CategorizationMerchantData",
@@ -19296,6 +19331,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CategorizationRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CategorizationRequest",
           "nameOverride": undefined,
@@ -19338,6 +19374,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "ChangeAccessMode": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ChangeAccessMode",
           "nameOverride": undefined,
@@ -19360,6 +19397,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "Charge": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Charge",
           "nameOverride": undefined,
@@ -19728,6 +19766,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "ChargePaymentMethodDetailsOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details about the payment method.",
           "generatedName": "ChargePaymentMethodDetailsOfpi",
           "nameOverride": undefined,
@@ -19754,6 +19793,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "ChargePaymentMethodDetailsOfpiContent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the payer of a PSE payment.",
           "generatedName": "ChargePaymentMethodDetailsOfpiContent",
           "nameOverride": undefined,
@@ -19799,6 +19839,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "ChargePaymentMethodDetailsPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details about the payment method.",
           "generatedName": "ChargePaymentMethodDetailsPse",
           "nameOverride": undefined,
@@ -19825,6 +19866,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "ChargePaymentMethodDetailsPseContent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the payer of a PSE payment.",
           "generatedName": "ChargePaymentMethodDetailsPseContent",
           "nameOverride": undefined,
@@ -19870,6 +19912,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CreateBankAccountOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateBankAccountOfpi",
           "nameOverride": undefined,
@@ -19938,6 +19981,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CreateBankAccountPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateBankAccountPse",
           "nameOverride": undefined,
@@ -20011,6 +20055,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CreateCustomerOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateCustomerOfpi",
           "nameOverride": undefined,
@@ -20152,6 +20197,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CreateCustomerPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateCustomerPse",
           "nameOverride": undefined,
@@ -20293,6 +20339,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CreatePaymentIntentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreatePaymentIntentPse",
           "nameOverride": undefined,
@@ -20433,6 +20480,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CreatePaymentLinkOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreatePaymentLinkOfpi",
           "nameOverride": undefined,
@@ -20591,6 +20639,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CreatePaymentLinkPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreatePaymentLinkPse",
           "nameOverride": undefined,
@@ -20753,6 +20802,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CustomerOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CustomerOfpi",
           "nameOverride": undefined,
@@ -20936,6 +20986,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CustomerPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CustomerPaginatedResponse",
           "nameOverride": undefined,
@@ -21051,6 +21102,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "CustomerPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CustomerPse",
           "nameOverride": undefined,
@@ -21246,6 +21298,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayConfirmationRequiredContentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "DisplayConfirmationRequiredContentPse",
           "nameOverride": undefined,
@@ -21272,6 +21325,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayConfirmationRequiredOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "DisplayConfirmationRequiredOfpi",
           "nameOverride": undefined,
@@ -21351,6 +21405,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayCredentialsRequiredContentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing form fields for the required credentials (for example, \`username\` or \`password\`) in this step.",
           "generatedName": "DisplayCredentialsRequiredContentPse",
           "nameOverride": undefined,
@@ -21377,6 +21432,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayCustomerBankAccountsContentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing what payment method information you need to display.",
           "generatedName": "DisplayCustomerBankAccountsContentPse",
           "nameOverride": undefined,
@@ -21424,6 +21480,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayPaymentFailed": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the payer institution.",
           "generatedName": "DisplayPaymentFailed",
           "nameOverride": undefined,
@@ -21450,6 +21507,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayPaymentMethodInformationContentOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing what payment method information you need to display.",
           "generatedName": "DisplayPaymentMethodInformationContentOfpi",
           "nameOverride": undefined,
@@ -21480,6 +21538,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayPaymentMethodInformationContentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing what payment method information you need to display.",
           "generatedName": "DisplayPaymentMethodInformationContentPse",
           "nameOverride": undefined,
@@ -21533,6 +21592,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayPaymentProcessing": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the payer institution.",
           "generatedName": "DisplayPaymentProcessing",
           "nameOverride": undefined,
@@ -21559,6 +21619,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayPaymentSucceeded": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the payer institution.",
           "generatedName": "DisplayPaymentSucceeded",
           "nameOverride": undefined,
@@ -21585,6 +21646,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DisplayTokenRequiredContentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DisplayTokenRequiredContentPse",
           "nameOverride": undefined,
@@ -21611,6 +21673,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DocumentIdBusiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing information about the ID document of the tax payer.",
           "generatedName": "DocumentIdBusiness",
           "nameOverride": undefined,
@@ -21648,6 +21711,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DocumentIdIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing information about the ID document of the tax payer.",
           "generatedName": "DocumentIdIndividual",
           "nameOverride": undefined,
@@ -21685,6 +21749,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DocumentInformationBusiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing detailed information about the fiscal document.",
           "generatedName": "DocumentInformationBusiness",
           "nameOverride": undefined,
@@ -21754,6 +21819,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "DocumentInformationIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing detailed information about the fiscal document.",
           "generatedName": "DocumentInformationIndividual",
           "nameOverride": undefined,
@@ -21823,6 +21889,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "EmploymentRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Emploment record response payload",
           "generatedName": "EmploymentRecord",
           "nameOverride": undefined,
@@ -22016,6 +22083,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "EmploymentRecordDetail": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the individual's employment history.",
           "generatedName": "EmploymentRecordDetail",
           "nameOverride": undefined,
@@ -22231,6 +22299,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
         },
         "EmploymentRecordDocumentId": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the individual's ID documents.",
           "generatedName": "EmploymentRecordDocumentId",
           "nameOverride": undefined,
@@ -22281,6 +22350,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
         },
         "EmploymentRecordEmploymentStatusUpdates": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding any employment changes of the individual.",
           "generatedName": "EmploymentRecordEmploymentStatusUpdates",
           "nameOverride": undefined,
@@ -22343,6 +22413,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
         },
         "EmploymentRecordEntitlement": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the benefits the individual is entitled to.",
           "generatedName": "EmploymentRecordEntitlement",
           "nameOverride": undefined,
@@ -22427,6 +22498,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
         },
         "EmploymentRecordFile": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Additional PDF binary files relating to the individual's employment.",
           "generatedName": "EmploymentRecordFile",
           "nameOverride": undefined,
@@ -22474,6 +22546,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
         },
         "EmploymentRecordPersonalData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the personal information of the individual.",
           "generatedName": "EmploymentRecordPersonalData",
           "nameOverride": undefined,
@@ -22641,6 +22714,7 @@ For Mexico, this is the *daily* rate that the individual earned, including the p
         },
         "EmploymentRecordRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmploymentRecordRequest",
           "nameOverride": undefined,
@@ -22697,6 +22771,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "EmploymentRecordSocialSecuritySummary": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the individual's social security contributions.",
           "generatedName": "EmploymentRecordSocialSecuritySummary",
           "nameOverride": undefined,
@@ -22772,6 +22847,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "EmploymentRecordsPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmploymentRecordsPaginatedResponse",
           "nameOverride": undefined,
@@ -25132,6 +25208,7 @@ We return one of the following enum values:
         },
         "EquityStatementBusiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the general fiscal situation of the taxpayer.",
           "generatedName": "EquityStatementBusiness",
           "nameOverride": undefined,
@@ -25237,6 +25314,7 @@ We return one of the following enum values:
         },
         "EquityStatementIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the general fiscal situation of the taxpayer.",
           "generatedName": "EquityStatementIndividual",
           "nameOverride": undefined,
@@ -25282,6 +25360,7 @@ We return one of the following enum values:
         },
         "EyodIncomeVerificationBodyRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EyodIncomeVerificationBodyRequest",
           "nameOverride": undefined,
@@ -25446,6 +25525,7 @@ We return one of the following enum values:
         },
         "EyodIncomeVerificationRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EyodIncomeVerificationRequest",
           "nameOverride": undefined,
@@ -25566,6 +25646,7 @@ We return one of the following enum values:
         },
         "GrossIncomeIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the declared gross income of the tax payer.",
           "generatedName": "GrossIncomeIndividual",
           "nameOverride": undefined,
@@ -25623,6 +25704,7 @@ We return one of the following enum values:
         },
         "HolderBankAccountInformationPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object with additional information about the individual that holds the bank account.",
           "generatedName": "HolderBankAccountInformationPse",
           "nameOverride": undefined,
@@ -25668,6 +25750,7 @@ We return one of the following enum values:
         },
         "HolderBankAccountPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the bank account holder.",
           "generatedName": "HolderBankAccountPse",
           "nameOverride": undefined,
@@ -25711,6 +25794,7 @@ We return one of the following enum values:
         },
         "HolderBusinessPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the business bank account holder.",
           "generatedName": "HolderBusinessPse",
           "nameOverride": undefined,
@@ -25746,6 +25830,7 @@ We return one of the following enum values:
         },
         "HolderBusinessResponsePse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the business bank account holder.",
           "generatedName": "HolderBusinessResponsePse",
           "nameOverride": undefined,
@@ -25785,6 +25870,7 @@ We return one of the following enum values:
         },
         "HolderInformationBusinessOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Additional information about the bank account holder required in order to create the account for OFPI.",
           "generatedName": "HolderInformationBusinessOfpi",
           "nameOverride": undefined,
@@ -25835,6 +25921,7 @@ We return one of the following enum values:
         },
         "HolderInformationBusinessOfpiResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HolderInformationBusinessOfpiResponse",
           "nameOverride": undefined,
@@ -25885,6 +25972,7 @@ We return one of the following enum values:
         },
         "HolderInformationBusinessPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HolderInformationBusinessPse",
           "nameOverride": undefined,
@@ -25910,6 +25998,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
         },
         "HolderInformationBusinessPseResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HolderInformationBusinessPseResponse",
           "nameOverride": undefined,
@@ -25935,6 +26024,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
         },
         "HolderInformationIndividualOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Additional information about the bank account holder required in order to create the account for OFPI.",
           "generatedName": "HolderInformationIndividualOfpi",
           "nameOverride": undefined,
@@ -25999,6 +26089,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
         },
         "HolderInformationIndividualOfpiResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HolderInformationIndividualOfpiResponse",
           "nameOverride": undefined,
@@ -26063,6 +26154,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
         },
         "HolderResponseOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the bank account holder.",
           "generatedName": "HolderResponseOfpi",
           "nameOverride": undefined,
@@ -26117,6 +26209,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
         },
         "Income": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Income insights",
           "generatedName": "Income",
           "nameOverride": undefined,
@@ -26406,6 +26499,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
         },
         "IncomeStreamsBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A list of income streams for the account.
 
 For each income stream, we provide additional insights such as:
@@ -26682,6 +26776,7 @@ For each income stream, we provide additional insights such as:
         },
         "IncomesPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IncomesPaginatedResponse",
           "nameOverride": undefined,
@@ -26778,6 +26873,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "IncomesRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IncomesRequest",
           "nameOverride": undefined,
@@ -26918,6 +27014,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "Institution": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Institution",
           "nameOverride": undefined,
@@ -27246,6 +27343,7 @@ Here is a list of the available features:
         },
         "InstitutionAccount": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the institution.",
           "generatedName": "InstitutionAccount",
           "nameOverride": undefined,
@@ -27291,6 +27389,7 @@ Please see our [Institutions](https://developers.belvo.com/docs/institution) Dev
         },
         "InstitutionDownError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
           "generatedName": "InstitutionDownError",
           "nameOverride": undefined,
@@ -27360,6 +27459,7 @@ For \`institution_down\` errors, the description is:
         },
         "InstitutionFormField": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InstitutionFormField",
           "nameOverride": undefined,
@@ -27534,6 +27634,7 @@ For \`institution_down\` errors, the description is:
         },
         "InstitutionInactiveError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when we (Belvo) have deactivated the institution in our API.",
           "generatedName": "InstitutionInactiveError",
           "nameOverride": undefined,
@@ -27603,6 +27704,7 @@ For \`institution_inactive\` errors, the description is:
         },
         "InstitutionUnavailableError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when the institution's website that you're trying to access is down due to maintenance or other issues, which means Belvo is unable to create new links or retrieve new data.",
           "generatedName": "InstitutionUnavailableError",
           "nameOverride": undefined,
@@ -27672,6 +27774,7 @@ For \`institution_unavailable\` errors, the description is:
         },
         "InstitutionsFeature": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InstitutionsFeature",
           "nameOverride": undefined,
@@ -27717,6 +27820,7 @@ For \`institution_unavailable\` errors, the description is:
         },
         "InstitutionsFormField": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InstitutionsFormField",
           "nameOverride": undefined,
@@ -27859,6 +27963,7 @@ For \`institution_unavailable\` errors, the description is:
         },
         "InstitutionsFormFieldValues": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InstitutionsFormFieldValues",
           "nameOverride": undefined,
@@ -27962,6 +28067,7 @@ For \`institution_unavailable\` errors, the description is:
         },
         "InstitutionsPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InstitutionsPaginatedResponse",
           "nameOverride": undefined,
@@ -28058,6 +28164,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "InvalidAccessMode": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when you try to update a link from single to recurrent, but there are no login credentials stored for the user.",
           "generatedName": "InvalidAccessMode",
           "nameOverride": undefined,
@@ -28127,6 +28234,7 @@ For \`invalid_access_mode_switch\` errors, the description is:
         },
         "InvalidLinkError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when you try to access an account but the user credentials are no longer valid, prompting an error from the institution.",
           "generatedName": "InvalidLinkError",
           "nameOverride": undefined,
@@ -28196,6 +28304,7 @@ For \`invalid_link\` errors, the description is:
         },
         "InvalidPeriodError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when you request incomes for a link within a given date range, however, the period between \`date_from\` and \`date_to\` is less than 90 days.",
           "generatedName": "InvalidPeriodError",
           "nameOverride": undefined,
@@ -28265,6 +28374,7 @@ For \`invalid_period\` errors, the description is:
         },
         "InvestmentsPortfolio": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvestmentsPortfolio",
           "nameOverride": undefined,
@@ -28435,6 +28545,7 @@ Please note that other currencies other than in the list above may be returned.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "InvestmentsPortfolioInstrument",
             "nameOverride": undefined,
@@ -28738,6 +28849,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "InvestmentsPortfolioInstrumentFees",
             "nameOverride": undefined,
@@ -28777,6 +28889,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "InvestmentsPortfolioInstrumentInterestRate",
             "nameOverride": undefined,
@@ -28835,6 +28948,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
         },
         "InvestmentsPortfolioInstrumentPublicId": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The public identifiers for the instrument.",
           "generatedName": "InvestmentsPortfolioInstrumentPublicId",
           "nameOverride": undefined,
@@ -28875,6 +28989,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "InvestmentsPortfolioInstrumentRedemptionConditions",
             "nameOverride": undefined,
@@ -28913,6 +29028,7 @@ For example, the due date, the liquidity date, the previdencia type, and so on.
         },
         "InvestmentsPortfoliosPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvestmentsPortfoliosPaginatedResponse",
           "nameOverride": undefined,
@@ -29009,6 +29125,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "InvoiceDetailDian": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceDetailDian",
           "nameOverride": undefined,
@@ -29236,6 +29353,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "InvoiceDetailRetainedTaxSat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceDetailRetainedTaxSat",
           "nameOverride": undefined,
@@ -29341,6 +29459,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "InvoiceDetailSat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceDetailSat",
           "nameOverride": undefined,
@@ -29597,6 +29716,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "InvoiceDian": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceDian",
           "nameOverride": undefined,
@@ -30417,6 +30537,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Details regarding the sender.
 ",
             "generatedName": "InvoiceSenderDetailsDian",
@@ -30636,6 +30757,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "generatedName": "InvoiceWarningsDian",
@@ -30691,6 +30813,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Object containing information about any warnings related to this invoice.
 ",
             "generatedName": "InvoiceWarningsSat",
@@ -30742,6 +30865,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
         },
         "InvoiceWithIdSat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceWithIdSat",
           "nameOverride": undefined,
@@ -31558,6 +31682,7 @@ Possible statuses are:
         },
         "InvoicesPaymentsDian": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoicesPaymentsDian",
           "nameOverride": undefined,
@@ -31807,6 +31932,7 @@ Possible statuses are:
         },
         "InvoicesPaymentsRelatedDocumentsDian": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "List of all the related deferred invoices affected by the payment.",
           "generatedName": "InvoicesPaymentsRelatedDocumentsDian",
           "nameOverride": undefined,
@@ -31952,6 +32078,7 @@ Possible statuses are:
         },
         "InvoicesPaymentsRelatedDocumentsSat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "List of all the related deferred invoices affected by the payment.",
           "generatedName": "InvoicesPaymentsRelatedDocumentsSat",
           "nameOverride": undefined,
@@ -32104,6 +32231,7 @@ Possible statuses are:
         },
         "InvoicesPaymentsSat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoicesPaymentsSat",
           "nameOverride": undefined,
@@ -32373,6 +32501,7 @@ Please note that other currencies other than in the list above may be returned.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
             "generatedName": "InvoicesPayrollDian",
@@ -32546,6 +32675,7 @@ Please note that other currencies other than in the list above may be returned.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Details regarding the payroll payment. Only applicable for payroll invoices.
 ",
             "generatedName": "InvoicesPayrollSat",
@@ -32708,6 +32838,7 @@ Please note that other currencies other than in the list above may be returned.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Details regarding the receiver.
 ",
             "generatedName": "InvoicesReceiverDetailsDian",
@@ -32923,6 +33054,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
         },
         "InvoicesRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoicesRequest",
           "nameOverride": undefined,
@@ -33028,6 +33160,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "InvoicesResponsePaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoicesResponsePaginatedResponse",
           "nameOverride": undefined,
@@ -33143,6 +33276,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "LastErrorInvalidCredentials": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the credentials that your customer provides are incorrect.",
           "generatedName": "LastErrorInvalidCredentials",
           "nameOverride": undefined,
@@ -33180,6 +33314,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "LastErrorInvalidToken": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when the MFA token your customer provides is invalid.",
           "generatedName": "LastErrorInvalidToken",
           "nameOverride": undefined,
@@ -33217,6 +33352,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "LastErrorLoginError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the \`pse_display_credentials_required\` next step.",
           "generatedName": "LastErrorLoginError",
           "nameOverride": undefined,
@@ -33254,6 +33390,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "LastErrorPaymentError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened during the payment intent process.",
           "generatedName": "LastErrorPaymentError",
           "nameOverride": undefined,
@@ -33291,6 +33428,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "LastErrorSessionExpired": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error occurs when you try to send a PATCH request after the session has already expired (the session expires after 10 minutes).",
           "generatedName": "LastErrorSessionExpired",
           "nameOverride": undefined,
@@ -33328,6 +33466,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "LastErrorTwoFactor": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the error you ran into in the previous step of the payment intent, if applicable. This error can occur when something unexpected happened in the \`pse_display_token_required\` next step.",
           "generatedName": "LastErrorTwoFactor",
           "nameOverride": undefined,
@@ -33365,6 +33504,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "Link": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Link",
           "nameOverride": undefined,
@@ -33564,6 +33704,7 @@ A unique 44-character string that can be used to identify a user at a given inst
         },
         "LinksPutRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LinksPutRequest",
           "nameOverride": undefined,
@@ -33728,6 +33869,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
         },
         "LinksRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LinksRequest",
           "nameOverride": undefined,
@@ -34049,6 +34191,7 @@ Belvo supports a base64 encoded \`private_key\`. If the \`private_key\` paramete
         },
         "LoginError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error can occur when:
 
   - the credentials that your user provides are incorrect or missing.
@@ -34129,6 +34272,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NeedsRedirectContent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the payer institution.",
           "generatedName": "NeedsRedirectContent",
           "nameOverride": undefined,
@@ -34155,6 +34299,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NeedsRedirectContentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the payer institution.",
           "generatedName": "NeedsRedirectContentPse",
           "nameOverride": undefined,
@@ -34181,6 +34326,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NetIncomeIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the declared net income of the tax payer. The values are calculated as the \`gross_income\` - \`non_taxable_income\`.",
           "generatedName": "NetIncomeIndividual",
           "nameOverride": undefined,
@@ -34238,6 +34384,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayConfirmationRequiredOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayConfirmationRequiredOfpi",
           "nameOverride": undefined,
@@ -34336,6 +34483,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayConfirmationRequiredPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayConfirmationRequiredPse",
           "nameOverride": undefined,
@@ -34452,6 +34600,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayCredentialsRequiredPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayCredentialsRequiredPse",
           "nameOverride": undefined,
@@ -34568,6 +34717,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayCustomerBankAccountsPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayCustomerBankAccountsPse",
           "nameOverride": undefined,
@@ -34684,6 +34834,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayNeedsRedirectPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayNeedsRedirectPse",
           "nameOverride": undefined,
@@ -34800,6 +34951,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayPaymentFailed": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayPaymentFailed",
           "nameOverride": undefined,
@@ -34898,6 +35050,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayPaymentMethodInformation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayPaymentMethodInformation",
           "nameOverride": undefined,
@@ -34996,6 +35149,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayPaymentMethodInformationPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type. You'll need to send a PATCH request with the institution selected by the customer or their bank accounts (if there are accounts already saved in the Belvo database).",
           "generatedName": "NextStepDisplayPaymentMethodInformationPse",
           "nameOverride": undefined,
@@ -35112,6 +35266,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayPaymentProcessing": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayPaymentProcessing",
           "nameOverride": undefined,
@@ -35210,6 +35365,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayPaymentSucceeded": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayPaymentSucceeded",
           "nameOverride": undefined,
@@ -35308,6 +35464,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepDisplayTokenRequiredPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepDisplayTokenRequiredPse",
           "nameOverride": undefined,
@@ -35428,6 +35585,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NextStepNeedsRedirect": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object detailing the next steps you should follow for a specific \`next_step\` type.",
           "generatedName": "NextStepNeedsRedirect",
           "nameOverride": undefined,
@@ -35525,6 +35683,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NonTaxableIncomeIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the declared non-taxable income of the tax payer.",
           "generatedName": "NonTaxableIncomeIndividual",
           "nameOverride": undefined,
@@ -35582,6 +35741,7 @@ For \`login_error\` errors, the description can be one of the following:
         },
         "NotFoundError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "NotFoundError",
           "nameOverride": "NotFoundErrorBody",
@@ -35651,6 +35811,7 @@ For \`not_found\` errors, the description is:
         },
         "Owner": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Owner",
           "nameOverride": undefined,
@@ -35926,6 +36087,7 @@ For \`not_found\` errors, the description is:
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Information regarding the identification document the owner provided to the bank.",
             "generatedName": "OwnerDocumentId",
             "nameOverride": undefined,
@@ -35998,6 +36160,7 @@ For \`not_found\` errors, the description is:
         },
         "OwnersPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OwnersPaginatedResponse",
           "nameOverride": undefined,
@@ -36094,6 +36257,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaginatedResponseLink": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaginatedResponseLink",
           "nameOverride": undefined,
@@ -36190,6 +36354,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PatchBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A JSON object containing a session UUID and a MFA token",
           "generatedName": "PatchBody",
           "nameOverride": undefined,
@@ -36262,6 +36427,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "PatchBodyWithoutSaveData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A JSON object containing a session UUID and a MFA token",
           "generatedName": "PatchBodyWithoutSaveData",
           "nameOverride": undefined,
@@ -36317,6 +36483,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "PatchPaymentIntentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PatchPaymentIntentPse",
           "nameOverride": undefined,
@@ -36357,6 +36524,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "PatchPaymentIntentsBodyPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PatchPaymentIntentsBodyPse",
           "nameOverride": undefined,
@@ -36383,6 +36551,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "PatchPaymentMethodDetailsPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object with required fields to fill information in the payment intent object. The information you need to send through depends on the next step Belvo returns in the response.",
           "generatedName": "PatchPaymentMethodDetailsPse",
           "nameOverride": undefined,
@@ -36492,6 +36661,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "PaymentIntentOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentIntentOfpi",
           "nameOverride": undefined,
@@ -36885,6 +37055,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "PaymentIntentPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentIntentPaginatedResponse",
           "nameOverride": undefined,
@@ -36981,6 +37152,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentIntentPaymentMethodDetailsBodyBusinessOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Payment method type selected.",
           "generatedName": "PaymentIntentPaymentMethodDetailsBodyBusinessOfpi",
           "nameOverride": undefined,
@@ -37054,6 +37226,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentIntentPaymentMethodDetailsBodyIndividualOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Payment method type selected.",
           "generatedName": "PaymentIntentPaymentMethodDetailsBodyIndividualOfpi",
           "nameOverride": undefined,
@@ -37131,6 +37304,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentIntentPaymentMethodDetailsBodyPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details about the payment method type selected.",
           "generatedName": "PaymentIntentPaymentMethodDetailsBodyPse",
           "nameOverride": undefined,
@@ -37252,6 +37426,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentIntentPaymentMethodDetailsBusinessOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details about the OFPI payment method.",
           "generatedName": "PaymentIntentPaymentMethodDetailsBusinessOfpi",
           "nameOverride": undefined,
@@ -37274,6 +37449,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentIntentPaymentMethodDetailsIndividualOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details about the OFPI payment method.",
           "generatedName": "PaymentIntentPaymentMethodDetailsIndividualOfpi",
           "nameOverride": undefined,
@@ -37296,6 +37472,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentIntentPaymentMethodDetailsPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details about the PSE payment method.",
           "generatedName": "PaymentIntentPaymentMethodDetailsPse",
           "nameOverride": undefined,
@@ -37322,6 +37499,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentIntentPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentIntentPse",
           "nameOverride": undefined,
@@ -37746,6 +37924,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentIntentsPaymentMethodDetailsBodyPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details about the organization's bank account that will receive the payment.",
           "generatedName": "PaymentIntentsPaymentMethodDetailsBodyPse",
           "nameOverride": undefined,
@@ -37799,6 +37978,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentIntentsPaymentMethodDetailsPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object with payment method details to create a payment intent.",
           "generatedName": "PaymentIntentsPaymentMethodDetailsPse",
           "nameOverride": undefined,
@@ -37821,6 +38001,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentLinkCallbackUrls": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentLinkCallbackUrls",
           "nameOverride": undefined,
@@ -37870,6 +38051,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentLinkCallbackUrlsResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The URLs that the user should be redirected to.
 
 **Note:** This field will return an empty object if your integration only generates payment links through the [Belvo Dashboard](https://dashboard.belvo.com/).",
@@ -37917,6 +38099,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentLinkListOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentLinkListOfpi",
           "nameOverride": undefined,
@@ -38099,6 +38282,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentLinkListPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentLinkListPse",
           "nameOverride": undefined,
@@ -38281,6 +38465,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentLinkOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentLinkOfpi",
           "nameOverride": undefined,
@@ -38462,6 +38647,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentLinkPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentLinkPaginatedResponse",
           "nameOverride": undefined,
@@ -38577,6 +38763,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentLinkPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentLinkPse",
           "nameOverride": undefined,
@@ -38758,6 +38945,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentLinksPaymentMethodDetailsBodyOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details about the organization's bank account that will receive the payment.",
           "generatedName": "PaymentLinksPaymentMethodDetailsBodyOfpi",
           "nameOverride": undefined,
@@ -38799,6 +38987,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentLinksPaymentMethodDetailsBodyPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details about the organization's bank account that will receive the payment.",
           "generatedName": "PaymentLinksPaymentMethodDetailsBodyPse",
           "nameOverride": undefined,
@@ -38852,6 +39041,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentMethodDetailsOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object with information required by Open Finance Payments in Brazil to create a payment intent.",
           "generatedName": "PaymentMethodDetailsOfpi",
           "nameOverride": undefined,
@@ -38874,6 +39064,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentMethodDetailsPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object with information required by PSE to create a payment intent.",
           "generatedName": "PaymentMethodDetailsPse",
           "nameOverride": undefined,
@@ -38896,6 +39087,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentMethodInfoCustomerBankAccountsPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentMethodInfoCustomerBankAccountsPse",
           "nameOverride": undefined,
@@ -39010,6 +39202,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentMethodInformationBodyOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Payment method type selected.",
           "generatedName": "PaymentMethodInformationBodyOfpi",
           "nameOverride": undefined,
@@ -39085,6 +39278,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentMethodInformationBodyPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Payment method type selected.",
           "generatedName": "PaymentMethodInformationBodyPse",
           "nameOverride": undefined,
@@ -39182,6 +39376,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentMethodInformationDetailsPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentMethodInformationDetailsPse",
           "nameOverride": undefined,
@@ -39226,6 +39421,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentMethodInformationOfpi": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the payment method selected.",
           "generatedName": "PaymentMethodInformationOfpi",
           "nameOverride": undefined,
@@ -39252,6 +39448,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentMethodInformationPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the payment method selected.
 
 **Note**: If no payment method information is associated, we return an empty array.",
@@ -39280,6 +39477,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentWebhookRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentWebhookRequest",
           "nameOverride": undefined,
@@ -39357,6 +39555,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentsInstitutionsPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentsInstitutionsPaginatedResponse",
           "nameOverride": undefined,
@@ -39453,6 +39652,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentsTransactionsPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentsTransactionsPaginatedResponse",
           "nameOverride": undefined,
@@ -39549,6 +39749,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentsWay": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentsWay",
           "nameOverride": undefined,
@@ -39586,6 +39787,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PaymentsWebhooksPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentsWebhooksPaginatedResponse",
           "nameOverride": undefined,
@@ -39682,6 +39884,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "PensionIncomeStatementIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the tax payer's total pension income.",
           "generatedName": "PensionIncomeStatementIndividual",
           "nameOverride": undefined,
@@ -39715,6 +39918,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "ProvidersPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ProvidersPse",
           "nameOverride": undefined,
@@ -39741,6 +39945,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "ReceivableTransactionRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ReceivableTransactionRequest",
           "nameOverride": undefined,
@@ -39831,6 +40036,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "ReceivablesTransaction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ReceivablesTransaction",
           "nameOverride": undefined,
@@ -40045,6 +40251,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "ReceivablesTransactionAccount": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Basic information about the account associated with the transaction.",
           "generatedName": "ReceivablesTransactionAccount",
           "nameOverride": undefined,
@@ -40084,6 +40291,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Details regarding the number of installments for the transaction, if applicable.",
             "generatedName": "ReceivablesTransactionNumberOfInstallments",
             "nameOverride": undefined,
@@ -40126,6 +40334,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "ReceivablesTransactionsPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ReceivablesTransactionsPaginatedResponse",
           "nameOverride": undefined,
@@ -40222,6 +40431,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "RecevablesTransactionFees": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding the fees applied to the transaction.",
           "generatedName": "RecevablesTransactionFees",
           "nameOverride": undefined,
@@ -40259,6 +40469,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "An array of minified transaction objects used to evaluate the recurring expense. If no transactions were found, we return an empty array.",
             "generatedName": "RecurringExpenseSourceTransaction",
             "nameOverride": undefined,
@@ -40313,6 +40524,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "RecurringExpenses": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Recurring expense insights.
 
 
@@ -40476,6 +40688,7 @@ Based on the frequency, you can infer how many days until the next charge will o
         },
         "RecurringExpensesPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RecurringExpensesPaginatedResponse",
           "nameOverride": undefined,
@@ -40572,6 +40785,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "RecurringExpensesRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RecurringExpensesRequest",
           "nameOverride": undefined,
@@ -40674,6 +40888,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "ReportingId": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing information about where the tax payer reports their income.",
           "generatedName": "ReportingId",
           "nameOverride": undefined,
@@ -40711,6 +40926,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "RequestTimeoutError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Belvo has a limit regarding the time it takes to log in, retrieve account data, and log out. A timeout occurs when there is a very high amount of data and everything could not be obtained within the allotted time.",
           "generatedName": "RequestTimeoutError",
           "nameOverride": "RequestTimeoutErrorBody",
@@ -40780,6 +40996,7 @@ For \`request_timeout\` errors, the description is:
         },
         "RetentionBreakdown": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A breakdown of the retained taxes",
           "generatedName": "RetentionBreakdown",
           "nameOverride": undefined,
@@ -40858,6 +41075,7 @@ For \`request_timeout\` errors, the description is:
         },
         "RiskInsights": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RiskInsights",
           "nameOverride": undefined,
@@ -40999,6 +41217,7 @@ For \`request_timeout\` errors, the description is:
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Balance metrics calculated based on the user's balances from checking and savings accounts.",
             "generatedName": "RiskInsightsBalanceMetrics",
             "nameOverride": undefined,
@@ -41262,6 +41481,7 @@ However, internal transfers (transfers between accounts belonging to the same li
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Aggregated metrics calculated based on the user's transactions from checking, savings, credit, and loan accounts.
 
 However, internal transfers (transfers between accounts belonging to the same link) are not used in the calculation.
@@ -41456,6 +41676,7 @@ However, internal transfers (transfers between accounts belonging to the same li
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Aggregated metrics calculated based on the link's credit card accounts.",
             "generatedName": "RiskInsightsCreditCardMetrics",
             "nameOverride": undefined,
@@ -41518,6 +41739,7 @@ However, internal transfers (transfers between accounts belonging to the same li
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Aggregated metrics calculated based on the user's loan accounts.",
             "generatedName": "RiskInsightsLoansMetrics",
             "nameOverride": undefined,
@@ -41595,6 +41817,7 @@ However, internal transfers (transfers between accounts belonging to the same li
         },
         "RiskInsightsPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RiskInsightsPaginatedResponse",
           "nameOverride": undefined,
@@ -41694,6 +41917,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Aggregated metrics calculated band on the user's transactions from checking, savings, credit card, and loan accounts.",
             "generatedName": "RiskInsightsTransactionMetrics",
             "nameOverride": undefined,
@@ -42169,6 +42393,7 @@ If the account has not been open long enough to have the transaction data for a 
         },
         "SecretKeys": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SecretKeys",
           "nameOverride": undefined,
@@ -42236,6 +42461,7 @@ If the account has not been open long enough to have the transaction data for a 
         },
         "SecretKeysPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SecretKeysPaginatedResponse",
           "nameOverride": undefined,
@@ -42332,6 +42558,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "SessionExpiredError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when you try to resume a request session that has already expired. This is usually because the user took too long to provide their authentication token.",
           "generatedName": "SessionExpiredError",
           "nameOverride": undefined,
@@ -42401,6 +42628,7 @@ For \`session_expired\` errors, the description is:
         },
         "StandardRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "StandardRequest",
           "nameOverride": undefined,
@@ -42459,6 +42687,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxAssessmentBusiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the calculated tax assessment of the tax payer. This includes the total taxable income, the income tax applied, and taxes already withheld.",
           "generatedName": "TaxAssessmentBusiness",
           "nameOverride": undefined,
@@ -42576,6 +42805,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxAssessmentIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing the calculated tax assessment of the tax payer. This includes the total taxable income, the income tax applied, and taxes already withheld.",
           "generatedName": "TaxAssessmentIndividual",
           "nameOverride": undefined,
@@ -42697,6 +42927,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
         },
         "TaxComplianceStatus": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxComplianceStatus",
           "nameOverride": undefined,
@@ -42839,6 +43070,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
         },
         "TaxComplianceStatusPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxComplianceStatusPaginatedResponse",
           "nameOverride": undefined,
@@ -42935,6 +43167,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxComplianceStatusRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxComplianceStatusRequest",
           "nameOverride": undefined,
@@ -42991,6 +43224,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxDeclarationBusiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxDeclarationBusiness",
           "nameOverride": undefined,
@@ -43166,6 +43400,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxDeclarationBusinessPaginated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxDeclarationBusinessPaginated",
           "nameOverride": undefined,
@@ -43262,6 +43497,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxDeclarationIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxDeclarationIndividual",
           "nameOverride": undefined,
@@ -43437,6 +43673,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxDeclarationIndividualPaginated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxDeclarationIndividualPaginated",
           "nameOverride": undefined,
@@ -43533,6 +43770,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxDeclarationsRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Request body for tax declrarations",
           "generatedName": "TaxDeclarationsRequest",
           "nameOverride": undefined,
@@ -43619,6 +43857,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxPayerInformationBusiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing information about the tax payer.",
           "generatedName": "TaxPayerInformationBusiness",
           "nameOverride": undefined,
@@ -43754,6 +43993,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxPayerInformationIndividual": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object containing information about the tax payer.",
           "generatedName": "TaxPayerInformationIndividual",
           "nameOverride": undefined,
@@ -43859,6 +44099,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxRetentions": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxRetentions",
           "nameOverride": undefined,
@@ -44267,6 +44508,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxRetentionsPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxRetentionsPaginatedResponse",
           "nameOverride": undefined,
@@ -44363,6 +44605,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxRetentionsRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxRetentionsRequest",
           "nameOverride": undefined,
@@ -44467,6 +44710,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxReturnBusiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxReturnBusiness",
           "nameOverride": undefined,
@@ -44788,6 +45032,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxReturnBusinessMonthly": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxReturnBusinessMonthly",
           "nameOverride": undefined,
@@ -45014,6 +45259,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxReturnPersonal": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxReturnPersonal",
           "nameOverride": undefined,
@@ -45303,6 +45549,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxReturnPersonalMonthly": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxReturnPersonalMonthly",
           "nameOverride": undefined,
@@ -45483,6 +45730,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxReturnsBusinessMonthlyPaginated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxReturnsBusinessMonthlyPaginated",
           "nameOverride": undefined,
@@ -45579,6 +45827,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxReturnsBusinessPaginated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxReturnsBusinessPaginated",
           "nameOverride": undefined,
@@ -45675,6 +45924,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxReturnsMonthlyRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Request body for monthly tax returns",
           "generatedName": "TaxReturnsMonthlyRequest",
           "nameOverride": undefined,
@@ -45778,6 +46028,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxReturnsPersonalMonthlyPaginated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxReturnsPersonalMonthlyPaginated",
           "nameOverride": undefined,
@@ -45874,6 +46125,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxReturnsPersonalPaginated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxReturnsPersonalPaginated",
           "nameOverride": undefined,
@@ -45970,6 +46222,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxReturnsYearlyRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Request body for yearly tax returns",
           "generatedName": "TaxReturnsYearlyRequest",
           "nameOverride": undefined,
@@ -46073,6 +46326,7 @@ By default, Belvo returns the yearly (annual) tax returns.
         },
         "TaxStatusAddressBetweenStreetDian": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusAddressBetweenStreetDian",
           "nameOverride": undefined,
@@ -46130,6 +46384,7 @@ By default, Belvo returns the yearly (annual) tax returns.
         },
         "TaxStatusAddressBetweenStreetSat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusAddressBetweenStreetSat",
           "nameOverride": undefined,
@@ -46186,6 +46441,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "The tax payer's address details.",
             "generatedName": "TaxStatusAddressDian",
             "nameOverride": undefined,
@@ -46426,6 +46682,7 @@ By default, Belvo returns the yearly (annual) tax returns.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "The tax payer's address details.",
             "generatedName": "TaxStatusAddressSat",
             "nameOverride": undefined,
@@ -46663,6 +46920,7 @@ By default, Belvo returns the yearly (annual) tax returns.
         },
         "TaxStatusDian": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusDian",
           "nameOverride": undefined,
@@ -46949,6 +47207,7 @@ Note: For individuals in Colombia, this field will return \`null\`.
         },
         "TaxStatusEconomicActivityDian": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusEconomicActivityDian",
           "nameOverride": undefined,
@@ -47078,6 +47337,7 @@ For detailed information regarding DIAN's economic activities, please see their 
         },
         "TaxStatusEconomicActivitySat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusEconomicActivitySat",
           "nameOverride": undefined,
@@ -47201,6 +47461,7 @@ For detailed information regarding DIAN's economic activities, please see their 
         },
         "TaxStatusObligationsDian": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding a business's obligations.
 
 ℹ️ For non-business accounts, this field will return empty.
@@ -47309,6 +47570,7 @@ For detailed information regarding DIAN's economic activities, please see their 
         },
         "TaxStatusObligationsSat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details regarding a business's obligations.
 
 ℹ️ For non-business accounts, this field will return empty.
@@ -47417,6 +47679,7 @@ For detailed information regarding DIAN's economic activities, please see their 
         },
         "TaxStatusPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusPaginatedResponse",
           "nameOverride": undefined,
@@ -47532,6 +47795,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxStatusRegimensDian": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusRegimensDian",
           "nameOverride": undefined,
@@ -47599,6 +47863,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxStatusRegimensSat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusRegimensSat",
           "nameOverride": undefined,
@@ -47666,6 +47931,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TaxStatusRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusRequest",
           "nameOverride": undefined,
@@ -47722,6 +47988,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TaxStatusSat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaxStatusSat",
           "nameOverride": undefined,
@@ -48005,6 +48272,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Details regarding the taxpayer.",
             "generatedName": "TaxStatusTaxPayerInformationDian",
             "nameOverride": undefined,
@@ -48282,6 +48550,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Details regarding the taxpayer.",
             "generatedName": "TaxStatusTaxPayerInformationSat",
             "nameOverride": undefined,
@@ -48556,6 +48825,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "TokenRequiredResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "MFA Token Required",
           "generatedName": "TokenRequiredResponse",
           "nameOverride": undefined,
@@ -48694,6 +48964,7 @@ For \`token_required\` errors, the description is:
         },
         "TokenRequiredResponseTokenGenerationData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details on how to generate the token.",
           "generatedName": "TokenRequiredResponseTokenGenerationData",
           "nameOverride": undefined,
@@ -48776,6 +49047,7 @@ You will still need to make a PATCH call to complete the request.",
         },
         "TooManySessionsError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when:
 
   - a user is attempting to log in to their institution via Belvo while also already being logged in to their institution on a web browser or mobile app.
@@ -48848,6 +49120,7 @@ For \`too_many_sessions\` errors, the description is:
         },
         "Transaction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Transaction",
           "nameOverride": undefined,
@@ -49180,6 +49453,7 @@ For \`too_many_sessions\` errors, the description is:
         },
         "TransactionBankAccountBodyPse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Information about the payer's bank account. Belvo returns the bank account ID when the account is already saved in the Belvo database.",
           "generatedName": "TransactionBankAccountBodyPse",
           "nameOverride": undefined,
@@ -49249,6 +49523,7 @@ For \`too_many_sessions\` errors, the description is:
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Additional data provided by the institution for credit card transactions.",
             "generatedName": "TransactionCreditCardData",
             "nameOverride": undefined,
@@ -49379,6 +49654,7 @@ We only return merchant information for new transactions made from *checking* or
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Additional data regarding the merchant involved in the transaction.
 We only return merchant information for new transactions made from *checking* or *credit card* accounts.
 > **Get merchant information**
@@ -49455,6 +49731,7 @@ We only return merchant information for new transactions made from *checking* or
         },
         "TransactionsPaginatedResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionsPaginatedResponse",
           "nameOverride": undefined,
@@ -49551,6 +49828,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         },
         "TransactionsRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionsRequest",
           "nameOverride": undefined,
@@ -49659,6 +49937,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         },
         "UnauthorizedError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when you try to make an API call using incorrect Belvo API credentials (either your secret key or secret password, or both, are incorrect).",
           "generatedName": "UnauthorizedError",
           "nameOverride": "UnauthorizedErrorBody",
@@ -49728,6 +50007,7 @@ For \`authentication_failed\` errors, the description is:
         },
         "UnconfirmedLinkError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when you try to access a link that was paused previously (and as such is not active now).
 A Link's status is set to \`unconfirmed_link\` when your user has not completed the Link creation process successfully (for example, they might not provide a valid MFA token).",
           "generatedName": "UnconfirmedLinkError",
@@ -49798,6 +50078,7 @@ For \`unconfirmed_link\` errors, the description is:
         },
         "UnexpectedError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when we (Belvo) have encountered an internal system error (sorry about that) or due to an unsupported response from the institution.",
           "generatedName": "UnexpectedError",
           "nameOverride": undefined,
@@ -49867,6 +50148,7 @@ For \`unexpected_error\` errors, the description is:
         },
         "UnsupportedOperationError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when you try to access some data operation that Belvo does not support for an institution. For example, trying to access the Balances resource for fiscal institutions.",
           "generatedName": "UnsupportedOperationError",
           "nameOverride": undefined,
@@ -49936,6 +50218,7 @@ For \`unsupported_operation\` errors, the description is:
         },
         "ValidationError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "This error occurs when you try to resume a request session that has already expired. This is usually because the user took too long to provide their authentication token.",
           "generatedName": "ValidationError",
           "nameOverride": undefined,
@@ -50034,6 +50317,7 @@ For \`session_expired\` errors, the description can be (among others):
         },
         "paymentInstitution": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentInstitution",
           "nameOverride": undefined,
@@ -50263,6 +50547,7 @@ For \`session_expired\` errors, the description can be (among others):
         },
         "paymentTransaction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentTransaction",
           "nameOverride": undefined,
@@ -50455,6 +50740,7 @@ For \`session_expired\` errors, the description can be (among others):
         },
         "paymentWebhook": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaymentWebhook",
           "nameOverride": undefined,

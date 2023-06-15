@@ -279,6 +279,20 @@ types:
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
+      allOfPropertyConflicts: list<AllOfPropertyConflict>
+
+  # OpenAPI IR to Fern:
+  # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.
+  # If the property conflict has conflicting type signatures, then we will make the type unknown.
+  AllOfPropertyConflict:
+    properties:
+      propertyKey: string
+      allOfSchemaIds:
+        type: list<SchemaId>
+        docs: The allOf schemas that conflict with each other
+      conflictingTypeSignatures:
+        type: boolean
+        docs: If the allOf schemas have different types. Unclear how to resolve this. Possibly make the property unknown?
 
   ObjectProperty:
     properties:

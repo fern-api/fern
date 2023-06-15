@@ -104,6 +104,7 @@ Here are some of the most used payload fields explained (you can find the full p
                   "type": "reference",
                 },
               ],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "PostConsumerTransactionResponse",
               "nameOverride": undefined,
@@ -320,6 +321,16 @@ Each consumer User entity needs three mandatory fields:
                   "type": "reference",
                 },
               ],
+              "allOfPropertyConflicts": [
+                {
+                  "allOfSchemaIds": [
+                    "ConsumerUsersResponse",
+                    "UserMonitoringResult",
+                  ],
+                  "conflictingTypeSignatures": false,
+                  "propertyKey": "userId",
+                },
+              ],
               "description": undefined,
               "generatedName": "PostConsumerUserResponse",
               "nameOverride": undefined,
@@ -468,6 +479,16 @@ Each consumer Business entity needs three mandatory fields:
                   "nameOverride": undefined,
                   "schema": "UserMonitoringResult",
                   "type": "reference",
+                },
+              ],
+              "allOfPropertyConflicts": [
+                {
+                  "allOfSchemaIds": [
+                    "BusinessUsersResponse",
+                    "UserMonitoringResult",
+                  ],
+                  "conflictingTypeSignatures": false,
+                  "propertyKey": "userId",
                 },
               ],
               "description": undefined,
@@ -811,6 +832,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "schemas": {
         "ACHDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for ACH payment method",
           "generatedName": "AchDetails",
           "nameOverride": undefined,
@@ -989,6 +1011,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "Address": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for standardized address",
           "generatedName": "Address",
           "nameOverride": undefined,
@@ -1091,6 +1114,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "AlertClosedDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AlertClosedDetails",
           "nameOverride": undefined,
@@ -1310,6 +1334,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "Amount": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for amount",
           "generatedName": "Amount",
           "nameOverride": undefined,
@@ -1361,6 +1386,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Business",
           "nameOverride": undefined,
@@ -1369,6 +1395,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "BusinessBase": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for a business user base fields",
           "generatedName": "BusinessBase",
           "nameOverride": undefined,
@@ -1404,6 +1431,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "BusinessEntityLink": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BusinessEntityLink",
           "nameOverride": undefined,
@@ -1453,6 +1481,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "BusinessOptional": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for a business user - optional fields",
           "generatedName": "BusinessOptional",
           "nameOverride": undefined,
@@ -1778,6 +1807,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "BusinessUserEvent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for business user-related events",
           "generatedName": "BusinessUserEvent",
           "nameOverride": undefined,
@@ -1884,6 +1914,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "BusinessUsersResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for business user risk score response",
           "generatedName": "BusinessUsersResponse",
           "nameOverride": undefined,
@@ -1916,6 +1947,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": "Model for business payload with rules result",
           "generatedName": "BusinessWithRulesResult",
           "nameOverride": undefined,
@@ -1967,6 +1999,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CardDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for credit or debit card details",
           "generatedName": "CardDetails",
           "nameOverride": undefined,
@@ -2284,6 +2317,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CardExpiry": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CardExpiry",
           "nameOverride": undefined,
@@ -2325,6 +2359,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CardMerchantDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CardMerchantDetails",
           "nameOverride": undefined,
@@ -2466,6 +2501,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CaseClosedDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CaseClosedDetails",
           "nameOverride": undefined,
@@ -2613,6 +2649,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CaseManagementEvent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for case management events",
           "generatedName": "CaseManagementEvent",
           "nameOverride": undefined,
@@ -2768,6 +2805,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CheckDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CheckDetails",
           "nameOverride": undefined,
@@ -2935,6 +2973,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CompanyFinancialDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for business user company financial details",
           "generatedName": "CompanyFinancialDetails",
           "nameOverride": undefined,
@@ -2999,6 +3038,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CompanyGeneralDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for business user company general details",
           "generatedName": "CompanyGeneralDetails",
           "nameOverride": undefined,
@@ -3157,6 +3197,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "CompanyRegistrationDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for business user company registration details",
           "generatedName": "CompanyRegistrationDetails",
           "nameOverride": undefined,
@@ -3268,6 +3309,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ConsumerName": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for a generic consumer name",
           "generatedName": "ConsumerName",
           "nameOverride": undefined,
@@ -3327,6 +3369,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ConsumerUserEvent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for consumer user-related events",
           "generatedName": "ConsumerUserEvent",
           "nameOverride": undefined,
@@ -3433,6 +3476,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ConsumerUsersResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for consumer user risk score response",
           "generatedName": "ConsumerUsersResponse",
           "nameOverride": undefined,
@@ -3456,6 +3500,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ContactDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for business user contact information details",
           "generatedName": "ContactDetails",
           "nameOverride": undefined,
@@ -6710,6 +6755,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "Date": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for date",
           "generatedName": "Date",
           "nameOverride": undefined,
@@ -6755,6 +6801,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "DeviceData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for device data",
           "generatedName": "DeviceData",
           "nameOverride": undefined,
@@ -6954,6 +7001,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ExecutedRulesResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for list of executed rules",
           "generatedName": "ExecutedRulesResult",
           "nameOverride": undefined,
@@ -7099,6 +7147,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "FailedRulesResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for list of rules failed execution. It means rules could not be run",
           "generatedName": "FailedRulesResult",
           "nameOverride": undefined,
@@ -7163,6 +7212,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "FalsePositiveDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FalsePositiveDetails",
           "nameOverride": undefined,
@@ -7201,6 +7251,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "GenericBankAccountDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for any generic bank account",
           "generatedName": "GenericBankAccountDetails",
           "nameOverride": undefined,
@@ -7366,6 +7417,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "HitRulesDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for list of hit rules",
           "generatedName": "HitRulesDetails",
           "nameOverride": undefined,
@@ -7499,6 +7551,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "IBANDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Standardized model for Bank Details",
           "generatedName": "IbanDetails",
           "nameOverride": undefined,
@@ -7724,6 +7777,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "KYCStatusDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "KycStatusDetails",
           "nameOverride": undefined,
@@ -7768,6 +7822,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "LegalDocument": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "LegalDocument model generalizes User's identity document type (ex: Passport)",
           "generatedName": "LegalDocument",
           "nameOverride": undefined,
@@ -7888,6 +7943,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "LegalEntity": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for business user legal entity details",
           "generatedName": "LegalEntity",
           "nameOverride": undefined,
@@ -7983,6 +8039,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ListData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Payload of a list, new or existed",
           "generatedName": "ListData",
           "nameOverride": undefined,
@@ -8030,6 +8087,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ListExisted": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "List with ID and header",
           "generatedName": "ListExisted",
           "nameOverride": undefined,
@@ -8083,6 +8141,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ListHeader": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ListHeader",
           "nameOverride": undefined,
@@ -8173,6 +8232,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ListItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ListItem",
           "nameOverride": undefined,
@@ -8225,6 +8285,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "ListMetadata": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ListMetadata",
           "nameOverride": undefined,
@@ -8404,6 +8465,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "MCCDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MccDetails",
           "nameOverride": undefined,
@@ -8443,6 +8505,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "MpesaDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for Mpesa payment method",
           "generatedName": "MpesaDetails",
           "nameOverride": undefined,
@@ -8541,6 +8604,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "PEPStatus": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PepStatus",
           "nameOverride": undefined,
@@ -8642,6 +8706,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "Person": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for a generic individual - different from User model by not having userId field",
           "generatedName": "Person",
           "nameOverride": undefined,
@@ -8782,6 +8847,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "RiskScoringResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for results from Risk Scoring",
           "generatedName": "RiskScoringResult",
           "nameOverride": undefined,
@@ -8863,6 +8929,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "RuleFailureException": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RuleFailureException",
           "nameOverride": undefined,
@@ -8920,6 +8987,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "RuleHitMeta": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Details of rule execution, for internal purposes only",
           "generatedName": "RuleHitMeta",
           "nameOverride": undefined,
@@ -9100,6 +9168,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "RulesResults": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RulesResults",
           "nameOverride": undefined,
@@ -9143,6 +9212,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "SWIFTDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for SWIFT payment method",
           "generatedName": "SwiftDetails",
           "nameOverride": undefined,
@@ -9295,6 +9365,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "SanctionsDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SanctionsDetails",
           "nameOverride": undefined,
@@ -9405,6 +9476,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "Tag": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Generic key-value pair model to append a custom variable being sent to Flagright API",
           "generatedName": "Tag",
           "nameOverride": undefined,
@@ -9459,6 +9531,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Transaction",
           "nameOverride": undefined,
@@ -9467,6 +9540,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "TransactionAmountDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for transaction amount details",
           "generatedName": "TransactionAmountDetails",
           "nameOverride": undefined,
@@ -9518,6 +9592,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "TransactionAmountLimit": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionAmountLimit",
           "nameOverride": undefined,
@@ -9595,6 +9670,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "TransactionBase": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for transaction base Payload",
           "generatedName": "TransactionBase",
           "nameOverride": undefined,
@@ -9683,6 +9759,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "TransactionCountLimit": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionCountLimit",
           "nameOverride": undefined,
@@ -9756,6 +9833,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "TransactionEvent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for transaction-related events",
           "generatedName": "TransactionEvent",
           "nameOverride": undefined,
@@ -9901,6 +9979,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionEventMonitoringResult",
           "nameOverride": undefined,
@@ -9937,6 +10016,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "TransactionLimit": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionLimit",
           "nameOverride": undefined,
@@ -9997,6 +10077,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "TransactionLimits": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for transaction limits for a given user",
           "generatedName": "TransactionLimits",
           "nameOverride": undefined,
@@ -10112,6 +10193,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "TransactionLimitsPaymentMethodLimits",
                   "nameOverride": undefined,
@@ -10288,6 +10370,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionMonitoringResult",
           "nameOverride": undefined,
@@ -10411,6 +10494,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "TransactionUpdatable": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for transaction additional payload",
           "generatedName": "TransactionUpdatable",
           "nameOverride": undefined,
@@ -10776,6 +10860,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": "Model for transaction payload with rules result",
           "generatedName": "TransactionWithRulesResult",
           "nameOverride": undefined,
@@ -10819,6 +10904,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "UPIDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for UPI payment method",
           "generatedName": "UpiDetails",
           "nameOverride": undefined,
@@ -10931,6 +11017,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": "Model for User details",
           "generatedName": "User",
           "nameOverride": undefined,
@@ -10939,6 +11026,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "UserBase": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for User details",
           "generatedName": "UserBase",
           "nameOverride": undefined,
@@ -10991,6 +11079,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "UserDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for consumer user personal details",
           "generatedName": "UserDetails",
           "nameOverride": undefined,
@@ -11109,6 +11198,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserMonitoringResult",
           "nameOverride": undefined,
@@ -11132,6 +11222,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "UserOptional": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Model for User details",
           "generatedName": "UserOptional",
           "nameOverride": undefined,
@@ -11445,6 +11536,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "UserStateDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserStateDetails",
           "nameOverride": undefined,
@@ -11512,6 +11604,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": "Model for consumer user payload with rules result",
           "generatedName": "UserWithRulesResult",
           "nameOverride": undefined,
@@ -11563,6 +11656,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "WalletDetails": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Standardized model for a Generic wallet transaction",
           "generatedName": "WalletDetails",
           "nameOverride": undefined,
@@ -11693,6 +11787,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "WebhookEvent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WebhookEvent",
           "nameOverride": undefined,

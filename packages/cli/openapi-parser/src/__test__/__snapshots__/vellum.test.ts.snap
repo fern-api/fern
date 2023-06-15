@@ -562,6 +562,7 @@ Upload a document to be indexed and used for search.
       "schemas": {
         "Document": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Document",
           "nameOverride": undefined,
@@ -621,6 +622,7 @@ Upload a document to be indexed and used for search.
         },
         "DocumentDocumentToDocumentIndex": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DocumentDocumentToDocumentIndex",
           "nameOverride": undefined,
@@ -675,6 +677,7 @@ Upload a document to be indexed and used for search.
         },
         "EnrichedNormalizedCompletion": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EnrichedNormalizedCompletion",
           "nameOverride": undefined,
@@ -808,6 +811,7 @@ Upload a document to be indexed and used for search.
         },
         "GenerateErrorResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenerateErrorResponse",
           "nameOverride": undefined,
@@ -831,6 +835,7 @@ Upload a document to be indexed and used for search.
         },
         "GenerateOptionsRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenerateOptionsRequest",
           "nameOverride": undefined,
@@ -857,6 +862,7 @@ Upload a document to be indexed and used for search.
         },
         "GenerateRequestBodyRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenerateRequestBodyRequest",
           "nameOverride": undefined,
@@ -948,6 +954,7 @@ Upload a document to be indexed and used for search.
         },
         "GenerateRequestRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenerateRequestRequest",
           "nameOverride": undefined,
@@ -1000,6 +1007,7 @@ Upload a document to be indexed and used for search.
         },
         "GenerateResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenerateResponse",
           "nameOverride": undefined,
@@ -1026,6 +1034,7 @@ Upload a document to be indexed and used for search.
         },
         "GenerateResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenerateResult",
           "nameOverride": undefined,
@@ -1069,6 +1078,7 @@ Upload a document to be indexed and used for search.
         },
         "GenerateResultData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenerateResultData",
           "nameOverride": undefined,
@@ -1095,6 +1105,7 @@ Upload a document to be indexed and used for search.
         },
         "GenerateResultError": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GenerateResultError",
           "nameOverride": undefined,
@@ -1196,6 +1207,7 @@ Upload a document to be indexed and used for search.
         },
         "ModelVersionBuildConfig": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ModelVersionBuildConfig",
           "nameOverride": undefined,
@@ -1240,6 +1252,7 @@ Upload a document to be indexed and used for search.
         },
         "ModelVersionExecConfigParameters": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ModelVersionExecConfigParameters",
           "nameOverride": undefined,
@@ -1380,6 +1393,7 @@ Upload a document to be indexed and used for search.
         },
         "ModelVersionExecConfigRead": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ModelVersionExecConfigRead",
           "nameOverride": undefined,
@@ -1434,6 +1448,7 @@ Upload a document to be indexed and used for search.
         },
         "ModelVersionRead": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ModelVersionRead",
           "nameOverride": undefined,
@@ -1551,6 +1566,7 @@ Upload a document to be indexed and used for search.
         },
         "ModelVersionSandboxSnapshot": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ModelVersionSandboxSnapshot",
           "nameOverride": undefined,
@@ -1586,6 +1602,7 @@ Upload a document to be indexed and used for search.
         },
         "NormalizedLogProbs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "NormalizedLogProbs",
           "nameOverride": undefined,
@@ -1624,6 +1641,7 @@ Upload a document to be indexed and used for search.
         },
         "NormalizedTokenLogProbs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "NormalizedTokenLogProbs",
           "nameOverride": undefined,
@@ -1704,6 +1722,7 @@ Upload a document to be indexed and used for search.
         },
         "PaginatedSlimDocumentList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PaginatedSlimDocumentList",
           "nameOverride": undefined,
@@ -1852,6 +1871,7 @@ Upload a document to be indexed and used for search.
         },
         "SearchErrorResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SearchErrorResponse",
           "nameOverride": undefined,
@@ -1875,6 +1895,7 @@ Upload a document to be indexed and used for search.
         },
         "SearchFiltersRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SearchFiltersRequest",
           "nameOverride": undefined,
@@ -1910,6 +1931,7 @@ Upload a document to be indexed and used for search.
         },
         "SearchRequestBodyRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SearchRequestBodyRequest",
           "nameOverride": undefined,
@@ -1998,6 +2020,7 @@ Upload a document to be indexed and used for search.
         },
         "SearchRequestOptionsRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SearchRequestOptionsRequest",
           "nameOverride": undefined,
@@ -2090,6 +2113,7 @@ Upload a document to be indexed and used for search.
         },
         "SearchResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SearchResponse",
           "nameOverride": undefined,
@@ -2116,6 +2140,7 @@ Upload a document to be indexed and used for search.
         },
         "SearchResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SearchResult",
           "nameOverride": undefined,
@@ -2182,6 +2207,7 @@ Upload a document to be indexed and used for search.
         },
         "SearchResultMergingRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SearchResultMergingRequest",
           "nameOverride": undefined,
@@ -2203,6 +2229,7 @@ Upload a document to be indexed and used for search.
         },
         "SearchWeightsRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SearchWeightsRequest",
           "nameOverride": undefined,
@@ -2236,6 +2263,7 @@ Upload a document to be indexed and used for search.
         },
         "SlimDocument": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SlimDocument",
           "nameOverride": undefined,
@@ -2387,6 +2415,7 @@ Upload a document to be indexed and used for search.
         },
         "SubmitCompletionActualRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SubmitCompletionActualRequest",
           "nameOverride": undefined,
@@ -2504,6 +2533,7 @@ Upload a document to be indexed and used for search.
         },
         "SubmitCompletionActualsErrorResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SubmitCompletionActualsErrorResponse",
           "nameOverride": undefined,
@@ -2527,6 +2557,7 @@ Upload a document to be indexed and used for search.
         },
         "SubmitCompletionActualsRequestRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SubmitCompletionActualsRequestRequest",
           "nameOverride": undefined,
@@ -2597,6 +2628,7 @@ Upload a document to be indexed and used for search.
         },
         "UploadDocumentErrorResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UploadDocumentErrorResponse",
           "nameOverride": undefined,
@@ -2620,6 +2652,7 @@ Upload a document to be indexed and used for search.
         },
         "UploadDocumentRequestBodyRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UploadDocumentRequestBodyRequest",
           "nameOverride": undefined,
@@ -2731,6 +2764,7 @@ Upload a document to be indexed and used for search.
         },
         "UploadDocumentResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UploadDocumentResponse",
           "nameOverride": undefined,
