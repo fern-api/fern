@@ -66,6 +66,33 @@ export function convertObject({
         }
     }
 
+    const allPropertiesMap: Record<string, { schemas: Schema[]; schemaIds: SchemaId[] }> = {};
+    for (const parent of parents) {
+        for (const [propertyKey, propertySchema] of Object.entries(parent.properties)) {
+            const propertyInfo = allPropertiesMap[propertyKey];
+            if (propertyInfo != null) {
+                propertyInfo.schemaIds.push(parent.schemaId);
+                const schemaExists = propertyInfo.schemas.some((schema) => {
+                    return isSchemaEqual(schema, propertySchema);
+                });
+                if (!schemaExists) {
+                    propertyInfo.schemas.push(propertySchema);
+                }
+            }
+        }
+    }
+    const allOfConflicts: { propertyKey: string; allOfSchemaIds: SchemaId[]; conflictingTypeSignatures: boolean }[] =
+        [];
+    for (const [allOfPropertyKey, allOfPropertyInfo] of Object.entries(allPropertiesMap)) {
+        if (allOfPropertyInfo.schemaIds.length > 1) {
+            allOfConflicts.push({
+                propertyKey: allOfPropertyKey,
+                allOfSchemaIds: allOfPropertyInfo.schemaIds,
+                conflictingTypeSignatures: allOfPropertyInfo.schemas.length > 1,
+            });
+        }
+    }
+
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = allRequired.includes(propertyName);
         const schema = isRequired
