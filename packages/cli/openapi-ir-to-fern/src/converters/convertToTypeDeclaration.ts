@@ -88,6 +88,15 @@ export function convertObjectToTypeDeclaration({
             ...propertyTypeReference.additionalTypeDeclarations,
         };
     }
+    const propertiesToSetToUnknown: Set<string> = new Set<string>();
+
+    for (const allOfPropertyConflict of schema.allOfPropertyConflicts) {
+        allOfPropertyConflict.allOfSchemaIds.forEach((schemaId) => schemasToInline.add(schemaId));
+        if (allOfPropertyConflict.conflictingTypeSignatures) {
+            propertiesToSetToUnknown.add(allOfPropertyConflict.propertyKey);
+        }
+    }
+
     const extendedSchemas: string[] = [];
     for (const allOf of schema.allOf) {
         if (schemasToInline.has(allOf.schema)) {
@@ -106,16 +115,25 @@ export function convertObjectToTypeDeclaration({
         if (inlinedSchema == null) {
             throw new Error(`Failed to find schema=${inlineSchemaId}`);
         }
-        const inlinedSchemaProperties = getAllProperties({
+        const inlinedSchemaPropertyInfo = getAllProperties({
             schema: inlinedSchema,
-            schemas,
             schemaId: inlineSchemaId,
         });
-        for (const propertyToInline of inlinedSchemaProperties) {
+        for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
             if (properties[propertyToInline.key] == null) {
+                if (propertiesToSetToUnknown.has(propertyToInline.key)) {
+                    properties[propertyToInline.key] = "unknown";
+                }
                 const propertyTypeReference = convertToTypeReference({ schema: propertyToInline.schema, schemas });
                 properties[propertyToInline.key] = propertyTypeReference.typeReference;
             }
+        }
+        for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {
+            const extendedSchemaTypeReference = convertToTypeReference({
+                schema: Schema.reference(extendedSchema),
+                schemas,
+            });
+            extendedSchemas.push(getTypeFromTypeReference(extendedSchemaTypeReference.typeReference));
         }
     }
 
@@ -133,27 +151,15 @@ export function convertObjectToTypeDeclaration({
     };
 }
 
-function getAllProperties({
-    schemaId,
-    schema,
-    schemas,
-}: {
-    schemaId: SchemaId;
-    schema: Schema;
-    schemas: Record<SchemaId, Schema>;
-}): ObjectProperty[] {
+function getAllProperties({ schemaId, schema }: { schemaId: SchemaId; schema: Schema }): {
+    properties: ObjectProperty[];
+    allOf: ReferencedSchema[];
+} {
     if (schema.type !== "object") {
         throw new Error(`Cannot getAllProperties for a non-object schema. schemaId=${schemaId}`);
     }
     const properties: ObjectProperty[] = [...schema.properties];
-    for (const parent of schema.allOf) {
-        const parentSchema = schemas[parent.schema];
-        if (parentSchema == null) {
-            throw new Error(`Failed to find schema=${parent.schema}`);
-        }
-        properties.push(...getAllProperties({ schemaId: parent.schema, schema: parentSchema, schemas }));
-    }
-    return properties;
+    return { properties, allOf: schema.allOf };
 }
 
 export function convertArrayToTypeDeclaration({

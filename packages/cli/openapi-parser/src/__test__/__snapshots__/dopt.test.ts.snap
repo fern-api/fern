@@ -70,6 +70,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "description": "Default Response",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "FindBlocksResponse",
               "nameOverride": undefined,
@@ -130,6 +131,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "key": "state",
                   "schema": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "FindBlocksResponseState",
                     "nameOverride": undefined,
@@ -277,6 +279,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schemas": [
                           {
                             "allOf": [],
+                            "allOfPropertyConflicts": [],
                             "description": undefined,
                             "generatedName": "FindBlocksResponseFieldsItemFindBlocksResponseFieldsItem",
                             "nameOverride": undefined,
@@ -328,6 +331,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           },
                           {
                             "allOf": [],
+                            "allOfPropertyConflicts": [],
                             "description": undefined,
                             "generatedName": "FindBlocksResponseFieldsItemFindBlocksResponseFieldsItem",
                             "nameOverride": undefined,
@@ -377,6 +381,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           },
                           {
                             "allOf": [],
+                            "allOfPropertyConflicts": [],
                             "description": undefined,
                             "generatedName": "FindBlocksResponseFieldsItemFindBlocksResponseFieldsItem",
                             "nameOverride": undefined,
@@ -639,6 +644,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "description": "Default Response",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "GetFlowResponse",
               "nameOverride": undefined,
@@ -709,6 +715,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "key": "state",
                   "schema": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "GetFlowResponseState",
                     "nameOverride": undefined,
@@ -765,6 +772,7 @@ exports[`open api parser dopt parse open api 1`] = `
                       "type": "array",
                       "value": {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetFlowResponseBlocksItem",
                         "nameOverride": undefined,
@@ -825,6 +833,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "state",
                             "schema": {
                               "allOf": [],
+                              "allOfPropertyConflicts": [],
                               "description": undefined,
                               "generatedName": "GetFlowResponseBlocksItemState",
                               "nameOverride": undefined,
@@ -972,6 +981,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                   "schemas": [
                                     {
                                       "allOf": [],
+                                      "allOfPropertyConflicts": [],
                                       "description": undefined,
                                       "generatedName": "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItem",
                                       "nameOverride": undefined,
@@ -1023,6 +1033,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                     },
                                     {
                                       "allOf": [],
+                                      "allOfPropertyConflicts": [],
                                       "description": undefined,
                                       "generatedName": "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItem",
                                       "nameOverride": undefined,
@@ -1072,6 +1083,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                     },
                                     {
                                       "allOf": [],
+                                      "allOfPropertyConflicts": [],
                                       "description": undefined,
                                       "generatedName": "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItem",
                                       "nameOverride": undefined,
@@ -1307,6 +1319,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "schemas": {
         "BadRequestErrorResponseBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BadRequestErrorResponseBody",
           "nameOverride": undefined,
@@ -1355,6 +1368,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "BlockTransitionQueryString": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BlockTransitionQueryString",
           "nameOverride": undefined,
@@ -1426,6 +1440,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "BlockTransitionRequestParams": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BlockTransitionRequestParams",
           "nameOverride": undefined,
@@ -1449,6 +1464,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "FlowIntentQueryString": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FlowIntentQueryString",
           "nameOverride": undefined,
@@ -1502,6 +1518,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "FlowIntentRequestParams": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FlowIntentRequestParams",
           "nameOverride": undefined,
@@ -1562,6 +1579,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "GetBlockQueryString": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetBlockQueryString",
           "nameOverride": undefined,
@@ -1597,6 +1615,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "GetBlockRequestParams": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetBlockRequestParams",
           "nameOverride": undefined,
@@ -1620,6 +1639,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "GetFlowQueryString": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetFlowQueryString",
           "nameOverride": undefined,
@@ -1687,6 +1707,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "GetFlowRequestParams": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetFlowRequestParams",
           "nameOverride": undefined,
@@ -1710,6 +1731,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "HealthCheckResponseBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HealthCheckResponseBody",
           "nameOverride": undefined,
@@ -1745,6 +1767,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "InternalServerErrorResponseBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InternalServerErrorResponseBody",
           "nameOverride": undefined,
@@ -1778,6 +1801,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "NotFoundErrorResponseBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "NotFoundErrorResponseBody",
           "nameOverride": undefined,
@@ -1811,6 +1835,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "TimeoutErrorResponseBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimeoutErrorResponseBody",
           "nameOverride": undefined,
@@ -1844,6 +1869,7 @@ exports[`open api parser dopt parse open api 1`] = `
         },
         "UnauthorizedErrorResponseBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UnauthorizedErrorResponseBody",
           "nameOverride": undefined,

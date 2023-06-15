@@ -64,6 +64,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateAppRequest",
               "nameOverride": undefined,
@@ -74,6 +75,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "key": "authConfiguration",
                   "schema": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "CreateAppRequestAuthConfiguration",
                     "nameOverride": undefined,
@@ -87,6 +89,7 @@ exports[`open api parser hathora parse open api 1`] = `
                           "type": "optional",
                           "value": {
                             "allOf": [],
+                            "allOfPropertyConflicts": [],
                             "description": undefined,
                             "generatedName": "CreateAppRequestAuthConfigurationGoogle",
                             "nameOverride": undefined,
@@ -222,6 +225,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateAppRequest",
               "nameOverride": undefined,
@@ -232,6 +236,7 @@ exports[`open api parser hathora parse open api 1`] = `
                   "key": "authConfiguration",
                   "schema": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "UpdateAppRequestAuthConfiguration",
                     "nameOverride": undefined,
@@ -245,6 +250,7 @@ exports[`open api parser hathora parse open api 1`] = `
                           "type": "optional",
                           "value": {
                             "allOf": [],
+                            "allOfPropertyConflicts": [],
                             "description": undefined,
                             "generatedName": "UpdateAppRequestAuthConfigurationGoogle",
                             "nameOverride": undefined,
@@ -470,6 +476,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": "Ok",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "LoginAnonymousResponse",
               "nameOverride": undefined,
@@ -533,6 +540,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "LoginNicknameRequest",
               "nameOverride": undefined,
@@ -561,6 +569,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": "Ok",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "LoginNicknameResponse",
               "nameOverride": undefined,
@@ -625,6 +634,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "LoginGoogleRequest",
               "nameOverride": undefined,
@@ -653,6 +663,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": "Ok",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "LoginGoogleResponse",
               "nameOverride": undefined,
@@ -1568,6 +1579,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreatePrivateLobbyRequest",
               "nameOverride": undefined,
@@ -1695,6 +1707,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreatePublicLobbyRequest",
               "nameOverride": undefined,
@@ -1822,6 +1835,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateLocalLobbyRequest",
               "nameOverride": undefined,
@@ -1949,6 +1963,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateLobbyRequest",
               "nameOverride": undefined,
@@ -2218,6 +2233,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "SetLobbyStateRequest",
               "nameOverride": undefined,
@@ -2888,6 +2904,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateRoomRequest",
               "nameOverride": undefined,
@@ -3411,6 +3428,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "schemas": {
         "ActiveConnectionInfo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ActiveConnectionInfo",
           "nameOverride": undefined,
@@ -3491,6 +3509,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "Application": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Application",
           "nameOverride": undefined,
@@ -3578,6 +3597,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "authConfiguration",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": undefined,
                 "generatedName": "ApplicationAuthConfiguration",
                 "nameOverride": undefined,
@@ -3591,6 +3611,7 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "optional",
                       "value": {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "ApplicationAuthConfigurationGoogle",
                         "nameOverride": undefined,
@@ -3708,6 +3729,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ApplicationWithDeployment",
           "nameOverride": undefined,
@@ -3730,6 +3752,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "Build": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Build",
           "nameOverride": undefined,
@@ -3743,6 +3766,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "array",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "BuildRegionalContainerTagsItem",
                   "nameOverride": undefined,
@@ -3984,6 +4008,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Deployment",
           "nameOverride": undefined,
@@ -4084,6 +4109,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "DeploymentConfig": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DeploymentConfig",
           "nameOverride": undefined,
@@ -4097,6 +4123,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "array",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "DeploymentConfigEnvItem",
                   "nameOverride": undefined,
@@ -4199,6 +4226,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "type": "array",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "DiscoveryResponseItem",
             "nameOverride": undefined,
@@ -4248,6 +4276,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "Lobby": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Lobby",
           "nameOverride": undefined,
@@ -4437,6 +4466,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "MetricValue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MetricValue",
           "nameOverride": undefined,
@@ -4495,6 +4525,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "Pick_Room.Exclude_keyofRoom.allocations__": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "From T, pick a set of properties whose keys are in the union K",
           "generatedName": "PickRoomExcludeKeyofRoomAllocations",
           "nameOverride": undefined,
@@ -4592,6 +4623,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "Process": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Process",
           "nameOverride": undefined,
@@ -4843,6 +4875,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ProcessWithRooms",
           "nameOverride": undefined,
@@ -4881,6 +4914,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "Record_Partial_MetricName_.MetricValue-Array_": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Construct a type with a set of properties K of type T",
           "generatedName": "RecordPartialMetricNameMetricValueArray",
           "nameOverride": undefined,
@@ -4974,6 +5008,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "Record_string.never_": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Construct a type with a set of properties K of type T",
           "generatedName": "RecordStringNever",
           "nameOverride": undefined,
@@ -5050,6 +5085,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "Room": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Room",
           "nameOverride": undefined,
@@ -5132,6 +5168,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "RoomAllocation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RoomAllocation",
           "nameOverride": undefined,
@@ -5257,6 +5294,7 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "StartingConnectionInfo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "StartingConnectionInfo",
           "nameOverride": undefined,

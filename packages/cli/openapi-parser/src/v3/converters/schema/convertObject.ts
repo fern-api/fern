@@ -1,4 +1,5 @@
 import {
+    AllOfPropertyConflict,
     ObjectProperty,
     ObjectPropertyConflictInfo,
     ReferencedSchema,
@@ -81,11 +82,10 @@ export function convertObject({
             }
         }
     }
-    const allOfConflicts: { propertyKey: string; allOfSchemaIds: SchemaId[]; conflictingTypeSignatures: boolean }[] =
-        [];
+    const allOfPropertyConflicts: AllOfPropertyConflict[] = [];
     for (const [allOfPropertyKey, allOfPropertyInfo] of Object.entries(allPropertiesMap)) {
         if (allOfPropertyInfo.schemaIds.length > 1) {
-            allOfConflicts.push({
+            allOfPropertyConflicts.push({
                 propertyKey: allOfPropertyKey,
                 allOfSchemaIds: allOfPropertyInfo.schemaIds,
                 conflictingTypeSignatures: allOfPropertyInfo.schemas.length > 1,
@@ -129,6 +129,7 @@ export function convertObject({
         }),
         description,
         allOf: parents.map((parent) => parent.convertedSchema),
+        allOfPropertyConflicts,
     });
 }
 
@@ -139,6 +140,7 @@ export function wrapObject({
     properties,
     description,
     allOf,
+    allOfPropertyConflicts,
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -146,6 +148,7 @@ export function wrapObject({
     properties: ObjectProperty[];
     description: string | undefined;
     allOf: ReferencedSchema[];
+    allOfPropertyConflicts: AllOfPropertyConflict[];
 }): Schema {
     if (wrapAsNullable) {
         return Schema.nullable({
@@ -155,6 +158,7 @@ export function wrapObject({
                 nameOverride,
                 generatedName,
                 allOf,
+                allOfPropertyConflicts,
             }),
             description,
         });
@@ -165,6 +169,7 @@ export function wrapObject({
         nameOverride,
         generatedName,
         allOf,
+        allOfPropertyConflicts,
     });
 }
 
