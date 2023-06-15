@@ -132,8 +132,6 @@ function convertSyncAndAsyncEndpoints({
         });
 
         const synchronousEndpoint = convertToEndpoint({
-            path,
-            httpMethod,
             sdkName,
             operation: {
                 ...operation,
@@ -154,8 +152,6 @@ function convertSyncAndAsyncEndpoints({
         });
 
         const asynchronousEndpoint = convertToEndpoint({
-            path,
-            httpMethod,
             sdkName,
             operation,
             parameters: parametersWithoutHeader,
@@ -180,8 +176,6 @@ function convertSyncAndAsyncEndpoints({
     } else {
         endpoints.push({
             ...convertToEndpoint({
-                path,
-                httpMethod,
                 sdkName,
                 operation,
                 parameters,
@@ -208,8 +202,6 @@ function getSdkName({ operation }: { operation: OpenAPIV3.OperationObject }): En
 }
 
 function convertToEndpoint({
-    path,
-    httpMethod,
     sdkName,
     operation,
     parameters,
@@ -218,8 +210,6 @@ function convertToEndpoint({
     responseStatusCode,
     suffix,
 }: {
-    path: string;
-    httpMethod: HttpMethod;
     sdkName?: EndpointSdkName;
     operation: OpenAPIV3.OperationObject;
     parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[];
@@ -229,9 +219,7 @@ function convertToEndpoint({
     suffix?: string;
 }): Omit<Endpoint, "path" | "method"> {
     const baseBreadcrumbs: string[] = [];
-    if (sdkName == null && operation.operationId == null) {
-        throw new Error(`${httpMethod} ${path} must specify either operationId or x-fern-sdk-method-name`);
-    } else if (sdkName != null) {
+    if (sdkName != null) {
         if (sdkName.groupName.length > 0) {
             baseBreadcrumbs.push(...sdkName.groupName);
         }
