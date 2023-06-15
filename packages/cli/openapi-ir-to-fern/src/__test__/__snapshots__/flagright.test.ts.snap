@@ -2524,7 +2524,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
             {
               "docs": undefined,
-              "name": "NA",
+              "name": "NOT_APPLICABLE",
               "value": "N/A",
             },
           ],
