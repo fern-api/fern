@@ -4584,13 +4584,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "PostBusinessUserResponse": {
           "docs": undefined,
           "extends": [
-            "BusinessUsersResponse",
-            "UserMonitoringResult",
+            "RulesResults",
           ],
           "properties": {
             "message": {
               "docs": undefined,
               "type": "optional<string>",
+            },
+            "userId": {
+              "docs": "user ID the risk score pertains to <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "type": "string",
             },
           },
         },
@@ -4609,13 +4612,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "PostConsumerUserResponse": {
           "docs": undefined,
           "extends": [
-            "ConsumerUsersResponse",
-            "UserMonitoringResult",
+            "RulesResults",
           ],
           "properties": {
             "message": {
               "docs": undefined,
               "type": "optional<string>",
+            },
+            "userId": {
+              "docs": "user ID the risk score pertains to <span style="white-space: nowrap">\`non-empty\`</span> ",
+              "type": "string",
             },
           },
         },

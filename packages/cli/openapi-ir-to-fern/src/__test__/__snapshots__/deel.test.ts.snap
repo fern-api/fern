@@ -1480,11 +1480,56 @@ exports[`open api parser deel simple 1`] = `
         },
         "ContractToCreateOngoingTimeBasedCompensationDetails": {
           "docs": undefined,
-          "extends": [
-            "CompensationDetailsOfContractToCreateShared",
-            "CompensationDetailsOfContractToCreateOngoingTimeBased",
-          ],
-          "properties": {},
+          "properties": {
+            "amount": {
+              "docs": "Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
+              "type": "optional<double>",
+            },
+            "currency_code": {
+              "docs": undefined,
+              "type": "CurrencyCodeRequired",
+            },
+            "cycle_end": {
+              "docs": "Date invoice cycle ends.",
+              "type": "double",
+            },
+            "cycle_end_type": {
+              "docs": undefined,
+              "type": "WorkStatementCycleEndTypeEnum",
+            },
+            "first_payment": {
+              "docs": "First payment amount.",
+              "type": "optional<double>",
+            },
+            "first_payment_date": {
+              "docs": undefined,
+              "type": "optional<DateString>",
+            },
+            "frequency": {
+              "docs": undefined,
+              "type": "WorkStatementCycleScaleEnum",
+            },
+            "notice_period": {
+              "docs": undefined,
+              "type": "optional<NoticePeriod>",
+            },
+            "pay_before_weekends": {
+              "docs": "If the payment due is on a weekend, pay on Friday.",
+              "type": "optional<boolean>",
+            },
+            "payment_due_days": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "payment_due_type": {
+              "docs": undefined,
+              "type": "WorkStatementPaymentDueTypeEnum",
+            },
+            "scale": {
+              "docs": undefined,
+              "type": "WorkStatementScaleEnum",
+            },
+          },
         },
         "ContractToCreatePayAsYouGoTimeBased": {
           "docs": undefined,
@@ -1501,11 +1546,56 @@ exports[`open api parser deel simple 1`] = `
         },
         "ContractToCreatePayAsYouGoTimeBasedCompensationDetails": {
           "docs": undefined,
-          "extends": [
-            "CompensationDetailsOfContractToCreateShared",
-            "CompensationDetailsOfContractToCreatePayAsYouGoTimeBased",
-          ],
-          "properties": {},
+          "properties": {
+            "amount": {
+              "docs": "Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
+              "type": "optional<double>",
+            },
+            "currency_code": {
+              "docs": undefined,
+              "type": "CurrencyCodeRequired",
+            },
+            "cycle_end": {
+              "docs": "Date invoice cycle ends.",
+              "type": "double",
+            },
+            "cycle_end_type": {
+              "docs": undefined,
+              "type": "WorkStatementCycleEndTypeEnum",
+            },
+            "first_payment": {
+              "docs": "First payment amount.",
+              "type": "optional<double>",
+            },
+            "first_payment_date": {
+              "docs": undefined,
+              "type": "optional<DateString>",
+            },
+            "frequency": {
+              "docs": undefined,
+              "type": "WorkStatementCycleScaleEnum",
+            },
+            "notice_period": {
+              "docs": undefined,
+              "type": "optional<NoticePeriod>",
+            },
+            "pay_before_weekends": {
+              "docs": "If the payment due is on a weekend, pay on Friday.",
+              "type": "optional<boolean>",
+            },
+            "payment_due_days": {
+              "docs": undefined,
+              "type": "double",
+            },
+            "payment_due_type": {
+              "docs": undefined,
+              "type": "WorkStatementPaymentDueTypeEnum",
+            },
+            "scale": {
+              "docs": undefined,
+              "type": "WorkStatementScaleEnum",
+            },
+          },
         },
         "ContractToCreatePaygMilestones": {
           "docs": undefined,

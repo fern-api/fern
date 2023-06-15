@@ -321,7 +321,16 @@ Each consumer User entity needs three mandatory fields:
                   "type": "reference",
                 },
               ],
-              "allOfPropertyConflicts": [],
+              "allOfPropertyConflicts": [
+                {
+                  "allOfSchemaIds": [
+                    "ConsumerUsersResponse",
+                    "UserMonitoringResult",
+                  ],
+                  "conflictingTypeSignatures": false,
+                  "propertyKey": "userId",
+                },
+              ],
               "description": undefined,
               "generatedName": "PostConsumerUserResponse",
               "nameOverride": undefined,
@@ -472,7 +481,16 @@ Each consumer Business entity needs three mandatory fields:
                   "type": "reference",
                 },
               ],
-              "allOfPropertyConflicts": [],
+              "allOfPropertyConflicts": [
+                {
+                  "allOfSchemaIds": [
+                    "BusinessUsersResponse",
+                    "UserMonitoringResult",
+                  ],
+                  "conflictingTypeSignatures": false,
+                  "propertyKey": "userId",
+                },
+              ],
               "description": undefined,
               "generatedName": "PostBusinessUserResponse",
               "nameOverride": undefined,

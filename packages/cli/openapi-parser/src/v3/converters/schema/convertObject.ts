@@ -79,6 +79,8 @@ export function convertObject({
                 if (!schemaExists) {
                     propertyInfo.schemas.push(propertySchema);
                 }
+            } else {
+                allPropertiesMap[propertyKey] = { schemaIds: [parent.schemaId], schemas: [propertySchema] };
             }
         }
     }

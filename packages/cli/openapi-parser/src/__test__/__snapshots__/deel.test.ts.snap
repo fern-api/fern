@@ -11101,7 +11101,16 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "allOfPropertyConflicts": [],
+                "allOfPropertyConflicts": [
+                  {
+                    "allOfSchemaIds": [
+                      "CompensationDetailsOfContractToCreate_Shared",
+                      "CompensationDetailsOfContractToCreate_ongoing_time_based",
+                    ],
+                    "conflictingTypeSignatures": false,
+                    "propertyKey": "amount",
+                  },
+                ],
                 "description": undefined,
                 "generatedName": "ContractToCreateOngoingTimeBasedCompensationDetails",
                 "nameOverride": undefined,
@@ -11161,7 +11170,16 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "allOfPropertyConflicts": [],
+                "allOfPropertyConflicts": [
+                  {
+                    "allOfSchemaIds": [
+                      "CompensationDetailsOfContractToCreate_Shared",
+                      "CompensationDetailsOfContractToCreate_pay_as_you_go_time_based",
+                    ],
+                    "conflictingTypeSignatures": false,
+                    "propertyKey": "amount",
+                  },
+                ],
                 "description": undefined,
                 "generatedName": "ContractToCreatePayAsYouGoTimeBasedCompensationDetails",
                 "nameOverride": undefined,
