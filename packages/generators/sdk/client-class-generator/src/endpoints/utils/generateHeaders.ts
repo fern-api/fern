@@ -1,5 +1,5 @@
 import { HttpEndpoint, HttpHeader, HttpService } from "@fern-fern/ir-model/http";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedHeader } from "../../GeneratedHeader";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
@@ -14,7 +14,7 @@ export function generateHeaders({
     endpoint,
     additionalHeaders = [],
 }: {
-    context: SdkClientClassContext;
+    context: SdkContext;
     generatedSdkClientClass: GeneratedSdkClientClassImpl;
     requestParameter: RequestParameter | undefined;
     service: HttpService;
@@ -53,7 +53,7 @@ function getValueExpressionForHeader({
     requestParameter,
 }: {
     header: HttpHeader;
-    context: SdkClientClassContext;
+    context: SdkContext;
     requestParameter: RequestParameter | undefined;
 }): ts.Expression {
     const literalValue = getLiteralValueForHeader(header, context);

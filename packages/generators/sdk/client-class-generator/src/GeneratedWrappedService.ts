@@ -1,7 +1,7 @@
 import { SubpackageId } from "@fern-fern/ir-model/commons";
 import { Subpackage } from "@fern-fern/ir-model/ir";
 import { getTextOfTsNode, Reference } from "@fern-typescript/commons";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { ClassDeclaration, Scope, ts } from "ts-morph";
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
 
@@ -24,7 +24,7 @@ export class GeneratedWrappedService {
         this.wrappedSubpackage = wrappedSubpackage;
     }
 
-    public addToServiceClass(class_: ClassDeclaration, context: SdkClientClassContext): void {
+    public addToServiceClass(class_: ClassDeclaration, context: SdkContext): void {
         const referenceToWrapped = this.getReferenceToWrappedService(class_, context);
         const generatedWrappedService = context.sdkClientClass.getGeneratedSdkClientClass({
             isRoot: false,
@@ -81,7 +81,7 @@ export class GeneratedWrappedService {
         return lastFernFilepathPart.camelCase.unsafeName;
     }
 
-    private getReferenceToWrappedService(serviceClass: ClassDeclaration, context: SdkClientClassContext): Reference {
+    private getReferenceToWrappedService(serviceClass: ClassDeclaration, context: SdkContext): Reference {
         const reference = context.sdkClientClass.getReferenceToClientClass({
             isRoot: false,
             subpackageId: this.wrappedSubpackageId,

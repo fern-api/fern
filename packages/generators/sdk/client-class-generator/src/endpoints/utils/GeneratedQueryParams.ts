@@ -1,4 +1,4 @@
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { RequestParameter } from "../../request-parameter/RequestParameter";
 
@@ -17,7 +17,7 @@ export class GeneratedQueryParams {
         this.requestParameter = requestParameter;
     }
 
-    public getBuildStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getBuildStatements(context: SdkContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
         if (this.requestParameter != null) {
@@ -32,7 +32,7 @@ export class GeneratedQueryParams {
                                     GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME,
                                     undefined,
                                     undefined,
-                                    context.base.externalDependencies.URLSearchParams.instantiate()
+                                    context.externalDependencies.URLSearchParams.instantiate()
                                 ),
                             ],
                             ts.NodeFlags.Const
@@ -47,7 +47,7 @@ export class GeneratedQueryParams {
                             (referenceToQueryParameter) => {
                                 return [
                                     ts.factory.createExpressionStatement(
-                                        context.base.externalDependencies.URLSearchParams.append({
+                                        context.externalDependencies.URLSearchParams.append({
                                             key: ts.factory.createStringLiteral(queryParameter.name.wireValue),
                                             value: context.type.stringify(
                                                 referenceToQueryParameter,
@@ -70,7 +70,7 @@ export class GeneratedQueryParams {
         return statements;
     }
 
-    public getReferenceTo(context: SdkClientClassContext): ts.Expression | undefined {
+    public getReferenceTo(context: SdkContext): ts.Expression | undefined {
         if (this.requestParameter != null && this.requestParameter.getAllQueryParameters(context).length > 0) {
             return ts.factory.createIdentifier(GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME);
         } else {

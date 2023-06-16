@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { PackageId } from "@fern-typescript/commons";
-import { GeneratedSdkEndpointTypeSchemas, SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
+import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { GeneratedEndpointErrorSchema } from "./GeneratedEndpointErrorSchema";
@@ -155,43 +155,40 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         });
     }
 
-    public writeToFile(context: SdkEndpointTypeSchemasContext): void {
+    public writeToFile(context: SdkContext): void {
         if (this.generatedRequestSchema != null) {
             this.generatedRequestSchema.writeSchemaToFile(context);
-            context.base.sourceFile.addStatements("\n");
+            context.sourceFile.addStatements("\n");
         }
 
         if (this.generatedResponseSchema != null) {
             this.generatedResponseSchema.writeSchemaToFile(context);
-            context.base.sourceFile.addStatements("\n");
+            context.sourceFile.addStatements("\n");
         }
 
         if (this.generatedStreamDataSchema != null) {
             this.generatedStreamDataSchema.writeSchemaToFile(context);
-            context.base.sourceFile.addStatements("\n");
+            context.sourceFile.addStatements("\n");
         }
 
         this.generatedSdkErrorSchema?.writeToFile(context);
     }
 
-    public getReferenceToRawResponse(context: SdkEndpointTypeSchemasContext): ts.TypeNode {
+    public getReferenceToRawResponse(context: SdkContext): ts.TypeNode {
         if (this.generatedResponseSchema == null) {
             throw new Error("No response schema was generated");
         }
         return this.generatedResponseSchema.getReferenceToRawShape(context);
     }
 
-    public getReferenceToRawError(context: SdkEndpointTypeSchemasContext): ts.TypeNode {
+    public getReferenceToRawError(context: SdkContext): ts.TypeNode {
         if (this.generatedSdkErrorSchema == null) {
             throw new Error("Cannot get reference to raw endpoint error because it is not defined.");
         }
         return this.generatedSdkErrorSchema.getReferenceToRawShape(context);
     }
 
-    public serializeRequest(
-        referenceToParsedRequest: ts.Expression,
-        context: SdkEndpointTypeSchemasContext
-    ): ts.Expression {
+    public serializeRequest(referenceToParsedRequest: ts.Expression, context: SdkContext): ts.Expression {
         if (this.endpoint.requestBody?.type !== "reference") {
             throw new Error("Cannot serialize request because it's not a reference");
         }
@@ -228,10 +225,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         }
     }
 
-    public deserializeResponse(
-        referenceToRawResponse: ts.Expression,
-        context: SdkEndpointTypeSchemasContext
-    ): ts.Expression {
+    public deserializeResponse(referenceToRawResponse: ts.Expression, context: SdkContext): ts.Expression {
         if (this.endpoint.response == null) {
             throw new Error("Cannot deserialize response because it's not defined");
         }
@@ -272,7 +266,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         }
     }
 
-    public deserializeError(referenceToRawError: ts.Expression, context: SdkEndpointTypeSchemasContext): ts.Expression {
+    public deserializeError(referenceToRawError: ts.Expression, context: SdkContext): ts.Expression {
         if (this.generatedSdkErrorSchema == null) {
             throw new Error("Cannot deserialize endpoint error because it is not defined.");
         }
@@ -293,7 +287,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         parsedDataVariableName,
     }: {
         referenceToRawStreamData: ts.Expression;
-        context: SdkEndpointTypeSchemasContext;
+        context: SdkContext;
         visitValid: (referenceToValue: ts.Expression) => ts.Statement[];
         visitInvalid: (referenceToErrors: ts.Expression) => ts.Statement[];
         parsedDataVariableName: string;
@@ -321,20 +315,14 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     ts.NodeFlags.Const
                 )
             ),
-            ...context.base.coreUtilities.zurg.Schema._visitMaybeValid(
-                ts.factory.createIdentifier(parsedDataVariableName),
-                {
-                    valid: visitValid,
-                    invalid: visitInvalid,
-                }
-            ),
+            ...context.coreUtilities.zurg.Schema._visitMaybeValid(ts.factory.createIdentifier(parsedDataVariableName), {
+                valid: visitValid,
+                invalid: visitInvalid,
+            }),
         ];
     }
 
-    private deserializeStreamData(
-        referenceToRawStreamData: ts.Expression,
-        context: SdkEndpointTypeSchemasContext
-    ): ts.Expression {
+    private deserializeStreamData(referenceToRawStreamData: ts.Expression, context: SdkContext): ts.Expression {
         if (this.endpoint.streamingResponse == null) {
             throw new Error("Cannot deserialize stream data because it's not defined");
         }

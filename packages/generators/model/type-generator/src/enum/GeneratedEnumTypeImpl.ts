@@ -5,18 +5,18 @@ import {
     getWriterForMultiLineUnionType,
     maybeAddDocs,
 } from "@fern-typescript/commons";
-import { GeneratedEnumType, WithBaseContextMixin } from "@fern-typescript/contexts";
+import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedEnumTypeImpl<Context extends WithBaseContextMixin>
+export class GeneratedEnumTypeImpl<Context extends BaseContext>
     extends AbstractGeneratedType<EnumTypeDeclaration, Context>
     implements GeneratedEnumType<Context>
 {
     public readonly type = "enum";
 
     public writeToFile(context: Context): void {
-        const type = context.base.sourceFile.addTypeAlias({
+        const type = context.sourceFile.addTypeAlias({
             name: this.typeName,
             isExported: true,
             type: getWriterForMultiLineUnionType(
@@ -29,7 +29,7 @@ export class GeneratedEnumTypeImpl<Context extends WithBaseContextMixin>
 
         maybeAddDocs(type, this.getDocs(context));
 
-        context.base.sourceFile.addVariableStatement({
+        context.sourceFile.addVariableStatement({
             declarationKind: VariableDeclarationKind.Const,
             isExported: true,
             declarations: [

@@ -1,6 +1,6 @@
 import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-model/types";
 import { Zurg } from "@fern-typescript/commons";
-import { GeneratedUnionType, GeneratedUnionTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
+import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import {
     GeneratedUnionSchema,
     RawNoPropertiesSingleUnionType,
@@ -12,13 +12,13 @@ import { RawSamePropertiesAsObjectSingleUnionType } from "./RawSamePropertiesAsO
 import { RawSinglePropertySingleUnionType } from "./RawSinglePropertySingleUnionType";
 
 export declare namespace GeneratedUnionTypeSchemaImpl {
-    export interface Init<Context extends TypeSchemaContext>
+    export interface Init<Context extends ModelContext>
         extends AbstractGeneratedTypeSchema.Init<UnionTypeDeclaration, Context> {
         includeUtilsOnUnionMembers: boolean;
     }
 }
 
-export class GeneratedUnionTypeSchemaImpl<Context extends TypeSchemaContext>
+export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<UnionTypeDeclaration, Context>
     implements GeneratedUnionTypeSchema<Context>
 {

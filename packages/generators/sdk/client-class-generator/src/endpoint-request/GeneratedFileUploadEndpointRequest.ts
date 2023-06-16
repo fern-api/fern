@@ -7,7 +7,7 @@ import {
     PackageId,
     visitJavaScriptRuntime,
 } from "@fern-typescript/commons";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
@@ -77,7 +77,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         }
     }
 
-    public getEndpointParameters(context: SdkClientClassContext): OptionalKind<ParameterDeclarationStructure>[] {
+    public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const property of this.requestBody.properties) {
             if (property.type === "file") {
@@ -118,7 +118,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                                             undefined,
                                             ts.factory.createIdentifier("event"),
                                             undefined,
-                                            context.base.externalDependencies.axios.AxiosProgressEvent._getReferenceToType()
+                                            context.externalDependencies.axios.AxiosProgressEvent._getReferenceToType()
                                         ),
                                     ],
                                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
@@ -134,12 +134,12 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return parameters;
     }
 
-    private getFileParameterType(property: FileProperty, context: SdkClientClassContext): ts.TypeNode {
+    private getFileParameterType(property: FileProperty, context: SdkContext): ts.TypeNode {
         const types: ts.TypeNode[] = [ts.factory.createTypeReferenceNode("File")];
 
         visitJavaScriptRuntime(this.targetRuntime, {
             node: () => {
-                types.push(context.base.externalDependencies.fs.ReadStream._getReferenceToType());
+                types.push(context.externalDependencies.fs.ReadStream._getReferenceToType());
             },
             browser: () => {
                 types.push(ts.factory.createTypeReferenceNode("Blob"));
@@ -152,7 +152,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return ts.factory.createUnionTypeNode(types);
     }
 
-    public getBuildRequestStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
         if (this.requestParameter != null) {
@@ -172,7 +172,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                             GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME,
                             undefined,
                             undefined,
-                            context.base.externalDependencies.formData._instantiate()
+                            context.externalDependencies.formData._instantiate()
                         ),
                     ],
                     ts.NodeFlags.Const
@@ -196,7 +196,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     }
 
     public getFetcherRequestArgs(
-        context: SdkClientClassContext
+        context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "onUploadProgress"> {
         return {
             headers: this.getHeaders(context),
@@ -205,7 +205,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             contentType: ts.factory.createBinaryExpression(
                 ts.factory.createStringLiteral("multipart/form-data; boundary="),
                 ts.factory.createToken(ts.SyntaxKind.PlusToken),
-                context.base.externalDependencies.formData.getBoundary({
+                context.externalDependencies.formData.getBoundary({
                     referencetoFormData: ts.factory.createIdentifier(
                         GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
                     ),
@@ -223,7 +223,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         };
     }
 
-    private getHeaders(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {
+    private getHeaders(context: SdkContext): ts.ObjectLiteralElementLike[] {
         return generateHeaders({
             context,
             requestParameter: this.requestParameter,
@@ -233,7 +233,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             additionalHeaders: [
                 {
                     header: "Content-Length",
-                    value: context.base.coreUtilities.formDataUtils.getFormDataContentLength({
+                    value: context.coreUtilities.formDataUtils.getFormDataContentLength({
                         referenceToFormData: ts.factory.createIdentifier(
                             GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
                         ),
@@ -247,7 +247,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return this.requestParameter?.getReferenceToRequestBody();
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkClientClassContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }

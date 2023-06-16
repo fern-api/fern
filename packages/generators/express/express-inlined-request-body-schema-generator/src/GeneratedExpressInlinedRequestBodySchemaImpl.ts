@@ -1,10 +1,7 @@
 import { HttpEndpoint, InlinedRequestBody } from "@fern-fern/ir-model/http";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
-import {
-    ExpressInlinedRequestBodySchemaContext,
-    GeneratedExpressInlinedRequestBodySchema,
-} from "@fern-typescript/contexts";
+import { ExpressContext, GeneratedExpressInlinedRequestBodySchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedExpressInlinedRequestBodySchemaImpl {
@@ -16,7 +13,7 @@ export declare namespace GeneratedExpressInlinedRequestBodySchemaImpl {
 }
 
 export class GeneratedExpressInlinedRequestBodySchemaImpl
-    extends AbstractGeneratedSchema<ExpressInlinedRequestBodySchemaContext>
+    extends AbstractGeneratedSchema<ExpressContext>
     implements GeneratedExpressInlinedRequestBodySchema
 {
     private packageId: PackageId;
@@ -35,14 +32,11 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
         this.inlinedRequestBody = inlinedRequestBody;
     }
 
-    public writeToFile(context: ExpressInlinedRequestBodySchemaContext): void {
+    public writeToFile(context: ExpressContext): void {
         this.writeSchemaToFile(context);
     }
 
-    public deserializeRequest(
-        referenceToRawRequest: ts.Expression,
-        context: ExpressInlinedRequestBodySchemaContext
-    ): ts.Expression {
+    public deserializeRequest(referenceToRawRequest: ts.Expression, context: ExpressContext): ts.Expression {
         return this.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
             unrecognizedObjectKeys: "fail",
             allowUnrecognizedEnumValues: false,
@@ -52,17 +46,14 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
         });
     }
 
-    protected getReferenceToSchema(context: ExpressInlinedRequestBodySchemaContext): Reference {
+    protected getReferenceToSchema(context: ExpressContext): Reference {
         return context.expressInlinedRequestBodySchema.getReferenceToInlinedRequestBody(
             this.packageId,
             this.endpoint.name
         );
     }
 
-    protected generateRawTypeDeclaration(
-        context: ExpressInlinedRequestBodySchemaContext,
-        module: ModuleDeclaration
-    ): void {
+    protected generateRawTypeDeclaration(context: ExpressContext, module: ModuleDeclaration): void {
         module.addInterface({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             properties: this.inlinedRequestBody.properties.map((property) => {
@@ -79,14 +70,14 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
         });
     }
 
-    protected getReferenceToParsedShape(context: ExpressInlinedRequestBodySchemaContext): ts.TypeNode {
+    protected getReferenceToParsedShape(context: ExpressContext): ts.TypeNode {
         return context.expressInlinedRequestBody
             .getReferenceToInlinedRequestBodyType(this.packageId, this.endpoint.name)
             .getTypeNode();
     }
 
-    protected buildSchema(context: ExpressInlinedRequestBodySchemaContext): Zurg.Schema {
-        let schema = context.base.coreUtilities.zurg.object(
+    protected buildSchema(context: ExpressContext): Zurg.Schema {
+        let schema = context.coreUtilities.zurg.object(
             this.inlinedRequestBody.properties.map((property) => ({
                 key: {
                     parsed: context.expressInlinedRequestBody

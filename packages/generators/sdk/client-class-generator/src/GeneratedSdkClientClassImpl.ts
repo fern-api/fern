@@ -11,7 +11,7 @@ import {
     PackageId,
     visitJavaScriptRuntime,
 } from "@fern-typescript/commons";
-import { GeneratedSdkClientClass, SdkClientClassContext } from "@fern-typescript/contexts";
+import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
@@ -279,8 +279,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions]);
     }
 
-    public writeToFile(context: SdkClientClassContext): void {
-        const serviceModule = context.base.sourceFile.addModule({
+    public writeToFile(context: SdkContext): void {
+        const serviceModule = context.sourceFile.addModule({
             name: this.serviceClassName,
             isExported: true,
             hasDeclareKeyword: true,
@@ -288,7 +288,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const optionsInterface = serviceModule.addInterface(this.generateOptionsInterface(context));
 
-        const serviceClass = context.base.sourceFile.addClass({
+        const serviceClass = context.sourceFile.addClass({
             name: this.serviceClassName,
             isExported: true,
         });
@@ -365,7 +365,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public getEnvironment(endpoint: HttpEndpoint, context: SdkClientClassContext): ts.Expression {
+    public getEnvironment(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
         let referenceToEnvironmentValue = this.getReferenceToEnvironment(context);
 
         const defaultEnvironment = context.environments
@@ -410,7 +410,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
     }
 
-    public getHeaders(context: SdkClientClassContext): GeneratedHeader[] {
+    public getHeaders(context: SdkContext): GeneratedHeader[] {
         const headers: GeneratedHeader[] = [
             ...this.intermediateRepresentation.headers
                 // auth headers are handled separately
@@ -423,7 +423,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             literalValue != null
                                 ? ts.factory.createStringLiteral(literalValue)
                                 : context.type.stringify(
-                                      context.base.coreUtilities.fetcher.Supplier.get(
+                                      context.coreUtilities.fetcher.Supplier.get(
                                           this.getReferenceToOption(this.getOptionKeyForNonLiteralGlobalHeader(header))
                                       ),
                                       header.valueType,
@@ -435,7 +435,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 .filter((header) => !this.isAuthorizationHeader(header))
                 .map((header) => ({
                     header: header.name.wireValue,
-                    value: context.base.coreUtilities.fetcher.Supplier.get(
+                    value: context.coreUtilities.fetcher.Supplier.get(
                         this.getReferenceToOption(this.getOptionKeyForAuthHeader(header))
                     ),
                 })),
@@ -465,7 +465,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
      * OPTIONS *
      ***********/
 
-    private generateOptionsInterface(context: SdkClientClassContext): OptionalKind<InterfaceDeclarationStructure> {
+    private generateOptionsInterface(context: SdkContext): OptionalKind<InterfaceDeclarationStructure> {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
 
         if (!this.requireDefaultEnvironment) {
@@ -473,7 +473,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             properties.push({
                 name: GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME,
                 type: getTextOfTsNode(
-                    context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         generatedEnvironments.getTypeForUserSuppliedEnvironment(context)
                     )
                 ),
@@ -501,11 +501,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             properties.push({
                 name: GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME,
                 type: getTextOfTsNode(
-                    context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory
-                            ? context.base.coreUtilities.auth.BearerToken._getReferenceToType()
+                            ? context.coreUtilities.auth.BearerToken._getReferenceToType()
                             : ts.factory.createUnionTypeNode([
-                                  context.base.coreUtilities.auth.BearerToken._getReferenceToType(),
+                                  context.coreUtilities.auth.BearerToken._getReferenceToType(),
                                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
                               ])
                     )
@@ -519,7 +519,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 {
                     name: this.getBasicAuthUsernameOptionKey(this.basicAuthScheme),
                     type: getTextOfTsNode(
-                        context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
                             this.intermediateRepresentation.sdkConfig.isAuthMandatory
                                 ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                                 : ts.factory.createUnionTypeNode([
@@ -533,7 +533,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 {
                     name: this.getBasicAuthPasswordOptionKey(this.basicAuthScheme),
                     type: getTextOfTsNode(
-                        context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
                             this.intermediateRepresentation.sdkConfig.isAuthMandatory
                                 ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                                 : ts.factory.createUnionTypeNode([
@@ -554,7 +554,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             properties.push({
                 name: this.getOptionKeyForAuthHeader(header),
                 type: getTextOfTsNode(
-                    context.base.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory
                             ? referenceToHeaderType.typeNode
                             : ts.factory.createUnionTypeNode([
@@ -572,9 +572,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const type = context.type.getReferenceToType(header.valueType);
                 properties.push({
                     name: this.getOptionKeyForNonLiteralGlobalHeader(header),
-                    type: getTextOfTsNode(
-                        context.base.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)
-                    ),
+                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(type.typeNode)),
                     hasQuestionToken: type.isOptional,
                 });
             }
@@ -583,14 +581,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (this.allowCustomFetcher) {
             properties.push({
                 name: GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME,
-                type: getTextOfTsNode(context.base.coreUtilities.fetcher.FetchFunction._getReferenceToType()),
+                type: getTextOfTsNode(context.coreUtilities.fetcher.FetchFunction._getReferenceToType()),
                 hasQuestionToken: true,
             });
             if (this.doesSdkUseStreamingFetcher()) {
                 properties.push({
                     name: GeneratedSdkClientClassImpl.CUSTOM_STREAMING_FETCHER_PROPERTY_NAME,
                     type: getTextOfTsNode(
-                        context.base.coreUtilities.streamingFetcher.StreamingFetchFunction._getReferenceToType()
+                        context.coreUtilities.streamingFetcher.StreamingFetchFunction._getReferenceToType()
                     ),
                     hasQuestionToken: true,
                 });
@@ -621,8 +619,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return basicAuthScheme.password.camelCase.unsafeName;
     }
 
-    private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
-        return context.base.coreUtilities.fetcher.Supplier.get(
+    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
+        return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
         );
     }
@@ -634,27 +632,27 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
     }
 
-    public getReferenceToFetcher(context: SdkClientClassContext): ts.Expression {
+    public getReferenceToFetcher(context: SdkContext): ts.Expression {
         if (this.allowCustomFetcher) {
             return ts.factory.createBinaryExpression(
                 this.getReferenceToOption(GeneratedSdkClientClassImpl.CUSTOM_FETCHER_PROPERTY_NAME),
                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                context.base.coreUtilities.fetcher.fetcher._getReferenceTo()
+                context.coreUtilities.fetcher.fetcher._getReferenceTo()
             );
         } else {
-            return context.base.coreUtilities.fetcher.fetcher._getReferenceTo();
+            return context.coreUtilities.fetcher.fetcher._getReferenceTo();
         }
     }
 
-    public getReferenceToStreamingFetcher(context: SdkClientClassContext): ts.Expression {
+    public getReferenceToStreamingFetcher(context: SdkContext): ts.Expression {
         if (this.allowCustomFetcher) {
             return ts.factory.createBinaryExpression(
                 this.getReferenceToOption(GeneratedSdkClientClassImpl.CUSTOM_STREAMING_FETCHER_PROPERTY_NAME),
                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                context.base.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo()
+                context.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo()
             );
         } else {
-            return context.base.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo();
+            return context.coreUtilities.streamingFetcher.streamingFetcher._getReferenceTo();
         }
     }
 
@@ -670,7 +668,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return header.name.name.camelCase.unsafeName;
     }
 
-    private getAuthorizationHeaderStatements(context: SdkClientClassContext): ts.Statement[] {
+    private getAuthorizationHeaderStatements(context: SdkContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
         if (this.bearerAuthScheme != null) {
@@ -679,7 +677,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     ts.factory.createReturnStatement(
                         ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
                             ts.factory.createTemplateSpan(
-                                context.base.coreUtilities.fetcher.Supplier.get(
+                                context.coreUtilities.fetcher.Supplier.get(
                                     this.getReferenceToOption(GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME)
                                 ),
                                 ts.factory.createTemplateTail("", "")
@@ -698,7 +696,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
                                     undefined,
                                     undefined,
-                                    context.base.coreUtilities.fetcher.Supplier.get(
+                                    context.coreUtilities.fetcher.Supplier.get(
                                         this.getReferenceToOption(
                                             GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME
                                         )
@@ -739,11 +737,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
                 statements.push(
                     ts.factory.createReturnStatement(
-                        context.base.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                            context.base.coreUtilities.fetcher.Supplier.get(
+                        context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                            context.coreUtilities.fetcher.Supplier.get(
                                 this.getReferenceToOption(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme))
                             ),
-                            context.base.coreUtilities.fetcher.Supplier.get(
+                            context.coreUtilities.fetcher.Supplier.get(
                                 this.getReferenceToOption(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme))
                             )
                         )
@@ -761,7 +759,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     USERNAME_VARIABLE_NAME,
                                     undefined,
                                     undefined,
-                                    context.base.coreUtilities.fetcher.Supplier.get(
+                                    context.coreUtilities.fetcher.Supplier.get(
                                         this.getReferenceToOption(
                                             this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)
                                         )
@@ -779,7 +777,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     PASSWORD_VARIABLE_NAME,
                                     undefined,
                                     undefined,
-                                    context.base.coreUtilities.fetcher.Supplier.get(
+                                    context.coreUtilities.fetcher.Supplier.get(
                                         this.getReferenceToOption(
                                             this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)
                                         )
@@ -809,7 +807,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         ts.factory.createBlock(
                             [
                                 ts.factory.createReturnStatement(
-                                    context.base.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
+                                    context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
                                         ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
                                         ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME)
                                     )
@@ -833,7 +831,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 ts.factory.createIdentifier(HEADER_VARIABLE_NAME),
                                 undefined,
                                 undefined,
-                                context.base.coreUtilities.fetcher.Supplier.get(
+                                context.coreUtilities.fetcher.Supplier.get(
                                     this.getReferenceToOption(this.getKeyForCustomHeader(header))
                                 )
                             ),

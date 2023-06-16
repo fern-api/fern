@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { WithBaseContextMixin, WithTypeContextMixin } from "@fern-typescript/contexts";
+import { ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { AbstractParsedSingleUnionType } from "../parsed-single-union-type/AbstractParsedSingleUnionType";
 import { KnownSingleUnionType } from "./KnownSingleUnionType";
 
-export abstract class AbstractKnownSingleUnionType<Context extends WithBaseContextMixin & WithTypeContextMixin>
+export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
     extends AbstractParsedSingleUnionType<Context>
     implements KnownSingleUnionType<Context>
 {

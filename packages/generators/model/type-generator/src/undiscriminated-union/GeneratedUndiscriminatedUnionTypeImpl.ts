@@ -1,21 +1,17 @@
 import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-model/types";
 import { getWriterForMultiLineUnionType, maybeAddDocs } from "@fern-typescript/commons";
-import {
-    GeneratedUndiscriminatedUnionType,
-    WithBaseContextMixin,
-    WithTypeContextMixin,
-} from "@fern-typescript/contexts";
+import { GeneratedUndiscriminatedUnionType, ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedUndiscriminatedUnionTypeImpl<Context extends WithBaseContextMixin & WithTypeContextMixin>
+export class GeneratedUndiscriminatedUnionTypeImpl<Context extends ModelContext>
     extends AbstractGeneratedType<UndiscriminatedUnionTypeDeclaration, Context>
     implements GeneratedUndiscriminatedUnionType<Context>
 {
     public readonly type = "undiscriminatedUnion";
 
     public writeToFile(context: Context): void {
-        const type = context.base.sourceFile.addTypeAlias({
+        const type = context.sourceFile.addTypeAlias({
             name: this.typeName,
             isExported: true,
             type: getWriterForMultiLineUnionType(

@@ -3,7 +3,7 @@ import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
-import { ExpressErrorSchemaContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
+import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedExpressErrorSchemaImpl {
@@ -15,7 +15,7 @@ export declare namespace GeneratedExpressErrorSchemaImpl {
 }
 
 export class GeneratedExpressErrorSchemaImpl
-    extends AbstractGeneratedSchema<ExpressErrorSchemaContext>
+    extends AbstractGeneratedSchema<ExpressContext>
     implements GeneratedExpressErrorSchema
 {
     private errorDeclaration: ErrorDeclaration;
@@ -27,7 +27,7 @@ export class GeneratedExpressErrorSchemaImpl
         this.type = type;
     }
 
-    public writeToFile(context: ExpressErrorSchemaContext): void {
+    public writeToFile(context: ExpressContext): void {
         // named errors are not generated - consumers should
         // (de)serialize the named type directly.
         // unknown request bodies don't need to be serialized.
@@ -48,7 +48,7 @@ export class GeneratedExpressErrorSchemaImpl
     }
 
     public serializeBody(
-        context: ExpressErrorSchemaContext,
+        context: ExpressContext,
         { referenceToBody }: { referenceToBody: ts.Expression }
     ): ts.Expression {
         switch (this.type._type) {
@@ -78,22 +78,22 @@ export class GeneratedExpressErrorSchemaImpl
         }
     }
 
-    protected getReferenceToSchema(context: ExpressErrorSchemaContext): Reference {
+    protected getReferenceToSchema(context: ExpressContext): Reference {
         return context.expressErrorSchema.getReferenceToExpressErrorSchema(this.errorDeclaration.name);
     }
 
-    protected generateRawTypeDeclaration(context: ExpressErrorSchemaContext, module: ModuleDeclaration): void {
+    protected generateRawTypeDeclaration(context: ExpressContext, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode),
         });
     }
 
-    protected getReferenceToParsedShape(context: ExpressErrorSchemaContext): ts.TypeNode {
+    protected getReferenceToParsedShape(context: ExpressContext): ts.TypeNode {
         return context.type.getReferenceToType(this.type).typeNode;
     }
 
-    protected buildSchema(context: ExpressErrorSchemaContext): Zurg.Schema {
+    protected buildSchema(context: ExpressContext): Zurg.Schema {
         return context.typeSchema.getSchemaOfTypeReference(this.type);
     }
 }

@@ -1,5 +1,5 @@
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
-import { TypeContext } from "@fern-typescript/contexts";
+import { ModelContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
@@ -9,7 +9,7 @@ export declare namespace SamePropertiesAsObjectSingleUnionTypeGenerator {
     }
 }
 
-export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends TypeContext>
+export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends ModelContext>
     implements SingleUnionTypeGenerator<Context>
 {
     private static BUILDER_PARAMETER_NAME = "value";

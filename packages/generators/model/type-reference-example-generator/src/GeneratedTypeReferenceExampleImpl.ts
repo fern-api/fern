@@ -6,7 +6,7 @@ import {
     ExampleTypeReferenceShape,
 } from "@fern-fern/ir-model/types";
 import { GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedTypeReferenceExample, TypeReferenceExampleContext } from "@fern-typescript/contexts";
+import { GeneratedTypeReferenceExample, ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export declare namespace GeneratedTypeReferenceExampleImpl {
@@ -22,7 +22,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         this.example = example;
     }
 
-    public build(context: TypeReferenceExampleContext, opts: GetReferenceOpts): ts.Expression {
+    public build(context: ModelContext, opts: GetReferenceOpts): ts.Expression {
         return this.buildExample({ example: this.example, context, opts });
     }
 
@@ -32,7 +32,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         opts,
     }: {
         example: ExampleTypeReference;
-        context: TypeReferenceExampleContext;
+        context: ModelContext;
         opts: GetReferenceOpts;
     }): ts.Expression {
         return ExampleTypeReferenceShape._visit(example.shape, {
@@ -110,7 +110,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
         opts,
     }: {
         example: ExampleTypeReference;
-        context: TypeReferenceExampleContext;
+        context: ModelContext;
         opts: GetReferenceOpts;
     }): ts.PropertyName {
         return ExampleTypeReferenceShape._visit<ts.PropertyName>(example.shape, {

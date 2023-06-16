@@ -5,7 +5,7 @@ import {
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
 import { GetReferenceOpts } from "@fern-typescript/commons";
-import { GeneratedUnion, GeneratedUnionType, TypeContext } from "@fern-typescript/contexts";
+import { GeneratedUnion, GeneratedUnionType, ModelContext } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
@@ -14,14 +14,14 @@ import { UnknownSingleUnionType } from "./UnknownSingleUnionType";
 import { UnknownSingleUnionTypeGenerator } from "./UnknownSingleUnionTypeGenerator";
 
 export declare namespace GeneratedUnionTypeImpl {
-    export interface Init<Context extends TypeContext>
+    export interface Init<Context extends ModelContext>
         extends AbstractGeneratedType.Init<UnionTypeDeclaration, Context> {
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
     }
 }
 
-export class GeneratedUnionTypeImpl<Context extends TypeContext>
+export class GeneratedUnionTypeImpl<Context extends ModelContext>
     extends AbstractGeneratedType<UnionTypeDeclaration, Context>
     implements GeneratedUnionType<Context>
 {

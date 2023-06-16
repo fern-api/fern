@@ -1,22 +1,22 @@
 import { Fetcher, StreamingFetcher } from "@fern-typescript/commons";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface GeneratedEndpointRequest {
-    getBuildRequestStatements: (context: SdkClientClassContext) => ts.Statement[];
+    getBuildRequestStatements: (context: SdkContext) => ts.Statement[];
     getEndpointParameters(
-        context: SdkClientClassContext,
+        context: SdkContext,
         {
             requestParameterIntersection,
             excludeInitializers,
         }: { requestParameterIntersection: ts.TypeNode | undefined; excludeInitializers: boolean }
     ): OptionalKind<ParameterDeclarationStructure>[];
     getFetcherRequestArgs: (
-        context: SdkClientClassContext
+        context: SdkContext
     ) => Pick<
         Fetcher.Args & StreamingFetcher.Args,
         "headers" | "queryParameters" | "body" | "contentType" | "onUploadProgress"
     >;
-    getReferenceToRequestBody: (context: SdkClientClassContext) => ts.Expression | undefined;
-    getReferenceToQueryParameter: (queryParameterKey: string, context: SdkClientClassContext) => ts.Expression;
+    getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
+    getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
 }

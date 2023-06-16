@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, PathParameter, PathParameterLocation } from "@fern-fern/ir-model/http";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { getParameterNameForPathParameter } from "./getParameterNameForPathParameter";
@@ -12,7 +12,7 @@ export function buildUrl({
 }: {
     endpoint: HttpEndpoint;
     generatedClientClass: GeneratedSdkClientClassImpl;
-    context: SdkClientClassContext;
+    context: SdkContext;
 }): ts.Expression | undefined {
     if (endpoint.allPathParameters.length === 0) {
         if (endpoint.fullPath.head.length === 0) {

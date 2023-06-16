@@ -1,5 +1,5 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { EndpointErrorUnionContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
@@ -9,7 +9,7 @@ export declare namespace UnknownErrorSingleUnionTypeGenerator {
     }
 }
 
-export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGenerator<EndpointErrorUnionContext> {
+export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGenerator<SdkContext> {
     private static CONTENT_PROPERTY_NAME = "content";
     private static BUILDER_PARAMETER_NAME = "fetcherError";
 
@@ -23,13 +23,11 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         return [];
     }
 
-    public getNonDiscriminantPropertiesForInterface(
-        context: EndpointErrorUnionContext
-    ): OptionalKind<PropertySignatureStructure>[] {
+    public getNonDiscriminantPropertiesForInterface(context: SdkContext): OptionalKind<PropertySignatureStructure>[] {
         return [
             {
                 name: UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
-                type: getTextOfTsNode(context.base.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()),
+                type: getTextOfTsNode(context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()),
             },
         ];
     }
@@ -42,11 +40,11 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         return [localReferenceToUnionValue];
     }
 
-    public getVisitMethodParameterType(context: EndpointErrorUnionContext): ts.TypeNode | undefined {
-        return context.base.coreUtilities.fetcher.Fetcher.Error._getReferenceToType();
+    public getVisitMethodParameterType(context: SdkContext): ts.TypeNode | undefined {
+        return context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType();
     }
 
-    public getParametersForBuilder(context: EndpointErrorUnionContext): ts.ParameterDeclaration[] {
+    public getParametersForBuilder(context: SdkContext): ts.ParameterDeclaration[] {
         return [
             ts.factory.createParameterDeclaration(
                 undefined,
@@ -54,7 +52,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
                 undefined,
                 UnknownErrorSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 undefined,
-                context.base.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
+                context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
             ),
         ];
     }

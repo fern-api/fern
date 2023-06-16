@@ -1,105 +1,78 @@
-import { GenericAPISdkErrorContextMixin, SdkErrorSchemaContext } from "@fern-typescript/contexts";
-import { GenericAPISdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
-import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
+import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
+import { ImportsManager, Reference, Zurg } from "@fern-typescript/commons";
+import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
+import { GeneratedSdkErrorSchema, SdkErrorSchemaContext } from "@fern-typescript/contexts";
+import { ErrorResolver } from "@fern-typescript/resolvers";
 import { SdkErrorSchemaGenerator } from "@fern-typescript/sdk-error-schema-generator";
-import { TypeGenerator } from "@fern-typescript/type-generator";
-import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
-import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { GenericAPISdkErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
+import { SourceFile } from "ts-morph";
 import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { GenericAPISdkErrorContextMixinImpl } from "../generic-api-sdk-error/GenericAPISdkErrorContextMixinImpl";
-import { SdkErrorContextMixinImpl } from "../sdk-error/SdkErrorContextMixinImpl";
-import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
-import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { SdkErrorSchemaContextMixinImpl } from "./SdkErrorSchemaContextMixinImpl";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 
 export declare namespace SdkErrorSchemaContextImpl {
-    export interface Init extends BaseContextImpl.Init {
-        typeGenerator: TypeGenerator;
-        typeResolver: TypeResolver;
-        typeDeclarationReferencer: TypeDeclarationReferencer;
-        typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
-        typeSchemaGenerator: TypeSchemaGenerator;
-        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        errorDeclarationReferencer: SdkErrorDeclarationReferencer;
+    export interface Init {
+        sourceFile: SourceFile;
+        coreUtilities: CoreUtilities;
+        importsManager: ImportsManager;
         sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
         sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
-        sdkErrorGenerator: SdkErrorGenerator;
         errorResolver: ErrorResolver;
-        genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
-        genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
-        treatUnknownAsAny: boolean;
     }
 }
 
-export class SdkErrorSchemaContextImpl extends BaseContextImpl implements SdkErrorSchemaContext {
-    public readonly type: TypeContextMixinImpl;
-    public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly sdkError: SdkErrorContextMixinImpl;
-    public readonly sdkErrorSchema: SdkErrorSchemaContextMixinImpl;
-    public readonly genericAPISdkError: GenericAPISdkErrorContextMixin;
+export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
+    private sourceFile: SourceFile;
+    private coreUtilities: CoreUtilities;
+    private importsManager: ImportsManager;
+    private sdkErrorSchemaDeclarationReferencer: SdkErrorDeclarationReferencer;
+    private sdkErrorSchemaGenerator: SdkErrorSchemaGenerator;
+    private errorResolver: ErrorResolver;
 
     constructor({
-        typeGenerator,
-        typeResolver,
-        typeDeclarationReferencer,
-        typeSchemaDeclarationReferencer,
-        typeSchemaGenerator,
-        typeReferenceExampleGenerator,
-        errorDeclarationReferencer,
+        sourceFile,
+        coreUtilities,
+        importsManager,
         sdkErrorSchemaDeclarationReferencer,
         sdkErrorSchemaGenerator,
-        sdkErrorGenerator,
         errorResolver,
-        genericAPISdkErrorDeclarationReferencer,
-        genericAPISdkErrorGenerator,
-        treatUnknownAsAny,
-        ...superInit
     }: SdkErrorSchemaContextImpl.Init) {
-        super(superInit);
-        this.type = new TypeContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            typeResolver,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeReferenceExampleGenerator,
-            treatUnknownAsAny,
+        this.sourceFile = sourceFile;
+        this.coreUtilities = coreUtilities;
+        this.importsManager = importsManager;
+        this.sdkErrorSchemaDeclarationReferencer = sdkErrorSchemaDeclarationReferencer;
+        this.sdkErrorSchemaGenerator = sdkErrorSchemaGenerator;
+        this.errorResolver = errorResolver;
+    }
+
+    public getSchemaOfError(errorName: DeclaredErrorName): Zurg.Schema {
+        const referenceToSchema = this.sdkErrorSchemaDeclarationReferencer
+            .getReferenceToError({
+                name: errorName,
+                importStrategy: getSchemaImportStrategy({
+                    // use dynamic imports when schemas reference schemas,
+                    // to avoid issues with circular imports
+                    useDynamicImport: true,
+                }),
+                importsManager: this.importsManager,
+                referencedIn: this.sourceFile,
+            })
+            .getExpression();
+
+        return this.coreUtilities.zurg.lazy(this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema));
+    }
+
+    public getGeneratedSdkErrorSchema(errorName: DeclaredErrorName): GeneratedSdkErrorSchema | undefined {
+        return this.sdkErrorSchemaGenerator.generateSdkErrorSchema({
+            errorDeclaration: this.errorResolver.getErrorDeclarationFromName(errorName),
+            errorName: this.sdkErrorSchemaDeclarationReferencer.getExportedName(errorName),
         });
-        this.typeSchema = new TypeSchemaContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            coreUtilities: this.base.coreUtilities,
+    }
+
+    public getReferenceToSdkErrorSchema(errorName: DeclaredErrorName): Reference {
+        return this.sdkErrorSchemaDeclarationReferencer.getReferenceToError({
+            name: errorName,
+            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
+            referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            typeResolver,
-            typeSchemaDeclarationReferencer,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeSchemaGenerator,
-            treatUnknownAsAny,
-        });
-        this.sdkError = new SdkErrorContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            errorDeclarationReferencer,
-            sdkErrorGenerator,
-            errorResolver,
-        });
-        this.sdkErrorSchema = new SdkErrorSchemaContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            coreUtilities: this.base.coreUtilities,
-            sdkErrorSchemaDeclarationReferencer,
-            sdkErrorSchemaGenerator,
-            errorResolver,
-        });
-        this.genericAPISdkError = new GenericAPISdkErrorContextMixinImpl({
-            genericAPISdkErrorDeclarationReferencer,
-            genericAPISdkErrorGenerator,
-            importsManager: this.importsManager,
-            sourceFile: this.sourceFile,
         });
     }
 }

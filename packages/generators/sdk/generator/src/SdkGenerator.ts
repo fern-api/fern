@@ -31,18 +31,7 @@ import { TypeGenerator } from "@fern-typescript/type-generator";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { Directory, Project, SourceFile } from "ts-morph";
-import { EndpointErrorUnionContextImpl } from "./contexts/endpoint-error-union/EndpointErrorUnionContextImpl";
-import { EnvironmentsContextImpl } from "./contexts/environments/EnvironmentsContextImpl";
-import { GenericAPISdkErrorContextImpl } from "./contexts/generic-api-sdk-error/GenericAPISdkErrorContextImpl";
-import { RequestWrapperContextImpl } from "./contexts/request-wrapper/RequestWrapperContextImpl";
-import { SdkClientClassContextImpl } from "./contexts/sdk-client-class/SdkClientClassContextImpl";
-import { SdkEndpointTypeSchemasContextImpl } from "./contexts/sdk-endpoint-type-schemas/SdkEndpointTypeSchemasContextImpl";
-import { SdkErrorSchemaContextImpl } from "./contexts/sdk-error-schema/SdkErrorSchemaContextImpl";
-import { SdkErrorContextImpl } from "./contexts/sdk-error/SdkErrorContextImpl";
-import { SdkInlinedRequestBodySchemaContextImpl } from "./contexts/sdk-inlined-request-body-schema/SdkInlinedRequestBodySchemaContextImpl";
-import { TimeoutSdkErrorContextImpl } from "./contexts/timeout-sdk-error/TimeoutSdkErrorContextImpl";
-import { TypeSchemaContextImpl } from "./contexts/type-schema/TypeSchemaContextImpl";
-import { TypeContextImpl } from "./contexts/type/TypeContextImpl";
+import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
@@ -305,19 +294,8 @@ export class SdkGenerator {
             this.withSourceFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
-                    const typeContext = new TypeContextImpl({
-                        sourceFile,
-                        coreUtilitiesManager: this.coreUtilitiesManager,
-                        dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constants,
-                        importsManager,
-                        typeResolver: this.typeResolver,
-                        typeDeclarationReferencer: this.typeDeclarationReferencer,
-                        typeGenerator: this.typeGenerator,
-                        typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                        treatUnknownAsAny: this.config.treatUnknownAsAny,
-                    });
-                    typeContext.type.getGeneratedType(typeDeclaration.name).writeToFile(typeContext);
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
                 },
             });
         }
@@ -328,23 +306,8 @@ export class SdkGenerator {
             this.withSourceFile({
                 filepath: this.typeSchemaDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
-                    const typeSchemaContext = new TypeSchemaContextImpl({
-                        sourceFile,
-                        coreUtilitiesManager: this.coreUtilitiesManager,
-                        dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constants,
-                        importsManager,
-                        typeResolver: this.typeResolver,
-                        typeDeclarationReferencer: this.typeDeclarationReferencer,
-                        typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
-                        typeGenerator: this.typeGenerator,
-                        typeSchemaGenerator: this.typeSchemaGenerator,
-                        typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                        treatUnknownAsAny: this.config.treatUnknownAsAny,
-                    });
-                    typeSchemaContext.typeSchema
-                        .getGeneratedTypeSchema(typeDeclaration.name)
-                        .writeToFile(typeSchemaContext);
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    context.typeSchema.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(context);
                 },
             });
         }
@@ -355,24 +318,8 @@ export class SdkGenerator {
             this.withSourceFile({
                 filepath: this.errorDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
-                    const errorContext = new SdkErrorContextImpl({
-                        sourceFile,
-                        coreUtilitiesManager: this.coreUtilitiesManager,
-                        dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constants,
-                        importsManager,
-                        typeResolver: this.typeResolver,
-                        typeDeclarationReferencer: this.typeDeclarationReferencer,
-                        typeGenerator: this.typeGenerator,
-                        typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                        errorDeclarationReferencer: this.errorDeclarationReferencer,
-                        sdkErrorGenerator: this.sdkErrorGenerator,
-                        errorResolver: this.errorResolver,
-                        genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
-                        genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
-                        treatUnknownAsAny: this.config.treatUnknownAsAny,
-                    });
-                    errorContext.sdkError.getGeneratedSdkError(errorDeclaration.name)?.writeToFile(errorContext);
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    context.sdkError.getGeneratedSdkError(errorDeclaration.name)?.writeToFile(context);
                 },
             });
         }
@@ -383,30 +330,8 @@ export class SdkGenerator {
             this.withSourceFile({
                 filepath: this.sdkErrorSchemaDeclarationReferencer.getExportedFilepath(errorDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
-                    const sdkErrorSchemaContext = new SdkErrorSchemaContextImpl({
-                        sourceFile,
-                        coreUtilitiesManager: this.coreUtilitiesManager,
-                        dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constants,
-                        importsManager,
-                        typeResolver: this.typeResolver,
-                        typeDeclarationReferencer: this.typeDeclarationReferencer,
-                        typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
-                        typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                        errorDeclarationReferencer: this.errorDeclarationReferencer,
-                        sdkErrorGenerator: this.sdkErrorGenerator,
-                        errorResolver: this.errorResolver,
-                        typeGenerator: this.typeGenerator,
-                        typeSchemaGenerator: this.typeSchemaGenerator,
-                        sdkErrorSchemaDeclarationReferencer: this.sdkErrorSchemaDeclarationReferencer,
-                        sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
-                        genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
-                        genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
-                        treatUnknownAsAny: this.config.treatUnknownAsAny,
-                    });
-                    sdkErrorSchemaContext.sdkErrorSchema
-                        .getGeneratedSdkErrorSchema(errorDeclaration.name)
-                        ?.writeToFile(sdkErrorSchemaContext);
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    context.sdkErrorSchema.getGeneratedSdkErrorSchema(errorDeclaration.name)?.writeToFile(context);
                 },
             });
         }
@@ -421,27 +346,10 @@ export class SdkGenerator {
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
-                        const endpointErrorUnionContext = new EndpointErrorUnionContextImpl({
-                            sourceFile,
-                            coreUtilitiesManager: this.coreUtilitiesManager,
-                            dependencyManager: this.dependencyManager,
-                            fernConstants: this.intermediateRepresentation.constants,
-                            importsManager,
-                            typeResolver: this.typeResolver,
-                            typeDeclarationReferencer: this.typeDeclarationReferencer,
-                            typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                            errorDeclarationReferencer: this.errorDeclarationReferencer,
-                            endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
-                            sdkErrorGenerator: this.sdkErrorGenerator,
-                            errorResolver: this.errorResolver,
-                            packageResolver: this.packageResolver,
-                            typeGenerator: this.typeGenerator,
-                            endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
-                            treatUnknownAsAny: this.config.treatUnknownAsAny,
-                        });
-                        endpointErrorUnionContext.endpointErrorUnion
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        context.endpointErrorUnion
                             .getGeneratedEndpointErrorUnion(packageId, endpoint.name)
-                            .writeToFile(endpointErrorUnionContext);
+                            .writeToFile(context);
                     },
                 });
             }
@@ -457,33 +365,10 @@ export class SdkGenerator {
                         endpoint,
                     }),
                     run: ({ sourceFile, importsManager }) => {
-                        const endpointTypeSchemasContext = new SdkEndpointTypeSchemasContextImpl({
-                            sourceFile,
-                            coreUtilitiesManager: this.coreUtilitiesManager,
-                            dependencyManager: this.dependencyManager,
-                            fernConstants: this.intermediateRepresentation.constants,
-                            importsManager,
-                            typeResolver: this.typeResolver,
-                            typeDeclarationReferencer: this.typeDeclarationReferencer,
-                            typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
-                            typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                            errorDeclarationReferencer: this.errorDeclarationReferencer,
-                            sdkEndpointSchemaDeclarationReferencer: this.sdkEndpointSchemaDeclarationReferencer,
-                            endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
-                            endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
-                            requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
-                            requestWrapperGenerator: this.requestWrapperGenerator,
-                            typeGenerator: this.typeGenerator,
-                            sdkErrorGenerator: this.sdkErrorGenerator,
-                            errorResolver: this.errorResolver,
-                            packageResolver: this.packageResolver,
-                            sdkEndpointTypeSchemasGenerator: this.sdkEndpointTypeSchemasGenerator,
-                            typeSchemaGenerator: this.typeSchemaGenerator,
-                            treatUnknownAsAny: this.config.treatUnknownAsAny,
-                        });
-                        endpointTypeSchemasContext.sdkEndpointTypeSchemas
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        context.sdkEndpointTypeSchemas
                             .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
-                            .writeToFile(endpointTypeSchemasContext);
+                            .writeToFile(context);
                     },
                 });
             }
@@ -500,21 +385,7 @@ export class SdkGenerator {
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
-                            const context = new RequestWrapperContextImpl({
-                                sourceFile,
-                                coreUtilitiesManager: this.coreUtilitiesManager,
-                                dependencyManager: this.dependencyManager,
-                                fernConstants: this.intermediateRepresentation.constants,
-                                importsManager,
-                                typeResolver: this.typeResolver,
-                                typeDeclarationReferencer: this.typeDeclarationReferencer,
-                                typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                                typeGenerator: this.typeGenerator,
-                                packageResolver: this.packageResolver,
-                                requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
-                                requestWrapperGenerator: this.requestWrapperGenerator,
-                                treatUnknownAsAny: this.config.treatUnknownAsAny,
-                            });
+                            const context = this.generateSdkContext({ sourceFile, importsManager });
                             context.requestWrapper
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
@@ -535,26 +406,7 @@ export class SdkGenerator {
                             endpoint,
                         }),
                         run: ({ sourceFile, importsManager }) => {
-                            const context = new SdkInlinedRequestBodySchemaContextImpl({
-                                sourceFile,
-                                coreUtilitiesManager: this.coreUtilitiesManager,
-                                dependencyManager: this.dependencyManager,
-                                fernConstants: this.intermediateRepresentation.constants,
-                                importsManager,
-                                typeResolver: this.typeResolver,
-                                packageResolver: this.packageResolver,
-                                typeDeclarationReferencer: this.typeDeclarationReferencer,
-                                typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                                typeGenerator: this.typeGenerator,
-                                requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
-                                requestWrapperGenerator: this.requestWrapperGenerator,
-                                sdkInlinedRequestBodySchemaGenerator: this.sdkInlinedRequestBodySchemaGenerator,
-                                sdkInlinedRequestBodySchemaDeclarationReferencer:
-                                    this.sdkInlinedRequestBodySchemaDeclarationReferencer,
-                                typeSchemaGenerator: this.typeSchemaGenerator,
-                                typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
-                                treatUnknownAsAny: this.config.treatUnknownAsAny,
-                            });
+                            const context = this.generateSdkContext({ sourceFile, importsManager });
                             context.sdkInlinedRequestBodySchema
                                 .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
                                 .writeToFile(context);
@@ -574,47 +426,8 @@ export class SdkGenerator {
             this.withSourceFile({
                 filepath: this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId),
                 run: ({ sourceFile, importsManager }) => {
-                    const sdkClientClassContext = new SdkClientClassContextImpl({
-                        intermediateRepresentation: this.intermediateRepresentation,
-                        sourceFile,
-                        coreUtilitiesManager: this.coreUtilitiesManager,
-                        dependencyManager: this.dependencyManager,
-                        fernConstants: this.intermediateRepresentation.constants,
-                        importsManager,
-                        typeResolver: this.typeResolver,
-                        typeDeclarationReferencer: this.typeDeclarationReferencer,
-                        typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
-                        typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
-                        errorDeclarationReferencer: this.errorDeclarationReferencer,
-                        sdkErrorSchemaDeclarationReferencer: this.sdkErrorSchemaDeclarationReferencer,
-                        endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
-                        sdkEndpointSchemaDeclarationReferencer: this.sdkEndpointSchemaDeclarationReferencer,
-                        endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
-                        requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
-                        requestWrapperGenerator: this.requestWrapperGenerator,
-                        sdkInlinedRequestBodySchemaDeclarationReferencer:
-                            this.sdkInlinedRequestBodySchemaDeclarationReferencer,
-                        sdkInlinedRequestBodySchemaGenerator: this.sdkInlinedRequestBodySchemaGenerator,
-                        typeGenerator: this.typeGenerator,
-                        sdkErrorGenerator: this.sdkErrorGenerator,
-                        errorResolver: this.errorResolver,
-                        packageResolver: this.packageResolver,
-                        sdkEndpointTypeSchemasGenerator: this.sdkEndpointTypeSchemasGenerator,
-                        typeSchemaGenerator: this.typeSchemaGenerator,
-                        sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
-                        environmentsGenerator: this.environmentsGenerator,
-                        environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
-                        sdkClientClassDeclarationReferencer: this.sdkClientClassDeclarationReferencer,
-                        sdkClientClassGenerator: this.sdkClientClassGenerator,
-                        genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
-                        genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
-                        timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
-                        timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
-                        treatUnknownAsAny: this.config.treatUnknownAsAny,
-                    });
-                    sdkClientClassContext.sdkClientClass
-                        .getGeneratedSdkClientClass(packageId)
-                        .writeToFile(sdkClientClassContext);
+                    const context = this.generateSdkContext({ sourceFile, importsManager });
+                    context.sdkClientClass.getGeneratedSdkClientClass(packageId).writeToFile(context);
                 },
             });
         }
@@ -624,18 +437,8 @@ export class SdkGenerator {
         this.withSourceFile({
             filepath: this.environmentsDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
-                const environmentsContext = new EnvironmentsContextImpl({
-                    sourceFile,
-                    coreUtilitiesManager: this.coreUtilitiesManager,
-                    dependencyManager: this.dependencyManager,
-                    fernConstants: this.intermediateRepresentation.constants,
-                    importsManager,
-                    intermediateRepresentation: this.intermediateRepresentation,
-                    environmentsGenerator: this.environmentsGenerator,
-                    environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
-                    treatUnknownAsAny: this.config.treatUnknownAsAny,
-                });
-                environmentsContext.environments.getGeneratedEnvironments().writeToFile(environmentsContext);
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                context.environments.getGeneratedEnvironments().writeToFile(context);
             },
         });
     }
@@ -644,15 +447,7 @@ export class SdkGenerator {
         this.withSourceFile({
             filepath: this.genericAPISdkErrorDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
-                const context = new GenericAPISdkErrorContextImpl({
-                    sourceFile,
-                    coreUtilitiesManager: this.coreUtilitiesManager,
-                    dependencyManager: this.dependencyManager,
-                    fernConstants: this.intermediateRepresentation.constants,
-                    importsManager,
-                    genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
-                    genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
-                });
+                const context = this.generateSdkContext({ sourceFile, importsManager });
                 this.genericAPISdkErrorGenerator
                     .generateGenericAPISdkError({
                         errorClassName: this.genericAPISdkErrorDeclarationReferencer.getExportedName(),
@@ -666,15 +461,7 @@ export class SdkGenerator {
         this.withSourceFile({
             filepath: this.timeoutSdkErrorDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
-                const context = new TimeoutSdkErrorContextImpl({
-                    sourceFile,
-                    coreUtilitiesManager: this.coreUtilitiesManager,
-                    dependencyManager: this.dependencyManager,
-                    fernConstants: this.intermediateRepresentation.constants,
-                    importsManager,
-                    timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
-                    timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
-                });
+                const context = this.generateSdkContext({ sourceFile, importsManager });
                 this.timeoutSdkErrorGenerator
                     .generateTimeoutSdkError({
                         errorClassName: this.timeoutSdkErrorDeclarationReferencer.getExportedName(),
@@ -732,5 +519,51 @@ export class SdkGenerator {
                 run(service, packageId);
             }
         }
+    }
+
+    private generateSdkContext({
+        sourceFile,
+        importsManager,
+    }: {
+        sourceFile: SourceFile;
+        importsManager: ImportsManager;
+    }): SdkContextImpl {
+        return new SdkContextImpl({
+            intermediateRepresentation: this.intermediateRepresentation,
+            sourceFile,
+            coreUtilitiesManager: this.coreUtilitiesManager,
+            dependencyManager: this.dependencyManager,
+            fernConstants: this.intermediateRepresentation.constants,
+            importsManager,
+            typeResolver: this.typeResolver,
+            typeDeclarationReferencer: this.typeDeclarationReferencer,
+            typeSchemaDeclarationReferencer: this.typeSchemaDeclarationReferencer,
+            typeReferenceExampleGenerator: this.typeReferenceExampleGenerator,
+            errorDeclarationReferencer: this.errorDeclarationReferencer,
+            sdkErrorSchemaDeclarationReferencer: this.sdkErrorSchemaDeclarationReferencer,
+            endpointErrorUnionDeclarationReferencer: this.endpointErrorUnionDeclarationReferencer,
+            sdkEndpointSchemaDeclarationReferencer: this.sdkEndpointSchemaDeclarationReferencer,
+            endpointErrorUnionGenerator: this.endpointErrorUnionGenerator,
+            requestWrapperDeclarationReferencer: this.requestWrapperDeclarationReferencer,
+            requestWrapperGenerator: this.requestWrapperGenerator,
+            sdkInlinedRequestBodySchemaDeclarationReferencer: this.sdkInlinedRequestBodySchemaDeclarationReferencer,
+            sdkInlinedRequestBodySchemaGenerator: this.sdkInlinedRequestBodySchemaGenerator,
+            typeGenerator: this.typeGenerator,
+            sdkErrorGenerator: this.sdkErrorGenerator,
+            errorResolver: this.errorResolver,
+            packageResolver: this.packageResolver,
+            sdkEndpointTypeSchemasGenerator: this.sdkEndpointTypeSchemasGenerator,
+            typeSchemaGenerator: this.typeSchemaGenerator,
+            sdkErrorSchemaGenerator: this.sdkErrorSchemaGenerator,
+            environmentsGenerator: this.environmentsGenerator,
+            environmentsDeclarationReferencer: this.environmentsDeclarationReferencer,
+            sdkClientClassDeclarationReferencer: this.sdkClientClassDeclarationReferencer,
+            sdkClientClassGenerator: this.sdkClientClassGenerator,
+            genericAPISdkErrorDeclarationReferencer: this.genericAPISdkErrorDeclarationReferencer,
+            genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
+            timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
+            timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
+            treatUnknownAsAny: this.config.treatUnknownAsAny,
+        });
     }
 }

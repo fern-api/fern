@@ -3,7 +3,7 @@ import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
-import { GeneratedSdkErrorSchema, SdkErrorSchemaContext } from "@fern-typescript/contexts";
+import { GeneratedSdkErrorSchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedSdkErrorSchemaImpl {
@@ -16,7 +16,7 @@ export declare namespace GeneratedSdkErrorSchemaImpl {
 }
 
 export class GeneratedSdkErrorSchemaImpl
-    extends AbstractGeneratedSchema<SdkErrorSchemaContext>
+    extends AbstractGeneratedSchema<SdkContext>
     implements GeneratedSdkErrorSchema
 {
     private errorDeclaration: ErrorDeclaration;
@@ -30,7 +30,7 @@ export class GeneratedSdkErrorSchemaImpl
         this.skipValidation = skipValidation;
     }
 
-    public writeToFile(context: SdkErrorSchemaContext): void {
+    public writeToFile(context: SdkContext): void {
         // named errors are not generated - consumers should
         // (de)serialize the named type directly.
         // unknown request bodies don't need to be serialized.
@@ -51,7 +51,7 @@ export class GeneratedSdkErrorSchemaImpl
     }
 
     public deserializeBody(
-        context: SdkErrorSchemaContext,
+        context: SdkContext,
         { referenceToBody }: { referenceToBody: ts.Expression }
     ): ts.Expression {
         switch (this.type._type) {
@@ -81,22 +81,22 @@ export class GeneratedSdkErrorSchemaImpl
         }
     }
 
-    protected getReferenceToSchema(context: SdkErrorSchemaContext): Reference {
+    protected getReferenceToSchema(context: SdkContext): Reference {
         return context.sdkErrorSchema.getReferenceToSdkErrorSchema(this.errorDeclaration.name);
     }
 
-    protected generateRawTypeDeclaration(context: SdkErrorSchemaContext, module: ModuleDeclaration): void {
+    protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode),
         });
     }
 
-    protected getReferenceToParsedShape(context: SdkErrorSchemaContext): ts.TypeNode {
+    protected getReferenceToParsedShape(context: SdkContext): ts.TypeNode {
         return context.type.getReferenceToType(this.type).typeNode;
     }
 
-    protected buildSchema(context: SdkErrorSchemaContext): Zurg.Schema {
+    protected buildSchema(context: SdkContext): Zurg.Schema {
         return context.typeSchema.getSchemaOfTypeReference(this.type);
     }
 }

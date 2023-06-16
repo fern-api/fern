@@ -5,7 +5,7 @@ import {
     SingleBaseUrlEnvironments,
 } from "@fern-fern/ir-model/environment";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
-import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
+import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace GeneratedSingleUrlEnvironmentsImpl {
@@ -27,7 +27,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         this.defaultEnvironmentId = defaultEnvironmentId;
     }
 
-    public writeToFile(context: EnvironmentsContext): void {
+    public writeToFile(context: SdkContext): void {
         const objectWriter = FernWriters.object.writer({ asConst: true });
         for (const environment of this.environments.environments) {
             objectWriter.addProperty({
@@ -37,7 +37,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
             });
         }
 
-        context.base.sourceFile.addVariableStatement({
+        context.sourceFile.addVariableStatement({
             declarationKind: VariableDeclarationKind.Const,
             isExported: true,
             declarations: [
@@ -48,7 +48,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
             ],
         });
 
-        context.base.sourceFile.addTypeAlias({
+        context.sourceFile.addTypeAlias({
             name: this.environmentEnumName,
             isExported: true,
             type: getTextOfTsNode(
@@ -67,7 +67,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         });
     }
 
-    public getReferenceToDefaultEnvironment(context: EnvironmentsContext): ts.Expression | undefined {
+    public getReferenceToDefaultEnvironment(context: SdkContext): ts.Expression | undefined {
         if (this.defaultEnvironmentId == null) {
             return undefined;
         }
@@ -83,7 +83,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
         );
     }
 
-    public getTypeForUserSuppliedEnvironment(context: EnvironmentsContext): ts.TypeNode {
+    public getTypeForUserSuppliedEnvironment(context: SdkContext): ts.TypeNode {
         return ts.factory.createUnionTypeNode([
             context.environments.getReferenceToEnvironmentsEnum().getTypeNode(),
             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),

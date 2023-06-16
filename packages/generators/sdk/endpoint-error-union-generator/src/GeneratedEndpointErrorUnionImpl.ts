@@ -1,7 +1,7 @@
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { PackageId } from "@fern-typescript/commons";
-import { EndpointErrorUnionContext, GeneratedEndpointErrorUnion, GeneratedUnion } from "@fern-typescript/contexts";
+import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
 import { ParsedSingleUnionTypeForError } from "./error/ParsedSingleUnionTypeForError";
@@ -23,7 +23,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
     private static STATUS_CODE_DISCRIMINANT = "statusCode";
 
     private endpoint: HttpEndpoint;
-    private errorUnion: GeneratedUnionImpl<EndpointErrorUnionContext>;
+    private errorUnion: GeneratedUnionImpl<SdkContext>;
 
     constructor({
         packageId,
@@ -35,7 +35,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
 
         const discriminant = this.getErrorUnionDiscriminant(errorDiscriminationStrategy);
         const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator({ discriminant });
-        this.errorUnion = new GeneratedUnionImpl<EndpointErrorUnionContext>({
+        this.errorUnion = new GeneratedUnionImpl<SdkContext>({
             typeName: GeneratedEndpointErrorUnionImpl.ERROR_INTERFACE_NAME,
             includeUtilsOnUnionMembers: true,
             discriminant,
@@ -71,11 +71,11 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         });
     }
 
-    public writeToFile(context: EndpointErrorUnionContext): void {
+    public writeToFile(context: SdkContext): void {
         this.errorUnion.writeToFile(context);
     }
 
-    public getErrorUnion(): GeneratedUnion<EndpointErrorUnionContext> {
+    public getErrorUnion(): GeneratedUnion<SdkContext> {
         return this.errorUnion;
     }
 }

@@ -1,7 +1,7 @@
 import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
 import { ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-model/ir";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
-import { SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
@@ -12,7 +12,7 @@ export declare namespace RawSinglePropertyErrorSingleUnionType {
     }
 }
 
-export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnionType<SdkEndpointTypeSchemasContext> {
+export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnionType<SdkContext> {
     private errorName: DeclaredErrorName;
     private discriminationStrategy: ErrorDiscriminationByPropertyStrategy;
 
@@ -27,7 +27,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     }
 
     protected getNonDiscriminantPropertiesForInterface(
-        context: SdkEndpointTypeSchemasContext
+        context: SdkContext
     ): OptionalKind<PropertySignatureStructure>[] {
         const errorDeclaration = context.sdkError.getErrorDeclaration(this.errorName);
         if (errorDeclaration.type == null) {
@@ -46,7 +46,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
     }
 
     protected getNonDiscriminantPropertiesForSchema(
-        context: SdkEndpointTypeSchemasContext
+        context: SdkContext
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
         const errorDeclaration = context.sdkError.getErrorDeclaration(this.errorName);
         if (errorDeclaration.type == null) {
@@ -55,7 +55,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
             );
         }
 
-        return context.base.coreUtilities.zurg.object([
+        return context.coreUtilities.zurg.object([
             {
                 key: {
                     parsed: this.discriminationStrategy.contentProperty.name.camelCase.unsafeName,

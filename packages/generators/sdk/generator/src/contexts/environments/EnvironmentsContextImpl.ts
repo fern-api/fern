@@ -1,33 +1,58 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { EnvironmentsContext } from "@fern-typescript/contexts";
+import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
+import { SourceFile } from "ts-morph";
 import { EnvironmentsDeclarationReferencer } from "../../declaration-referencers/EnvironmentsDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { EnvironmentsContextMixinImpl } from "./EnvironmentsContextMixinImpl";
 
 export declare namespace EnvironmentsContextImpl {
-    export interface Init extends BaseContextImpl.Init {
+    export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
         environmentsGenerator: EnvironmentsGenerator;
         environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
-        treatUnknownAsAny: boolean;
+        importsManager: ImportsManager;
+        sourceFile: SourceFile;
     }
 }
 
-export class EnvironmentsContextImpl extends BaseContextImpl implements EnvironmentsContext {
-    public readonly environments: EnvironmentsContextMixinImpl;
+export class EnvironmentsContextImpl implements EnvironmentsContext {
+    private intermediateRepresentation: IntermediateRepresentation;
+    private environmentsGenerator: EnvironmentsGenerator;
+    private environmentsDeclarationReferencer: EnvironmentsDeclarationReferencer;
+    private importsManager: ImportsManager;
+    private sourceFile: SourceFile;
 
     constructor({
         intermediateRepresentation,
         environmentsGenerator,
         environmentsDeclarationReferencer,
-        ...superInit
+        importsManager,
+        sourceFile,
     }: EnvironmentsContextImpl.Init) {
-        super(superInit);
-        this.environments = new EnvironmentsContextMixinImpl({
-            intermediateRepresentation,
-            environmentsGenerator,
-            environmentsDeclarationReferencer,
+        this.intermediateRepresentation = intermediateRepresentation;
+        this.environmentsGenerator = environmentsGenerator;
+        this.environmentsDeclarationReferencer = environmentsDeclarationReferencer;
+        this.importsManager = importsManager;
+        this.sourceFile = sourceFile;
+    }
+
+    public getGeneratedEnvironments(): GeneratedEnvironments {
+        return this.environmentsGenerator.generateEnvironments({
+            environmentEnumName: this.environmentsDeclarationReferencer.getExportedNameOfEnvironmentsEnum(),
+            environmentUrlsTypeName: this.environmentsDeclarationReferencer.getExportedNameOfEnvironmentUrls(),
+            environmentsConfig: this.intermediateRepresentation.environments ?? undefined,
+        });
+    }
+
+    public getReferenceToEnvironmentsEnum(): Reference {
+        return this.environmentsDeclarationReferencer.getReferenceToEnvironmentsEnum({
+            importsManager: this.importsManager,
+            sourceFile: this.sourceFile,
+        });
+    }
+
+    public getReferenceToEnvironmentUrls(): Reference {
+        return this.environmentsDeclarationReferencer.getReferenceToEnvironmentUrls({
             importsManager: this.importsManager,
             sourceFile: this.sourceFile,
         });

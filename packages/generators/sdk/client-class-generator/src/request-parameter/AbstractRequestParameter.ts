@@ -1,6 +1,6 @@
 import { HttpEndpoint, HttpHeader, HttpService, QueryParameter, SdkRequest } from "@fern-fern/ir-model/http";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { RequestParameter } from "./RequestParameter";
 
@@ -27,7 +27,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     }
 
     public getParameterDeclaration(
-        context: SdkClientClassContext,
+        context: SdkContext,
         {
             typeIntersection,
             excludeInitializers = false,
@@ -55,23 +55,17 @@ export abstract class AbstractRequestParameter implements RequestParameter {
         return this.sdkRequest.requestParameterName.camelCase.unsafeName;
     }
 
-    public abstract getInitialStatements(
-        context: SdkClientClassContext,
-        args: { variablesInScope: string[] }
-    ): ts.Statement[];
-    public abstract getAllQueryParameters(context: SdkClientClassContext): QueryParameter[];
-    public abstract getReferenceToRequestBody(context: SdkClientClassContext): ts.Expression | undefined;
-    public abstract getReferenceToQueryParameter(
-        queryParameterKey: string,
-        context: SdkClientClassContext
-    ): ts.Expression;
-    public abstract getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression;
+    public abstract getInitialStatements(context: SdkContext, args: { variablesInScope: string[] }): ts.Statement[];
+    public abstract getAllQueryParameters(context: SdkContext): QueryParameter[];
+    public abstract getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined;
+    public abstract getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression;
+    public abstract getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkContext): ts.Expression;
     public abstract withQueryParameter(
         queryParameter: QueryParameter,
-        context: SdkClientClassContext,
+        context: SdkContext,
         callback: (value: ts.Expression) => ts.Statement[]
     ): ts.Statement[];
-    protected abstract getParameterType(contxt: SdkClientClassContext): {
+    protected abstract getParameterType(contxt: SdkContext): {
         type: ts.TypeNode;
         hasQuestionToken: boolean;
         initializer?: ts.Expression;

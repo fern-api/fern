@@ -1,19 +1,18 @@
 import { SingleUnionTypeProperty } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
-import { GeneratedType, WithBaseContextMixin, WithTypeSchemaContextMixin } from "@fern-typescript/contexts";
+import { GeneratedType, ModelContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace RawSinglePropertySingleUnionType {
-    export interface Init<Context extends WithBaseContextMixin & WithTypeSchemaContextMixin>
-        extends AbstractRawSingleUnionType.Init {
+    export interface Init<Context extends ModelContext> extends AbstractRawSingleUnionType.Init {
         singleProperty: SingleUnionTypeProperty;
         getGeneratedType: () => GeneratedType<Context>;
     }
 }
 
 export class RawSinglePropertySingleUnionType<
-    Context extends WithBaseContextMixin & WithTypeSchemaContextMixin
+    Context extends ModelContext
 > extends AbstractRawSingleUnionType<Context> {
     private singleProperty: SingleUnionTypeProperty;
     private getGeneratedType: () => GeneratedType<Context>;
@@ -46,7 +45,7 @@ export class RawSinglePropertySingleUnionType<
         if (unionBeingGenerated.type !== "union") {
             throw new Error("Type is not a union");
         }
-        return context.base.coreUtilities.zurg.object([
+        return context.coreUtilities.zurg.object([
             {
                 key: {
                     parsed: unionBeingGenerated.getSinglePropertyKey(this.singleProperty),

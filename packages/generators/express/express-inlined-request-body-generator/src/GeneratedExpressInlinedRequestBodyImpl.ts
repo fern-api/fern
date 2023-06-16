@@ -1,6 +1,6 @@
 import { InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-model/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { ExpressInlinedRequestBodyContext, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
+import { ExpressContext, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 
 export declare namespace GeneratedExpressInlinedRequestBodyImpl {
     export interface Init {
@@ -18,8 +18,8 @@ export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressI
         this.typeName = typeName;
     }
 
-    public writeToFile(context: ExpressInlinedRequestBodyContext): void {
-        const requestInterface = context.base.sourceFile.addInterface({
+    public writeToFile(context: ExpressContext): void {
+        const requestInterface = context.sourceFile.addInterface({
             name: this.typeName,
             isExported: true,
         });

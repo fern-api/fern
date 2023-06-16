@@ -1,7 +1,7 @@
 import { HttpEndpoint, InlinedRequestBody } from "@fern-fern/ir-model/http";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
-import { GeneratedSdkInlinedRequestBodySchema, SdkInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
+import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
 export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
@@ -13,7 +13,7 @@ export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
 }
 
 export class GeneratedSdkInlinedRequestBodySchemaImpl
-    extends AbstractGeneratedSchema<SdkInlinedRequestBodySchemaContext>
+    extends AbstractGeneratedSchema<SdkContext>
     implements GeneratedSdkInlinedRequestBodySchema
 {
     private packageId: PackageId;
@@ -32,14 +32,11 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         this.inlinedRequestBody = inlinedRequestBody;
     }
 
-    public writeToFile(context: SdkInlinedRequestBodySchemaContext): void {
+    public writeToFile(context: SdkContext): void {
         this.writeSchemaToFile(context);
     }
 
-    public serializeRequest(
-        referenceToParsedRequest: ts.Expression,
-        context: SdkInlinedRequestBodySchemaContext
-    ): ts.Expression {
+    public serializeRequest(referenceToParsedRequest: ts.Expression, context: SdkContext): ts.Expression {
         return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
             unrecognizedObjectKeys: "strip",
             allowUnrecognizedEnumValues: false,
@@ -49,11 +46,11 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         });
     }
 
-    protected getReferenceToSchema(context: SdkInlinedRequestBodySchemaContext): Reference {
+    protected getReferenceToSchema(context: SdkContext): Reference {
         return context.sdkInlinedRequestBodySchema.getReferenceToInlinedRequestBody(this.packageId, this.endpoint.name);
     }
 
-    protected generateRawTypeDeclaration(context: SdkInlinedRequestBodySchemaContext, module: ModuleDeclaration): void {
+    protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
         module.addInterface({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             properties: this.inlinedRequestBody.properties.map((property) => {
@@ -70,7 +67,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         });
     }
 
-    protected getReferenceToParsedShape(context: SdkInlinedRequestBodySchemaContext): ts.TypeNode {
+    protected getReferenceToParsedShape(context: SdkContext): ts.TypeNode {
         const referenceToRequestWrapper = context.requestWrapper.getReferenceToRequestWrapper(
             this.packageId,
             this.endpoint.name
@@ -94,8 +91,8 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         }
     }
 
-    protected buildSchema(context: SdkInlinedRequestBodySchemaContext): Zurg.Schema {
-        let schema = context.base.coreUtilities.zurg.object(
+    protected buildSchema(context: SdkContext): Zurg.Schema {
+        let schema = context.coreUtilities.zurg.object(
             this.inlinedRequestBody.properties.map((property) => ({
                 key: {
                     parsed: context.requestWrapper

@@ -1,7 +1,7 @@
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-model/ir";
 import { PackageId, Zurg } from "@fern-typescript/commons";
-import { EndpointErrorUnionContext, GeneratedUnion, SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
+import { GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { GeneratedUnionSchema, RawNoPropertiesSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { ts } from "ts-morph";
@@ -22,13 +22,13 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
-    private GeneratedSdkErrorUnionSchema: GeneratedUnionSchema<SdkEndpointTypeSchemasContext>;
+    private GeneratedSdkErrorUnionSchema: GeneratedUnionSchema<SdkContext>;
 
     constructor({ packageId, endpoint, errorResolver, discriminationStrategy }: GeneratedEndpointErrorSchemaImpl.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
 
-        this.GeneratedSdkErrorUnionSchema = new GeneratedUnionSchema<SdkEndpointTypeSchemasContext>({
+        this.GeneratedSdkErrorUnionSchema = new GeneratedUnionSchema<SdkContext>({
             typeName: GeneratedEndpointErrorSchemaImpl.ERROR_SCHEMA_NAME,
             shouldIncludeDefaultCaseInTransform: false,
             includeUtilsOnUnionMembers: true,
@@ -59,19 +59,19 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
         });
     }
 
-    public writeToFile(context: SdkEndpointTypeSchemasContext): void {
+    public writeToFile(context: SdkContext): void {
         this.GeneratedSdkErrorUnionSchema.writeSchemaToFile(context);
     }
 
-    public getReferenceToRawShape(context: SdkEndpointTypeSchemasContext): ts.TypeNode {
+    public getReferenceToRawShape(context: SdkContext): ts.TypeNode {
         return this.GeneratedSdkErrorUnionSchema.getReferenceToRawShape(context);
     }
 
-    public getReferenceToZurgSchema(context: SdkEndpointTypeSchemasContext): Zurg.Schema {
+    public getReferenceToZurgSchema(context: SdkContext): Zurg.Schema {
         return this.GeneratedSdkErrorUnionSchema.getReferenceToZurgSchema(context);
     }
 
-    private getErrorUnion(context: SdkEndpointTypeSchemasContext): GeneratedUnion<EndpointErrorUnionContext> {
+    private getErrorUnion(context: SdkContext): GeneratedUnion<SdkContext> {
         return context.endpointErrorUnion
             .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
             .getErrorUnion();

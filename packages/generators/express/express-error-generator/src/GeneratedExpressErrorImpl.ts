@@ -1,7 +1,7 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { ExpressErrorContext, GeneratedExpressError } from "@fern-typescript/contexts";
+import { ExpressContext, GeneratedExpressError } from "@fern-typescript/contexts";
 import {
     ClassDeclaration,
     OptionalKind,
@@ -19,7 +19,7 @@ export declare namespace GeneratedExpressErrorImpl {
 }
 
 export class GeneratedExpressErrorImpl
-    extends AbstractErrorClassGenerator<ExpressErrorContext>
+    extends AbstractErrorClassGenerator<ExpressContext>
     implements GeneratedExpressError
 {
     public readonly type = "class";
@@ -34,11 +34,11 @@ export class GeneratedExpressErrorImpl
         this.errorDeclaration = errorDeclaration;
     }
 
-    public writeToFile(context: ExpressErrorContext): void {
+    public writeToFile(context: ExpressContext): void {
         super.writeToSourceFile(context);
     }
 
-    protected addToClass(class_: ClassDeclaration, context: ExpressErrorContext): void {
+    protected addToClass(class_: ClassDeclaration, context: ExpressContext): void {
         class_.addMethod(
             context.genericAPIExpressError
                 .getGeneratedGenericAPIExpressError()
@@ -46,7 +46,7 @@ export class GeneratedExpressErrorImpl
                     if (this.errorDeclaration.type == null) {
                         return [
                             ts.factory.createExpressionStatement(
-                                context.base.externalDependencies.express.Response.sendStatus({
+                                context.externalDependencies.express.Response.sendStatus({
                                     referenceToExpressResponse: expressResponse,
                                     status: this.errorDeclaration.statusCode,
                                 })
@@ -63,8 +63,8 @@ export class GeneratedExpressErrorImpl
 
                     return [
                         ts.factory.createExpressionStatement(
-                            context.base.externalDependencies.express.Response.json({
-                                referenceToExpressResponse: context.base.externalDependencies.express.Response.status({
+                            context.externalDependencies.express.Response.json({
+                                referenceToExpressResponse: context.externalDependencies.express.Response.status({
                                     referenceToExpressResponse: expressResponse,
                                     status: this.errorDeclaration.statusCode,
                                 }),
@@ -85,7 +85,7 @@ export class GeneratedExpressErrorImpl
         return [];
     }
 
-    protected getConstructorParameters(context: ExpressErrorContext): OptionalKind<ParameterDeclarationStructure>[] {
+    protected getConstructorParameters(context: ExpressContext): OptionalKind<ParameterDeclarationStructure>[] {
         if (this.errorDeclaration.type == null) {
             return [];
         }
@@ -101,7 +101,7 @@ export class GeneratedExpressErrorImpl
         ];
     }
 
-    protected getSuperArguments(context: ExpressErrorContext): ts.Expression[] {
+    protected getSuperArguments(context: ExpressContext): ts.Expression[] {
         return context.genericAPIExpressError.getGeneratedGenericAPIExpressError().getConstructorArguments({
             errorName: this.errorClassName,
         });
@@ -115,7 +115,7 @@ export class GeneratedExpressErrorImpl
         return false;
     }
 
-    protected override getBaseClass(context: ExpressErrorContext): ts.TypeNode {
+    protected override getBaseClass(context: ExpressContext): ts.TypeNode {
         return context.genericAPIExpressError.getReferenceToGenericAPIExpressError().getTypeNode();
     }
 }

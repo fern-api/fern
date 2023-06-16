@@ -1,10 +1,8 @@
-import { EndpointErrorUnionContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { AbstractParsedSingleUnionType, AbstractUnknownSingleUnionType } from "@fern-typescript/union-generator";
 
-export class UnknownErrorSingleUnionType extends AbstractUnknownSingleUnionType<EndpointErrorUnionContext> {
-    constructor(
-        superInit: Omit<AbstractParsedSingleUnionType.Init<EndpointErrorUnionContext>, "includeUtilsOnUnionMembers">
-    ) {
+export class UnknownErrorSingleUnionType extends AbstractUnknownSingleUnionType<SdkContext> {
+    constructor(superInit: Omit<AbstractParsedSingleUnionType.Init<SdkContext>, "includeUtilsOnUnionMembers">) {
         super({
             ...superInit,
             includeUtilsOnUnionMembers: true,

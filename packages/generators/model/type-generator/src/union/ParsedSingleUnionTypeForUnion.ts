@@ -5,7 +5,7 @@ import {
     SingleUnionTypeProperty,
     UnionTypeDeclaration,
 } from "@fern-fern/ir-model/types";
-import { TypeContext } from "@fern-typescript/contexts";
+import { ModelContext } from "@fern-typescript/contexts";
 import {
     AbstractKnownSingleUnionType,
     NoPropertiesSingleUnionTypeGenerator,
@@ -22,7 +22,7 @@ export declare namespace ParsedSingleUnionTypeForUnion {
     }
 }
 
-export class ParsedSingleUnionTypeForUnion<Context extends TypeContext> extends AbstractKnownSingleUnionType<Context> {
+export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends AbstractKnownSingleUnionType<Context> {
     private singleUnionTypeFromUnion: SingleUnionType;
     protected union: UnionTypeDeclaration;
 

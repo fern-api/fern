@@ -14,7 +14,7 @@ import {
     GeneratedType,
     GeneratedTypeSchema,
     GeneratedUnionTypeSchema,
-    TypeSchemaContext,
+    ModelContext,
 } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl";
@@ -39,7 +39,7 @@ export declare namespace TypeSchemaGenerator {
     }
 }
 
-export class TypeSchemaGenerator<Context extends TypeSchemaContext = TypeSchemaContext> {
+export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
     private includeUtilsOnUnionMembers: boolean;
 
     constructor({ includeUtilsOnUnionMembers }: TypeSchemaGenerator.Init) {

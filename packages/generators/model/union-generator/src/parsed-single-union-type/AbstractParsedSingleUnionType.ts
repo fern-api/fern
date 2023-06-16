@@ -1,18 +1,18 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { WithBaseContextMixin, WithTypeContextMixin } from "@fern-typescript/contexts";
+import { ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 import { SingleUnionTypeGenerator } from "../single-union-type-generator/SingleUnionTypeGenerator";
 import { ParsedSingleUnionType } from "./ParsedSingleUnionType";
 
 export declare namespace AbstractParsedSingleUnionType {
-    export interface Init<Context extends WithBaseContextMixin & WithTypeContextMixin> {
+    export interface Init<Context extends ModelContext> {
         singleUnionType: SingleUnionTypeGenerator<Context>;
         includeUtilsOnUnionMembers: boolean;
     }
 }
 
-export abstract class AbstractParsedSingleUnionType<Context extends WithBaseContextMixin & WithTypeContextMixin>
+export abstract class AbstractParsedSingleUnionType<Context extends ModelContext>
     implements ParsedSingleUnionType<Context>
 {
     private static VISITOR_PARAMETER_NAME = "visitor";

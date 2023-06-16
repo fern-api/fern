@@ -1,5 +1,5 @@
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
-import { WithBaseContextMixin } from "@fern-typescript/contexts";
+import { BaseContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace AbstractGeneratedSchema {
@@ -8,7 +8,7 @@ export declare namespace AbstractGeneratedSchema {
     }
 }
 
-export abstract class AbstractGeneratedSchema<Context extends WithBaseContextMixin> {
+export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
     protected static RAW_TYPE_NAME = "Raw";
 
     protected typeName: string;
@@ -18,7 +18,7 @@ export abstract class AbstractGeneratedSchema<Context extends WithBaseContextMix
     }
 
     public writeSchemaToFile(context: Context): void {
-        context.base.sourceFile.addVariableStatement({
+        context.sourceFile.addVariableStatement({
             isExported: true,
             declarationKind: VariableDeclarationKind.Const,
             declarations: [
@@ -40,9 +40,7 @@ export abstract class AbstractGeneratedSchema<Context extends WithBaseContextMix
     }
 
     public getReferenceToZurgSchema(context: Context): Zurg.Schema {
-        return context.base.coreUtilities.zurg.Schema._fromExpression(
-            this.getReferenceToSchema(context).getExpression()
-        );
+        return context.coreUtilities.zurg.Schema._fromExpression(this.getReferenceToSchema(context).getExpression());
     }
 
     public getReferenceToRawShape(context: Context): ts.TypeNode {
@@ -63,11 +61,11 @@ export abstract class AbstractGeneratedSchema<Context extends WithBaseContextMix
         rawShape: ts.TypeNode;
         parsedShape: ts.TypeNode;
     }): ts.TypeNode {
-        return context.base.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });
+        return context.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });
     }
 
     protected generateModule(context: Context): void {
-        const module = context.base.sourceFile.addModule({
+        const module = context.sourceFile.addModule({
             name: this.getModuleName(),
             isExported: true,
             hasDeclareKeyword: true,

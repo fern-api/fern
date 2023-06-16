@@ -1,58 +1,76 @@
-import { RequestWrapperContext } from "@fern-typescript/contexts";
+import { Name } from "@fern-fern/ir-model/commons";
+import { ImportsManager, PackageId } from "@fern-typescript/commons";
+import { GeneratedRequestWrapper, RequestWrapperContext } from "@fern-typescript/contexts";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
-import { PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { TypeGenerator } from "@fern-typescript/type-generator";
-import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
+import { PackageResolver } from "@fern-typescript/resolvers";
+import { SourceFile, ts } from "ts-morph";
 import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { RequestWrapperContextMixinImpl } from "./RequestWrapperContextMixinImpl";
 
 export declare namespace RequestWrapperContextImpl {
-    export interface Init extends BaseContextImpl.Init {
-        typeResolver: TypeResolver;
-        typeGenerator: TypeGenerator;
-        typeDeclarationReferencer: TypeDeclarationReferencer;
-        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
+    export interface Init {
         requestWrapperGenerator: RequestWrapperGenerator;
+        requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
         packageResolver: PackageResolver;
-        treatUnknownAsAny: boolean;
+        importsManager: ImportsManager;
+        sourceFile: SourceFile;
     }
 }
 
-export class RequestWrapperContextImpl extends BaseContextImpl implements RequestWrapperContext {
-    public readonly type: TypeContextMixinImpl;
-    public readonly requestWrapper: RequestWrapperContextMixinImpl;
+export class RequestWrapperContextImpl implements RequestWrapperContext {
+    private requestWrapperGenerator: RequestWrapperGenerator;
+    private requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
+    private packageResolver: PackageResolver;
+    private importsManager: ImportsManager;
+    private sourceFile: SourceFile;
 
     constructor({
-        typeResolver,
-        typeGenerator,
-        typeDeclarationReferencer,
-        typeReferenceExampleGenerator,
-        requestWrapperDeclarationReferencer,
         requestWrapperGenerator,
+        requestWrapperDeclarationReferencer,
         packageResolver,
-        treatUnknownAsAny,
-        ...superInit
+        importsManager,
+        sourceFile,
     }: RequestWrapperContextImpl.Init) {
-        super(superInit);
-        this.type = new TypeContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            typeResolver,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeReferenceExampleGenerator,
-            treatUnknownAsAny,
+        this.requestWrapperGenerator = requestWrapperGenerator;
+        this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
+        this.packageResolver = packageResolver;
+        this.importsManager = importsManager;
+        this.sourceFile = sourceFile;
+    }
+
+    public getGeneratedRequestWrapper(packageId: PackageId, endpointName: Name): GeneratedRequestWrapper {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.requestWrapperGenerator.generateRequestWrapper({
+            service: serviceDeclaration,
+            endpoint,
+            wrapperName: this.requestWrapperDeclarationReferencer.getExportedName({
+                packageId,
+                endpoint,
+            }),
         });
-        this.requestWrapper = new RequestWrapperContextMixinImpl({
-            requestWrapperDeclarationReferencer,
-            requestWrapperGenerator,
-            packageResolver,
-            sourceFile: this.sourceFile,
+    }
+
+    public getReferenceToRequestWrapper(packageId: PackageId, endpointName: Name): ts.TypeNode {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperType({
+            name: { packageId, endpoint },
             importsManager: this.importsManager,
+            importStrategy: {
+                type: "fromRoot",
+                namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport,
+            },
+            referencedIn: this.sourceFile,
         });
     }
 }

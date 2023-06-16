@@ -1,7 +1,7 @@
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { PackageId, Reference } from "@fern-typescript/commons";
-import { SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
 
 export declare namespace AbstractGeneratedEndpointTypeSchema {
@@ -13,7 +13,7 @@ export declare namespace AbstractGeneratedEndpointTypeSchema {
 }
 
 export abstract class AbstractGeneratedEndpointTypeSchema
-    extends AbstractGeneratedSchema<SdkEndpointTypeSchemasContext>
+    extends AbstractGeneratedSchema<SdkContext>
     implements GeneratedEndpointTypeSchema
 {
     protected packageId: PackageId;
@@ -27,7 +27,7 @@ export abstract class AbstractGeneratedEndpointTypeSchema
         this.endpoint = endpoint;
     }
 
-    protected getReferenceToSchema(context: SdkEndpointTypeSchemasContext): Reference {
+    protected getReferenceToSchema(context: SdkContext): Reference {
         return context.sdkEndpointTypeSchemas.getReferenceToEndpointTypeSchemaExport(
             this.packageId,
             this.endpoint.name,

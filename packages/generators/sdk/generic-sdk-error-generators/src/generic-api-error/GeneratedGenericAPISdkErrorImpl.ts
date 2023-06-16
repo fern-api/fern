@@ -1,10 +1,10 @@
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsKeyword, getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedGenericAPISdkError, GenericAPISdkErrorContext } from "@fern-typescript/contexts";
+import { GeneratedGenericAPISdkError, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph";
 
 export class GeneratedGenericAPISdkErrorImpl
-    extends AbstractErrorClassGenerator<GenericAPISdkErrorContext>
+    extends AbstractErrorClassGenerator<SdkContext>
     implements GeneratedGenericAPISdkError
 {
     private static STATUS_CODE_PROPERTY_NAME = "statusCode";
@@ -17,13 +17,13 @@ export class GeneratedGenericAPISdkErrorImpl
 
     private static BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
 
-    public writeToFile(context: GenericAPISdkErrorContext): void {
+    public writeToFile(context: SdkContext): void {
         super.writeToSourceFile(context);
         this.writeBuildMessageFunctionToFile(context);
     }
 
     public build(
-        context: GenericAPISdkErrorContext,
+        context: SdkContext,
         {
             message,
             statusCode,
@@ -249,10 +249,10 @@ export class GeneratedGenericAPISdkErrorImpl
         return false;
     }
 
-    private writeBuildMessageFunctionToFile(context: GenericAPISdkErrorContext): void {
+    private writeBuildMessageFunctionToFile(context: SdkContext): void {
         const LINES_VARIABLE_NAME = "lines";
 
-        context.base.sourceFile.addFunction({
+        context.sourceFile.addFunction({
             name: GeneratedGenericAPISdkErrorImpl.BUILD_MESSAGE_FUNCTION_NAME,
             parameters: [
                 {

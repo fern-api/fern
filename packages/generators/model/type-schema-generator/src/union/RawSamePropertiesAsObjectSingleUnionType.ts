@@ -1,6 +1,6 @@
 import { DeclaredTypeName } from "@fern-fern/ir-model/types";
 import { Zurg } from "@fern-typescript/commons";
-import { WithBaseContextMixin, WithTypeSchemaContextMixin } from "@fern-typescript/contexts";
+import { ModelContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
@@ -11,7 +11,7 @@ export declare namespace RawSamePropertiesAsObjectSingleUnionType {
 }
 
 export class RawSamePropertiesAsObjectSingleUnionType<
-    Context extends WithBaseContextMixin & WithTypeSchemaContextMixin
+    Context extends ModelContext
 > extends AbstractRawSingleUnionType<Context> {
     private extended: DeclaredTypeName;
 

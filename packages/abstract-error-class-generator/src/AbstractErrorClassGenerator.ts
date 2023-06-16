@@ -1,5 +1,5 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { WithBaseContextMixin } from "@fern-typescript/contexts";
+import { BaseContext } from "@fern-typescript/contexts";
 import {
     ClassDeclaration,
     OptionalKind,
@@ -14,7 +14,7 @@ export declare namespace AbstractErrorClassGenerator {
     }
 }
 
-export abstract class AbstractErrorClassGenerator<Context extends WithBaseContextMixin> {
+export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
     protected errorClassName: string;
 
     constructor({ errorClassName }: AbstractErrorClassGenerator.Init) {
@@ -22,7 +22,7 @@ export abstract class AbstractErrorClassGenerator<Context extends WithBaseContex
     }
 
     protected writeToSourceFile(context: Context): void {
-        const class_ = context.base.sourceFile.addClass({
+        const class_ = context.sourceFile.addClass({
             name: this.errorClassName,
             isAbstract: this.isAbstract(),
             isExported: true,

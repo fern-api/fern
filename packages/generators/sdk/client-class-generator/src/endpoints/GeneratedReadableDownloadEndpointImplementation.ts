@@ -1,6 +1,6 @@
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { Fetcher } from "@fern-typescript/commons";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
@@ -53,7 +53,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
     }
 
     public getSignature(
-        context: SdkClientClassContext,
+        context: SdkContext,
         {
             requestParameterIntersection,
             excludeInitializers = false,
@@ -70,7 +70,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
                           undefined,
                           GeneratedReadableDownloadEndpointImplementation.READABLE_RESPONSE_KEY,
                           undefined,
-                          context.base.externalDependencies.stream.Readable._getReferenceToType()
+                          context.externalDependencies.stream.Readable._getReferenceToType()
                       ),
                       ts.factory.createPropertySignature(
                           undefined,
@@ -85,7 +85,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
                           ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                       ),
                   ])
-                : context.base.externalDependencies.stream.Readable._getReferenceToType(),
+                : context.externalDependencies.stream.Readable._getReferenceToType(),
         };
     }
 
@@ -93,25 +93,25 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
         return this.endpoint.docs ?? undefined;
     }
 
-    public getStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getStatements(context: SdkContext): ts.Statement[] {
         return [...this.getRequestBuilderStatements(context), ...this.invokeFetcher(context)];
     }
 
-    public getRequestBuilderStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getRequestBuilderStatements(context: SdkContext): ts.Statement[] {
         return this.request.getBuildRequestStatements(context);
     }
 
-    private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
+    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
         const url = buildUrl({ endpoint: this.endpoint, generatedClientClass: this.generatedSdkClientClass, context });
         if (url != null) {
-            return context.base.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
+            return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
         } else {
             return referenceToEnvironment;
         }
     }
 
-    public invokeFetcher(context: SdkClientClassContext): ts.Statement[] {
+    public invokeFetcher(context: SdkContext): ts.Statement[] {
         const ERROR_CALLBACK_PARAMETER_NAME = "error";
 
         const fetcherArgs: Fetcher.Args = {
@@ -122,7 +122,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
         };
 
-        const fetcherCall = context.base.coreUtilities.streamingFetcher.streamingFetcher._invoke(
+        const fetcherCall = context.coreUtilities.streamingFetcher.streamingFetcher._invoke(
             {
                 ...fetcherArgs,
                 onData: undefined,
@@ -197,7 +197,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
                                 ),
                                 undefined,
                                 undefined,
-                                context.base.coreUtilities.streamingFetcher.getHeader._invoke({
+                                context.coreUtilities.streamingFetcher.getHeader._invoke({
                                     referenceToRequest: ts.factory.createIdentifier(
                                         GeneratedReadableDownloadEndpointImplementation.RESPONSE_VARIABLE_NAME
                                     ),
@@ -219,8 +219,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
                                     ts.factory.createIdentifier(
                                         GeneratedReadableDownloadEndpointImplementation.RESPONSE_VARIABLE_NAME
                                     ),
-                                    context.base.coreUtilities.streamingFetcher.StreamingFetcher.Response.properties
-                                        .data
+                                    context.coreUtilities.streamingFetcher.StreamingFetcher.Response.properties.data
                                 )
                             ),
                             ts.factory.createPropertyAssignment(
@@ -249,7 +248,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
                                 ts.factory.createIdentifier(
                                     GeneratedReadableDownloadEndpointImplementation.CONTENT_TYPE_RESPONSE_KEY
                                 ),
-                                context.base.coreUtilities.streamingFetcher.getHeader._invoke({
+                                context.coreUtilities.streamingFetcher.getHeader._invoke({
                                     referenceToRequest: ts.factory.createIdentifier(
                                         GeneratedReadableDownloadEndpointImplementation.RESPONSE_VARIABLE_NAME
                                     ),
@@ -268,7 +267,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
                         ts.factory.createIdentifier(
                             GeneratedReadableDownloadEndpointImplementation.RESPONSE_VARIABLE_NAME
                         ),
-                        context.base.coreUtilities.streamingFetcher.StreamingFetcher.Response.properties.data
+                        context.coreUtilities.streamingFetcher.StreamingFetcher.Response.properties.data
                     )
                 )
             );

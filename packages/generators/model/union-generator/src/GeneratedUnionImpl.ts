@@ -7,7 +7,7 @@ import {
     ObjectWriter,
     Reference,
 } from "@fern-typescript/commons";
-import { GeneratedUnion, WithBaseContextMixin, WithTypeContextMixin } from "@fern-typescript/contexts";
+import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import {
     InterfaceDeclarationStructure,
     OptionalKind,
@@ -19,7 +19,7 @@ import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnion
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
 
 export declare namespace GeneratedUnionImpl {
-    export interface Init<Context extends WithBaseContextMixin & WithTypeContextMixin> {
+    export interface Init<Context extends ModelContext> {
         typeName: string;
         discriminant: string;
         getDocs: ((context: Context) => string | null | undefined) | undefined;
@@ -32,9 +32,7 @@ export declare namespace GeneratedUnionImpl {
     }
 }
 
-export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeContextMixin>
-    implements GeneratedUnion<Context>
-{
+export class GeneratedUnionImpl<Context extends ModelContext> implements GeneratedUnion<Context> {
     public static readonly UTILS_INTERFACE_NAME = "_Utils";
     public static readonly BASE_INTERFACE_NAME = "_Base";
     public static readonly VISITOR_INTERFACE_NAME = "_Visitor";
@@ -207,7 +205,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
      **************/
 
     private writeTypeAlias(context: Context): void {
-        const typeAlias = context.base.sourceFile.addTypeAlias({
+        const typeAlias = context.sourceFile.addTypeAlias({
             name: this.typeName,
             type: getWriterForMultiLineUnionType(
                 this.getAllSingleUnionTypesForAlias().map((singleUnionType) => ({
@@ -239,7 +237,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
      **********/
 
     private writeModule(context: Context): void {
-        const module = context.base.sourceFile.addModule({
+        const module = context.sourceFile.addModule({
             name: this.typeName,
             isExported: true,
             hasDeclareKeyword: true,
@@ -370,7 +368,7 @@ export class GeneratedUnionImpl<Context extends WithBaseContextMixin & WithTypeC
             return;
         }
 
-        context.base.sourceFile.addVariableStatement({
+        context.sourceFile.addVariableStatement({
             declarationKind: VariableDeclarationKind.Const,
             declarations: [
                 {

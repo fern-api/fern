@@ -1,20 +1,20 @@
 import { HttpHeader, QueryParameter } from "@fern-fern/ir-model/http";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface RequestParameter {
-    getInitialStatements: (context: SdkClientClassContext, args: { variablesInScope: string[] }) => ts.Statement[];
+    getInitialStatements: (context: SdkContext, args: { variablesInScope: string[] }) => ts.Statement[];
     getParameterDeclaration: (
-        context: SdkClientClassContext,
+        context: SdkContext,
         opts?: { typeIntersection?: ts.TypeNode; excludeInitializers?: boolean }
     ) => OptionalKind<ParameterDeclarationStructure>;
-    getReferenceToRequestBody: (context: SdkClientClassContext) => ts.Expression | undefined;
-    getReferenceToQueryParameter: (queryParameterKey: string, context: SdkClientClassContext) => ts.Expression;
-    getAllQueryParameters: (context: SdkClientClassContext) => QueryParameter[];
-    getReferenceToNonLiteralHeader: (header: HttpHeader, context: SdkClientClassContext) => ts.Expression;
+    getReferenceToRequestBody: (context: SdkContext) => ts.Expression | undefined;
+    getReferenceToQueryParameter: (queryParameterKey: string, context: SdkContext) => ts.Expression;
+    getAllQueryParameters: (context: SdkContext) => QueryParameter[];
+    getReferenceToNonLiteralHeader: (header: HttpHeader, context: SdkContext) => ts.Expression;
     withQueryParameter: (
         queryParameter: QueryParameter,
-        context: SdkClientClassContext,
+        context: SdkContext,
         callback: (value: ts.Expression) => ts.Statement[]
     ) => ts.Statement[];
 }

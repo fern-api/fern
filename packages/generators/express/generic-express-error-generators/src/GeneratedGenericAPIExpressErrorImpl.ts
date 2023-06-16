@@ -1,6 +1,6 @@
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedGenericAPIExpressError, GenericAPIExpressErrorContext } from "@fern-typescript/contexts";
+import { ExpressContext, GeneratedGenericAPIExpressError } from "@fern-typescript/contexts";
 import {
     ClassDeclaration,
     MethodDeclarationStructure,
@@ -12,14 +12,14 @@ import {
 } from "ts-morph";
 
 export class GeneratedGenericAPIExpressErrorImpl
-    extends AbstractErrorClassGenerator<GenericAPIExpressErrorContext>
+    extends AbstractErrorClassGenerator<ExpressContext>
     implements GeneratedGenericAPIExpressError
 {
     private static SEND_METHOD_NAME = "send";
     private static SEND_RESPONSE_PARAMETER_NAME = "res";
     private static ERROR_NAME_PROPERTY_NAME = "errorName";
 
-    public writeToFile(context: GenericAPIExpressErrorContext): void {
+    public writeToFile(context: ExpressContext): void {
         super.writeToSourceFile(context);
     }
 
@@ -47,11 +47,11 @@ export class GeneratedGenericAPIExpressErrorImpl
         return [];
     }
 
-    protected addToClass(class_: ClassDeclaration, context: GenericAPIExpressErrorContext): void {
+    protected addToClass(class_: ClassDeclaration, context: ExpressContext): void {
         class_.addMethod(this.getSendMethod(context));
     }
 
-    private getSendMethod(context: GenericAPIExpressErrorContext): OptionalKind<MethodDeclarationStructure> {
+    private getSendMethod(context: ExpressContext): OptionalKind<MethodDeclarationStructure> {
         return {
             name: GeneratedGenericAPIExpressErrorImpl.SEND_METHOD_NAME,
             scope: Scope.Public,
@@ -59,7 +59,7 @@ export class GeneratedGenericAPIExpressErrorImpl
             parameters: [
                 {
                     name: GeneratedGenericAPIExpressErrorImpl.SEND_RESPONSE_PARAMETER_NAME,
-                    type: getTextOfTsNode(context.base.externalDependencies.express.Response._getReferenceToType()),
+                    type: getTextOfTsNode(context.externalDependencies.express.Response._getReferenceToType()),
                 },
             ],
             returnType: getTextOfTsNode(
@@ -75,7 +75,7 @@ export class GeneratedGenericAPIExpressErrorImpl
     }
 
     public implementSend(
-        context: GenericAPIExpressErrorContext,
+        context: ExpressContext,
         generateBody: ({ expressResponse }: { expressResponse: ts.Expression }) => ts.Statement[]
     ): OptionalKind<MethodDeclarationStructure> {
         return {

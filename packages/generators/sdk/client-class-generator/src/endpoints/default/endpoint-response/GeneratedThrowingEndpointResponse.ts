@@ -1,7 +1,7 @@
 import { HttpEndpoint, ResponseError, SdkResponse } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { GeneratedSdkEndpointTypeSchemas, SdkClientClassContext } from "@fern-typescript/contexts";
+import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
 import { GeneratedEndpointResponse } from "./GeneratedEndpointResponse";
@@ -44,21 +44,21 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         return GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME;
     }
 
-    public getNamesOfThrownExceptions(context: SdkClientClassContext): string[] {
+    public getNamesOfThrownExceptions(context: SdkContext): string[] {
         return this.endpoint.errors.map((error) =>
             getTextOfTsNode(context.sdkError.getReferenceToError(error.error).getExpression())
         );
     }
 
-    public getReturnType(context: SdkClientClassContext): ts.TypeNode {
+    public getReturnType(context: SdkContext): ts.TypeNode {
         return getSuccessReturnType(this.response, context);
     }
 
-    public getReturnResponseStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getReturnResponseStatements(context: SdkContext): ts.Statement[] {
         return [this.getReturnResponseIfOk(context), ...this.getReturnFailedResponse(context)];
     }
 
-    private getReturnResponseIfOk(context: SdkClientClassContext): ts.Statement {
+    private getReturnResponseIfOk(context: SdkContext): ts.Statement {
         return ts.factory.createIfStatement(
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
@@ -68,22 +68,22 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
     }
 
-    private getOkResponseBody(context: SdkClientClassContext): ts.Expression {
+    private getOkResponseBody(context: SdkContext): ts.Expression {
         const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
         return generatedEndpointTypeSchemas.deserializeResponse(
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-                context.base.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
+                context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
             ),
             context
         );
     }
 
-    private getReturnFailedResponse(context: SdkClientClassContext): ts.Statement[] {
+    private getReturnFailedResponse(context: SdkContext): ts.Statement[] {
         return [...this.getThrowsForStatusCodeErrors(context), ...this.getThrowsForNonStatusCodeErrors(context)];
     }
 
-    private getThrowsForStatusCodeErrors(context: SdkClientClassContext): ts.Statement[] {
+    private getThrowsForStatusCodeErrors(context: SdkContext): ts.Statement[] {
         const referenceToError = this.getReferenceToError(context);
         const referenceToErrorBody = this.getReferenceToErrorBody(context);
 
@@ -92,11 +92,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 message: undefined,
                 statusCode: ts.factory.createPropertyAccessExpression(
                     referenceToError,
-                    context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
+                    context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
                 ),
                 responseBody: ts.factory.createPropertyAccessExpression(
                     referenceToError,
-                    context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
+                    context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
                 ),
             })
         );
@@ -106,11 +106,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 ts.factory.createBinaryExpression(
                     ts.factory.createPropertyAccessExpression(
                         referenceToError,
-                        context.base.coreUtilities.fetcher.Fetcher.Error.reason
+                        context.coreUtilities.fetcher.Fetcher.Error.reason
                     ),
                     ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
                     ts.factory.createStringLiteral(
-                        context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError._reasonLiteralValue
+                        context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError._reasonLiteralValue
                     )
                 ),
                 ts.factory.createBlock(
@@ -154,7 +154,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody,
         defaultBody,
     }: {
-        context: SdkClientClassContext;
+        context: SdkContext;
         generateCaseBody: (responseError: ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
@@ -184,7 +184,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody,
         defaultBody,
     }: {
-        context: SdkClientClassContext;
+        context: SdkContext;
         propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy;
         generateCaseBody: (responseError: ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
@@ -217,14 +217,14 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         generateCaseBody,
         defaultBody,
     }: {
-        context: SdkClientClassContext;
+        context: SdkContext;
         generateCaseBody: (responseError: ResponseError) => ts.Statement[];
         defaultBody: ts.Statement[];
     }) {
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToError(context),
-                context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
+                context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.statusCode
             ),
             ts.factory.createCaseBlock([
                 ...this.endpoint.errors.map((error) => {
@@ -239,18 +239,18 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         );
     }
 
-    private getThrowsForNonStatusCodeErrors(context: SdkClientClassContext): ts.Statement[] {
+    private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement[] {
         const referenceToError = this.getReferenceToError(context);
         return [
             ts.factory.createSwitchStatement(
                 ts.factory.createPropertyAccessExpression(
                     referenceToError,
-                    context.base.coreUtilities.fetcher.Fetcher.Error.reason
+                    context.coreUtilities.fetcher.Fetcher.Error.reason
                 ),
                 ts.factory.createCaseBlock([
                     ts.factory.createCaseClause(
                         ts.factory.createStringLiteral(
-                            context.base.coreUtilities.fetcher.Fetcher.NonJsonError._reasonLiteralValue
+                            context.coreUtilities.fetcher.Fetcher.NonJsonError._reasonLiteralValue
                         ),
                         [
                             ts.factory.createThrowStatement(
@@ -258,11 +258,11 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                     message: undefined,
                                     statusCode: ts.factory.createPropertyAccessExpression(
                                         referenceToError,
-                                        context.base.coreUtilities.fetcher.Fetcher.NonJsonError.statusCode
+                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.statusCode
                                     ),
                                     responseBody: ts.factory.createPropertyAccessExpression(
                                         referenceToError,
-                                        context.base.coreUtilities.fetcher.Fetcher.NonJsonError.rawBody
+                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.rawBody
                                     ),
                                 })
                             ),
@@ -270,7 +270,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     ),
                     ts.factory.createCaseClause(
                         ts.factory.createStringLiteral(
-                            context.base.coreUtilities.fetcher.Fetcher.TimeoutSdkError._reasonLiteralValue
+                            context.coreUtilities.fetcher.Fetcher.TimeoutSdkError._reasonLiteralValue
                         ),
                         [
                             ts.factory.createThrowStatement(
@@ -280,14 +280,14 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     ),
                     ts.factory.createCaseClause(
                         ts.factory.createStringLiteral(
-                            context.base.coreUtilities.fetcher.Fetcher.UnknownError._reasonLiteralValue
+                            context.coreUtilities.fetcher.Fetcher.UnknownError._reasonLiteralValue
                         ),
                         [
                             ts.factory.createThrowStatement(
                                 context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
                                     message: ts.factory.createPropertyAccessExpression(
                                         referenceToError,
-                                        context.base.coreUtilities.fetcher.Fetcher.UnknownError.message
+                                        context.coreUtilities.fetcher.Fetcher.UnknownError.message
                                     ),
                                     statusCode: undefined,
                                     responseBody: undefined,
@@ -300,25 +300,25 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         ];
     }
 
-    private getGeneratedEndpointTypeSchemas(context: SdkClientClassContext): GeneratedSdkEndpointTypeSchemas {
+    private getGeneratedEndpointTypeSchemas(context: SdkContext): GeneratedSdkEndpointTypeSchemas {
         return context.sdkEndpointTypeSchemas.getGeneratedEndpointTypeSchemas(this.packageId, this.endpoint.name);
     }
 
-    private getReturnValueForOkResponse(context: SdkClientClassContext): ts.Expression | undefined {
+    private getReturnValueForOkResponse(context: SdkContext): ts.Expression | undefined {
         return this.endpoint.response != null ? this.getOkResponseBody(context) : undefined;
     }
 
-    private getReferenceToError(context: SdkClientClassContext): ts.Expression {
+    private getReferenceToError(context: SdkContext): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier(GeneratedThrowingEndpointResponse.RESPONSE_VARIABLE_NAME),
-            context.base.coreUtilities.fetcher.APIResponse.FailedResponse.error
+            context.coreUtilities.fetcher.APIResponse.FailedResponse.error
         );
     }
 
-    private getReferenceToErrorBody(context: SdkClientClassContext): ts.Expression {
+    private getReferenceToErrorBody(context: SdkContext): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
             this.getReferenceToError(context),
-            context.base.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
+            context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
         );
     }
 }

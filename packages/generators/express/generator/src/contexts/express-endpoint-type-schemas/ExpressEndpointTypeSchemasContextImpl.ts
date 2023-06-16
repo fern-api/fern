@@ -1,80 +1,79 @@
-import { ExpressEndpointTypeSchemasContext } from "@fern-typescript/contexts";
+import { Name } from "@fern-fern/ir-model/commons";
+import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { ExpressEndpointTypeSchemasContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ExpressEndpointTypeSchemasGenerator } from "@fern-typescript/express-endpoint-type-schemas-generator";
-import { PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { TypeGenerator } from "@fern-typescript/type-generator";
-import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
-import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { PackageResolver } from "@fern-typescript/resolvers";
+import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
-import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { ExpressEndpointTypeSchemasContextMixinImpl } from "./ExpressEndpointTypeSchemasContextMixinImpl";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 
 export declare namespace ExpressEndpointTypeSchemasContextImpl {
-    export interface Init extends BaseContextImpl.Init {
-        typeGenerator: TypeGenerator;
-        typeResolver: TypeResolver;
-        typeDeclarationReferencer: TypeDeclarationReferencer;
-        typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
-        typeSchemaGenerator: TypeSchemaGenerator;
-        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
+    export interface Init {
         expressEndpointTypeSchemasGenerator: ExpressEndpointTypeSchemasGenerator;
+        expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
         packageResolver: PackageResolver;
-        treatUnknownAsAny: boolean;
+        sourceFile: SourceFile;
+        importsManager: ImportsManager;
     }
 }
 
-export class ExpressEndpointTypeSchemasContextImpl
-    extends BaseContextImpl
-    implements ExpressEndpointTypeSchemasContext
-{
-    public readonly type: TypeContextMixinImpl;
-    public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly expressEndpointTypeSchemas: ExpressEndpointTypeSchemasContextMixinImpl;
+export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTypeSchemasContext {
+    private expressEndpointTypeSchemasGenerator: ExpressEndpointTypeSchemasGenerator;
+    private packageResolver: PackageResolver;
+    private expressEndpointSchemaDeclarationReferencer: EndpointDeclarationReferencer;
+    private sourceFile: SourceFile;
+    private importsManager: ImportsManager;
 
     constructor({
-        typeGenerator,
-        typeResolver,
-        typeDeclarationReferencer,
-        typeSchemaGenerator,
-        typeSchemaDeclarationReferencer,
-        typeReferenceExampleGenerator,
-        expressEndpointSchemaDeclarationReferencer,
+        sourceFile,
+        importsManager,
         expressEndpointTypeSchemasGenerator,
+        expressEndpointSchemaDeclarationReferencer,
         packageResolver,
-        treatUnknownAsAny,
-        ...superInit
     }: ExpressEndpointTypeSchemasContextImpl.Init) {
-        super(superInit);
+        this.sourceFile = sourceFile;
+        this.importsManager = importsManager;
+        this.packageResolver = packageResolver;
+        this.expressEndpointTypeSchemasGenerator = expressEndpointTypeSchemasGenerator;
+        this.expressEndpointSchemaDeclarationReferencer = expressEndpointSchemaDeclarationReferencer;
+    }
 
-        this.type = new TypeContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            typeResolver,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeReferenceExampleGenerator,
-            treatUnknownAsAny,
+    public getGeneratedEndpointTypeSchemas(
+        packageId: PackageId,
+        endpointName: Name
+    ): GeneratedExpressEndpointTypeSchemas {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.expressEndpointTypeSchemasGenerator.generateEndpointTypeSchemas({
+            packageId,
+            service: serviceDeclaration,
+            endpoint,
         });
-        this.typeSchema = new TypeSchemaContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            coreUtilities: this.base.coreUtilities,
+    }
+
+    public getReferenceToEndpointTypeSchemaExport(
+        packageId: PackageId,
+        endpointName: Name,
+        export_: string | string[]
+    ): Reference {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.expressEndpointSchemaDeclarationReferencer.getReferenceToEndpointExport({
+            name: { packageId, endpoint },
+            referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            typeResolver,
-            typeSchemaDeclarationReferencer,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeSchemaGenerator,
-            treatUnknownAsAny,
-        });
-        this.expressEndpointTypeSchemas = new ExpressEndpointTypeSchemasContextMixinImpl({
-            packageResolver,
-            expressEndpointTypeSchemasGenerator,
-            expressEndpointSchemaDeclarationReferencer,
-            importsManager: this.importsManager,
-            sourceFile: this.base.sourceFile,
+            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
+            subImport: typeof export_ === "string" ? [export_] : export_,
         });
     }
 }

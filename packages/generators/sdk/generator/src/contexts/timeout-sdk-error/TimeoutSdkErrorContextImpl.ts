@@ -1,30 +1,46 @@
-import { TimeoutSdkErrorContext, TimeoutSdkErrorContextMixin } from "@fern-typescript/contexts";
+import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { GeneratedTimeoutSdkError, TimeoutSdkErrorContext } from "@fern-typescript/contexts";
 import { TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
+import { SourceFile } from "ts-morph";
 import { TimeoutSdkErrorDeclarationReferencer } from "../../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { TimeoutSdkErrorContextMixinImpl } from "./TimeoutSdkErrorContextMixinImpl";
 
 export declare namespace TimeoutSdkErrorContextImpl {
-    export interface Init extends BaseContextImpl.Init {
+    export interface Init {
         timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
         timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
+        importsManager: ImportsManager;
+        sourceFile: SourceFile;
     }
 }
 
-export class TimeoutSdkErrorContextImpl extends BaseContextImpl implements TimeoutSdkErrorContext {
-    public readonly timeoutSdkError: TimeoutSdkErrorContextMixin;
+export class TimeoutSdkErrorContextImpl implements TimeoutSdkErrorContext {
+    private timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
+    private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
+    private importsManager: ImportsManager;
+    private sourceFile: SourceFile;
 
     constructor({
         timeoutSdkErrorDeclarationReferencer,
         timeoutSdkErrorGenerator,
-        ...superInit
+        importsManager,
+        sourceFile,
     }: TimeoutSdkErrorContextImpl.Init) {
-        super(superInit);
-        this.timeoutSdkError = new TimeoutSdkErrorContextMixinImpl({
-            timeoutSdkErrorDeclarationReferencer,
-            timeoutSdkErrorGenerator,
+        this.importsManager = importsManager;
+        this.sourceFile = sourceFile;
+        this.timeoutSdkErrorDeclarationReferencer = timeoutSdkErrorDeclarationReferencer;
+        this.timeoutSdkErrorGenerator = timeoutSdkErrorGenerator;
+    }
+
+    public getReferenceToTimeoutSdkError(): Reference {
+        return this.timeoutSdkErrorDeclarationReferencer.getReferenceToError({
             importsManager: this.importsManager,
-            sourceFile: this.sourceFile,
+            referencedIn: this.sourceFile,
+        });
+    }
+
+    public getGeneratedTimeoutSdkError(): GeneratedTimeoutSdkError {
+        return this.timeoutSdkErrorGenerator.generateTimeoutSdkError({
+            errorClassName: this.timeoutSdkErrorDeclarationReferencer.getExportedName(),
         });
     }
 }

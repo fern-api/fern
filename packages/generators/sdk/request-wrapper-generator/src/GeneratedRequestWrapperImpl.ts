@@ -10,11 +10,7 @@ import {
 } from "@fern-fern/ir-model/http";
 import { TypeReference } from "@fern-fern/ir-model/types";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import {
-    GeneratedRequestWrapper,
-    RequestWrapperContext,
-    RequestWrapperNonBodyProperty,
-} from "@fern-typescript/contexts";
+import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 
 export declare namespace GeneratedRequestWrapperImpl {
@@ -40,8 +36,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         this.wrapperName = wrapperName;
     }
 
-    public writeToFile(context: RequestWrapperContext): void {
-        const requestInterface = context.base.sourceFile.addInterface({
+    public writeToFile(context: SdkContext): void {
+        const requestInterface = context.sourceFile.addInterface({
             name: this.wrapperName,
             isExported: true,
         });
@@ -113,7 +109,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private getInlineProperty(
         property: InlinedRequestBodyProperty,
-        context: RequestWrapperContext
+        context: SdkContext
     ): OptionalKind<PropertySignatureStructure> {
         const type = context.type.getReferenceToType(property.valueType);
         return {
@@ -136,7 +132,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }: {
         queryParameter: QueryParameter;
         referenceToQueryParameterProperty: ts.Expression;
-        context: RequestWrapperContext;
+        context: SdkContext;
         callback: (value: ts.Expression) => ts.Statement[];
     }): ts.Statement[] {
         let statements: ts.Statement[];
@@ -201,14 +197,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     #areBodyPropertiesOptional: boolean | undefined;
-    public areAllPropertiesOptional(context: RequestWrapperContext): boolean {
+    public areAllPropertiesOptional(context: SdkContext): boolean {
         if (this.#areBodyPropertiesOptional == null) {
             this.#areBodyPropertiesOptional = this.expensivelyComputeIfAllPropertiesAreOptional(context);
         }
         return this.#areBodyPropertiesOptional;
     }
 
-    public getNonBodyKeys(context: RequestWrapperContext): RequestWrapperNonBodyProperty[] {
+    public getNonBodyKeys(context: SdkContext): RequestWrapperNonBodyProperty[] {
         return [
             ...this.getAllQueryParameters().map((queryParameter) =>
                 this.getPropertyNameOfQueryParameter(queryParameter)
@@ -221,7 +217,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return property.name.name.camelCase.unsafeName;
     }
 
-    private expensivelyComputeIfAllPropertiesAreOptional(context: RequestWrapperContext): boolean {
+    private expensivelyComputeIfAllPropertiesAreOptional(context: SdkContext): boolean {
         for (const queryParameter of this.getAllQueryParameters()) {
             if (!this.isTypeOptional(queryParameter.valueType, context)) {
                 return false;
@@ -284,7 +280,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return true;
     }
 
-    private isTypeOptional(typeReference: TypeReference, context: RequestWrapperContext): boolean {
+    private isTypeOptional(typeReference: TypeReference, context: SdkContext): boolean {
         const resolvedType = context.type.resolveTypeReference(typeReference);
         return resolvedType._type === "container" && resolvedType.container._type === "optional";
     }
@@ -307,7 +303,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         return this.endpoint.queryParameters;
     }
 
-    private getAllNonLiteralHeaders(context: RequestWrapperContext): HttpHeader[] {
+    private getAllNonLiteralHeaders(context: SdkContext): HttpHeader[] {
         return [...this.service.headers, ...this.endpoint.headers].filter((header) => {
             const resolvedType = context.type.resolveTypeReference(header.valueType);
             const isLiteral = resolvedType._type === "container" && resolvedType.container._type === "literal";

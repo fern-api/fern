@@ -1,11 +1,11 @@
 import { AliasTypeDeclaration, ShapeType } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
-import { GeneratedAliasTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
+import { GeneratedAliasTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
-export class GeneratedAliasTypeSchemaImpl<Context extends TypeSchemaContext>
+export class GeneratedAliasTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<AliasTypeDeclaration, Context>
     implements GeneratedAliasTypeSchema<Context>
 {
@@ -62,9 +62,9 @@ export class GeneratedAliasTypeSchemaImpl<Context extends TypeSchemaContext>
         parsedShape: ts.TypeNode;
     }): ts.TypeNode {
         if (this.shape.resolvedType._type === "named" && this.shape.resolvedType.shape === ShapeType.Object) {
-            return context.base.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
+            return context.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
         } else {
-            return context.base.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });
+            return context.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });
         }
     }
 }

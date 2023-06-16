@@ -1,75 +1,77 @@
-import { EndpointErrorUnionContext } from "@fern-typescript/contexts";
+import { Name } from "@fern-fern/ir-model/commons";
+import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { EndpointErrorUnionContext, GeneratedEndpointErrorUnion } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
-import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { SdkErrorGenerator } from "@fern-typescript/sdk-error-generator";
-import { TypeGenerator } from "@fern-typescript/type-generator";
-import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
+import { PackageResolver } from "@fern-typescript/resolvers";
+import { SourceFile } from "ts-morph";
 import { EndpointDeclarationReferencer } from "../../declaration-referencers/EndpointDeclarationReferencer";
-import { SdkErrorDeclarationReferencer } from "../../declaration-referencers/SdkErrorDeclarationReferencer";
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { SdkErrorContextMixinImpl } from "../sdk-error/SdkErrorContextMixinImpl";
-import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { EndpointErrorUnionContextMixinImpl } from "./EndpointErrorUnionContextMixinImpl";
 
 export declare namespace EndpointErrorUnionContextImpl {
-    export interface Init extends BaseContextImpl.Init {
-        typeResolver: TypeResolver;
-        typeGenerator: TypeGenerator;
-        typeDeclarationReferencer: TypeDeclarationReferencer;
-        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        errorResolver: ErrorResolver;
-        sdkErrorGenerator: SdkErrorGenerator;
-        errorDeclarationReferencer: SdkErrorDeclarationReferencer;
+    export interface Init {
+        sourceFile: SourceFile;
+        importsManager: ImportsManager;
         endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
         endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
         packageResolver: PackageResolver;
-        treatUnknownAsAny: boolean;
     }
 }
 
-export class EndpointErrorUnionContextImpl extends BaseContextImpl implements EndpointErrorUnionContext {
-    public readonly type: TypeContextMixinImpl;
-    public readonly sdkError: SdkErrorContextMixinImpl;
-    public readonly endpointErrorUnion: EndpointErrorUnionContextMixinImpl;
+export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext {
+    private sourceFile: SourceFile;
+    private importsManager: ImportsManager;
+    private endpointErrorUnionDeclarationReferencer: EndpointDeclarationReferencer;
+    private endpointErrorUnionGenerator: EndpointErrorUnionGenerator;
+    private packageResolver: PackageResolver;
 
     constructor({
-        typeResolver,
-        typeGenerator,
-        typeDeclarationReferencer,
-        typeReferenceExampleGenerator,
-        sdkErrorGenerator,
-        errorResolver,
-        errorDeclarationReferencer,
+        sourceFile,
+        importsManager,
         endpointErrorUnionDeclarationReferencer,
         endpointErrorUnionGenerator,
         packageResolver,
-        treatUnknownAsAny,
-        ...superInit
     }: EndpointErrorUnionContextImpl.Init) {
-        super(superInit);
-        this.type = new TypeContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            typeResolver,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeReferenceExampleGenerator,
-            treatUnknownAsAny,
+        this.sourceFile = sourceFile;
+        this.importsManager = importsManager;
+        this.endpointErrorUnionDeclarationReferencer = endpointErrorUnionDeclarationReferencer;
+        this.endpointErrorUnionGenerator = endpointErrorUnionGenerator;
+        this.packageResolver = packageResolver;
+    }
+
+    public getGeneratedEndpointErrorUnion(packageId: PackageId, endpointName: Name): GeneratedEndpointErrorUnion {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.endpointErrorUnionGenerator.generateEndpointErrorUnion({
+            packageId,
+            endpoint,
         });
-        this.sdkError = new SdkErrorContextMixinImpl({
-            sourceFile: this.base.sourceFile,
+    }
+
+    public getReferenceToEndpointTypeExport(
+        packageId: PackageId,
+        endpointName: Name,
+        export_: string | string[]
+    ): Reference {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.endpointErrorUnionDeclarationReferencer.getReferenceToEndpointExport({
+            name: { packageId, endpoint },
+            referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            errorDeclarationReferencer,
-            sdkErrorGenerator,
-            errorResolver,
-        });
-        this.endpointErrorUnion = new EndpointErrorUnionContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            endpointErrorUnionDeclarationReferencer,
-            endpointErrorUnionGenerator,
-            packageResolver,
+            importStrategy: {
+                type: "fromRoot",
+                namespaceImport: this.endpointErrorUnionDeclarationReferencer.namespaceExport,
+            },
+            subImport: typeof export_ === "string" ? [export_] : export_,
         });
     }
 }

@@ -1,30 +1,46 @@
-import { GenericAPIExpressErrorContext, GenericAPIExpressErrorContextMixin } from "@fern-typescript/contexts";
+import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { GeneratedGenericAPIExpressError, GenericAPIExpressErrorContext } from "@fern-typescript/contexts";
 import { GenericAPIExpressErrorGenerator } from "@fern-typescript/generic-express-error-generators";
+import { SourceFile } from "ts-morph";
 import { GenericAPIExpressErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPIExpressErrorDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { GenericAPIExpressErrorContextMixinImpl } from "./GenericAPIExpressErrorContextMixinImpl";
 
 export declare namespace GenericAPIExpressErrorContextImpl {
-    export interface Init extends BaseContextImpl.Init {
+    export interface Init {
         genericAPIExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
         genericAPIExpressErrorGenerator: GenericAPIExpressErrorGenerator;
+        importsManager: ImportsManager;
+        sourceFile: SourceFile;
     }
 }
 
-export class GenericAPIExpressErrorContextImpl extends BaseContextImpl implements GenericAPIExpressErrorContext {
-    public readonly genericAPIExpressError: GenericAPIExpressErrorContextMixin;
+export class GenericAPIExpressErrorContextImpl implements GenericAPIExpressErrorContext {
+    private genericAPIExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
+    private genericAPIExpressErrorGenerator: GenericAPIExpressErrorGenerator;
+    private importsManager: ImportsManager;
+    private sourceFile: SourceFile;
 
     constructor({
         genericAPIExpressErrorDeclarationReferencer,
         genericAPIExpressErrorGenerator,
-        ...superInit
+        importsManager,
+        sourceFile,
     }: GenericAPIExpressErrorContextImpl.Init) {
-        super(superInit);
-        this.genericAPIExpressError = new GenericAPIExpressErrorContextMixinImpl({
-            genericAPIExpressErrorDeclarationReferencer,
-            genericAPIExpressErrorGenerator,
+        this.importsManager = importsManager;
+        this.sourceFile = sourceFile;
+        this.genericAPIExpressErrorDeclarationReferencer = genericAPIExpressErrorDeclarationReferencer;
+        this.genericAPIExpressErrorGenerator = genericAPIExpressErrorGenerator;
+    }
+
+    public getReferenceToGenericAPIExpressError(): Reference {
+        return this.genericAPIExpressErrorDeclarationReferencer.getReferenceToError({
             importsManager: this.importsManager,
-            sourceFile: this.sourceFile,
+            referencedIn: this.sourceFile,
+        });
+    }
+
+    public getGeneratedGenericAPIExpressError(): GeneratedGenericAPIExpressError {
+        return this.genericAPIExpressErrorGenerator.generateGenericAPIExpressError({
+            errorClassName: this.genericAPIExpressErrorDeclarationReferencer.getExportedName(),
         });
     }
 }

@@ -1,10 +1,10 @@
 import { HttpHeader, InlinedRequestBodyProperty, QueryParameter } from "@fern-fern/ir-model/http";
-import { GeneratedRequestWrapper, SdkClientClassContext } from "@fern-typescript/contexts";
+import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
 export class FileUploadRequestParameter extends AbstractRequestParameter {
-    protected getParameterType(context: SdkClientClassContext): {
+    protected getParameterType(context: SdkContext): {
         type: ts.TypeNode;
         hasQuestionToken: boolean;
         initializer?: ts.Expression;
@@ -23,13 +23,13 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         throw new Error("Cannot get reference to request body in file upload request");
     }
 
-    public getAllQueryParameters(context: SdkClientClassContext): QueryParameter[] {
+    public getAllQueryParameters(context: SdkContext): QueryParameter[] {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }
 
     public withQueryParameter(
         queryParameter: QueryParameter,
-        context: SdkClientClassContext,
+        context: SdkContext,
         callback: (value: ts.Expression) => ts.Statement[]
     ): ts.Statement[] {
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
@@ -43,7 +43,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         });
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkClientClassContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         const queryParameter = this.endpoint.queryParameters.find(
             (queryParam) => queryParam.name.wireValue === queryParameterKey
         );
@@ -56,22 +56,19 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
+    public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkContext): ts.Expression {
         return this.getReferenceToProperty(
             this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header).propertyName
         );
     }
 
-    public getReferenceToBodyProperty(
-        property: InlinedRequestBodyProperty,
-        context: SdkClientClassContext
-    ): ts.Expression {
+    public getReferenceToBodyProperty(property: InlinedRequestBodyProperty, context: SdkContext): ts.Expression {
         return this.getReferenceToProperty(
             this.getGeneratedRequestWrapper(context).getInlinedRequestBodyPropertyKey(property)
         );
     }
 
-    private getGeneratedRequestWrapper(context: SdkClientClassContext): GeneratedRequestWrapper {
+    private getGeneratedRequestWrapper(context: SdkContext): GeneratedRequestWrapper {
         return context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
     }
 

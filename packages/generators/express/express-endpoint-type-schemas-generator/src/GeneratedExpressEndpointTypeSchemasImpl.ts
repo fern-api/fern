@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
 import { PackageId } from "@fern-typescript/commons";
-import { ExpressEndpointTypeSchemasContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
+import { ExpressContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
 import { GeneratedEndpointTypeSchemaImpl } from "./GeneratedEndpointTypeSchemaImpl";
@@ -74,10 +74,10 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         }
     }
 
-    public writeToFile(context: ExpressEndpointTypeSchemasContext): void {
+    public writeToFile(context: ExpressContext): void {
         if (this.generatedRequestSchema != null) {
             this.generatedRequestSchema.writeSchemaToFile(context);
-            context.base.sourceFile.addStatements("\n");
+            context.sourceFile.addStatements("\n");
         }
 
         if (this.generatedResponseSchema != null) {
@@ -85,17 +85,14 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         }
     }
 
-    public getReferenceToRawResponse(context: ExpressEndpointTypeSchemasContext): ts.TypeNode {
+    public getReferenceToRawResponse(context: ExpressContext): ts.TypeNode {
         if (this.generatedResponseSchema == null) {
             throw new Error("No response schema was generated");
         }
         return this.generatedResponseSchema.getReferenceToRawShape(context);
     }
 
-    public deserializeRequest(
-        referenceToRawRequest: ts.Expression,
-        context: ExpressEndpointTypeSchemasContext
-    ): ts.Expression {
+    public deserializeRequest(referenceToRawRequest: ts.Expression, context: ExpressContext): ts.Expression {
         if (this.endpoint.requestBody?.type !== "reference") {
             throw new Error("Cannot serialize request because it's not a reference");
         }
@@ -130,10 +127,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         }
     }
 
-    public serializeResponse(
-        referenceToParsedResponse: ts.Expression,
-        context: ExpressEndpointTypeSchemasContext
-    ): ts.Expression {
+    public serializeResponse(referenceToParsedResponse: ts.Expression, context: ExpressContext): ts.Expression {
         if (this.endpoint.response == null) {
             throw new Error("Cannot deserialize response because it's not defined");
         }

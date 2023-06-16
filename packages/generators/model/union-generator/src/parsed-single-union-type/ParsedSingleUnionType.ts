@@ -1,8 +1,8 @@
-import { WithBaseContextMixin, WithTypeContextMixin } from "@fern-typescript/contexts";
+import { ModelContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 
-export interface ParsedSingleUnionType<Context extends WithBaseContextMixin & WithTypeContextMixin> {
+export interface ParsedSingleUnionType<Context extends ModelContext> {
     getDocs(): string | null | undefined;
     getDiscriminantValue(): string | number | undefined;
     getDiscriminantValueOrThrow(): string | number;

@@ -1,94 +1,81 @@
-import { ExpressInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
-import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";
+import { Name } from "@fern-fern/ir-model/commons";
+import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import {
+    ExpressInlinedRequestBodySchemaContext,
+    GeneratedExpressInlinedRequestBodySchema,
+} from "@fern-typescript/contexts";
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
-import { PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { TypeGenerator } from "@fern-typescript/type-generator";
-import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
-import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { PackageResolver } from "@fern-typescript/resolvers";
+import { SourceFile } from "ts-morph";
 import { ExpressInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/ExpressInlinedRequestBodyDeclarationReferencer";
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { ExpressInlinedRequestBodyContextMixinImpl } from "../express-inlined-request-body/ExpressInlinedRequestBodyContextMixinImpl.ts";
-import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
-import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { ExpressInlinedRequestBodySchemaContextMixinImpl } from "./ExpressInlinedRequestBodySchemaContextMixinImpl";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 
 export declare namespace ExpressInlinedRequestBodySchemaContextImpl {
-    export interface Init extends BaseContextImpl.Init {
-        typeGenerator: TypeGenerator;
-        typeResolver: TypeResolver;
-        typeDeclarationReferencer: TypeDeclarationReferencer;
-        typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
-        typeSchemaGenerator: TypeSchemaGenerator;
-        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        expressInlinedRequestBodyGenerator: ExpressInlinedRequestBodyGenerator;
-        expressInlinedRequestBodyDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
+    export interface Init {
         expressInlinedRequestBodySchemaGenerator: ExpressInlinedRequestBodySchemaGenerator;
         expressInlinedRequestBodySchemaDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
         packageResolver: PackageResolver;
-        treatUnknownAsAny: boolean;
+        sourceFile: SourceFile;
+        importsManager: ImportsManager;
     }
 }
 
-export class ExpressInlinedRequestBodySchemaContextImpl
-    extends BaseContextImpl
-    implements ExpressInlinedRequestBodySchemaContext
-{
-    public readonly type: TypeContextMixinImpl;
-    public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly expressInlinedRequestBody: ExpressInlinedRequestBodyContextMixinImpl;
-    public readonly expressInlinedRequestBodySchema: ExpressInlinedRequestBodySchemaContextMixinImpl;
+export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInlinedRequestBodySchemaContext {
+    private expressInlinedRequestBodySchemaGenerator: ExpressInlinedRequestBodySchemaGenerator;
+    private expressInlinedRequestBodySchemaDeclarationReferencer: ExpressInlinedRequestBodyDeclarationReferencer;
+    private packageResolver: PackageResolver;
+    private sourceFile: SourceFile;
+    private importsManager: ImportsManager;
 
     constructor({
-        typeGenerator,
-        typeResolver,
-        typeDeclarationReferencer,
-        typeSchemaGenerator,
-        typeSchemaDeclarationReferencer,
-        typeReferenceExampleGenerator,
-        expressInlinedRequestBodyGenerator,
-        expressInlinedRequestBodyDeclarationReferencer,
-        expressInlinedRequestBodySchemaGenerator,
-        expressInlinedRequestBodySchemaDeclarationReferencer,
+        importsManager,
         packageResolver,
-        treatUnknownAsAny,
-        ...superInit
+        sourceFile,
+        expressInlinedRequestBodySchemaDeclarationReferencer,
+        expressInlinedRequestBodySchemaGenerator,
     }: ExpressInlinedRequestBodySchemaContextImpl.Init) {
-        super(superInit);
+        this.expressInlinedRequestBodySchemaGenerator = expressInlinedRequestBodySchemaGenerator;
+        this.expressInlinedRequestBodySchemaDeclarationReferencer =
+            expressInlinedRequestBodySchemaDeclarationReferencer;
+        this.sourceFile = sourceFile;
+        this.importsManager = importsManager;
+        this.packageResolver = packageResolver;
+    }
 
-        this.type = new TypeContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            typeResolver,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeReferenceExampleGenerator,
-            treatUnknownAsAny,
+    public getGeneratedInlinedRequestBodySchema(
+        packageId: PackageId,
+        endpointName: Name
+    ): GeneratedExpressInlinedRequestBodySchema {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.expressInlinedRequestBodySchemaGenerator.generateInlinedRequestBodySchema({
+            packageId,
+            endpoint,
+            typeName: this.expressInlinedRequestBodySchemaDeclarationReferencer.getExportedName({
+                packageId,
+                endpoint,
+            }),
         });
-        this.typeSchema = new TypeSchemaContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            coreUtilities: this.base.coreUtilities,
+    }
+
+    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: Name): Reference {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.expressInlinedRequestBodySchemaDeclarationReferencer.getReferenceToInlinedRequestBody({
+            name: { packageId, endpoint },
+            referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            typeResolver,
-            typeSchemaDeclarationReferencer,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeSchemaGenerator,
-            treatUnknownAsAny,
-        });
-        this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextMixinImpl({
-            packageResolver,
-            importsManager: this.importsManager,
-            sourceFile: this.base.sourceFile,
-            expressInlinedRequestBodyGenerator,
-            expressInlinedRequestBodyDeclarationReferencer,
-        });
-        this.expressInlinedRequestBodySchema = new ExpressInlinedRequestBodySchemaContextMixinImpl({
-            packageResolver,
-            importsManager: this.importsManager,
-            sourceFile: this.base.sourceFile,
-            expressInlinedRequestBodySchemaGenerator,
-            expressInlinedRequestBodySchemaDeclarationReferencer,
+            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
         });
     }
 }

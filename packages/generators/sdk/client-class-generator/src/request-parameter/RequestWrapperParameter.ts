@@ -1,9 +1,5 @@
 import { HttpHeader, QueryParameter } from "@fern-fern/ir-model/http";
-import {
-    GeneratedRequestWrapper,
-    RequestWrapperNonBodyProperty,
-    SdkClientClassContext,
-} from "@fern-typescript/contexts";
+import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
@@ -16,7 +12,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
 
     private nonBodyKeyAliases: Record<DefaultNonBodyKeyName, string> = {};
 
-    protected getParameterType(context: SdkClientClassContext): {
+    protected getParameterType(context: SdkContext): {
         type: ts.TypeNode;
         hasQuestionToken: boolean;
         initializer?: ts.Expression;
@@ -30,7 +26,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     }
 
     public getInitialStatements(
-        context: SdkClientClassContext,
+        context: SdkContext,
         { variablesInScope }: { variablesInScope: string[] }
     ): ts.Statement[] {
         this.nonBodyKeyAliases = {};
@@ -99,7 +95,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         ];
     }
 
-    public getReferenceToRequestBody(context: SdkClientClassContext): ts.Expression | undefined {
+    public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         if (this.endpoint.requestBody == null) {
             return undefined;
         }
@@ -110,13 +106,13 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         }
     }
 
-    public getAllQueryParameters(context: SdkClientClassContext): QueryParameter[] {
+    public getAllQueryParameters(context: SdkContext): QueryParameter[] {
         return this.getGeneratedRequestWrapper(context).getAllQueryParameters();
     }
 
     public withQueryParameter(
         queryParameter: QueryParameter,
-        context: SdkClientClassContext,
+        context: SdkContext,
         callback: (value: ts.Expression) => ts.Statement[]
     ): ts.Statement[] {
         const generatedRequestWrapper = this.getGeneratedRequestWrapper(context);
@@ -130,7 +126,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         });
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkClientClassContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         const queryParameter = this.endpoint.queryParameters.find(
             (queryParam) => queryParam.name.wireValue === queryParameterKey
         );
@@ -143,7 +139,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         );
     }
 
-    public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkClientClassContext): ts.Expression {
+    public getReferenceToNonLiteralHeader(header: HttpHeader, context: SdkContext): ts.Expression {
         return ts.factory.createIdentifier(
             this.getAliasForNonBodyProperty(
                 this.getGeneratedRequestWrapper(context).getPropertyNameOfNonLiteralHeader(header)
@@ -151,7 +147,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         );
     }
 
-    private getGeneratedRequestWrapper(context: SdkClientClassContext): GeneratedRequestWrapper {
+    private getGeneratedRequestWrapper(context: SdkContext): GeneratedRequestWrapper {
         return context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpoint.name);
     }
 

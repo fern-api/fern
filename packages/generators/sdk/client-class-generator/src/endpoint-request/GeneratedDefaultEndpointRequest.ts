@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpRequestBody, HttpService, SdkRequest, SdkRequestShape } from "@fern-fern/ir-model/http";
 import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams";
 import { generateHeaders } from "../endpoints/utils/generateHeaders";
@@ -65,7 +65,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     public getEndpointParameters(
-        context: SdkClientClassContext,
+        context: SdkContext,
         {
             requestParameterIntersection,
             excludeInitializers,
@@ -89,7 +89,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         return parameters;
     }
 
-    public getBuildRequestStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getBuildRequestStatements(context: SdkContext): ts.Statement[] {
         const statements: ts.Statement[] = [];
 
         if (this.requestParameter != null) {
@@ -109,7 +109,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     }
 
     public getFetcherRequestArgs(
-        context: SdkClientClassContext
+        context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "onUploadProgress"> {
         return {
             headers: this.getHeaders(context),
@@ -120,7 +120,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         };
     }
 
-    private getHeaders(context: SdkClientClassContext): ts.ObjectLiteralElementLike[] {
+    private getHeaders(context: SdkContext): ts.ObjectLiteralElementLike[] {
         return generateHeaders({
             context,
             requestParameter: this.requestParameter,
@@ -130,7 +130,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         });
     }
 
-    private getSerializedRequestBodyWithNullCheck(context: SdkClientClassContext): ts.Expression | undefined {
+    private getSerializedRequestBodyWithNullCheck(context: SdkContext): ts.Expression | undefined {
         if (this.requestParameter == null || this.requestBody == null) {
             return undefined;
         }
@@ -165,7 +165,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private getSerializedRequestBodyWithoutNullCheck(
         requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference,
         referenceToRequestBody: ts.Expression,
-        context: SdkClientClassContext
+        context: SdkContext
     ): ts.Expression {
         switch (requestBody.type) {
             case "inlinedRequestBody":
@@ -183,7 +183,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     private isRequestBodyNullable(
         requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference,
-        context: SdkClientClassContext
+        context: SdkContext
     ): boolean {
         switch (requestBody.type) {
             case "inlinedRequestBody":
@@ -197,11 +197,11 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         }
     }
 
-    public getReferenceToRequestBody(context: SdkClientClassContext): ts.Expression | undefined {
+    public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         return this.requestParameter?.getReferenceToRequestBody(context);
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkClientClassContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         if (this.requestParameter == null) {
             throw new Error("Cannot get reference to query parameter because request parameter is not defined.");
         }

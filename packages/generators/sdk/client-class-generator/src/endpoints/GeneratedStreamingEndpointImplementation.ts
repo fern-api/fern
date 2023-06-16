@@ -1,6 +1,6 @@
 import { HttpEndpoint, StreamingResponse } from "@fern-fern/ir-model/http";
 import { Fetcher, getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
@@ -57,7 +57,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getSignature(
-        context: SdkClientClassContext,
+        context: SdkContext,
         {
             requestParameterIntersection,
             excludeInitializers = false,
@@ -68,12 +68,12 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 requestParameterIntersection,
                 excludeInitializers,
             }),
-            returnTypeWithoutPromise: context.base.externalDependencies.stream.Readable._getReferenceToType(),
+            returnTypeWithoutPromise: context.externalDependencies.stream.Readable._getReferenceToType(),
         };
     }
 
     private getEndpointParameters(
-        context: SdkClientClassContext,
+        context: SdkContext,
         {
             requestParameterIntersection,
             excludeInitializers,
@@ -108,29 +108,27 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 hasQuestionToken: true,
                 type: getTextOfTsNode(
                     ts.factory.createExpressionWithTypeArguments(ts.factory.createIdentifier("Pick"), [
-                        context.base.coreUtilities.streamingFetcher.StreamingFetcher.Args._getReferenceToType(),
+                        context.coreUtilities.streamingFetcher.StreamingFetcher.Args._getReferenceToType(),
                         ts.factory.createUnionTypeNode([
                             ts.factory.createLiteralTypeNode(
                                 ts.factory.createStringLiteral(
-                                    context.base.coreUtilities.streamingFetcher.StreamingFetcher.Args.properties.onError
+                                    context.coreUtilities.streamingFetcher.StreamingFetcher.Args.properties.onError
                                 )
                             ),
                             ts.factory.createLiteralTypeNode(
                                 ts.factory.createStringLiteral(
-                                    context.base.coreUtilities.streamingFetcher.StreamingFetcher.Args.properties
-                                        .onFinish
+                                    context.coreUtilities.streamingFetcher.StreamingFetcher.Args.properties.onFinish
                                 )
                             ),
                             ts.factory.createLiteralTypeNode(
                                 ts.factory.createStringLiteral(
-                                    context.base.coreUtilities.streamingFetcher.StreamingFetcher.Args.properties
+                                    context.coreUtilities.streamingFetcher.StreamingFetcher.Args.properties
                                         .abortController
                                 )
                             ),
                             ts.factory.createLiteralTypeNode(
                                 ts.factory.createStringLiteral(
-                                    context.base.coreUtilities.streamingFetcher.StreamingFetcher.Args.properties
-                                        .timeoutMs
+                                    context.coreUtilities.streamingFetcher.StreamingFetcher.Args.properties.timeoutMs
                                 )
                             ),
                         ]),
@@ -144,31 +142,28 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return this.endpoint.docs ?? undefined;
     }
 
-    public getStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getStatements(context: SdkContext): ts.Statement[] {
         return [
             ...this.getRequestBuilderStatements(context),
             ...this.invokeFetcher(context, { isCallbackOptional: false }),
         ];
     }
 
-    public getRequestBuilderStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getRequestBuilderStatements(context: SdkContext): ts.Statement[] {
         return this.request.getBuildRequestStatements(context);
     }
 
-    private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
+    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
         const url = buildUrl({ endpoint: this.endpoint, generatedClientClass: this.generatedSdkClientClass, context });
         if (url != null) {
-            return context.base.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
+            return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
         } else {
             return referenceToEnvironment;
         }
     }
 
-    public invokeFetcher(
-        context: SdkClientClassContext,
-        { isCallbackOptional }: { isCallbackOptional: boolean }
-    ): ts.Statement[] {
+    public invokeFetcher(context: SdkContext, { isCallbackOptional }: { isCallbackOptional: boolean }): ts.Statement[] {
         const PARSED_DATA_VARIABLE_NAME = "parsed";
 
         const fetcherArgs: Fetcher.Args = {
@@ -188,7 +183,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                             GeneratedStreamingEndpointImplementation.CALLBACK_QUEUE_VARIABLE_NAME,
                             undefined,
                             undefined,
-                            context.base.coreUtilities.callbackQueue._instantiate()
+                            context.coreUtilities.callbackQueue._instantiate()
                         ),
                     ],
                     ts.NodeFlags.Const
@@ -202,10 +197,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                             GeneratedStreamingEndpointImplementation.RESPONSE_VARIABLE_NAME,
                             undefined,
                             undefined,
-                            context.base.coreUtilities.streamingFetcher.streamingFetcher._invoke(
+                            context.coreUtilities.streamingFetcher.streamingFetcher._invoke(
                                 {
                                     ...fetcherArgs,
-                                    onData: context.base.coreUtilities.callbackQueue.wrap({
+                                    onData: context.coreUtilities.callbackQueue.wrap({
                                         referenceToCallbackQueue: ts.factory.createIdentifier(
                                             GeneratedStreamingEndpointImplementation.CALLBACK_QUEUE_VARIABLE_NAME
                                         ),
@@ -277,7 +272,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                                             ts.factory.createNull()
                                         ),
                                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                        context.base.coreUtilities.callbackQueue.wrap({
+                                        context.coreUtilities.callbackQueue.wrap({
                                             referenceToCallbackQueue: ts.factory.createIdentifier(
                                                 GeneratedStreamingEndpointImplementation.CALLBACK_QUEUE_VARIABLE_NAME
                                             ),
@@ -293,7 +288,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                                             ts.factory.createNull()
                                         ),
                                         ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                        context.base.coreUtilities.callbackQueue.wrap({
+                                        context.coreUtilities.callbackQueue.wrap({
                                             referenceToCallbackQueue: ts.factory.createIdentifier(
                                                 GeneratedStreamingEndpointImplementation.CALLBACK_QUEUE_VARIABLE_NAME
                                             ),
@@ -321,7 +316,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             ts.factory.createReturnStatement(
                 ts.factory.createPropertyAccessExpression(
                     ts.factory.createIdentifier(GeneratedStreamingEndpointImplementation.RESPONSE_VARIABLE_NAME),
-                    context.base.coreUtilities.streamingFetcher.StreamingFetcher.Response.properties.data
+                    context.coreUtilities.streamingFetcher.StreamingFetcher.Response.properties.data
                 )
             ),
         ];
@@ -338,11 +333,11 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         );
     }
 
-    public getReferenceToRequestBody(context: SdkClientClassContext): ts.Expression | undefined {
+    public getReferenceToRequestBody(context: SdkContext): ts.Expression | undefined {
         return this.request.getReferenceToRequestBody(context);
     }
 
-    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkClientClassContext): ts.Expression {
+    public getReferenceToQueryParameter(queryParameterKey: string, context: SdkContext): ts.Expression {
         return this.request.getReferenceToQueryParameter(queryParameterKey, context);
     }
 }

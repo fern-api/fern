@@ -1,6 +1,6 @@
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { Reference } from "@fern-typescript/commons";
-import { GeneratedType, WithBaseContextMixin } from "@fern-typescript/contexts";
+import { BaseContext, GeneratedType } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export declare namespace AbstractGeneratedTypeSchema {
@@ -15,7 +15,7 @@ export declare namespace AbstractGeneratedTypeSchema {
 
 export abstract class AbstractGeneratedTypeSchema<
     Shape,
-    Context extends WithBaseContextMixin
+    Context extends BaseContext
 > extends AbstractGeneratedSchema<Context> {
     protected shape: Shape;
     protected getGeneratedType: () => GeneratedType<Context>;

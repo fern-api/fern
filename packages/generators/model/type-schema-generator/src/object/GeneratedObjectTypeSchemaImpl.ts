@@ -1,11 +1,11 @@
 import { ObjectTypeDeclaration } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
-import { GeneratedObjectTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
+import { GeneratedObjectTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
 
-export class GeneratedObjectTypeSchemaImpl<Context extends TypeSchemaContext>
+export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<ObjectTypeDeclaration, Context>
     implements GeneratedObjectTypeSchema<Context>
 {
@@ -17,7 +17,7 @@ export class GeneratedObjectTypeSchemaImpl<Context extends TypeSchemaContext>
             throw new Error("Type is not an object: " + this.typeName);
         }
 
-        let schema = context.base.coreUtilities.zurg.object(
+        let schema = context.coreUtilities.zurg.object(
             this.shape.properties.map((property) => ({
                 key: {
                     raw: property.name.wireValue,
@@ -60,6 +60,6 @@ export class GeneratedObjectTypeSchemaImpl<Context extends TypeSchemaContext>
         rawShape: ts.TypeNode;
         parsedShape: ts.TypeNode;
     }): ts.TypeNode {
-        return context.base.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
+        return context.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
     }
 }

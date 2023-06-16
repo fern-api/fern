@@ -1,5 +1,5 @@
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 
 export interface EndpointSignature {
@@ -9,8 +9,8 @@ export interface EndpointSignature {
 
 export interface GeneratedEndpointImplementation {
     endpoint: HttpEndpoint;
-    getStatements: (context: SdkClientClassContext) => ts.Statement[];
-    getOverloads: (context: SdkClientClassContext) => EndpointSignature[];
-    getSignature: (context: SdkClientClassContext) => EndpointSignature;
-    getDocs: (context: SdkClientClassContext) => string | undefined;
+    getStatements: (context: SdkContext) => ts.Statement[];
+    getOverloads: (context: SdkContext) => EndpointSignature[];
+    getSignature: (context: SdkContext) => EndpointSignature;
+    getDocs: (context: SdkContext) => string | undefined;
 }

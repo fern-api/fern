@@ -1,10 +1,10 @@
 import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-model/types";
 import { GetReferenceOpts, getTextOfTsKeyword, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { BrandedGeneratedAliasType, TypeContext } from "@fern-typescript/contexts";
+import { BrandedGeneratedAliasType, ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedBrandedStringAliasImpl<Context extends TypeContext>
+export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
     extends AbstractGeneratedType<TypeReference, Context>
     implements BrandedGeneratedAliasType<Context>
 {
@@ -31,7 +31,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends TypeContext>
 
     private writeTypeAlias(context: Context) {
         const referenceToAliasedType = context.type.getReferenceToType(this.shape).typeNode;
-        const typeAlias = context.base.sourceFile.addTypeAlias({
+        const typeAlias = context.sourceFile.addTypeAlias({
             name: this.typeName,
             type: getTextOfTsNode(
                 ts.factory.createIntersectionTypeNode([
@@ -53,7 +53,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends TypeContext>
 
     private writeBuilder(context: Context) {
         const VALUE_PARAMETER_NAME = "value";
-        context.base.sourceFile.addFunction({
+        context.sourceFile.addFunction({
             name: this.typeName,
             parameters: [
                 {

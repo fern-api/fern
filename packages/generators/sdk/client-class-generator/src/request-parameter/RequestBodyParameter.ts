@@ -1,5 +1,5 @@
 import { HttpRequestBodyReference, QueryParameter } from "@fern-fern/ir-model/http";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractRequestParameter } from "./AbstractRequestParameter";
 
@@ -41,7 +41,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         throw new Error("Cannot reference query parameter because request is not wrapped");
     }
 
-    protected getParameterType(context: SdkClientClassContext): { type: ts.TypeNode; hasQuestionToken: boolean } {
+    protected getParameterType(context: SdkContext): { type: ts.TypeNode; hasQuestionToken: boolean } {
         const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
         return {
             type: type.typeNodeWithoutUndefined,

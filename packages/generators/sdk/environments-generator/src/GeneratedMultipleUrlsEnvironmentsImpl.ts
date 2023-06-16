@@ -6,7 +6,7 @@ import {
     MultipleBaseUrlsEnvironments,
 } from "@fern-fern/ir-model/environment";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
-import { EnvironmentsContext, GeneratedEnvironments } from "@fern-typescript/contexts";
+import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
 import { ts, VariableDeclarationKind } from "ts-morph";
 
 export declare namespace GeneratedMultipleUrlsEnvironmentsImpl {
@@ -36,8 +36,8 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         this.defaultEnvironmentId = defaultEnvironmentId;
     }
 
-    public writeToFile(context: EnvironmentsContext): void {
-        context.base.sourceFile.addInterface({
+    public writeToFile(context: SdkContext): void {
+        context.sourceFile.addInterface({
             name: this.environmentUrlsTypeName,
             properties: this.environments.baseUrls.map((baseUrl) => ({
                 name: this.getNameOfBaseUrl(baseUrl),
@@ -71,7 +71,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
             });
         }
 
-        context.base.sourceFile.addVariableStatement({
+        context.sourceFile.addVariableStatement({
             declarationKind: VariableDeclarationKind.Const,
             isExported: true,
             declarations: [
@@ -82,7 +82,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
             ],
         });
 
-        context.base.sourceFile.addTypeAlias({
+        context.sourceFile.addTypeAlias({
             name: this.environmentEnumName,
             isExported: true,
             type: getTextOfTsNode(
@@ -100,7 +100,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         });
     }
 
-    public getReferenceToDefaultEnvironment(context: EnvironmentsContext): ts.Expression | undefined {
+    public getReferenceToDefaultEnvironment(context: SdkContext): ts.Expression | undefined {
         if (this.defaultEnvironmentId == null) {
             return undefined;
         }
@@ -117,7 +117,7 @@ export class GeneratedMultipleUrlsEnvironmentsImpl implements GeneratedEnvironme
         );
     }
 
-    public getTypeForUserSuppliedEnvironment(context: EnvironmentsContext): ts.TypeNode {
+    public getTypeForUserSuppliedEnvironment(context: SdkContext): ts.TypeNode {
         return ts.factory.createUnionTypeNode([
             context.environments.getReferenceToEnvironmentsEnum().getTypeNode(),
             context.environments.getReferenceToEnvironmentUrls().getTypeNode(),

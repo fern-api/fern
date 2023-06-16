@@ -1,7 +1,7 @@
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import { AbstractErrorClassGenerator } from "@fern-typescript/abstract-error-class-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { GeneratedSdkErrorClass, SdkErrorContext } from "@fern-typescript/contexts";
+import { GeneratedSdkErrorClass, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, PropertyDeclarationStructure, ts } from "ts-morph";
 
 export declare namespace GeneratedSdkErrorClassImpl {
@@ -12,7 +12,7 @@ export declare namespace GeneratedSdkErrorClassImpl {
 }
 
 export class GeneratedSdkErrorClassImpl
-    extends AbstractErrorClassGenerator<SdkErrorContext>
+    extends AbstractErrorClassGenerator<SdkContext>
     implements GeneratedSdkErrorClass
 {
     public readonly type = "class";
@@ -26,12 +26,12 @@ export class GeneratedSdkErrorClassImpl
         this.errorDeclaration = errorDeclaration;
     }
 
-    public writeToFile(context: SdkErrorContext): void {
+    public writeToFile(context: SdkContext): void {
         super.writeToSourceFile(context);
     }
 
     public build(
-        context: SdkErrorContext,
+        context: SdkContext,
         { referenceToBody }: { referenceToBody: ts.Expression | undefined }
     ): ts.NewExpression {
         return ts.factory.createNewExpression(
@@ -49,7 +49,7 @@ export class GeneratedSdkErrorClassImpl
         return [];
     }
 
-    protected getConstructorParameters(context: SdkErrorContext): OptionalKind<ParameterDeclarationStructure>[] {
+    protected getConstructorParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
         if (this.errorDeclaration.type == null) {
             return [];
         }
@@ -63,7 +63,7 @@ export class GeneratedSdkErrorClassImpl
         ];
     }
 
-    protected getSuperArguments(context: SdkErrorContext): ts.Expression[] {
+    protected getSuperArguments(context: SdkContext): ts.Expression[] {
         return context.genericAPISdkError.getGeneratedGenericAPISdkError().buildConstructorArguments({
             message: undefined,
             statusCode: ts.factory.createNumericLiteral(this.errorDeclaration.statusCode),
@@ -82,7 +82,7 @@ export class GeneratedSdkErrorClassImpl
         return false;
     }
 
-    protected override getBaseClass(context: SdkErrorContext): ts.TypeNode {
+    protected override getBaseClass(context: SdkContext): ts.TypeNode {
         return context.genericAPISdkError.getReferenceToGenericAPISdkError().getTypeNode();
     }
 }

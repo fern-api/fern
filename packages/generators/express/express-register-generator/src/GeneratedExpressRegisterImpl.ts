@@ -1,7 +1,7 @@
 import { Name } from "@fern-fern/ir-model/commons";
 import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
 import { convertHttpPathToExpressRoute, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { ExpressRegisterContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
+import { ExpressContext, GeneratedExpressRegister } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { partition } from "lodash-es";
 import { ts } from "ts-morph";
@@ -36,8 +36,8 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
         this.packageResolver = packageResolver;
     }
 
-    public writeToFile(context: ExpressRegisterContext): void {
-        context.base.sourceFile.addFunction({
+    public writeToFile(context: ExpressContext): void {
+        context.sourceFile.addFunction({
             isExported: true,
             name: this.registerFunctionName,
             parameters: [
@@ -45,8 +45,8 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                     name: GeneratedExpressRegisterImpl.EXPRESS_APP_PARAMETER_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createUnionTypeNode([
-                            context.base.externalDependencies.express.Express(),
-                            context.base.externalDependencies.express.Router._getReferenceToType(),
+                            context.externalDependencies.express.Express(),
+                            context.externalDependencies.express.Router._getReferenceToType(),
                         ])
                     ),
                 },
@@ -71,7 +71,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                     }
 
                     let statement: ts.Statement = ts.factory.createExpressionStatement(
-                        context.base.externalDependencies.express.App.use({
+                        context.externalDependencies.express.App.use({
                             referenceToApp: ts.factory.createParenthesizedExpression(
                                 ts.factory.createAsExpression(
                                     ts.factory.createIdentifier(
@@ -137,7 +137,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
     private constructLiteralTypeNodeForServicesTree(
         rootId: PackageId,
         root: Package,
-        context: ExpressRegisterContext
+        context: ExpressContext
     ): ts.TypeLiteralNode {
         const [leaves, otherChildren] = partition(
             root.subpackages,
@@ -179,7 +179,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
         return ts.factory.createTypeLiteralNode(members);
     }
 
-    private getPropertySignatureForService(packageId: PackageId, context: ExpressRegisterContext): ts.TypeElement {
+    private getPropertySignatureForService(packageId: PackageId, context: ExpressContext): ts.TypeElement {
         return ts.factory.createPropertySignature(
             undefined,
             this.getServiceKey(packageId),

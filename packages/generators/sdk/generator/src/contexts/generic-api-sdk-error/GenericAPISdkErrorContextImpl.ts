@@ -1,30 +1,46 @@
-import { GenericAPISdkErrorContext, GenericAPISdkErrorContextMixin } from "@fern-typescript/contexts";
+import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { GeneratedGenericAPISdkError, GenericAPISdkErrorContext } from "@fern-typescript/contexts";
 import { GenericAPISdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
+import { SourceFile } from "ts-morph";
 import { GenericAPISdkErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { GenericAPISdkErrorContextMixinImpl } from "./GenericAPISdkErrorContextMixinImpl";
 
 export declare namespace GenericAPISdkErrorContextImpl {
-    export interface Init extends BaseContextImpl.Init {
+    export interface Init {
         genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
         genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
+        importsManager: ImportsManager;
+        sourceFile: SourceFile;
     }
 }
 
-export class GenericAPISdkErrorContextImpl extends BaseContextImpl implements GenericAPISdkErrorContext {
-    public readonly genericAPISdkError: GenericAPISdkErrorContextMixin;
+export class GenericAPISdkErrorContextImpl implements GenericAPISdkErrorContext {
+    private genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
+    private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
+    private importsManager: ImportsManager;
+    private sourceFile: SourceFile;
 
     constructor({
         genericAPISdkErrorDeclarationReferencer,
         genericAPISdkErrorGenerator,
-        ...superInit
+        importsManager,
+        sourceFile,
     }: GenericAPISdkErrorContextImpl.Init) {
-        super(superInit);
-        this.genericAPISdkError = new GenericAPISdkErrorContextMixinImpl({
-            genericAPISdkErrorDeclarationReferencer,
-            genericAPISdkErrorGenerator,
+        this.importsManager = importsManager;
+        this.sourceFile = sourceFile;
+        this.genericAPISdkErrorDeclarationReferencer = genericAPISdkErrorDeclarationReferencer;
+        this.genericAPISdkErrorGenerator = genericAPISdkErrorGenerator;
+    }
+
+    public getReferenceToGenericAPISdkError(): Reference {
+        return this.genericAPISdkErrorDeclarationReferencer.getReferenceToError({
             importsManager: this.importsManager,
-            sourceFile: this.sourceFile,
+            referencedIn: this.sourceFile,
+        });
+    }
+
+    public getGeneratedGenericAPISdkError(): GeneratedGenericAPISdkError {
+        return this.genericAPISdkErrorGenerator.generateGenericAPISdkError({
+            errorClassName: this.genericAPISdkErrorDeclarationReferencer.getExportedName(),
         });
     }
 }

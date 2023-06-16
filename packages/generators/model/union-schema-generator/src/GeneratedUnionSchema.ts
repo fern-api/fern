@@ -2,13 +2,12 @@ import { NameAndWireValue } from "@fern-fern/ir-model/commons";
 import { ObjectProperty } from "@fern-fern/ir-model/types";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
-import { GeneratedUnion, WithBaseContextMixin, WithTypeSchemaContextMixin } from "@fern-typescript/contexts";
+import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts, VariableDeclarationKind } from "ts-morph";
 import { RawSingleUnionType } from "./RawSingleUnionType";
 
 export declare namespace GeneratedUnionSchema {
-    export interface Init<Context extends WithBaseContextMixin & WithTypeSchemaContextMixin>
-        extends AbstractGeneratedSchema.Init {
+    export interface Init<Context extends ModelContext> extends AbstractGeneratedSchema.Init {
         discriminant: NameAndWireValue;
         singleUnionTypes: RawSingleUnionType<Context>[];
         baseProperties?: ObjectProperty[];
@@ -19,9 +18,7 @@ export declare namespace GeneratedUnionSchema {
     }
 }
 
-export class GeneratedUnionSchema<
-    Context extends WithBaseContextMixin & WithTypeSchemaContextMixin
-> extends AbstractGeneratedSchema<Context> {
+export class GeneratedUnionSchema<Context extends ModelContext> extends AbstractGeneratedSchema<Context> {
     private static VALUE_PARAMETER_NAME = "value";
     private static BASE_SCHEMA_NAME = "_Base";
 
@@ -99,7 +96,7 @@ export class GeneratedUnionSchema<
     }
 
     public buildSchema(context: Context): Zurg.Schema {
-        let schema: Zurg.Schema = context.base.coreUtilities.zurg.union({
+        let schema: Zurg.Schema = context.coreUtilities.zurg.union({
             parsedDiscriminant: this.getParsedDiscriminant(context),
             rawDiscriminant: this.discriminant.wireValue,
             singleUnionTypes: this.singleUnionTypes.map((singleUnionType) => {
@@ -107,7 +104,7 @@ export class GeneratedUnionSchema<
                 if (this.hasBaseInterface()) {
                     singleUnionTypeSchema.nonDiscriminantProperties =
                         singleUnionTypeSchema.nonDiscriminantProperties.extend(
-                            context.base.coreUtilities.zurg.Schema._fromExpression(
+                            context.coreUtilities.zurg.Schema._fromExpression(
                                 ts.factory.createIdentifier(GeneratedUnionSchema.BASE_SCHEMA_NAME)
                             )
                         );
@@ -197,13 +194,13 @@ export class GeneratedUnionSchema<
         }
 
         if (this.hasBaseInterface()) {
-            context.base.sourceFile.addVariableStatement({
+            context.sourceFile.addVariableStatement({
                 declarationKind: VariableDeclarationKind.Const,
                 declarations: [
                     {
                         name: GeneratedUnionSchema.BASE_SCHEMA_NAME,
                         initializer: getTextOfTsNode(
-                            context.base.coreUtilities.zurg
+                            context.coreUtilities.zurg
                                 .object(
                                     this.baseProperties.map((baseProperty) => ({
                                         key: {

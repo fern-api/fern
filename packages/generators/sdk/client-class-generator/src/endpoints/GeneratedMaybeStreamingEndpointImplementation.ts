@@ -1,6 +1,6 @@
 import { HttpEndpoint, MaybeStreamingResponse, StreamCondition } from "@fern-fern/ir-model/http";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { zip } from "lodash-es";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 import { GeneratedDefaultEndpointImplementation } from "./default/GeneratedDefaultEndpointImplementation";
@@ -34,7 +34,7 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
         this.streamingEndpointImplementation = streamingEndpointImplementation;
     }
 
-    public getStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getStatements(context: SdkContext): ts.Statement[] {
         return [
             ...this.streamingEndpointImplementation.getRequestBuilderStatements(context),
             ts.factory.createIfStatement(
@@ -51,7 +51,7 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
         ];
     }
 
-    private getReferenceToStreamConditionVariable(context: SdkClientClassContext): ts.Expression {
+    private getReferenceToStreamConditionVariable(context: SdkContext): ts.Expression {
         return StreamCondition._visit<ts.Expression>(this.response.condition, {
             queryParameterKey: (queryParameterKey) => {
                 return this.streamingEndpointImplementation.getReferenceToQueryParameter(queryParameterKey, context);
@@ -74,7 +74,7 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
         });
     }
 
-    public getOverloads(context: SdkClientClassContext): EndpointSignature[] {
+    public getOverloads(context: SdkContext): EndpointSignature[] {
         const requestParameterKeyForStreamCondition = StreamCondition._visit(this.response.condition, {
             queryParameterKey: (queryParameterKey) => queryParameterKey,
             requestPropertyKey: (requestPropertyKey) => requestPropertyKey,
@@ -109,7 +109,7 @@ export class GeneratedMaybeStreamingEndpointImplementation implements GeneratedE
         ];
     }
 
-    public getSignature(context: SdkClientClassContext): EndpointSignature {
+    public getSignature(context: SdkContext): EndpointSignature {
         const nonStreamingSignature = this.nonStreamingEndpointImplementation.getSignature(context);
         const streamingSignature = this.streamingEndpointImplementation.getSignature(context);
         return {

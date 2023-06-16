@@ -1,95 +1,77 @@
-import { SdkInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
-import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
-import { PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
+import { Name } from "@fern-fern/ir-model/commons";
+import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
+import { GeneratedSdkInlinedRequestBodySchema, SdkInlinedRequestBodySchemaContext } from "@fern-typescript/contexts";
+import { PackageResolver } from "@fern-typescript/resolvers";
 import { SdkInlinedRequestBodySchemaGenerator } from "@fern-typescript/sdk-inlined-request-schema-generator";
-import { TypeGenerator } from "@fern-typescript/type-generator";
-import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
-import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
-import { RequestWrapperDeclarationReferencer } from "../../declaration-referencers/RequestWrapperDeclarationReferencer";
+import { SourceFile } from "ts-morph";
 import { SdkInlinedRequestBodyDeclarationReferencer } from "../../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { RequestWrapperContextMixinImpl } from "../request-wrapper/RequestWrapperContextMixinImpl";
-import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
-import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { SdkInlinedRequestBodySchemaContextMixinImpl } from "./SdkInlinedRequestBodySchemaContextMixinImpl";
+import { getSchemaImportStrategy } from "../getSchemaImportStrategy";
 
 export declare namespace SdkInlinedRequestBodySchemaContextImpl {
-    export interface Init extends BaseContextImpl.Init {
-        typeGenerator: TypeGenerator;
-        typeResolver: TypeResolver;
-        typeDeclarationReferencer: TypeDeclarationReferencer;
-        typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
-        typeSchemaGenerator: TypeSchemaGenerator;
-        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        requestWrapperDeclarationReferencer: RequestWrapperDeclarationReferencer;
-        requestWrapperGenerator: RequestWrapperGenerator;
+    export interface Init {
         sdkInlinedRequestBodySchemaGenerator: SdkInlinedRequestBodySchemaGenerator;
         sdkInlinedRequestBodySchemaDeclarationReferencer: SdkInlinedRequestBodyDeclarationReferencer;
         packageResolver: PackageResolver;
-        treatUnknownAsAny: boolean;
+        sourceFile: SourceFile;
+        importsManager: ImportsManager;
     }
 }
 
-export class SdkInlinedRequestBodySchemaContextImpl
-    extends BaseContextImpl
-    implements SdkInlinedRequestBodySchemaContext
-{
-    public readonly type: TypeContextMixinImpl;
-    public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly requestWrapper: RequestWrapperContextMixinImpl;
-    public readonly sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContextMixinImpl;
+export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequestBodySchemaContext {
+    private sdkInlinedRequestBodySchemaGenerator: SdkInlinedRequestBodySchemaGenerator;
+    private sdkInlinedRequestBodySchemaDeclarationReferencer: SdkInlinedRequestBodyDeclarationReferencer;
+    private packageResolver: PackageResolver;
+    private sourceFile: SourceFile;
+    private importsManager: ImportsManager;
 
     constructor({
-        typeGenerator,
-        typeResolver,
-        typeDeclarationReferencer,
-        typeSchemaGenerator,
-        typeSchemaDeclarationReferencer,
-        typeReferenceExampleGenerator,
-        requestWrapperDeclarationReferencer,
-        sdkInlinedRequestBodySchemaGenerator,
-        sdkInlinedRequestBodySchemaDeclarationReferencer,
-        requestWrapperGenerator,
+        importsManager,
         packageResolver,
-        treatUnknownAsAny,
-        ...superInit
+        sourceFile,
+        sdkInlinedRequestBodySchemaDeclarationReferencer,
+        sdkInlinedRequestBodySchemaGenerator,
     }: SdkInlinedRequestBodySchemaContextImpl.Init) {
-        super(superInit);
+        this.sdkInlinedRequestBodySchemaGenerator = sdkInlinedRequestBodySchemaGenerator;
+        this.sdkInlinedRequestBodySchemaDeclarationReferencer = sdkInlinedRequestBodySchemaDeclarationReferencer;
+        this.sourceFile = sourceFile;
+        this.importsManager = importsManager;
+        this.packageResolver = packageResolver;
+    }
 
-        this.type = new TypeContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            typeResolver,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeReferenceExampleGenerator,
-            treatUnknownAsAny,
+    public getGeneratedInlinedRequestBodySchema(
+        packageId: PackageId,
+        endpointName: Name
+    ): GeneratedSdkInlinedRequestBodySchema {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.sdkInlinedRequestBodySchemaGenerator.generateInlinedRequestBodySchema({
+            packageId,
+            endpoint,
+            typeName: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedName({
+                packageId,
+                endpoint,
+            }),
         });
-        this.typeSchema = new TypeSchemaContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            coreUtilities: this.base.coreUtilities,
+    }
+
+    public getReferenceToInlinedRequestBody(packageId: PackageId, endpointName: Name): Reference {
+        const serviceDeclaration = this.packageResolver.getServiceDeclarationOrThrow(packageId);
+        const endpoint = serviceDeclaration.endpoints.find(
+            (endpoint) => endpoint.name.originalName === endpointName.originalName
+        );
+        if (endpoint == null) {
+            throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
+        }
+        return this.sdkInlinedRequestBodySchemaDeclarationReferencer.getReferenceToInlinedRequestBody({
+            name: { packageId, endpoint },
+            referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            typeResolver,
-            typeSchemaDeclarationReferencer,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeSchemaGenerator,
-            treatUnknownAsAny,
-        });
-        this.requestWrapper = new RequestWrapperContextMixinImpl({
-            requestWrapperDeclarationReferencer,
-            requestWrapperGenerator,
-            packageResolver,
-            sourceFile: this.sourceFile,
-            importsManager: this.importsManager,
-        });
-        this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextMixinImpl({
-            packageResolver,
-            importsManager: this.importsManager,
-            sourceFile: this.base.sourceFile,
-            sdkInlinedRequestBodySchemaGenerator,
-            sdkInlinedRequestBodySchemaDeclarationReferencer,
+            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
         });
     }
 }

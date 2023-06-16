@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
 import { SdkResponse } from "@fern-fern/ir-model/http";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export function getSuccessReturnType(
     response: SdkResponse.Json | SdkResponse.FileDownload | undefined,
-    context: SdkClientClassContext
+    context: SdkContext
 ): ts.TypeNode {
     if (response == null) {
         return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);

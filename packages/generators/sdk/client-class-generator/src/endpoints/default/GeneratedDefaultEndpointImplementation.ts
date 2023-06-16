@@ -1,6 +1,6 @@
 import { HttpEndpoint } from "@fern-fern/ir-model/http";
 import { Fetcher } from "@fern-typescript/commons";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
@@ -48,7 +48,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     public getSignature(
-        context: SdkClientClassContext,
+        context: SdkContext,
         {
             requestParameterIntersection,
             excludeInitializers = false,
@@ -63,7 +63,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         };
     }
 
-    public getDocs(context: SdkClientClassContext): string | undefined {
+    public getDocs(context: SdkContext): string | undefined {
         const lines: string[] = [];
         if (this.endpoint.docs != null) {
             lines.push(this.endpoint.docs);
@@ -80,25 +80,25 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         return lines.join("\n");
     }
 
-    public getStatements(context: SdkClientClassContext): ts.Statement[] {
+    public getStatements(context: SdkContext): ts.Statement[] {
         return [...this.request.getBuildRequestStatements(context), ...this.invokeFetcherAndReturnResponse(context)];
     }
 
-    public invokeFetcherAndReturnResponse(context: SdkClientClassContext): ts.Statement[] {
+    public invokeFetcherAndReturnResponse(context: SdkContext): ts.Statement[] {
         return [...this.invokeFetcher(context), ...this.response.getReturnResponseStatements(context)];
     }
 
-    private getReferenceToEnvironment(context: SdkClientClassContext): ts.Expression {
+    private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
         const url = buildUrl({ endpoint: this.endpoint, generatedClientClass: this.generatedSdkClientClass, context });
         if (url != null) {
-            return context.base.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
+            return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
         } else {
             return referenceToEnvironment;
         }
     }
 
-    private invokeFetcher(context: SdkClientClassContext): ts.Statement[] {
+    private invokeFetcher(context: SdkContext): ts.Statement[] {
         const fetcherArgs: Fetcher.Args = {
             ...this.request.getFetcherRequestArgs(context),
             url: this.getReferenceToEnvironment(context),
@@ -116,7 +116,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             this.response.getResponseVariableName(),
                             undefined,
                             undefined,
-                            context.base.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
+                            context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
                             })
                         ),

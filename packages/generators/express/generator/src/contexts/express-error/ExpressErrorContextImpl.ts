@@ -1,105 +1,63 @@
-import { ExpressErrorContext, GenericAPIExpressErrorContextMixin } from "@fern-typescript/contexts";
+import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
+import { ImportsManager, Reference } from "@fern-typescript/commons";
+import { ExpressErrorContext, GeneratedExpressError } from "@fern-typescript/contexts";
 import { ExpressErrorGenerator } from "@fern-typescript/express-error-generator";
-import { ExpressErrorSchemaGenerator } from "@fern-typescript/express-error-schema-generator";
-import { GenericAPIExpressErrorGenerator } from "@fern-typescript/generic-express-error-generators";
-import { ErrorResolver, TypeResolver } from "@fern-typescript/resolvers";
-import { TypeGenerator } from "@fern-typescript/type-generator";
-import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
-import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import { SourceFile } from "ts-morph";
 import { ExpressErrorDeclarationReferencer } from "../../declaration-referencers/ExpressErrorDeclarationReferencer";
-import { GenericAPIExpressErrorDeclarationReferencer } from "../../declaration-referencers/GenericAPIExpressErrorDeclarationReferencer";
-import { TypeDeclarationReferencer } from "../../declaration-referencers/TypeDeclarationReferencer";
-import { BaseContextImpl } from "../base/BaseContextImpl";
-import { ExpressErrorSchemaContextMixinImpl } from "../express-error-schema/ExpressErrorSchemaContextMixinImpl";
-import { GenericAPIExpressErrorContextMixinImpl } from "../generic-api-express-error/GenericAPIExpressErrorContextMixinImpl";
-import { TypeSchemaContextMixinImpl } from "../type-schema/TypeSchemaContextMixinImpl";
-import { TypeContextMixinImpl } from "../type/TypeContextMixinImpl";
-import { ExpressErrorContextMixinImpl } from "./ExpressErrorContextMixinImpl";
 
 export declare namespace ExpressErrorContextImpl {
-    export interface Init extends BaseContextImpl.Init {
-        typeResolver: TypeResolver;
-        typeGenerator: TypeGenerator;
-        typeDeclarationReferencer: TypeDeclarationReferencer;
-        typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
-        typeSchemaDeclarationReferencer: TypeDeclarationReferencer;
-        typeSchemaGenerator: TypeSchemaGenerator;
+    export interface Init {
+        sourceFile: SourceFile;
+        importsManager: ImportsManager;
         errorDeclarationReferencer: ExpressErrorDeclarationReferencer;
         expressErrorGenerator: ExpressErrorGenerator;
-        expressErrorSchemaDeclarationReferencer: ExpressErrorDeclarationReferencer;
-        expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
         errorResolver: ErrorResolver;
-        genericAPIExpressErrorDeclarationReferencer: GenericAPIExpressErrorDeclarationReferencer;
-        genericAPIExpressErrorGenerator: GenericAPIExpressErrorGenerator;
-        treatUnknownAsAny: boolean;
     }
 }
 
-export class ExpressErrorContextImpl extends BaseContextImpl implements ExpressErrorContext {
-    public readonly type: TypeContextMixinImpl;
-    public readonly typeSchema: TypeSchemaContextMixinImpl;
-    public readonly expressError: ExpressErrorContextMixinImpl;
-    public readonly expressErrorSchema: ExpressErrorSchemaContextMixinImpl;
-    public readonly genericAPIExpressError: GenericAPIExpressErrorContextMixin;
+export class ExpressErrorContextImpl implements ExpressErrorContext {
+    private sourceFile: SourceFile;
+    private importsManager: ImportsManager;
+    private errorDeclarationReferencer: ExpressErrorDeclarationReferencer;
+    private expressErrorGenerator: ExpressErrorGenerator;
+    private errorResolver: ErrorResolver;
 
     constructor({
-        typeResolver,
-        typeDeclarationReferencer,
-        typeGenerator,
+        sourceFile,
+        importsManager,
         errorDeclarationReferencer,
         expressErrorGenerator,
         errorResolver,
-        typeReferenceExampleGenerator,
-        genericAPIExpressErrorDeclarationReferencer,
-        genericAPIExpressErrorGenerator,
-        typeSchemaDeclarationReferencer,
-        typeSchemaGenerator,
-        expressErrorSchemaGenerator,
-        expressErrorSchemaDeclarationReferencer,
-        treatUnknownAsAny,
-        ...superInit
     }: ExpressErrorContextImpl.Init) {
-        super(superInit);
-        this.type = new TypeContextMixinImpl({
-            sourceFile: this.base.sourceFile,
+        this.sourceFile = sourceFile;
+        this.importsManager = importsManager;
+        this.errorDeclarationReferencer = errorDeclarationReferencer;
+        this.expressErrorGenerator = expressErrorGenerator;
+        this.errorResolver = errorResolver;
+    }
+
+    public getReferenceToError(errorName: DeclaredErrorName): Reference {
+        return this.errorDeclarationReferencer.getReferenceToError({
+            name: errorName,
+            importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
+            referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            typeResolver,
-            typeGenerator,
-            typeDeclarationReferencer,
-            typeReferenceExampleGenerator,
-            treatUnknownAsAny,
         });
-        this.typeSchema = new TypeSchemaContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            coreUtilities: this.base.coreUtilities,
-            importsManager: this.importsManager,
-            typeResolver,
-            typeSchemaDeclarationReferencer,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeSchemaGenerator,
-            treatUnknownAsAny,
+    }
+
+    public getGeneratedExpressError(errorName: DeclaredErrorName): GeneratedExpressError {
+        return this.expressErrorGenerator.generateError({
+            errorName: this.getErrorClassName(errorName),
+            errorDeclaration: this.getErrorDeclaration(errorName),
         });
-        this.expressError = new ExpressErrorContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            errorDeclarationReferencer,
-            expressErrorGenerator,
-            errorResolver,
-        });
-        this.expressErrorSchema = new ExpressErrorSchemaContextMixinImpl({
-            sourceFile: this.base.sourceFile,
-            importsManager: this.importsManager,
-            coreUtilities: this.base.coreUtilities,
-            expressErrorSchemaDeclarationReferencer,
-            expressErrorSchemaGenerator,
-            errorResolver,
-        });
-        this.genericAPIExpressError = new GenericAPIExpressErrorContextMixinImpl({
-            genericAPIExpressErrorDeclarationReferencer,
-            genericAPIExpressErrorGenerator,
-            importsManager: this.importsManager,
-            sourceFile: this.sourceFile,
-        });
+    }
+
+    public getErrorDeclaration(errorName: DeclaredErrorName): ErrorDeclaration {
+        return this.errorResolver.getErrorDeclarationFromName(errorName);
+    }
+
+    public getErrorClassName(errorName: DeclaredErrorName): string {
+        return this.errorDeclarationReferencer.getExportedName(errorName);
     }
 }

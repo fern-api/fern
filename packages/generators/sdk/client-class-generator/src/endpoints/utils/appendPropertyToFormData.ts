@@ -1,6 +1,6 @@
 import { FileUploadRequestProperty } from "@fern-fern/ir-model/http";
 import { ContainerType, Type, TypeReference } from "@fern-fern/ir-model/types";
-import { SdkClientClassContext } from "@fern-typescript/contexts";
+import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter";
 import { getParameterNameForFile } from "./getParameterNameForFile";
@@ -12,13 +12,13 @@ export function appendPropertyToFormData({
     requestParameter,
 }: {
     property: FileUploadRequestProperty;
-    context: SdkClientClassContext;
+    context: SdkContext;
     referenceToFormData: ts.Expression;
     requestParameter: FileUploadRequestParameter | undefined;
 }): ts.Statement {
     return FileUploadRequestProperty._visit(property, {
         file: (property) => {
-            let statement = context.base.externalDependencies.formData.append({
+            let statement = context.externalDependencies.formData.append({
                 referencetoFormData: referenceToFormData,
                 key: property.key.wireValue,
                 value: ts.factory.createIdentifier(getParameterNameForFile(property)),
@@ -64,7 +64,7 @@ export function appendPropertyToFormData({
                     referenceToBodyProperty,
                     ts.factory.createBlock(
                         [
-                            context.base.externalDependencies.formData.append({
+                            context.externalDependencies.formData.append({
                                 referencetoFormData: referenceToFormData,
                                 key: property.name.wireValue,
                                 value: stringifyIterableItemType(
@@ -107,7 +107,7 @@ export function appendPropertyToFormData({
                     statement = ts.factory.createIfStatement(condition, statement);
                 }
             } else {
-                statement = context.base.externalDependencies.formData.append({
+                statement = context.externalDependencies.formData.append({
                     referencetoFormData: referenceToFormData,
                     key: property.name.wireValue,
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {
@@ -135,7 +135,7 @@ export function appendPropertyToFormData({
     });
 }
 
-function isMaybeIterable(typeReference: TypeReference, context: SdkClientClassContext): boolean {
+function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boolean {
     return TypeReference._visit<boolean>(typeReference, {
         container: (container) =>
             ContainerType._visit<boolean>(container, {
@@ -169,11 +169,7 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkClientClassCo
     });
 }
 
-function stringifyIterableItemType(
-    value: ts.Expression,
-    iterable: TypeReference,
-    context: SdkClientClassContext
-): ts.Expression {
+function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference, context: SdkContext): ts.Expression {
     return TypeReference._visit(iterable, {
         container: (container) =>
             ContainerType._visit(container, {
@@ -220,7 +216,7 @@ function stringifyIterableItemType(
     });
 }
 
-function isDefinitelyIterable(typeReference: TypeReference, context: SdkClientClassContext): boolean {
+function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext): boolean {
     return TypeReference._visit<boolean>(typeReference, {
         container: (container) =>
             ContainerType._visit<boolean>(container, {
@@ -255,7 +251,7 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkClientCl
     });
 }
 
-function isMaybeList(typeReference: TypeReference, context: SdkClientClassContext): boolean {
+function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean {
     return TypeReference._visit<boolean>(typeReference, {
         container: (container) =>
             ContainerType._visit<boolean>(container, {
@@ -289,7 +285,7 @@ function isMaybeList(typeReference: TypeReference, context: SdkClientClassContex
     });
 }
 
-function isMaybeSet(typeReference: TypeReference, context: SdkClientClassContext): boolean {
+function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean {
     return TypeReference._visit<boolean>(typeReference, {
         container: (container) =>
             ContainerType._visit<boolean>(container, {

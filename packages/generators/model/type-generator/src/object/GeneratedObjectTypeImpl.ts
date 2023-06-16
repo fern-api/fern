@@ -1,17 +1,17 @@
 import { ExampleTypeShape, ObjectProperty, ObjectTypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
 import { GetReferenceOpts, getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
-import { GeneratedObjectType, TypeContext } from "@fern-typescript/contexts";
+import { GeneratedObjectType, ModelContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
 import { AbstractGeneratedType } from "../AbstractGeneratedType";
 
-export class GeneratedObjectTypeImpl<Context extends TypeContext>
+export class GeneratedObjectTypeImpl<Context extends ModelContext>
     extends AbstractGeneratedType<ObjectTypeDeclaration, Context>
     implements GeneratedObjectType<Context>
 {
     public readonly type = "object";
 
     public writeToFile(context: Context): void {
-        const interfaceNode = context.base.sourceFile.addInterface({
+        const interfaceNode = context.sourceFile.addInterface({
             name: this.typeName,
             properties: [
                 ...this.shape.properties.map((property) => {
