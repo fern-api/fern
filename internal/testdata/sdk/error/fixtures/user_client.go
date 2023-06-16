@@ -117,7 +117,7 @@ func (u *updateEndpoint) Call(ctx context.Context) (string, error) {
 		ctx,
 		u.client,
 		u.url,
-		http.MethodGet,
+		http.MethodPost,
 		nil,
 		response,
 		nil,

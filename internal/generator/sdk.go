@@ -172,8 +172,8 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	f.P("ctx,")
 	f.P(receiver, ".client,")
 	f.P(receiver, ".url,")
-	f.P("http.MethodGet,") // TODO: Support all other HTTP method types.
-	f.P("nil,")            // TODO: Support request body, if any.
+	f.P(irMethodToMethodEnum(endpoint.Method), ",")
+	f.P("nil,") // TODO: Support request body, if any.
 	f.P("response,")
 	f.P("nil,") // TODO: Support request's http.Headers, if any.
 	f.P(receiver, ".decodeError,")
@@ -457,4 +457,23 @@ func inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody *ir.InlinedReq
 		Extends:    inlinedRequestBody.Extends,
 		Properties: properties,
 	}
+}
+
+// irMethodToMethodEnum maps the given ir.HttpMethod to the net/http equivalent.
+// Note this returns the string representation of the net/http constant (e.g.
+// "http.MethodGet"), not the value the constant points to (e.g. "GET").
+func irMethodToMethodEnum(method ir.HttpMethod) string {
+	switch method {
+	case ir.HttpMethodGet:
+		return "http.MethodGet"
+	case ir.HttpMethodPost:
+		return "http.MethodPost"
+	case ir.HttpMethodPut:
+		return "http.MethodPut"
+	case ir.HttpMethodPatch:
+		return "http.MethodPatch"
+	case ir.HttpMethodDelete:
+		return "http.MethodDelete"
+	}
+	return ""
 }
