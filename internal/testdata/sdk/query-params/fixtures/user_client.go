@@ -15,12 +15,14 @@ type UserClient interface{}
 type getAllUsersEndpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newgetAllUsersEndpoint(url string, client core.HTTPClient) *getAllUsersEndpoint {
+func newgetAllUsersEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getAllUsersEndpoint {
 	return &getAllUsersEndpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -42,7 +44,7 @@ func (g *getAllUsersEndpoint) Call(ctx context.Context, request *GetAllUsersRequ
 		http.MethodGet,
 		request,
 		response,
-		nil,
+		g.header,
 		g.decodeError,
 	); err != nil {
 		return response, err

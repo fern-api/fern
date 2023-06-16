@@ -16,12 +16,14 @@ type UserClient interface{}
 type setNameEndpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newsetNameEndpoint(url string, client core.HTTPClient) *setNameEndpoint {
+func newsetNameEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameEndpoint {
 	return &setNameEndpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -43,7 +45,7 @@ func (s *setNameEndpoint) Call(ctx context.Context, userId string, request strin
 		http.MethodPost,
 		request,
 		response,
-		nil,
+		s.header,
 		s.decodeError,
 	); err != nil {
 		return response, err
@@ -54,12 +56,14 @@ func (s *setNameEndpoint) Call(ctx context.Context, userId string, request strin
 type setNameV2Endpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newsetNameV2Endpoint(url string, client core.HTTPClient) *setNameV2Endpoint {
+func newsetNameV2Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameV2Endpoint {
 	return &setNameV2Endpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -81,7 +85,7 @@ func (s *setNameV2Endpoint) Call(ctx context.Context, userId string, request *Se
 		http.MethodPost,
 		request,
 		response,
-		nil,
+		s.header,
 		s.decodeError,
 	); err != nil {
 		return response, err
@@ -92,12 +96,14 @@ func (s *setNameV2Endpoint) Call(ctx context.Context, userId string, request *Se
 type setNameV3Endpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newsetNameV3Endpoint(url string, client core.HTTPClient) *setNameV3Endpoint {
+func newsetNameV3Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameV3Endpoint {
 	return &setNameV3Endpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -119,7 +125,7 @@ func (s *setNameV3Endpoint) Call(ctx context.Context, userId string, request *Se
 		http.MethodPost,
 		request,
 		response,
-		nil,
+		s.header,
 		s.decodeError,
 	); err != nil {
 		return response, err
@@ -130,12 +136,14 @@ func (s *setNameV3Endpoint) Call(ctx context.Context, userId string, request *Se
 type setNameV4Endpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newsetNameV4Endpoint(url string, client core.HTTPClient) *setNameV4Endpoint {
+func newsetNameV4Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameV4Endpoint {
 	return &setNameV4Endpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -157,7 +165,7 @@ func (s *setNameV4Endpoint) Call(ctx context.Context, userId string, request *Se
 		http.MethodPost,
 		request,
 		response,
-		nil,
+		s.header,
 		s.decodeError,
 	); err != nil {
 		return response, err
@@ -168,12 +176,14 @@ func (s *setNameV4Endpoint) Call(ctx context.Context, userId string, request *Se
 type setNameV5Endpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newsetNameV5Endpoint(url string, client core.HTTPClient) *setNameV5Endpoint {
+func newsetNameV5Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameV5Endpoint {
 	return &setNameV5Endpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -195,7 +205,7 @@ func (s *setNameV5Endpoint) Call(ctx context.Context, userId string, request *Se
 		http.MethodPost,
 		request,
 		response,
-		nil,
+		s.header,
 		s.decodeError,
 	); err != nil {
 		return response, err

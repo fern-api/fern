@@ -42,11 +42,12 @@ func newFileWriter(
 	// they aren't used.
 	imports := make(imports)
 	imports.Add("context")
+	imports.Add("encoding/base64")
+	imports.Add("encoding/json")
 	imports.Add("errors")
 	imports.Add("fmt")
-	imports.Add("net/http")
 	imports.Add("io")
-	imports.Add("encoding/json")
+	imports.Add("net/http")
 	imports.Add("strconv")
 	imports.Add("time")
 

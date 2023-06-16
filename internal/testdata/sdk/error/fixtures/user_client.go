@@ -17,12 +17,14 @@ type UserClient interface{}
 type getEndpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newgetEndpoint(url string, client core.HTTPClient) *getEndpoint {
+func newgetEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getEndpoint {
 	return &getEndpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -75,7 +77,7 @@ func (g *getEndpoint) Call(ctx context.Context, id string) (string, error) {
 		http.MethodGet,
 		nil,
 		response,
-		nil,
+		g.header,
 		g.decodeError,
 	); err != nil {
 		return response, err
@@ -86,12 +88,14 @@ func (g *getEndpoint) Call(ctx context.Context, id string) (string, error) {
 type updateEndpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newupdateEndpoint(url string, client core.HTTPClient) *updateEndpoint {
+func newupdateEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *updateEndpoint {
 	return &updateEndpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -123,7 +127,7 @@ func (u *updateEndpoint) Call(ctx context.Context, id string, request string) (s
 		http.MethodPost,
 		request,
 		response,
-		nil,
+		u.header,
 		u.decodeError,
 	); err != nil {
 		return response, err

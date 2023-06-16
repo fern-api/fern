@@ -17,18 +17,26 @@ var coreFile string
 // service code. This includes the ClientOption type, auth options,
 // and HTTPClient interface declaration.
 func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
-	var (
-		authSchemes = auth.Schemes
-		importPath  = path.Join(f.baseImportPath, "core")
-	)
+	importPath := path.Join(f.baseImportPath, "core")
 
 	// We have at least one auth scheme, so we need to generate the ClientOption.
 	f.P("type ClientOption func(*ClientOptions)")
 	f.P()
 
+	if auth == nil || len(auth.Schemes) == 0 {
+		// We don't have any auth options to write, but we still generate
+		// the ClientOptions structure for the endpoints to act upon.
+		f.P("type ClientOptions struct {}")
+		f.P()
+
+		f.P("func (c *ClientOptions) ToHeader() http.Header { return nil }")
+		f.P()
+		return nil
+	}
+
 	// Generate the exported ClientOptions type that all clients can act upon.
 	f.P("type ClientOptions struct {")
-	for _, authScheme := range authSchemes {
+	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			f.P("Bearer string")
 		}
@@ -48,7 +56,7 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 	f.P()
 
 	// Generat the authorization functional options.
-	for _, authScheme := range authSchemes {
+	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			f.P("func ClientWithAuthBearer(bearer string) ClientOption {")
 			f.P("return func(opts *ClientOptions) {")
@@ -81,6 +89,29 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 			f.P()
 		}
 	}
+
+	// Generate the ToHeader method.
+	f.P("func (c *ClientOptions) ToHeader() http.Header {")
+	f.P("header := make(http.Header)")
+	for _, authScheme := range auth.Schemes {
+		if authScheme.Bearer != nil {
+			f.P(`header.Set("Authorization", `, `"Bearer " + c.Bearer)`)
+		}
+		if authScheme.Basic != nil {
+			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(c.Username + ": " + c.Password)))`)
+		}
+		if header := authScheme.Header; header != nil {
+			var prefix string
+			if header.Prefix != nil {
+				prefix = *header.Prefix + " "
+			}
+			f.P(`header.Set("`, header.Name.Name.OriginalName, `", fmt.Sprintf("`, prefix, `%v", c.`, header.Name.Name.PascalCase.UnsafeName, "))")
+		}
+	}
+	f.P("return header")
+	f.P("}")
+	f.P()
+
 	return nil
 }
 
@@ -110,14 +141,16 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	f.P("type ", typeName, " struct {")
 	f.P("url string")
 	f.P("client core.HTTPClient")
+	f.P("header http.Header")
 	f.P("}")
 	f.P()
 
 	// Generate the constructor.
-	f.P("func new", typeName, "(url string, client core.HTTPClient) *", typeName, " {")
+	f.P("func new", typeName, "(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *", typeName, " {")
 	f.P("return &", typeName, "{")
 	f.P("url: url,")
 	f.P("client: client,")
+	f.P("header: clientOptions.ToHeader(),")
 	f.P("}")
 	f.P("}")
 	f.P()
@@ -222,7 +255,7 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	f.P(irMethodToMethodEnum(endpoint.Method), ",")
 	f.P(requestParameter, ",")
 	f.P(responseParameter, ",")
-	f.P("nil,") // TODO: Support request's http.Headers, if any.
+	f.P(receiver, ".header,")
 	f.P(receiver, ".decodeError,")
 	f.P("); err != nil {")
 	f.P("return ", errorReturnValues)

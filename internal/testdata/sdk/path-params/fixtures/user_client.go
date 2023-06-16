@@ -16,12 +16,14 @@ type UserClient interface{}
 type getUserEndpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newgetUserEndpoint(url string, client core.HTTPClient) *getUserEndpoint {
+func newgetUserEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getUserEndpoint {
 	return &getUserEndpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -43,7 +45,7 @@ func (g *getUserEndpoint) Call(ctx context.Context, userId string) (string, erro
 		http.MethodGet,
 		nil,
 		response,
-		nil,
+		g.header,
 		g.decodeError,
 	); err != nil {
 		return response, err
@@ -54,12 +56,14 @@ func (g *getUserEndpoint) Call(ctx context.Context, userId string) (string, erro
 type getUserV2Endpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newgetUserV2Endpoint(url string, client core.HTTPClient) *getUserV2Endpoint {
+func newgetUserV2Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getUserV2Endpoint {
 	return &getUserV2Endpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -81,7 +85,7 @@ func (g *getUserV2Endpoint) Call(ctx context.Context, userId string) (string, er
 		http.MethodGet,
 		nil,
 		response,
-		nil,
+		g.header,
 		g.decodeError,
 	); err != nil {
 		return response, err
@@ -92,12 +96,14 @@ func (g *getUserV2Endpoint) Call(ctx context.Context, userId string) (string, er
 type getUserV3Endpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newgetUserV3Endpoint(url string, client core.HTTPClient) *getUserV3Endpoint {
+func newgetUserV3Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getUserV3Endpoint {
 	return &getUserV3Endpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -119,7 +125,7 @@ func (g *getUserV3Endpoint) Call(ctx context.Context, userId string, infoId stri
 		http.MethodGet,
 		nil,
 		response,
-		nil,
+		g.header,
 		g.decodeError,
 	); err != nil {
 		return response, err

@@ -2,6 +2,11 @@
 
 package core
 
+import (
+	base64 "encoding/base64"
+	http "net/http"
+)
+
 type ClientOption func(*ClientOptions)
 
 type ClientOptions struct {
@@ -14,4 +19,10 @@ func ClientWithAuthBasic(username, password string) ClientOption {
 		opts.Username = username
 		opts.Password = password
 	}
+}
+
+func (c *ClientOptions) ToHeader() http.Header {
+	header := make(http.Header)
+	header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(c.Username+": "+c.Password)))
+	return header
 }

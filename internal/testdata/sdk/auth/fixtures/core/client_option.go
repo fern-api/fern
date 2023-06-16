@@ -2,6 +2,11 @@
 
 package core
 
+import (
+	fmt "fmt"
+	http "net/http"
+)
+
 type ClientOption func(*ClientOptions)
 
 type ClientOptions struct {
@@ -12,4 +17,10 @@ func ClientWithAuthCustom(custom string) ClientOption {
 	return func(opts *ClientOptions) {
 		opts.Custom = custom
 	}
+}
+
+func (c *ClientOptions) ToHeader() http.Header {
+	header := make(http.Header)
+	header.Set("custom", fmt.Sprintf("%v", c.Custom))
+	return header
 }

@@ -16,12 +16,14 @@ type UserClient interface{}
 type getUserEndpoint struct {
 	url    string
 	client core.HTTPClient
+	header http.Header
 }
 
-func newgetUserEndpoint(url string, client core.HTTPClient) *getUserEndpoint {
+func newgetUserEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getUserEndpoint {
 	return &getUserEndpoint{
 		url:    url,
 		client: client,
+		header: clientOptions.ToHeader(),
 	}
 }
 
@@ -43,7 +45,7 @@ func (g *getUserEndpoint) Call(ctx context.Context, userId string, request *GetU
 		http.MethodGet,
 		request,
 		response,
-		nil,
+		g.header,
 		g.decodeError,
 	); err != nil {
 		return response, err
