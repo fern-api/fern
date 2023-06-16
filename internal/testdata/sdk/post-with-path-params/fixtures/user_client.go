@@ -5,6 +5,7 @@ package api
 import (
 	context "context"
 	errors "errors"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
 	io "io"
 	http "net/http"
@@ -32,12 +33,13 @@ func (s *setNameEndpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameEndpoint) Call(ctx context.Context) (string, error) {
+func (s *setNameEndpoint) Call(ctx context.Context, userId string) (string, error) {
+	endpointURL := fmt.Sprintf(s.url, userId)
 	var response string
 	if err := core.DoRequest(
 		ctx,
 		s.client,
-		s.url,
+		endpointURL,
 		http.MethodPost,
 		nil,
 		response,
@@ -69,12 +71,13 @@ func (s *setNameV2Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameV2Endpoint) Call(ctx context.Context) (string, error) {
+func (s *setNameV2Endpoint) Call(ctx context.Context, userId string) (string, error) {
+	endpointURL := fmt.Sprintf(s.url, userId)
 	var response string
 	if err := core.DoRequest(
 		ctx,
 		s.client,
-		s.url,
+		endpointURL,
 		http.MethodPost,
 		nil,
 		response,
@@ -106,12 +109,13 @@ func (s *setNameV3Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameV3Endpoint) Call(ctx context.Context) (*SetNameRequestV3Body, error) {
+func (s *setNameV3Endpoint) Call(ctx context.Context, userId string) (*SetNameRequestV3Body, error) {
+	endpointURL := fmt.Sprintf(s.url, userId)
 	response := new(SetNameRequestV3Body)
 	if err := core.DoRequest(
 		ctx,
 		s.client,
-		s.url,
+		endpointURL,
 		http.MethodPost,
 		nil,
 		response,
@@ -143,12 +147,13 @@ func (s *setNameV4Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameV4Endpoint) Call(ctx context.Context) (string, error) {
+func (s *setNameV4Endpoint) Call(ctx context.Context, userId string) (string, error) {
+	endpointURL := fmt.Sprintf(s.url, userId)
 	var response string
 	if err := core.DoRequest(
 		ctx,
 		s.client,
-		s.url,
+		endpointURL,
 		http.MethodPost,
 		nil,
 		response,
@@ -180,12 +185,13 @@ func (s *setNameV5Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameV5Endpoint) Call(ctx context.Context) (string, error) {
+func (s *setNameV5Endpoint) Call(ctx context.Context, userId string) (string, error) {
+	endpointURL := fmt.Sprintf(s.url, userId)
 	var response string
 	if err := core.DoRequest(
 		ctx,
 		s.client,
-		s.url,
+		endpointURL,
 		http.MethodPost,
 		nil,
 		response,

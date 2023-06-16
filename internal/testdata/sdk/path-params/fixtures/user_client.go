@@ -5,6 +5,7 @@ package api
 import (
 	context "context"
 	errors "errors"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/path-params/fixtures/core"
 	io "io"
 	http "net/http"
@@ -32,12 +33,89 @@ func (g *getUserEndpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (g *getUserEndpoint) Call(ctx context.Context) (string, error) {
+func (g *getUserEndpoint) Call(ctx context.Context, userId string) (string, error) {
+	endpointURL := fmt.Sprintf(g.url, userId)
 	var response string
 	if err := core.DoRequest(
 		ctx,
 		g.client,
-		g.url,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		g.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
+type getUserV2Endpoint struct {
+	url    string
+	client core.HTTPClient
+}
+
+func newgetUserV2Endpoint(url string, client core.HTTPClient) *getUserV2Endpoint {
+	return &getUserV2Endpoint{
+		url:    url,
+		client: client,
+	}
+}
+
+func (g *getUserV2Endpoint) decodeError(statusCode int, body io.Reader) error {
+	bytes, err := io.ReadAll(body)
+	if err != nil {
+		return err
+	}
+	return errors.New(string(bytes))
+}
+
+func (g *getUserV2Endpoint) Call(ctx context.Context, userId string) (string, error) {
+	endpointURL := fmt.Sprintf(g.url, userId)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		g.client,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		response,
+		nil,
+		g.decodeError,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
+type getUserV3Endpoint struct {
+	url    string
+	client core.HTTPClient
+}
+
+func newgetUserV3Endpoint(url string, client core.HTTPClient) *getUserV3Endpoint {
+	return &getUserV3Endpoint{
+		url:    url,
+		client: client,
+	}
+}
+
+func (g *getUserV3Endpoint) decodeError(statusCode int, body io.Reader) error {
+	bytes, err := io.ReadAll(body)
+	if err != nil {
+		return err
+	}
+	return errors.New(string(bytes))
+}
+
+func (g *getUserV3Endpoint) Call(ctx context.Context, userId string, infoId string) (string, error) {
+	endpointURL := fmt.Sprintf(g.url, userId, infoId)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		g.client,
+		endpointURL,
 		http.MethodGet,
 		nil,
 		response,

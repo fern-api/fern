@@ -33,11 +33,12 @@ func (g *getAllUsersEndpoint) decodeError(statusCode int, body io.Reader) error 
 }
 
 func (g *getAllUsersEndpoint) Call(ctx context.Context) (string, error) {
+	endpointURL := g.url
 	var response string
 	if err := core.DoRequest(
 		ctx,
 		g.client,
-		g.url,
+		endpointURL,
 		http.MethodGet,
 		nil,
 		response,

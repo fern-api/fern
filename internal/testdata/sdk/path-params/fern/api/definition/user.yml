@@ -9,3 +9,18 @@ service:
       path-parameters:
         userId: string
       response: string
+
+    getUserV2:
+      method: GET
+      path: /get/{userId}/info
+      path-parameters:
+        userId: string
+      response: string
+
+    getUserV3:
+      method: GET
+      path: /get/{userId}/info/{infoId}
+      path-parameters:
+        userId: string
+        infoId: string
+      response: string

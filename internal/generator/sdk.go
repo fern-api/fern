@@ -149,38 +149,69 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	f.P()
 
 	// Generate the Call method.
-	var responseType string
+	var (
+		responseType              string
+		responseParameter         string
+		responseInitializerFormat string
+		signatureReturnValues     string
+		successfulReturnValues    string
+		errorReturnValues         string
+	)
 	if endpoint.Response != nil {
 		if endpoint.Response.Json == nil {
 			return fmt.Errorf("the SDK generator only supports JSON-based responses, but found %q", endpoint.Response.Type)
 		}
 		responseType = typeReferenceToGoType(endpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
+		responseInitializerFormat = "var response %s"
+		if named := endpoint.Response.Json.ResponseBodyType.Named; named != nil && isPointer(f.types[named.TypeId]) {
+			responseInitializerFormat = "response := new(%s)"
+		}
+		responseParameter = "response"
+		signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
+		successfulReturnValues = "response, nil"
+		errorReturnValues = "response, err"
+	} else {
+		responseParameter = "nil"
+		signatureReturnValues = "error"
+		successfulReturnValues = "nil"
+		errorReturnValues = "err"
 	}
 
-	// TODO: Add path parameters and request body, if any.
+	// Add path parameters and request body, if any.
 	parameters := "ctx context.Context"
-
-	// TODO: What about endpoints without a response value?
-	responseInitializerFormat := "var response %s"
-	if named := endpoint.Response.Json.ResponseBodyType.Named; named != nil && isPointer(f.types[named.TypeId]) {
-		responseInitializerFormat = "response := new(%s)"
+	var parameterNames []string
+	for _, pathParameter := range endpoint.AllPathParameters {
+		parameterName := pathParameter.Name.CamelCase.SafeName
+		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+		parameters += fmt.Sprintf(", %s %s", parameterName, parameterType)
+		parameterNames = append(parameterNames, parameterName)
 	}
 
-	f.P("func (", receiver, "*", typeName, ") Call(", parameters, ") (", responseType, ", error) {")
-	f.P(fmt.Sprintf(responseInitializerFormat, strings.TrimLeft(responseType, "*")))
+	urlStatement := fmt.Sprintf("endpointURL := %s.url", receiver)
+	if len(parameterNames) > 0 {
+		urlStatement = "endpointURL := fmt.Sprintf(" + receiver + ".url, " + strings.Join(parameterNames, ", ") + ")"
+	}
+
+	// TODO: Support request body variable.
+
+	f.P("func (", receiver, "*", typeName, ") Call(", parameters, ")", signatureReturnValues, " {")
+	f.P(urlStatement)
+	if responseType != "" {
+		f.P(fmt.Sprintf(responseInitializerFormat, strings.TrimLeft(responseType, "*")))
+	}
 	f.P("if err := core.DoRequest(")
 	f.P("ctx,")
 	f.P(receiver, ".client,")
-	f.P(receiver, ".url,")
+	f.P("endpointURL, ")
 	f.P(irMethodToMethodEnum(endpoint.Method), ",")
 	f.P("nil,") // TODO: Support request body, if any.
-	f.P("response,")
+	f.P(responseParameter, ",")
 	f.P("nil,") // TODO: Support request's http.Headers, if any.
 	f.P(receiver, ".decodeError,")
 	f.P("); err != nil {")
-	f.P("return response, err")
+	f.P("return ", errorReturnValues)
 	f.P("}")
-	f.P("return response, nil")
+	f.P("return ", successfulReturnValues)
 	f.P("}")
 
 	return nil

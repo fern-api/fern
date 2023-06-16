@@ -6,6 +6,7 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 	io "io"
 	http "net/http"
@@ -64,12 +65,13 @@ func (g *getEndpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (g *getEndpoint) Call(ctx context.Context) (string, error) {
+func (g *getEndpoint) Call(ctx context.Context, id string) (string, error) {
+	endpointURL := fmt.Sprintf(g.url, id)
 	var response string
 	if err := core.DoRequest(
 		ctx,
 		g.client,
-		g.url,
+		endpointURL,
 		http.MethodGet,
 		nil,
 		response,
@@ -111,12 +113,13 @@ func (u *updateEndpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (u *updateEndpoint) Call(ctx context.Context) (string, error) {
+func (u *updateEndpoint) Call(ctx context.Context, id string) (string, error) {
+	endpointURL := fmt.Sprintf(u.url, id)
 	var response string
 	if err := core.DoRequest(
 		ctx,
 		u.client,
-		u.url,
+		endpointURL,
 		http.MethodPost,
 		nil,
 		response,
