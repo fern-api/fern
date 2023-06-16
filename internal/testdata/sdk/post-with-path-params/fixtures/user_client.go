@@ -33,7 +33,7 @@ func (s *setNameEndpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameEndpoint) Call(ctx context.Context, userId string) (string, error) {
+func (s *setNameEndpoint) Call(ctx context.Context, userId string, request string) (string, error) {
 	endpointURL := fmt.Sprintf(s.url, userId)
 	var response string
 	if err := core.DoRequest(
@@ -41,7 +41,7 @@ func (s *setNameEndpoint) Call(ctx context.Context, userId string) (string, erro
 		s.client,
 		endpointURL,
 		http.MethodPost,
-		nil,
+		request,
 		response,
 		nil,
 		s.decodeError,
@@ -71,7 +71,7 @@ func (s *setNameV2Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameV2Endpoint) Call(ctx context.Context, userId string) (string, error) {
+func (s *setNameV2Endpoint) Call(ctx context.Context, userId string, request *SetNameRequest) (string, error) {
 	endpointURL := fmt.Sprintf(s.url, userId)
 	var response string
 	if err := core.DoRequest(
@@ -79,7 +79,7 @@ func (s *setNameV2Endpoint) Call(ctx context.Context, userId string) (string, er
 		s.client,
 		endpointURL,
 		http.MethodPost,
-		nil,
+		request,
 		response,
 		nil,
 		s.decodeError,
@@ -109,7 +109,7 @@ func (s *setNameV3Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameV3Endpoint) Call(ctx context.Context, userId string) (*SetNameRequestV3Body, error) {
+func (s *setNameV3Endpoint) Call(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error) {
 	endpointURL := fmt.Sprintf(s.url, userId)
 	response := new(SetNameRequestV3Body)
 	if err := core.DoRequest(
@@ -117,7 +117,7 @@ func (s *setNameV3Endpoint) Call(ctx context.Context, userId string) (*SetNameRe
 		s.client,
 		endpointURL,
 		http.MethodPost,
-		nil,
+		request,
 		response,
 		nil,
 		s.decodeError,
@@ -147,7 +147,7 @@ func (s *setNameV4Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameV4Endpoint) Call(ctx context.Context, userId string) (string, error) {
+func (s *setNameV4Endpoint) Call(ctx context.Context, userId string, request *SetNameRequestV4) (string, error) {
 	endpointURL := fmt.Sprintf(s.url, userId)
 	var response string
 	if err := core.DoRequest(
@@ -155,7 +155,7 @@ func (s *setNameV4Endpoint) Call(ctx context.Context, userId string) (string, er
 		s.client,
 		endpointURL,
 		http.MethodPost,
-		nil,
+		request,
 		response,
 		nil,
 		s.decodeError,
@@ -185,7 +185,7 @@ func (s *setNameV5Endpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (s *setNameV5Endpoint) Call(ctx context.Context, userId string) (string, error) {
+func (s *setNameV5Endpoint) Call(ctx context.Context, userId string, request *SetNameRequestV5) (string, error) {
 	endpointURL := fmt.Sprintf(s.url, userId)
 	var response string
 	if err := core.DoRequest(
@@ -193,7 +193,7 @@ func (s *setNameV5Endpoint) Call(ctx context.Context, userId string) (string, er
 		s.client,
 		endpointURL,
 		http.MethodPost,
-		nil,
+		request,
 		response,
 		nil,
 		s.decodeError,

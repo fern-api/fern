@@ -32,7 +32,7 @@ func (g *getAllUsersEndpoint) decodeError(statusCode int, body io.Reader) error 
 	return errors.New(string(bytes))
 }
 
-func (g *getAllUsersEndpoint) Call(ctx context.Context) (string, error) {
+func (g *getAllUsersEndpoint) Call(ctx context.Context, request *GetAllUsersRequest) (string, error) {
 	endpointURL := g.url
 	var response string
 	if err := core.DoRequest(
@@ -40,7 +40,7 @@ func (g *getAllUsersEndpoint) Call(ctx context.Context) (string, error) {
 		g.client,
 		endpointURL,
 		http.MethodGet,
-		nil,
+		request,
 		response,
 		nil,
 		g.decodeError,

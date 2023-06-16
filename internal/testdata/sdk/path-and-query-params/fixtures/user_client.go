@@ -33,7 +33,7 @@ func (g *getUserEndpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (g *getUserEndpoint) Call(ctx context.Context, userId string) (string, error) {
+func (g *getUserEndpoint) Call(ctx context.Context, userId string, request *GetUserRequest) (string, error) {
 	endpointURL := fmt.Sprintf(g.url, userId)
 	var response string
 	if err := core.DoRequest(
@@ -41,7 +41,7 @@ func (g *getUserEndpoint) Call(ctx context.Context, userId string) (string, erro
 		g.client,
 		endpointURL,
 		http.MethodGet,
-		nil,
+		request,
 		response,
 		nil,
 		g.decodeError,

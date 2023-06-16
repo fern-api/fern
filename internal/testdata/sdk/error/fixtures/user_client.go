@@ -113,7 +113,7 @@ func (u *updateEndpoint) decodeError(statusCode int, body io.Reader) error {
 	return errors.New(string(bytes))
 }
 
-func (u *updateEndpoint) Call(ctx context.Context, id string) (string, error) {
+func (u *updateEndpoint) Call(ctx context.Context, id string, request string) (string, error) {
 	endpointURL := fmt.Sprintf(u.url, id)
 	var response string
 	if err := core.DoRequest(
@@ -121,7 +121,7 @@ func (u *updateEndpoint) Call(ctx context.Context, id string) (string, error) {
 		u.client,
 		endpointURL,
 		http.MethodPost,
-		nil,
+		request,
 		response,
 		nil,
 		u.decodeError,

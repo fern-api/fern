@@ -187,12 +187,28 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 		parameterNames = append(parameterNames, parameterName)
 	}
 
+	requestParameter := "nil"
+	if endpoint.SdkRequest != nil {
+		var requestType string
+		if requestBody := endpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
+			requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath)
+		}
+		if endpoint.SdkRequest.Shape.Wrapper != nil {
+			// If this is a wrapper type, it's guaranteed to be generated in the same package,
+			// so we don't need to consult its Fern filepath.
+			requestType = fmt.Sprintf("*%s", endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+		}
+		requestParameter = endpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
+		parameters += fmt.Sprintf(", %s %s", requestParameter, requestType)
+	}
+
 	urlStatement := fmt.Sprintf("endpointURL := %s.url", receiver)
 	if len(parameterNames) > 0 {
 		urlStatement = "endpointURL := fmt.Sprintf(" + receiver + ".url, " + strings.Join(parameterNames, ", ") + ")"
 	}
 
-	// TODO: Support request body variable.
+	// TODO: Add query parameters from request, if any.
+	// TODO: Add headers from request, if any.
 
 	f.P("func (", receiver, "*", typeName, ") Call(", parameters, ")", signatureReturnValues, " {")
 	f.P(urlStatement)
@@ -204,7 +220,7 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	f.P(receiver, ".client,")
 	f.P("endpointURL, ")
 	f.P(irMethodToMethodEnum(endpoint.Method), ",")
-	f.P("nil,") // TODO: Support request body, if any.
+	f.P(requestParameter, ",")
 	f.P(responseParameter, ",")
 	f.P("nil,") // TODO: Support request's http.Headers, if any.
 	f.P(receiver, ".decodeError,")
