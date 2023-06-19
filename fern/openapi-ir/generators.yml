@@ -8,4 +8,5 @@ groups:
           mode: model
         output:
           location: npm
+          url: npm.buildwithfern.com
           package-name: "@fern-fern/openapi-ir"
