@@ -69,5 +69,5 @@ type client struct {
 }
 
 func (g *client) GetAllUsers(ctx context.Context, request *GetAllUsersRequest) (string, error) {
-	return g.getAllUsers(ctx)
+	return g.getAllUsers(ctx, request)
 }

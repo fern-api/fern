@@ -70,5 +70,5 @@ type client struct {
 }
 
 func (g *client) GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error) {
-	return g.getUser(ctx, userId)
+	return g.getUser(ctx, userId, request)
 }

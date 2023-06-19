@@ -321,10 +321,16 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	f.P("return ", successfulReturnValues)
 	f.P("}")
 
+	// Reformat the parameter names so that they're suitable for
+	// the client method call.
+	parameterNames = append([]string{"ctx"}, parameterNames...)
+	if requestParameter != "nil" {
+		parameterNames = append(parameterNames, requestParameter)
+	}
 	return &signature{
 		Name:           endpoint.Name,
 		Parameters:     parameters,
-		ParameterNames: strings.Join(append([]string{"ctx"}, parameterNames...), ", "),
+		ParameterNames: strings.Join(parameterNames, ", "),
 		ReturnValues:   signatureReturnValues,
 	}, nil
 }

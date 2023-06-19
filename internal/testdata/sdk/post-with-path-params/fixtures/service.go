@@ -242,21 +242,21 @@ type client struct {
 }
 
 func (s *client) SetName(ctx context.Context, userId string, request string) (string, error) {
-	return s.setName(ctx, userId)
+	return s.setName(ctx, userId, request)
 }
 
 func (s *client) SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error) {
-	return s.setNameV2(ctx, userId)
+	return s.setNameV2(ctx, userId, request)
 }
 
 func (s *client) SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error) {
-	return s.setNameV3(ctx, userId)
+	return s.setNameV3(ctx, userId, request)
 }
 
 func (s *client) SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error) {
-	return s.setNameV4(ctx, userId)
+	return s.setNameV4(ctx, userId, request)
 }
 
 func (s *client) SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error) {
-	return s.setNameV5(ctx, userId)
+	return s.setNameV5(ctx, userId, request)
 }

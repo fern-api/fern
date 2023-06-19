@@ -7,10 +7,9 @@ import (
 	json "encoding/json"
 	errors "errors"
 	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 	io "io"
 	http "net/http"
-
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 )
 
 type getEndpoint struct {

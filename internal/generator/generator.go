@@ -181,7 +181,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 				files = append(files, file)
 			}
 			// Generate the client interface.
-			fileInfo := fileInfoForClient(ir.ApiName, irService)
+			fileInfo := fileInfoForService(ir.ApiName, irService)
 			writer := newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
@@ -265,22 +265,21 @@ func fileInfoForType(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *ir.N
 	}
 }
 
-func fileInfoForClient(apiName *ir.Name, service *ir.HttpService) *fileInfo {
+func fileInfoForService(apiName *ir.Name, service *ir.HttpService) *fileInfo {
 	var packages []string
 	for _, packageName := range service.Name.FernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
 	}
-	serviceName := service.Name.FernFilepath.File.SnakeCase.UnsafeName
 	if len(packages) == 0 {
 		// This type didn't declare a package, so it belongs at the top-level.
 		// The top-level package uses the API's name as its package declaration.
 		return &fileInfo{
-			filename:    fmt.Sprintf("%s_client.go", serviceName),
+			filename:    "service.go",
 			packageName: strings.ToLower(apiName.CamelCase.SafeName),
 		}
 	}
 	return &fileInfo{
-		filename:    fmt.Sprintf("%s_client.go", filepath.Join(append(packages, serviceName)...)),
+		filename:    "service.go",
 		packageName: packages[len(packages)-1],
 	}
 }
