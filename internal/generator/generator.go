@@ -92,26 +92,25 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 		}
 		files = append(files, file)
 	}
-	switch mode {
-	case ModeModel:
-		for _, irType := range ir.Types {
-			fileInfo := fileInfoForType(ir.ApiName, irType.Name.FernFilepath, irType.Name.Name)
-			writer := newFileWriter(
-				fileInfo.filename,
-				fileInfo.packageName,
-				g.config.ImportPath,
-				ir.Types,
-				ir.Errors,
-			)
-			if err := writer.WriteType(irType); err != nil {
-				return nil, err
-			}
-			file, err := writer.File()
-			if err != nil {
-				return nil, err
-			}
-			files = append(files, file)
+	for _, irType := range ir.Types {
+		fileInfo := fileInfoForType(ir.ApiName, irType.Name.FernFilepath, irType.Name.Name)
+		writer := newFileWriter(
+			fileInfo.filename,
+			fileInfo.packageName,
+			g.config.ImportPath,
+			ir.Types,
+			ir.Errors,
+		)
+		if err := writer.WriteType(irType); err != nil {
+			return nil, err
 		}
+		file, err := writer.File()
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
+	}
+	switch mode {
 	case ModeClient:
 		if g.config.ImportPath == "" {
 			return nil, errors.New("the SDK requires an import path configuration")
