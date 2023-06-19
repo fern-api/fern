@@ -11,19 +11,17 @@ import (
 	http "net/http"
 )
 
-type UserClient interface{}
-
 type getUserEndpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newgetUserEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getUserEndpoint {
+func newGetUserEndpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *getUserEndpoint {
 	return &getUserEndpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -40,7 +38,7 @@ func (g *getUserEndpoint) Call(ctx context.Context, userId string, request *GetU
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		g.client,
+		g.httpClient,
 		endpointURL,
 		http.MethodGet,
 		request,
@@ -51,4 +49,26 @@ func (g *getUserEndpoint) Call(ctx context.Context, userId string, request *GetU
 		return response, err
 	}
 	return response, nil
+}
+
+type Service interface {
+	GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error)
+}
+
+func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+	options := new(core.ClientOptions)
+	for _, opt := range opts {
+		opt(options)
+	}
+	return &client{
+		getUser: newGetUserEndpoint(baseURL, httpClient, options).Call,
+	}, nil
+}
+
+type client struct {
+	getUser func(ctx context.Context, userId string, request *GetUserRequest) (string, error)
+}
+
+func (g *client) GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error) {
+	return g.getUser(ctx, userId)
 }

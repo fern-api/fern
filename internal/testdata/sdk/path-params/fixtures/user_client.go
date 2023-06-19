@@ -11,19 +11,17 @@ import (
 	http "net/http"
 )
 
-type UserClient interface{}
-
 type getUserEndpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newgetUserEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getUserEndpoint {
+func newGetUserEndpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *getUserEndpoint {
 	return &getUserEndpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -40,7 +38,7 @@ func (g *getUserEndpoint) Call(ctx context.Context, userId string) (string, erro
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		g.client,
+		g.httpClient,
 		endpointURL,
 		http.MethodGet,
 		nil,
@@ -54,16 +52,16 @@ func (g *getUserEndpoint) Call(ctx context.Context, userId string) (string, erro
 }
 
 type getUserV2Endpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newgetUserV2Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getUserV2Endpoint {
+func newGetUserV2Endpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *getUserV2Endpoint {
 	return &getUserV2Endpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -80,7 +78,7 @@ func (g *getUserV2Endpoint) Call(ctx context.Context, userId string) (string, er
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		g.client,
+		g.httpClient,
 		endpointURL,
 		http.MethodGet,
 		nil,
@@ -94,16 +92,16 @@ func (g *getUserV2Endpoint) Call(ctx context.Context, userId string) (string, er
 }
 
 type getUserV3Endpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newgetUserV3Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getUserV3Endpoint {
+func newGetUserV3Endpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *getUserV3Endpoint {
 	return &getUserV3Endpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -120,7 +118,7 @@ func (g *getUserV3Endpoint) Call(ctx context.Context, userId string, infoId stri
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		g.client,
+		g.httpClient,
 		endpointURL,
 		http.MethodGet,
 		nil,
@@ -131,4 +129,40 @@ func (g *getUserV3Endpoint) Call(ctx context.Context, userId string, infoId stri
 		return response, err
 	}
 	return response, nil
+}
+
+type Service interface {
+	GetUser(ctx context.Context, userId string) (string, error)
+	GetUserV2(ctx context.Context, userId string) (string, error)
+	GetUserV3(ctx context.Context, userId string, infoId string) (string, error)
+}
+
+func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+	options := new(core.ClientOptions)
+	for _, opt := range opts {
+		opt(options)
+	}
+	return &client{
+		getUser:   newGetUserEndpoint(baseURL, httpClient, options).Call,
+		getUserV2: newGetUserV2Endpoint(baseURL, httpClient, options).Call,
+		getUserV3: newGetUserV3Endpoint(baseURL, httpClient, options).Call,
+	}, nil
+}
+
+type client struct {
+	getUser   func(ctx context.Context, userId string) (string, error)
+	getUserV2 func(ctx context.Context, userId string) (string, error)
+	getUserV3 func(ctx context.Context, userId string, infoId string) (string, error)
+}
+
+func (g *client) GetUser(ctx context.Context, userId string) (string, error) {
+	return g.getUser(ctx, userId)
+}
+
+func (g *client) GetUserV2(ctx context.Context, userId string) (string, error) {
+	return g.getUserV2(ctx, userId)
+}
+
+func (g *client) GetUserV3(ctx context.Context, userId string, infoId string) (string, error) {
+	return g.getUserV3(ctx, userId, infoId)
 }

@@ -11,19 +11,17 @@ import (
 	http "net/http"
 )
 
-type UserClient interface{}
-
 type setNameEndpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newsetNameEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameEndpoint {
+func newSetNameEndpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *setNameEndpoint {
 	return &setNameEndpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -40,7 +38,7 @@ func (s *setNameEndpoint) Call(ctx context.Context, userId string, request strin
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		s.client,
+		s.httpClient,
 		endpointURL,
 		http.MethodPost,
 		request,
@@ -54,16 +52,16 @@ func (s *setNameEndpoint) Call(ctx context.Context, userId string, request strin
 }
 
 type setNameV2Endpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newsetNameV2Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameV2Endpoint {
+func newSetNameV2Endpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *setNameV2Endpoint {
 	return &setNameV2Endpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -80,7 +78,7 @@ func (s *setNameV2Endpoint) Call(ctx context.Context, userId string, request *Se
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		s.client,
+		s.httpClient,
 		endpointURL,
 		http.MethodPost,
 		request,
@@ -94,16 +92,16 @@ func (s *setNameV2Endpoint) Call(ctx context.Context, userId string, request *Se
 }
 
 type setNameV3Endpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newsetNameV3Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameV3Endpoint {
+func newSetNameV3Endpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *setNameV3Endpoint {
 	return &setNameV3Endpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -120,7 +118,7 @@ func (s *setNameV3Endpoint) Call(ctx context.Context, userId string, request *Se
 	response := new(SetNameRequestV3Body)
 	if err := core.DoRequest(
 		ctx,
-		s.client,
+		s.httpClient,
 		endpointURL,
 		http.MethodPost,
 		request,
@@ -134,16 +132,16 @@ func (s *setNameV3Endpoint) Call(ctx context.Context, userId string, request *Se
 }
 
 type setNameV4Endpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newsetNameV4Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameV4Endpoint {
+func newSetNameV4Endpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *setNameV4Endpoint {
 	return &setNameV4Endpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -160,7 +158,7 @@ func (s *setNameV4Endpoint) Call(ctx context.Context, userId string, request *Se
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		s.client,
+		s.httpClient,
 		endpointURL,
 		http.MethodPost,
 		request,
@@ -174,16 +172,16 @@ func (s *setNameV4Endpoint) Call(ctx context.Context, userId string, request *Se
 }
 
 type setNameV5Endpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newsetNameV5Endpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *setNameV5Endpoint {
+func newSetNameV5Endpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *setNameV5Endpoint {
 	return &setNameV5Endpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -200,7 +198,7 @@ func (s *setNameV5Endpoint) Call(ctx context.Context, userId string, request *Se
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		s.client,
+		s.httpClient,
 		endpointURL,
 		http.MethodPost,
 		request,
@@ -211,4 +209,54 @@ func (s *setNameV5Endpoint) Call(ctx context.Context, userId string, request *Se
 		return response, err
 	}
 	return response, nil
+}
+
+type Service interface {
+	SetName(ctx context.Context, userId string, request string) (string, error)
+	SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error)
+	SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error)
+	SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error)
+	SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error)
+}
+
+func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+	options := new(core.ClientOptions)
+	for _, opt := range opts {
+		opt(options)
+	}
+	return &client{
+		setName:   newSetNameEndpoint(baseURL, httpClient, options).Call,
+		setNameV2: newSetNameV2Endpoint(baseURL, httpClient, options).Call,
+		setNameV3: newSetNameV3Endpoint(baseURL, httpClient, options).Call,
+		setNameV4: newSetNameV4Endpoint(baseURL, httpClient, options).Call,
+		setNameV5: newSetNameV5Endpoint(baseURL, httpClient, options).Call,
+	}, nil
+}
+
+type client struct {
+	setName   func(ctx context.Context, userId string, request string) (string, error)
+	setNameV2 func(ctx context.Context, userId string, request *SetNameRequest) (string, error)
+	setNameV3 func(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error)
+	setNameV4 func(ctx context.Context, userId string, request *SetNameRequestV4) (string, error)
+	setNameV5 func(ctx context.Context, userId string, request *SetNameRequestV5) (string, error)
+}
+
+func (s *client) SetName(ctx context.Context, userId string, request string) (string, error) {
+	return s.setName(ctx, userId)
+}
+
+func (s *client) SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error) {
+	return s.setNameV2(ctx, userId)
+}
+
+func (s *client) SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error) {
+	return s.setNameV3(ctx, userId)
+}
+
+func (s *client) SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error) {
+	return s.setNameV4(ctx, userId)
+}
+
+func (s *client) SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error) {
+	return s.setNameV5(ctx, userId)
 }

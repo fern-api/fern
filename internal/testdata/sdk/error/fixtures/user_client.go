@@ -7,24 +7,23 @@ import (
 	json "encoding/json"
 	errors "errors"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 	io "io"
 	http "net/http"
+
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 )
 
-type UserClient interface{}
-
 type getEndpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newgetEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *getEndpoint {
+func newGetEndpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *getEndpoint {
 	return &getEndpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -72,7 +71,7 @@ func (g *getEndpoint) Call(ctx context.Context, id string) (string, error) {
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		g.client,
+		g.httpClient,
 		endpointURL,
 		http.MethodGet,
 		nil,
@@ -86,16 +85,16 @@ func (g *getEndpoint) Call(ctx context.Context, id string) (string, error) {
 }
 
 type updateEndpoint struct {
-	url    string
-	client core.HTTPClient
-	header http.Header
+	url        string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func newupdateEndpoint(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *updateEndpoint {
+func newUpdateEndpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *updateEndpoint {
 	return &updateEndpoint{
-		url:    url,
-		client: client,
-		header: clientOptions.ToHeader(),
+		url:        url,
+		httpClient: httpClient,
+		header:     clientOptions.ToHeader(),
 	}
 }
 
@@ -122,7 +121,7 @@ func (u *updateEndpoint) Call(ctx context.Context, id string, request string) (s
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		u.client,
+		u.httpClient,
 		endpointURL,
 		http.MethodPost,
 		request,
@@ -133,4 +132,33 @@ func (u *updateEndpoint) Call(ctx context.Context, id string, request string) (s
 		return response, err
 	}
 	return response, nil
+}
+
+type Service interface {
+	Get(ctx context.Context, id string) (string, error)
+	Update(ctx context.Context, id string, request string) (string, error)
+}
+
+func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+	options := new(core.ClientOptions)
+	for _, opt := range opts {
+		opt(options)
+	}
+	return &client{
+		get:    newGetEndpoint(baseURL, httpClient, options).Call,
+		update: newUpdateEndpoint(baseURL, httpClient, options).Call,
+	}, nil
+}
+
+type client struct {
+	get    func(ctx context.Context, id string) (string, error)
+	update func(ctx context.Context, id string, request string) (string, error)
+}
+
+func (g *client) Get(ctx context.Context, id string) (string, error) {
+	return g.get(ctx, id)
+}
+
+func (u *client) Update(ctx context.Context, id string, request string) (string, error) {
+	return u.update(ctx, id, request)
 }

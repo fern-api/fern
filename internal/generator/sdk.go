@@ -126,19 +126,70 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 // This file includes all of the service's endpoints so that their
 // implementation(s) are visible within the same file.
 func (f *fileWriter) WriteClient(service *ir.HttpService) error {
-	f.P("type ", service.Name.FernFilepath.File.PascalCase.UnsafeName, "Client interface {}")
-	f.P()
-
-	for _, endpoint := range service.Endpoints {
-		if err := f.writeEndpoint(service.Name.FernFilepath, endpoint); err != nil {
+	// Generate the endpoint implementations.
+	signatures := make([]*signature, len(service.Endpoints))
+	for i, endpoint := range service.Endpoints {
+		signature, err := f.writeEndpoint(service.Name.FernFilepath, endpoint)
+		if err != nil {
 			return err
 		}
+		signatures[i] = signature
 	}
+
+	// Generate the service interface definition.
+	serviceName := "Service"
+	f.P("type ", serviceName, " interface {")
+	for _, signature := range signatures {
+		f.P(fmt.Sprintf("%s(%s) %s", signature.Name.PascalCase.UnsafeName, signature.Parameters, signature.ReturnValues))
+	}
+	f.P("}")
+	f.P()
+
+	// Generate the client constructor.
+	// TODO: Call the nested client constructors (e.g. user.NewClient)
+	f.P("func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (", serviceName, ", error) {")
+	f.P("options := new(core.ClientOptions)")
+	f.P("for _, opt := range opts {")
+	f.P("opt(options)")
+	f.P("}")
+	f.P("return &client{")
+	for _, signature := range signatures {
+		f.P(signature.Name.CamelCase.SafeName, " : new", signature.Name.PascalCase.UnsafeName, "Endpoint(baseURL, httpClient, options).Call,")
+	}
+	f.P("}, nil")
+	f.P("}")
+	f.P()
+
+	// Generate the client implementation.
+	f.P("type client struct {")
+	for _, signature := range signatures {
+		f.P(signature.Name.CamelCase.SafeName, " func(", signature.Parameters, ") ", signature.ReturnValues)
+	}
+	f.P("}")
+	f.P()
+
+	// Implement the Service interface.
+	for _, signature := range signatures {
+		receiver := typeNameToReceiver(signature.Name.CamelCase.UnsafeName)
+		f.P("func (", receiver, " *client) ", signature.Name.PascalCase.UnsafeName, "(", signature.Parameters, ") ", signature.ReturnValues, " {")
+		f.P("return ", receiver, ".", signature.Name.CamelCase.SafeName, "(", signature.ParameterNames, ")")
+		f.P("}")
+		f.P()
+	}
+
 	return nil
 }
 
+// signature holds the fields required to generate a signautre used by the generated client.
+type signature struct {
+	Name           *ir.Name
+	Parameters     string
+	ParameterNames string
+	ReturnValues   string
+}
+
 // writeEndpoint writes the endpoint type, which includes its error decoder and call methods.
-func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) error {
+func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) (*signature, error) {
 	// Generate the type definition.
 	var (
 		typeName   = fmt.Sprintf("%sEndpoint", endpoint.Name.CamelCase.UnsafeName)
@@ -147,16 +198,16 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	)
 	f.P("type ", typeName, " struct {")
 	f.P("url string")
-	f.P("client core.HTTPClient")
+	f.P("httpClient core.HTTPClient")
 	f.P("header http.Header")
 	f.P("}")
 	f.P()
 
 	// Generate the constructor.
-	f.P("func new", typeName, "(url string, client core.HTTPClient, clientOptions *core.ClientOptions) *", typeName, " {")
+	f.P("func new", endpoint.Name.PascalCase.UnsafeName, "Endpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *", typeName, " {")
 	f.P("return &", typeName, "{")
 	f.P("url: url,")
-	f.P("client: client,")
+	f.P("httpClient: httpClient,")
 	f.P("header: clientOptions.ToHeader(),")
 	f.P("}")
 	f.P("}")
@@ -199,7 +250,7 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	)
 	if endpoint.Response != nil {
 		if endpoint.Response.Json == nil {
-			return fmt.Errorf("the SDK generator only supports JSON-based responses, but found %q", endpoint.Response.Type)
+			return nil, fmt.Errorf("the SDK generator only supports JSON-based responses, but found %q", endpoint.Response.Type)
 		}
 		responseType = typeReferenceToGoType(endpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
 		responseInitializerFormat = "var response %s"
@@ -257,7 +308,7 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	}
 	f.P("if err := core.DoRequest(")
 	f.P("ctx,")
-	f.P(receiver, ".client,")
+	f.P(receiver, ".httpClient,")
 	f.P("endpointURL, ")
 	f.P(irMethodToMethodEnum(endpoint.Method), ",")
 	f.P(requestParameter, ",")
@@ -270,7 +321,12 @@ func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	f.P("return ", successfulReturnValues)
 	f.P("}")
 
-	return nil
+	return &signature{
+		Name:           endpoint.Name,
+		Parameters:     parameters,
+		ParameterNames: strings.Join(append([]string{"ctx"}, parameterNames...), ", "),
+		ReturnValues:   signatureReturnValues,
+	}, nil
 }
 
 // WriteError writes the structured error types.
