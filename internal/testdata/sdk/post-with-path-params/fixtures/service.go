@@ -21,38 +21,38 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		opt(options)
 	}
 	return &client{
-		setName:   newSetNameEndpoint(baseURL, httpClient, options).Call,
-		setNameV2: newSetNameV2Endpoint(baseURL, httpClient, options).Call,
-		setNameV3: newSetNameV3Endpoint(baseURL, httpClient, options).Call,
-		setNameV4: newSetNameV4Endpoint(baseURL, httpClient, options).Call,
-		setNameV5: newSetNameV5Endpoint(baseURL, httpClient, options).Call,
+		setNameEndpoint:   newSetNameEndpoint(baseURL, httpClient, options),
+		setNameV2Endpoint: newSetNameV2Endpoint(baseURL, httpClient, options),
+		setNameV3Endpoint: newSetNameV3Endpoint(baseURL, httpClient, options),
+		setNameV4Endpoint: newSetNameV4Endpoint(baseURL, httpClient, options),
+		setNameV5Endpoint: newSetNameV5Endpoint(baseURL, httpClient, options),
 	}, nil
 }
 
 type client struct {
-	setName   func(ctx context.Context, userId string, request string) (string, error)
-	setNameV2 func(ctx context.Context, userId string, request *SetNameRequest) (string, error)
-	setNameV3 func(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error)
-	setNameV4 func(ctx context.Context, userId string, request *SetNameRequestV4) (string, error)
-	setNameV5 func(ctx context.Context, userId string, request *SetNameRequestV5) (string, error)
+	setNameEndpoint   *setNameEndpoint
+	setNameV2Endpoint *setNameV2Endpoint
+	setNameV3Endpoint *setNameV3Endpoint
+	setNameV4Endpoint *setNameV4Endpoint
+	setNameV5Endpoint *setNameV5Endpoint
 }
 
 func (s *client) SetName(ctx context.Context, userId string, request string) (string, error) {
-	return s.setName(ctx, userId, request)
+	return s.setNameEndpoint.Call(ctx, userId, request)
 }
 
 func (s *client) SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error) {
-	return s.setNameV2(ctx, userId, request)
+	return s.setNameV2Endpoint.Call(ctx, userId, request)
 }
 
 func (s *client) SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error) {
-	return s.setNameV3(ctx, userId, request)
+	return s.setNameV3Endpoint.Call(ctx, userId, request)
 }
 
 func (s *client) SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error) {
-	return s.setNameV4(ctx, userId, request)
+	return s.setNameV4Endpoint.Call(ctx, userId, request)
 }
 
 func (s *client) SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error) {
-	return s.setNameV5(ctx, userId, request)
+	return s.setNameV5Endpoint.Call(ctx, userId, request)
 }

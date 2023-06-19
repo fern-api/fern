@@ -144,7 +144,7 @@ func (f *fileWriter) WriteClient(signatures []*signature) error {
 	f.P("}")
 	f.P("return &client{")
 	for _, signature := range signatures {
-		f.P(signature.Name.CamelCase.SafeName, " : new", signature.Name.PascalCase.UnsafeName, "Endpoint(baseURL, httpClient, options).Call,")
+		f.P(signature.EndpointTypeName, " : new", signature.Name.PascalCase.UnsafeName, "Endpoint(baseURL, httpClient, options),")
 	}
 	f.P("}, nil")
 	f.P("}")
@@ -153,7 +153,7 @@ func (f *fileWriter) WriteClient(signatures []*signature) error {
 	// Generate the client implementation.
 	f.P("type client struct {")
 	for _, signature := range signatures {
-		f.P(signature.Name.CamelCase.SafeName, " func(", signature.Parameters, ") ", signature.ReturnValues)
+		f.P(signature.EndpointTypeName, " *", signature.EndpointTypeName)
 	}
 	f.P("}")
 	f.P()
@@ -162,7 +162,7 @@ func (f *fileWriter) WriteClient(signatures []*signature) error {
 	for _, signature := range signatures {
 		receiver := typeNameToReceiver(signature.Name.CamelCase.UnsafeName)
 		f.P("func (", receiver, " *client) ", signature.Name.PascalCase.UnsafeName, "(", signature.Parameters, ") ", signature.ReturnValues, " {")
-		f.P("return ", receiver, ".", signature.Name.CamelCase.SafeName, "(", signature.ParameterNames, ")")
+		f.P("return ", receiver, ".", signature.EndpointTypeName, ".Call(", signature.ParameterNames, ")")
 		f.P("}")
 		f.P()
 	}
@@ -172,10 +172,11 @@ func (f *fileWriter) WriteClient(signatures []*signature) error {
 
 // signature holds the fields required to generate a signautre used by the generated client.
 type signature struct {
-	Name           *ir.Name
-	Parameters     string
-	ParameterNames string
-	ReturnValues   string
+	Name             *ir.Name
+	EndpointTypeName string
+	Parameters       string
+	ParameterNames   string
+	ReturnValues     string
 }
 
 // WriteEndpoint writes the endpoint type, which includes its error decoder and call methods.
@@ -318,10 +319,11 @@ func (f *fileWriter) WriteEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 		parameterNames = append(parameterNames, requestParameter)
 	}
 	return &signature{
-		Name:           endpoint.Name,
-		Parameters:     parameters,
-		ParameterNames: strings.Join(parameterNames, ", "),
-		ReturnValues:   signatureReturnValues,
+		Name:             endpoint.Name,
+		EndpointTypeName: typeName,
+		Parameters:       parameters,
+		ParameterNames:   strings.Join(parameterNames, ", "),
+		ReturnValues:     signatureReturnValues,
 	}, nil
 }
 

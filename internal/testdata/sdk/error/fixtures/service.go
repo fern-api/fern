@@ -18,20 +18,20 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		opt(options)
 	}
 	return &client{
-		get:    newGetEndpoint(baseURL, httpClient, options).Call,
-		update: newUpdateEndpoint(baseURL, httpClient, options).Call,
+		getEndpoint:    newGetEndpoint(baseURL, httpClient, options),
+		updateEndpoint: newUpdateEndpoint(baseURL, httpClient, options),
 	}, nil
 }
 
 type client struct {
-	get    func(ctx context.Context, id string) (string, error)
-	update func(ctx context.Context, id string, request string) (string, error)
+	getEndpoint    *getEndpoint
+	updateEndpoint *updateEndpoint
 }
 
 func (g *client) Get(ctx context.Context, id string) (string, error) {
-	return g.get(ctx, id)
+	return g.getEndpoint.Call(ctx, id)
 }
 
 func (u *client) Update(ctx context.Context, id string, request string) (string, error) {
-	return u.update(ctx, id, request)
+	return u.updateEndpoint.Call(ctx, id, request)
 }

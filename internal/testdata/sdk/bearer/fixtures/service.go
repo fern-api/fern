@@ -17,14 +17,14 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		opt(options)
 	}
 	return &client{
-		get: newGetEndpoint(baseURL, httpClient, options).Call,
+		getEndpoint: newGetEndpoint(baseURL, httpClient, options),
 	}, nil
 }
 
 type client struct {
-	get func(ctx context.Context) (string, error)
+	getEndpoint *getEndpoint
 }
 
 func (g *client) Get(ctx context.Context) (string, error) {
-	return g.get(ctx)
+	return g.getEndpoint.Call(ctx)
 }

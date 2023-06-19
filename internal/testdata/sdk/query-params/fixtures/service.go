@@ -17,14 +17,14 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		opt(options)
 	}
 	return &client{
-		getAllUsers: newGetAllUsersEndpoint(baseURL, httpClient, options).Call,
+		getAllUsersEndpoint: newGetAllUsersEndpoint(baseURL, httpClient, options),
 	}, nil
 }
 
 type client struct {
-	getAllUsers func(ctx context.Context, request *GetAllUsersRequest) (string, error)
+	getAllUsersEndpoint *getAllUsersEndpoint
 }
 
 func (g *client) GetAllUsers(ctx context.Context, request *GetAllUsersRequest) (string, error) {
-	return g.getAllUsers(ctx, request)
+	return g.getAllUsersEndpoint.Call(ctx, request)
 }

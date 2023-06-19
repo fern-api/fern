@@ -19,26 +19,26 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		opt(options)
 	}
 	return &client{
-		getUser:   newGetUserEndpoint(baseURL, httpClient, options).Call,
-		getUserV2: newGetUserV2Endpoint(baseURL, httpClient, options).Call,
-		getUserV3: newGetUserV3Endpoint(baseURL, httpClient, options).Call,
+		getUserEndpoint:   newGetUserEndpoint(baseURL, httpClient, options),
+		getUserV2Endpoint: newGetUserV2Endpoint(baseURL, httpClient, options),
+		getUserV3Endpoint: newGetUserV3Endpoint(baseURL, httpClient, options),
 	}, nil
 }
 
 type client struct {
-	getUser   func(ctx context.Context, userId string) (string, error)
-	getUserV2 func(ctx context.Context, userId string) (string, error)
-	getUserV3 func(ctx context.Context, userId string, infoId string) (string, error)
+	getUserEndpoint   *getUserEndpoint
+	getUserV2Endpoint *getUserV2Endpoint
+	getUserV3Endpoint *getUserV3Endpoint
 }
 
 func (g *client) GetUser(ctx context.Context, userId string) (string, error) {
-	return g.getUser(ctx, userId)
+	return g.getUserEndpoint.Call(ctx, userId)
 }
 
 func (g *client) GetUserV2(ctx context.Context, userId string) (string, error) {
-	return g.getUserV2(ctx, userId)
+	return g.getUserV2Endpoint.Call(ctx, userId)
 }
 
 func (g *client) GetUserV3(ctx context.Context, userId string, infoId string) (string, error) {
-	return g.getUserV3(ctx, userId, infoId)
+	return g.getUserV3Endpoint.Call(ctx, userId, infoId)
 }

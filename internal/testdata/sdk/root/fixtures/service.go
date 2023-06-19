@@ -24,56 +24,56 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		opt(options)
 	}
 	return &client{
-		getFoo:             newGetFooEndpoint(baseURL, httpClient, options).Call,
-		postFoo:            newPostFooEndpoint(baseURL, httpClient, options).Call,
-		getFooFooId:        newGetFooFooIdEndpoint(baseURL, httpClient, options).Call,
-		patchFooFooId:      newPatchFooFooIdEndpoint(baseURL, httpClient, options).Call,
-		deleteFooFooId:     newDeleteFooFooIdEndpoint(baseURL, httpClient, options).Call,
-		postFooFooIdRun:    newPostFooFooIdRunEndpoint(baseURL, httpClient, options).Call,
-		postFooBatchCreate: newPostFooBatchCreateEndpoint(baseURL, httpClient, options).Call,
-		postFooBatchDelete: newPostFooBatchDeleteEndpoint(baseURL, httpClient, options).Call,
+		getFooEndpoint:             newGetFooEndpoint(baseURL, httpClient, options),
+		postFooEndpoint:            newPostFooEndpoint(baseURL, httpClient, options),
+		getFooFooIdEndpoint:        newGetFooFooIdEndpoint(baseURL, httpClient, options),
+		patchFooFooIdEndpoint:      newPatchFooFooIdEndpoint(baseURL, httpClient, options),
+		deleteFooFooIdEndpoint:     newDeleteFooFooIdEndpoint(baseURL, httpClient, options),
+		postFooFooIdRunEndpoint:    newPostFooFooIdRunEndpoint(baseURL, httpClient, options),
+		postFooBatchCreateEndpoint: newPostFooBatchCreateEndpoint(baseURL, httpClient, options),
+		postFooBatchDeleteEndpoint: newPostFooBatchDeleteEndpoint(baseURL, httpClient, options),
 	}, nil
 }
 
 type client struct {
-	getFoo             func(ctx context.Context) ([]*Foo, error)
-	postFoo            func(ctx context.Context, request *Bar) (*Foo, error)
-	getFooFooId        func(ctx context.Context, fooId Id) (*Foo, error)
-	patchFooFooId      func(ctx context.Context, fooId Id, request *Foo) (*Foo, error)
-	deleteFooFooId     func(ctx context.Context, fooId Id) error
-	postFooFooIdRun    func(ctx context.Context, fooId Id) (*Foo, error)
-	postFooBatchCreate func(ctx context.Context, request []*Bar) ([]*Foo, error)
-	postFooBatchDelete func(ctx context.Context, request []Id) error
+	getFooEndpoint             *getFooEndpoint
+	postFooEndpoint            *postFooEndpoint
+	getFooFooIdEndpoint        *getFooFooIdEndpoint
+	patchFooFooIdEndpoint      *patchFooFooIdEndpoint
+	deleteFooFooIdEndpoint     *deleteFooFooIdEndpoint
+	postFooFooIdRunEndpoint    *postFooFooIdRunEndpoint
+	postFooBatchCreateEndpoint *postFooBatchCreateEndpoint
+	postFooBatchDeleteEndpoint *postFooBatchDeleteEndpoint
 }
 
 func (g *client) GetFoo(ctx context.Context) ([]*Foo, error) {
-	return g.getFoo(ctx)
+	return g.getFooEndpoint.Call(ctx)
 }
 
 func (p *client) PostFoo(ctx context.Context, request *Bar) (*Foo, error) {
-	return p.postFoo(ctx, request)
+	return p.postFooEndpoint.Call(ctx, request)
 }
 
 func (g *client) GetFooFooId(ctx context.Context, fooId Id) (*Foo, error) {
-	return g.getFooFooId(ctx, fooId)
+	return g.getFooFooIdEndpoint.Call(ctx, fooId)
 }
 
 func (p *client) PatchFooFooId(ctx context.Context, fooId Id, request *Foo) (*Foo, error) {
-	return p.patchFooFooId(ctx, fooId, request)
+	return p.patchFooFooIdEndpoint.Call(ctx, fooId, request)
 }
 
 func (d *client) DeleteFooFooId(ctx context.Context, fooId Id) error {
-	return d.deleteFooFooId(ctx, fooId)
+	return d.deleteFooFooIdEndpoint.Call(ctx, fooId)
 }
 
 func (p *client) PostFooFooIdRun(ctx context.Context, fooId Id) (*Foo, error) {
-	return p.postFooFooIdRun(ctx, fooId)
+	return p.postFooFooIdRunEndpoint.Call(ctx, fooId)
 }
 
 func (p *client) PostFooBatchCreate(ctx context.Context, request []*Bar) ([]*Foo, error) {
-	return p.postFooBatchCreate(ctx, request)
+	return p.postFooBatchCreateEndpoint.Call(ctx, request)
 }
 
 func (p *client) PostFooBatchDelete(ctx context.Context, request []Id) error {
-	return p.postFooBatchDelete(ctx, request)
+	return p.postFooBatchDeleteEndpoint.Call(ctx, request)
 }
