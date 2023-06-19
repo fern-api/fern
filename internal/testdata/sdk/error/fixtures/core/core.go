@@ -87,7 +87,7 @@ func DoRequest(
 		return err
 	}
 
-	if resp.StatusCode != 200 {
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		if errorDecoder != nil {
 			// This endpoint has custom errors, so we'll
 			// attempt to unmarshal the error into a structured
