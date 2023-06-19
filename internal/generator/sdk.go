@@ -205,6 +205,8 @@ func (f *fileWriter) WriteEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	f.P()
 
 	// Generate the error decoder.
+	// TODO: Make sure that we preserve the status code from every
+	// error returned from this function.
 	f.P("func (", receiver, "*", typeName, ") decodeError(statusCode int, body io.Reader) error {")
 	if len(endpoint.Errors) > 0 {
 		f.P("decoder := json.NewDecoder(body)")
