@@ -5,6 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/path-params/fixtures/core"
+	path "path"
 )
 
 type Service interface {
@@ -19,9 +20,9 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		opt(options)
 	}
 	return &client{
-		getUserEndpoint:   newGetUserEndpoint(baseURL, httpClient, options),
-		getUserV2Endpoint: newGetUserV2Endpoint(baseURL, httpClient, options),
-		getUserV3Endpoint: newGetUserV3Endpoint(baseURL, httpClient, options),
+		getUserEndpoint:   newGetUserEndpoint(path.Join(baseURL, "/users/%v"), httpClient, options),
+		getUserV2Endpoint: newGetUserV2Endpoint(path.Join(baseURL, "/users/get/%v/info"), httpClient, options),
+		getUserV3Endpoint: newGetUserV3Endpoint(path.Join(baseURL, "/users/get/%v/info/%v"), httpClient, options),
 	}, nil
 }
 

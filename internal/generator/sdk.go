@@ -125,6 +125,9 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 // WriteClient writes a client for interacting with the given service.
 // This file includes all of the service's endpoints so that their
 // implementation(s) are visible within the same file.
+//
+// TODO: Remove separate endpoint types; consolidate all logic
+// in the client's implementation.
 func (f *fileWriter) WriteClient(signatures []*signature) error {
 	// Generate the service interface definition.
 	serviceName := "Service"
@@ -144,7 +147,11 @@ func (f *fileWriter) WriteClient(signatures []*signature) error {
 	f.P("}")
 	f.P("return &client{")
 	for _, signature := range signatures {
-		f.P(signature.EndpointTypeName, " : new", signature.Name.PascalCase.UnsafeName, "Endpoint(baseURL, httpClient, options),")
+		urlFormat := "baseURL"
+		if signature.PathSuffix != "" {
+			urlFormat = fmt.Sprintf("path.Join(baseURL, %q)", signature.PathSuffix)
+		}
+		f.P(signature.EndpointTypeName, " : new", signature.Name.PascalCase.UnsafeName, "Endpoint(", urlFormat, ", httpClient, options),")
 	}
 	f.P("}, nil")
 	f.P("}")
@@ -177,6 +184,7 @@ type signature struct {
 	Parameters       string
 	ParameterNames   string
 	ReturnValues     string
+	PathSuffix       string
 }
 
 // WriteEndpoint writes the endpoint type, which includes its error decoder and call methods.
@@ -286,6 +294,23 @@ func (f *fileWriter) WriteEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 		parameters += fmt.Sprintf(", %s %s", requestParameter, requestType)
 	}
 
+	// Consolidate the endpoint's full path into a path suffix that
+	// can be applied to the endpoint at construction time.
+	var pathSuffix string
+	if endpoint.FullPath != nil {
+		if endpoint.FullPath.Head != "/" {
+			pathSuffix = endpoint.FullPath.Head
+		}
+		for _, part := range endpoint.FullPath.Parts {
+			if part.PathParameter != "" {
+				pathSuffix += "%v"
+			}
+			if part.Tail != "" {
+				pathSuffix += part.Tail
+			}
+		}
+	}
+
 	urlStatement := fmt.Sprintf("endpointURL := %s.url", receiver)
 	if len(parameterNames) > 0 {
 		urlStatement = "endpointURL := fmt.Sprintf(" + receiver + ".url, " + strings.Join(parameterNames, ", ") + ")"
@@ -320,12 +345,14 @@ func (f *fileWriter) WriteEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 	if requestParameter != "nil" {
 		parameterNames = append(parameterNames, requestParameter)
 	}
+
 	return &signature{
 		Name:             endpoint.Name,
 		EndpointTypeName: typeName,
 		Parameters:       parameters,
 		ParameterNames:   strings.Join(parameterNames, ", "),
 		ReturnValues:     signatureReturnValues,
+		PathSuffix:       pathSuffix,
 	}, nil
 }
 

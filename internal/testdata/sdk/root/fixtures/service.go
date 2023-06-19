@@ -5,6 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
+	path "path"
 )
 
 type Service interface {
@@ -24,14 +25,14 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		opt(options)
 	}
 	return &client{
-		getFooEndpoint:             newGetFooEndpoint(baseURL, httpClient, options),
-		postFooEndpoint:            newPostFooEndpoint(baseURL, httpClient, options),
-		getFooFooIdEndpoint:        newGetFooFooIdEndpoint(baseURL, httpClient, options),
-		patchFooFooIdEndpoint:      newPatchFooFooIdEndpoint(baseURL, httpClient, options),
-		deleteFooFooIdEndpoint:     newDeleteFooFooIdEndpoint(baseURL, httpClient, options),
-		postFooFooIdRunEndpoint:    newPostFooFooIdRunEndpoint(baseURL, httpClient, options),
-		postFooBatchCreateEndpoint: newPostFooBatchCreateEndpoint(baseURL, httpClient, options),
-		postFooBatchDeleteEndpoint: newPostFooBatchDeleteEndpoint(baseURL, httpClient, options),
+		getFooEndpoint:             newGetFooEndpoint(path.Join(baseURL, "foo"), httpClient, options),
+		postFooEndpoint:            newPostFooEndpoint(path.Join(baseURL, "foo"), httpClient, options),
+		getFooFooIdEndpoint:        newGetFooFooIdEndpoint(path.Join(baseURL, "foo/%v"), httpClient, options),
+		patchFooFooIdEndpoint:      newPatchFooFooIdEndpoint(path.Join(baseURL, "foo/%v"), httpClient, options),
+		deleteFooFooIdEndpoint:     newDeleteFooFooIdEndpoint(path.Join(baseURL, "foo/%v"), httpClient, options),
+		postFooFooIdRunEndpoint:    newPostFooFooIdRunEndpoint(path.Join(baseURL, "foo/%v/run"), httpClient, options),
+		postFooBatchCreateEndpoint: newPostFooBatchCreateEndpoint(path.Join(baseURL, "foo/batch-create"), httpClient, options),
+		postFooBatchDeleteEndpoint: newPostFooBatchDeleteEndpoint(path.Join(baseURL, "foo/batch-delete"), httpClient, options),
 	}, nil
 }
 

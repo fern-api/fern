@@ -5,6 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
+	path "path"
 )
 
 type Service interface {
@@ -21,11 +22,11 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		opt(options)
 	}
 	return &client{
-		setNameEndpoint:   newSetNameEndpoint(baseURL, httpClient, options),
-		setNameV2Endpoint: newSetNameV2Endpoint(baseURL, httpClient, options),
-		setNameV3Endpoint: newSetNameV3Endpoint(baseURL, httpClient, options),
-		setNameV4Endpoint: newSetNameV4Endpoint(baseURL, httpClient, options),
-		setNameV5Endpoint: newSetNameV5Endpoint(baseURL, httpClient, options),
+		setNameEndpoint:   newSetNameEndpoint(path.Join(baseURL, "/users/%v/set-name"), httpClient, options),
+		setNameV2Endpoint: newSetNameV2Endpoint(path.Join(baseURL, "/users/%v/set-name-v2"), httpClient, options),
+		setNameV3Endpoint: newSetNameV3Endpoint(path.Join(baseURL, "/users/%v/set-name-v3"), httpClient, options),
+		setNameV4Endpoint: newSetNameV4Endpoint(path.Join(baseURL, "/users/%v/set-name-v4"), httpClient, options),
+		setNameV5Endpoint: newSetNameV5Endpoint(path.Join(baseURL, "/users/%v/set-name-v5"), httpClient, options),
 	}, nil
 }
 

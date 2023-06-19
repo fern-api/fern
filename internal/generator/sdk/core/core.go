@@ -97,9 +97,6 @@ func DoRequest(
 		// This endpoint doesn't have any custom error
 		// types, so we just read the body as-is, and
 		// put it into a normal error.
-		//
-		// TODO: Define a core.Error type that we can use
-		// to include the status code.
 		bytes, err := io.ReadAll(resp.Body)
 		if err != nil {
 			return err
