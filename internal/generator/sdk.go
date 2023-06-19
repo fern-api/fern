@@ -125,17 +125,7 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 // WriteClient writes a client for interacting with the given service.
 // This file includes all of the service's endpoints so that their
 // implementation(s) are visible within the same file.
-func (f *fileWriter) WriteClient(service *ir.HttpService) error {
-	// Generate the endpoint implementations.
-	signatures := make([]*signature, len(service.Endpoints))
-	for i, endpoint := range service.Endpoints {
-		signature, err := f.writeEndpoint(service.Name.FernFilepath, endpoint)
-		if err != nil {
-			return err
-		}
-		signatures[i] = signature
-	}
-
+func (f *fileWriter) WriteClient(signatures []*signature) error {
 	// Generate the service interface definition.
 	serviceName := "Service"
 	f.P("type ", serviceName, " interface {")
@@ -188,8 +178,8 @@ type signature struct {
 	ReturnValues   string
 }
 
-// writeEndpoint writes the endpoint type, which includes its error decoder and call methods.
-func (f *fileWriter) writeEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) (*signature, error) {
+// WriteEndpoint writes the endpoint type, which includes its error decoder and call methods.
+func (f *fileWriter) WriteEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) (*signature, error) {
 	// Generate the type definition.
 	var (
 		typeName   = fmt.Sprintf("%sEndpoint", endpoint.Name.CamelCase.UnsafeName)

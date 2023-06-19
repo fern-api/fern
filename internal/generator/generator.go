@@ -180,6 +180,28 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 				}
 				files = append(files, file)
 			}
+			// Generate the endpoint implementations.
+			signatures := make([]*signature, len(irService.Endpoints))
+			for i, endpoint := range irService.Endpoints {
+				fileInfo := fileInfoForEndpoint(ir.ApiName, irService.Name.FernFilepath, endpoint.Name)
+				writer := newFileWriter(
+					fileInfo.filename,
+					fileInfo.packageName,
+					g.config.ImportPath,
+					ir.Types,
+					ir.Errors,
+				)
+				signature, err := writer.WriteEndpoint(irService.Name.FernFilepath, endpoint)
+				if err != nil {
+					return nil, err
+				}
+				signatures[i] = signature
+				file, err := writer.File()
+				if err != nil {
+					return nil, err
+				}
+				files = append(files, file)
+			}
 			// Generate the client interface.
 			fileInfo := fileInfoForService(ir.ApiName, irService)
 			writer := newFileWriter(
@@ -189,7 +211,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 				ir.Types,
 				ir.Errors,
 			)
-			if err := writer.WriteClient(irService); err != nil {
+			if err := writer.WriteClient(signatures); err != nil {
 				return nil, err
 			}
 			file, err := writer.File()
@@ -261,6 +283,26 @@ func fileInfoForType(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *ir.N
 	}
 	return &fileInfo{
 		filename:    fmt.Sprintf("%s.go", filepath.Join(append(packages, typeName)...)),
+		packageName: packages[len(packages)-1],
+	}
+}
+
+func fileInfoForEndpoint(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *ir.Name) *fileInfo {
+	var packages []string
+	for _, packageName := range fernFilepath.PackagePath {
+		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
+	}
+	typeName := name.SnakeCase.UnsafeName
+	if len(packages) == 0 {
+		// This type didn't declare a package, so it belongs at the top-level.
+		// The top-level package uses the API's name as its package declaration.
+		return &fileInfo{
+			filename:    fmt.Sprintf("%s_endpoint.go", typeName),
+			packageName: strings.ToLower(apiName.CamelCase.SafeName),
+		}
+	}
+	return &fileInfo{
+		filename:    fmt.Sprintf("%s_endpoint.go", filepath.Join(append(packages, typeName)...)),
 		packageName: packages[len(packages)-1],
 	}
 }
