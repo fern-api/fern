@@ -20,6 +20,8 @@ func ClientWithAuthBearer(bearer string) ClientOption {
 
 func (c *ClientOptions) ToHeader() http.Header {
 	header := make(http.Header)
-	header.Set("Authorization", "Bearer "+c.Bearer)
+	if c.Bearer != "" {
+		header.Set("Authorization", "Bearer "+c.Bearer)
+	}
 	return header
 }

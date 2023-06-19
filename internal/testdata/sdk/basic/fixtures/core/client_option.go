@@ -23,6 +23,8 @@ func ClientWithAuthBasic(username, password string) ClientOption {
 
 func (c *ClientOptions) ToHeader() http.Header {
 	header := make(http.Header)
-	header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(c.Username+": "+c.Password)))
+	if c.Username != "" && c.Password != "" {
+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(c.Username+": "+c.Password)))
+	}
 	return header
 }

@@ -95,17 +95,24 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 	f.P("header := make(http.Header)")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
+			f.P(`if c.Bearer != "" { `)
 			f.P(`header.Set("Authorization", `, `"Bearer " + c.Bearer)`)
+			f.P("}")
 		}
 		if authScheme.Basic != nil {
+			f.P(`if c.Username != "" && c.Password != "" {`)
 			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(c.Username + ": " + c.Password)))`)
+			f.P("}")
 		}
 		if header := authScheme.Header; header != nil {
 			var prefix string
 			if header.Prefix != nil {
 				prefix = *header.Prefix + " "
 			}
-			f.P(`header.Set("`, header.Name.Name.OriginalName, `", fmt.Sprintf("`, prefix, `%v", c.`, header.Name.Name.PascalCase.UnsafeName, "))")
+			f.P("var value ", typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath))
+			f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != value {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v", c.`, header.Name.Name.PascalCase.UnsafeName, "))")
+			f.P("}")
 		}
 	}
 	f.P("return header")
