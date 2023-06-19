@@ -5,7 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
-	path "path"
+	url "net/url"
 )
 
 type Service interface {
@@ -24,15 +24,47 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
+	getFooURL, err := url.JoinPath(baseURL, "foo")
+	if err != nil {
+		return nil, err
+	}
+	postFooURL, err := url.JoinPath(baseURL, "foo")
+	if err != nil {
+		return nil, err
+	}
+	getFooFooIdURL, err := url.JoinPath(baseURL, "foo/%v")
+	if err != nil {
+		return nil, err
+	}
+	patchFooFooIdURL, err := url.JoinPath(baseURL, "foo/%v")
+	if err != nil {
+		return nil, err
+	}
+	deleteFooFooIdURL, err := url.JoinPath(baseURL, "foo/%v")
+	if err != nil {
+		return nil, err
+	}
+	postFooFooIdRunURL, err := url.JoinPath(baseURL, "foo/%v/run")
+	if err != nil {
+		return nil, err
+	}
+	postFooBatchCreateURL, err := url.JoinPath(baseURL, "foo/batch-create")
+	if err != nil {
+		return nil, err
+	}
+	postFooBatchDeleteURL, err := url.JoinPath(baseURL, "foo/batch-delete")
+	if err != nil {
+		return nil, err
+	}
 	return &client{
-		getFooEndpoint:             newGetFooEndpoint(path.Join(baseURL, "foo"), httpClient, options),
-		postFooEndpoint:            newPostFooEndpoint(path.Join(baseURL, "foo"), httpClient, options),
-		getFooFooIdEndpoint:        newGetFooFooIdEndpoint(path.Join(baseURL, "foo/%v"), httpClient, options),
-		patchFooFooIdEndpoint:      newPatchFooFooIdEndpoint(path.Join(baseURL, "foo/%v"), httpClient, options),
-		deleteFooFooIdEndpoint:     newDeleteFooFooIdEndpoint(path.Join(baseURL, "foo/%v"), httpClient, options),
-		postFooFooIdRunEndpoint:    newPostFooFooIdRunEndpoint(path.Join(baseURL, "foo/%v/run"), httpClient, options),
-		postFooBatchCreateEndpoint: newPostFooBatchCreateEndpoint(path.Join(baseURL, "foo/batch-create"), httpClient, options),
-		postFooBatchDeleteEndpoint: newPostFooBatchDeleteEndpoint(path.Join(baseURL, "foo/batch-delete"), httpClient, options),
+		getFooEndpoint:             newGetFooEndpoint(getFooURL, httpClient, options),
+		postFooEndpoint:            newPostFooEndpoint(postFooURL, httpClient, options),
+		getFooFooIdEndpoint:        newGetFooFooIdEndpoint(getFooFooIdURL, httpClient, options),
+		patchFooFooIdEndpoint:      newPatchFooFooIdEndpoint(patchFooFooIdURL, httpClient, options),
+		deleteFooFooIdEndpoint:     newDeleteFooFooIdEndpoint(deleteFooFooIdURL, httpClient, options),
+		postFooFooIdRunEndpoint:    newPostFooFooIdRunEndpoint(postFooFooIdRunURL, httpClient, options),
+		postFooBatchCreateEndpoint: newPostFooBatchCreateEndpoint(postFooBatchCreateURL, httpClient, options),
+		postFooBatchDeleteEndpoint: newPostFooBatchDeleteEndpoint(postFooBatchDeleteURL, httpClient, options),
 	}, nil
 }
 

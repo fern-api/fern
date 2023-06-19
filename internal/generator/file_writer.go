@@ -48,7 +48,7 @@ func newFileWriter(
 	imports.Add("fmt")
 	imports.Add("io")
 	imports.Add("net/http")
-	imports.Add("path")
+	imports.Add("net/url")
 	imports.Add("strconv")
 	imports.Add("time")
 

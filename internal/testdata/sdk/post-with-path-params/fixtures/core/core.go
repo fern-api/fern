@@ -122,7 +122,7 @@ func newRequest(
 	endpointHeaders http.Header,
 	requestBody io.Reader,
 ) (*http.Request, error) {
-	req, err := http.NewRequest(method, url, requestBody)
+	req, err := http.NewRequestWithContext(ctx, method, url, requestBody)
 	if err != nil {
 		return nil, err
 	}
