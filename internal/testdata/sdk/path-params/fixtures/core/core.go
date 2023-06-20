@@ -105,9 +105,11 @@ func DoRequest(
 	}
 
 	// Mutate the response parameter in-place.
-	decoder := json.NewDecoder(resp.Body)
-	if err := decoder.Decode(response); err != nil {
-		return err
+	if response != nil {
+		decoder := json.NewDecoder(resp.Body)
+		if err := decoder.Decode(response); err != nil {
+			return err
+		}
 	}
 
 	return nil
