@@ -93,7 +93,6 @@ func (f *fileWriter) File() (*File, error) {
 
 	formatted, err := removeUnusedImports(f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
 	if err != nil {
-		fmt.Println(string(append(header.buffer.Bytes(), f.buffer.Bytes()...)))
 		return nil, err
 	}
 	return &File{
