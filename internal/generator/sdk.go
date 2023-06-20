@@ -145,21 +145,14 @@ func (f *fileWriter) WriteClient(signatures []*signature) error {
 	f.P("for _, opt := range opts {")
 	f.P("opt(options)")
 	f.P("}")
-	for _, signature := range signatures {
-		if signature.PathSuffix != "" {
-			f.P(signature.Name.CamelCase.UnsafeName + fmt.Sprintf("URL, err := url.JoinPath(baseURL, %q)", signature.PathSuffix))
-			f.P("if err != nil {")
-			f.P("return nil, err")
-			f.P("}")
-		}
-	}
+	f.P(`baseURL = strings.TrimRight(baseURL, "/")`)
 	f.P("return &client{")
 	for _, signature := range signatures {
 		urlFormat := "baseURL"
 		if signature.PathSuffix != "" {
-			urlFormat = signature.Name.CamelCase.UnsafeName + "URL"
+			urlFormat = fmt.Sprintf(`baseURL + "/" + %q`, signature.PathSuffix)
 		}
-		f.P(signature.EndpointTypeName, " : new", signature.Name.PascalCase.UnsafeName, "Endpoint(", urlFormat, ", httpClient, options),")
+		f.P(signature.EndpointTypeName, ": new", signature.Name.PascalCase.UnsafeName, "Endpoint(", urlFormat, ", httpClient, options),")
 	}
 	f.P("}, nil")
 	f.P("}")
@@ -360,7 +353,7 @@ func (f *fileWriter) WriteEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 		Parameters:       parameters,
 		ParameterNames:   strings.Join(parameterNames, ", "),
 		ReturnValues:     signatureReturnValues,
-		PathSuffix:       pathSuffix,
+		PathSuffix:       strings.TrimLeft(pathSuffix, "/"),
 	}, nil
 }
 

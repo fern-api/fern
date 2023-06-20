@@ -5,7 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/path-params/fixtures/core"
-	url "net/url"
+	strings "strings"
 )
 
 type Service interface {
@@ -19,22 +19,11 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
-	getUserURL, err := url.JoinPath(baseURL, "/users/%v")
-	if err != nil {
-		return nil, err
-	}
-	getUserV2URL, err := url.JoinPath(baseURL, "/users/get/%v/info")
-	if err != nil {
-		return nil, err
-	}
-	getUserV3URL, err := url.JoinPath(baseURL, "/users/get/%v/info/%v")
-	if err != nil {
-		return nil, err
-	}
+	baseURL = strings.TrimRight(baseURL, "/")
 	return &client{
-		getUserEndpoint:   newGetUserEndpoint(getUserURL, httpClient, options),
-		getUserV2Endpoint: newGetUserV2Endpoint(getUserV2URL, httpClient, options),
-		getUserV3Endpoint: newGetUserV3Endpoint(getUserV3URL, httpClient, options),
+		getUserEndpoint:   newGetUserEndpoint(baseURL+"/"+"users/%v", httpClient, options),
+		getUserV2Endpoint: newGetUserV2Endpoint(baseURL+"/"+"users/get/%v/info", httpClient, options),
+		getUserV3Endpoint: newGetUserV3Endpoint(baseURL+"/"+"users/get/%v/info/%v", httpClient, options),
 	}, nil
 }
 

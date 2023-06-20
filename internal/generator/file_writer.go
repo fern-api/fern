@@ -48,8 +48,8 @@ func newFileWriter(
 	imports.Add("fmt")
 	imports.Add("io")
 	imports.Add("net/http")
-	imports.Add("net/url")
 	imports.Add("strconv")
+	imports.Add("strings")
 	imports.Add("time")
 
 	// Add an import to the core utilities package generated for
@@ -93,6 +93,7 @@ func (f *fileWriter) File() (*File, error) {
 
 	formatted, err := removeUnusedImports(f.filename, append(header.buffer.Bytes(), f.buffer.Bytes()...))
 	if err != nil {
+		fmt.Println(string(append(header.buffer.Bytes(), f.buffer.Bytes()...)))
 		return nil, err
 	}
 	return &File{

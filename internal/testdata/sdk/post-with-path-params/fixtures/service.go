@@ -5,7 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
-	url "net/url"
+	strings "strings"
 )
 
 type Service interface {
@@ -21,32 +21,13 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
-	setNameURL, err := url.JoinPath(baseURL, "/users/%v/set-name")
-	if err != nil {
-		return nil, err
-	}
-	setNameV2URL, err := url.JoinPath(baseURL, "/users/%v/set-name-v2")
-	if err != nil {
-		return nil, err
-	}
-	setNameV3URL, err := url.JoinPath(baseURL, "/users/%v/set-name-v3")
-	if err != nil {
-		return nil, err
-	}
-	setNameV4URL, err := url.JoinPath(baseURL, "/users/%v/set-name-v4")
-	if err != nil {
-		return nil, err
-	}
-	setNameV5URL, err := url.JoinPath(baseURL, "/users/%v/set-name-v5")
-	if err != nil {
-		return nil, err
-	}
+	baseURL = strings.TrimRight(baseURL, "/")
 	return &client{
-		setNameEndpoint:   newSetNameEndpoint(setNameURL, httpClient, options),
-		setNameV2Endpoint: newSetNameV2Endpoint(setNameV2URL, httpClient, options),
-		setNameV3Endpoint: newSetNameV3Endpoint(setNameV3URL, httpClient, options),
-		setNameV4Endpoint: newSetNameV4Endpoint(setNameV4URL, httpClient, options),
-		setNameV5Endpoint: newSetNameV5Endpoint(setNameV5URL, httpClient, options),
+		setNameEndpoint:   newSetNameEndpoint(baseURL+"/"+"users/%v/set-name", httpClient, options),
+		setNameV2Endpoint: newSetNameV2Endpoint(baseURL+"/"+"users/%v/set-name-v2", httpClient, options),
+		setNameV3Endpoint: newSetNameV3Endpoint(baseURL+"/"+"users/%v/set-name-v3", httpClient, options),
+		setNameV4Endpoint: newSetNameV4Endpoint(baseURL+"/"+"users/%v/set-name-v4", httpClient, options),
+		setNameV5Endpoint: newSetNameV5Endpoint(baseURL+"/"+"users/%v/set-name-v5", httpClient, options),
 	}, nil
 }
 

@@ -5,6 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/auth/fixtures/core"
+	strings "strings"
 )
 
 type Service interface {
@@ -16,6 +17,7 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
+	baseURL = strings.TrimRight(baseURL, "/")
 	return &client{
 		getEndpoint: newGetEndpoint(baseURL, httpClient, options),
 	}, nil

@@ -5,7 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
-	url "net/url"
+	strings "strings"
 )
 
 type Service interface {
@@ -30,77 +30,22 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
-	getTasksURL, err := url.JoinPath(baseURL, "tasks")
-	if err != nil {
-		return nil, err
-	}
-	postTasksURL, err := url.JoinPath(baseURL, "tasks")
-	if err != nil {
-		return nil, err
-	}
-	getTasksTaskIdURL, err := url.JoinPath(baseURL, "tasks/%v")
-	if err != nil {
-		return nil, err
-	}
-	patchTasksTaskIdURL, err := url.JoinPath(baseURL, "tasks/%v")
-	if err != nil {
-		return nil, err
-	}
-	deleteTasksTaskIdURL, err := url.JoinPath(baseURL, "tasks/%v")
-	if err != nil {
-		return nil, err
-	}
-	postTasksTaskIdRunURL, err := url.JoinPath(baseURL, "tasks/%v/run")
-	if err != nil {
-		return nil, err
-	}
-	postTasksBatchCreateURL, err := url.JoinPath(baseURL, "tasks/batch-create")
-	if err != nil {
-		return nil, err
-	}
-	postTasksBatchDeleteURL, err := url.JoinPath(baseURL, "tasks/batch-delete")
-	if err != nil {
-		return nil, err
-	}
-	getSchedulesURL, err := url.JoinPath(baseURL, "schedules")
-	if err != nil {
-		return nil, err
-	}
-	postSchedulesURL, err := url.JoinPath(baseURL, "schedules")
-	if err != nil {
-		return nil, err
-	}
-	getSchedulesScheduleIdURL, err := url.JoinPath(baseURL, "schedules/%v")
-	if err != nil {
-		return nil, err
-	}
-	patchSchedulesScheduleIdURL, err := url.JoinPath(baseURL, "schedules/%v")
-	if err != nil {
-		return nil, err
-	}
-	deleteSchedulesScheduleIdURL, err := url.JoinPath(baseURL, "schedules/%v")
-	if err != nil {
-		return nil, err
-	}
-	getSchedulesScheduleIdTasksURL, err := url.JoinPath(baseURL, "schedules/%v/tasks")
-	if err != nil {
-		return nil, err
-	}
+	baseURL = strings.TrimRight(baseURL, "/")
 	return &client{
-		getTasksEndpoint:                    newGetTasksEndpoint(getTasksURL, httpClient, options),
-		postTasksEndpoint:                   newPostTasksEndpoint(postTasksURL, httpClient, options),
-		getTasksTaskIdEndpoint:              newGetTasksTaskIdEndpoint(getTasksTaskIdURL, httpClient, options),
-		patchTasksTaskIdEndpoint:            newPatchTasksTaskIdEndpoint(patchTasksTaskIdURL, httpClient, options),
-		deleteTasksTaskIdEndpoint:           newDeleteTasksTaskIdEndpoint(deleteTasksTaskIdURL, httpClient, options),
-		postTasksTaskIdRunEndpoint:          newPostTasksTaskIdRunEndpoint(postTasksTaskIdRunURL, httpClient, options),
-		postTasksBatchCreateEndpoint:        newPostTasksBatchCreateEndpoint(postTasksBatchCreateURL, httpClient, options),
-		postTasksBatchDeleteEndpoint:        newPostTasksBatchDeleteEndpoint(postTasksBatchDeleteURL, httpClient, options),
-		getSchedulesEndpoint:                newGetSchedulesEndpoint(getSchedulesURL, httpClient, options),
-		postSchedulesEndpoint:               newPostSchedulesEndpoint(postSchedulesURL, httpClient, options),
-		getSchedulesScheduleIdEndpoint:      newGetSchedulesScheduleIdEndpoint(getSchedulesScheduleIdURL, httpClient, options),
-		patchSchedulesScheduleIdEndpoint:    newPatchSchedulesScheduleIdEndpoint(patchSchedulesScheduleIdURL, httpClient, options),
-		deleteSchedulesScheduleIdEndpoint:   newDeleteSchedulesScheduleIdEndpoint(deleteSchedulesScheduleIdURL, httpClient, options),
-		getSchedulesScheduleIdTasksEndpoint: newGetSchedulesScheduleIdTasksEndpoint(getSchedulesScheduleIdTasksURL, httpClient, options),
+		getTasksEndpoint:                    newGetTasksEndpoint(baseURL+"/"+"tasks", httpClient, options),
+		postTasksEndpoint:                   newPostTasksEndpoint(baseURL+"/"+"tasks", httpClient, options),
+		getTasksTaskIdEndpoint:              newGetTasksTaskIdEndpoint(baseURL+"/"+"tasks/%v", httpClient, options),
+		patchTasksTaskIdEndpoint:            newPatchTasksTaskIdEndpoint(baseURL+"/"+"tasks/%v", httpClient, options),
+		deleteTasksTaskIdEndpoint:           newDeleteTasksTaskIdEndpoint(baseURL+"/"+"tasks/%v", httpClient, options),
+		postTasksTaskIdRunEndpoint:          newPostTasksTaskIdRunEndpoint(baseURL+"/"+"tasks/%v/run", httpClient, options),
+		postTasksBatchCreateEndpoint:        newPostTasksBatchCreateEndpoint(baseURL+"/"+"tasks/batch-create", httpClient, options),
+		postTasksBatchDeleteEndpoint:        newPostTasksBatchDeleteEndpoint(baseURL+"/"+"tasks/batch-delete", httpClient, options),
+		getSchedulesEndpoint:                newGetSchedulesEndpoint(baseURL+"/"+"schedules", httpClient, options),
+		postSchedulesEndpoint:               newPostSchedulesEndpoint(baseURL+"/"+"schedules", httpClient, options),
+		getSchedulesScheduleIdEndpoint:      newGetSchedulesScheduleIdEndpoint(baseURL+"/"+"schedules/%v", httpClient, options),
+		patchSchedulesScheduleIdEndpoint:    newPatchSchedulesScheduleIdEndpoint(baseURL+"/"+"schedules/%v", httpClient, options),
+		deleteSchedulesScheduleIdEndpoint:   newDeleteSchedulesScheduleIdEndpoint(baseURL+"/"+"schedules/%v", httpClient, options),
+		getSchedulesScheduleIdTasksEndpoint: newGetSchedulesScheduleIdTasksEndpoint(baseURL+"/"+"schedules/%v/tasks", httpClient, options),
 	}, nil
 }
 

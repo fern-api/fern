@@ -5,7 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
-	url "net/url"
+	strings "strings"
 )
 
 type Service interface {
@@ -18,17 +18,10 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
-	getURL, err := url.JoinPath(baseURL, "%v")
-	if err != nil {
-		return nil, err
-	}
-	updateURL, err := url.JoinPath(baseURL, "%v")
-	if err != nil {
-		return nil, err
-	}
+	baseURL = strings.TrimRight(baseURL, "/")
 	return &client{
-		getEndpoint:    newGetEndpoint(getURL, httpClient, options),
-		updateEndpoint: newUpdateEndpoint(updateURL, httpClient, options),
+		getEndpoint:    newGetEndpoint(baseURL+"/"+"%v", httpClient, options),
+		updateEndpoint: newUpdateEndpoint(baseURL+"/"+"%v", httpClient, options),
 	}, nil
 }
 
