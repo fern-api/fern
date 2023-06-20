@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { CurlExample } from "../../examples/curl-example/CurlExample";
 import { JsonExample } from "../../examples/json-example/JsonExample";
@@ -7,8 +7,8 @@ import { useEndpointContext } from "../endpoint-context/useEndpointContext";
 
 export declare namespace EndpointExample {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
-        example: FernRegistryApiRead.ExampleEndpointCall.Raw;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+        example: FernRegistryApiRead.ExampleEndpointCall;
     }
 }
 

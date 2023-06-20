@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
@@ -8,7 +8,7 @@ import { MapTypeContextProvider } from "./MapTypeContextProvider";
 
 export declare namespace InternalTypeReferenceDefinitions {
     export interface Props {
-        type: FernRegistryApiRead.TypeReference.Raw;
+        type: FernRegistryApiRead.TypeReference;
         isCollapsible: boolean;
         className?: string;
     }

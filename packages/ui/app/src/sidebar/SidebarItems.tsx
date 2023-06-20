@@ -1,4 +1,4 @@
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
@@ -9,7 +9,7 @@ import { SidebarDocsSection } from "./SidebarDocsSection";
 export declare namespace SidebarItems {
     export interface Props {
         slug: string;
-        navigationItems: FernRegistryDocsRead.NavigationItem.Raw[];
+        navigationItems: FernRegistryDocsRead.NavigationItem[];
     }
 }
 

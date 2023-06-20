@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@fern-api/ui": "workspace:*",
-    "@fern-fern/registry-browser": "0.0.1004",
+    "@fern-fern/registry-browser": "0.0.1113",
     "next": "^13.4.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

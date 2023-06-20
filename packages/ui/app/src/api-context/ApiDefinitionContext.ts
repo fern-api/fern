@@ -1,5 +1,5 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import React from "react";
 
 export const ApiDefinitionContext = React.createContext<() => ApiDefinitionContextValue>(() => {
@@ -7,11 +7,11 @@ export const ApiDefinitionContext = React.createContext<() => ApiDefinitionConte
 });
 
 export interface ApiDefinitionContextValue {
-    apiDefinition: FernRegistryApiRead.ApiDefinition.Raw;
-    apiSection: FernRegistryDocsRead.ApiSection.Raw;
+    apiDefinition: FernRegistryApiRead.ApiDefinition;
+    apiSection: FernRegistryDocsRead.ApiSection;
     apiSlug: string;
-    resolveTypeById: (typeId: FernRegistryApiRead.TypeId.Raw) => FernRegistryApiRead.TypeDefinition.Raw;
+    resolveTypeById: (typeId: FernRegistryApiRead.TypeId) => FernRegistryApiRead.TypeDefinition;
     resolveSubpackageById: (
-        subpackageId: FernRegistryApiRead.SubpackageId.Raw
-    ) => FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
+        subpackageId: FernRegistryApiRead.SubpackageId
+    ) => FernRegistryApiRead.ApiDefinitionSubpackage;
 }

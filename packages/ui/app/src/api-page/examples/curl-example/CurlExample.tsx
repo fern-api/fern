@@ -1,5 +1,5 @@
 import { assertNever, assertNeverNoThrow, noop } from "@fern-api/core-utils";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React, { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
 import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
@@ -16,8 +16,8 @@ import { CurlParameter } from "./CurlParameter";
 
 export declare namespace CurlExample {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
-        example: FernRegistryApiRead.ExampleEndpointCall.Raw;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+        example: FernRegistryApiRead.ExampleEndpointCall;
         selectedProperty: JsonPropertyPath | undefined;
         parent: HTMLElement | undefined;
     }

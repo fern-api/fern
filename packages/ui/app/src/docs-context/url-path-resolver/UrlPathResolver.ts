@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { assertNever } from "@fern-api/core-utils";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 
 export type ResolvedUrlPath =
@@ -16,60 +16,60 @@ export type ResolvedUrlPath =
 export declare namespace ResolvedUrlPath {
     export interface Section {
         type: "section";
-        section: FernRegistryDocsRead.DocsSection.Raw;
+        section: FernRegistryDocsRead.DocsSection;
         slug: string;
     }
 
     export interface Page {
         type: "page";
-        page: FernRegistryDocsRead.PageMetadata.Raw;
+        page: FernRegistryDocsRead.PageMetadata;
         slug: string;
     }
 
     export interface Api {
         type: "api";
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
         slug: string;
     }
 
     export interface ClientLibraries {
         type: "clientLibraries";
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
         slug: string;
-        artifacts: FernRegistryDocsRead.ApiArtifacts.Raw;
+        artifacts: FernRegistryDocsRead.ApiArtifacts;
     }
 
     export interface TopLevelEndpoint {
         type: "topLevelEndpoint";
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
         slug: string;
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 
     export interface ApiSubpackage {
         type: "apiSubpackage";
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
         slug: string;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 
     export interface Endpoint {
         type: "endpoint";
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
         slug: string;
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
-        parent: FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+        parent: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 }
 
 export class UrlPathResolverImpl {
     private urlSlugTree: UrlSlugTree;
 
-    constructor(docsDefinition: FernRegistryDocsRead.DocsDefinition.Raw) {
+    constructor(docsDefinition: FernRegistryDocsRead.DocsDefinition) {
         console.log(Date.now(), "Building UrlSlugTree");
         this.urlSlugTree = new UrlSlugTree(docsDefinition);
         console.log(Date.now(), "Built UrlSlugTree");

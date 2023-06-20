@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { App } from "@fern-api/ui";
 import { FernRegistryClient } from "@fern-fern/registry-browser";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v2/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
 import { GetServerSideProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
@@ -14,7 +14,7 @@ const REGISTRY_SERVICE = new FernRegistryClient({
 
 export declare namespace Docs {
     export interface Props {
-        docs: FernRegistryDocsRead.LoadDocsForUrlResponse.Raw;
+        docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
         pathname: string;
     }
 }
@@ -53,17 +53,9 @@ export const getServerSideProps: GetServerSideProps<Docs.Props> = async (context
         return { notFound: true };
     }
 
-    console.log(Date.now(), "Serializing docs");
-    const docsRaw = await FernRegistryDocsRead.LoadDocsForUrlResponse.jsonOrThrow(docs.body, {
-        unrecognizedObjectKeys: "passthrough",
-        allowUnrecognizedEnumValues: true,
-        allowUnrecognizedUnionMembers: true,
-    });
-    console.log(Date.now(), "Serialized docs");
-
     return {
         props: {
-            docs: docsRaw,
+            docs: docs.body,
             pathname: context.query.slug != null ? (context.query.slug as string[]).join("/") : "",
         },
     };

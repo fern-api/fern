@@ -1,12 +1,12 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import React, { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
 
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
     }>;
 }
@@ -20,14 +20,14 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
     const apiDefinition = resolveApi(apiSection.api);
 
     const resolveSubpackageById = useCallback(
-        (subpackageId: FernRegistryApiRead.SubpackageId.Raw): FernRegistryApiRead.ApiDefinitionSubpackage.Raw => {
+        (subpackageId: FernRegistryApiRead.SubpackageId): FernRegistryApiRead.ApiDefinitionSubpackage => {
             return resolveSubpackage(apiDefinition, subpackageId);
         },
         [apiDefinition]
     );
 
     const resolveTypeById = useCallback(
-        (typeId: FernRegistryApiRead.TypeId.Raw): FernRegistryApiRead.TypeDefinition.Raw => {
+        (typeId: FernRegistryApiRead.TypeId): FernRegistryApiRead.TypeDefinition => {
             const type = apiDefinition.types[typeId];
             if (type == null) {
                 throw new Error("Type does not exist");
@@ -52,9 +52,9 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
 };
 
 export function resolveSubpackage(
-    apiDefinition: FernRegistryApiRead.ApiDefinition.Raw,
-    subpackageId: FernRegistryApiRead.SubpackageId.Raw
-): FernRegistryApiRead.ApiDefinitionSubpackage.Raw {
+    apiDefinition: FernRegistryApiRead.ApiDefinition,
+    subpackageId: FernRegistryApiRead.SubpackageId
+): FernRegistryApiRead.ApiDefinitionSubpackage {
     const subpackage = apiDefinition.subpackages[subpackageId];
     if (subpackage == null) {
         throw new Error("Subpackage does not exist");

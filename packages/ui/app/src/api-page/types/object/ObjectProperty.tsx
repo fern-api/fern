@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
@@ -15,7 +15,7 @@ import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 
 export declare namespace ObjectProperty {
     export interface Props {
-        property: FernRegistryApiRead.ObjectProperty.Raw;
+        property: FernRegistryApiRead.ObjectProperty;
     }
 }
 

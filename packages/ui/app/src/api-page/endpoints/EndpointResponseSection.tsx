@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Description } from "../types/Description";
@@ -8,7 +8,7 @@ import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointResponseSection {
     export interface Props {
-        httpResponse: FernRegistryApiRead.HttpResponse.Raw;
+        httpResponse: FernRegistryApiRead.HttpResponse;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
     }
 }

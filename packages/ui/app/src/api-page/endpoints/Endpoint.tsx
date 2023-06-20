@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useEffect } from "react";
 import { useDocsContext } from "../../docs-context/useDocsContext";
 import { useApiPageContext } from "../api-page-context/useApiPageContext";
@@ -8,7 +8,7 @@ import { EndpointContent } from "./EndpointContent";
 
 export declare namespace Endpoint {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
         slug: string;
     }
 }

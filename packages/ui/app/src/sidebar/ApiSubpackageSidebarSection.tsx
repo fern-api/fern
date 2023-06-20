@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useMemo } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
@@ -11,7 +11,7 @@ import { SidebarGroup } from "./SidebarGroup";
 
 export declare namespace ApiSubpackageSidebarSection {
     export interface Props {
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         slug: string;
         isFirstItemInApi?: boolean;
     }

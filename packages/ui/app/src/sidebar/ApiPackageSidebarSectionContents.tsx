@@ -1,11 +1,11 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { ApiSubpackages } from "./ApiSubpackages";
 import { EndpointSidebarItem } from "./EndpointSidebarItem";
 
 export declare namespace ApiPackageSidebarSectionContents {
     export interface Props {
-        package: FernRegistryApiRead.ApiDefinitionPackage.Raw;
+        package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
     }
 }

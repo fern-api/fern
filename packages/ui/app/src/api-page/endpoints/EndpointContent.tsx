@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import React, { useCallback, useMemo, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
@@ -20,7 +20,7 @@ import { QueryParametersSection } from "./QueryParametersSection";
 
 export declare namespace EndpointContent {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
         setContainerRef: (ref: HTMLElement | null) => void;
     }
 }

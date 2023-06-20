@@ -1,11 +1,11 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useMemo } from "react";
 import { DefinitionItemExamples, Example } from "../../examples/DefinitionItemExamples";
 import { EndpointExample } from "./EndpointExample";
 
 export declare namespace EndpointExamples {
     export interface Props {
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
     }
 }
 

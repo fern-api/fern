@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { noop, size } from "lodash-es";
 import { resolveSubpackage } from "../../api-context/ApiDefinitionContextProvider";
 import { areApiArtifactsNonEmpty } from "../../api-page/artifacts/areApiArtifactsNonEmpty";
@@ -12,7 +12,7 @@ export class UrlSlugTree {
     private root: Record<UrlSlug, UrlSlugTreeNode>;
     private nodeToNeighbors: Record<UrlSlug, UrlSlugNeighbors> = {};
 
-    constructor(private readonly docsDefinition: FernRegistryDocsRead.DocsDefinition.Raw) {
+    constructor(private readonly docsDefinition: FernRegistryDocsRead.DocsDefinition) {
         this.root = this.constructSlugToNodeRecord({
             items: docsDefinition.config.navigation.items,
             parentSlug: "",
@@ -101,7 +101,7 @@ export class UrlSlugTree {
         items,
         parentSlug,
     }: {
-        items: FernRegistryDocsRead.NavigationItem.Raw[];
+        items: FernRegistryDocsRead.NavigationItem[];
         parentSlug: string;
     }): Record<UrlSlug, UrlSlugTreeNode> {
         return items.reduce<Record<UrlSlug, UrlSlugTreeNode>>((acc, item) => {
@@ -134,7 +134,7 @@ export class UrlSlugTree {
         section,
         slug,
     }: {
-        section: FernRegistryDocsRead.DocsSection.Raw;
+        section: FernRegistryDocsRead.DocsSection;
         slug: string;
     }): UrlSlugTreeNode.Section {
         return {
@@ -149,7 +149,7 @@ export class UrlSlugTree {
         page,
         slug,
     }: {
-        page: FernRegistryDocsRead.PageMetadata.Raw;
+        page: FernRegistryDocsRead.PageMetadata;
         slug: string;
     }): UrlSlugTreeNode.Page {
         return {
@@ -163,7 +163,7 @@ export class UrlSlugTree {
         apiSection,
         slug,
     }: {
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
         slug: string;
     }): UrlSlugTreeNode.Api {
         const apiDefinition = this.docsDefinition.apis[apiSection.api];
@@ -189,9 +189,9 @@ export class UrlSlugTree {
         slug,
         apiDefinition,
     }: {
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
         slug: string;
-        apiDefinition: FernRegistryApiRead.ApiDefinition.Raw;
+        apiDefinition: FernRegistryApiRead.ApiDefinition;
     }): UrlSlugTreeNode.Api["children"] {
         const children: UrlSlugTreeNode.Api["children"] = {};
 
@@ -239,9 +239,9 @@ export class UrlSlugTree {
         slugInsideApi,
         isFirstItemInApi,
     }: {
-        apiDefinition: FernRegistryApiRead.ApiDefinition.Raw;
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
-        package_: FernRegistryApiRead.ApiDefinitionPackage.Raw;
+        apiDefinition: FernRegistryApiRead.ApiDefinition;
+        apiSection: FernRegistryDocsRead.ApiSection;
+        package_: FernRegistryApiRead.ApiDefinitionPackage;
         apiSlug: string;
         slugInsideApi: string;
         isFirstItemInApi: boolean;
@@ -272,8 +272,8 @@ export class UrlSlugTree {
         isFirstItemInApi,
         apiSlug,
     }: {
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
-        topLevelEndpoint: FernRegistryApiRead.EndpointDefinition.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
+        topLevelEndpoint: FernRegistryApiRead.EndpointDefinition;
         isFirstItemInApi: boolean;
         apiSlug: string;
     }): UrlSlugTreeNode.TopLevelEndpoint {
@@ -295,9 +295,9 @@ export class UrlSlugTree {
         slugInsideApi,
         isFirstItemInApi,
     }: {
-        apiDefinition: FernRegistryApiRead.ApiDefinition.Raw;
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
+        apiDefinition: FernRegistryApiRead.ApiDefinition;
+        apiSection: FernRegistryDocsRead.ApiSection;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         apiSlug: string;
         slugInsideApi: string;
         isFirstItemInApi: boolean;
@@ -334,8 +334,8 @@ export class UrlSlugTree {
         apiSlug,
         slugInsideApi,
     }: {
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         apiSlug: string;
         slugInsideApi: string;
     }): Record<UrlSlug, UrlSlugTreeNode.Endpoint> {
@@ -358,11 +358,11 @@ export class UrlSlugTree {
         parent,
         endpoint,
     }: {
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
         apiSlug: string;
         slugInsideApi: string;
-        parent: FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
+        parent: FernRegistryApiRead.ApiDefinitionSubpackage;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
     }): UrlSlugTreeNode.Endpoint {
         return {
             type: "endpoint",
@@ -413,13 +413,13 @@ export type UrlSlugTreeNode =
 export declare namespace UrlSlugTreeNode {
     export interface Section extends BaseNode {
         type: "section";
-        section: FernRegistryDocsRead.DocsSection.Raw;
+        section: FernRegistryDocsRead.DocsSection;
         children: Record<UrlSlug, UrlSlugTreeNode>;
     }
 
     export interface Page extends BaseNode {
         type: "page";
-        page: FernRegistryDocsRead.PageMetadata.Raw;
+        page: FernRegistryDocsRead.PageMetadata;
     }
 
     export interface Api extends BaseNode, BaseApiNode {
@@ -429,26 +429,26 @@ export declare namespace UrlSlugTreeNode {
 
     export interface ClientLibraries extends BaseNode, BaseApiNode {
         type: "clientLibraries";
-        artifacts: FernRegistryDocsRead.ApiArtifacts.Raw;
+        artifacts: FernRegistryDocsRead.ApiArtifacts;
     }
 
     export interface TopLevelEndpoint extends BaseNode, BaseApiNode {
         type: "topLevelEndpoint";
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
         isFirstItemInApi: boolean;
     }
 
     export interface ApiSubpackage extends BaseNode, BaseApiNode {
         type: "apiSubpackage";
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
         isFirstItemInApi: boolean;
         children: Record<UrlSlug, ApiSubpackage | Endpoint>;
     }
 
     export interface Endpoint extends BaseNode, BaseApiNode {
         type: "endpoint";
-        endpoint: FernRegistryApiRead.EndpointDefinition.Raw;
-        parent: FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
+        endpoint: FernRegistryApiRead.EndpointDefinition;
+        parent: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 
     export interface BaseNode {
@@ -457,7 +457,7 @@ export declare namespace UrlSlugTreeNode {
 
     export interface BaseApiNode {
         apiSlug: string;
-        apiSection: FernRegistryDocsRead.ApiSection.Raw;
+        apiSection: FernRegistryDocsRead.ApiSection;
     }
 }
 

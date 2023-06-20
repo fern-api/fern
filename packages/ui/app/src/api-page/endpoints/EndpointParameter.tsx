@@ -1,4 +1,4 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { Markdown } from "../markdown/Markdown";
@@ -9,7 +9,7 @@ export declare namespace EndpointParameter {
     export interface Props {
         name: string;
         description?: string;
-        type: FernRegistryApiRead.TypeReference.Raw;
+        type: FernRegistryApiRead.TypeReference;
     }
 }
 

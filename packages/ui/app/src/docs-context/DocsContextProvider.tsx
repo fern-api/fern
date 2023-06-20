@@ -1,5 +1,6 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
+import { FernRegistry } from "@fern-fern/registry-browser";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { DocsContext, DocsContextValue } from "./DocsContext";
@@ -8,7 +9,7 @@ import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
-        docsDefinition: FernRegistryDocsRead.DocsDefinition.Raw;
+        docsDefinition: FernRegistryDocsRead.DocsDefinition;
         basePath: string | undefined;
         pathname: string;
     }>;
@@ -50,7 +51,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     );
 
     const resolveApi = useCallback(
-        (apiId: string): FernRegistryApiRead.ApiDefinition.Raw => {
+        (apiId: FernRegistry.ApiDefinitionId): FernRegistryApiRead.ApiDefinition => {
             const api = docsDefinition.apis[apiId];
             if (api == null) {
                 throw new Error("API does not exist: " + apiId);
@@ -61,7 +62,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     );
 
     const resolvePage = useCallback(
-        (pageId: FernRegistryDocsRead.PageId.Raw): FernRegistryDocsRead.PageContent.Raw => {
+        (pageId: FernRegistryDocsRead.PageId): FernRegistryDocsRead.PageContent => {
             const page = docsDefinition.pages[pageId];
             if (page == null) {
                 throw new Error("Page does not exist: " + pageId);
@@ -72,7 +73,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     );
 
     const resolveFile = useCallback(
-        (fileId: FernRegistryDocsRead.FileId.Raw): FernRegistryDocsRead.Url.Raw => {
+        (fileId: FernRegistryDocsRead.FileId): FernRegistryDocsRead.Url => {
             const file = docsDefinition.files[fileId];
             if (file == null) {
                 throw new Error("File does not exist: " + fileId);

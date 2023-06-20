@@ -1,12 +1,12 @@
 import { NonIdealState } from "@blueprintjs/core";
-import { assertNever } from "@fern-api/core-utils";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
+import { assertNeverNoThrow } from "@fern-api/core-utils";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { Redirect } from "./Redirect";
 
 export declare namespace RedirectToFirstNavigationItem {
     export interface Props {
-        items: FernRegistryDocsRead.NavigationItem.Raw[];
+        items: FernRegistryDocsRead.NavigationItem[];
         slug: string;
     }
 }
@@ -26,7 +26,7 @@ export const RedirectToFirstNavigationItem: React.FC<RedirectToFirstNavigationIt
                     />
                 );
             default:
-                assertNever(firstItem);
+                assertNeverNoThrow(firstItem);
         }
     }
     return <NonIdealState title="No content" />;

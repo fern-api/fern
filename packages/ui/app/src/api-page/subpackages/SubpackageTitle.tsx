@@ -1,10 +1,10 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { startCase } from "lodash-es";
 import { useMemo } from "react";
 
 export declare namespace SubpackageTitle {
     export interface Props {
-        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage.Raw;
+        subpackage: FernRegistryApiRead.ApiDefinitionSubpackage;
     }
 }
 

@@ -1,10 +1,10 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
 import { ReferencedTypePreviewPart } from "./ReferencedTypePreviewPart";
 
 export declare namespace TypeShorthand {
     export interface Props {
-        type: FernRegistryApiRead.TypeReference.Raw;
+        type: FernRegistryApiRead.TypeReference;
         plural: boolean;
         withArticle?: boolean;
     }

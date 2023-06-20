@@ -1,11 +1,11 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import { TypeDefinitionContextProvider } from "../context/TypeDefinitionContextProvider";
 import { InternalTypeReferenceDefinitions } from "./InternalTypeReferenceDefinitions";
 
 export declare namespace TypeReferenceDefinitions {
     export interface Props {
-        type: FernRegistryApiRead.TypeReference.Raw;
+        type: FernRegistryApiRead.TypeReference;
         isCollapsible: boolean;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         className?: string;

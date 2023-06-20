@@ -1,7 +1,7 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { useBooleanState, useIsHovering } from "@fern-api/react-commons";
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/serialization/resources/api/resources/v1/resources/read";
+import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
@@ -20,7 +20,7 @@ import { TypeDefinitionDetails } from "./TypeDefinitionDetails";
 
 export declare namespace InternalTypeDefinition {
     export interface Props {
-        typeShape: FernRegistryApiRead.TypeShape.Raw;
+        typeShape: FernRegistryApiRead.TypeShape;
         isCollapsible: boolean;
     }
 }

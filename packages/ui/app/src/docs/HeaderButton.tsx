@@ -1,10 +1,10 @@
 import { assertNeverNoThrow } from "@fern-api/core-utils";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/serialization/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import classNames from "classnames";
 
 export declare namespace HeaderButton {
     export interface Props {
-        navbarLink: FernRegistryDocsRead.NavbarLink.Raw;
+        navbarLink: FernRegistryDocsRead.NavbarLink;
     }
 }
 
@@ -22,7 +22,7 @@ export const HeaderButton: React.FC<HeaderButton.Props> = ({ navbarLink }) => {
 
 const DEFAULT_STYLE = "!text-accentPrimary/80 hover:!text-accentPrimary cursor-pointer transition";
 
-function getClassesForStyle(style: FernRegistryDocsRead.NavbarLinkStyle.Raw): string {
+function getClassesForStyle(style: FernRegistryDocsRead.NavbarLinkStyle): string {
     switch (style) {
         case "PRIMARY":
             return DEFAULT_STYLE;
