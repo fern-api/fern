@@ -78,7 +78,7 @@ export function wrapEnum({
 function generateEnumNameFromValue(value: string): string {
     const maybeParsedNumber = replaceStartingNumber(value);
     if (maybeParsedNumber != null) {
-        return maybeParsedNumber;
+        return upperFirst(camelCase(maybeParsedNumber));
     } else {
         if (value.toLowerCase() === "n/a") {
             return "NOT_APPLICABLE";
@@ -90,7 +90,7 @@ function generateEnumNameFromValue(value: string): string {
 const ENUM_VALUE_THAT_BEGINS_WITH_NUMBER = /(\d+)(\w+)/;
 function replaceStartingNumber(input: string): string | undefined {
     const matches = input.match(ENUM_VALUE_THAT_BEGINS_WITH_NUMBER);
-    if (matches && matches.length === 3 && matches[1] != null) {
+    if (matches && matches.length >= 1 && matches[1] != null) {
         const numericPart = matches[1];
         const nonNumericPart = matches[2];
         const parsedNumber = parseFloat(numericPart);
