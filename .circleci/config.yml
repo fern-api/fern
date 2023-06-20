@@ -24,13 +24,13 @@ jobs:
           command: |
             projectVersion=$(./scripts/git-version.sh)
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.model -t fernapi/fern-go-model:${projectVersion} . --push
+            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.model -t fernapi/fern-go-model:${projectVersion} --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} . --push
       - run:
           name: Publish SDK Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk:${projectVersion} . --push
+            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk:${projectVersion} --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} . --push
 
 workflows:
   build:
@@ -50,3 +50,4 @@ workflows:
             - test
           context:
             - docker-hub
+            - github
