@@ -177,7 +177,7 @@ class LightweightStackframeInformation(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(
+    def _pre_validate_lightweight_stackframe_information(
         cls, values: LightweightStackframeInformation.Partial
     ) -> LightweightStackframeInformation.Partial:
         for validator in LightweightStackframeInformation.Validators._pre_validators:
@@ -185,7 +185,7 @@ class LightweightStackframeInformation(pydantic.BaseModel):
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(
+    def _post_validate_lightweight_stackframe_information(
         cls, values: LightweightStackframeInformation.Partial
     ) -> LightweightStackframeInformation.Partial:
         for validator in LightweightStackframeInformation.Validators._post_validators:

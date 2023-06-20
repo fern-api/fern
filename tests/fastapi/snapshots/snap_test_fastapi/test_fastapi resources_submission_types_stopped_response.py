@@ -117,13 +117,13 @@ class StoppedResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: StoppedResponse.Partial) -> StoppedResponse.Partial:
+    def _pre_validate_stopped_response(cls, values: StoppedResponse.Partial) -> StoppedResponse.Partial:
         for validator in StoppedResponse.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: StoppedResponse.Partial) -> StoppedResponse.Partial:
+    def _post_validate_stopped_response(cls, values: StoppedResponse.Partial) -> StoppedResponse.Partial:
         for validator in StoppedResponse.Validators._post_validators:
             values = validator(values)
         return values

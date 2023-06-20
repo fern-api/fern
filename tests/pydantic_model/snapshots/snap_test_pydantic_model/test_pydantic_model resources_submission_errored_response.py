@@ -157,13 +157,13 @@ class ErroredResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: ErroredResponse.Partial) -> ErroredResponse.Partial:
+    def _pre_validate_errored_response(cls, values: ErroredResponse.Partial) -> ErroredResponse.Partial:
         for validator in ErroredResponse.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: ErroredResponse.Partial) -> ErroredResponse.Partial:
+    def _post_validate_errored_response(cls, values: ErroredResponse.Partial) -> ErroredResponse.Partial:
         for validator in ErroredResponse.Validators._post_validators:
             values = validator(values)
         return values

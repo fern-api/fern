@@ -256,13 +256,13 @@ class BasicCustomFiles(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
+    def _pre_validate_v_2_basic_custom_files(cls, values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
         for validator in BasicCustomFiles.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
+    def _post_validate_v_2_basic_custom_files(cls, values: BasicCustomFiles.Partial) -> BasicCustomFiles.Partial:
         for validator in BasicCustomFiles.Validators._post_validators:
             values = validator(values)
         return values

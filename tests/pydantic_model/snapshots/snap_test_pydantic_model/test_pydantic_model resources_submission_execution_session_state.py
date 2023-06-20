@@ -347,13 +347,17 @@ class ExecutionSessionState(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: ExecutionSessionState.Partial) -> ExecutionSessionState.Partial:
+    def _pre_validate_execution_session_state(
+        cls, values: ExecutionSessionState.Partial
+    ) -> ExecutionSessionState.Partial:
         for validator in ExecutionSessionState.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: ExecutionSessionState.Partial) -> ExecutionSessionState.Partial:
+    def _post_validate_execution_session_state(
+        cls, values: ExecutionSessionState.Partial
+    ) -> ExecutionSessionState.Partial:
         for validator in ExecutionSessionState.Validators._post_validators:
             values = validator(values)
         return values

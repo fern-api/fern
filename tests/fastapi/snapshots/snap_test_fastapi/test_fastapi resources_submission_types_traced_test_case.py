@@ -158,13 +158,13 @@ class TracedTestCase(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: TracedTestCase.Partial) -> TracedTestCase.Partial:
+    def _pre_validate_traced_test_case(cls, values: TracedTestCase.Partial) -> TracedTestCase.Partial:
         for validator in TracedTestCase.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: TracedTestCase.Partial) -> TracedTestCase.Partial:
+    def _post_validate_traced_test_case(cls, values: TracedTestCase.Partial) -> TracedTestCase.Partial:
         for validator in TracedTestCase.Validators._post_validators:
             values = validator(values)
         return values

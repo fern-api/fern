@@ -125,13 +125,17 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: GetDefaultStarterFilesResponse.Partial) -> GetDefaultStarterFilesResponse.Partial:
+    def _pre_validate_get_default_starter_files_response(
+        cls, values: GetDefaultStarterFilesResponse.Partial
+    ) -> GetDefaultStarterFilesResponse.Partial:
         for validator in GetDefaultStarterFilesResponse.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: GetDefaultStarterFilesResponse.Partial) -> GetDefaultStarterFilesResponse.Partial:
+    def _post_validate_get_default_starter_files_response(
+        cls, values: GetDefaultStarterFilesResponse.Partial
+    ) -> GetDefaultStarterFilesResponse.Partial:
         for validator in GetDefaultStarterFilesResponse.Validators._post_validators:
             values = validator(values)
         return values

@@ -209,9 +209,14 @@ class FernAwarePydanticModel:
                 root_type=root_type,
             )
         else:
+            unique_name = []
+            if self._type_name is not None:
+                unique_name = [path.snake_case.unsafe_name for path in self._type_name.fern_filepath.package_path]
+                unique_name.append(self._type_name.name.snake_case.unsafe_name)
             return PydanticValidatorsGenerator(
                 model=self._pydantic_model,
                 extended_pydantic_fields=self._get_extended_pydantic_fields(self._extends or []),
+                unique_name=unique_name,
             )
 
     def _get_extended_pydantic_fields(self, extends: Sequence[ir_types.DeclaredTypeName]) -> List[PydanticField]:

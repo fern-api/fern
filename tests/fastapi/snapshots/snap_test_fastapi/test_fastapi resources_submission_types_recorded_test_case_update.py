@@ -166,13 +166,17 @@ class RecordedTestCaseUpdate(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: RecordedTestCaseUpdate.Partial) -> RecordedTestCaseUpdate.Partial:
+    def _pre_validate_recorded_test_case_update(
+        cls, values: RecordedTestCaseUpdate.Partial
+    ) -> RecordedTestCaseUpdate.Partial:
         for validator in RecordedTestCaseUpdate.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: RecordedTestCaseUpdate.Partial) -> RecordedTestCaseUpdate.Partial:
+    def _post_validate_recorded_test_case_update(
+        cls, values: RecordedTestCaseUpdate.Partial
+    ) -> RecordedTestCaseUpdate.Partial:
         for validator in RecordedTestCaseUpdate.Validators._post_validators:
             values = validator(values)
         return values

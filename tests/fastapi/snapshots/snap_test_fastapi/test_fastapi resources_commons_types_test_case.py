@@ -141,13 +141,13 @@ class TestCase(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: TestCase.Partial) -> TestCase.Partial:
+    def _pre_validate_test_case(cls, values: TestCase.Partial) -> TestCase.Partial:
         for validator in TestCase.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: TestCase.Partial) -> TestCase.Partial:
+    def _post_validate_test_case(cls, values: TestCase.Partial) -> TestCase.Partial:
         for validator in TestCase.Validators._post_validators:
             values = validator(values)
         return values

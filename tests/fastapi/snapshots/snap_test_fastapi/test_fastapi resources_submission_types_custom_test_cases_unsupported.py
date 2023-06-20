@@ -168,13 +168,17 @@ class CustomTestCasesUnsupported(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: CustomTestCasesUnsupported.Partial) -> CustomTestCasesUnsupported.Partial:
+    def _pre_validate_custom_test_cases_unsupported(
+        cls, values: CustomTestCasesUnsupported.Partial
+    ) -> CustomTestCasesUnsupported.Partial:
         for validator in CustomTestCasesUnsupported.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: CustomTestCasesUnsupported.Partial) -> CustomTestCasesUnsupported.Partial:
+    def _post_validate_custom_test_cases_unsupported(
+        cls, values: CustomTestCasesUnsupported.Partial
+    ) -> CustomTestCasesUnsupported.Partial:
         for validator in CustomTestCasesUnsupported.Validators._post_validators:
             values = validator(values)
         return values

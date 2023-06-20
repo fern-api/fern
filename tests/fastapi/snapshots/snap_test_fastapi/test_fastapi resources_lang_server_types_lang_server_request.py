@@ -111,13 +111,13 @@ class LangServerRequest(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: LangServerRequest.Partial) -> LangServerRequest.Partial:
+    def _pre_validate_lang_server_request(cls, values: LangServerRequest.Partial) -> LangServerRequest.Partial:
         for validator in LangServerRequest.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: LangServerRequest.Partial) -> LangServerRequest.Partial:
+    def _post_validate_lang_server_request(cls, values: LangServerRequest.Partial) -> LangServerRequest.Partial:
         for validator in LangServerRequest.Validators._post_validators:
             values = validator(values)
         return values

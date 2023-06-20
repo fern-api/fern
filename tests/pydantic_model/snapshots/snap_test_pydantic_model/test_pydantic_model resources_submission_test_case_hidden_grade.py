@@ -111,13 +111,13 @@ class TestCaseHiddenGrade(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: TestCaseHiddenGrade.Partial) -> TestCaseHiddenGrade.Partial:
+    def _pre_validate_test_case_hidden_grade(cls, values: TestCaseHiddenGrade.Partial) -> TestCaseHiddenGrade.Partial:
         for validator in TestCaseHiddenGrade.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: TestCaseHiddenGrade.Partial) -> TestCaseHiddenGrade.Partial:
+    def _post_validate_test_case_hidden_grade(cls, values: TestCaseHiddenGrade.Partial) -> TestCaseHiddenGrade.Partial:
         for validator in TestCaseHiddenGrade.Validators._post_validators:
             values = validator(values)
         return values

@@ -191,13 +191,13 @@ class SubmissionFileInfo(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: SubmissionFileInfo.Partial) -> SubmissionFileInfo.Partial:
+    def _pre_validate_submission_file_info(cls, values: SubmissionFileInfo.Partial) -> SubmissionFileInfo.Partial:
         for validator in SubmissionFileInfo.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: SubmissionFileInfo.Partial) -> SubmissionFileInfo.Partial:
+    def _post_validate_submission_file_info(cls, values: SubmissionFileInfo.Partial) -> SubmissionFileInfo.Partial:
         for validator in SubmissionFileInfo.Validators._post_validators:
             values = validator(values)
         return values

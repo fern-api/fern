@@ -217,13 +217,13 @@ class GeneratedFiles(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
+    def _pre_validate_v_2_generated_files(cls, values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
         for validator in GeneratedFiles.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
+    def _post_validate_v_2_generated_files(cls, values: GeneratedFiles.Partial) -> GeneratedFiles.Partial:
         for validator in GeneratedFiles.Validators._post_validators:
             values = validator(values)
         return values

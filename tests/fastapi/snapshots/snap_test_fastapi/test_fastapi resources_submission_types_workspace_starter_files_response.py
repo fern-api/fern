@@ -125,13 +125,17 @@ class WorkspaceStarterFilesResponse(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: WorkspaceStarterFilesResponse.Partial) -> WorkspaceStarterFilesResponse.Partial:
+    def _pre_validate_workspace_starter_files_response(
+        cls, values: WorkspaceStarterFilesResponse.Partial
+    ) -> WorkspaceStarterFilesResponse.Partial:
         for validator in WorkspaceStarterFilesResponse.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: WorkspaceStarterFilesResponse.Partial) -> WorkspaceStarterFilesResponse.Partial:
+    def _post_validate_workspace_starter_files_response(
+        cls, values: WorkspaceStarterFilesResponse.Partial
+    ) -> WorkspaceStarterFilesResponse.Partial:
         for validator in WorkspaceStarterFilesResponse.Validators._post_validators:
             values = validator(values)
         return values

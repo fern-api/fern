@@ -130,7 +130,7 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(
+    def _pre_validate_v_2_v_3_get_generated_test_case_template_file_request(
         cls, values: GetGeneratedTestCaseTemplateFileRequest.Partial
     ) -> GetGeneratedTestCaseTemplateFileRequest.Partial:
         for validator in GetGeneratedTestCaseTemplateFileRequest.Validators._pre_validators:
@@ -138,7 +138,7 @@ class GetGeneratedTestCaseTemplateFileRequest(pydantic.BaseModel):
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(
+    def _post_validate_v_2_v_3_get_generated_test_case_template_file_request(
         cls, values: GetGeneratedTestCaseTemplateFileRequest.Partial
     ) -> GetGeneratedTestCaseTemplateFileRequest.Partial:
         for validator in GetGeneratedTestCaseTemplateFileRequest.Validators._post_validators:

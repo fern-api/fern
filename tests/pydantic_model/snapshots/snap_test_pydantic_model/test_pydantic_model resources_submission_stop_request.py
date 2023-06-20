@@ -113,13 +113,13 @@ class StopRequest(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: StopRequest.Partial) -> StopRequest.Partial:
+    def _pre_validate_stop_request(cls, values: StopRequest.Partial) -> StopRequest.Partial:
         for validator in StopRequest.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: StopRequest.Partial) -> StopRequest.Partial:
+    def _post_validate_stop_request(cls, values: StopRequest.Partial) -> StopRequest.Partial:
         for validator in StopRequest.Validators._post_validators:
             values = validator(values)
         return values

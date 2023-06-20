@@ -331,13 +331,13 @@ class SubmitRequestV2(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: SubmitRequestV2.Partial) -> SubmitRequestV2.Partial:
+    def _pre_validate_submit_request_v_2(cls, values: SubmitRequestV2.Partial) -> SubmitRequestV2.Partial:
         for validator in SubmitRequestV2.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: SubmitRequestV2.Partial) -> SubmitRequestV2.Partial:
+    def _post_validate_submit_request_v_2(cls, values: SubmitRequestV2.Partial) -> SubmitRequestV2.Partial:
         for validator in SubmitRequestV2.Validators._post_validators:
             values = validator(values)
         return values

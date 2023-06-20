@@ -166,13 +166,17 @@ class WorkspaceSubmissionUpdate(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: WorkspaceSubmissionUpdate.Partial) -> WorkspaceSubmissionUpdate.Partial:
+    def _pre_validate_workspace_submission_update(
+        cls, values: WorkspaceSubmissionUpdate.Partial
+    ) -> WorkspaceSubmissionUpdate.Partial:
         for validator in WorkspaceSubmissionUpdate.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: WorkspaceSubmissionUpdate.Partial) -> WorkspaceSubmissionUpdate.Partial:
+    def _post_validate_workspace_submission_update(
+        cls, values: WorkspaceSubmissionUpdate.Partial
+    ) -> WorkspaceSubmissionUpdate.Partial:
         for validator in WorkspaceSubmissionUpdate.Validators._post_validators:
             values = validator(values)
         return values

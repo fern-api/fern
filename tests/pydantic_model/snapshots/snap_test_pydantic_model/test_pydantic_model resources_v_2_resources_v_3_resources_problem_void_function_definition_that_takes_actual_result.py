@@ -189,7 +189,7 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(
+    def _pre_validate_v_2_v_3_void_function_definition_that_takes_actual_result(
         cls, values: VoidFunctionDefinitionThatTakesActualResult.Partial
     ) -> VoidFunctionDefinitionThatTakesActualResult.Partial:
         for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._pre_validators:
@@ -197,7 +197,7 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(
+    def _post_validate_v_2_v_3_void_function_definition_that_takes_actual_result(
         cls, values: VoidFunctionDefinitionThatTakesActualResult.Partial
     ) -> VoidFunctionDefinitionThatTakesActualResult.Partial:
         for validator in VoidFunctionDefinitionThatTakesActualResult.Validators._post_validators:

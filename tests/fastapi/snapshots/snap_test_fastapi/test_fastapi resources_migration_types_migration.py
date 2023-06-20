@@ -139,13 +139,13 @@ class Migration(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: Migration.Partial) -> Migration.Partial:
+    def _pre_validate_migration(cls, values: Migration.Partial) -> Migration.Partial:
         for validator in Migration.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: Migration.Partial) -> Migration.Partial:
+    def _post_validate_migration(cls, values: Migration.Partial) -> Migration.Partial:
         for validator in Migration.Validators._post_validators:
             values = validator(values)
         return values

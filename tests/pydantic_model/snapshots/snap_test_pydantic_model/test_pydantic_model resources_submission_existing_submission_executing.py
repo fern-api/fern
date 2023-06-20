@@ -123,13 +123,17 @@ class ExistingSubmissionExecuting(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: ExistingSubmissionExecuting.Partial) -> ExistingSubmissionExecuting.Partial:
+    def _pre_validate_existing_submission_executing(
+        cls, values: ExistingSubmissionExecuting.Partial
+    ) -> ExistingSubmissionExecuting.Partial:
         for validator in ExistingSubmissionExecuting.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: ExistingSubmissionExecuting.Partial) -> ExistingSubmissionExecuting.Partial:
+    def _post_validate_existing_submission_executing(
+        cls, values: ExistingSubmissionExecuting.Partial
+    ) -> ExistingSubmissionExecuting.Partial:
         for validator in ExistingSubmissionExecuting.Validators._post_validators:
             values = validator(values)
         return values

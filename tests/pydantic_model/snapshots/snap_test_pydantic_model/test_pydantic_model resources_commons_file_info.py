@@ -138,13 +138,13 @@ class FileInfo(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(cls, values: FileInfo.Partial) -> FileInfo.Partial:
+    def _pre_validate_file_info(cls, values: FileInfo.Partial) -> FileInfo.Partial:
         for validator in FileInfo.Validators._pre_validators:
             values = validator(values)
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(cls, values: FileInfo.Partial) -> FileInfo.Partial:
+    def _post_validate_file_info(cls, values: FileInfo.Partial) -> FileInfo.Partial:
         for validator in FileInfo.Validators._post_validators:
             values = validator(values)
         return values

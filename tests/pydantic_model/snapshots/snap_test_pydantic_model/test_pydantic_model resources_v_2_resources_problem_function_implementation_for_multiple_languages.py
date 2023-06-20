@@ -136,7 +136,7 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
                 ...
 
     @pydantic.root_validator(pre=True)
-    def _pre_validate(
+    def _pre_validate_v_2_function_implementation_for_multiple_languages(
         cls, values: FunctionImplementationForMultipleLanguages.Partial
     ) -> FunctionImplementationForMultipleLanguages.Partial:
         for validator in FunctionImplementationForMultipleLanguages.Validators._pre_validators:
@@ -144,7 +144,7 @@ class FunctionImplementationForMultipleLanguages(pydantic.BaseModel):
         return values
 
     @pydantic.root_validator(pre=False)
-    def _post_validate(
+    def _post_validate_v_2_function_implementation_for_multiple_languages(
         cls, values: FunctionImplementationForMultipleLanguages.Partial
     ) -> FunctionImplementationForMultipleLanguages.Partial:
         for validator in FunctionImplementationForMultipleLanguages.Validators._post_validators:
