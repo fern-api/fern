@@ -5133,7 +5133,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "values": [
             {
               "description": undefined,
-              "generatedName": "OneInch",
+              "generatedName": "OneNch",
               "nameOverride": undefined,
               "value": "1INCH",
             },

@@ -2669,22 +2669,22 @@ exports[`open api parser flexport simple 1`] = `
             },
             {
               "docs": undefined,
-              "name": "Two0",
+              "name": "Twenty",
               "value": "20",
             },
             {
               "docs": undefined,
-              "name": "Two1",
+              "name": "TwentyOne",
               "value": "21",
             },
             {
               "docs": undefined,
-              "name": "TwoW",
+              "name": "Two",
               "value": "2W",
             },
             {
               "docs": undefined,
-              "name": "Four3",
+              "name": "FortyThree",
               "value": "43",
             },
             {

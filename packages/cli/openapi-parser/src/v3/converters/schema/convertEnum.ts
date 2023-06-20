@@ -87,18 +87,16 @@ function generateEnumNameFromValue(value: string): string {
     }
 }
 
-const ENUM_VALUE_THAT_BEGINS_WITH_NUMBER = /(\d+)(\w+)/;
+const NUMERIC_REGEX = /^(\d+)/;
 function replaceStartingNumber(input: string): string | undefined {
-    const matches = input.match(ENUM_VALUE_THAT_BEGINS_WITH_NUMBER);
-    if (matches && matches.length >= 1 && matches[1] != null) {
-        const numericPart = matches[1];
-        const nonNumericPart = matches[2];
+    const matches = input.match(NUMERIC_REGEX);
+    if (matches && matches[0] != null) {
+        const numericPart = matches[0];
+        const nonNumericPart = input.substring(matches.length);
         const parsedNumber = parseFloat(numericPart);
         if (!isNaN(parsedNumber) && isFinite(parsedNumber)) {
             const snakeCasedNumber = convertNumberToSnakeCase(parsedNumber);
-            return nonNumericPart != null && nonNumericPart.length > 0
-                ? `${snakeCasedNumber}_${nonNumericPart}`
-                : snakeCasedNumber;
+            return nonNumericPart.length > 0 ? `${snakeCasedNumber}_${nonNumericPart}` : snakeCasedNumber;
         }
     }
     return undefined;
