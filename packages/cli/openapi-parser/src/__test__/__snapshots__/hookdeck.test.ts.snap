@@ -82,6 +82,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIssueTriggersRequestDisabledAtGetIssueTriggersRequestDisabledAt",
                         "nameOverride": undefined,
@@ -417,6 +418,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateIssueTriggerRequest",
               "nameOverride": undefined,
@@ -554,6 +556,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpsertIssueTriggerRequest",
               "nameOverride": undefined,
@@ -753,6 +756,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateIssueTriggerRequest",
               "nameOverride": undefined,
@@ -1559,6 +1563,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetBookmarksRequestLastUsedAtGetBookmarksRequestLastUsedAt",
                         "nameOverride": undefined,
@@ -1864,6 +1869,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateBookmarkRequest",
               "nameOverride": undefined,
@@ -2040,6 +2046,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateBookmarkRequest",
               "nameOverride": undefined,
@@ -2228,6 +2235,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "TriggerBookmarkRequest",
               "nameOverride": undefined,
@@ -2366,6 +2374,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetDestinationsRequestNameGetDestinationsRequestName",
                         "nameOverride": undefined,
@@ -2528,6 +2537,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetDestinationsRequestArchivedAtGetDestinationsRequestArchivedAt",
                         "nameOverride": undefined,
@@ -2710,6 +2720,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetDestinationsRequestCliPathGetDestinationsRequestCliPath",
                         "nameOverride": undefined,
@@ -2940,6 +2951,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateDestinationRequest",
               "nameOverride": undefined,
@@ -3118,6 +3130,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpsertDestinationRequest",
               "nameOverride": undefined,
@@ -3363,6 +3376,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateDestinationRequest",
               "nameOverride": undefined,
@@ -3926,6 +3940,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventsRequestAttemptsGetEventsRequestAttempts",
                         "nameOverride": undefined,
@@ -4057,6 +4072,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventsRequestResponseStatusGetEventsRequestResponseStatus",
                         "nameOverride": undefined,
@@ -4201,6 +4217,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventsRequestSuccessfulAtGetEventsRequestSuccessfulAt",
                         "nameOverride": undefined,
@@ -4326,6 +4343,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventsRequestCreatedAtGetEventsRequestCreatedAt",
                         "nameOverride": undefined,
@@ -4492,6 +4510,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventsRequestCliIdGetEventsRequestCliId",
                         "nameOverride": undefined,
@@ -4599,6 +4618,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventsRequestLastAttemptAtGetEventsRequestLastAttemptAt",
                         "nameOverride": undefined,
@@ -4765,6 +4785,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventsRequestHeadersGetEventsRequestHeaders",
                         "nameOverride": undefined,
@@ -4801,6 +4822,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventsRequestBodyGetEventsRequestBody",
                         "nameOverride": undefined,
@@ -4837,6 +4859,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventsRequestParsedQueryGetEventsRequestParsedQuery",
                         "nameOverride": undefined,
@@ -5377,6 +5400,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventBulkRetriesRequestCancelledAtGetEventBulkRetriesRequestCancelledAt",
                         "nameOverride": undefined,
@@ -5522,6 +5546,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventBulkRetriesRequestCompletedAtGetEventBulkRetriesRequestCompletedAt",
                         "nameOverride": undefined,
@@ -5667,6 +5692,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetEventBulkRetriesRequestCreatedAtGetEventBulkRetriesRequestCreatedAt",
                         "nameOverride": undefined,
@@ -5834,6 +5860,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Filter for events to be included in the bulk retry, use query parameters of [Event](#events)",
                   "generatedName": "GetEventBulkRetriesRequestQuery",
                   "nameOverride": undefined,
@@ -6110,6 +6137,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetEventBulkRetriesRequestQueryAttemptsGetEventBulkRetriesRequestQueryAttempts",
                                 "nameOverride": undefined,
@@ -6245,6 +6273,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GetEventBulkRetriesRequestQueryResponseStatusGetEventBulkRetriesRequestQueryResponseStatus",
                                   "nameOverride": undefined,
@@ -6394,6 +6423,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GetEventBulkRetriesRequestQuerySuccessfulAtGetEventBulkRetriesRequestQuerySuccessfulAt",
                                   "nameOverride": undefined,
@@ -6521,6 +6551,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetEventBulkRetriesRequestQueryCreatedAtGetEventBulkRetriesRequestQueryCreatedAt",
                                 "nameOverride": undefined,
@@ -6692,6 +6723,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GetEventBulkRetriesRequestQueryCliIdGetEventBulkRetriesRequestQueryCliId",
                                   "nameOverride": undefined,
@@ -6809,6 +6841,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GetEventBulkRetriesRequestQueryLastAttemptAtGetEventBulkRetriesRequestQueryLastAttemptAt",
                                   "nameOverride": undefined,
@@ -6978,6 +7011,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetEventBulkRetriesRequestQueryHeadersGetEventBulkRetriesRequestQueryHeaders",
                                 "nameOverride": undefined,
@@ -7015,6 +7049,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetEventBulkRetriesRequestQueryBodyGetEventBulkRetriesRequestQueryBody",
                                 "nameOverride": undefined,
@@ -7052,6 +7087,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetEventBulkRetriesRequestQueryParsedQueryGetEventBulkRetriesRequestQueryParsedQuery",
                                 "nameOverride": undefined,
@@ -7553,6 +7589,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateEventBulkRetryRequest",
               "nameOverride": undefined,
@@ -7566,6 +7603,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Filter properties for the events to be included in the bulk retry",
                       "generatedName": "CreateEventBulkRetryRequestQuery",
                       "nameOverride": undefined,
@@ -7842,6 +7880,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateEventBulkRetryRequestQueryAttemptsCreateEventBulkRetryRequestQueryAttempts",
                                     "nameOverride": undefined,
@@ -7977,6 +8016,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                     },
                                     {
                                       "allOf": [],
+                                      "allOfPropertyConflicts": [],
                                       "description": undefined,
                                       "generatedName": "CreateEventBulkRetryRequestQueryResponseStatusCreateEventBulkRetryRequestQueryResponseStatus",
                                       "nameOverride": undefined,
@@ -8126,6 +8166,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                     },
                                     {
                                       "allOf": [],
+                                      "allOfPropertyConflicts": [],
                                       "description": undefined,
                                       "generatedName": "CreateEventBulkRetryRequestQuerySuccessfulAtCreateEventBulkRetryRequestQuerySuccessfulAt",
                                       "nameOverride": undefined,
@@ -8253,6 +8294,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateEventBulkRetryRequestQueryCreatedAtCreateEventBulkRetryRequestQueryCreatedAt",
                                     "nameOverride": undefined,
@@ -8424,6 +8466,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                     },
                                     {
                                       "allOf": [],
+                                      "allOfPropertyConflicts": [],
                                       "description": undefined,
                                       "generatedName": "CreateEventBulkRetryRequestQueryCliIdCreateEventBulkRetryRequestQueryCliId",
                                       "nameOverride": undefined,
@@ -8541,6 +8584,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                     },
                                     {
                                       "allOf": [],
+                                      "allOfPropertyConflicts": [],
                                       "description": undefined,
                                       "generatedName": "CreateEventBulkRetryRequestQueryLastAttemptAtCreateEventBulkRetryRequestQueryLastAttemptAt",
                                       "nameOverride": undefined,
@@ -8710,6 +8754,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateEventBulkRetryRequestQueryHeadersCreateEventBulkRetryRequestQueryHeaders",
                                     "nameOverride": undefined,
@@ -8747,6 +8792,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateEventBulkRetryRequestQueryBodyCreateEventBulkRetryRequestQueryBody",
                                     "nameOverride": undefined,
@@ -8784,6 +8830,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateEventBulkRetryRequestQueryParsedQueryCreateEventBulkRetryRequestQueryParsedQuery",
                                     "nameOverride": undefined,
@@ -8911,6 +8958,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Filter properties for the events to be included in the bulk retry",
                   "generatedName": "GenerateEventBulkRetryPlanRequestQuery",
                   "nameOverride": undefined,
@@ -9187,6 +9235,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateEventBulkRetryPlanRequestQueryAttemptsGenerateEventBulkRetryPlanRequestQueryAttempts",
                                 "nameOverride": undefined,
@@ -9322,6 +9371,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GenerateEventBulkRetryPlanRequestQueryResponseStatusGenerateEventBulkRetryPlanRequestQueryResponseStatus",
                                   "nameOverride": undefined,
@@ -9471,6 +9521,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GenerateEventBulkRetryPlanRequestQuerySuccessfulAtGenerateEventBulkRetryPlanRequestQuerySuccessfulAt",
                                   "nameOverride": undefined,
@@ -9598,6 +9649,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateEventBulkRetryPlanRequestQueryCreatedAtGenerateEventBulkRetryPlanRequestQueryCreatedAt",
                                 "nameOverride": undefined,
@@ -9769,6 +9821,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GenerateEventBulkRetryPlanRequestQueryCliIdGenerateEventBulkRetryPlanRequestQueryCliId",
                                   "nameOverride": undefined,
@@ -9886,6 +9939,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GenerateEventBulkRetryPlanRequestQueryLastAttemptAtGenerateEventBulkRetryPlanRequestQueryLastAttemptAt",
                                   "nameOverride": undefined,
@@ -10055,6 +10109,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateEventBulkRetryPlanRequestQueryHeadersGenerateEventBulkRetryPlanRequestQueryHeaders",
                                 "nameOverride": undefined,
@@ -10092,6 +10147,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateEventBulkRetryPlanRequestQueryBodyGenerateEventBulkRetryPlanRequestQueryBody",
                                 "nameOverride": undefined,
@@ -10129,6 +10185,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateEventBulkRetryPlanRequestQueryParsedQueryGenerateEventBulkRetryPlanRequestQueryParsedQuery",
                                 "nameOverride": undefined,
@@ -10374,6 +10431,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIgnoredEventBulkRetriesRequestCancelledAtGetIgnoredEventBulkRetriesRequestCancelledAt",
                         "nameOverride": undefined,
@@ -10519,6 +10577,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIgnoredEventBulkRetriesRequestCompletedAtGetIgnoredEventBulkRetriesRequestCompletedAt",
                         "nameOverride": undefined,
@@ -10664,6 +10723,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIgnoredEventBulkRetriesRequestCreatedAtGetIgnoredEventBulkRetriesRequestCreatedAt",
                         "nameOverride": undefined,
@@ -10831,6 +10891,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Filter by the bulk retry ignored event query object",
                   "generatedName": "GetIgnoredEventBulkRetriesRequestQuery",
                   "nameOverride": undefined,
@@ -11159,6 +11220,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateIgnoredEventBulkRetryRequest",
               "nameOverride": undefined,
@@ -11172,6 +11234,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Filter by the bulk retry ignored event query object",
                       "generatedName": "CreateIgnoredEventBulkRetryRequestQuery",
                       "nameOverride": undefined,
@@ -11332,6 +11395,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Filter by the bulk retry ignored event query object",
                   "generatedName": "GenerateIgnoredEventBulkRetryPlanRequestQuery",
                   "nameOverride": undefined,
@@ -11658,6 +11722,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateIntegrationRequest",
               "nameOverride": undefined,
@@ -11874,6 +11939,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateIntegrationRequest",
               "nameOverride": undefined,
@@ -12511,6 +12577,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Filter by aggregation keys",
                   "generatedName": "GetIssuesRequestAggregationKeys",
                   "nameOverride": undefined,
@@ -12667,6 +12734,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIssuesRequestCreatedAtGetIssuesRequestCreatedAt",
                         "nameOverride": undefined,
@@ -12812,6 +12880,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIssuesRequestFirstSeenAtGetIssuesRequestFirstSeenAt",
                         "nameOverride": undefined,
@@ -12957,6 +13026,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIssuesRequestLastSeenAtGetIssuesRequestLastSeenAt",
                         "nameOverride": undefined,
@@ -13102,6 +13172,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIssuesRequestDismissedAtGetIssuesRequestDismissedAt",
                         "nameOverride": undefined,
@@ -13761,6 +13832,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Filter by aggregation keys",
                   "generatedName": "GetIssueCountRequestAggregationKeys",
                   "nameOverride": undefined,
@@ -13917,6 +13989,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIssueCountRequestCreatedAtGetIssueCountRequestCreatedAt",
                         "nameOverride": undefined,
@@ -14062,6 +14135,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIssueCountRequestFirstSeenAtGetIssueCountRequestFirstSeenAt",
                         "nameOverride": undefined,
@@ -14207,6 +14281,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIssueCountRequestLastSeenAtGetIssueCountRequestLastSeenAt",
                         "nameOverride": undefined,
@@ -14352,6 +14427,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetIssueCountRequestDismissedAtGetIssueCountRequestDismissedAt",
                         "nameOverride": undefined,
@@ -14789,6 +14865,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateIssueRequest",
               "nameOverride": undefined,
@@ -15013,6 +15090,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestsRequestRejectionCauseGetRequestsRequestRejectionCause",
                         "nameOverride": undefined,
@@ -15161,6 +15239,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestsRequestIgnoredCountGetRequestsRequestIgnoredCount",
                         "nameOverride": undefined,
@@ -15303,6 +15382,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestsRequestEventsCountGetRequestsRequestEventsCount",
                         "nameOverride": undefined,
@@ -15503,6 +15583,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestsRequestHeadersGetRequestsRequestHeaders",
                         "nameOverride": undefined,
@@ -15539,6 +15620,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestsRequestBodyGetRequestsRequestBody",
                         "nameOverride": undefined,
@@ -15575,6 +15657,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestsRequestParsedQueryGetRequestsRequestParsedQuery",
                         "nameOverride": undefined,
@@ -15628,6 +15711,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestsRequestCreatedAtGetRequestsRequestCreatedAt",
                         "nameOverride": undefined,
@@ -15753,6 +15837,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestsRequestIngestedAtGetRequestsRequestIngestedAt",
                         "nameOverride": undefined,
@@ -16244,6 +16329,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "RetryRequestRequest",
               "nameOverride": undefined,
@@ -16588,6 +16674,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestEventsRequestAttemptsGetRequestEventsRequestAttempts",
                         "nameOverride": undefined,
@@ -16719,6 +16806,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestEventsRequestResponseStatusGetRequestEventsRequestResponseStatus",
                         "nameOverride": undefined,
@@ -16863,6 +16951,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestEventsRequestSuccessfulAtGetRequestEventsRequestSuccessfulAt",
                         "nameOverride": undefined,
@@ -16988,6 +17077,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestEventsRequestCreatedAtGetRequestEventsRequestCreatedAt",
                         "nameOverride": undefined,
@@ -17154,6 +17244,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestEventsRequestCliIdGetRequestEventsRequestCliId",
                         "nameOverride": undefined,
@@ -17261,6 +17352,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestEventsRequestLastAttemptAtGetRequestEventsRequestLastAttemptAt",
                         "nameOverride": undefined,
@@ -17427,6 +17519,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestEventsRequestHeadersGetRequestEventsRequestHeaders",
                         "nameOverride": undefined,
@@ -17463,6 +17556,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestEventsRequestBodyGetRequestEventsRequestBody",
                         "nameOverride": undefined,
@@ -17499,6 +17593,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestEventsRequestParsedQueryGetRequestEventsRequestParsedQuery",
                         "nameOverride": undefined,
@@ -18075,6 +18170,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestBulkRetriesRequestCancelledAtGetRequestBulkRetriesRequestCancelledAt",
                         "nameOverride": undefined,
@@ -18220,6 +18316,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestBulkRetriesRequestCompletedAtGetRequestBulkRetriesRequestCompletedAt",
                         "nameOverride": undefined,
@@ -18365,6 +18462,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRequestBulkRetriesRequestCreatedAtGetRequestBulkRetriesRequestCreatedAt",
                         "nameOverride": undefined,
@@ -18547,6 +18645,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
                   "generatedName": "GetRequestBulkRetriesRequestQuery",
                   "nameOverride": undefined,
@@ -18648,6 +18747,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GetRequestBulkRetriesRequestQueryRejectionCauseGetRequestBulkRetriesRequestQueryRejectionCause",
                                   "nameOverride": undefined,
@@ -18798,6 +18898,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetRequestBulkRetriesRequestQueryIgnoredCountGetRequestBulkRetriesRequestQueryIgnoredCount",
                                 "nameOverride": undefined,
@@ -18941,6 +19042,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetRequestBulkRetriesRequestQueryEventsCountGetRequestBulkRetriesRequestQueryEventsCount",
                                 "nameOverride": undefined,
@@ -19144,6 +19246,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetRequestBulkRetriesRequestQueryHeadersGetRequestBulkRetriesRequestQueryHeaders",
                                 "nameOverride": undefined,
@@ -19181,6 +19284,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetRequestBulkRetriesRequestQueryBodyGetRequestBulkRetriesRequestQueryBody",
                                 "nameOverride": undefined,
@@ -19218,6 +19322,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetRequestBulkRetriesRequestQueryParsedQueryGetRequestBulkRetriesRequestQueryParsedQuery",
                                 "nameOverride": undefined,
@@ -19273,6 +19378,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetRequestBulkRetriesRequestQueryCreatedAtGetRequestBulkRetriesRequestQueryCreatedAt",
                                 "nameOverride": undefined,
@@ -19399,6 +19505,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GetRequestBulkRetriesRequestQueryIngestedAtGetRequestBulkRetriesRequestQueryIngestedAt",
                                 "nameOverride": undefined,
@@ -19944,6 +20051,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateRequestBulkRetryRequest",
               "nameOverride": undefined,
@@ -19957,6 +20065,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
                       "generatedName": "CreateRequestBulkRetryRequestQuery",
                       "nameOverride": undefined,
@@ -20058,6 +20167,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                     },
                                     {
                                       "allOf": [],
+                                      "allOfPropertyConflicts": [],
                                       "description": undefined,
                                       "generatedName": "CreateRequestBulkRetryRequestQueryRejectionCauseCreateRequestBulkRetryRequestQueryRejectionCause",
                                       "nameOverride": undefined,
@@ -20208,6 +20318,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateRequestBulkRetryRequestQueryIgnoredCountCreateRequestBulkRetryRequestQueryIgnoredCount",
                                     "nameOverride": undefined,
@@ -20351,6 +20462,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateRequestBulkRetryRequestQueryEventsCountCreateRequestBulkRetryRequestQueryEventsCount",
                                     "nameOverride": undefined,
@@ -20554,6 +20666,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateRequestBulkRetryRequestQueryHeadersCreateRequestBulkRetryRequestQueryHeaders",
                                     "nameOverride": undefined,
@@ -20591,6 +20704,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateRequestBulkRetryRequestQueryBodyCreateRequestBulkRetryRequestQueryBody",
                                     "nameOverride": undefined,
@@ -20628,6 +20742,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateRequestBulkRetryRequestQueryParsedQueryCreateRequestBulkRetryRequestQueryParsedQuery",
                                     "nameOverride": undefined,
@@ -20683,6 +20798,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateRequestBulkRetryRequestQueryCreatedAtCreateRequestBulkRetryRequestQueryCreatedAt",
                                     "nameOverride": undefined,
@@ -20809,6 +20925,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "CreateRequestBulkRetryRequestQueryIngestedAtCreateRequestBulkRetryRequestQueryIngestedAt",
                                     "nameOverride": undefined,
@@ -21007,6 +21124,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "nullable",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Filter properties for the events to be included in the bulk retry, use query parameters of [Requests](#requests)",
                   "generatedName": "GenerateRequestBulkRetryPlanRequestQuery",
                   "nameOverride": undefined,
@@ -21108,6 +21226,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 },
                                 {
                                   "allOf": [],
+                                  "allOfPropertyConflicts": [],
                                   "description": undefined,
                                   "generatedName": "GenerateRequestBulkRetryPlanRequestQueryRejectionCauseGenerateRequestBulkRetryPlanRequestQueryRejectionCause",
                                   "nameOverride": undefined,
@@ -21258,6 +21377,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateRequestBulkRetryPlanRequestQueryIgnoredCountGenerateRequestBulkRetryPlanRequestQueryIgnoredCount",
                                 "nameOverride": undefined,
@@ -21401,6 +21521,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateRequestBulkRetryPlanRequestQueryEventsCountGenerateRequestBulkRetryPlanRequestQueryEventsCount",
                                 "nameOverride": undefined,
@@ -21604,6 +21725,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateRequestBulkRetryPlanRequestQueryHeadersGenerateRequestBulkRetryPlanRequestQueryHeaders",
                                 "nameOverride": undefined,
@@ -21641,6 +21763,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateRequestBulkRetryPlanRequestQueryBodyGenerateRequestBulkRetryPlanRequestQueryBody",
                                 "nameOverride": undefined,
@@ -21678,6 +21801,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateRequestBulkRetryPlanRequestQueryParsedQueryGenerateRequestBulkRetryPlanRequestQueryParsedQuery",
                                 "nameOverride": undefined,
@@ -21733,6 +21857,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateRequestBulkRetryPlanRequestQueryCreatedAtGenerateRequestBulkRetryPlanRequestQueryCreatedAt",
                                 "nameOverride": undefined,
@@ -21859,6 +21984,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               },
                               {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "GenerateRequestBulkRetryPlanRequestQueryIngestedAtGenerateRequestBulkRetryPlanRequestQueryIngestedAt",
                                 "nameOverride": undefined,
@@ -22244,6 +22370,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRulesetsRequestNameGetRulesetsRequestName",
                         "nameOverride": undefined,
@@ -22566,6 +22693,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetRulesetsRequestArchivedAtGetRulesetsRequestArchivedAt",
                         "nameOverride": undefined,
@@ -22871,6 +22999,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateRulesetRequest",
               "nameOverride": undefined,
@@ -22971,6 +23100,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpsertRulesetRequest",
               "nameOverride": undefined,
@@ -23138,6 +23268,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateRulesetRequest",
               "nameOverride": undefined,
@@ -23426,6 +23557,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetSourcesRequestNameGetSourcesRequestName",
                         "nameOverride": undefined,
@@ -23588,6 +23720,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetSourcesRequestArchivedAtGetSourcesRequestArchivedAt",
                         "nameOverride": undefined,
@@ -23733,6 +23866,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetSourcesRequestIntegrationIdGetSourcesRequestIntegrationId",
                         "nameOverride": undefined,
@@ -23950,6 +24084,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateSourceRequest",
               "nameOverride": undefined,
@@ -24013,6 +24148,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpsertSourceRequest",
               "nameOverride": undefined,
@@ -24143,6 +24279,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateSourceRequest",
               "nameOverride": undefined,
@@ -24331,6 +24468,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ToggleWebhookNotificationsRequest",
               "nameOverride": undefined,
@@ -24708,6 +24846,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateTransformationRequest",
               "nameOverride": undefined,
@@ -24830,6 +24969,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpsertTransformationRequest",
               "nameOverride": undefined,
@@ -25019,6 +25159,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateTransformationRequest",
               "nameOverride": undefined,
@@ -25149,6 +25290,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "TestTransformationRequest",
               "nameOverride": undefined,
@@ -25162,6 +25304,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Key-value environment variables to be passed to the transformation",
                       "generatedName": "TestTransformationRequestEnv",
                       "nameOverride": undefined,
@@ -25233,6 +25376,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Request input to use for the transformation execution",
                       "generatedName": "TestTransformationRequestRequest",
                       "nameOverride": undefined,
@@ -25275,6 +25419,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "schemas": [
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "TestTransformationRequestRequestBodyTestTransformationRequestRequestBody",
                                     "nameOverride": undefined,
@@ -25350,6 +25495,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "optional",
                             "value": {
                               "allOf": [],
+                              "allOfPropertyConflicts": [],
                               "description": "JSON representation of the query params",
                               "generatedName": "TestTransformationRequestRequestParsedQuery",
                               "nameOverride": undefined,
@@ -25649,6 +25795,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetTransformationExecutionsRequestCreatedAtGetTransformationExecutionsRequestCreatedAt",
                         "nameOverride": undefined,
@@ -26063,6 +26210,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetConnectionsRequestNameGetConnectionsRequestName",
                         "nameOverride": undefined,
@@ -26307,6 +26455,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetConnectionsRequestArchivedAtGetConnectionsRequestArchivedAt",
                         "nameOverride": undefined,
@@ -26469,6 +26618,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       },
                       {
                         "allOf": [],
+                        "allOfPropertyConflicts": [],
                         "description": undefined,
                         "generatedName": "GetConnectionsRequestPausedAtGetConnectionsRequestPausedAt",
                         "nameOverride": undefined,
@@ -26774,6 +26924,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CreateConnectionRequest",
               "nameOverride": undefined,
@@ -26845,6 +26996,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Destination input object",
                       "generatedName": "CreateConnectionRequestDestination",
                       "nameOverride": undefined,
@@ -26992,6 +27144,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Source input object",
                       "generatedName": "CreateConnectionRequestSource",
                       "nameOverride": undefined,
@@ -27024,6 +27177,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Ruleset input object",
                       "generatedName": "CreateConnectionRequestRuleset",
                       "nameOverride": undefined,
@@ -27172,6 +27326,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpsertConnectionRequest",
               "nameOverride": undefined,
@@ -27243,6 +27398,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Destination input object",
                       "generatedName": "UpsertConnectionRequestDestination",
                       "nameOverride": undefined,
@@ -27390,6 +27546,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Source input object",
                       "generatedName": "UpsertConnectionRequestSource",
                       "nameOverride": undefined,
@@ -27422,6 +27579,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Ruleset input object",
                       "generatedName": "UpsertConnectionRequestRuleset",
                       "nameOverride": undefined,
@@ -27637,6 +27795,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "UpdateConnectionRequest",
               "nameOverride": undefined,
@@ -27668,6 +27827,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Ruleset input object",
                       "generatedName": "UpdateConnectionRequestRuleset",
                       "nameOverride": undefined,
@@ -28151,6 +28311,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "schemas": {
         "APIErrorResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Error response model",
           "generatedName": "ApiErrorResponse",
           "nameOverride": undefined,
@@ -28207,6 +28368,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "ApiErrorResponseData",
                     "nameOverride": undefined,
@@ -28221,6 +28383,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "APIKeyIntegrationConfigs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ApiKeyIntegrationConfigs",
           "nameOverride": undefined,
@@ -28258,6 +28421,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "AlertRule": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AlertRule",
           "nameOverride": undefined,
@@ -28310,6 +28474,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "AttachedIntegrationToSource": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AttachedIntegrationToSource",
           "nameOverride": undefined,
@@ -28569,6 +28734,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "BasicAuthIntegrationConfigs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BasicAuthIntegrationConfigs",
           "nameOverride": undefined,
@@ -28606,6 +28772,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "BatchOperation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BatchOperation",
           "nameOverride": undefined,
@@ -28916,6 +29083,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "BatchOperationPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BatchOperationPaginatedResult",
           "nameOverride": undefined,
@@ -28979,6 +29147,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "BatchOperationPlan": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BatchOperationPlan",
           "nameOverride": undefined,
@@ -29048,6 +29217,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "Bookmark": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Bookmark",
           "nameOverride": undefined,
@@ -29216,6 +29386,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "BookmarkPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BookmarkPaginatedResult",
           "nameOverride": undefined,
@@ -29279,6 +29450,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "Connection": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Connection",
           "nameOverride": undefined,
@@ -29531,6 +29703,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "ConnectionFilterPropertyConnectionFilterProperty",
                   "nameOverride": undefined,
@@ -29545,6 +29718,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "ConnectionPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ConnectionPaginatedResult",
           "nameOverride": undefined,
@@ -29608,6 +29782,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "ConsoleLine": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ConsoleLine",
           "nameOverride": undefined,
@@ -29674,6 +29849,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DelayRule": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DelayRule",
           "nameOverride": undefined,
@@ -29705,6 +29881,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DeletedBookmarkResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DeletedBookmarkResponse",
           "nameOverride": undefined,
@@ -29728,6 +29905,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DeletedIntegration": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DeletedIntegration",
           "nameOverride": undefined,
@@ -29751,6 +29929,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DeletedIssueTriggerResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DeletedIssueTriggerResponse",
           "nameOverride": undefined,
@@ -29774,6 +29953,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DeliveryIssue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Delivery issue",
           "generatedName": "DeliveryIssue",
           "nameOverride": undefined,
@@ -30018,6 +30198,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DeliveryIssueAggregationKeys": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Keys used as the aggregation keys a 'delivery' type issue",
           "generatedName": "DeliveryIssueAggregationKeys",
           "nameOverride": undefined,
@@ -30081,6 +30262,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Delivery issue data",
             "generatedName": "DeliveryIssueData",
             "nameOverride": undefined,
@@ -30125,6 +30307,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DeliveryIssueReference": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Reference to the event and attempt an issue is being created for.",
           "generatedName": "DeliveryIssueReference",
           "nameOverride": undefined,
@@ -30162,6 +30345,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DeliveryIssueWithData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Delivery issue",
           "generatedName": "DeliveryIssueWithData",
           "nameOverride": undefined,
@@ -30423,6 +30607,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "Destination": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Associated [Destination](#destination-object) object",
           "generatedName": "Destination",
           "nameOverride": undefined,
@@ -30625,6 +30810,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DestinationPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DestinationPaginatedResult",
           "nameOverride": undefined,
@@ -30718,6 +30904,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "DetachedIntegrationFromSource": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DetachedIntegrationFromSource",
           "nameOverride": undefined,
@@ -30726,6 +30913,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "Event": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Event",
           "nameOverride": undefined,
@@ -30852,6 +31040,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "EventData",
                     "nameOverride": undefined,
@@ -30923,6 +31112,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "EventDataParsedQueryEventDataParsedQuery",
                                     "nameOverride": undefined,
@@ -31019,6 +31209,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "EventDataBodyEventDataBody",
                                     "nameOverride": undefined,
@@ -31271,6 +31462,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "EventAttempt",
             "nameOverride": undefined,
@@ -31403,6 +31595,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "nullable",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": "Response body from the destination",
                       "generatedName": "EventAttemptBody",
                       "nameOverride": undefined,
@@ -31670,6 +31863,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "EventAttemptPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventAttemptPaginatedResult",
           "nameOverride": undefined,
@@ -31733,6 +31927,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "EventPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventPaginatedResult",
           "nameOverride": undefined,
@@ -31834,6 +32029,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "FilterRule": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FilterRule",
           "nameOverride": undefined,
@@ -31985,6 +32181,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "HMACIntegrationConfigs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HmacIntegrationConfigs",
           "nameOverride": undefined,
@@ -32060,6 +32257,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "HandledHMACConfigs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HandledHmacConfigs",
           "nameOverride": undefined,
@@ -32083,6 +32281,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IgnoredEvent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IgnoredEvent",
           "nameOverride": undefined,
@@ -32261,6 +32460,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IgnoredEventPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IgnoredEventPaginatedResult",
           "nameOverride": undefined,
@@ -32324,6 +32524,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "Integration": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Integration",
           "nameOverride": undefined,
@@ -32533,6 +32734,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IntegrationPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IntegrationPaginatedResult",
           "nameOverride": undefined,
@@ -32769,6 +32971,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueCount": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IssueCount",
           "nameOverride": undefined,
@@ -32822,6 +33025,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueTrigger": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IssueTrigger",
           "nameOverride": undefined,
@@ -33004,6 +33208,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueTriggerBackpressureConfigs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Configurations for a 'Backpressure' issue trigger",
           "generatedName": "IssueTriggerBackpressureConfigs",
           "nameOverride": undefined,
@@ -33074,6 +33279,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Notification channels object for the specific channel type",
             "generatedName": "IssueTriggerChannels",
             "nameOverride": undefined,
@@ -33135,6 +33341,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueTriggerDeliveryConfigs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Configurations for a 'delivery' issue trigger",
           "generatedName": "IssueTriggerDeliveryConfigs",
           "nameOverride": undefined,
@@ -33195,6 +33402,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueTriggerEmailChannel": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Email channel for an issue trigger",
           "generatedName": "IssueTriggerEmailChannel",
           "nameOverride": undefined,
@@ -33203,6 +33411,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueTriggerIntegrationChannel": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Integration channel for an issue trigger",
           "generatedName": "IssueTriggerIntegrationChannel",
           "nameOverride": undefined,
@@ -33211,6 +33420,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueTriggerPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IssueTriggerPaginatedResult",
           "nameOverride": undefined,
@@ -33309,6 +33519,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueTriggerSlackChannel": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Slack channel for an issue trigger",
           "generatedName": "IssueTriggerSlackChannel",
           "nameOverride": undefined,
@@ -33352,6 +33563,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueTriggerTransformationConfigs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Configurations for a 'Transformation' issue trigger",
           "generatedName": "IssueTriggerTransformationConfigs",
           "nameOverride": undefined,
@@ -33465,6 +33677,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueWithDataPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IssueWithDataPaginatedResult",
           "nameOverride": undefined,
@@ -33527,38 +33740,40 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "type": "object",
         },
         "OrderByDirection": {
-          "oneOf": {
-            "description": undefined,
-            "generatedName": "OrderByDirection",
-            "nameOverride": undefined,
-            "schemas": [
-              {
-                "description": undefined,
-                "type": "literal",
-                "value": "asc",
-              },
-              {
-                "description": undefined,
-                "type": "literal",
-                "value": "desc",
-              },
-              {
-                "description": undefined,
-                "type": "literal",
-                "value": "ASC",
-              },
-              {
-                "description": undefined,
-                "type": "literal",
-                "value": "DESC",
-              },
-            ],
-            "type": "undisciminated",
-          },
-          "type": "oneOf",
+          "description": undefined,
+          "generatedName": "OrderByDirection",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "description": undefined,
+              "generatedName": "asc",
+              "nameOverride": undefined,
+              "value": "asc",
+            },
+            {
+              "description": undefined,
+              "generatedName": "desc",
+              "nameOverride": undefined,
+              "value": "desc",
+            },
+            {
+              "description": undefined,
+              "generatedName": "ASC",
+              "nameOverride": undefined,
+              "value": "ASC",
+            },
+            {
+              "description": undefined,
+              "generatedName": "DESC",
+              "nameOverride": undefined,
+              "value": "DESC",
+            },
+          ],
         },
         "RawBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RawBody",
           "nameOverride": undefined,
@@ -33582,6 +33797,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "Request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Request",
           "nameOverride": undefined,
@@ -33874,6 +34090,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "RequestData",
                     "nameOverride": undefined,
@@ -33945,6 +34162,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "RequestDataParsedQueryRequestDataParsedQuery",
                                     "nameOverride": undefined,
@@ -34041,6 +34259,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "RequestDataBodyRequestDataBody",
                                     "nameOverride": undefined,
@@ -34121,6 +34340,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "RequestPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RequestPaginatedResult",
           "nameOverride": undefined,
@@ -34246,6 +34466,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "RetriedEvent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RetriedEvent",
           "nameOverride": undefined,
@@ -34281,6 +34502,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "RetryRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RetryRequest",
           "nameOverride": undefined,
@@ -34328,6 +34550,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "RetryRule": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RetryRule",
           "nameOverride": undefined,
@@ -34474,6 +34697,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Associated [Ruleset](#ruleset-object) object",
             "generatedName": "Ruleset",
             "nameOverride": undefined,
@@ -34605,6 +34829,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "RulesetPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RulesetPaginatedResult",
           "nameOverride": undefined,
@@ -34668,6 +34893,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "SeekPagination": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SeekPagination",
           "nameOverride": undefined,
@@ -34811,6 +35037,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "ShopifyIntegrationConfigs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ShopifyIntegrationConfigs",
           "nameOverride": undefined,
@@ -34956,6 +35183,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "ShortEventData",
             "nameOverride": undefined,
@@ -35027,6 +35255,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           },
                           {
                             "allOf": [],
+                            "allOfPropertyConflicts": [],
                             "description": undefined,
                             "generatedName": "ShortEventDataParsedQueryShortEventDataParsedQuery",
                             "nameOverride": undefined,
@@ -35123,6 +35352,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           },
                           {
                             "allOf": [],
+                            "allOfPropertyConflicts": [],
                             "description": undefined,
                             "generatedName": "ShortEventDataBodyShortEventDataBody",
                             "nameOverride": undefined,
@@ -35170,6 +35400,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "Source": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Associated [Source](#source-object) object",
           "generatedName": "Source",
           "nameOverride": undefined,
@@ -35264,6 +35495,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": "Integration object",
                     "generatedName": "SourceIntegration",
                     "nameOverride": undefined,
@@ -35387,6 +35619,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "SourcePaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SourcePaginatedResult",
           "nameOverride": undefined,
@@ -35450,6 +35683,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "ToggleWebhookNotifications": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ToggleWebhookNotifications",
           "nameOverride": undefined,
@@ -35542,6 +35776,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformFull": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransformFull",
           "nameOverride": undefined,
@@ -35587,6 +35822,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "You can optionally define a new transformation while creating a transform rule",
                   "generatedName": "TransformFullTransformation",
                   "nameOverride": undefined,
@@ -35664,6 +35900,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformReference": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransformReference",
           "nameOverride": undefined,
@@ -35724,6 +35961,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "Transformation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Transformation",
           "nameOverride": undefined,
@@ -35896,6 +36134,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformationExecution": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransformationExecution",
           "nameOverride": undefined,
@@ -36141,6 +36380,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformationExecutionPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransformationExecutionPaginatedResult",
           "nameOverride": undefined,
@@ -36204,6 +36444,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformationExecutorOutput": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransformationExecutorOutput",
           "nameOverride": undefined,
@@ -36299,6 +36540,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "TransformationExecutorOutputRequest",
                     "nameOverride": undefined,
@@ -36383,6 +36625,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                     "type": "nullable",
                                     "value": {
                                       "allOf": [],
+                                      "allOfPropertyConflicts": [],
                                       "description": undefined,
                                       "generatedName": "TransformationExecutorOutputRequestQueryTransformationExecutorOutputRequestQuery",
                                       "nameOverride": undefined,
@@ -36438,6 +36681,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "TransformationExecutorOutputRequestParsedQueryTransformationExecutorOutputRequestParsedQuery",
                                     "nameOverride": undefined,
@@ -36483,6 +36727,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   },
                                   {
                                     "allOf": [],
+                                    "allOfPropertyConflicts": [],
                                     "description": undefined,
                                     "generatedName": "TransformationExecutorOutputRequestBodyTransformationExecutorOutputRequestBody",
                                     "nameOverride": undefined,
@@ -36533,6 +36778,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformationFailedMeta": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransformationFailedMeta",
           "nameOverride": undefined,
@@ -36556,6 +36802,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformationIssue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Transformation issue",
           "generatedName": "TransformationIssue",
           "nameOverride": undefined,
@@ -36800,6 +37047,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformationIssueAggregationKeys": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Keys used as the aggregation keys a 'transformation' type issue",
           "generatedName": "TransformationIssueAggregationKeys",
           "nameOverride": undefined,
@@ -36843,6 +37091,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Transformation issue data",
             "generatedName": "TransformationIssueData",
             "nameOverride": undefined,
@@ -36883,6 +37132,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformationIssueReference": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Reference to the event request transformation an issue is being created for.",
           "generatedName": "TransformationIssueReference",
           "nameOverride": undefined,
@@ -36928,6 +37178,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformationIssueWithData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Transformation issue",
           "generatedName": "TransformationIssueWithData",
           "nameOverride": undefined,
@@ -37189,6 +37440,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "TransformationPaginatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransformationPaginatedResult",
           "nameOverride": undefined,

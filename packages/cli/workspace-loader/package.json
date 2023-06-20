@@ -32,6 +32,8 @@
     "@fern-api/docs-configuration": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generators-configuration": "workspace:*",
+    "@fern-api/openapi-ir-to-fern": "workspace:*",
+    "@fern-api/openapi-parser": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/services": "workspace:*",

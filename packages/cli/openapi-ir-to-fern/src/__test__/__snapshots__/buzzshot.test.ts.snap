@@ -35,7 +35,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "optional<integer>",
             },
             "name": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "optional<string>",
             },
             "photos": {
@@ -151,7 +151,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "optional<boolean>",
             },
             "name": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "optional<string>",
             },
             "photos": {
@@ -200,7 +200,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "optional<integer>",
             },
             "name": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "optional<string>",
             },
             "room": {
@@ -308,11 +308,11 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "list<GroupPlayersItemExtraFieldsItem>",
             },
             "first_name": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "optional<string>",
             },
             "last_name": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "optional<string>",
             },
             "phone": {
@@ -546,7 +546,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "list<PlayerExtraFieldsItem>",
             },
             "first_name": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "optional<string>",
             },
             "id": {
@@ -554,7 +554,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "optional<integer>",
             },
             "last_name": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "optional<string>",
             },
             "marketing_email_allowed": {
@@ -604,7 +604,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "optional<integer>",
             },
             "name": {
-              "docs": "\`<= 255 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
               "type": "string",
             },
           },
@@ -926,6 +926,9 @@ exports[`open api parser buzzshot simple 1`] = `
     "display-name": "",
     "error-discrimination": {
       "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
     },
     "name": "api",
   },

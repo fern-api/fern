@@ -11187,6 +11187,7 @@ exports[`open api parser aries parse open api 1`] = `
       "schemas": {
         "AMLRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AmlRecord",
           "nameOverride": undefined,
@@ -11259,6 +11260,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ActionMenuFetchResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ActionMenuFetchResult",
           "nameOverride": undefined,
@@ -11305,6 +11307,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AdminConfig": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AdminConfig",
           "nameOverride": undefined,
@@ -11318,6 +11321,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Configuration settings",
                   "generatedName": "AdminConfigConfig",
                   "nameOverride": undefined,
@@ -11331,6 +11335,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AdminMediationDeny": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AdminMediationDeny",
           "nameOverride": undefined,
@@ -11384,6 +11389,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AdminModules": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AdminModules",
           "nameOverride": undefined,
@@ -11439,6 +11445,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AdminStatus": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AdminStatus",
           "nameOverride": undefined,
@@ -11452,6 +11459,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Conductor statistics",
                   "generatedName": "AdminStatusConductor",
                   "nameOverride": undefined,
@@ -11491,6 +11499,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Timing results",
                   "generatedName": "AdminStatusTiming",
                   "nameOverride": undefined,
@@ -11522,6 +11531,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AdminStatusLiveliness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AdminStatusLiveliness",
           "nameOverride": undefined,
@@ -11547,6 +11557,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AdminStatusReadiness": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AdminStatusReadiness",
           "nameOverride": undefined,
@@ -11572,6 +11583,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AttachDecorator": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AttachDecorator",
           "nameOverride": undefined,
@@ -11700,6 +11712,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AttachDecoratorData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AttachDecoratorData",
           "nameOverride": undefined,
@@ -11805,6 +11818,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AttachDecoratorData1JWS": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AttachDecoratorData1Jws",
           "nameOverride": undefined,
@@ -11859,6 +11873,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AttachDecoratorDataJWS": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AttachDecoratorDataJws",
           "nameOverride": "AttachDecoratorDataJWS",
@@ -11942,6 +11957,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AttachDecoratorDataJWSHeader": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AttachDecoratorDataJwsHeader",
           "nameOverride": undefined,
@@ -11973,6 +11989,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AttachmentDef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AttachmentDef",
           "nameOverride": undefined,
@@ -12029,6 +12046,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "AttributeMimeTypesResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AttributeMimeTypesResult",
           "nameOverride": undefined,
@@ -12085,6 +12103,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ClaimFormat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ClaimFormat",
           "nameOverride": undefined,
@@ -12098,6 +12117,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "ClaimFormatJwt",
                   "nameOverride": undefined,
@@ -12115,6 +12135,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "ClaimFormatJwtVc",
                   "nameOverride": undefined,
@@ -12132,6 +12153,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "ClaimFormatJwtVp",
                   "nameOverride": undefined,
@@ -12149,6 +12171,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "ClaimFormatLdp",
                   "nameOverride": undefined,
@@ -12166,6 +12189,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "ClaimFormatLdpVc",
                   "nameOverride": undefined,
@@ -12183,6 +12207,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "ClaimFormatLdpVp",
                   "nameOverride": undefined,
@@ -12196,6 +12221,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ClearPendingRevocationsRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ClearPendingRevocationsRequest",
           "nameOverride": undefined,
@@ -12236,6 +12262,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ConnRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ConnRecord",
           "nameOverride": undefined,
@@ -12690,6 +12717,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ConnectionInvitation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ConnectionInvitation",
           "nameOverride": undefined,
@@ -12855,6 +12883,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ConnectionList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ConnectionList",
           "nameOverride": undefined,
@@ -12885,6 +12914,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ConnectionMetadata": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ConnectionMetadata",
           "nameOverride": undefined,
@@ -12898,6 +12928,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Dictionary of metadata associated with connection.",
                   "generatedName": "ConnectionMetadataResults",
                   "nameOverride": undefined,
@@ -12911,6 +12942,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ConnectionMetadataSetRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ConnectionMetadataSetRequest",
           "nameOverride": undefined,
@@ -12921,6 +12953,7 @@ exports[`open api parser aries parse open api 1`] = `
               "key": "metadata",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Dictionary of metadata to set for connection.",
                 "generatedName": "ConnectionMetadataSetRequestMetadata",
                 "nameOverride": undefined,
@@ -12945,6 +12978,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ConnectionStaticRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ConnectionStaticRequest",
           "nameOverride": undefined,
@@ -13098,6 +13132,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ConnectionStaticResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ConnectionStaticResult",
           "nameOverride": undefined,
@@ -13190,6 +13225,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Constraints": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Constraints",
           "nameOverride": undefined,
@@ -13393,6 +13429,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CreateInvitationRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateInvitationRequest",
           "nameOverride": undefined,
@@ -13424,6 +13461,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Optional metadata to attach to the connection created with the invitation",
                   "generatedName": "CreateInvitationRequestMetadata",
                   "nameOverride": undefined,
@@ -13517,6 +13555,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CreateWalletRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateWalletRequest",
           "nameOverride": undefined,
@@ -13739,6 +13778,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CreateWalletResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateWalletResponse",
           "nameOverride": undefined,
@@ -13795,6 +13835,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Settings for this wallet.",
                   "generatedName": "CreateWalletResponseSettings",
                   "nameOverride": undefined,
@@ -13876,6 +13917,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CreateWalletTokenRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateWalletTokenRequest",
           "nameOverride": undefined,
@@ -13903,6 +13945,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CreateWalletTokenResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateWalletTokenResponse",
           "nameOverride": undefined,
@@ -13930,6 +13973,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredAttrSpec": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredAttrSpec",
           "nameOverride": undefined,
@@ -13989,6 +14033,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredDefValue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredDefValue",
           "nameOverride": undefined,
@@ -14032,6 +14077,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredDefValuePrimary": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredDefValuePrimary",
           "nameOverride": undefined,
@@ -14130,6 +14176,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredDefValueRevocation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredDefValueRevocation",
           "nameOverride": undefined,
@@ -14353,6 +14400,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredInfoList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredInfoList",
           "nameOverride": undefined,
@@ -14383,6 +14431,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredRevIndyRecordsResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredRevIndyRecordsResult",
           "nameOverride": undefined,
@@ -14396,6 +14445,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Indy revocation registry delta",
                   "generatedName": "CredRevIndyRecordsResultRevRegDelta",
                   "nameOverride": undefined,
@@ -14409,6 +14459,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredRevRecordDetailsResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredRevRecordDetailsResult",
           "nameOverride": undefined,
@@ -14439,6 +14490,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredRevRecordResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredRevRecordResult",
           "nameOverride": undefined,
@@ -14465,6 +14517,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredRevokedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredRevokedResult",
           "nameOverride": undefined,
@@ -14490,6 +14543,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Credential": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Credential",
           "nameOverride": undefined,
@@ -14639,6 +14693,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredentialDefinition": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredentialDefinition",
           "nameOverride": undefined,
@@ -14758,6 +14813,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredentialDefinitionGetResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredentialDefinitionGetResult",
           "nameOverride": undefined,
@@ -14784,6 +14840,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredentialDefinitionSendRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredentialDefinitionSendRequest",
           "nameOverride": undefined,
@@ -14861,6 +14918,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredentialDefinitionSendResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredentialDefinitionSendResult",
           "nameOverride": undefined,
@@ -14896,6 +14954,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredentialDefinitionsCreatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredentialDefinitionsCreatedResult",
           "nameOverride": undefined,
@@ -14927,6 +14986,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredentialOffer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredentialOffer",
           "nameOverride": undefined,
@@ -15028,6 +15088,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredentialPreview": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredentialPreview",
           "nameOverride": undefined,
@@ -15072,6 +15133,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredentialProposal": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredentialProposal",
           "nameOverride": undefined,
@@ -15264,6 +15326,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "CredentialStatusOptions": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CredentialStatusOptions",
           "nameOverride": undefined,
@@ -15295,6 +15358,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DID": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Did",
           "nameOverride": undefined,
@@ -15422,6 +15486,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIDCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DidCreate",
           "nameOverride": undefined,
@@ -15484,6 +15549,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIDCreateOptions": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DidCreateOptions",
           "nameOverride": undefined,
@@ -15544,6 +15610,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIDEndpoint": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DidEndpoint",
           "nameOverride": undefined,
@@ -15585,6 +15652,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIDEndpointWithType": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DidEndpointWithType",
           "nameOverride": undefined,
@@ -15661,6 +15729,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIDList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DidList",
           "nameOverride": undefined,
@@ -15691,6 +15760,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIDResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DidResult",
           "nameOverride": undefined,
@@ -15717,6 +15787,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIDXRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DidxRequest",
           "nameOverride": undefined,
@@ -15819,6 +15890,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIFField": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DifField",
           "nameOverride": undefined,
@@ -15932,6 +16004,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIFHolder": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DifHolder",
           "nameOverride": undefined,
@@ -15992,6 +16065,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIFOptions": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DifOptions",
           "nameOverride": undefined,
@@ -16037,6 +16111,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIFPresSpec": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DifPresSpec",
           "nameOverride": undefined,
@@ -16085,6 +16160,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Mapping of input_descriptor id to list of stored W3C credential record_id",
                   "generatedName": "DifPresSpecRecordIds",
                   "nameOverride": undefined,
@@ -16102,6 +16178,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
                   "generatedName": "DifPresSpecRevealDoc",
                   "nameOverride": undefined,
@@ -16115,6 +16192,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIFProofProposal": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DifProofProposal",
           "nameOverride": undefined,
@@ -16162,6 +16240,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "DIFProofRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DifProofRequest",
           "nameOverride": undefined,
@@ -16201,6 +16280,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Date": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Date",
           "nameOverride": undefined,
@@ -16224,6 +16304,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Disclose": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Disclose",
           "nameOverride": undefined,
@@ -16286,6 +16367,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Disclosures": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Disclosures",
           "nameOverride": undefined,
@@ -16352,6 +16434,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Doc": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Doc",
           "nameOverride": undefined,
@@ -16362,6 +16445,7 @@ exports[`open api parser aries parse open api 1`] = `
               "key": "credential",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Credential to sign",
                 "generatedName": "DocCredential",
                 "nameOverride": undefined,
@@ -16395,6 +16479,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "EndorserInfo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EndorserInfo",
           "nameOverride": undefined,
@@ -16436,6 +16521,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "EndpointsResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EndpointsResult",
           "nameOverride": undefined,
@@ -16481,6 +16567,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Filter": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Filter",
           "nameOverride": undefined,
@@ -16722,6 +16809,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Generated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Generated",
           "nameOverride": undefined,
@@ -16785,6 +16873,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "GetDIDEndpointResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetDidEndpointResponse",
           "nameOverride": undefined,
@@ -16816,6 +16905,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "GetDIDVerkeyResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetDidVerkeyResponse",
           "nameOverride": undefined,
@@ -16847,6 +16937,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "GetNymRoleResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GetNymRoleResponse",
           "nameOverride": undefined,
@@ -16921,6 +17012,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyAttrValue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyAttrValue",
           "nameOverride": undefined,
@@ -16958,6 +17050,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyCredAbstract": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyCredAbstract",
           "nameOverride": undefined,
@@ -17030,6 +17123,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyCredInfo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyCredInfo",
           "nameOverride": undefined,
@@ -17164,6 +17258,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyCredPrecis": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyCredPrecis",
           "nameOverride": undefined,
@@ -17245,6 +17340,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyCredRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyCredRequest",
           "nameOverride": undefined,
@@ -17255,6 +17351,7 @@ exports[`open api parser aries parse open api 1`] = `
               "key": "blinded_ms",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Blinded master secret",
                 "generatedName": "IndyCredRequestBlindedMs",
                 "nameOverride": undefined,
@@ -17268,6 +17365,7 @@ exports[`open api parser aries parse open api 1`] = `
               "key": "blinded_ms_correctness_proof",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Blinded master secret correctness proof",
                 "generatedName": "IndyCredRequestBlindedMsCorrectnessProof",
                 "nameOverride": undefined,
@@ -17322,6 +17420,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyCredential": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyCredential",
           "nameOverride": undefined,
@@ -17352,6 +17451,7 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": "Revocation registry state",
                     "generatedName": "IndyCredentialRevReg",
                     "nameOverride": undefined,
@@ -17403,6 +17503,7 @@ exports[`open api parser aries parse open api 1`] = `
               "key": "signature",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Credential signature",
                 "generatedName": "IndyCredentialSignature",
                 "nameOverride": undefined,
@@ -17416,6 +17517,7 @@ exports[`open api parser aries parse open api 1`] = `
               "key": "signature_correctness_proof",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Credential signature correctness proof",
                 "generatedName": "IndyCredentialSignatureCorrectnessProof",
                 "nameOverride": undefined,
@@ -17457,6 +17559,7 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "nullable",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": "Witness for revocation proof",
                     "generatedName": "IndyCredentialWitness",
                     "nameOverride": undefined,
@@ -17479,6 +17582,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyEQProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyEqProof",
           "nameOverride": undefined,
@@ -17614,6 +17718,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyGEProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyGeProof",
           "nameOverride": undefined,
@@ -17757,6 +17862,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyGEProofPred": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyGeProofPred",
           "nameOverride": undefined,
@@ -17841,6 +17947,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyKeyCorrectnessProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyKeyCorrectnessProof",
           "nameOverride": undefined,
@@ -17900,6 +18007,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyNonRevocProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyNonRevocProof",
           "nameOverride": undefined,
@@ -17963,6 +18071,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyNonRevocationInterval": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyNonRevocationInterval",
           "nameOverride": undefined,
@@ -18004,6 +18113,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyPresAttrSpec": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyPresAttrSpec",
           "nameOverride": undefined,
@@ -18099,6 +18209,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyPresPredSpec": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyPresPredSpec",
           "nameOverride": undefined,
@@ -18189,6 +18300,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyPresPreview": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyPresPreview",
           "nameOverride": undefined,
@@ -18250,6 +18362,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyPresSpec": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyPresSpec",
           "nameOverride": undefined,
@@ -18342,6 +18455,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyPrimaryProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyPrimaryProof",
           "nameOverride": undefined,
@@ -18405,6 +18519,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProof",
           "nameOverride": undefined,
@@ -18469,6 +18584,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofIdentifier": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofIdentifier",
           "nameOverride": undefined,
@@ -18556,6 +18672,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofProof",
           "nameOverride": undefined,
@@ -18603,6 +18720,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofProofAggregatedProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofProofAggregatedProof",
           "nameOverride": undefined,
@@ -18654,6 +18772,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofProofProofsProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofProofProofsProof",
           "nameOverride": undefined,
@@ -18725,6 +18844,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofReqAttrSpec": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofReqAttrSpec",
           "nameOverride": undefined,
@@ -18822,6 +18942,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofReqAttrSpecNonRevoked": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofReqAttrSpecNonRevoked",
           "nameOverride": undefined,
@@ -18875,6 +18996,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofReqPredSpec": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofReqPredSpec",
           "nameOverride": undefined,
@@ -18995,6 +19117,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofReqPredSpecNonRevoked": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofReqPredSpecNonRevoked",
           "nameOverride": undefined,
@@ -19048,6 +19171,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofRequest",
           "nameOverride": undefined,
@@ -19172,6 +19296,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofRequestNonRevoked": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofRequestNonRevoked",
           "nameOverride": undefined,
@@ -19225,6 +19350,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofRequestedProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofRequestedProof",
           "nameOverride": undefined,
@@ -19332,6 +19458,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Proof requested proof self-attested attributes",
                   "generatedName": "IndyProofRequestedProofSelfAttestedAttrs",
                   "nameOverride": undefined,
@@ -19349,6 +19476,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Unrevealed attributes",
                   "generatedName": "IndyProofRequestedProofUnrevealedAttrs",
                   "nameOverride": undefined,
@@ -19362,6 +19490,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofRequestedProofPredicate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofRequestedProofPredicate",
           "nameOverride": undefined,
@@ -19387,6 +19516,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofRequestedProofRevealedAttr": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofRequestedProofRevealedAttr",
           "nameOverride": undefined,
@@ -19448,6 +19578,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyProofRequestedProofRevealedAttrGroup": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyProofRequestedProofRevealedAttrGroup",
           "nameOverride": undefined,
@@ -19515,6 +19646,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyRequestedCredsRequestedAttr": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyRequestedCredsRequestedAttr",
           "nameOverride": undefined,
@@ -19554,6 +19686,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyRequestedCredsRequestedPred": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyRequestedCredsRequestedPred",
           "nameOverride": undefined,
@@ -19593,6 +19726,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyRevRegDef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyRevRegDef",
           "nameOverride": undefined,
@@ -19705,6 +19839,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyRevRegDefValue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyRevRegDefValue",
           "nameOverride": undefined,
@@ -19812,6 +19947,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyRevRegDefValuePublicKeys": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyRevRegDefValuePublicKeys",
           "nameOverride": undefined,
@@ -19838,6 +19974,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyRevRegDefValuePublicKeysAccumKey": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyRevRegDefValuePublicKeysAccumKey",
           "nameOverride": undefined,
@@ -19881,6 +20018,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyRevRegEntry": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyRevRegEntry",
           "nameOverride": undefined,
@@ -19925,6 +20063,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IndyRevRegEntryValue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IndyRevRegEntryValue",
           "nameOverride": undefined,
@@ -19998,6 +20137,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "InputDescriptors": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InputDescriptors",
           "nameOverride": undefined,
@@ -20068,6 +20208,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Metadata dictionary",
                   "generatedName": "InputDescriptorsMetadata",
                   "nameOverride": undefined,
@@ -20154,6 +20295,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "InvitationCreateRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvitationCreateRequest",
           "nameOverride": undefined,
@@ -20268,6 +20410,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Optional metadata to attach to the connection created with the invitation",
                   "generatedName": "InvitationCreateRequestMetadata",
                   "nameOverride": undefined,
@@ -20333,6 +20476,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "InvitationMessage": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvitationMessage",
           "nameOverride": undefined,
@@ -20508,6 +20652,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "InvitationRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvitationRecord",
           "nameOverride": undefined,
@@ -20684,6 +20829,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "InvitationResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvitationResult",
           "nameOverride": undefined,
@@ -20758,6 +20904,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IssuerCredRevRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IssuerCredRevRecord",
           "nameOverride": undefined,
@@ -20929,6 +21076,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "IssuerRevRegRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "IssuerRevRegRecord",
           "nameOverride": undefined,
@@ -21256,6 +21404,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Keylist": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Keylist",
           "nameOverride": undefined,
@@ -21286,6 +21435,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "KeylistQuery": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "KeylistQuery",
           "nameOverride": undefined,
@@ -21335,6 +21485,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Query dictionary object",
                   "generatedName": "KeylistQueryFilter",
                   "nameOverride": undefined,
@@ -21365,6 +21516,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "KeylistQueryFilterRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "KeylistQueryFilterRequest",
           "nameOverride": undefined,
@@ -21378,6 +21530,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Filter for keylist query",
                   "generatedName": "KeylistQueryFilterRequestFilter",
                   "nameOverride": undefined,
@@ -21391,6 +21544,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "KeylistQueryPaginate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "KeylistQueryPaginate",
           "nameOverride": undefined,
@@ -21440,6 +21594,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "KeylistUpdate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "KeylistUpdate",
           "nameOverride": undefined,
@@ -21506,6 +21661,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "KeylistUpdateRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "KeylistUpdateRequest",
           "nameOverride": undefined,
@@ -21536,6 +21692,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "KeylistUpdateRule": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "KeylistUpdateRule",
           "nameOverride": undefined,
@@ -21584,6 +21741,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "LDProofVCDetail": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LdProofVcDetail",
           "nameOverride": undefined,
@@ -21619,6 +21777,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "LDProofVCDetailOptions": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LdProofVcDetailOptions",
           "nameOverride": undefined,
@@ -21755,6 +21914,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "LedgerConfigInstance": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LedgerConfigInstance",
           "nameOverride": undefined,
@@ -21852,6 +22012,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "LedgerConfigList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LedgerConfigList",
           "nameOverride": undefined,
@@ -21890,6 +22051,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "LinkedDataProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LinkedDataProof",
           "nameOverride": undefined,
@@ -22045,6 +22207,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MediationCreateRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MediationCreateRequest",
           "nameOverride": undefined,
@@ -22098,6 +22261,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MediationDeny": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MediationDeny",
           "nameOverride": undefined,
@@ -22187,6 +22351,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MediationGrant": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MediationGrant",
           "nameOverride": undefined,
@@ -22272,6 +22437,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MediationIdMatchInfo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MediationIdMatchInfo",
           "nameOverride": undefined,
@@ -22299,6 +22465,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MediationList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MediationList",
           "nameOverride": undefined,
@@ -22329,6 +22496,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MediationRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MediationRecord",
           "nameOverride": undefined,
@@ -22522,6 +22690,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Menu": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Menu",
           "nameOverride": undefined,
@@ -22638,6 +22807,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MenuForm": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MenuForm",
           "nameOverride": undefined,
@@ -22722,6 +22892,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MenuFormParam": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MenuFormParam",
           "nameOverride": undefined,
@@ -22829,6 +23000,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MenuJson": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MenuJson",
           "nameOverride": undefined,
@@ -22909,6 +23081,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "MenuOption": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MenuOption",
           "nameOverride": undefined,
@@ -23009,6 +23182,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "OobRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OobRecord",
           "nameOverride": undefined,
@@ -23266,6 +23440,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "PerformRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PerformRequest",
           "nameOverride": undefined,
@@ -23320,6 +23495,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "PingRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PingRequest",
           "nameOverride": undefined,
@@ -23351,6 +23527,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "PingRequestResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PingRequestResponse",
           "nameOverride": undefined,
@@ -23378,6 +23555,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "PresentationDefinition": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PresentationDefinition",
           "nameOverride": undefined,
@@ -23500,6 +23678,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "PresentationProposal": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PresentationProposal",
           "nameOverride": undefined,
@@ -23580,6 +23759,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "PresentationRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PresentationRequest",
           "nameOverride": undefined,
@@ -23664,6 +23844,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ProtocolDescriptor": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ProtocolDescriptor",
           "nameOverride": undefined,
@@ -23713,6 +23894,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "PublishRevocations": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PublishRevocations",
           "nameOverride": undefined,
@@ -23753,6 +23935,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Queries": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Queries",
           "nameOverride": undefined,
@@ -23819,6 +24002,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Query": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Query",
           "nameOverride": undefined,
@@ -23900,6 +24084,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "QueryItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "QueryItem",
           "nameOverride": undefined,
@@ -23948,6 +24133,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RawEncoded": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RawEncoded",
           "nameOverride": undefined,
@@ -23993,6 +24179,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ReceiveInvitationRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ReceiveInvitationRequest",
           "nameOverride": undefined,
@@ -24158,6 +24345,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RemoveWalletRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RemoveWalletRequest",
           "nameOverride": undefined,
@@ -24185,6 +24373,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ResolutionResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ResolutionResult",
           "nameOverride": undefined,
@@ -24195,6 +24384,7 @@ exports[`open api parser aries parse open api 1`] = `
               "key": "did_document",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "DID Document",
                 "generatedName": "ResolutionResultDidDocument",
                 "nameOverride": undefined,
@@ -24208,6 +24398,7 @@ exports[`open api parser aries parse open api 1`] = `
               "key": "metadata",
               "schema": {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Resolution metadata",
                 "generatedName": "ResolutionResultMetadata",
                 "nameOverride": undefined,
@@ -24220,6 +24411,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RevRegCreateRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevRegCreateRequest",
           "nameOverride": undefined,
@@ -24263,6 +24455,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RevRegIssuedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevRegIssuedResult",
           "nameOverride": undefined,
@@ -24288,6 +24481,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RevRegResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevRegResult",
           "nameOverride": undefined,
@@ -24314,6 +24508,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RevRegUpdateTailsFileUri": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevRegUpdateTailsFileUri",
           "nameOverride": undefined,
@@ -24337,6 +24532,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RevRegWalletUpdatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevRegWalletUpdatedResult",
           "nameOverride": undefined,
@@ -24350,6 +24546,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Calculated accumulator for phantom revocations",
                   "generatedName": "RevRegWalletUpdatedResultAccumCalculated",
                   "nameOverride": undefined,
@@ -24367,6 +24564,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Applied ledger transaction to fix revocations",
                   "generatedName": "RevRegWalletUpdatedResultAccumFixed",
                   "nameOverride": undefined,
@@ -24384,6 +24582,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Indy revocation registry delta",
                   "generatedName": "RevRegWalletUpdatedResultRevRegDelta",
                   "nameOverride": undefined,
@@ -24397,6 +24596,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RevRegsCreated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevRegsCreated",
           "nameOverride": undefined,
@@ -24440,6 +24640,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RevokeRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevokeRequest",
           "nameOverride": undefined,
@@ -24618,6 +24819,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "RouteRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RouteRecord",
           "nameOverride": undefined,
@@ -24767,6 +24969,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "Schema": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Schema",
           "nameOverride": undefined,
@@ -24886,6 +25089,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SchemaGetResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SchemaGetResult",
           "nameOverride": undefined,
@@ -24912,6 +25116,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SchemaInputDescriptor": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SchemaInputDescriptor",
           "nameOverride": undefined,
@@ -24955,6 +25160,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SchemaSendRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SchemaSendRequest",
           "nameOverride": undefined,
@@ -25010,6 +25216,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SchemaSendResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SchemaSendResult",
           "nameOverride": undefined,
@@ -25058,6 +25265,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SchemasCreatedResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SchemasCreatedResult",
           "nameOverride": undefined,
@@ -25089,6 +25297,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SchemasInputDescriptorFilter": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SchemasInputDescriptorFilter",
           "nameOverride": undefined,
@@ -25139,6 +25348,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SendMenu": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SendMenu",
           "nameOverride": undefined,
@@ -25169,6 +25379,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SendMessage": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SendMessage",
           "nameOverride": undefined,
@@ -25196,6 +25407,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "ServiceDecorator": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ServiceDecorator",
           "nameOverride": undefined,
@@ -25259,6 +25471,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SignRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SignRequest",
           "nameOverride": undefined,
@@ -25295,6 +25508,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SignResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SignResponse",
           "nameOverride": undefined,
@@ -25326,6 +25540,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Signed document",
                   "generatedName": "SignResponseSignedDoc",
                   "nameOverride": undefined,
@@ -25339,6 +25554,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SignatureOptions": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SignatureOptions",
           "nameOverride": undefined,
@@ -25430,6 +25646,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SignedDoc": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SignedDoc",
           "nameOverride": undefined,
@@ -25460,6 +25677,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "SubmissionRequirements": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SubmissionRequirements",
           "nameOverride": undefined,
@@ -25621,6 +25839,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TAAAccept": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaaAccept",
           "nameOverride": undefined,
@@ -25684,6 +25903,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TAAAcceptance": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaaAcceptance",
           "nameOverride": undefined,
@@ -25727,6 +25947,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TAAInfo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaaInfo",
           "nameOverride": undefined,
@@ -25803,6 +26024,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TAARecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaaRecord",
           "nameOverride": undefined,
@@ -25866,6 +26088,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TAAResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TaaResult",
           "nameOverride": undefined,
@@ -25892,6 +26115,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TailsDeleteResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TailsDeleteResponse",
           "nameOverride": undefined,
@@ -25919,6 +26143,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TransactionJobs": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionJobs",
           "nameOverride": undefined,
@@ -25998,6 +26223,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TransactionList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionList",
           "nameOverride": undefined,
@@ -26028,6 +26254,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TransactionRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TransactionRecord",
           "nameOverride": undefined,
@@ -26145,6 +26372,7 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "TransactionRecordMessagesAttachItem",
                     "nameOverride": undefined,
@@ -26163,6 +26391,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "TransactionRecordMetaData",
                   "nameOverride": undefined,
@@ -26183,6 +26412,7 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "TransactionRecordSignatureRequestItem",
                     "nameOverride": undefined,
@@ -26204,6 +26434,7 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "array",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "TransactionRecordSignatureResponseItem",
                     "nameOverride": undefined,
@@ -26258,6 +26489,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "TransactionRecordTiming",
                   "nameOverride": undefined,
@@ -26323,6 +26555,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TxnOrCredentialDefinitionSendResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TxnOrCredentialDefinitionSendResult",
           "nameOverride": undefined,
@@ -26374,6 +26607,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TxnOrPublishRevocationsResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TxnOrPublishRevocationsResult",
           "nameOverride": undefined,
@@ -26425,6 +26659,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TxnOrRegisterLedgerNymResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TxnOrRegisterLedgerNymResponse",
           "nameOverride": undefined,
@@ -26475,6 +26710,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TxnOrRevRegResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TxnOrRevRegResult",
           "nameOverride": undefined,
@@ -26526,6 +26762,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "TxnOrSchemaSendResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TxnOrSchemaSendResult",
           "nameOverride": undefined,
@@ -26585,6 +26822,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "UpdateWalletRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateWalletRequest",
           "nameOverride": undefined,
@@ -26687,6 +26925,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialBoundOfferRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialBoundOfferRequest",
           "nameOverride": undefined,
@@ -26721,6 +26960,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialConnFreeOfferRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialConnFreeOfferRequest",
           "nameOverride": undefined,
@@ -26827,6 +27067,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialCreate",
           "nameOverride": undefined,
@@ -27011,6 +27252,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialExchange": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialExchange",
           "nameOverride": undefined,
@@ -27247,6 +27489,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "(Indy) credential request metadata",
                   "generatedName": "V10CredentialExchangeCredentialRequestMetadata",
                   "nameOverride": undefined,
@@ -27495,6 +27738,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialExchangeListResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialExchangeListResult",
           "nameOverride": undefined,
@@ -27573,6 +27817,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialFreeOfferRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialFreeOfferRequest",
           "nameOverride": undefined,
@@ -27693,6 +27938,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialIssueRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialIssueRequest",
           "nameOverride": undefined,
@@ -27724,6 +27970,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialProblemReportRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialProblemReportRequest",
           "nameOverride": undefined,
@@ -27747,6 +27994,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialProposalRequestMand": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialProposalRequestMand",
           "nameOverride": undefined,
@@ -27945,6 +28193,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialProposalRequestOpt": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialProposalRequestOpt",
           "nameOverride": undefined,
@@ -28147,6 +28396,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10CredentialStoreRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10CredentialStoreRequest",
           "nameOverride": undefined,
@@ -28174,6 +28424,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10DiscoveryExchangeListResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10DiscoveryExchangeListResult",
           "nameOverride": undefined,
@@ -28212,6 +28463,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10DiscoveryRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10DiscoveryRecord",
           "nameOverride": undefined,
@@ -28407,6 +28659,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10PresentationCreateRequestRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10PresentationCreateRequestRequest",
           "nameOverride": undefined,
@@ -28483,6 +28736,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10PresentationExchange": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10PresentationExchange",
           "nameOverride": undefined,
@@ -28843,6 +29097,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10PresentationExchangeList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10PresentationExchangeList",
           "nameOverride": undefined,
@@ -28905,6 +29160,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10PresentationProblemReportRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10PresentationProblemReportRequest",
           "nameOverride": undefined,
@@ -28928,6 +29184,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10PresentationProposalRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10PresentationProposalRequest",
           "nameOverride": undefined,
@@ -29018,6 +29275,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10PresentationSendRequestRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10PresentationSendRequestRequest",
           "nameOverride": undefined,
@@ -29108,6 +29366,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V10PresentationSendRequestToProposal": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V10PresentationSendRequestToProposal",
           "nameOverride": undefined,
@@ -29149,6 +29408,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredAttrSpec": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredAttrSpec",
           "nameOverride": undefined,
@@ -29208,6 +29468,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredBoundOfferRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredBoundOfferRequest",
           "nameOverride": undefined,
@@ -29267,6 +29528,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredExFree": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredExFree",
           "nameOverride": undefined,
@@ -29396,6 +29658,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredExRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredExRecord",
           "nameOverride": undefined,
@@ -29844,6 +30107,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredExRecordByFormat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredExRecordByFormat",
           "nameOverride": undefined,
@@ -29857,6 +30121,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "V20CredExRecordByFormatCredIssue",
                   "nameOverride": undefined,
@@ -29874,6 +30139,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "V20CredExRecordByFormatCredOffer",
                   "nameOverride": undefined,
@@ -29891,6 +30157,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "V20CredExRecordByFormatCredProposal",
                   "nameOverride": undefined,
@@ -29908,6 +30175,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "V20CredExRecordByFormatCredRequest",
                   "nameOverride": undefined,
@@ -29921,6 +30189,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredExRecordDetail": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredExRecordDetail",
           "nameOverride": undefined,
@@ -29989,6 +30258,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredExRecordIndy": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredExRecordIndy",
           "nameOverride": undefined,
@@ -30074,6 +30344,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Credential request metadata for indy holder",
                   "generatedName": "V20CredExRecordIndyCredRequestMetadata",
                   "nameOverride": undefined,
@@ -30159,6 +30430,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredExRecordLDProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredExRecordLdProof",
           "nameOverride": undefined,
@@ -30276,6 +30548,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredExRecordListResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredExRecordListResult",
           "nameOverride": undefined,
@@ -30354,6 +30627,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredFilter": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredFilter",
           "nameOverride": undefined,
@@ -30397,6 +30671,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredFilterIndy": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredFilterIndy",
           "nameOverride": undefined,
@@ -30514,6 +30789,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredFilterLDProof": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredFilterLdProof",
           "nameOverride": undefined,
@@ -30552,6 +30828,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredFormat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredFormat",
           "nameOverride": undefined,
@@ -30589,6 +30866,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredIssue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredIssue",
           "nameOverride": undefined,
@@ -30708,6 +30986,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredIssueProblemReportRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredIssueProblemReportRequest",
           "nameOverride": undefined,
@@ -30731,6 +31010,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredIssueRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredIssueRequest",
           "nameOverride": undefined,
@@ -30762,6 +31042,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredOffer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredOffer",
           "nameOverride": undefined,
@@ -30898,6 +31179,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredOfferConnFreeRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredOfferConnFreeRequest",
           "nameOverride": undefined,
@@ -31007,6 +31289,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredOfferRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredOfferRequest",
           "nameOverride": undefined,
@@ -31130,6 +31413,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredPreview": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredPreview",
           "nameOverride": undefined,
@@ -31174,6 +31458,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredProposal": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredProposal",
           "nameOverride": undefined,
@@ -31300,6 +31585,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredRequest",
           "nameOverride": undefined,
@@ -31401,6 +31687,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredRequestFree": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredRequestFree",
           "nameOverride": undefined,
@@ -31521,6 +31808,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredRequestRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredRequestRequest",
           "nameOverride": undefined,
@@ -31552,6 +31840,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20CredStoreRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20CredStoreRequest",
           "nameOverride": undefined,
@@ -31579,6 +31868,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20DiscoveryExchangeListResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20DiscoveryExchangeListResult",
           "nameOverride": undefined,
@@ -31617,6 +31907,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20DiscoveryExchangeResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20DiscoveryExchangeResult",
           "nameOverride": undefined,
@@ -31643,6 +31934,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20DiscoveryRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20DiscoveryRecord",
           "nameOverride": undefined,
@@ -31826,6 +32118,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20IssueCredSchemaCore": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20IssueCredSchemaCore",
           "nameOverride": undefined,
@@ -31931,6 +32224,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20Pres": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20Pres",
           "nameOverride": undefined,
@@ -32032,6 +32326,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresCreateRequestRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresCreateRequestRequest",
           "nameOverride": undefined,
@@ -32108,6 +32403,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresExRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresExRecord",
           "nameOverride": undefined,
@@ -32521,6 +32817,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresExRecordByFormat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresExRecordByFormat",
           "nameOverride": undefined,
@@ -32534,6 +32831,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "V20PresExRecordByFormatPres",
                   "nameOverride": undefined,
@@ -32551,6 +32849,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "V20PresExRecordByFormatPresProposal",
                   "nameOverride": undefined,
@@ -32568,6 +32867,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "V20PresExRecordByFormatPresRequest",
                   "nameOverride": undefined,
@@ -32581,6 +32881,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresExRecordList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresExRecordList",
           "nameOverride": undefined,
@@ -32643,6 +32944,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresFormat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresFormat",
           "nameOverride": undefined,
@@ -32680,6 +32982,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresProblemReportRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresProblemReportRequest",
           "nameOverride": undefined,
@@ -32703,6 +33006,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresProposal": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresProposal",
           "nameOverride": undefined,
@@ -32800,6 +33104,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresProposalByFormat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresProposalByFormat",
           "nameOverride": undefined,
@@ -32859,6 +33164,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresProposalRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresProposalRequest",
           "nameOverride": undefined,
@@ -32949,6 +33255,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresRequest",
           "nameOverride": undefined,
@@ -33062,6 +33369,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresRequestByFormat": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresRequestByFormat",
           "nameOverride": undefined,
@@ -33121,6 +33429,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresSendRequestRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresSendRequestRequest",
           "nameOverride": undefined,
@@ -33211,6 +33520,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresSpecByFormatRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresSpecByFormatRequest",
           "nameOverride": undefined,
@@ -33298,6 +33608,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "V20PresentationSendRequestToProposal": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "V20PresentationSendRequestToProposal",
           "nameOverride": undefined,
@@ -33339,6 +33650,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "VCRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VcRecord",
           "nameOverride": undefined,
@@ -33401,6 +33713,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "(JSON-serializable) credential value",
                   "generatedName": "VcRecordCredValue",
                   "nameOverride": undefined,
@@ -33556,6 +33869,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "VCRecordList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VcRecordList",
           "nameOverride": undefined,
@@ -33586,6 +33900,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "VerifyRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VerifyRequest",
           "nameOverride": undefined,
@@ -33634,6 +33949,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "VerifyResponse": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VerifyResponse",
           "nameOverride": undefined,
@@ -33673,6 +33989,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "W3CCredentialsListRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "W3CCredentialsListRequest",
           "nameOverride": undefined,
@@ -33871,6 +34188,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "WalletList": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WalletList",
           "nameOverride": undefined,
@@ -33913,6 +34231,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "WalletRecord": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WalletRecord",
           "nameOverride": undefined,
@@ -33969,6 +34288,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "Settings for this wallet.",
                   "generatedName": "WalletRecordSettings",
                   "nameOverride": undefined,
@@ -34032,6 +34352,7 @@ exports[`open api parser aries parse open api 1`] = `
         },
         "WriteLedgerRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WriteLedgerRequest",
           "nameOverride": undefined,

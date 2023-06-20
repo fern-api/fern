@@ -43,6 +43,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "The created booking amendment",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "BookingAmendmentCreateResponse",
               "nameOverride": undefined,
@@ -253,6 +254,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "collection of booking line items",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "BookingLineItemIndexResponse",
               "nameOverride": undefined,
@@ -318,6 +320,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "BookingLineItemIndexResponseData",
                       "nameOverride": undefined,
@@ -454,6 +457,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "The created booking line item",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "BookingLineItemCreateResponse",
               "nameOverride": undefined,
@@ -573,6 +577,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "A collection of booking line items",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "BookingLineItemShowResponse",
               "nameOverride": undefined,
@@ -1048,6 +1053,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "collection of bookings",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "BookingsIndexResponse",
               "nameOverride": undefined,
@@ -1113,6 +1119,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "BookingsIndexResponseData",
                       "nameOverride": undefined,
@@ -1249,6 +1256,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "The created booking",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "BookingCreateResponse",
               "nameOverride": undefined,
@@ -1369,6 +1377,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "BookingShowResponse",
               "nameOverride": undefined,
@@ -1486,6 +1495,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CarbonCalculationCreateResponse",
               "nameOverride": undefined,
@@ -1689,6 +1699,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CommercialInvoicesIndexResponse",
               "nameOverride": undefined,
@@ -1754,6 +1765,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "CommercialInvoicesIndexResponseData",
                       "nameOverride": undefined,
@@ -1890,6 +1902,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "The created commercial invoice",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CommercialInvoicesCreateResponse",
               "nameOverride": undefined,
@@ -2007,6 +2020,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "The updated commercial invoice",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CommercialInvoicesUpdateResponse",
               "nameOverride": undefined,
@@ -2128,6 +2142,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CommercialInvoicesShowResponse",
               "nameOverride": undefined,
@@ -2282,6 +2297,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "collection of customs entries",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CustomsEntryIndexResponse",
               "nameOverride": undefined,
@@ -2347,6 +2363,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "CustomsEntryIndexResponseData",
                       "nameOverride": undefined,
@@ -2487,6 +2504,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CustomsEntriesShowResponse",
               "nameOverride": undefined,
@@ -2743,6 +2761,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "collection of documents",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "DocumentsIndexResponse",
               "nameOverride": undefined,
@@ -2808,6 +2827,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "DocumentsIndexResponseData",
                       "nameOverride": undefined,
@@ -2960,6 +2980,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "Created",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "DocumentsCreateResponse",
               "nameOverride": undefined,
@@ -3081,6 +3102,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "DocumentsShowResponse",
               "nameOverride": undefined,
@@ -3347,6 +3369,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "EventsIndexResponse",
               "nameOverride": undefined,
@@ -3412,6 +3435,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "EventsIndexResponseData",
                       "nameOverride": undefined,
@@ -3550,6 +3574,7 @@ we still recommend setting the Content-Type header to the value \`application/js
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "EventsShowResponse",
               "nameOverride": undefined,
@@ -3947,6 +3972,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of invoices",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "InvoiceIndexResponse",
               "nameOverride": undefined,
@@ -4012,6 +4038,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "InvoiceIndexResponseData",
                       "nameOverride": undefined,
@@ -4152,6 +4179,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "InvoicesShowResponse",
               "nameOverride": undefined,
@@ -4323,6 +4351,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of companies",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkCompanyIndexResponse",
               "nameOverride": undefined,
@@ -4388,6 +4417,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "NetworkCompanyIndexResponseData",
                       "nameOverride": undefined,
@@ -4540,6 +4570,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "The created company",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkCompanyCreateResponse",
               "nameOverride": undefined,
@@ -4659,6 +4690,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkCompanyShowResponse",
               "nameOverride": undefined,
@@ -4791,6 +4823,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "The updated company",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkCompanyUpdateResponse",
               "nameOverride": undefined,
@@ -4979,6 +5012,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of company entities",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "CompanyEntityIndexResponse",
               "nameOverride": undefined,
@@ -5044,6 +5078,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "CompanyEntityIndexResponseData",
                       "nameOverride": undefined,
@@ -5196,6 +5231,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "The created company entity",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkCompanyEntityCreateResponse",
               "nameOverride": undefined,
@@ -5317,6 +5353,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkCompanyEntityShowResponse",
               "nameOverride": undefined,
@@ -5449,6 +5486,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkCompanyEntityUpdateResponse",
               "nameOverride": undefined,
@@ -5637,6 +5675,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of contacts",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkContactIndexResponse",
               "nameOverride": undefined,
@@ -5702,6 +5741,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "NetworkContactIndexResponseData",
                       "nameOverride": undefined,
@@ -5854,6 +5894,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "The created contact",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkContactCreateResponse",
               "nameOverride": undefined,
@@ -5975,6 +6016,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkContactShowResponse",
               "nameOverride": undefined,
@@ -6107,6 +6149,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "The updated contact",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkContactUpdateResponse",
               "nameOverride": undefined,
@@ -6329,6 +6372,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of locations",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "LocationIndexResponse",
               "nameOverride": undefined,
@@ -6394,6 +6438,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "LocationIndexResponseData",
                       "nameOverride": undefined,
@@ -6546,6 +6591,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "The created location",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkLocationCreateResponse",
               "nameOverride": undefined,
@@ -6667,6 +6713,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkLocationShowResponse",
               "nameOverride": undefined,
@@ -6799,6 +6846,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "LocationUpdateResponse",
               "nameOverride": undefined,
@@ -6905,6 +6953,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "NetworkCompanyMeResponse",
               "nameOverride": undefined,
@@ -7089,6 +7138,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "OceanContainerLegsIndexResponse",
               "nameOverride": undefined,
@@ -7154,6 +7204,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "OceanContainerLegsIndexResponseData",
                       "nameOverride": undefined,
@@ -7292,6 +7343,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "OceanContainerLegsShowResponse",
               "nameOverride": undefined,
@@ -7478,6 +7530,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ContainerListResponse",
               "nameOverride": undefined,
@@ -7543,6 +7596,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "ContainerListResponseData",
                       "nameOverride": undefined,
@@ -7683,6 +7737,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ContainerShowResponse",
               "nameOverride": undefined,
@@ -7877,6 +7932,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of ports",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "PortsIndexResponse",
               "nameOverride": undefined,
@@ -7942,6 +7998,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "PortsIndexResponseData",
                       "nameOverride": undefined,
@@ -8133,6 +8190,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ProductIndexResponse",
               "nameOverride": undefined,
@@ -8198,6 +8256,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "ProductIndexResponseData",
                       "nameOverride": undefined,
@@ -8334,6 +8393,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Created",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ProductCreateResponse",
               "nameOverride": undefined,
@@ -8455,6 +8515,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ProductShowResponse",
               "nameOverride": undefined,
@@ -8587,6 +8648,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Updated",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ProductUpdateResponse",
               "nameOverride": undefined,
@@ -8816,6 +8878,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of purchase order line items",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "PurchaseOrderLineItemIndexResponse",
               "nameOverride": undefined,
@@ -8881,6 +8944,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "PurchaseOrderLineItemIndexResponseData",
                       "nameOverride": undefined,
@@ -9011,6 +9075,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of purchase order line items",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "PurchaseOrderLineItemShowResponse",
               "nameOverride": undefined,
@@ -9464,6 +9529,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of purchase orders",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "PurchaseOrderIndexResponse",
               "nameOverride": undefined,
@@ -9529,6 +9595,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "PurchaseOrderIndexResponseData",
                       "nameOverride": undefined,
@@ -9723,6 +9790,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "PurchaseOrderShowResponse",
               "nameOverride": undefined,
@@ -9965,6 +10033,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ShipmentLegIndexResponse",
               "nameOverride": undefined,
@@ -10030,6 +10099,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "ShipmentLegIndexResponseData",
                       "nameOverride": undefined,
@@ -10184,6 +10254,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ShipmentLegShowResponse",
               "nameOverride": undefined,
@@ -10830,6 +10901,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of shipments",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ShipmentIndexResponse",
               "nameOverride": undefined,
@@ -10895,6 +10967,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "ShipmentIndexResponseData",
                       "nameOverride": undefined,
@@ -11036,6 +11109,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "Success",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ShipmentShowResponse",
               "nameOverride": undefined,
@@ -11166,6 +11240,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "The updated shipment",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ShipmentUpdateResponse",
               "nameOverride": undefined,
@@ -11270,6 +11345,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": undefined,
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ShipmentsShareableRequest",
               "nameOverride": undefined,
@@ -11304,6 +11380,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "description": "collection of shipments shareable status url",
             "schema": {
               "allOf": [],
+              "allOfPropertyConflicts": [],
               "description": undefined,
               "generatedName": "ShipmentsShareableResponse",
               "nameOverride": undefined,
@@ -11369,6 +11446,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional",
                     "value": {
                       "allOf": [],
+                      "allOfPropertyConflicts": [],
                       "description": undefined,
                       "generatedName": "ShipmentsShareableResponseData",
                       "nameOverride": undefined,
@@ -11403,6 +11481,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                               "type": "array",
                               "value": {
                                 "allOf": [],
+                                "allOfPropertyConflicts": [],
                                 "description": undefined,
                                 "generatedName": "ShipmentsShareableResponseDataShipmentsItem",
                                 "nameOverride": undefined,
@@ -11621,6 +11700,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "schemas": {
         "AdditionalDates": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AdditionalDates",
           "nameOverride": undefined,
@@ -11756,6 +11836,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Address": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Address",
           "nameOverride": undefined,
@@ -11979,6 +12060,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "AddressForRequestBody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AddressForRequestBody",
           "nameOverride": undefined,
@@ -12117,6 +12199,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "AirBookingDetail",
             "nameOverride": undefined,
@@ -12324,6 +12407,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "AirShipmentDetail",
             "nameOverride": undefined,
@@ -12425,6 +12509,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "AirShipmentLeg",
             "nameOverride": undefined,
@@ -12507,6 +12592,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Airport": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Airport",
           "nameOverride": undefined,
@@ -12606,6 +12692,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Booking": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Booking",
           "nameOverride": undefined,
@@ -13121,6 +13208,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "BookingAmendment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BookingAmendment",
           "nameOverride": undefined,
@@ -13419,6 +13507,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "BookingAmendmentHsCode": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BookingAmendmentHsCode",
           "nameOverride": undefined,
@@ -13499,6 +13588,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "BookingHsCode": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BookingHsCode",
           "nameOverride": undefined,
@@ -13597,6 +13687,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "BookingLineItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BookingLineItem",
           "nameOverride": undefined,
@@ -13690,6 +13781,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "BookingLineItemCollectionRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "BookingLineItemCollectionRef",
           "nameOverride": undefined,
@@ -13753,6 +13845,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "BookingRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "BookingRef",
           "nameOverride": undefined,
@@ -13832,6 +13925,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CarbonCalculation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CarbonCalculation",
           "nameOverride": undefined,
@@ -13876,6 +13970,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Cargo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "With cargo you have two options, detailed or simple. These are both expressed directly on the cargo object. For detailed cargo, \`shipping_units\` is required, and \`weight\` and \`volume\` is required in the \`cargo\` object or the \`shipping_units\` object. For simple cargo, \`shipping_units\` is required, but only one should be specified, and \`weight\` and \`volume\` are required in the \`cargo\` object.",
           "generatedName": "Cargo",
           "nameOverride": undefined,
@@ -14101,6 +14196,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CommercialInvoice": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CommercialInvoice",
           "nameOverride": undefined,
@@ -14435,6 +14531,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CommercialInvoiceCollectionRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "CommercialInvoiceCollectionRef",
           "nameOverride": undefined,
@@ -14498,6 +14595,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CommercialInvoiceLineItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CommercialInvoiceLineItem",
           "nameOverride": undefined,
@@ -14831,6 +14929,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CommercialInvoiceLineItemContainerNumber": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CommercialInvoiceLineItemContainerNumber",
           "nameOverride": undefined,
@@ -14948,6 +15047,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Company": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Company",
           "nameOverride": undefined,
@@ -15117,6 +15217,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CompanyEntity": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CompanyEntity",
           "nameOverride": undefined,
@@ -15234,6 +15335,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CompanyEntityRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "CompanyEntityRef",
           "nameOverride": undefined,
@@ -15313,6 +15415,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Contact": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Contact",
           "nameOverride": undefined,
@@ -15433,6 +15536,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "optional",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
                   "generatedName": "ContactCompany",
                   "nameOverride": undefined,
@@ -15519,6 +15623,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ContainerCollectionRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "ContainerCollectionRef",
           "nameOverride": undefined,
@@ -15582,6 +15687,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ContainerCounts": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ContainerCounts",
           "nameOverride": undefined,
@@ -15673,6 +15779,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ContainerLegCollectionRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "ContainerLegCollectionRef",
           "nameOverride": undefined,
@@ -15736,6 +15843,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ContainerRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "ContainerRef",
           "nameOverride": undefined,
@@ -15815,6 +15923,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CoordinatesCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CoordinatesCreate",
           "nameOverride": undefined,
@@ -15860,6 +15969,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateAirBooking": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "If a non-null value is passed in for 'air_booking', then the new booking will be assumed to be an air booking, even if the 'ocean_booking' or 'trucking_booking' fields are set.",
           "generatedName": "CreateAirBooking",
           "nameOverride": undefined,
@@ -16143,6 +16253,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateBooking": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateBooking",
           "nameOverride": undefined,
@@ -16504,6 +16615,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateBookingAmendment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateBookingAmendment",
           "nameOverride": undefined,
@@ -16823,6 +16935,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateBookingAmendmentHsCode": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateBookingAmendmentHsCode",
           "nameOverride": undefined,
@@ -16878,6 +16991,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateBookingHsCode": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateBookingHsCode",
           "nameOverride": undefined,
@@ -16951,6 +17065,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateBookingLineItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateBookingLineItem",
           "nameOverride": undefined,
@@ -16996,6 +17111,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateCarbonCalculation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateCarbonCalculation",
           "nameOverride": undefined,
@@ -17340,6 +17456,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateCargo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "With cargo you have two options, detailed or simple. These are both expressed directly on the cargo object. For detailed cargo, \`shipping_units\` is required, and \`weight\` and \`volume\` is required in the \`cargo\` object or the \`shipping_units\` object. For simple cargo, \`shipping_units\` is required, but only one should be specified, and \`weight\` and \`volume\` are required in the \`cargo\` object.",
           "generatedName": "CreateCargo",
           "nameOverride": undefined,
@@ -17547,6 +17664,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateCommercialInvoice": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateCommercialInvoice",
           "nameOverride": undefined,
@@ -17724,6 +17842,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateCommercialInvoiceLineItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateCommercialInvoiceLineItem",
           "nameOverride": undefined,
@@ -18011,6 +18130,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateCompany": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateCompany",
           "nameOverride": undefined,
@@ -18052,6 +18172,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateCompanyEntity": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateCompanyEntity",
           "nameOverride": undefined,
@@ -18163,6 +18284,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateContact": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateContact",
           "nameOverride": undefined,
@@ -18232,6 +18354,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateContainerCounts": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateContainerCounts",
           "nameOverride": undefined,
@@ -18305,6 +18428,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateDocument": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateDocument",
           "nameOverride": undefined,
@@ -18418,6 +18542,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateInvolvedParty": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateInvolvedParty",
           "nameOverride": undefined,
@@ -18455,6 +18580,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateLineItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateLineItem",
           "nameOverride": undefined,
@@ -19138,25 +19264,25 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     {
                       "description": undefined,
-                      "generatedName": "twenty",
+                      "generatedName": "Twenty",
                       "nameOverride": undefined,
                       "value": "20",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "twenty_one",
+                      "generatedName": "TwentyOne",
                       "nameOverride": undefined,
                       "value": "21",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "two",
+                      "generatedName": "TwoW",
                       "nameOverride": undefined,
                       "value": "2W",
                     },
                     {
                       "description": undefined,
-                      "generatedName": "forty_three",
+                      "generatedName": "FortyThree",
                       "nameOverride": undefined,
                       "value": "43",
                     },
@@ -19648,6 +19774,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateLineItemDestinationLocation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateLineItemDestinationLocation",
           "nameOverride": undefined,
@@ -19687,6 +19814,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateLineItemMeasurement": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateLineItemMeasurement",
           "nameOverride": undefined,
@@ -19785,6 +19913,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateLocation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateLocation",
           "nameOverride": undefined,
@@ -19896,6 +20025,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateOceanBooking": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateOceanBooking",
           "nameOverride": undefined,
@@ -20132,6 +20262,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateOrUpdatePurchaseOrder": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateOrUpdatePurchaseOrder",
           "nameOverride": undefined,
@@ -20652,6 +20783,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateParty": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A party is a company entity that is tied to a purchase order and has a specific role.",
           "generatedName": "CreateParty",
           "nameOverride": undefined,
@@ -20785,6 +20917,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "type": "array",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "CreatePartyContactsItem",
                     "nameOverride": undefined,
@@ -20890,6 +21023,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateProduct": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateProduct",
           "nameOverride": undefined,
@@ -21052,6 +21186,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreatePurchaseOrderHsCode": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreatePurchaseOrderHsCode",
           "nameOverride": undefined,
@@ -21089,6 +21224,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreatePurchaseOrderPort": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreatePurchaseOrderPort",
           "nameOverride": undefined,
@@ -21149,6 +21285,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreatePurchaseOrderProduct": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreatePurchaseOrderProduct",
           "nameOverride": undefined,
@@ -21368,6 +21505,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateQuantity": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateQuantity",
           "nameOverride": undefined,
@@ -21444,6 +21582,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreateTruckingBooking": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreateTruckingBooking",
           "nameOverride": undefined,
@@ -21508,6 +21647,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CreditMemo": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CreditMemo",
           "nameOverride": undefined,
@@ -21650,6 +21790,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CustomsEntry": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CustomsEntry",
           "nameOverride": undefined,
@@ -21783,6 +21924,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CustomsEntryCollectionRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "CustomsEntryCollectionRef",
           "nameOverride": undefined,
@@ -21846,6 +21988,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "CustomsInvolvedParty": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "CustomsInvolvedParty",
           "nameOverride": undefined,
@@ -21943,6 +22086,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "DistanceCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DistanceCreate",
           "nameOverride": undefined,
@@ -21997,6 +22141,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Document": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Document",
           "nameOverride": undefined,
@@ -22174,6 +22319,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "DocumentCollectionRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "DocumentCollectionRef",
           "nameOverride": undefined,
@@ -22237,6 +22383,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Error": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Error",
           "nameOverride": undefined,
@@ -22316,6 +22463,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Exception": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Exception",
           "nameOverride": undefined,
@@ -22486,6 +22634,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "FileMetadata": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FileMetadata",
           "nameOverride": undefined,
@@ -22579,6 +22728,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "GenericCollectionRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "GenericCollectionRef",
           "nameOverride": undefined,
@@ -22642,6 +22792,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "GenericObjectRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "GenericObjectRef",
           "nameOverride": undefined,
@@ -22741,6 +22892,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "HsCode": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "HsCode",
           "nameOverride": undefined,
@@ -22826,6 +22978,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Invoice": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Invoice",
           "nameOverride": undefined,
@@ -23186,6 +23339,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "InvoiceItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InvoiceItem",
           "nameOverride": undefined,
@@ -23375,6 +23529,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "InvoiceQuantity": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Describes the number of units used to calculate the price of a line item",
           "generatedName": "InvoiceQuantity",
           "nameOverride": undefined,
@@ -23438,6 +23593,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "InvoiceRate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Describes the rate per unit used to calculate the price of a line item",
           "generatedName": "InvoiceRate",
           "nameOverride": undefined,
@@ -23501,6 +23657,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "LegCollectionRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "LegCollectionRef",
           "nameOverride": undefined,
@@ -23564,6 +23721,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "LegRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "LegRef",
           "nameOverride": undefined,
@@ -23643,6 +23801,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Length": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Length",
           "nameOverride": undefined,
@@ -23715,6 +23874,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "LengthCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LengthCreate",
           "nameOverride": undefined,
@@ -23769,6 +23929,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "LineItemMeasurement": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LineItemMeasurement",
           "nameOverride": undefined,
@@ -23879,6 +24040,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Location": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Location",
           "nameOverride": undefined,
@@ -24044,6 +24206,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Manufacturer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Manufacturer",
           "nameOverride": undefined,
@@ -24108,6 +24271,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "schemas": [
               {
                 "allOf": [],
+                "allOfPropertyConflicts": [],
                 "description": "Object format.",
                 "generatedName": "MetadataCreateMetadataCreate",
                 "nameOverride": undefined,
@@ -24142,6 +24306,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "type": "array",
                 "value": {
                   "allOf": [],
+                  "allOfPropertyConflicts": [],
                   "description": undefined,
                   "generatedName": "MetadataCreateMetadataCreateItem",
                   "nameOverride": undefined,
@@ -24206,6 +24371,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Money",
           "nameOverride": undefined,
@@ -24233,6 +24399,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "MoneyCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "MoneyCreate",
           "nameOverride": undefined,
@@ -24281,6 +24448,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "OceanBookingDetail",
             "nameOverride": undefined,
@@ -24518,6 +24686,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "OceanShipmentContainerLeg": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OceanShipmentContainerLeg",
           "nameOverride": undefined,
@@ -24607,6 +24776,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "OceanShipmentDetail",
             "nameOverride": undefined,
@@ -24740,6 +24910,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "OceanShipmentLeg": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OceanShipmentLeg",
           "nameOverride": undefined,
@@ -24856,6 +25027,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Parties": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A party is a company entity that is tied to a purchase order that has a specific role.",
           "generatedName": "Parties",
           "nameOverride": undefined,
@@ -24995,6 +25167,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "type": "array",
                   "value": {
                     "allOf": [],
+                    "allOfPropertyConflicts": [],
                     "description": undefined,
                     "generatedName": "PartiesContactsItem",
                     "nameOverride": undefined,
@@ -25103,6 +25276,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "Place",
             "nameOverride": undefined,
@@ -25214,6 +25388,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Placeport": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Placeport",
           "nameOverride": undefined,
@@ -25276,6 +25451,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Product": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Product",
           "nameOverride": undefined,
@@ -25510,6 +25686,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ProductClassification": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ProductClassification",
           "nameOverride": undefined,
@@ -25577,6 +25754,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ProductProperty": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ProductProperty",
           "nameOverride": undefined,
@@ -25640,6 +25818,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ProductRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "ProductRef",
           "nameOverride": undefined,
@@ -25719,6 +25898,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "PurchaseOrder": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PurchaseOrder",
           "nameOverride": undefined,
@@ -26297,6 +26477,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "PurchaseOrderLineItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PurchaseOrderLineItem",
           "nameOverride": undefined,
@@ -27070,6 +27251,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "PurchaseOrderLineItemCollectionRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "PurchaseOrderLineItemCollectionRef",
           "nameOverride": undefined,
@@ -27133,6 +27315,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "PurchaseOrderLineItemDestinationAddress": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PurchaseOrderLineItemDestinationAddress",
           "nameOverride": undefined,
@@ -27176,6 +27359,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "PurchaseOrderLineItemRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "PurchaseOrderLineItemRef",
           "nameOverride": undefined,
@@ -27255,6 +27439,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "PurchaseOrderProduct": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PurchaseOrderProduct",
           "nameOverride": undefined,
@@ -27478,6 +27663,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "PurchaseOrderRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "PurchaseOrderRef",
           "nameOverride": undefined,
@@ -27560,6 +27746,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "RailShipmentLeg",
             "nameOverride": undefined,
@@ -27605,6 +27792,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "Shipment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Shipment",
           "nameOverride": undefined,
@@ -28684,6 +28872,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ShipmentContainer": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ShipmentContainer",
           "nameOverride": undefined,
@@ -29299,6 +29488,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ShipmentDangerousGoods": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ShipmentDangerousGoods",
           "nameOverride": undefined,
@@ -29401,6 +29591,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ShipmentEventData": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ShipmentEventData",
           "nameOverride": undefined,
@@ -29544,6 +29735,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ShipmentItem": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ShipmentItem",
           "nameOverride": undefined,
@@ -29672,6 +29864,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ShipmentLeg": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ShipmentLeg",
           "nameOverride": undefined,
@@ -29998,6 +30191,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ShipmentNode": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ShipmentNode",
           "nameOverride": undefined,
@@ -30081,6 +30275,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ShipmentRef": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "generatedName": "ShipmentRef",
           "nameOverride": undefined,
@@ -30246,6 +30441,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ShippingUnit": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "For detailed cargo, \`shipping_units\` is required. For simple cargo, \`shipping_units\` is required, but only one should be specified.",
           "generatedName": "ShippingUnit",
           "nameOverride": undefined,
@@ -30426,6 +30622,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "ShippingUnitCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "For detailed cargo, \`shipping_units\` is required. For simple cargo, \`shipping_units\` is required, but only one should be specified.",
           "generatedName": "ShippingUnitCreate",
           "nameOverride": undefined,
@@ -30591,6 +30788,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": "Name and address of a specific terminal within a port or airport.  Possibly null",
             "generatedName": "Terminal",
             "nameOverride": undefined,
@@ -30731,6 +30929,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "TruckingBookingDetail",
             "nameOverride": undefined,
@@ -30825,6 +31024,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "type": "nullable",
           "value": {
             "allOf": [],
+            "allOfPropertyConflicts": [],
             "description": undefined,
             "generatedName": "TruckingShipmentLeg",
             "nameOverride": undefined,
@@ -30975,6 +31175,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "UpdateCommercialInvoice": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateCommercialInvoice",
           "nameOverride": undefined,
@@ -31113,6 +31314,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "UpdateCompany": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateCompany",
           "nameOverride": undefined,
@@ -31158,6 +31360,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "UpdateCompanyEntity": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateCompanyEntity",
           "nameOverride": undefined,
@@ -31241,6 +31444,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "UpdateContact": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateContact",
           "nameOverride": undefined,
@@ -31304,6 +31508,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "UpdateLocation": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateLocation",
           "nameOverride": undefined,
@@ -31409,6 +31614,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "UpdateProduct": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateProduct",
           "nameOverride": undefined,
@@ -31587,6 +31793,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "UpdateShipment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UpdateShipment",
           "nameOverride": undefined,
@@ -31617,6 +31824,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "VatNumber": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VatNumber",
           "nameOverride": undefined,
@@ -31689,6 +31897,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Volume",
           "nameOverride": undefined,
@@ -31716,6 +31925,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "VolumeCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "VolumeCreate",
           "nameOverride": undefined,
@@ -31770,6 +31980,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "WebhookEvent": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WebhookEvent",
           "nameOverride": undefined,
@@ -31909,6 +32120,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Weight",
           "nameOverride": undefined,
@@ -31936,6 +32148,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "WeightCreate": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WeightCreate",
           "nameOverride": undefined,
@@ -31990,6 +32203,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "WriteProductClassification": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WriteProductClassification",
           "nameOverride": undefined,
@@ -32031,6 +32245,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "WriteProductProperty": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WriteProductProperty",
           "nameOverride": undefined,
@@ -32068,6 +32283,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "WriteProductSupplier": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WriteProductSupplier",
           "nameOverride": undefined,
@@ -32125,6 +32341,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         },
         "WriteVatNumber": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WriteVatNumber",
           "nameOverride": undefined,

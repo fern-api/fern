@@ -398,6 +398,7 @@ exports[`open api parser hume parse open api 1`] = `
       "schemas": {
         "BaseRequest": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BaseRequest",
           "nameOverride": undefined,
@@ -681,6 +682,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "BoundingBox": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A bounding box around a face.",
           "generatedName": "BoundingBox",
           "nameOverride": undefined,
@@ -738,6 +740,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "BurstPrediction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "BurstPrediction",
           "nameOverride": undefined,
@@ -794,6 +797,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Completed": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Completed",
           "nameOverride": undefined,
@@ -863,6 +867,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "DescriptionsScore": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DescriptionsScore",
           "nameOverride": undefined,
@@ -920,6 +925,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "EmotionScore": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EmotionScore",
           "nameOverride": undefined,
@@ -969,6 +975,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Error": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Error",
           "nameOverride": undefined,
@@ -1006,6 +1013,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Face": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Face",
           "nameOverride": undefined,
@@ -1129,6 +1137,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "FacePrediction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FacePrediction",
           "nameOverride": undefined,
@@ -1246,6 +1255,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "FacemeshPrediction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FacemeshPrediction",
           "nameOverride": undefined,
@@ -1272,6 +1282,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "FacsScore": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "FacsScore",
           "nameOverride": undefined,
@@ -1309,6 +1320,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Failed": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Failed",
           "nameOverride": undefined,
@@ -1368,6 +1380,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "File": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "File",
           "nameOverride": undefined,
@@ -1459,6 +1472,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "GroupedPredictions<BurstPrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GroupedPredictionsBurstPrediction",
           "nameOverride": undefined,
@@ -1499,6 +1513,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "GroupedPredictions<FacePrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GroupedPredictionsFacePrediction",
           "nameOverride": undefined,
@@ -1539,6 +1554,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "GroupedPredictions<FacemeshPrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GroupedPredictionsFacemeshPrediction",
           "nameOverride": undefined,
@@ -1579,6 +1595,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "GroupedPredictions<LanguagePrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GroupedPredictionsLanguagePrediction",
           "nameOverride": undefined,
@@ -1619,6 +1636,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "GroupedPredictions<NerPrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GroupedPredictionsNerPrediction",
           "nameOverride": undefined,
@@ -1659,6 +1677,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "GroupedPredictions<ProsodyPrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "GroupedPredictionsProsodyPrediction",
           "nameOverride": undefined,
@@ -1699,6 +1718,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "InProgress": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "InProgress",
           "nameOverride": undefined,
@@ -1732,6 +1752,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Job<Request>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "JobRequest",
           "nameOverride": undefined,
@@ -1795,6 +1816,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "JobId": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "JobId",
           "nameOverride": undefined,
@@ -1818,6 +1840,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Language": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Language",
           "nameOverride": undefined,
@@ -1894,6 +1917,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "LanguagePrediction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "LanguagePrediction",
           "nameOverride": undefined,
@@ -2040,6 +2064,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Models": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Models",
           "nameOverride": undefined,
@@ -2151,6 +2176,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "ModelsPredictions": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ModelsPredictions",
           "nameOverride": undefined,
@@ -2262,6 +2288,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Ner": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Ner",
           "nameOverride": undefined,
@@ -2287,6 +2314,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "NerPrediction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "NerPrediction",
           "nameOverride": undefined,
@@ -2453,6 +2481,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "PositionInterval": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
           "generatedName": "PositionInterval",
           "nameOverride": undefined,
@@ -2486,6 +2515,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Prediction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Prediction",
           "nameOverride": undefined,
@@ -2522,6 +2552,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Predictions<optional<Null>, BurstPrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PredictionsOptionalNullBurstPrediction",
           "nameOverride": undefined,
@@ -2565,6 +2596,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Predictions<optional<Null>, FacePrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PredictionsOptionalNullFacePrediction",
           "nameOverride": undefined,
@@ -2608,6 +2640,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Predictions<optional<Null>, FacemeshPrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PredictionsOptionalNullFacemeshPrediction",
           "nameOverride": undefined,
@@ -2651,6 +2684,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Predictions<optional<TranscriptionMetadata>, LanguagePrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
           "nameOverride": undefined,
@@ -2694,6 +2728,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Predictions<optional<TranscriptionMetadata>, NerPrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PredictionsOptionalTranscriptionMetadataNerPrediction",
           "nameOverride": undefined,
@@ -2737,6 +2772,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Predictions<optional<TranscriptionMetadata>, ProsodyPrediction>": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
           "nameOverride": undefined,
@@ -2780,6 +2816,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Prosody": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
           "generatedName": "Prosody",
           "nameOverride": undefined,
@@ -2839,6 +2876,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "ProsodyPrediction": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ProsodyPrediction",
           "nameOverride": undefined,
@@ -2928,6 +2966,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Queued": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Queued",
           "nameOverride": undefined,
@@ -2949,6 +2988,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "Request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Request",
           "nameOverride": undefined,
@@ -3067,6 +3107,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Results": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Results",
           "nameOverride": undefined,
@@ -3110,6 +3151,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "SentimentScore": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SentimentScore",
           "nameOverride": undefined,
@@ -3202,6 +3244,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "SourceResult": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SourceResult",
           "nameOverride": undefined,
@@ -3329,6 +3372,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "StateCompleted",
           "nameOverride": undefined,
@@ -3361,6 +3405,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "StateFailed",
           "nameOverride": undefined,
@@ -3393,6 +3438,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "StateInProgress",
           "nameOverride": undefined,
@@ -3425,6 +3471,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "StateQueued",
           "nameOverride": undefined,
@@ -3480,6 +3527,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "TimeInterval": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A time range with a beginning and end, measured in seconds.",
           "generatedName": "TimeInterval",
           "nameOverride": undefined,
@@ -3513,6 +3561,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "ToxicityScore": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ToxicityScore",
           "nameOverride": undefined,
@@ -3550,6 +3599,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Transcription": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Transcription",
           "nameOverride": undefined,
@@ -3576,6 +3626,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "TranscriptionMetadata": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Transcription metadata for your media file.",
           "generatedName": "TranscriptionMetadata",
           "nameOverride": undefined,
@@ -3614,6 +3665,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Url": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Url",
           "nameOverride": undefined,
@@ -3657,6 +3709,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "Window": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Window",
           "nameOverride": undefined,

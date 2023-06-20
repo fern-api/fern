@@ -31,6 +31,7 @@ export const V7_TO_V6_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
     migrateBackwards: (v7): IrVersions.V6.ir.IntermediateRepresentation => {
         return {

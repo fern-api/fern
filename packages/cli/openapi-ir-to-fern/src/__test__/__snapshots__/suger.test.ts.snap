@@ -8243,6 +8243,9 @@ the same customer, dimension, and time, but a different quantity.",
     "error-discrimination": {
       "strategy": "status-code",
     },
+    "imports": {
+      "root": "__package__.yml",
+    },
     "name": "api",
   },
 }

@@ -2429,8 +2429,6 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-docs-configuration": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
-    "@fern-api/openapi-ir-to-fern": "workspace:*"
-    "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
@@ -3227,7 +3225,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.74
+    "@fern-fern/openapi-ir-model": 0.0.81
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3279,8 +3277,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-api/validator": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.74
+    "@fern-fern/openapi-ir-model": 0.0.81
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3795,6 +3792,8 @@ __metadata:
     "@fern-api/docs-configuration": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
+    "@fern-api/openapi-ir-to-fern": "workspace:*"
+    "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/services": "workspace:*"
@@ -4089,10 +4088,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/openapi-ir-model@npm:0.0.74":
-  version: 0.0.74
-  resolution: "@fern-fern/openapi-ir-model@npm:0.0.74"
-  checksum: eefa7cf33fc3ed611b36de9d20ead22cfc7afb2b6fc4f6ea4b941752ff3bf24ec12d67676888b6a0169db670fec976753214eba576788192fd71588fb5b093c7
+"@fern-fern/openapi-ir-model@npm:0.0.81":
+  version: 0.0.81
+  resolution: "@fern-fern/openapi-ir-model@npm:0.0.81"
+  checksum: dd978b285a135be82d010a232d3f8dbd285631578392dfde987ada49ef3683f9b8b8279f456215cc2fec2eacd0f09ae39439abd1906ff45a05ddc9f5722fe258
   languageName: node
   linkType: hard
 

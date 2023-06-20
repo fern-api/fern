@@ -9,6 +9,8 @@
     { "path": "../config-management/docs-configuration" },
     { "path": "../config-management/generators-configuration" },
     { "path": "../config-management/project-configuration" },
+    { "path": "../openapi-ir-to-fern" },
+    { "path": "../openapi-parser" },
     { "path": "../semver-utils" },
     { "path": "../services" },
     { "path": "../task-context" },

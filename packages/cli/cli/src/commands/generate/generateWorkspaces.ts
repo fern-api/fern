@@ -1,9 +1,8 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
-import { convertOpenApiWorkspaceToFernWorkspace } from "../../utils/convertOpenApiWorkspaceToFernWorkspace";
 import { generateWorkspace } from "./generateWorkspace";
 
 export async function generateWorkspaces({

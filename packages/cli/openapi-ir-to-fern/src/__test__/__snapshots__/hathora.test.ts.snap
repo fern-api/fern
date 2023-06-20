@@ -58,7 +58,7 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "appName": {
-              "docs": "\`<= 32 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 32 characters\`</span>",
               "type": "string",
             },
             "authConfiguration": {
@@ -362,11 +362,11 @@ exports[`open api parser hathora simple 1`] = `
           "docs": undefined,
           "properties": {
             "name": {
-              "docs": "\`non-empty\` \`<= 100 characters\`",
+              "docs": "<span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 100 characters\`</span>",
               "type": "string",
             },
             "value": {
-              "docs": "\`<= 5000 characters\`",
+              "docs": "<span style="white-space: nowrap">\`<= 5000 characters\`</span>",
               "type": "string",
             },
           },
@@ -2207,6 +2207,9 @@ exports[`open api parser hathora simple 1`] = `
     "display-name": "Hathora Cloud API",
     "error-discrimination": {
       "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
     },
     "name": "api",
   },

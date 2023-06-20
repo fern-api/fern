@@ -1,7 +1,8 @@
-import { VALID_NAME_REGEX } from "@fern-api/validator";
 import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../../extensions/getFernEnum";
+
+const VALID_NAME_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9_]*$");
 
 export function convertEnum({
     nameOverride,
@@ -75,18 +76,30 @@ export function wrapEnum({
 }
 
 function generateEnumNameFromValue(value: string): string {
-    const maybeParsedNumber = maybeParseNumber(value);
+    const maybeParsedNumber = replaceStartingNumber(value);
     if (maybeParsedNumber != null) {
-        return convertNumberToSnakeCase(maybeParsedNumber) ?? value;
+        return upperFirst(camelCase(maybeParsedNumber));
     } else {
+        if (value.toLowerCase() === "n/a") {
+            return "NOT_APPLICABLE";
+        }
         return upperFirst(camelCase(value));
     }
 }
 
-function maybeParseNumber(input: string): number | null {
-    const parsedNumber = parseFloat(input);
-
-    return !isNaN(parsedNumber) && isFinite(parsedNumber) ? parsedNumber : null;
+const NUMERIC_REGEX = /^(\d+)/;
+function replaceStartingNumber(input: string): string | undefined {
+    const matches = input.match(NUMERIC_REGEX);
+    if (matches && matches[0] != null) {
+        const numericPart = matches[0];
+        const nonNumericPart = input.substring(numericPart.length);
+        const parsedNumber = parseFloat(numericPart);
+        if (!isNaN(parsedNumber) && isFinite(parsedNumber)) {
+            const snakeCasedNumber = convertNumberToSnakeCase(parsedNumber);
+            return nonNumericPart.length > 0 ? `${snakeCasedNumber}_${nonNumericPart}` : snakeCasedNumber;
+        }
+    }
+    return undefined;
 }
 
 function stripCommonPrefix(names: string[]): string[] {

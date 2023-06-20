@@ -3660,6 +3660,7 @@ organizations.
         },
         "artifacts-locate-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to getting an artifact's download URL.",
           "generatedName": "ArtifactsLocateResponse",
           "nameOverride": undefined,
@@ -3701,6 +3702,7 @@ organizations.
         },
         "artifacts-prepare-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to prepare a URL to upload a file.",
           "generatedName": "ArtifactsPrepareRequest",
           "nameOverride": undefined,
@@ -3724,6 +3726,7 @@ organizations.
         },
         "artifacts-prepare-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to preparing a URL to upload a file.",
           "generatedName": "ArtifactsPrepareResponse",
           "nameOverride": undefined,
@@ -3778,6 +3781,7 @@ organizations.
         },
         "artifacts-prepare-response-form-data": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ArtifactsPrepareResponseFormData",
           "nameOverride": undefined,
@@ -3815,6 +3819,7 @@ organizations.
         },
         "atom-base": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AtomBase",
           "nameOverride": undefined,
@@ -3926,6 +3931,7 @@ organizations.
         },
         "atom-base-summary": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AtomBaseSummary",
           "nameOverride": undefined,
@@ -4079,6 +4085,7 @@ authentication connection that is set up for a Dev organization.
         },
         "auth-connection-options-azure-ad": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object encapsulating the configuration parameters for an Azure AD
 authentication connection.
 ",
@@ -4144,6 +4151,7 @@ authentication connection.
         },
         "auth-connection-options-google-apps": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object encapsulating the configuration parameters for a Google Apps
 authentication connection.
 ",
@@ -4211,6 +4219,7 @@ authentication connection.
         },
         "auth-connection-options-oidc": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object encapsulating the configuration parameters for an OIDC
 authentication connection.
 ",
@@ -4276,6 +4285,7 @@ authentication connection.
         },
         "auth-connection-options-saml": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Object encapsulating the configuration parameters for a SAML
 authentication connection.
 ",
@@ -4405,6 +4415,7 @@ for each authentication connection will depend on the type value.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "AuthToken",
           "nameOverride": undefined,
@@ -4726,6 +4737,7 @@ token. Only applicable for application access tokens.
         },
         "auth-tokens-create-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A request to create a new token corresponding to the requested token
 type.
 ",
@@ -4925,6 +4937,7 @@ requesting an application access token (AAT).
         },
         "auth-tokens-create-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Response for the request to create a new token corresponding to the
 requested token type.
 ",
@@ -5038,6 +5051,7 @@ of values in which the order of values does not matter.
         },
         "auth-tokens-delete-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to revoke the token.",
           "generatedName": "AuthTokensDeleteRequest",
           "nameOverride": undefined,
@@ -5068,6 +5082,7 @@ JTI claim of the token in the authorization header.
         },
         "auth-tokens-get-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to get the token metadata.",
           "generatedName": "AuthTokensGetResponse",
           "nameOverride": undefined,
@@ -5090,6 +5105,7 @@ JTI claim of the token in the authorization header.
         },
         "auth-tokens-list-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to list the token metadata.",
           "generatedName": "AuthTokensListResponse",
           "nameOverride": undefined,
@@ -5116,6 +5132,7 @@ JTI claim of the token in the authorization header.
         },
         "auth-tokens-org-traits": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Carries Rev org info.",
           "generatedName": "AuthTokensOrgTraits",
           "nameOverride": undefined,
@@ -5161,6 +5178,7 @@ JTI claim of the token in the authorization header.
         },
         "auth-tokens-rev-info": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Carries info corresponding to the Rev user to be provisioned and/or
 issue a Rev session token.
 ",
@@ -5256,6 +5274,7 @@ issue a Rev session token.
         },
         "auth-tokens-self-delete-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to delete all the tokens created by the authenticated user,
 that match with the provided token type.
 ",
@@ -5284,6 +5303,7 @@ that match with the provided token type.
         },
         "auth-tokens-update-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "A request to update the token metadata.",
           "generatedName": "AuthTokensUpdateRequest",
           "nameOverride": undefined,
@@ -5322,6 +5342,7 @@ that match with the provided token type.
         },
         "auth-tokens-update-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Response for the request to update the token metadata.",
           "generatedName": "AuthTokensUpdateResponse",
           "nameOverride": undefined,
@@ -5344,6 +5365,7 @@ that match with the provided token type.
         },
         "auth-tokens-user-traits": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Carries Rev user info.",
           "generatedName": "AuthTokensUserTraits",
           "nameOverride": undefined,
@@ -5528,6 +5550,7 @@ authentication connections have different configuration parameters.
         },
         "dev-org-auth-connections-create-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Response for the request to create a new enterprise authentication
 connection.
 ",
@@ -5552,6 +5575,7 @@ connection.
         },
         "dev-org-auth-connections-delete-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Request to delete an enterprise authentication connection for a Dev
 organization. A default connection and a connection which is currently
 enabled cannot be deleted.
@@ -5578,6 +5602,7 @@ enabled cannot be deleted.
         },
         "dev-org-auth-connections-get-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Response object encapsulating the configuration details of an
 authentication connection.
 ",
@@ -5602,6 +5627,7 @@ authentication connection.
         },
         "dev-org-auth-connections-list-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Response object for the request to list all the social and enterprise
 authentication connections configured for a Dev organization.
 ",
@@ -5632,6 +5658,7 @@ a Dev organization.
         },
         "dev-org-auth-connections-toggle-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Request to enable or disable an authentication connection for a Dev
 organization.
 ",
@@ -5808,6 +5835,7 @@ that can be updated.
         },
         "dev-org-auth-connections-update-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Response for the request to update an enterprise authentication
 connection.
 ",
@@ -5841,6 +5869,7 @@ connection.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "DevUser",
           "nameOverride": undefined,
@@ -5879,6 +5908,7 @@ connection.
         },
         "dev-users-list-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to listing the Dev users.",
           "generatedName": "DevUsersListResponse",
           "nameOverride": undefined,
@@ -5945,6 +5975,7 @@ sort order. If not set, then no prior elements exist.
         },
         "dev-users-self-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to getting the information for the authenticated user.
 ",
           "generatedName": "DevUsersSelfResponse",
@@ -5989,6 +6020,7 @@ sort order. If not set, then no prior elements exist.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Enhancement",
           "nameOverride": undefined,
@@ -6033,6 +6065,7 @@ sort order. If not set, then no prior elements exist.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorBadRequest",
           "nameOverride": undefined,
@@ -6067,6 +6100,7 @@ sort order. If not set, then no prior elements exist.
         },
         "error-bad-request-invalid-enum-value": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorBadRequestInvalidEnumValue",
           "nameOverride": undefined,
@@ -6122,6 +6156,7 @@ sort order. If not set, then no prior elements exist.
         },
         "error-bad-request-missing-required-field": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorBadRequestMissingRequiredField",
           "nameOverride": undefined,
@@ -6195,6 +6230,7 @@ sort order. If not set, then no prior elements exist.
         },
         "error-bad-request-value-not-permitted": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorBadRequestValueNotPermitted",
           "nameOverride": undefined,
@@ -6236,6 +6272,7 @@ sort order. If not set, then no prior elements exist.
         },
         "error-base": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorBase",
           "nameOverride": undefined,
@@ -6272,6 +6309,7 @@ sort order. If not set, then no prior elements exist.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorForbidden",
           "nameOverride": undefined,
@@ -6320,6 +6358,7 @@ sort order. If not set, then no prior elements exist.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorInternalServerError",
           "nameOverride": undefined,
@@ -6388,6 +6427,7 @@ inquiry.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorNotFound",
           "nameOverride": undefined,
@@ -6436,6 +6476,7 @@ inquiry.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorServiceUnavailable",
           "nameOverride": undefined,
@@ -6484,6 +6525,7 @@ inquiry.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorTooManyRequests",
           "nameOverride": undefined,
@@ -6549,6 +6591,7 @@ inquiry.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "ErrorUnauthorized",
           "nameOverride": undefined,
@@ -6588,6 +6631,7 @@ inquiry.
         },
         "event-part-created": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventPartCreated",
           "nameOverride": undefined,
@@ -6610,6 +6654,7 @@ inquiry.
         },
         "event-part-deleted": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventPartDeleted",
           "nameOverride": undefined,
@@ -6633,6 +6678,7 @@ inquiry.
         },
         "event-part-updated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventPartUpdated",
           "nameOverride": undefined,
@@ -6655,6 +6701,7 @@ inquiry.
         },
         "event-rev-org-created": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventRevOrgCreated",
           "nameOverride": undefined,
@@ -6677,6 +6724,7 @@ inquiry.
         },
         "event-rev-org-deleted": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventRevOrgDeleted",
           "nameOverride": undefined,
@@ -6700,6 +6748,7 @@ inquiry.
         },
         "event-rev-org-updated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventRevOrgUpdated",
           "nameOverride": undefined,
@@ -6722,6 +6771,7 @@ inquiry.
         },
         "event-tag-created": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventTagCreated",
           "nameOverride": undefined,
@@ -6744,6 +6794,7 @@ inquiry.
         },
         "event-tag-deleted": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventTagDeleted",
           "nameOverride": undefined,
@@ -6767,6 +6818,7 @@ inquiry.
         },
         "event-tag-updated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventTagUpdated",
           "nameOverride": undefined,
@@ -6789,6 +6841,7 @@ inquiry.
         },
         "event-timeline-entry-created": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventTimelineEntryCreated",
           "nameOverride": undefined,
@@ -6811,6 +6864,7 @@ inquiry.
         },
         "event-timeline-entry-deleted": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventTimelineEntryDeleted",
           "nameOverride": undefined,
@@ -6834,6 +6888,7 @@ inquiry.
         },
         "event-timeline-entry-updated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventTimelineEntryUpdated",
           "nameOverride": undefined,
@@ -6856,6 +6911,7 @@ inquiry.
         },
         "event-webhook-created": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventWebhookCreated",
           "nameOverride": undefined,
@@ -6878,6 +6934,7 @@ inquiry.
         },
         "event-webhook-deleted": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventWebhookDeleted",
           "nameOverride": undefined,
@@ -6901,6 +6958,7 @@ inquiry.
         },
         "event-webhook-updated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventWebhookUpdated",
           "nameOverride": undefined,
@@ -6923,6 +6981,7 @@ inquiry.
         },
         "event-work-created": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventWorkCreated",
           "nameOverride": undefined,
@@ -6945,6 +7004,7 @@ inquiry.
         },
         "event-work-deleted": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventWorkDeleted",
           "nameOverride": undefined,
@@ -6968,6 +7028,7 @@ inquiry.
         },
         "event-work-updated": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "EventWorkUpdated",
           "nameOverride": undefined,
@@ -7035,6 +7096,7 @@ inquiry.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Issue",
           "nameOverride": undefined,
@@ -7127,6 +7189,7 @@ always be returned in the specified sort-by order.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OrgBase",
           "nameOverride": undefined,
@@ -7163,6 +7226,7 @@ always be returned in the specified sort-by order.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "OrgBaseSummary",
           "nameOverride": undefined,
@@ -7297,6 +7361,7 @@ always be returned in the specified sort-by order.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartBase",
           "nameOverride": undefined,
@@ -7406,6 +7471,7 @@ always be returned in the specified sort-by order.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartBaseSummary",
           "nameOverride": undefined,
@@ -7596,6 +7662,7 @@ always be returned in the specified sort-by order.
         },
         "parts-create-request-capability": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsCreateRequestCapability",
           "nameOverride": undefined,
@@ -7623,6 +7690,7 @@ always be returned in the specified sort-by order.
         },
         "parts-create-request-enhancement": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsCreateRequestEnhancement",
           "nameOverride": undefined,
@@ -7670,6 +7738,7 @@ always be returned in the specified sort-by order.
         },
         "parts-create-request-feature": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsCreateRequestFeature",
           "nameOverride": undefined,
@@ -7709,6 +7778,7 @@ always be returned in the specified sort-by order.
         },
         "parts-create-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsCreateResponse",
           "nameOverride": undefined,
@@ -7731,6 +7801,7 @@ always be returned in the specified sort-by order.
         },
         "parts-delete-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsDeleteRequest",
           "nameOverride": undefined,
@@ -7766,6 +7837,7 @@ always be returned in the specified sort-by order.
         },
         "parts-get-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsGetResponse",
           "nameOverride": undefined,
@@ -7788,6 +7860,7 @@ always be returned in the specified sort-by order.
         },
         "parts-list-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsListResponse",
           "nameOverride": undefined,
@@ -7979,6 +8052,7 @@ sort order. If not set, then no prior elements exist.
         },
         "parts-update-request-enhancement": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsUpdateRequestEnhancement",
           "nameOverride": undefined,
@@ -8018,6 +8092,7 @@ sort order. If not set, then no prior elements exist.
         },
         "parts-update-request-owned-by": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsUpdateRequestOwnedBy",
           "nameOverride": undefined,
@@ -8063,6 +8138,7 @@ empty.
         },
         "parts-update-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "PartsUpdateResponse",
           "nameOverride": undefined,
@@ -8110,6 +8186,7 @@ empty.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevOrg",
           "nameOverride": undefined,
@@ -8185,6 +8262,7 @@ organization.
         },
         "rev-orgs-create-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Request object to create a new Rev organization in the Dev
 organization.
 ",
@@ -8302,6 +8380,7 @@ records.
         },
         "rev-orgs-create-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Response object for request to create a new Rev organization.
 ",
           "generatedName": "RevOrgsCreateResponse",
@@ -8325,6 +8404,7 @@ records.
         },
         "rev-orgs-delete-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Request object to delete a Rev organization.",
           "generatedName": "RevOrgsDeleteRequest",
           "nameOverride": undefined,
@@ -8360,6 +8440,7 @@ records.
         },
         "rev-orgs-get-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to getting a Rev organization's information.",
           "generatedName": "RevOrgsGetResponse",
           "nameOverride": undefined,
@@ -8382,6 +8463,7 @@ records.
         },
         "rev-orgs-list-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to getting a list of Rev organizations' information.
 ",
           "generatedName": "RevOrgsListResponse",
@@ -8449,6 +8531,7 @@ sort order. If not set, then no prior elements exist.
         },
         "rev-orgs-update-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Request object to update information of the Rev organization.
 ",
           "generatedName": "RevOrgsUpdateRequest",
@@ -8583,6 +8666,7 @@ records.
         },
         "rev-orgs-update-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Response object to updating Rev organization's information.",
           "generatedName": "RevOrgsUpdateResponse",
           "nameOverride": undefined,
@@ -8614,6 +8698,7 @@ records.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "RevUserSummary",
           "nameOverride": undefined,
@@ -8663,6 +8748,7 @@ system-generated identifier will be assigned to the user.
         },
         "set-tag-with-value": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "SetTagWithValue",
           "nameOverride": undefined,
@@ -8706,6 +8792,7 @@ the value must be one that's specified in the tag's allowed values.
         },
         "stage": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Describes the current stage of a work item.",
           "generatedName": "Stage",
           "nameOverride": undefined,
@@ -8729,6 +8816,7 @@ the value must be one that's specified in the tag's allowed values.
         },
         "stage-init": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Sets an object's initial stage.",
           "generatedName": "StageInit",
           "nameOverride": undefined,
@@ -8756,6 +8844,7 @@ the value must be one that's specified in the tag's allowed values.
         },
         "stage-update": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Updates an object's stage.",
           "generatedName": "StageUpdate",
           "nameOverride": undefined,
@@ -8801,6 +8890,7 @@ the value must be one that's specified in the tag's allowed values.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Tag",
           "nameOverride": undefined,
@@ -8881,6 +8971,7 @@ unique.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TagSummary",
           "nameOverride": undefined,
@@ -8907,6 +8998,7 @@ unique.
         },
         "tag-with-value": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TagWithValue",
           "nameOverride": undefined,
@@ -8947,6 +9039,7 @@ unique.
         },
         "tags-create-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to create a new tag.",
           "generatedName": "TagsCreateRequest",
           "nameOverride": undefined,
@@ -9013,6 +9106,7 @@ permitted.
         },
         "tags-create-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to creating a new tag.",
           "generatedName": "TagsCreateResponse",
           "nameOverride": undefined,
@@ -9035,6 +9129,7 @@ permitted.
         },
         "tags-delete-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to delete a tag.",
           "generatedName": "TagsDeleteRequest",
           "nameOverride": undefined,
@@ -9070,6 +9165,7 @@ permitted.
         },
         "tags-get-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to getting a tag's information.",
           "generatedName": "TagsGetResponse",
           "nameOverride": undefined,
@@ -9092,6 +9188,7 @@ permitted.
         },
         "tags-list-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to listing the tags.",
           "generatedName": "TagsListResponse",
           "nameOverride": undefined,
@@ -9158,6 +9255,7 @@ sort order. If not set, then no prior elements exist.
         },
         "tags-update-allowed-values": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "Specifies an update to a tag's allowed values.",
           "generatedName": "TagsUpdateAllowedValues",
           "nameOverride": undefined,
@@ -9189,6 +9287,7 @@ sort order. If not set, then no prior elements exist.
         },
         "tags-update-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to update a tag.",
           "generatedName": "TagsUpdateRequest",
           "nameOverride": undefined,
@@ -9267,6 +9366,7 @@ tags.
         },
         "tags-update-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response for updating a tag.",
           "generatedName": "TagsUpdateResponse",
           "nameOverride": undefined,
@@ -9298,6 +9398,7 @@ tags.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Ticket",
           "nameOverride": undefined,
@@ -9399,6 +9500,7 @@ tags.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimelineComment",
           "nameOverride": undefined,
@@ -9556,6 +9658,7 @@ will appear in the response.
         },
         "timeline-entries-create-request-timeline-comment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimelineEntriesCreateRequestTimelineComment",
           "nameOverride": undefined,
@@ -9648,6 +9751,7 @@ will appear in the response.
         },
         "timeline-entries-create-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to creating a timeline entry for an object.",
           "generatedName": "TimelineEntriesCreateResponse",
           "nameOverride": undefined,
@@ -9670,6 +9774,7 @@ will appear in the response.
         },
         "timeline-entries-get-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to getting a timeline entry.",
           "generatedName": "TimelineEntriesGetResponse",
           "nameOverride": undefined,
@@ -9692,6 +9797,7 @@ will appear in the response.
         },
         "timeline-entries-list-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to listing timeline entries for an object.",
           "generatedName": "TimelineEntriesListResponse",
           "nameOverride": undefined,
@@ -9792,6 +9898,7 @@ sort order. If not set, then no prior elements exist.
         },
         "timeline-entries-update-request-timeline-comment": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimelineEntriesUpdateRequestTimelineComment",
           "nameOverride": undefined,
@@ -9874,6 +9981,7 @@ sort order. If not set, then no prior elements exist.
         },
         "timeline-entries-update-request-timeline-comment-artifacts": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "TimelineEntriesUpdateRequestTimelineCommentArtifacts",
           "nameOverride": undefined,
@@ -9959,6 +10067,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         },
         "timeline-entries-update-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to updating a timeline entry.",
           "generatedName": "TimelineEntriesUpdateResponse",
           "nameOverride": undefined,
@@ -10032,6 +10141,7 @@ default visibility.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserBase",
           "nameOverride": undefined,
@@ -10161,6 +10271,7 @@ default visibility.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserBaseSummary",
           "nameOverride": undefined,
@@ -10369,6 +10480,7 @@ default visibility.
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "Webhook",
           "nameOverride": undefined,
@@ -10440,6 +10552,7 @@ default visibility.
         },
         "webhook-event-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WebhookEventRequest",
           "nameOverride": undefined,
@@ -10839,6 +10952,7 @@ seconds.
         },
         "webhook-event-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WebhookEventResponse",
           "nameOverride": undefined,
@@ -10990,6 +11104,7 @@ be set for other request types.
         },
         "webhook-event-verify": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WebhookEventVerify",
           "nameOverride": undefined,
@@ -11039,6 +11154,7 @@ be set for other request types.
         },
         "webhooks-create-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to create a new webhook.",
           "generatedName": "WebhooksCreateRequest",
           "nameOverride": undefined,
@@ -11105,6 +11221,7 @@ response.
         },
         "webhooks-create-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to creating a new webhook.",
           "generatedName": "WebhooksCreateResponse",
           "nameOverride": undefined,
@@ -11127,6 +11244,7 @@ response.
         },
         "webhooks-delete-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to delete a webhook.",
           "generatedName": "WebhooksDeleteRequest",
           "nameOverride": undefined,
@@ -11162,6 +11280,7 @@ response.
         },
         "webhooks-get-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to getting the information for the webhook.",
           "generatedName": "WebhooksGetResponse",
           "nameOverride": undefined,
@@ -11184,6 +11303,7 @@ response.
         },
         "webhooks-list-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to listing the webhooks.",
           "generatedName": "WebhooksListResponse",
           "nameOverride": undefined,
@@ -11230,6 +11350,7 @@ response.
         },
         "webhooks-update-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The request to update a webhook.",
           "generatedName": "WebhooksUpdateRequest",
           "nameOverride": undefined,
@@ -11331,6 +11452,7 @@ won't receive any object events until successfully verified.
         },
         "webhooks-update-request-event-types": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WebhooksUpdateRequestEventTypes",
           "nameOverride": undefined,
@@ -11412,6 +11534,7 @@ event types. Note this is mutually exclusive with 'add' and
         },
         "webhooks-update-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": "The response to updating the webhook.",
           "generatedName": "WebhooksUpdateResponse",
           "nameOverride": undefined,
@@ -11472,6 +11595,7 @@ event types. Note this is mutually exclusive with 'add' and
               "type": "reference",
             },
           ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorkBase",
           "nameOverride": undefined,
@@ -11846,6 +11970,7 @@ issues.
         },
         "works-create-request-issue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksCreateRequestIssue",
           "nameOverride": undefined,
@@ -11890,6 +12015,7 @@ issues.
         },
         "works-create-request-ticket": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksCreateRequestTicket",
           "nameOverride": undefined,
@@ -11952,6 +12078,7 @@ issues.
         },
         "works-create-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksCreateResponse",
           "nameOverride": undefined,
@@ -11974,6 +12101,7 @@ issues.
         },
         "works-delete-request": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksDeleteRequest",
           "nameOverride": undefined,
@@ -12009,6 +12137,7 @@ issues.
         },
         "works-export-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksExportResponse",
           "nameOverride": undefined,
@@ -12035,6 +12164,7 @@ issues.
         },
         "works-get-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksGetResponse",
           "nameOverride": undefined,
@@ -12057,6 +12187,7 @@ issues.
         },
         "works-list-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksListResponse",
           "nameOverride": undefined,
@@ -12318,6 +12449,7 @@ sort order. If not set, then no prior elements exist.
         },
         "works-update-request-artifact-ids": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksUpdateRequestArtifactIds",
           "nameOverride": undefined,
@@ -12349,6 +12481,7 @@ sort order. If not set, then no prior elements exist.
         },
         "works-update-request-issue": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksUpdateRequestIssue",
           "nameOverride": undefined,
@@ -12397,6 +12530,7 @@ sort order. If not set, then no prior elements exist.
         },
         "works-update-request-owned-by": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksUpdateRequestOwnedBy",
           "nameOverride": undefined,
@@ -12430,6 +12564,7 @@ empty.
         },
         "works-update-request-reported-by": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksUpdateRequestReportedBy",
           "nameOverride": undefined,
@@ -12462,6 +12597,7 @@ empty.
         },
         "works-update-request-tags": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksUpdateRequestTags",
           "nameOverride": undefined,
@@ -12492,6 +12628,7 @@ empty.
         },
         "works-update-request-ticket": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksUpdateRequestTicket",
           "nameOverride": undefined,
@@ -12560,6 +12697,7 @@ empty.
         },
         "works-update-response": {
           "allOf": [],
+          "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "WorksUpdateResponse",
           "nameOverride": undefined,

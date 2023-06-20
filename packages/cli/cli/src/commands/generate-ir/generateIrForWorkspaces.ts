@@ -4,11 +4,10 @@ import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
-import { convertOpenApiWorkspaceToFernWorkspace } from "../../utils/convertOpenApiWorkspaceToFernWorkspace";
 import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace";
 
 export async function generateIrForWorkspaces({

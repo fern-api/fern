@@ -12,12 +12,12 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.6.0
+        version: 0.6.4
         output:
           location: local-file-system
           path: ../../generated/typescript
       - name: fernapi/fern-openapi
-        version: 0.0.26
+        version: 0.0.28
         output:
           location: local-file-system
           path: ../../generated/openapi
@@ -180,12 +180,12 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.6.0
+        version: 0.6.4
         output:
           location: local-file-system
           path: ../../generated/typescript
       - name: fernapi/fern-openapi
-        version: 0.0.26
+        version: 0.0.28
         output:
           location: local-file-system
           path: ../../generated/openapi
@@ -640,7 +640,18 @@ components:
       properties:
         input:
           title: Input
-          type: string
+          anyOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        instructions:
+          title: Instructions
+          anyOf:
+            - type: string
+            - type: array
+              items:
+                type: string
         model:
           title: Model
           type: string
@@ -826,6 +837,30 @@ components:
         type:
           title: Error Type
           type: string
+    VideoEncoderProperties:
+      title: VideoEncoderProperties
+      type: object
+      properties:
+        fps:
+          title: Fps
+          type: number
+        width:
+          title: Width
+          type: integer
+        height:
+          title: Height
+          type: integer
+        bitrate:
+          title: Bitrate
+          type: string
+        preset:
+          title: Preset
+          type: string
+          default: p4
+        tune:
+          title: Tune
+          type: string
+          default: hq
     VideoEncoderRequest:
       title: VideoEncoderRequest
       required:
@@ -843,14 +878,13 @@ components:
           title: Video Encoder Codec
           type: string
           default: hevc_nvenc
-        video_encoder_preset:
-          title: Video Encoder Preset
-          type: string
-          default: p4
-        video_encoder_cq:
-          title: Video Encoder Cq
-          type: integer
-          default: 27
+        video_properties:
+          $ref: '#/components/schemas/VideoEncoderProperties'
+        video_filters:
+          title: Video Filters
+          type: array
+          items:
+            type: object
         callback:
           title: Callback
           type: string
@@ -1035,12 +1069,12 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.6.0
+        version: 0.6.4
         output:
           location: local-file-system
           path: ../../generated/typescript
       - name: fernapi/fern-openapi
-        version: 0.0.26
+        version: 0.0.28
         output:
           location: local-file-system
           path: ../../generated/openapi

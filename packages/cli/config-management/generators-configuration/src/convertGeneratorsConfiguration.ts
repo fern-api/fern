@@ -196,5 +196,8 @@ function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
         return GenerationLanguage.PYTHON;
     }
+    if (generatorName.includes("go")) {
+        return GenerationLanguage.GO;
+    }
     return undefined;
 }
