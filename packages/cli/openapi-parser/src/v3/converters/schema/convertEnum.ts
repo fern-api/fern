@@ -76,9 +76,9 @@ export function wrapEnum({
 }
 
 function generateEnumNameFromValue(value: string): string {
-    const maybeParsedNumber = maybeParseNumber(value);
+    const maybeParsedNumber = replaceStartingNumber(value);
     if (maybeParsedNumber != null) {
-        return convertNumberToSnakeCase(maybeParsedNumber) ?? value;
+        return upperFirst(camelCase(maybeParsedNumber));
     } else {
         if (value.toLowerCase() === "n/a") {
             return "NOT_APPLICABLE";
@@ -87,10 +87,19 @@ function generateEnumNameFromValue(value: string): string {
     }
 }
 
-function maybeParseNumber(input: string): number | null {
-    const parsedNumber = parseFloat(input);
-
-    return !isNaN(parsedNumber) && isFinite(parsedNumber) ? parsedNumber : null;
+const NUMERIC_REGEX = /^(\d+)/;
+function replaceStartingNumber(input: string): string | undefined {
+    const matches = input.match(NUMERIC_REGEX);
+    if (matches && matches[0] != null) {
+        const numericPart = matches[0];
+        const nonNumericPart = input.substring(numericPart.length);
+        const parsedNumber = parseFloat(numericPart);
+        if (!isNaN(parsedNumber) && isFinite(parsedNumber)) {
+            const snakeCasedNumber = convertNumberToSnakeCase(parsedNumber);
+            return nonNumericPart.length > 0 ? `${snakeCasedNumber}_${nonNumericPart}` : snakeCasedNumber;
+        }
+    }
+    return undefined;
 }
 
 function stripCommonPrefix(names: string[]): string[] {
