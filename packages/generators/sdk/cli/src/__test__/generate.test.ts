@@ -5,6 +5,7 @@ import { JavaScriptRuntime } from "@fern-typescript/commons";
 import decompress from "decompress";
 import execa from "execa";
 import { lstat, rm, symlink, writeFile } from "fs/promises";
+import "jest-specific-snapshot";
 import path from "path";
 import tmp from "tmp-promise";
 import { SdkCustomConfigSchema } from "../custom-config/schema/SdkCustomConfigSchema";
@@ -272,7 +273,7 @@ describe("runGenerator", () => {
                     (item) => !FILENAMES_TO_IGNORE_FOR_SNAPSHOT.has(item.name)
                 );
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(directoryContents).toMatchSnapshot();
+                expect(directoryContents).toMatchSpecificSnapshot(path.join(fixturePath, `sdk-${fixture.path}.shot`));
             },
             180_000
         );

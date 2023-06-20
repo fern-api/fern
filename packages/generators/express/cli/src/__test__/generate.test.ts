@@ -4,6 +4,7 @@ import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/seriali
 import decompress from "decompress";
 import execa from "execa";
 import { lstat, rm, symlink, writeFile } from "fs/promises";
+import "jest-specific-snapshot";
 import path from "path";
 import tmp from "tmp-promise";
 import { ExpressCustomConfigSchema } from "../custom-config/schema/ExpressCustomConfigSchema";
@@ -47,7 +48,6 @@ const FIXTURES: FixtureInfo[] = [
         orgName: "fern",
         outputMode: "local",
         apiName: "api",
-        only: true,
     },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
@@ -118,7 +118,9 @@ describe("runGenerator", () => {
                     (item) => !FILENAMES_TO_IGNORE_FOR_SNAPSHOT.has(item.name)
                 );
                 // eslint-disable-next-line jest/no-standalone-expect
-                expect(directoryContents).toMatchSnapshot();
+                expect(directoryContents).toMatchSpecificSnapshot(
+                    path.join(fixturePath, `express-${fixture.path}.shot`)
+                );
             },
             180_000
         );
