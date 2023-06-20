@@ -2679,7 +2679,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             {
               "docs": undefined,
-              "name": "Two",
+              "name": "TwoW",
               "value": "2W",
             },
             {

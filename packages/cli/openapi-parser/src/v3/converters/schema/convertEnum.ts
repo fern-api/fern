@@ -92,7 +92,7 @@ function replaceStartingNumber(input: string): string | undefined {
     const matches = input.match(NUMERIC_REGEX);
     if (matches && matches[0] != null) {
         const numericPart = matches[0];
-        const nonNumericPart = input.substring(matches.length);
+        const nonNumericPart = input.substring(numericPart.length);
         const parsedNumber = parseFloat(numericPart);
         if (!isNaN(parsedNumber) && isFinite(parsedNumber)) {
             const snakeCasedNumber = convertNumberToSnakeCase(parsedNumber);

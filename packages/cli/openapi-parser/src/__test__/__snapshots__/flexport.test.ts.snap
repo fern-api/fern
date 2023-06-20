@@ -19276,7 +19276,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     {
                       "description": undefined,
-                      "generatedName": "Two",
+                      "generatedName": "TwoW",
                       "nameOverride": undefined,
                       "value": "2W",
                     },
