@@ -9,6 +9,7 @@ export declare namespace EndpointErrorUnionGenerator {
     export interface Init {
         intermediateRepresentation: IntermediateRepresentation;
         errorResolver: ErrorResolver;
+        includeSerdeLayer: boolean;
     }
 
     export namespace generateEndpointErrorUnion {
@@ -22,10 +23,12 @@ export declare namespace EndpointErrorUnionGenerator {
 export class EndpointErrorUnionGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private errorResolver: ErrorResolver;
+    private includeSerdeLayer: boolean;
 
-    constructor({ intermediateRepresentation, errorResolver }: EndpointErrorUnionGenerator.Init) {
+    constructor({ intermediateRepresentation, errorResolver, includeSerdeLayer }: EndpointErrorUnionGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public generateEndpointErrorUnion({
@@ -37,7 +40,7 @@ export class EndpointErrorUnionGenerator {
             endpoint,
             errorResolver: this.errorResolver,
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
-            includeUtilsOnUnionMembers: true,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 }

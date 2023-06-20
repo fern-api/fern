@@ -21,6 +21,7 @@ interface FixtureInfo {
     targetRuntime: JavaScriptRuntime;
     customConfig?: SdkCustomConfigSchema;
     only?: boolean;
+    additionalAssertions?: (pathToOutput: AbsoluteFilePath) => void | Promise<void>;
 }
 
 const FIXTURES: FixtureInfo[] = [
@@ -204,6 +205,22 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         targetRuntime: JavaScriptRuntime.NODE,
     },
+    {
+        path: "no-zurg",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
+        customConfig: {
+            noSerdeLayer: true,
+        },
+        additionalAssertions: async (outputPath) => {
+            // eslint-disable-next-line jest/no-standalone-expect
+            expect(await doesPathExist(path.join(outputPath, "src", "serialization"))).toBe(false);
+            // eslint-disable-next-line jest/no-standalone-expect
+            expect(await doesPathExist(path.join(outputPath, "src", "core", "schemas"))).toBe(false);
+        },
+    },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
@@ -272,6 +289,9 @@ describe("runGenerator", () => {
                 const directoryContents = (await getDirectoryContents(unzippedDirectory)).filter(
                     (item) => !FILENAMES_TO_IGNORE_FOR_SNAPSHOT.has(item.name)
                 );
+
+                await fixture.additionalAssertions?.(unzippedDirectory);
+
                 // eslint-disable-next-line jest/no-standalone-expect
                 expect(directoryContents).toMatchSpecificSnapshot(path.join(fixturePath, `sdk-${fixture.path}.shot`));
             },

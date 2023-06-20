@@ -75,6 +75,7 @@ export declare namespace ExpressContextImpl {
         expressRegisterGenerator: ExpressRegisterGenerator;
         expressErrorSchemaDeclarationReferencer: ExpressErrorDeclarationReferencer;
         expressErrorSchemaGenerator: ExpressErrorSchemaGenerator;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -126,6 +127,7 @@ export class ExpressContextImpl implements ExpressContext {
         expressRegisterGenerator,
         expressErrorSchemaDeclarationReferencer,
         expressErrorSchemaGenerator,
+        includeSerdeLayer,
     }: ExpressContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.externalDependencies = createExternalDependencies({
@@ -146,6 +148,7 @@ export class ExpressContextImpl implements ExpressContext {
             typeGenerator,
             typeReferenceExampleGenerator,
             treatUnknownAsAny,
+            includeSerdeLayer,
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -157,6 +160,7 @@ export class ExpressContextImpl implements ExpressContext {
             typeGenerator,
             typeSchemaGenerator,
             treatUnknownAsAny,
+            includeSerdeLayer,
         });
 
         this.expressInlinedRequestBody = new ExpressInlinedRequestBodyContextImpl({

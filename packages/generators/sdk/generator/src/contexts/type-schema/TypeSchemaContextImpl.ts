@@ -24,6 +24,7 @@ export declare namespace TypeSchemaContextImpl {
         typeGenerator: TypeGenerator;
         typeSchemaGenerator: TypeSchemaGenerator;
         treatUnknownAsAny: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -38,6 +39,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     private typeResolver: TypeResolver;
     private typeGenerator: TypeGenerator;
     private typeSchemaGenerator: TypeSchemaGenerator;
+    private includeSerdeLayer: boolean;
 
     constructor({
         sourceFile,
@@ -49,6 +51,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         typeSchemaDeclarationReferencer,
         typeSchemaGenerator,
         treatUnknownAsAny,
+        includeSerdeLayer,
     }: TypeSchemaContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.coreUtilities = coreUtilities;
@@ -69,6 +72,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         this.typeResolver = typeResolver;
         this.typeGenerator = typeGenerator;
         this.typeSchemaGenerator = typeSchemaGenerator;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getGeneratedTypeSchema(typeName: DeclaredTypeName): GeneratedTypeSchema {
@@ -84,6 +88,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
                     fernFilepath: typeDeclaration.name.fernFilepath,
                     typeName: this.typeDeclarationReferencer.getExportedName(typeDeclaration.name),
                     getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
+                    includeSerdeLayer: this.includeSerdeLayer,
                 }),
             getReferenceToGeneratedType: () =>
                 this.typeDeclarationReferencer

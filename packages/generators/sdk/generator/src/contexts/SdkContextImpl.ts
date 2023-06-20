@@ -89,6 +89,7 @@ export declare namespace SdkContextImpl {
         timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
         timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
         treatUnknownAsAny: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -148,6 +149,7 @@ export class SdkContextImpl implements SdkContext {
         dependencyManager,
         coreUtilitiesManager,
         fernConstants,
+        includeSerdeLayer,
     }: SdkContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.externalDependencies = createExternalDependencies({
@@ -168,6 +170,7 @@ export class SdkContextImpl implements SdkContext {
             typeGenerator,
             typeReferenceExampleGenerator,
             treatUnknownAsAny,
+            includeSerdeLayer,
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -179,6 +182,7 @@ export class SdkContextImpl implements SdkContext {
             typeGenerator,
             typeSchemaGenerator,
             treatUnknownAsAny,
+            includeSerdeLayer,
         });
         this.sdkError = new SdkErrorContextImpl({
             sourceFile,

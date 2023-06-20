@@ -9,6 +9,7 @@ export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
         packageId: PackageId;
         endpoint: HttpEndpoint;
         inlinedRequestBody: InlinedRequestBody;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -19,17 +20,20 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
     private inlinedRequestBody: InlinedRequestBody;
+    private includeSerdeLayer: boolean;
 
     constructor({
         packageId,
         endpoint,
         inlinedRequestBody,
+        includeSerdeLayer,
         ...superInit
     }: GeneratedSdkInlinedRequestBodySchemaImpl.Init) {
         super(superInit);
         this.packageId = packageId;
         this.endpoint = endpoint;
         this.inlinedRequestBody = inlinedRequestBody;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -37,6 +41,9 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     }
 
     public serializeRequest(referenceToParsedRequest: ts.Expression, context: SdkContext): ts.Expression {
+        if (!this.includeSerdeLayer) {
+            return referenceToParsedRequest;
+        }
         return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
             unrecognizedObjectKeys: "strip",
             allowUnrecognizedEnumValues: false,

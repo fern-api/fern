@@ -1,3 +1,5 @@
+// this is the parsed config shape. to view the allowed options for generators.yml,
+// see SdkCustomConfigSchema.ts
 export interface SdkCustomConfig {
     useBrandedStringAliases: boolean;
     isPackagePrivate: boolean;
@@ -15,4 +17,5 @@ export interface SdkCustomConfig {
     extraDependencies: Record<string, string>;
     treatUnknownAsAny: boolean;
     includeContentHeadersOnFileDownloadResponse: boolean;
+    noSerdeLayer: boolean;
 }

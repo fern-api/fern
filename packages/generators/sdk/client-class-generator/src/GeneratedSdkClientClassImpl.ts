@@ -45,6 +45,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         npmPackage: NpmPackage | undefined;
         targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -85,6 +86,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         npmPackage,
         targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
+        includeSerdeLayer,
     }: GeneratedSdkClientClassImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -163,6 +165,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
                         timeoutInSeconds,
+                        includeSerdeLayer,
                     });
                 };
 
@@ -175,6 +178,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         response: streamingResponse,
                         timeoutInSeconds,
                         request: getGeneratedEndpointRequest(),
+                        includeSerdeLayer,
                     });
                 };
 
@@ -193,6 +197,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     timeoutInSeconds,
                                     request: getGeneratedEndpointRequest(),
                                     includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
+                                    includeSerdeLayer,
                                 }),
                             browser: () =>
                                 new GeneratedBlobDownloadEndpointImplementation({
@@ -204,6 +209,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     response: getGeneratedEndpointResponse({
                                         response: SdkResponse.fileDownload(fileDownload),
                                     }),
+                                    includeSerdeLayer,
                                 }),
                         }),
                     json: (jsonResponse) =>

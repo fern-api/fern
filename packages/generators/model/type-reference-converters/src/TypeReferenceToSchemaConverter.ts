@@ -84,11 +84,10 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
     }
 
     protected override set(itemType: TypeReference): Zurg.Schema {
-        const itemSchema = this.convert(itemType);
         if (this.isTypeReferencePrimitive(itemType)) {
-            return this.zurg.set(itemSchema);
+            return this.zurg.set(this.convert(itemType));
         } else {
-            return this.zurg.list(itemSchema);
+            return this.list(itemType);
         }
     }
 }

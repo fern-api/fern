@@ -17,7 +17,7 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
                 ...this.shape.properties.map((property) => {
                     const value = context.type.getReferenceToType(property.valueType);
                     const propertyNode: OptionalKind<PropertySignatureStructure> = {
-                        name: this.getPropertyKeyFromProperty(property),
+                        name: `"${this.getPropertyKeyFromProperty(property)}"`,
                         type: getTextOfTsNode(value.typeNodeWithoutUndefined),
                         hasQuestionToken: value.isOptional,
                         docs: property.docs != null ? [{ description: property.docs }] : undefined,
@@ -45,7 +45,11 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
     }
 
     private getPropertyKeyFromProperty(property: ObjectProperty): string {
-        return property.name.name.camelCase.unsafeName;
+        if (this.includeSerdeLayer) {
+            return property.name.name.camelCase.unsafeName;
+        } else {
+            return property.name.wireValue;
+        }
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {

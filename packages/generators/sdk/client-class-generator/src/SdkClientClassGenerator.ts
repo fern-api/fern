@@ -17,6 +17,7 @@ export declare namespace SdkClientClassGenerator {
         npmPackage: NpmPackage | undefined;
         targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
+        includeSerdeLayer: boolean;
     }
 
     export namespace generateService {
@@ -39,6 +40,7 @@ export class SdkClientClassGenerator {
     private npmPackage: NpmPackage | undefined;
     private targetRuntime: JavaScriptRuntime;
     private includeContentHeadersOnFileDownloadResponse: boolean;
+    private includeSerdeLayer: boolean;
 
     constructor({
         intermediateRepresentation,
@@ -52,6 +54,7 @@ export class SdkClientClassGenerator {
         npmPackage,
         targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
+        includeSerdeLayer,
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -64,6 +67,7 @@ export class SdkClientClassGenerator {
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public generateService({
@@ -84,6 +88,7 @@ export class SdkClientClassGenerator {
             npmPackage: this.npmPackage,
             targetRuntime: this.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 }

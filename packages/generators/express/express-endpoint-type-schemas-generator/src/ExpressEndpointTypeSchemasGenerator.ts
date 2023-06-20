@@ -4,6 +4,10 @@ import { GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { GeneratedExpressEndpointTypeSchemasImpl } from "./GeneratedExpressEndpointTypeSchemasImpl";
 
 export declare namespace ExpressEndpointTypeSchemasGenerator {
+    export interface Init {
+        includeSerdeLayer: boolean;
+    }
+
     export namespace generateEndpointTypeSchemas {
         export interface Args {
             packageId: PackageId;
@@ -14,6 +18,12 @@ export declare namespace ExpressEndpointTypeSchemasGenerator {
 }
 
 export class ExpressEndpointTypeSchemasGenerator {
+    private includeSerdeLayer: boolean;
+
+    constructor({ includeSerdeLayer }: ExpressEndpointTypeSchemasGenerator.Init) {
+        this.includeSerdeLayer = includeSerdeLayer;
+    }
+
     public generateEndpointTypeSchemas({
         packageId,
         service,
@@ -23,6 +33,7 @@ export class ExpressEndpointTypeSchemasGenerator {
             packageId,
             service,
             endpoint,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 }

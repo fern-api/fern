@@ -19,14 +19,21 @@ export declare namespace ParsedSingleUnionTypeForUnion {
         singleUnionType: SingleUnionType;
         union: UnionTypeDeclaration;
         includeUtilsOnUnionMembers: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
 export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends AbstractKnownSingleUnionType<Context> {
     private singleUnionTypeFromUnion: SingleUnionType;
+    private includeSerdeLayer: boolean;
     protected union: UnionTypeDeclaration;
 
-    constructor({ singleUnionType, union, includeUtilsOnUnionMembers }: ParsedSingleUnionTypeForUnion.Init) {
+    constructor({
+        singleUnionType,
+        union,
+        includeUtilsOnUnionMembers,
+        includeSerdeLayer,
+    }: ParsedSingleUnionTypeForUnion.Init) {
         super({
             singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
                 singleUnionType.shape,
@@ -36,7 +43,9 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
                         new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended }),
                     singleProperty: (singleProperty) =>
                         new SinglePropertySingleUnionTypeGenerator({
-                            propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty),
+                            propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
+                                includeSerdeLayer,
+                            }),
                             getReferenceToPropertyType: (context) =>
                                 context.type.getReferenceToType(singleProperty.type),
                         }),
@@ -50,6 +59,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
 
         this.union = union;
         this.singleUnionTypeFromUnion = singleUnionType;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getDocs(): string | null | undefined {
@@ -65,18 +75,33 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
     }
 
     public getBuilderName(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+        if (this.includeSerdeLayer) {
+            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+        } else {
+            return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+        }
     }
 
     public getVisitorKey(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+        if (this.includeSerdeLayer) {
+            return this.singleUnionTypeFromUnion.discriminantValue.name.camelCase.unsafeName;
+        } else {
+            return this.singleUnionTypeFromUnion.discriminantValue.wireValue;
+        }
     }
 
     protected getDiscriminant(): NameAndWireValue {
         return this.union.discriminant;
     }
 
-    public static getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {
-        return singleProperty.name.name.camelCase.unsafeName;
+    public static getSinglePropertyKey(
+        singleProperty: SingleUnionTypeProperty,
+        { includeSerdeLayer }: { includeSerdeLayer: boolean }
+    ): string {
+        if (includeSerdeLayer) {
+            return singleProperty.name.name.camelCase.unsafeName;
+        } else {
+            return singleProperty.name.wireValue;
+        }
     }
 }

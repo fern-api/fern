@@ -8,6 +8,7 @@ export declare namespace ExpressServiceGenerator {
     export interface Init {
         doNotHandleUnrecognizedErrors: boolean;
         packageResolver: PackageResolver;
+        includeSerdeLayer: boolean;
     }
 
     export namespace generateService {
@@ -22,10 +23,12 @@ export declare namespace ExpressServiceGenerator {
 export class ExpressServiceGenerator {
     private doNotHandleUnrecognizedErrors: boolean;
     private packageResolver: PackageResolver;
+    private includeSerdeLayer: boolean;
 
-    constructor({ packageResolver, doNotHandleUnrecognizedErrors }: ExpressServiceGenerator.Init) {
+    constructor({ packageResolver, doNotHandleUnrecognizedErrors, includeSerdeLayer }: ExpressServiceGenerator.Init) {
         this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors;
         this.packageResolver = packageResolver;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public generateService({
@@ -40,6 +43,7 @@ export class ExpressServiceGenerator {
             service,
             serviceClassName,
             doNotHandleUnrecognizedErrors: this.doNotHandleUnrecognizedErrors,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 }

@@ -18,6 +18,7 @@ export declare namespace GeneratedExpressServiceImpl {
         service: HttpService;
         serviceClassName: string;
         doNotHandleUnrecognizedErrors: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -37,6 +38,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private service: HttpService;
     private packageId: PackageId;
     private package_: Package;
+    private includeSerdeLayer: boolean;
 
     constructor({
         packageId,
@@ -44,12 +46,14 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         serviceClassName,
         service,
         doNotHandleUnrecognizedErrors,
+        includeSerdeLayer,
     }: GeneratedExpressServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
         this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors;
         this.packageId = packageId;
         this.package_ = package_;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -174,9 +178,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 allPathParameters.length > 0
                                     ? ts.factory.createTypeLiteralNode(
                                           allPathParameters.map((pathParameter) => {
-                                              const type = context.typeSchema.getReferenceToRawType(
-                                                  pathParameter.valueType
-                                              );
+                                              const type = this.includeSerdeLayer
+                                                  ? context.typeSchema.getReferenceToRawType(pathParameter.valueType)
+                                                  : context.type.getReferenceToType(pathParameter.valueType);
                                               return ts.factory.createPropertySignature(
                                                   undefined,
                                                   this.getPathParameterName(pathParameter),
@@ -357,7 +361,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 return ts.factory.createBlock(
                     [
                         ...(endpoint.requestBody != null
-                            ? this.getIfElseWithValidation({
+                            ? this.getIfElseMaybeWithValidation({
                                   expressRequest,
                                   expressResponse,
                                   next,
@@ -381,7 +385,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         });
     }
 
-    private getIfElseWithValidation({
+    private getIfElseMaybeWithValidation({
         expressRequest,
         expressResponse,
         next,
@@ -403,11 +407,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             context.externalDependencies.express.Request.body
         );
 
-        // no validation required for `unknown` requests
-        if (
+        // no validation required for `unknown` requests or when there's no serde layer
+        const isRequestBodyUnknown =
             requestBody.type === "reference" &&
-            context.type.resolveTypeReference(requestBody.requestBodyType)._type === "unknown"
-        ) {
+            context.type.resolveTypeReference(requestBody.requestBodyType)._type === "unknown";
+        if (!this.includeSerdeLayer || isRequestBodyUnknown) {
             return [
                 this.getTryCatch({
                     expressRequest,

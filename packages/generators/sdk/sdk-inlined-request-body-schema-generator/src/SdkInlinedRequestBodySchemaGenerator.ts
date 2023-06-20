@@ -4,6 +4,10 @@ import { GeneratedSdkInlinedRequestBodySchema } from "@fern-typescript/contexts"
 import { GeneratedSdkInlinedRequestBodySchemaImpl } from "./GeneratedSdkInlinedRequestBodySchemaImpl";
 
 export declare namespace SdkInlinedRequestBodySchemaGenerator {
+    export interface Init {
+        includeSerdeLayer: boolean;
+    }
+
     export namespace generateInlinedRequestBodySchema {
         export interface Args {
             packageId: PackageId;
@@ -14,6 +18,12 @@ export declare namespace SdkInlinedRequestBodySchemaGenerator {
 }
 
 export class SdkInlinedRequestBodySchemaGenerator {
+    private includeSerdeLayer: boolean;
+
+    constructor({ includeSerdeLayer }: SdkInlinedRequestBodySchemaGenerator.Init) {
+        this.includeSerdeLayer = includeSerdeLayer;
+    }
+
     public generateInlinedRequestBodySchema({
         packageId,
         endpoint,
@@ -27,6 +37,7 @@ export class SdkInlinedRequestBodySchemaGenerator {
             endpoint,
             inlinedRequestBody: endpoint.requestBody,
             typeName,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 }

@@ -42,6 +42,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                     singleUnionType,
                     union: this.shape,
                     includeUtilsOnUnionMembers,
+                    includeSerdeLayer: this.includeSerdeLayer,
                 })
         );
 
@@ -53,13 +54,16 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
             includeOtherInUnionTypes,
             getReferenceToUnion: this.getReferenceToSelf.bind(this),
             getDocs: (context: Context) => this.getDocs(context),
-            discriminant: this.shape.discriminant.name.camelCase.unsafeName,
+            discriminant: this.includeSerdeLayer
+                ? this.shape.discriminant.name.camelCase.unsafeName
+                : this.shape.discriminant.wireValue,
             parsedSingleUnionTypes,
             unknownSingleUnionType: new UnknownSingleUnionType({
                 singleUnionType: unknownSingleUnionTypeGenerator,
                 includeUtilsOnUnionMembers,
             }),
             baseProperties: this.shape.baseProperties,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 
@@ -72,7 +76,9 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
     }
 
     public getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {
-        return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty);
+        return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
+            includeSerdeLayer: this.includeSerdeLayer,
+        });
     }
 
     public buildExample(example: ExampleTypeShape, context: Context, opts: GetReferenceOpts): ts.Expression {
@@ -107,7 +113,9 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                         }
                         return [
                             ts.factory.createPropertyAssignment(
-                                ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape),
+                                ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
+                                    includeSerdeLayer: this.includeSerdeLayer,
+                                }),
                                 context.type.getGeneratedExample(property).build(context, opts)
                             ),
                         ];

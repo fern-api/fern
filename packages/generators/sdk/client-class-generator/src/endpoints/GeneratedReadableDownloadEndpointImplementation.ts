@@ -15,6 +15,7 @@ export declare namespace GeneratedReadableDownloadEndpointImplementation {
         timeoutInSeconds: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
         includeContentHeadersOnResponse: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -31,6 +32,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
     private timeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
     private includeContentHeadersOnResponse: boolean;
+    private includeSerdeLayer: boolean;
 
     constructor({
         endpoint,
@@ -39,6 +41,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
         timeoutInSeconds,
         request,
         includeContentHeadersOnResponse,
+        includeSerdeLayer,
     }: GeneratedReadableDownloadEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -46,6 +49,7 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
         this.timeoutInSeconds = timeoutInSeconds;
         this.request = request;
         this.includeContentHeadersOnResponse = includeContentHeadersOnResponse;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -103,7 +107,12 @@ export class GeneratedReadableDownloadEndpointImplementation implements Generate
 
     private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
-        const url = buildUrl({ endpoint: this.endpoint, generatedClientClass: this.generatedSdkClientClass, context });
+        const url = buildUrl({
+            endpoint: this.endpoint,
+            generatedClientClass: this.generatedSdkClientClass,
+            context,
+            includeSerdeLayer: this.includeSerdeLayer,
+        });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
         } else {

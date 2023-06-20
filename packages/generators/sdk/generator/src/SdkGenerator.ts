@@ -73,6 +73,7 @@ export declare namespace SdkGenerator {
         extraDependencies: Record<string, string>;
         treatUnknownAsAny: boolean;
         includeContentHeadersOnFileDownloadResponse: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -207,6 +208,7 @@ export class SdkGenerator {
             useBrandedStringAliases: config.shouldUseBrandedStringAliases,
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
+            includeSerdeLayer: config.includeSerdeLayer,
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -217,16 +219,19 @@ export class SdkGenerator {
         });
         this.sdkErrorSchemaGenerator = new SdkErrorSchemaGenerator({
             skipValidation: config.skipResponseValidation,
+            includeSerdeLayer: config.includeSerdeLayer,
         });
         this.endpointErrorUnionGenerator = new EndpointErrorUnionGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,
+            includeSerdeLayer: config.includeSerdeLayer,
         });
         this.sdkEndpointTypeSchemasGenerator = new SdkEndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,
             shouldGenerateErrors: config.neverThrowErrors,
             skipResponseValidation: config.skipResponseValidation,
+            includeSerdeLayer: config.includeSerdeLayer,
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
@@ -242,28 +247,36 @@ export class SdkGenerator {
             npmPackage,
             targetRuntime: config.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
+            includeSerdeLayer: config.includeSerdeLayer,
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
-        this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator();
+        this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator({
+            includeSerdeLayer: config.includeSerdeLayer,
+        });
     }
 
     public async generate(): Promise<TypescriptProject> {
         this.generateTypeDeclarations();
-        this.generateTypeSchemas();
         this.generateErrorDeclarations();
         this.generateServiceDeclarations();
         this.generateEnvironments();
         this.generateRequestWrappers();
-        this.generateEndpointTypeSchemas();
-        this.generateInlinedRequestBodySchemas();
 
         if (this.config.neverThrowErrors) {
             this.generateEndpointErrorUnion();
         } else {
             this.generateGenericAPISdkError();
             this.generateTimeoutSdkError();
-            this.generateSdkErrorSchemas();
+            if (this.config.includeSerdeLayer) {
+                this.generateSdkErrorSchemas();
+            }
+        }
+
+        if (this.config.includeSerdeLayer) {
+            this.generateTypeSchemas();
+            this.generateEndpointTypeSchemas();
+            this.generateInlinedRequestBodySchemas();
         }
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
@@ -564,6 +577,7 @@ export class SdkGenerator {
             timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
             timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
             treatUnknownAsAny: this.config.treatUnknownAsAny,
+            includeSerdeLayer: this.config.includeSerdeLayer,
         });
     }
 }

@@ -11,6 +11,7 @@ export declare namespace GeneratedExpressEndpointTypeSchemasImpl {
         packageId: PackageId;
         service: HttpService;
         endpoint: HttpEndpoint;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -21,55 +22,59 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     private endpoint: HttpEndpoint;
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
+    private includeSerdeLayer: boolean;
 
-    constructor({ packageId, service, endpoint }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
+    constructor({ packageId, service, endpoint, includeSerdeLayer }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
+        this.includeSerdeLayer = includeSerdeLayer;
 
-        // only generate request schemas for referenced request bodies.  inlined
-        // request bodies are generated separately.
-        if (endpoint.requestBody?.type === "reference") {
-            switch (endpoint.requestBody.requestBodyType._type) {
-                case "primitive":
-                case "container":
-                    this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
-                        packageId,
-                        service,
-                        endpoint,
-                        typeName: GeneratedExpressEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
-                        type: endpoint.requestBody.requestBodyType,
-                    });
-                    break;
-                // named requests bodies are not generated - consumers should
-                // (de)serialize the named type directly.
-                // unknown request bodies don't need to be serialized.
-                case "named":
-                case "unknown":
-                    break;
-                default:
-                    assertNever(endpoint.requestBody.requestBodyType);
+        if (includeSerdeLayer) {
+            // only generate request schemas for referenced request bodies.  inlined
+            // request bodies are generated separately.
+            if (endpoint.requestBody?.type === "reference") {
+                switch (endpoint.requestBody.requestBodyType._type) {
+                    case "primitive":
+                    case "container":
+                        this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
+                            packageId,
+                            service,
+                            endpoint,
+                            typeName: GeneratedExpressEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
+                            type: endpoint.requestBody.requestBodyType,
+                        });
+                        break;
+                    // named requests bodies are not generated - consumers should
+                    // (de)serialize the named type directly.
+                    // unknown request bodies don't need to be serialized.
+                    case "named":
+                    case "unknown":
+                        break;
+                    default:
+                        assertNever(endpoint.requestBody.requestBodyType);
+                }
             }
-        }
 
-        if (endpoint.response?.type === "json") {
-            switch (endpoint.response.responseBodyType._type) {
-                case "primitive":
-                case "container":
-                    this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
-                        packageId,
-                        service,
-                        endpoint,
-                        typeName: GeneratedExpressEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                        type: endpoint.response.responseBodyType,
-                    });
-                    break;
-                // named response bodies are not generated - consumers should
-                // (de)serialize the named type directly.
-                // unknown response bodies don't need to be deserialized.
-                case "named":
-                case "unknown":
-                    break;
-                default:
-                    assertNever(endpoint.response.responseBodyType);
+            if (endpoint.response?.type === "json") {
+                switch (endpoint.response.responseBodyType._type) {
+                    case "primitive":
+                    case "container":
+                        this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
+                            packageId,
+                            service,
+                            endpoint,
+                            typeName: GeneratedExpressEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
+                            type: endpoint.response.responseBodyType,
+                        });
+                        break;
+                    // named response bodies are not generated - consumers should
+                    // (de)serialize the named type directly.
+                    // unknown response bodies don't need to be deserialized.
+                    case "named":
+                    case "unknown":
+                        break;
+                    default:
+                        assertNever(endpoint.response.responseBodyType);
+                }
             }
         }
     }
@@ -95,6 +100,10 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     public deserializeRequest(referenceToRawRequest: ts.Expression, context: ExpressContext): ts.Expression {
         if (this.endpoint.requestBody?.type !== "reference") {
             throw new Error("Cannot serialize request because it's not a reference");
+        }
+
+        if (!this.includeSerdeLayer) {
+            return referenceToRawRequest;
         }
 
         switch (this.endpoint.requestBody.requestBodyType._type) {
@@ -134,6 +143,10 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
 
         if (this.endpoint.response.type === "fileDownload") {
             throw new Error("Cannot serialize file");
+        }
+
+        if (!this.includeSerdeLayer) {
+            return referenceToParsedResponse;
         }
 
         switch (this.endpoint.response.responseBodyType._type) {

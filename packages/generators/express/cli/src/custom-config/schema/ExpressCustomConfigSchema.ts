@@ -7,6 +7,7 @@ export const ExpressCustomConfigSchema = z.strictObject({
     includeUtilsOnUnionMembers: z.optional(z.boolean()),
     includeOtherInUnionTypes: z.optional(z.boolean()),
     treatUnknownAsAny: z.optional(z.boolean()),
+    noSerdeLayer: z.optional(z.boolean()),
 });
 
 export type ExpressCustomConfigSchema = z.infer<typeof ExpressCustomConfigSchema>;

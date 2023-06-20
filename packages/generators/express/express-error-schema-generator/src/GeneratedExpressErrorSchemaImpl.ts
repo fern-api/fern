@@ -11,6 +11,7 @@ export declare namespace GeneratedExpressErrorSchemaImpl {
         errorName: string;
         errorDeclaration: ErrorDeclaration;
         type: TypeReference;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -20,11 +21,13 @@ export class GeneratedExpressErrorSchemaImpl
 {
     private errorDeclaration: ErrorDeclaration;
     private type: TypeReference;
+    private includeSerdeLayer: boolean;
 
-    constructor({ errorName, errorDeclaration, type }: GeneratedExpressErrorSchemaImpl.Init) {
+    constructor({ errorName, errorDeclaration, type, includeSerdeLayer }: GeneratedExpressErrorSchemaImpl.Init) {
         super({ typeName: errorName });
         this.errorDeclaration = errorDeclaration;
         this.type = type;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -51,6 +54,10 @@ export class GeneratedExpressErrorSchemaImpl
         context: ExpressContext,
         { referenceToBody }: { referenceToBody: ts.Expression }
     ): ts.Expression {
+        if (!this.includeSerdeLayer) {
+            return referenceToBody;
+        }
+
         switch (this.type._type) {
             case "named":
                 return context.typeSchema

@@ -16,6 +16,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         timeoutInSeconds: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -26,6 +27,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private timeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
     private response: GeneratedEndpointResponse;
+    private includeSerdeLayer: boolean;
 
     constructor({
         endpoint,
@@ -34,6 +36,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         includeCredentialsOnCrossOriginRequests,
         timeoutInSeconds,
         request,
+        includeSerdeLayer,
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -41,6 +44,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.timeoutInSeconds = timeoutInSeconds;
         this.request = request;
         this.response = response;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -90,7 +94,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
-        const url = buildUrl({ endpoint: this.endpoint, generatedClientClass: this.generatedSdkClientClass, context });
+        const url = buildUrl({
+            endpoint: this.endpoint,
+            generatedClientClass: this.generatedSdkClientClass,
+            context,
+            includeSerdeLayer: this.includeSerdeLayer,
+        });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
         } else {

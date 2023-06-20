@@ -9439,7 +9439,7 @@ export interface CreateProblemRequestV2 {
     customFiles: TraceApi.v2.CustomFiles;
     customTestCaseTemplates: TraceApi.v2.TestCaseTemplate[];
     testcases: TraceApi.v2.TestCaseV2[];
-    supportedLanguages: TraceApi.Language[];
+    supportedLanguages: Set<TraceApi.Language>;
     isPublic: boolean;
 }
 ",
@@ -10095,7 +10095,7 @@ export interface ProblemInfoV2 {
     problemDescription: TraceApi.ProblemDescription;
     problemName: string;
     problemVersion: number;
-    supportedLanguages: TraceApi.Language[];
+    supportedLanguages: Set<TraceApi.Language>;
     customFiles: TraceApi.v2.CustomFiles;
     generatedFiles: TraceApi.v2.GeneratedFiles;
     customTestCaseTemplates: TraceApi.v2.TestCaseTemplate[];
@@ -11352,7 +11352,7 @@ export interface CreateProblemRequestV2 {
     customFiles: TraceApi.v2.v3.CustomFiles;
     customTestCaseTemplates: TraceApi.v2.v3.TestCaseTemplate[];
     testcases: TraceApi.v2.v3.TestCaseV2[];
-    supportedLanguages: TraceApi.Language[];
+    supportedLanguages: Set<TraceApi.Language>;
     isPublic: boolean;
 }
 ",
@@ -12008,7 +12008,7 @@ export interface ProblemInfoV2 {
     problemDescription: TraceApi.ProblemDescription;
     problemName: string;
     problemVersion: number;
-    supportedLanguages: TraceApi.Language[];
+    supportedLanguages: Set<TraceApi.Language>;
     customFiles: TraceApi.v2.v3.CustomFiles;
     generatedFiles: TraceApi.v2.v3.GeneratedFiles;
     customTestCaseTemplates: TraceApi.v2.v3.TestCaseTemplate[];
@@ -27677,7 +27677,7 @@ exports.CreateProblemRequestV2 = core.serialization.object({
     customFiles: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.CustomFiles; })),
     customTestCaseTemplates: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseTemplate; }))),
     testcases: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseV2; }))),
-    supportedLanguages: core.serialization.list(core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).Language; }))),
+    supportedLanguages: core.serialization.set(core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).Language; }))),
     isPublic: core.serialization.boolean(),
 });
 ",
@@ -29115,7 +29115,7 @@ exports.ProblemInfoV2 = core.serialization.object({
     problemDescription: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).ProblemDescription; })),
     problemName: core.serialization.string(),
     problemVersion: core.serialization.number(),
-    supportedLanguages: core.serialization.list(core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).Language; }))),
+    supportedLanguages: core.serialization.set(core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).Language; }))),
     customFiles: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.CustomFiles; })),
     generatedFiles: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.GeneratedFiles; })),
     customTestCaseTemplates: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseTemplate; }))),
@@ -30950,7 +30950,7 @@ exports.CreateProblemRequestV2 = core.serialization.object({
     customFiles: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.CustomFiles; })),
     customTestCaseTemplates: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseTemplate; }))),
     testcases: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseV2; }))),
-    supportedLanguages: core.serialization.list(core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).Language; }))),
+    supportedLanguages: core.serialization.set(core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).Language; }))),
     isPublic: core.serialization.boolean(),
 });
 ",
@@ -32392,7 +32392,7 @@ exports.ProblemInfoV2 = core.serialization.object({
     problemDescription: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).ProblemDescription; })),
     problemName: core.serialization.string(),
     problemVersion: core.serialization.number(),
-    supportedLanguages: core.serialization.list(core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).Language; }))),
+    supportedLanguages: core.serialization.set(core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).Language; }))),
     customFiles: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.CustomFiles; })),
     generatedFiles: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.GeneratedFiles; })),
     customTestCaseTemplates: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseTemplate; }))),

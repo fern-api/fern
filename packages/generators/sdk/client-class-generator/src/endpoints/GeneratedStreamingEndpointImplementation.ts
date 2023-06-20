@@ -16,6 +16,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         includeCredentialsOnCrossOriginRequests: boolean;
         timeoutInSeconds: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -33,6 +34,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private includeCredentialsOnCrossOriginRequests: boolean;
     private timeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
+    private includeSerdeLayer: boolean;
 
     constructor({
         packageId,
@@ -42,6 +44,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         response,
         timeoutInSeconds,
         request,
+        includeSerdeLayer,
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -50,6 +53,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.response = response;
         this.timeoutInSeconds = timeoutInSeconds;
         this.request = request;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -155,7 +159,12 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     private getReferenceToEnvironment(context: SdkContext): ts.Expression {
         const referenceToEnvironment = this.generatedSdkClientClass.getEnvironment(this.endpoint, context);
-        const url = buildUrl({ endpoint: this.endpoint, generatedClientClass: this.generatedSdkClientClass, context });
+        const url = buildUrl({
+            endpoint: this.endpoint,
+            generatedClientClass: this.generatedSdkClientClass,
+            context,
+            includeSerdeLayer: this.includeSerdeLayer,
+        });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
         } else {

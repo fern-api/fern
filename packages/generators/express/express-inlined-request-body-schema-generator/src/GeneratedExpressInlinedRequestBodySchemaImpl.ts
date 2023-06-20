@@ -9,6 +9,7 @@ export declare namespace GeneratedExpressInlinedRequestBodySchemaImpl {
         packageId: PackageId;
         endpoint: HttpEndpoint;
         inlinedRequestBody: InlinedRequestBody;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -19,17 +20,20 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
     private inlinedRequestBody: InlinedRequestBody;
+    private includeSerdeLayer: boolean;
 
     constructor({
         packageId,
         endpoint,
         inlinedRequestBody,
+        includeSerdeLayer,
         ...superInit
     }: GeneratedExpressInlinedRequestBodySchemaImpl.Init) {
         super(superInit);
         this.packageId = packageId;
         this.endpoint = endpoint;
         this.inlinedRequestBody = inlinedRequestBody;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -37,6 +41,9 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
     }
 
     public deserializeRequest(referenceToRawRequest: ts.Expression, context: ExpressContext): ts.Expression {
+        if (!this.includeSerdeLayer) {
+            return referenceToRawRequest;
+        }
         return this.getReferenceToZurgSchema(context).parse(referenceToRawRequest, {
             unrecognizedObjectKeys: "fail",
             allowUnrecognizedEnumValues: false,

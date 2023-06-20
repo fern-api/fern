@@ -11,13 +11,15 @@ import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomC
 export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfig> {
     protected parseCustomConfig(customConfig: unknown): ExpressCustomConfig {
         const parsed = customConfig != null ? ExpressCustomConfigSchema.parse(customConfig) : undefined;
+        const noSerdeLayer = parsed?.noSerdeLayer ?? false;
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             areImplementationsOptional: parsed?.optionalImplementations ?? false,
             doNotHandleUnrecognizedErrors: parsed?.doNotHandleUnrecognizedErrors ?? false,
-            includeUtilsOnUnionMembers: parsed?.includeUtilsOnUnionMembers ?? false,
+            includeUtilsOnUnionMembers: !noSerdeLayer && (parsed?.includeUtilsOnUnionMembers ?? false),
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
+            noSerdeLayer,
         };
     }
 
@@ -48,6 +50,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 includeUtilsOnUnionMembers: customConfig.includeUtilsOnUnionMembers,
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
+                includeSerdeLayer: !customConfig.noSerdeLayer,
             },
         });
 

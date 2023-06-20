@@ -20,6 +20,7 @@ export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         shouldGenerateErrors: boolean;
         skipResponseValidation: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -34,6 +35,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private generatedStreamDataSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private generatedSdkErrorSchema: GeneratedEndpointErrorSchema | undefined;
     private skipResponseValidation: boolean;
+    private includeSerdeLayer: boolean;
 
     constructor({
         packageId,
@@ -43,90 +45,93 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         errorDiscriminationStrategy,
         shouldGenerateErrors,
         skipResponseValidation,
+        includeSerdeLayer,
     }: GeneratedSdkEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
-
-        // only generate request schemas for referenced request bodies.  inlined
-        // request bodies are generated separately.
-        if (endpoint.requestBody?.type === "reference") {
-            switch (endpoint.requestBody.requestBodyType._type) {
-                case "primitive":
-                case "container":
-                    this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
-                        packageId,
-                        service,
-                        endpoint,
-                        typeName: GeneratedSdkEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
-                        type: endpoint.requestBody.requestBodyType,
-                    });
-                    break;
-                // named requests bodies are not generated - consumers should
-                // (de)serialize the named type directly.
-                // unknown request bodies don't need to be serialized.
-                case "named":
-                case "unknown":
-                    break;
-                default:
-                    assertNever(endpoint.requestBody.requestBodyType);
-            }
-        }
-
-        if (endpoint.response?.type === "json") {
-            switch (endpoint.response.responseBodyType._type) {
-                case "primitive":
-                case "container":
-                    this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
-                        packageId,
-                        service,
-                        endpoint,
-                        typeName: GeneratedSdkEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                        type: endpoint.response.responseBodyType,
-                    });
-                    break;
-                // named response bodies are not generated - consumers should
-                // (de)serialize the named type directly.
-                // unknown response bodies don't need to be deserialized.
-                case "named":
-                case "unknown":
-                    break;
-                default:
-                    assertNever(endpoint.response.responseBodyType);
-            }
-        }
-
-        if (endpoint.streamingResponse != null) {
-            switch (endpoint.streamingResponse.dataEventType._type) {
-                case "primitive":
-                case "container":
-                    this.generatedStreamDataSchema = new GeneratedEndpointTypeSchemaImpl({
-                        packageId,
-                        service,
-                        endpoint,
-                        typeName: GeneratedSdkEndpointTypeSchemasImpl.STREAM_DATA_SCHEMA_NAME,
-                        type: endpoint.streamingResponse.dataEventType,
-                    });
-                    break;
-                // named response bodies are not generated - consumers should
-                // (de)serialize the named type directly.
-                // unknown response bodies don't need to be deserialized.
-                case "named":
-                case "unknown":
-                    break;
-                default:
-                    assertNever(endpoint.streamingResponse.dataEventType);
-            }
-        }
-
-        this.generatedSdkErrorSchema = shouldGenerateErrors
-            ? this.getGeneratedEndpointErrorSchema({
-                  packageId,
-                  endpoint,
-                  errorResolver,
-                  errorDiscriminationStrategy,
-              })
-            : undefined;
-
         this.skipResponseValidation = skipResponseValidation;
+        this.includeSerdeLayer = includeSerdeLayer;
+
+        if (this.includeSerdeLayer) {
+            // only generate request schemas for referenced request bodies.  inlined
+            // request bodies are generated separately.
+            if (endpoint.requestBody?.type === "reference") {
+                switch (endpoint.requestBody.requestBodyType._type) {
+                    case "primitive":
+                    case "container":
+                        this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
+                            packageId,
+                            service,
+                            endpoint,
+                            typeName: GeneratedSdkEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
+                            type: endpoint.requestBody.requestBodyType,
+                        });
+                        break;
+                    // named requests bodies are not generated - consumers should
+                    // (de)serialize the named type directly.
+                    // unknown request bodies don't need to be serialized.
+                    case "named":
+                    case "unknown":
+                        break;
+                    default:
+                        assertNever(endpoint.requestBody.requestBodyType);
+                }
+            }
+
+            if (endpoint.response?.type === "json") {
+                switch (endpoint.response.responseBodyType._type) {
+                    case "primitive":
+                    case "container":
+                        this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
+                            packageId,
+                            service,
+                            endpoint,
+                            typeName: GeneratedSdkEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
+                            type: endpoint.response.responseBodyType,
+                        });
+                        break;
+                    // named response bodies are not generated - consumers should
+                    // (de)serialize the named type directly.
+                    // unknown response bodies don't need to be deserialized.
+                    case "named":
+                    case "unknown":
+                        break;
+                    default:
+                        assertNever(endpoint.response.responseBodyType);
+                }
+            }
+
+            if (endpoint.streamingResponse != null) {
+                switch (endpoint.streamingResponse.dataEventType._type) {
+                    case "primitive":
+                    case "container":
+                        this.generatedStreamDataSchema = new GeneratedEndpointTypeSchemaImpl({
+                            packageId,
+                            service,
+                            endpoint,
+                            typeName: GeneratedSdkEndpointTypeSchemasImpl.STREAM_DATA_SCHEMA_NAME,
+                            type: endpoint.streamingResponse.dataEventType,
+                        });
+                        break;
+                    // named response bodies are not generated - consumers should
+                    // (de)serialize the named type directly.
+                    // unknown response bodies don't need to be deserialized.
+                    case "named":
+                    case "unknown":
+                        break;
+                    default:
+                        assertNever(endpoint.streamingResponse.dataEventType);
+                }
+            }
+
+            this.generatedSdkErrorSchema = shouldGenerateErrors
+                ? this.getGeneratedEndpointErrorSchema({
+                      packageId,
+                      endpoint,
+                      errorResolver,
+                      errorDiscriminationStrategy,
+                  })
+                : undefined;
+        }
     }
 
     private getGeneratedEndpointErrorSchema({
@@ -193,6 +198,10 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             throw new Error("Cannot serialize request because it's not a reference");
         }
 
+        if (!this.includeSerdeLayer) {
+            return referenceToParsedRequest;
+        }
+
         switch (this.endpoint.requestBody.requestBodyType._type) {
             case "unknown":
                 return referenceToParsedRequest;
@@ -234,9 +243,18 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             return referenceToRawResponse;
         }
 
+        if (this.endpoint.response.responseBodyType._type === "unknown") {
+            return referenceToRawResponse;
+        }
+
+        if (!this.includeSerdeLayer) {
+            return ts.factory.createAsExpression(
+                referenceToRawResponse,
+                context.type.getReferenceToType(this.endpoint.response.responseBodyType).typeNode
+            );
+        }
+
         switch (this.endpoint.response.responseBodyType._type) {
-            case "unknown":
-                return referenceToRawResponse;
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.responseBodyType, { isGeneratingSchema: false })
@@ -270,6 +288,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.generatedSdkErrorSchema == null) {
             throw new Error("Cannot deserialize endpoint error because it is not defined.");
         }
+        if (!this.includeSerdeLayer) {
+            return referenceToRawError;
+        }
         return this.generatedSdkErrorSchema.getReferenceToZurgSchema(context).parseOrThrow(referenceToRawError, {
             allowUnrecognizedEnumValues: true,
             allowUnrecognizedUnionMembers: true,
@@ -300,6 +321,10 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             return visitValid(referenceToRawStreamData);
         }
 
+        if (!this.includeSerdeLayer) {
+            return visitValid(referenceToRawStreamData);
+        }
+
         return [
             ts.factory.createVariableStatement(
                 undefined,
@@ -325,6 +350,10 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private deserializeStreamData(referenceToRawStreamData: ts.Expression, context: SdkContext): ts.Expression {
         if (this.endpoint.streamingResponse == null) {
             throw new Error("Cannot deserialize stream data because it's not defined");
+        }
+
+        if (!this.includeSerdeLayer) {
+            return referenceToRawStreamData;
         }
 
         switch (this.endpoint.streamingResponse.dataEventType._type) {

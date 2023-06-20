@@ -14,7 +14,7 @@ export declare namespace GeneratedEndpointErrorUnionImpl {
         endpoint: HttpEndpoint;
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
-        includeUtilsOnUnionMembers: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -30,6 +30,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         endpoint,
         errorResolver,
         errorDiscriminationStrategy,
+        includeSerdeLayer,
     }: GeneratedEndpointErrorUnionImpl.Init) {
         this.endpoint = endpoint;
 
@@ -58,6 +59,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                 singleUnionType: unknownErrorSingleUnionTypeGenerator,
             }),
             includeOtherInUnionTypes: true,
+            includeSerdeLayer,
         });
     }
 

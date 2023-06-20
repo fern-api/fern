@@ -29,6 +29,7 @@ export declare namespace GeneratedUnionImpl {
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         baseProperties?: ObjectProperty[];
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -53,6 +54,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private includeUtilsOnUnionMembers: boolean;
     private includeOtherInUnionTypes: boolean;
     private baseProperties: ObjectProperty[];
+    private includeSerdeLayer: boolean;
 
     constructor({
         typeName,
@@ -64,6 +66,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         includeUtilsOnUnionMembers,
         includeOtherInUnionTypes,
         baseProperties = [],
+        includeSerdeLayer,
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
@@ -74,6 +77,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
         this.includeOtherInUnionTypes = includeOtherInUnionTypes;
         this.baseProperties = baseProperties;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public writeToFile(context: Context): void {
@@ -197,7 +201,11 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     }
 
     private _getBasePropertyKey(baseProperty: ObjectProperty): string {
-        return baseProperty.name.name.camelCase.unsafeName;
+        if (this.includeSerdeLayer) {
+            return baseProperty.name.name.camelCase.unsafeName;
+        } else {
+            return baseProperty.name.wireValue;
+        }
     }
 
     /**************

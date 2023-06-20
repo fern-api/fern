@@ -95,7 +95,13 @@ export abstract class AbstractTypeReferenceConverter<T> {
 
     protected isTypeReferencePrimitive(typeReference: TypeReference): boolean {
         const resolvedType = this.typeResolver.resolveTypeReference(typeReference);
-        return resolvedType._type === "primitive";
+        if (resolvedType._type === "primitive") {
+            return true;
+        }
+        if (resolvedType._type === "named" && resolvedType.shape === ShapeType.Enum) {
+            return true;
+        }
+        return false;
     }
 
     protected generateNonOptionalTypeReferenceNode(typeNode: ts.TypeNode): TypeReferenceNode {

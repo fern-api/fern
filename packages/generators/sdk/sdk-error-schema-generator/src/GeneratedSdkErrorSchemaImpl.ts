@@ -12,6 +12,7 @@ export declare namespace GeneratedSdkErrorSchemaImpl {
         errorDeclaration: ErrorDeclaration;
         type: TypeReference;
         skipValidation: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -22,12 +23,20 @@ export class GeneratedSdkErrorSchemaImpl
     private errorDeclaration: ErrorDeclaration;
     private type: TypeReference;
     private skipValidation: boolean;
+    private includeSerdeLayer: boolean;
 
-    constructor({ errorName, errorDeclaration, type, skipValidation }: GeneratedSdkErrorSchemaImpl.Init) {
+    constructor({
+        errorName,
+        errorDeclaration,
+        type,
+        skipValidation,
+        includeSerdeLayer,
+    }: GeneratedSdkErrorSchemaImpl.Init) {
         super({ typeName: errorName });
         this.errorDeclaration = errorDeclaration;
         this.type = type;
         this.skipValidation = skipValidation;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -54,6 +63,9 @@ export class GeneratedSdkErrorSchemaImpl
         context: SdkContext,
         { referenceToBody }: { referenceToBody: ts.Expression }
     ): ts.Expression {
+        if (!this.includeSerdeLayer) {
+            return ts.factory.createAsExpression(referenceToBody, context.type.getReferenceToType(this.type).typeNode);
+        }
         switch (this.type._type) {
             case "named":
                 return context.typeSchema

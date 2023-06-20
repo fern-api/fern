@@ -58,6 +58,7 @@ export declare namespace ExpressGenerator {
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         treatUnknownAsAny: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -178,17 +179,23 @@ export class ExpressGenerator {
             useBrandedStringAliases: config.shouldUseBrandedStringAliases,
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
+            includeSerdeLayer: config.includeSerdeLayer,
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
         });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.expressInlinedRequestBodyGenerator = new ExpressInlinedRequestBodyGenerator();
-        this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator();
-        this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator();
+        this.expressInlinedRequestBodySchemaGenerator = new ExpressInlinedRequestBodySchemaGenerator({
+            includeSerdeLayer: config.includeSerdeLayer,
+        });
+        this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator({
+            includeSerdeLayer: config.includeSerdeLayer,
+        });
         this.expressServiceGenerator = new ExpressServiceGenerator({
             packageResolver: this.packageResolver,
             doNotHandleUnrecognizedErrors: config.doNotHandleUnrecognizedErrors,
+            includeSerdeLayer: config.includeSerdeLayer,
         });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             packageResolver: this.packageResolver,
@@ -198,20 +205,25 @@ export class ExpressGenerator {
         });
         this.genericApiExpressErrorGenerator = new GenericAPIExpressErrorGenerator();
         this.expressErrorGenerator = new ExpressErrorGenerator();
-        this.expressErrorSchemaGenerator = new ExpressErrorSchemaGenerator();
+        this.expressErrorSchemaGenerator = new ExpressErrorSchemaGenerator({
+            includeSerdeLayer: config.includeSerdeLayer,
+        });
     }
 
     public async generate(): Promise<TypescriptProject> {
         this.generateTypeDeclarations();
-        this.generateTypeSchemas();
         this.generateInlinedRequestBodies();
-        this.generateInlinedRequestBodySchemas();
-        this.generateEndpointTypeSchemas();
         this.generateExpressServices();
         this.generateExpressRegister();
         this.generateGenericApiExpressGenerator();
         this.generateErrorDeclarations();
-        this.generateErrorSchemas();
+
+        if (this.config.includeSerdeLayer) {
+            this.generateTypeSchemas();
+            this.generateInlinedRequestBodySchemas();
+            this.generateEndpointTypeSchemas();
+            this.generateErrorSchemas();
+        }
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
@@ -460,6 +472,7 @@ export class ExpressGenerator {
             expressRegisterGenerator: this.expressRegisterGenerator,
             expressErrorSchemaDeclarationReferencer: this.expressErrorSchemaDeclarationReferencer,
             expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
+            includeSerdeLayer: this.config.includeSerdeLayer,
         });
     }
 }

@@ -4,6 +4,10 @@ import { GeneratedExpressInlinedRequestBodySchema } from "@fern-typescript/conte
 import { GeneratedExpressInlinedRequestBodySchemaImpl } from "./GeneratedExpressInlinedRequestBodySchemaImpl";
 
 export declare namespace ExpressInlinedRequestBodySchemaGenerator {
+    export interface Init {
+        includeSerdeLayer: boolean;
+    }
+
     export namespace generateInlinedRequestBodySchema {
         export interface Args {
             packageId: PackageId;
@@ -14,6 +18,12 @@ export declare namespace ExpressInlinedRequestBodySchemaGenerator {
 }
 
 export class ExpressInlinedRequestBodySchemaGenerator {
+    private includeSerdeLayer: boolean;
+
+    constructor({ includeSerdeLayer }: ExpressInlinedRequestBodySchemaGenerator.Init) {
+        this.includeSerdeLayer = includeSerdeLayer;
+    }
+
     public generateInlinedRequestBodySchema({
         packageId,
         endpoint,
@@ -27,6 +37,7 @@ export class ExpressInlinedRequestBodySchemaGenerator {
             endpoint,
             inlinedRequestBody: endpoint.requestBody,
             typeName,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 }

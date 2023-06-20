@@ -31,6 +31,7 @@ export declare namespace TypeGenerator {
         useBrandedStringAliases: boolean;
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
+        includeSerdeLayer: boolean;
     }
 
     export namespace generateType {
@@ -41,6 +42,7 @@ export declare namespace TypeGenerator {
             docs: string | undefined;
             fernFilepath: FernFilepath;
             getReferenceToSelf: (context: Context) => Reference;
+            includeSerdeLayer: boolean;
         }
     }
 }
@@ -49,11 +51,18 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
     private useBrandedStringAliases: boolean;
     private includeUtilsOnUnionMembers: boolean;
     private includeOtherInUnionTypes: boolean;
+    private includeSerdeLayer: boolean;
 
-    constructor({ useBrandedStringAliases, includeUtilsOnUnionMembers, includeOtherInUnionTypes }: TypeGenerator.Init) {
+    constructor({
+        useBrandedStringAliases,
+        includeUtilsOnUnionMembers,
+        includeOtherInUnionTypes,
+        includeSerdeLayer,
+    }: TypeGenerator.Init) {
         this.useBrandedStringAliases = useBrandedStringAliases;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
         this.includeOtherInUnionTypes = includeOtherInUnionTypes;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public generateType({
@@ -115,6 +124,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             docs,
             fernFilepath,
             getReferenceToSelf,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 
@@ -142,6 +152,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToSelf,
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: this.includeOtherInUnionTypes,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 
@@ -160,7 +171,15 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
         fernFilepath: FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedObjectType<Context> {
-        return new GeneratedObjectTypeImpl({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf });
+        return new GeneratedObjectTypeImpl({
+            typeName,
+            shape,
+            examples,
+            docs,
+            fernFilepath,
+            getReferenceToSelf,
+            includeSerdeLayer: this.includeSerdeLayer,
+        });
     }
 
     private generateEnum({
@@ -178,7 +197,15 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
         fernFilepath: FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
     }): GeneratedEnumType<Context> {
-        return new GeneratedEnumTypeImpl({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf });
+        return new GeneratedEnumTypeImpl({
+            typeName,
+            shape,
+            examples,
+            docs,
+            fernFilepath,
+            getReferenceToSelf,
+            includeSerdeLayer: this.includeSerdeLayer,
+        });
     }
 
     public generateAlias({
@@ -204,6 +231,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   docs,
                   fernFilepath,
                   getReferenceToSelf,
+                  includeSerdeLayer: this.includeSerdeLayer,
               })
             : new GeneratedAliasTypeImpl({
                   typeName,
@@ -212,6 +240,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   docs,
                   fernFilepath,
                   getReferenceToSelf,
+                  includeSerdeLayer: this.includeSerdeLayer,
               });
     }
 }

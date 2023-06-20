@@ -5,6 +5,7 @@ import { GeneratedSdkErrorSchemaImpl } from "./GeneratedSdkErrorSchemaImpl";
 export declare namespace SdkErrorSchemaGenerator {
     export interface Init {
         skipValidation: boolean;
+        includeSerdeLayer: boolean;
     }
 
     export namespace generateError {
@@ -17,9 +18,11 @@ export declare namespace SdkErrorSchemaGenerator {
 
 export class SdkErrorSchemaGenerator {
     private skipValidation: boolean;
+    private includeSerdeLayer: boolean;
 
-    constructor({ skipValidation }: SdkErrorSchemaGenerator.Init) {
+    constructor({ skipValidation, includeSerdeLayer }: SdkErrorSchemaGenerator.Init) {
         this.skipValidation = skipValidation;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public generateSdkErrorSchema({
@@ -34,6 +37,7 @@ export class SdkErrorSchemaGenerator {
             type: errorDeclaration.type,
             errorName,
             skipValidation: this.skipValidation,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 }

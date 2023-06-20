@@ -24,6 +24,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected parseCustomConfig(customConfig: unknown): SdkCustomConfig {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
+        const noSerdeLayer = parsed?.noSerdeLayer ?? false;
         return {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             isPackagePrivate: parsed?.private ?? false,
@@ -33,14 +34,15 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             includeCredentialsOnCrossOriginRequests: parsed?.includeCredentialsOnCrossOriginRequests ?? false,
             shouldBundle: parsed?.bundle ?? false,
             allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
-            includeUtilsOnUnionMembers: parsed?.includeUtilsOnUnionMembers ?? false,
+            includeUtilsOnUnionMembers: !noSerdeLayer && (parsed?.includeUtilsOnUnionMembers ?? false),
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
             timeoutInSeconds: parsed?.timeoutInSeconds,
-            skipResponseValidation: parsed?.skipResponseValidation ?? false,
+            skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? false),
             extraDependencies: parsed?.extraDependencies ?? {},
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
+            noSerdeLayer,
         };
     }
 
@@ -83,6 +85,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 extraDependencies: customConfig.extraDependencies,
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
+                includeSerdeLayer: !customConfig.noSerdeLayer,
             },
         });
 

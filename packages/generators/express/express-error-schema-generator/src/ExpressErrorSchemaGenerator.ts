@@ -3,6 +3,10 @@ import { GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 import { GeneratedExpressErrorSchemaImpl } from "./GeneratedExpressErrorSchemaImpl";
 
 export declare namespace ExpressErrorSchemaGenerator {
+    export interface Init {
+        includeSerdeLayer: boolean;
+    }
+
     export namespace generateError {
         export interface Args {
             errorName: string;
@@ -12,6 +16,12 @@ export declare namespace ExpressErrorSchemaGenerator {
 }
 
 export class ExpressErrorSchemaGenerator {
+    private includeSerdeLayer: boolean;
+
+    constructor({ includeSerdeLayer }: ExpressErrorSchemaGenerator.Init) {
+        this.includeSerdeLayer = includeSerdeLayer;
+    }
+
     public generateExpressErrorSchema({
         errorDeclaration,
         errorName,
@@ -23,6 +33,7 @@ export class ExpressErrorSchemaGenerator {
             errorDeclaration,
             type: errorDeclaration.type,
             errorName,
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 }

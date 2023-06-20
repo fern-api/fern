@@ -26,6 +26,7 @@ export declare namespace TypeContextImpl {
         typeGenerator: TypeGenerator;
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         treatUnknownAsAny: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -38,6 +39,7 @@ export class TypeContextImpl implements TypeContext {
     private typeResolver: TypeResolver;
     private typeGenerator: TypeGenerator;
     private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
+    private includeSerdeLayer: boolean;
 
     constructor({
         sourceFile,
@@ -47,6 +49,7 @@ export class TypeContextImpl implements TypeContext {
         typeGenerator,
         typeReferenceExampleGenerator,
         treatUnknownAsAny,
+        includeSerdeLayer,
     }: TypeContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -54,11 +57,13 @@ export class TypeContextImpl implements TypeContext {
         this.typeDeclarationReferencer = typeDeclarationReferencer;
         this.typeGenerator = typeGenerator;
         this.typeReferenceExampleGenerator = typeReferenceExampleGenerator;
+        this.includeSerdeLayer = includeSerdeLayer;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             typeResolver,
             treatUnknownAsAny,
+            includeSerdeLayer,
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
@@ -100,6 +105,7 @@ export class TypeContextImpl implements TypeContext {
             examples: typeDeclaration.examples,
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
+            includeSerdeLayer: this.includeSerdeLayer,
         });
     }
 

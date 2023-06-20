@@ -9,10 +9,12 @@ export function buildUrl({
     endpoint,
     generatedClientClass,
     context,
+    includeSerdeLayer,
 }: {
     endpoint: HttpEndpoint;
     generatedClientClass: GeneratedSdkClientClassImpl;
     context: SdkContext;
+    includeSerdeLayer: boolean;
 }): ts.Expression | undefined {
     if (endpoint.allPathParameters.length === 0) {
         if (endpoint.fullPath.head.length === 0) {
@@ -33,7 +35,7 @@ export function buildUrl({
 
             let referenceToPathParameterValue = getReferenceToPathParameter({ pathParameter, generatedClientClass });
 
-            if (pathParameter.valueType._type === "named") {
+            if (includeSerdeLayer && pathParameter.valueType._type === "named") {
                 referenceToPathParameterValue = context.typeSchema
                     .getSchemaOfNamedType(pathParameter.valueType, {
                         isGeneratingSchema: false,
