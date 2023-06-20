@@ -8,7 +8,7 @@ import (
 	strings "strings"
 )
 
-type Service interface {
+type UserClient interface {
 	SetName(ctx context.Context, userId string, request string) (string, error)
 	SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error)
 	SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error)
@@ -16,22 +16,22 @@ type Service interface {
 	SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error)
 }
 
-func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) UserClient {
 	options := new(core.ClientOptions)
 	for _, opt := range opts {
 		opt(options)
 	}
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &client{
+	return &userClient{
 		setNameEndpoint:   newSetNameEndpoint(baseURL+"/"+"users/%v/set-name", httpClient, options),
 		setNameV2Endpoint: newSetNameV2Endpoint(baseURL+"/"+"users/%v/set-name-v2", httpClient, options),
 		setNameV3Endpoint: newSetNameV3Endpoint(baseURL+"/"+"users/%v/set-name-v3", httpClient, options),
 		setNameV4Endpoint: newSetNameV4Endpoint(baseURL+"/"+"users/%v/set-name-v4", httpClient, options),
 		setNameV5Endpoint: newSetNameV5Endpoint(baseURL+"/"+"users/%v/set-name-v5", httpClient, options),
-	}, nil
+	}
 }
 
-type client struct {
+type userClient struct {
 	setNameEndpoint   *setNameEndpoint
 	setNameV2Endpoint *setNameV2Endpoint
 	setNameV3Endpoint *setNameV3Endpoint
@@ -39,22 +39,22 @@ type client struct {
 	setNameV5Endpoint *setNameV5Endpoint
 }
 
-func (s *client) SetName(ctx context.Context, userId string, request string) (string, error) {
-	return s.setNameEndpoint.Call(ctx, userId, request)
+func (u *userClient) SetName(ctx context.Context, userId string, request string) (string, error) {
+	return u.setNameEndpoint.Call(ctx, userId, request)
 }
 
-func (s *client) SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error) {
-	return s.setNameV2Endpoint.Call(ctx, userId, request)
+func (u *userClient) SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error) {
+	return u.setNameV2Endpoint.Call(ctx, userId, request)
 }
 
-func (s *client) SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error) {
-	return s.setNameV3Endpoint.Call(ctx, userId, request)
+func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error) {
+	return u.setNameV3Endpoint.Call(ctx, userId, request)
 }
 
-func (s *client) SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error) {
-	return s.setNameV4Endpoint.Call(ctx, userId, request)
+func (u *userClient) SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error) {
+	return u.setNameV4Endpoint.Call(ctx, userId, request)
 }
 
-func (s *client) SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error) {
-	return s.setNameV5Endpoint.Call(ctx, userId, request)
+func (u *userClient) SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error) {
+	return u.setNameV5Endpoint.Call(ctx, userId, request)
 }

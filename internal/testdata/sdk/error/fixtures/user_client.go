@@ -8,32 +8,32 @@ import (
 	strings "strings"
 )
 
-type Service interface {
+type UserClient interface {
 	Get(ctx context.Context, id string) (string, error)
 	Update(ctx context.Context, id string, request string) (string, error)
 }
 
-func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) UserClient {
 	options := new(core.ClientOptions)
 	for _, opt := range opts {
 		opt(options)
 	}
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &client{
+	return &userClient{
 		getEndpoint:    newGetEndpoint(baseURL+"/"+"%v", httpClient, options),
 		updateEndpoint: newUpdateEndpoint(baseURL+"/"+"%v", httpClient, options),
-	}, nil
+	}
 }
 
-type client struct {
+type userClient struct {
 	getEndpoint    *getEndpoint
 	updateEndpoint *updateEndpoint
 }
 
-func (g *client) Get(ctx context.Context, id string) (string, error) {
-	return g.getEndpoint.Call(ctx, id)
+func (u *userClient) Get(ctx context.Context, id string) (string, error) {
+	return u.getEndpoint.Call(ctx, id)
 }
 
-func (u *client) Update(ctx context.Context, id string, request string) (string, error) {
+func (u *userClient) Update(ctx context.Context, id string, request string) (string, error) {
 	return u.updateEndpoint.Call(ctx, id, request)
 }

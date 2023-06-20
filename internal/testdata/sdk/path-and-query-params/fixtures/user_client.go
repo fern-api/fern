@@ -8,25 +8,25 @@ import (
 	strings "strings"
 )
 
-type Service interface {
+type UserClient interface {
 	GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error)
 }
 
-func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) UserClient {
 	options := new(core.ClientOptions)
 	for _, opt := range opts {
 		opt(options)
 	}
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &client{
+	return &userClient{
 		getUserEndpoint: newGetUserEndpoint(baseURL+"/"+"users/%v", httpClient, options),
-	}, nil
+	}
 }
 
-type client struct {
+type userClient struct {
 	getUserEndpoint *getUserEndpoint
 }
 
-func (g *client) GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error) {
-	return g.getUserEndpoint.Call(ctx, userId, request)
+func (u *userClient) GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error) {
+	return u.getUserEndpoint.Call(ctx, userId, request)
 }

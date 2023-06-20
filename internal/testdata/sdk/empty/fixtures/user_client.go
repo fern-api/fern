@@ -7,17 +7,17 @@ import (
 	strings "strings"
 )
 
-type Service interface {
+type UserClient interface {
 }
 
-func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) UserClient {
 	options := new(core.ClientOptions)
 	for _, opt := range opts {
 		opt(options)
 	}
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &client{}, nil
+	return &userClient{}
 }
 
-type client struct {
+type userClient struct {
 }

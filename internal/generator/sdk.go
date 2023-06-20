@@ -126,27 +126,62 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 // This file includes all of the service's endpoints so that their
 // implementation(s) are visible within the same file.
 //
+// Note that the given subpackages are all expected to have endpoints
+// within their tree.
+//
 // TODO: Remove separate endpoint types; consolidate all logic
 // in the client's implementation.
-func (f *fileWriter) WriteClient(signatures []*signature) error {
+func (f *fileWriter) WriteClient(signatures []*signature, subpackages []*ir.Subpackage, namePrefix *ir.Name) error {
 	// Generate the service interface definition.
-	serviceName := "Service"
-	f.P("type ", serviceName, " interface {")
+	var (
+		clientName     = "Client"
+		clientImplName = "client"
+		receiver       = "c"
+	)
+	if namePrefix != nil {
+		clientImplName = namePrefix.CamelCase.UnsafeName + clientName
+		clientName = namePrefix.PascalCase.UnsafeName + clientName
+		receiver = typeNameToReceiver(clientImplName)
+	}
+	f.P("type ", clientName, " interface {")
 	for _, signature := range signatures {
 		f.P(fmt.Sprintf("%s(%s) %s", signature.Name.PascalCase.UnsafeName, signature.Parameters, signature.ReturnValues))
+	}
+	for _, subpackage := range subpackages {
+		// Define a getter method for the subpackage client.
+		//
+		// If this is a top-level client (i.e. defined by a __package__.yml),
+		// it will have getters for each of the files in the same package.
+		//
+		//  type Client interface {
+		//    User() UserClient
+		//    Notification() NotificationClient
+		//  }
+		//
+		// TODO: Temporary solution - refactor this conditional when the IR is updated.
+		if subpackage.FernFilepath.File != nil {
+			clientTypeName := subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
+			f.P(subpackage.Name.PascalCase.UnsafeName, "()", clientTypeName)
+			continue
+		}
+		var (
+			importPath     = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
+			clientTypeName = f.imports.Add(importPath) + ".Client"
+		)
+		f.P(subpackage.Name.PascalCase.UnsafeName, "()", clientTypeName)
 	}
 	f.P("}")
 	f.P()
 
 	// Generate the client constructor.
 	// TODO: Call the nested client constructors (e.g. user.NewClient)
-	f.P("func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (", serviceName, ", error) {")
+	f.P("func New", clientName, "(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) ", clientName, " {")
 	f.P("options := new(core.ClientOptions)")
 	f.P("for _, opt := range opts {")
 	f.P("opt(options)")
 	f.P("}")
 	f.P(`baseURL = strings.TrimRight(baseURL, "/")`)
-	f.P("return &client{")
+	f.P("return &", clientImplName, "{")
 	for _, signature := range signatures {
 		urlFormat := "baseURL"
 		if signature.PathSuffix != "" {
@@ -154,23 +189,63 @@ func (f *fileWriter) WriteClient(signatures []*signature) error {
 		}
 		f.P(signature.EndpointTypeName, ": new", signature.Name.PascalCase.UnsafeName, "Endpoint(", urlFormat, ", httpClient, options),")
 	}
-	f.P("}, nil")
+	for _, subpackage := range subpackages {
+		// TODO: Temporary solution - refactor this conditional when the IR is updated.
+		if subpackage.FernFilepath.File != nil {
+			clientTypeName := subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
+			clientConstructor := "New" + clientTypeName + "(baseURL, httpClient, opts...),"
+			f.P(subpackage.Name.CamelCase.UnsafeName, "Client: ", clientConstructor)
+			continue
+		}
+		var (
+			importPath        = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
+			clientConstructor = f.imports.Add(importPath) + ".NewClient(baseURL, httpClient, opts...),"
+		)
+		f.P(subpackage.Name.CamelCase.UnsafeName, "Client: ", clientConstructor)
+	}
+	f.P("}")
 	f.P("}")
 	f.P()
 
 	// Generate the client implementation.
-	f.P("type client struct {")
+	f.P("type ", clientImplName, " struct {")
 	for _, signature := range signatures {
 		f.P(signature.EndpointTypeName, " *", signature.EndpointTypeName)
+	}
+	for _, subpackage := range subpackages {
+		// TODO: Temporary solution - refactor this conditional when the IR is updated.
+		var (
+			importPath     = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
+			clientTypeName = f.imports.Add(importPath) + "." + clientName
+		)
+		if subpackage.FernFilepath.File != nil {
+			clientTypeName = subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
+		}
+		f.P(subpackage.Name.CamelCase.UnsafeName, "Client ", clientTypeName)
 	}
 	f.P("}")
 	f.P()
 
-	// Implement the Service interface.
+	// Implement this service's methods.
 	for _, signature := range signatures {
-		receiver := typeNameToReceiver(signature.Name.CamelCase.UnsafeName)
-		f.P("func (", receiver, " *client) ", signature.Name.PascalCase.UnsafeName, "(", signature.Parameters, ") ", signature.ReturnValues, " {")
+		f.P("func (", receiver, " *", clientImplName, ") ", signature.Name.PascalCase.UnsafeName, "(", signature.Parameters, ") ", signature.ReturnValues, " {")
 		f.P("return ", receiver, ".", signature.EndpointTypeName, ".Call(", signature.ParameterNames, ")")
+		f.P("}")
+		f.P()
+	}
+
+	// Implement the getter methods to nested clients, if any.
+	for _, subpackage := range subpackages {
+		// TODO: Temporary solution - refactor this conditional when the IR is updated.
+		var (
+			importPath     = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
+			clientTypeName = f.imports.Add(importPath) + ".Client"
+		)
+		if subpackage.FernFilepath.File != nil {
+			clientTypeName = subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
+		}
+		f.P("func (", receiver, " *", clientImplName, ") ", subpackage.Name.PascalCase.UnsafeName, "() ", clientTypeName, " {")
+		f.P("return ", receiver, ".", subpackage.Name.CamelCase.UnsafeName, "Client")
 		f.P("}")
 		f.P()
 	}

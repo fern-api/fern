@@ -8,39 +8,39 @@ import (
 	strings "strings"
 )
 
-type Service interface {
+type UserClient interface {
 	GetUser(ctx context.Context, userId string) (string, error)
 	GetUserV2(ctx context.Context, userId string) (string, error)
 	GetUserV3(ctx context.Context, userId string, infoId string) (string, error)
 }
 
-func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) UserClient {
 	options := new(core.ClientOptions)
 	for _, opt := range opts {
 		opt(options)
 	}
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &client{
+	return &userClient{
 		getUserEndpoint:   newGetUserEndpoint(baseURL+"/"+"users/%v", httpClient, options),
 		getUserV2Endpoint: newGetUserV2Endpoint(baseURL+"/"+"users/get/%v/info", httpClient, options),
 		getUserV3Endpoint: newGetUserV3Endpoint(baseURL+"/"+"users/get/%v/info/%v", httpClient, options),
-	}, nil
+	}
 }
 
-type client struct {
+type userClient struct {
 	getUserEndpoint   *getUserEndpoint
 	getUserV2Endpoint *getUserV2Endpoint
 	getUserV3Endpoint *getUserV3Endpoint
 }
 
-func (g *client) GetUser(ctx context.Context, userId string) (string, error) {
-	return g.getUserEndpoint.Call(ctx, userId)
+func (u *userClient) GetUser(ctx context.Context, userId string) (string, error) {
+	return u.getUserEndpoint.Call(ctx, userId)
 }
 
-func (g *client) GetUserV2(ctx context.Context, userId string) (string, error) {
-	return g.getUserV2Endpoint.Call(ctx, userId)
+func (u *userClient) GetUserV2(ctx context.Context, userId string) (string, error) {
+	return u.getUserV2Endpoint.Call(ctx, userId)
 }
 
-func (g *client) GetUserV3(ctx context.Context, userId string, infoId string) (string, error) {
-	return g.getUserV3Endpoint.Call(ctx, userId, infoId)
+func (u *userClient) GetUserV3(ctx context.Context, userId string, infoId string) (string, error) {
+	return u.getUserV3Endpoint.Call(ctx, userId, infoId)
 }

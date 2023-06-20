@@ -4,29 +4,29 @@ package api
 
 import (
 	context "context"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/bearer/fixtures/core"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/basic/fixtures/core"
 	strings "strings"
 )
 
-type Service interface {
+type UserClient interface {
 	Get(ctx context.Context) (string, error)
 }
 
-func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) UserClient {
 	options := new(core.ClientOptions)
 	for _, opt := range opts {
 		opt(options)
 	}
 	baseURL = strings.TrimRight(baseURL, "/")
-	return &client{
+	return &userClient{
 		getEndpoint: newGetEndpoint(baseURL, httpClient, options),
-	}, nil
+	}
 }
 
-type client struct {
+type userClient struct {
 	getEndpoint *getEndpoint
 }
 
-func (g *client) Get(ctx context.Context) (string, error) {
-	return g.getEndpoint.Call(ctx)
+func (u *userClient) Get(ctx context.Context) (string, error) {
+	return u.getEndpoint.Call(ctx)
 }

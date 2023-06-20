@@ -8,7 +8,7 @@ import (
 	strings "strings"
 )
 
-type Service interface {
+type Client interface {
 	GetTasks(ctx context.Context) ([]*Task, error)
 	PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 	GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error)
@@ -25,7 +25,7 @@ type Service interface {
 	GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id) ([]*Task, error)
 }
 
-func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) (Service, error) {
+func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) Client {
 	options := new(core.ClientOptions)
 	for _, opt := range opts {
 		opt(options)
@@ -46,7 +46,7 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 		patchSchedulesScheduleIdEndpoint:    newPatchSchedulesScheduleIdEndpoint(baseURL+"/"+"schedules/%v", httpClient, options),
 		deleteSchedulesScheduleIdEndpoint:   newDeleteSchedulesScheduleIdEndpoint(baseURL+"/"+"schedules/%v", httpClient, options),
 		getSchedulesScheduleIdTasksEndpoint: newGetSchedulesScheduleIdTasksEndpoint(baseURL+"/"+"schedules/%v/tasks", httpClient, options),
-	}, nil
+	}
 }
 
 type client struct {
@@ -66,58 +66,58 @@ type client struct {
 	getSchedulesScheduleIdTasksEndpoint *getSchedulesScheduleIdTasksEndpoint
 }
 
-func (g *client) GetTasks(ctx context.Context) ([]*Task, error) {
-	return g.getTasksEndpoint.Call(ctx)
+func (c *client) GetTasks(ctx context.Context) ([]*Task, error) {
+	return c.getTasksEndpoint.Call(ctx)
 }
 
-func (p *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error) {
-	return p.postTasksEndpoint.Call(ctx, request)
+func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error) {
+	return c.postTasksEndpoint.Call(ctx, request)
 }
 
-func (g *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
-	return g.getTasksTaskIdEndpoint.Call(ctx, taskId)
+func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
+	return c.getTasksTaskIdEndpoint.Call(ctx, taskId)
 }
 
-func (p *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task) (*Task, error) {
-	return p.patchTasksTaskIdEndpoint.Call(ctx, taskId, request)
+func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task) (*Task, error) {
+	return c.patchTasksTaskIdEndpoint.Call(ctx, taskId, request)
 }
 
-func (d *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
-	return d.deleteTasksTaskIdEndpoint.Call(ctx, taskId)
+func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
+	return c.deleteTasksTaskIdEndpoint.Call(ctx, taskId)
 }
 
-func (p *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, error) {
-	return p.postTasksTaskIdRunEndpoint.Call(ctx, taskId)
+func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, error) {
+	return c.postTasksTaskIdRunEndpoint.Call(ctx, taskId)
 }
 
-func (p *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) ([]*Task, error) {
-	return p.postTasksBatchCreateEndpoint.Call(ctx, request)
+func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) ([]*Task, error) {
+	return c.postTasksBatchCreateEndpoint.Call(ctx, request)
 }
 
-func (p *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
-	return p.postTasksBatchDeleteEndpoint.Call(ctx, request)
+func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
+	return c.postTasksBatchDeleteEndpoint.Call(ctx, request)
 }
 
-func (g *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
-	return g.getSchedulesEndpoint.Call(ctx)
+func (c *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
+	return c.getSchedulesEndpoint.Call(ctx)
 }
 
-func (p *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Schedule, error) {
-	return p.postSchedulesEndpoint.Call(ctx, request)
+func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Schedule, error) {
+	return c.postSchedulesEndpoint.Call(ctx, request)
 }
 
-func (g *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Schedule, error) {
-	return g.getSchedulesScheduleIdEndpoint.Call(ctx, scheduleId)
+func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Schedule, error) {
+	return c.getSchedulesScheduleIdEndpoint.Call(ctx, scheduleId)
 }
 
-func (p *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, request *Schedule) (*Schedule, error) {
-	return p.patchSchedulesScheduleIdEndpoint.Call(ctx, scheduleId, request)
+func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, request *Schedule) (*Schedule, error) {
+	return c.patchSchedulesScheduleIdEndpoint.Call(ctx, scheduleId, request)
 }
 
-func (d *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) error {
-	return d.deleteSchedulesScheduleIdEndpoint.Call(ctx, scheduleId)
+func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) error {
+	return c.deleteSchedulesScheduleIdEndpoint.Call(ctx, scheduleId)
 }
 
-func (g *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id) ([]*Task, error) {
-	return g.getSchedulesScheduleIdTasksEndpoint.Call(ctx, scheduleId)
+func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id) ([]*Task, error) {
+	return c.getSchedulesScheduleIdTasksEndpoint.Call(ctx, scheduleId)
 }

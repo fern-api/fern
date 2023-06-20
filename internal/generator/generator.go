@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	fernir "github.com/fern-api/fern-go/internal/fern/ir"
 )
 
 const (
@@ -58,7 +59,7 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	return g.generate(ir, mode)
 }
 
-func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*File, error) {
+func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) ([]*File, error) {
 	if g.config.ImportPath == "" {
 		// If an import path is not configured, we need to validate that none of types
 		// import types from another package.
@@ -157,69 +158,56 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 			}
 			files = append(files, file)
 		}
-		for _, irService := range ir.Services {
-			// Generate the in-lined request types.
-			for _, irEndpoint := range irService.Endpoints {
-				if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
-					// This endpoint doesn't have any in-lined request types that need to be generated.
+		// First generate the client at the root package, if any.
+		if ir.RootPackage != nil && ir.RootPackage.Service != nil {
+			var subpackages []*fernir.Subpackage
+			for _, subpackageID := range ir.RootPackage.Subpackages {
+				subpackage := ir.Subpackages[subpackageID]
+				if !subpackage.HasEndpointsInTree {
+					// We only want to include subpackages that have endpoints.
 					continue
 				}
-				fileInfo := fileInfoForType(ir.ApiName, irService.Name.FernFilepath, irEndpoint.SdkRequest.Shape.Wrapper.WrapperName)
-				writer := newFileWriter(
-					fileInfo.filename,
-					fileInfo.packageName,
-					g.config.ImportPath,
-					ir.Types,
-					ir.Errors,
-				)
-				if err := writer.WriteRequestType(irService.Name.FernFilepath, irEndpoint); err != nil {
-					return nil, err
-				}
-				file, err := writer.File()
-				if err != nil {
-					return nil, err
-				}
-				files = append(files, file)
+				subpackages = append(subpackages, subpackage)
 			}
-			// Generate the endpoint implementations.
-			signatures := make([]*signature, len(irService.Endpoints))
-			for i, endpoint := range irService.Endpoints {
-				fileInfo := fileInfoForEndpoint(ir.ApiName, irService.Name.FernFilepath, endpoint.Name)
-				writer := newFileWriter(
-					fileInfo.filename,
-					fileInfo.packageName,
-					g.config.ImportPath,
-					ir.Types,
-					ir.Errors,
-				)
-				signature, err := writer.WriteEndpoint(irService.Name.FernFilepath, endpoint)
-				if err != nil {
-					return nil, err
-				}
-				signatures[i] = signature
-				file, err := writer.File()
-				if err != nil {
-					return nil, err
-				}
-				files = append(files, file)
-			}
-			// Generate the client interface.
-			fileInfo := fileInfoForService(ir.ApiName, irService)
-			writer := newFileWriter(
-				fileInfo.filename,
-				fileInfo.packageName,
-				g.config.ImportPath,
-				ir.Types,
-				ir.Errors,
-			)
-			if err := writer.WriteClient(signatures); err != nil {
-				return nil, err
-			}
-			file, err := writer.File()
+			serviceFiles, err := g.generateService(ir, ir.Services[*ir.RootPackage.Service], subpackages)
 			if err != nil {
 				return nil, err
 			}
-			files = append(files, file)
+			files = append(files, serviceFiles...)
+		}
+		// Then generate the client for all of the subpackages.
+		for _, irSubpackage := range ir.Subpackages {
+			var subpackages []*fernir.Subpackage
+			for _, subpackageID := range irSubpackage.Subpackages {
+				subpackage := ir.Subpackages[subpackageID]
+				if !subpackage.HasEndpointsInTree {
+					// We only want to include subpackages that have endpoints.
+					continue
+				}
+				subpackages = append(subpackages, subpackage)
+			}
+			if irSubpackage.Service == nil && len(subpackages) == 0 {
+				// This subpackage doesn't have any transitive services,
+				// so we don't need to generate a client for it.
+				continue
+			}
+			if irSubpackage.Service == nil {
+				// This subpackage doesn't have a service, but we still need
+				// to generate an intermediary client for it to access the
+				// nested endpoints.
+				serviceFile, err := g.generateServiceWithoutEndpoints(ir, irSubpackage, subpackages)
+				if err != nil {
+					return nil, err
+				}
+				files = append(files, serviceFile)
+				continue
+			}
+			// This service has endpoints, so we proceed with the normal flow.
+			serviceFiles, err := g.generateService(ir, ir.Services[*irSubpackage.Service], subpackages)
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, serviceFiles...)
 		}
 	}
 	// Finally, generate the go.mod file, if needed.
@@ -242,6 +230,117 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 		files = append(files, newLicenseFile())
 	}
 	return files, nil
+}
+
+func (g *Generator) generateService(
+	ir *fernir.IntermediateRepresentation,
+	irService *fernir.HttpService,
+	irSubpackages []*fernir.Subpackage,
+) ([]*File, error) {
+	var files []*File
+	// Generate the in-lined request types.
+	for _, irEndpoint := range irService.Endpoints {
+		if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
+			// This endpoint doesn't have any in-lined request types that need to be generated.
+			continue
+		}
+		fileInfo := fileInfoForType(ir.ApiName, irService.Name.FernFilepath, irEndpoint.SdkRequest.Shape.Wrapper.WrapperName)
+		writer := newFileWriter(
+			fileInfo.filename,
+			fileInfo.packageName,
+			g.config.ImportPath,
+			ir.Types,
+			ir.Errors,
+		)
+		if err := writer.WriteRequestType(irService.Name.FernFilepath, irEndpoint); err != nil {
+			return nil, err
+		}
+		file, err := writer.File()
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
+	}
+	// Generate the endpoint implementations.
+	signatures := make([]*signature, len(irService.Endpoints))
+	for i, endpoint := range irService.Endpoints {
+		fileInfo := fileInfoForEndpoint(ir.ApiName, irService.Name.FernFilepath, endpoint.Name)
+		writer := newFileWriter(
+			fileInfo.filename,
+			fileInfo.packageName,
+			g.config.ImportPath,
+			ir.Types,
+			ir.Errors,
+		)
+		signature, err := writer.WriteEndpoint(irService.Name.FernFilepath, endpoint)
+		if err != nil {
+			return nil, err
+		}
+		signatures[i] = signature
+		file, err := writer.File()
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
+	}
+	// Generate the client interface.
+	var namePrefix *fernir.Name
+	// TODO: Temporary solution - refactor this so we more accurately
+	// recognize whether or not the leaf is defined by a __package__.yml
+	// or a filename.
+	if irService.Name.FernFilepath.File != nil {
+		namePrefix = irService.Name.FernFilepath.File
+	}
+	fileInfo := fileInfoForService(ir.ApiName, irService.Name.FernFilepath, namePrefix)
+	writer := newFileWriter(
+		fileInfo.filename,
+		fileInfo.packageName,
+		g.config.ImportPath,
+		ir.Types,
+		ir.Errors,
+	)
+	if err := writer.WriteClient(signatures, irSubpackages, namePrefix); err != nil {
+		return nil, err
+	}
+	file, err := writer.File()
+	if err != nil {
+		return nil, err
+	}
+	files = append(files, file)
+	return files, nil
+}
+
+// generateServiceWithoutEndpoints is behaviorally similar to g.generateService, but
+// it's suited to write purely intermediary services (i.e. those that don't include
+// any endpoints).
+func (g *Generator) generateServiceWithoutEndpoints(
+	ir *fernir.IntermediateRepresentation,
+	irSubpackage *fernir.Subpackage,
+	irSubpackages []*fernir.Subpackage,
+) (*File, error) {
+	var namePrefix *fernir.Name
+	if len(irSubpackages) > 0 {
+		// TODO: Temporary solution - refactor this so we more accurately
+		// recognize whether or not the leaf is defined by a __package__.yml
+		// or a filename.
+		//
+		// When refactored, consolidate the nested conditional into a single condition.
+		if irSubpackage.FernFilepath.File != nil {
+			namePrefix = irSubpackage.FernFilepath.File
+		}
+	}
+	fileInfo := fileInfoForService(ir.ApiName, irSubpackage.FernFilepath, namePrefix)
+	writer := newFileWriter(
+		fileInfo.filename,
+		fileInfo.packageName,
+		g.config.ImportPath,
+		ir.Types,
+		ir.Errors,
+	)
+	if err := writer.WriteClient(nil /* signatures */, irSubpackages, namePrefix); err != nil {
+		return nil, err
+	}
+	return writer.File()
 }
 
 // newLicenseFile returns a *File for the generated LICENSE file.
@@ -328,21 +427,27 @@ func fileInfoForEndpoint(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *
 	}
 }
 
-func fileInfoForService(apiName *ir.Name, service *ir.HttpService) *fileInfo {
+func fileInfoForService(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *ir.Name) *fileInfo {
 	var packages []string
-	for _, packageName := range service.Name.FernFilepath.PackagePath {
+	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
+	}
+	basename := "client.go"
+	if name != nil {
+		// Prepend the name, if any. This lets us create a prefixed client in
+		// the same package to maintain the package hierarchy (e.g. user_service.go).
+		basename = name.SnakeCase.UnsafeName + "_" + basename
 	}
 	if len(packages) == 0 {
 		// This type didn't declare a package, so it belongs at the top-level.
 		// The top-level package uses the API's name as its package declaration.
 		return &fileInfo{
-			filename:    "service.go",
+			filename:    basename,
 			packageName: strings.ToLower(apiName.CamelCase.SafeName),
 		}
 	}
 	return &fileInfo{
-		filename:    "service.go",
+		filename:    filepath.Join(append(packages, basename)...),
 		packageName: packages[len(packages)-1],
 	}
 }
