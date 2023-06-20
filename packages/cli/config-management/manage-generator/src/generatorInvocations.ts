@@ -56,7 +56,11 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.0.1",
     },
     [GeneratorName.GO_SDK]: {
-        version: "0.0.1",
+        version: "0.0.3",
+        output: {
+            location: "local-file-system",
+            path: "../../sdk/go",
+        },
     },
     [GeneratorName.OPENAPI]: {
         version: "0.0.28",
