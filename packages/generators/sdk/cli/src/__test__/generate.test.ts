@@ -206,13 +206,31 @@ const FIXTURES: FixtureInfo[] = [
         targetRuntime: JavaScriptRuntime.NODE,
     },
     {
-        path: "no-zurg",
+        path: "no-zurg-trace",
         orgName: "fern",
         outputMode: "github",
         apiName: "api",
         targetRuntime: JavaScriptRuntime.NODE,
         customConfig: {
             noSerdeLayer: true,
+        },
+        additionalAssertions: async (outputPath) => {
+            // eslint-disable-next-line jest/no-standalone-expect
+            expect(await doesPathExist(path.join(outputPath, "src", "serialization"))).toBe(false);
+            // eslint-disable-next-line jest/no-standalone-expect
+            expect(await doesPathExist(path.join(outputPath, "src", "core", "schemas"))).toBe(false);
+        },
+    },
+
+    {
+        path: "no-zurg-no-throwing",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
+        customConfig: {
+            noSerdeLayer: true,
+            neverThrowErrors: true,
         },
         additionalAssertions: async (outputPath) => {
             // eslint-disable-next-line jest/no-standalone-expect

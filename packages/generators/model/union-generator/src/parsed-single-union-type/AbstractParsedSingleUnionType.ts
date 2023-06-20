@@ -214,6 +214,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
 
     public abstract getDocs(): string | null | undefined;
     public abstract getDiscriminantValue(): string | number | undefined;
+    public abstract getDiscriminantValueAsExpression(): ts.Expression;
     public abstract getInterfaceName(): string;
     public abstract getBuilderName(): string;
     public abstract getVisitorKey(): string;

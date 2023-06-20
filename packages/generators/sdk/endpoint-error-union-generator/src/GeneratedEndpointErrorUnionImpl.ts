@@ -36,9 +36,11 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
 
         const discriminant = this.getErrorUnionDiscriminant(errorDiscriminationStrategy);
         const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator({ discriminant });
+        const includeUtilsOnUnionMembers = includeSerdeLayer;
         this.errorUnion = new GeneratedUnionImpl<SdkContext>({
             typeName: GeneratedEndpointErrorUnionImpl.ERROR_INTERFACE_NAME,
-            includeUtilsOnUnionMembers: true,
+            includeUtilsOnUnionMembers,
+            includeConstBuilders: true,
             discriminant,
             getDocs: undefined,
             parsedSingleUnionTypes: endpoint.errors.map(
@@ -47,6 +49,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                         error,
                         errorResolver,
                         errorDiscriminationStrategy,
+                        includeUtilsOnUnionMembers,
                     })
             ),
             getReferenceToUnion: (context) =>
@@ -57,6 +60,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                 ),
             unknownSingleUnionType: new UnknownErrorSingleUnionType({
                 singleUnionType: unknownErrorSingleUnionTypeGenerator,
+                includeUtilsOnUnionMembers,
             }),
             includeOtherInUnionTypes: true,
             includeSerdeLayer,

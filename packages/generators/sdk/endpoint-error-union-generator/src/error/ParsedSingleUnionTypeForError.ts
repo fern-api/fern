@@ -15,6 +15,7 @@ export declare namespace ParsedSingleUnionTypeForError {
         error: ResponseError;
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        includeUtilsOnUnionMembers: boolean;
     }
 }
 
@@ -23,11 +24,16 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     private responseError: ResponseError;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
 
-    constructor({ error, errorDiscriminationStrategy, errorResolver }: ParsedSingleUnionTypeForError.Init) {
+    constructor({
+        error,
+        errorDiscriminationStrategy,
+        errorResolver,
+        includeUtilsOnUnionMembers,
+    }: ParsedSingleUnionTypeForError.Init) {
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
             singleUnionType: getSingleUnionTypeGenerator({ errorDiscriminationStrategy, errorDeclaration }),
-            includeUtilsOnUnionMembers: true,
+            includeUtilsOnUnionMembers,
         });
 
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;

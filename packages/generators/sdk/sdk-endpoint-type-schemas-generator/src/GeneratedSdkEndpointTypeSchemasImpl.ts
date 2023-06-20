@@ -285,11 +285,11 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     }
 
     public deserializeError(referenceToRawError: ts.Expression, context: SdkContext): ts.Expression {
-        if (this.generatedSdkErrorSchema == null) {
-            throw new Error("Cannot deserialize endpoint error because it is not defined.");
-        }
         if (!this.includeSerdeLayer) {
             return referenceToRawError;
+        }
+        if (this.generatedSdkErrorSchema == null) {
+            throw new Error("Cannot deserialize endpoint error because it is not defined.");
         }
         return this.generatedSdkErrorSchema.getReferenceToZurgSchema(context).parseOrThrow(referenceToRawError, {
             allowUnrecognizedEnumValues: true,

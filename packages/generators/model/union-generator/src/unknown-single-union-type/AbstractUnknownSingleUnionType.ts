@@ -13,6 +13,10 @@ export abstract class AbstractUnknownSingleUnionType<
         return undefined;
     }
 
+    public getDiscriminantValueAsExpression(): ts.Expression {
+        return ts.factory.createIdentifier("undefined");
+    }
+
     public getDiscriminantValueType(): ts.TypeNode {
         return ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword);
     }

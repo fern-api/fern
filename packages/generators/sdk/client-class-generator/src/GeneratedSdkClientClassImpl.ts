@@ -141,6 +141,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             errorDiscriminationStrategy: intermediateRepresentation.errorDiscriminationStrategy,
                             errorResolver,
                             response,
+                            includeSerdeLayer,
                         });
                     } else {
                         return new GeneratedThrowingEndpointResponse({

@@ -14,6 +14,7 @@ export declare namespace GeneratedNonThrowingEndpointResponse {
         response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
+        includeSerdeLayer: boolean;
     }
 }
 
@@ -25,6 +26,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
     private response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
+    private includeSerdeLayer: boolean;
 
     constructor({
         packageId,
@@ -32,12 +34,14 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         response,
         errorDiscriminationStrategy,
         errorResolver,
+        includeSerdeLayer,
     }: GeneratedNonThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
         this.response = response;
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
         this.errorResolver = errorResolver;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     public getResponseVariableName(): string {
@@ -158,13 +162,16 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
         const generatedEndpointTypeSchemas = this.getGeneratedEndpointTypeSchemas(context);
         const referenceToErrorBody = this.getReferenceToErrorBody(context);
+        const errorBodyType = this.includeSerdeLayer
+            ? generatedEndpointTypeSchemas.getReferenceToRawError(context)
+            : context.endpointErrorUnion
+                  .getGeneratedEndpointErrorUnion(this.packageId, this.endpoint.name)
+                  .getErrorUnion()
+                  .getReferenceTo(context);
 
         return ts.factory.createSwitchStatement(
             ts.factory.createPropertyAccessChain(
-                ts.factory.createAsExpression(
-                    referenceToErrorBody,
-                    generatedEndpointTypeSchemas.getReferenceToRawError(context)
-                ),
+                ts.factory.createAsExpression(referenceToErrorBody, errorBodyType),
                 ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                 propertyErrorDiscriminationStrategy.discriminant.wireValue
             ),
@@ -180,10 +187,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                   ts.factory.createReturnStatement(
                                       context.coreUtilities.fetcher.APIResponse.FailedResponse._build(
                                           generatedEndpointTypeSchemas.deserializeError(
-                                              ts.factory.createAsExpression(
-                                                  referenceToErrorBody,
-                                                  generatedEndpointTypeSchemas.getReferenceToRawError(context)
-                                              ),
+                                              ts.factory.createAsExpression(referenceToErrorBody, errorBodyType),
                                               context
                                           )
                                       )

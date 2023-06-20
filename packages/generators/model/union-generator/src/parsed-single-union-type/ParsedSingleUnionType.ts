@@ -5,6 +5,7 @@ import { GeneratedUnionImpl } from "../GeneratedUnionImpl";
 export interface ParsedSingleUnionType<Context extends ModelContext> {
     getDocs(): string | null | undefined;
     getDiscriminantValue(): string | number | undefined;
+    getDiscriminantValueAsExpression: () => ts.Expression;
     getDiscriminantValueOrThrow(): string | number;
     getDiscriminantValueType(): ts.TypeNode;
     getInterfaceName(): string;

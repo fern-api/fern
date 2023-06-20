@@ -27,6 +27,10 @@ export declare namespace GeneratedUnionImpl {
         unknownSingleUnionType: ParsedSingleUnionType<Context>;
         getReferenceToUnion: (context: Context) => Reference;
         includeUtilsOnUnionMembers: boolean;
+        /**
+         * @default the value of includeUtilsOnUnionMembers
+         */
+        includeConstBuilders?: boolean;
         includeOtherInUnionTypes: boolean;
         baseProperties?: ObjectProperty[];
         includeSerdeLayer: boolean;
@@ -55,6 +59,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private includeOtherInUnionTypes: boolean;
     private baseProperties: ObjectProperty[];
     private includeSerdeLayer: boolean;
+    private includeConstBuilders: boolean;
 
     constructor({
         typeName,
@@ -64,6 +69,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         unknownSingleUnionType,
         getReferenceToUnion,
         includeUtilsOnUnionMembers,
+        includeConstBuilders = includeUtilsOnUnionMembers,
         includeOtherInUnionTypes,
         baseProperties = [],
         includeSerdeLayer,
@@ -78,12 +84,13 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.includeOtherInUnionTypes = includeOtherInUnionTypes;
         this.baseProperties = baseProperties;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.includeConstBuilders = includeConstBuilders;
     }
 
     public writeToFile(context: Context): void {
         this.writeTypeAlias(context);
         this.writeModule(context);
-        if (this.includeUtilsOnUnionMembers) {
+        if (this.includeConstBuilders) {
             this.writeConst(context);
         }
     }
@@ -178,6 +185,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         context: Context;
         existingValue: ts.Expression;
     }): ts.Expression {
+        if (!this.includeConstBuilders) {
+            throw new Error("Cannot build single union type because builders were not generated");
+        }
         return ts.factory.createCallExpression(
             ts.factory.createPropertyAccessExpression(
                 this.getReferenceToUnion(context).getExpression(),
@@ -253,6 +263,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         module.addInterfaces(this.getSingleUnionTypeInterfaces(context));
         if (this.includeUtilsOnUnionMembers) {
             module.addInterface(this.getUtilsInterface(context));
+        }
+        if (this.includeUtilsOnUnionMembers || this.includeConstBuilders) {
             module.addInterface(this.getVisitorInterface(context));
         }
         if (this.hasBaseInterface()) {
@@ -393,10 +405,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             throw new Error("Cannot create builders because union has base properties");
         }
 
-        const buildableSingleUnionTypes = this.includeUtilsOnUnionMembers
-            ? this.getAllSingleUnionTypesIncludingUnknown()
-            : this.parsedSingleUnionTypes;
-        for (const singleUnionType of buildableSingleUnionTypes) {
+        for (const singleUnionType of this.getAllSingleUnionTypesIncludingUnknown()) {
             writer.addProperty({
                 key: singleUnionType.getBuilderName(),
                 value: getTextOfTsNode(singleUnionType.getBuilder(context, this)),

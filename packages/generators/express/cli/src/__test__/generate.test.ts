@@ -51,7 +51,7 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
     },
     {
-        path: "no-zurg",
+        path: "no-zurg-trace",
         orgName: "fern",
         outputMode: "local",
         apiName: "api",

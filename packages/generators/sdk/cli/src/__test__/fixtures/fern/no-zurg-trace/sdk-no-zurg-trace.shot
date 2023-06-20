@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`runGenerator no-zurg 1`] = `
+exports[`runGenerator no-zurg-trace 1`] = `
 Array [
   Object {
     "contents": Array [
