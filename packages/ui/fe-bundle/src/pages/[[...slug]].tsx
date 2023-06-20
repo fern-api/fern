@@ -20,7 +20,6 @@ export declare namespace Docs {
 }
 
 export default function Docs({ docs, pathname }: Docs.Props): JSX.Element {
-    console.log(Date.now(), "Rendering Docs component");
     return (
         <main className={inter.className}>
             <Head>
@@ -35,17 +34,14 @@ export default function Docs({ docs, pathname }: Docs.Props): JSX.Element {
 }
 
 export const getServerSideProps: GetServerSideProps<Docs.Props> = async (context) => {
-    console.log(Date.now(), "In getServerSideProps");
     const host = context.req.headers["x-fern-host"] ?? context.req.headers.host;
     if (host == null) {
         throw new Error("Host header is not defined");
     }
 
-    console.log(Date.now(), "Loading docs");
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
         url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? `${host}${context.resolvedUrl}`,
     });
-    console.log(Date.now(), "Loaded docs");
 
     if (!docs.ok) {
         // eslint-disable-next-line no-console

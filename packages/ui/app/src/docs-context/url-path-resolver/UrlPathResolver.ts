@@ -70,9 +70,7 @@ export class UrlPathResolverImpl {
     private urlSlugTree: UrlSlugTree;
 
     constructor(docsDefinition: FernRegistryDocsRead.DocsDefinition) {
-        console.log(Date.now(), "Building UrlSlugTree");
         this.urlSlugTree = new UrlSlugTree(docsDefinition);
-        console.log(Date.now(), "Built UrlSlugTree");
     }
 
     public resolveSlug(slug: string): ResolvedUrlPath | undefined {
