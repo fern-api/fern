@@ -53,7 +53,7 @@ func Run(usage string, fn GeneratorFunc) {
 		os.Exit(1)
 	}
 	if err := run(fn); err != nil {
-		fmt.Fprintln(os.Stderr, usage)
+		fmt.Fprintln(os.Stderr, err.Error())
 		os.Exit(1)
 	}
 }
