@@ -61,6 +61,9 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
             location: "local-file-system",
             path: "../../sdk/go",
         },
+        config: {
+            importPath: "go-mod-path/sdk/go",
+        },
     },
     [GeneratorName.OPENAPI]: {
         version: "0.0.28",
