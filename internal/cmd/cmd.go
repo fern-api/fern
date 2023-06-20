@@ -8,10 +8,10 @@ import (
 	"strings"
 
 	"github.com/fern-api/fern-go"
-	"github.com/fern-api/fern-go/internal/fern/generatorexec"
 	"github.com/fern-api/fern-go/internal/generator"
 	"github.com/fern-api/fern-go/internal/goexec"
 	"github.com/fern-api/fern-go/internal/writer"
+	generatorexec "github.com/fern-api/fiddle/sdk/go"
 )
 
 // defaultImports specify the default imports used in the generated

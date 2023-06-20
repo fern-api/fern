@@ -3,6 +3,7 @@ module github.com/fern-api/fern-go
 go 1.19
 
 require (
+	github.com/fern-api/fiddle/sdk/go v0.0.0-20230620181315-a35a043e8244
 	github.com/gofrs/uuid/v5 v5.0.0
 	github.com/stretchr/testify v1.8.4
 	golang.org/x/tools v0.9.1
