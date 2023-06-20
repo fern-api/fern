@@ -42,7 +42,7 @@ func (g *getUserV2Endpoint) Call(ctx context.Context, userId string) (string, er
 		endpointURL,
 		http.MethodGet,
 		nil,
-		response,
+		&response,
 		g.header,
 		g.decodeError,
 	); err != nil {

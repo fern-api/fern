@@ -73,7 +73,7 @@ func (p *postTasksBatchCreateEndpoint) Call(ctx context.Context, request []*Task
 		endpointURL,
 		http.MethodPost,
 		request,
-		response,
+		&response,
 		p.header,
 		p.decodeError,
 	); err != nil {

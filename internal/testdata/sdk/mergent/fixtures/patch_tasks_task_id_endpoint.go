@@ -67,7 +67,7 @@ func (p *patchTasksTaskIdEndpoint) Call(ctx context.Context, taskId Id, request 
 		endpointURL,
 		http.MethodPatch,
 		request,
-		response,
+		&response,
 		p.header,
 		p.decodeError,
 	); err != nil {

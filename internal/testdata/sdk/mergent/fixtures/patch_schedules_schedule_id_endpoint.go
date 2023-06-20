@@ -60,7 +60,7 @@ func (p *patchSchedulesScheduleIdEndpoint) Call(ctx context.Context, scheduleId 
 		endpointURL,
 		http.MethodPatch,
 		request,
-		response,
+		&response,
 		p.header,
 		p.decodeError,
 	); err != nil {

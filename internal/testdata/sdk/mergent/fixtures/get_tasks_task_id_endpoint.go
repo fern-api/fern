@@ -53,7 +53,7 @@ func (g *getTasksTaskIdEndpoint) Call(ctx context.Context, taskId Id) (*Task, er
 		endpointURL,
 		http.MethodGet,
 		nil,
-		response,
+		&response,
 		g.header,
 		g.decodeError,
 	); err != nil {

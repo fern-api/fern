@@ -53,7 +53,7 @@ func (g *getFooFooIdEndpoint) Call(ctx context.Context, fooId Id) (*Foo, error) 
 		endpointURL,
 		http.MethodGet,
 		nil,
-		response,
+		&response,
 		g.header,
 		g.decodeError,
 	); err != nil {

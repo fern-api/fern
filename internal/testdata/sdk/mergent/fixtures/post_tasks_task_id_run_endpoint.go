@@ -60,7 +60,7 @@ func (p *postTasksTaskIdRunEndpoint) Call(ctx context.Context, taskId Id) (*Task
 		endpointURL,
 		http.MethodPost,
 		nil,
-		response,
+		&response,
 		p.header,
 		p.decodeError,
 	); err != nil {

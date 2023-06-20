@@ -259,7 +259,7 @@ func (f *fileWriter) WriteEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 		if named := endpoint.Response.Json.ResponseBodyType.Named; named != nil && isPointer(f.types[named.TypeId]) {
 			responseInitializerFormat = "response := new(%s)"
 		}
-		responseParameter = "response"
+		responseParameter = "&response"
 		signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
 		successfulReturnValues = "response, nil"
 		errorReturnValues = "response, err"

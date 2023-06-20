@@ -67,7 +67,7 @@ func (p *patchFooFooIdEndpoint) Call(ctx context.Context, fooId Id, request *Foo
 		endpointURL,
 		http.MethodPatch,
 		request,
-		response,
+		&response,
 		p.header,
 		p.decodeError,
 	); err != nil {

@@ -60,7 +60,7 @@ func (p *postFooFooIdRunEndpoint) Call(ctx context.Context, fooId Id) (*Foo, err
 		endpointURL,
 		http.MethodPost,
 		nil,
-		response,
+		&response,
 		p.header,
 		p.decodeError,
 	); err != nil {

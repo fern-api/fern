@@ -53,7 +53,7 @@ func (g *getSchedulesScheduleIdEndpoint) Call(ctx context.Context, scheduleId Id
 		endpointURL,
 		http.MethodGet,
 		nil,
-		response,
+		&response,
 		g.header,
 		g.decodeError,
 	); err != nil {

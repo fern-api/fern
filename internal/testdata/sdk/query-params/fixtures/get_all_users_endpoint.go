@@ -41,7 +41,7 @@ func (g *getAllUsersEndpoint) Call(ctx context.Context, request *GetAllUsersRequ
 		endpointURL,
 		http.MethodGet,
 		request,
-		response,
+		&response,
 		g.header,
 		g.decodeError,
 	); err != nil {

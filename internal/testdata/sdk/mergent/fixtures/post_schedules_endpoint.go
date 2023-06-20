@@ -52,7 +52,7 @@ func (p *postSchedulesEndpoint) Call(ctx context.Context, request *ScheduleNew) 
 		endpointURL,
 		http.MethodPost,
 		request,
-		response,
+		&response,
 		p.header,
 		p.decodeError,
 	); err != nil {

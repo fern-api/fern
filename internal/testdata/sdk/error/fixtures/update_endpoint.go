@@ -53,7 +53,7 @@ func (u *updateEndpoint) Call(ctx context.Context, id string, request string) (s
 		endpointURL,
 		http.MethodPost,
 		request,
-		response,
+		&response,
 		u.header,
 		u.decodeError,
 	); err != nil {

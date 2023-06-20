@@ -41,7 +41,7 @@ func (g *getFooEndpoint) Call(ctx context.Context) ([]*Foo, error) {
 		endpointURL,
 		http.MethodGet,
 		nil,
-		response,
+		&response,
 		g.header,
 		g.decodeError,
 	); err != nil {
