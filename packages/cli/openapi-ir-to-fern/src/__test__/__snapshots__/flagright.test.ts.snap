@@ -2534,7 +2534,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "enum": [
             {
               "docs": undefined,
-              "name": "1INCH",
+              "name": "one_INCH",
               "value": "1INCH",
             },
             {

@@ -78,7 +78,7 @@ export function wrapEnum({
 function generateEnumNameFromValue(value: string): string {
     const maybeParsedNumber = replaceStartingNumber(value);
     if (maybeParsedNumber != null) {
-        return replaceStartingNumber(maybeParsedNumber) ?? value;
+        return maybeParsedNumber;
     } else {
         if (value.toLowerCase() === "n/a") {
             return "NOT_APPLICABLE";
