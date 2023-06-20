@@ -2,10 +2,13 @@ package cmd
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/fern-api/fern-go"
 	"github.com/fern-api/fern-go/internal/generator"
@@ -23,11 +26,13 @@ var defaultImports = map[string]string{
 // Config represents the common configuration required from all of
 // the commands (e.g. fern-go-{client,model}).
 type Config struct {
-	DryRun     bool
-	IrFilepath string
-	ImportPath string
-	Module     *generator.ModuleConfig
-	Writer     *writer.Config
+	DryRun            bool
+	CoordinatorURL    string
+	CoordinatorTaskID string
+	IrFilepath        string
+	ImportPath        string
+	Module            *generator.ModuleConfig
+	Writer            *writer.Config
 }
 
 // GeneratorFunc is a function that generates files.
@@ -47,20 +52,69 @@ func Run(usage string, fn GeneratorFunc) {
 		fmt.Fprintln(os.Stderr, usage)
 		os.Exit(1)
 	}
+	if err := run(fn); err != nil {
+		fmt.Fprintln(os.Stderr, usage)
+		os.Exit(1)
+	}
+}
+
+func run(fn GeneratorFunc) (retErr error) {
 	config, err := newConfig(os.Args[1])
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
+		return err
 	}
+	coordinator, err := newCoordinatorClient(config.CoordinatorURL)
+	if err != nil {
+		return err
+	}
+	// Setup a new request context for the initial update.
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	if err := coordinator.SendUpdate(
+		ctx,
+		config.CoordinatorTaskID,
+		[]*generatorexec.GeneratorUpdate{
+			generatorexec.NewGeneratorUpdateFromInitV2(
+				&generatorexec.InitUpdateV2{},
+			),
+		},
+	); err != nil {
+		return err
+	}
+	defer func() {
+		// Now that we've successfully sent the update, wrap the exit update in a function
+		// the call-site can execute as soon as we're done.
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		defer cancel()
+		exitStatusUpdate := generatorexec.NewExitStatusUpdateFromSuccessful(new(generatorexec.SuccessfulStatusUpdate))
+		if retErr != nil {
+			// The generator returned an error, so we send an error update to the coordinator.
+			exitStatusUpdate = generatorexec.NewExitStatusUpdateFromError(
+				&generatorexec.ErrorExitStatusUpdate{
+					Message: retErr.Error(),
+				},
+			)
+		}
+		// TODO: Combine this error so that the original error is preserved on the console.
+		err := coordinator.SendUpdate(
+			ctx,
+			config.CoordinatorTaskID,
+			[]*generatorexec.GeneratorUpdate{
+				generatorexec.NewGeneratorUpdateFromExitStatusUpdate(exitStatusUpdate),
+			},
+		)
+		if retErr == nil {
+			retErr = err
+		}
+	}()
 	files, err := fn(config)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
+		return err
 	}
 	if err := writeFiles(config.Writer, config.Module, files); err != nil {
-		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
+		return err
 	}
+	return nil
 }
 
 // newConfig returns the *Config found at the given configFilename.
@@ -98,12 +152,22 @@ func newConfig(configFilename string) (*Config, error) {
 			)
 		}
 	}
+	var (
+		coordinatorURL    string
+		coordinatorTaskID string
+	)
+	if config.Environment != nil && config.Environment.Remote != nil {
+		coordinatorURL = config.Environment.Remote.CoordinatorUrlV2
+		coordinatorTaskID = config.Environment.Remote.Id
+	}
 	return &Config{
-		DryRun:     config.DryRun,
-		IrFilepath: config.IrFilepath,
-		ImportPath: importPath,
-		Module:     moduleConfig,
-		Writer:     writerConfig,
+		DryRun:            config.DryRun,
+		CoordinatorURL:    coordinatorURL,
+		CoordinatorTaskID: coordinatorTaskID,
+		IrFilepath:        config.IrFilepath,
+		ImportPath:        importPath,
+		Module:            moduleConfig,
+		Writer:            writerConfig,
 	}, nil
 }
 
@@ -212,4 +276,18 @@ func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, 
 	default:
 		return nil, fmt.Errorf("unrecognized output configuration mode: %T", outputConfigMode)
 	}
+}
+
+func newCoordinatorClient(coordinatorURL string) (generatorexec.Service, error) {
+	if coordinatorURL == "" {
+		return &nopCoordinatorClient{}, nil
+	}
+	// TODO: Properly instrument a http.Client.
+	return generatorexec.NewClient(coordinatorURL, http.DefaultClient)
+}
+
+type nopCoordinatorClient struct{}
+
+func (*nopCoordinatorClient) SendUpdate(_ context.Context, _ generatorexec.TaskId, _ []*generatorexec.GeneratorUpdate) error {
+	return nil
 }
