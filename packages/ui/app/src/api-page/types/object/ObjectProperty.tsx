@@ -86,7 +86,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                 </div>
             </div>
             <div className="flex flex-col">
-                <Description description={description} />
+                <Description description={description ?? undefined} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions type={property.valueType} isCollapsible />
                 </TypeDefinitionContext.Provider>

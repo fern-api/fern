@@ -1,4 +1,5 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 
 export function getEndpointTitleAsString(endpoint: FernRegistryApiRead.EndpointDefinition): string {
     return endpoint.name ?? getEndpointPathAsString(endpoint);
@@ -6,13 +7,13 @@ export function getEndpointTitleAsString(endpoint: FernRegistryApiRead.EndpointD
 
 export function getEndpointPathAsString(endpoint: FernRegistryApiRead.EndpointDefinition): string {
     return (
-        "GET" +
+        endpoint.method +
         " " +
         endpoint.path.parts
             .map((part) =>
-                part._visit({
-                    literal: (literal) => literal,
-                    pathParameter: getPathParameterAsString,
+                visitDiscriminatedUnion(part, "type")._visit({
+                    literal: (literal) => literal.value,
+                    pathParameter: (pathParameter) => getPathParameterAsString(pathParameter.value),
                     _other: () => "",
                 })
             )

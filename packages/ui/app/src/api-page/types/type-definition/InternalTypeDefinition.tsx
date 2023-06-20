@@ -5,6 +5,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
@@ -36,7 +37,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
 
     const collapsableContent = useMemo(
         () =>
-            typeShape._visit<CollapsibleContent | undefined>({
+            visitDiscriminatedUnion(typeShape, "type")._visit<CollapsibleContent | undefined>({
                 alias: () => undefined,
                 object: (object) => ({
                     elements: getAllObjectProperties(object, resolveTypeById).map((property) => (

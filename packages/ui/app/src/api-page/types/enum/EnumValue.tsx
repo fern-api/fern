@@ -20,7 +20,7 @@ export const EnumValue: React.FC<EnumValue.Props> = ({ enumValue }) => {
             })}
         >
             <MonospaceText>{`"${enumValue.value}"`}</MonospaceText>
-            <Description description={enumValue.description} />
+            <Description description={enumValue.description ?? undefined} />
         </div>
     );
 };

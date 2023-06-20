@@ -1,4 +1,5 @@
 import { NonIdealState } from "@blueprintjs/core";
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
 import { Redirect } from "./Redirect";
@@ -25,12 +26,8 @@ export const RedirectToFirstNavigationItem: React.FC<RedirectToFirstNavigationIt
                     />
                 );
             default:
-                assertVoid(firstItem.type);
+                assertNeverNoThrow(firstItem);
         }
     }
     return <NonIdealState title="No content" />;
 };
-
-function assertVoid(_: void): void {
-    // no-op
-}

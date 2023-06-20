@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
@@ -40,7 +40,7 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
     }, [handleIsSelected, slug, registerNavigateToPathListener]);
 
     const isSelected = useIsSlugSelected(slug);
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (isSelected) {
             handleIsSelected();
         }

@@ -4,8 +4,6 @@
   "include": ["./src"],
   "references": [
     { "path": "../../commons/core-utils" },
-    { "path": "../../commons/loadable" },
-    { "path": "../../commons/react/fonts" },
     { "path": "../../commons/react/react-commons" },
     { "path": "../../commons/react/routing-utils" },
     { "path": "../../commons/react/theme" }

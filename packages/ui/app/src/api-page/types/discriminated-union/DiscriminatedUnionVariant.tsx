@@ -24,19 +24,24 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
 }) => {
     const { isRootTypeDefinition } = useTypeDefinitionContext();
 
-    const shape = useMemo(() => {
-        return FernRegistryApiRead.TypeShape.object({
+    const shape = useMemo((): FernRegistryApiRead.TypeShape => {
+        return {
             ...unionVariant.additionalProperties,
+            type: "object",
             properties: [
                 {
                     key: discriminant,
-                    valueType: FernRegistryApiRead.TypeReference.literal(
-                        FernRegistryApiRead.LiteralType.stringLiteral(unionVariant.discriminantValue)
-                    ),
+                    valueType: {
+                        type: "literal",
+                        value: {
+                            type: "stringLiteral",
+                            value: unionVariant.discriminantValue,
+                        },
+                    },
                 },
                 ...unionVariant.additionalProperties.properties,
             ],
-        });
+        };
     }, [discriminant, unionVariant.additionalProperties, unionVariant.discriminantValue]);
 
     const contextValue = useTypeDefinitionContext();
@@ -63,7 +68,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
         >
             <MonospaceText>{startCase(unionVariant.discriminantValue)}</MonospaceText>
             <div className="flex flex-col">
-                <Description description={unionVariant.description} />
+                <Description description={unionVariant.description ?? undefined} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition typeShape={shape} isCollapsible={true} />
                 </TypeDefinitionContext.Provider>

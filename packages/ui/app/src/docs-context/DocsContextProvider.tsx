@@ -9,16 +9,16 @@ import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
-        pathname: string;
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         basePath: string | undefined;
+        pathname: string;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
-    pathname,
     docsDefinition,
     basePath = "/",
+    pathname,
     children,
 }) => {
     const router = useRouter();
@@ -29,7 +29,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         path = path.replace(new RegExp(`^${basePath}`), "");
         path = removeLeadingAndTrailingSlashes(path);
         return urlPathResolver.resolveSlug(path);
-    }, [basePath, pathname, urlPathResolver]);
+    }, [basePath, urlPathResolver, pathname]);
 
     const [selectedPath, setSelectedPath] = useState(resolvedPathFromUrl);
     // handle redirects
@@ -134,6 +134,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolvedPathFromUrl,
             nextPath,
             previousPath,
+            pathname,
         }),
         [
             basePath,
@@ -142,6 +143,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             navigateToPathListeners.registerListener,
             nextPath,
             onScrollToPath,
+            pathname,
             previousPath,
             resolveApi,
             resolveFile,

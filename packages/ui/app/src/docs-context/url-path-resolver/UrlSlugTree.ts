@@ -5,6 +5,7 @@ import { noop, size } from "lodash-es";
 import { resolveSubpackage } from "../../api-context/ApiDefinitionContextProvider";
 import { areApiArtifactsNonEmpty } from "../../api-page/artifacts/areApiArtifactsNonEmpty";
 import { doesSubpackageHaveEndpointsRecursive } from "../../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
+import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { joinUrlSlugs } from "../joinUrlSlugs";
 
 export class UrlSlugTree {
@@ -104,7 +105,7 @@ export class UrlSlugTree {
         parentSlug: string;
     }): Record<UrlSlug, UrlSlugTreeNode> {
         return items.reduce<Record<UrlSlug, UrlSlugTreeNode>>((acc, item) => {
-            item._visit({
+            visitDiscriminatedUnion(item, "type")._visit({
                 section: (section) => {
                     acc[section.urlSlug] = this.constructSectionNode({
                         section,

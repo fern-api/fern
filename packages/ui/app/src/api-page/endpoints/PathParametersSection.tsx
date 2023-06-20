@@ -11,11 +11,13 @@ export declare namespace PathParametersSection {
 
 export const PathParametersSection: React.FC<PathParametersSection.Props> = ({ pathParameters }) => {
     const convertedParameters = useMemo((): EndpointParameter.Props[] => {
-        return pathParameters.map((pathParameter) => ({
-            name: pathParameter.key,
-            type: pathParameter.type,
-            description: pathParameter.description,
-        }));
+        return pathParameters.map(
+            (pathParameter): EndpointParameter.Props => ({
+                name: pathParameter.key,
+                type: pathParameter.type,
+                description: pathParameter.description ?? undefined,
+            })
+        );
     }, [pathParameters]);
 
     return <EndpointParametersSection title="Path parameters" parameters={convertedParameters} />;

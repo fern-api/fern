@@ -3,6 +3,7 @@ import classNames from "classnames";
 import React, { useCallback, useMemo, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { PageMargins } from "../../page-margins/PageMargins";
+import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
@@ -67,10 +68,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             {environmentUrl}
                             {endpoint.path.parts.map((part, index) => (
                                 <React.Fragment key={index}>
-                                    {part._visit<JSX.Element | string | null>({
-                                        literal: (literal) => literal,
+                                    {visitDiscriminatedUnion(part, "type")._visit<JSX.Element | string | null>({
+                                        literal: (literal) => literal.value,
                                         pathParameter: (pathParameter) => (
-                                            <EndpointPathParameter pathParameter={pathParameter} />
+                                            <EndpointPathParameter pathParameter={pathParameter.value} />
                                         ),
                                         _other: () => null,
                                     })}

@@ -11,11 +11,13 @@ export declare namespace QueryParametersSection {
 
 export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({ queryParameters }) => {
     const convertedParameters = useMemo((): EndpointParameter.Props[] => {
-        return queryParameters.map((queryParameter) => ({
-            name: queryParameter.key,
-            type: queryParameter.type,
-            description: queryParameter.description,
-        }));
+        return queryParameters.map(
+            (queryParameter): EndpointParameter.Props => ({
+                name: queryParameter.key,
+                type: queryParameter.type,
+                description: queryParameter.description ?? undefined,
+            })
+        );
     }, [queryParameters]);
 
     return <EndpointParametersSection title="Query parameters" parameters={convertedParameters} />;
