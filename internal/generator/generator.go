@@ -115,9 +115,10 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 		if g.config.ImportPath == "" {
 			return nil, errors.New("the SDK requires an import path configuration")
 		}
-		if ir.ErrorDiscriminationStrategy != nil && ir.ErrorDiscriminationStrategy.StatusCode == nil {
-			return nil, errors.New("this generator only supports the status-code error discrimination strategy")
-		}
+		// TODO: Temporary silent failure to integrate with fiddle - uncomment these lines and return an error here.
+		//if ir.ErrorDiscriminationStrategy != nil && ir.ErrorDiscriminationStrategy.StatusCode == nil {
+		//return nil, errors.New("this generator only supports the status-code error discrimination strategy")
+		//}
 		// Generate the core API files.
 		fileInfo := fileInfoForCoreClientOptions()
 		writer := newFileWriter(
