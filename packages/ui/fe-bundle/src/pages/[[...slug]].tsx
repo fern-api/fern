@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { App } from "@fern-api/ui";
 import { FernRegistryClient } from "@fern-fern/registry-browser";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
