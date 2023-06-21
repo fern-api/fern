@@ -8,7 +8,7 @@ export const Header: React.FC = () => {
     return (
         <div
             className={classNames(
-                "flex justify-between items-center gap-10 shrink-0 py-4 pl-4 pr-20 border-b border-border",
+                "flex justify-between items-center gap-10 shrink-0 py-4 pl-4 pr-20",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-16"
             )}
