@@ -2,10 +2,10 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import classNames from "classnames";
 import React, { useCallback, useMemo, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { PageMargins } from "../../page-margins/PageMargins";
 import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
+import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
 import { EndpointMethodPill } from "./EndpointMethodPill";
@@ -56,15 +56,15 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint), [endpoint]);
 
     return (
-        <PageMargins>
-            <div className="flex min-w-0 flex-1 gap-20" ref={setContainerRef}>
+        <ApiPageMargins>
+            <div className={classNames("flex min-w-0 flex-1 gap-20", "flex-col md:flex-row")} ref={setContainerRef}>
                 <div className="flex flex-1 flex-col">
                     <div className="pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
                     <div className="flex items-center gap-2">
                         <EndpointMethodPill endpoint={endpoint} />
-                        <MonospaceText className="text-text-default">
+                        <MonospaceText className="text-text-default break-all">
                             {environmentUrl}
                             {endpoint.path.parts.map((part, index) => (
                                 <React.Fragment key={index}>
@@ -114,11 +114,13 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 {titleHeight != null && (
                     <div
                         className={classNames(
-                            "flex-1 flex sticky self-start top-0 min-w-0",
+                            "flex-1 sticky self-start top-0 min-w-0",
                             // the py-10 is the same as the 40px below
                             "py-10",
                             // the 4rem is the same as the h-10 as the Header
-                            "max-h-[calc(100vh-4rem)]"
+                            "max-h-[calc(100vh-4rem)]",
+                            // hide on mobile,
+                            "hidden md:flex"
                         )}
                         style={{
                             // the 40px is the same as the py-10 above
@@ -128,7 +130,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                         <EndpointExamples endpoint={endpoint} />
                     </div>
                 )}
+                <div className="flex max-h-[150vh] md:hidden">
+                    <EndpointExamples endpoint={endpoint} />
+                </div>
             </div>
-        </PageMargins>
+        </ApiPageMargins>
     );
 });

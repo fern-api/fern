@@ -1,11 +1,12 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi2";
 import { useApiDefinitionContext } from "../api-context/useApiDefinitionContext";
 import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
 import { SubpackageTitle } from "../api-page/subpackages/SubpackageTitle";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiPackageSidebarSectionContents } from "./ApiPackageSidebarSectionContents";
+import { SidebarContext } from "./context/SidebarContext";
 import { NavigatingSidebarItem } from "./NavigatingSidebarItem";
 import { SidebarGroup } from "./SidebarGroup";
 
@@ -28,7 +29,8 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
 
     const isSelected = selectedPath != null && selectedPath.slug === slug;
     const isChildSelected = selectedPath != null && selectedPath.slug.startsWith(`${slug}/`);
-    const isOpen = isSelected || isChildSelected;
+    const { expandAllSections } = useContext(SidebarContext)();
+    const isOpen = isSelected || isChildSelected || expandAllSections;
 
     if (!hasEndpoints) {
         return null;

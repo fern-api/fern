@@ -6,10 +6,6 @@
 }
 
 .app {
-    flex: 1;
-    display: flex;
-    height: 100vh;
-
     :global {
         p {
             @apply text-text-default;

@@ -2,7 +2,7 @@ import { H2 } from "@blueprintjs/core";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { joinUrlSlugs } from "../../docs-context/joinUrlSlugs";
-import { PageMargins } from "../../page-margins/PageMargins";
+import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { ApiArtifactsTitle } from "./ApiArtifactsTitle";
 import { DotNetLogo } from "./sdk-logos/DotNetLogo";
@@ -26,7 +26,7 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
     const { setTargetRef } = useApiPageCenterElement({ slug });
 
     return (
-        <PageMargins>
+        <ApiPageMargins>
             <div ref={setTargetRef}>
                 <H2 className="pt-20">
                     <ApiArtifactsTitle />
@@ -85,6 +85,6 @@ export const ApiArtifacts: React.FC<ApiArtifacts.Props> = ({ apiArtifacts }) => 
                     />
                 </div>
             </div>
-        </PageMargins>
+        </ApiPageMargins>
     );
 };

@@ -31,7 +31,7 @@ export const App: React.FC<App.Props> = ({ docs, pathname }) => {
     }, []);
 
     return (
-        <div className={classNames(styles.app, "bg-background")}>
+        <div className={classNames(styles.app, "flex flex-1 h-screen bg-background")}>
             {CONTEXTS.reduceRight(
                 (children, Context) => (
                     <Context>{children}</Context>
