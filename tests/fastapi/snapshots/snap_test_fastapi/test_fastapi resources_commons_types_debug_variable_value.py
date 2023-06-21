@@ -123,18 +123,20 @@ class DebugVariableValue(pydantic.BaseModel):
         if self.__root__.type == "charValue":
             return char_value(self.__root__.value)
         if self.__root__.type == "mapValue":
-            return map_value(DebugMapValue(**self.__root__.dict(exclude_unset=True)))
+            return map_value(DebugMapValue(**self.__root__.dict(exclude_unset=True, exclude="type")))
         if self.__root__.type == "listValue":
             return list_value(self.__root__.value)
         if self.__root__.type == "binaryTreeNodeValue":
-            return binary_tree_node_value(BinaryTreeNodeAndTreeValue(**self.__root__.dict(exclude_unset=True)))
+            return binary_tree_node_value(
+                BinaryTreeNodeAndTreeValue(**self.__root__.dict(exclude_unset=True, exclude="type"))
+            )
         if self.__root__.type == "singlyLinkedListNodeValue":
             return singly_linked_list_node_value(
-                SinglyLinkedListNodeAndListValue(**self.__root__.dict(exclude_unset=True))
+                SinglyLinkedListNodeAndListValue(**self.__root__.dict(exclude_unset=True, exclude="type"))
             )
         if self.__root__.type == "doublyLinkedListNodeValue":
             return doubly_linked_list_node_value(
-                DoublyLinkedListNodeAndListValue(**self.__root__.dict(exclude_unset=True))
+                DoublyLinkedListNodeAndListValue(**self.__root__.dict(exclude_unset=True, exclude="type"))
             )
         if self.__root__.type == "undefinedValue":
             return undefined_value()
@@ -142,7 +144,9 @@ class DebugVariableValue(pydantic.BaseModel):
             return null_value()
         if self.__root__.type == "genericValue":
             return generic_value(
-                resources_commons_types_generic_value_GenericValue(**self.__root__.dict(exclude_unset=True))
+                resources_commons_types_generic_value_GenericValue(
+                    **self.__root__.dict(exclude_unset=True, exclude="type")
+                )
             )
 
     __root__: typing_extensions.Annotated[

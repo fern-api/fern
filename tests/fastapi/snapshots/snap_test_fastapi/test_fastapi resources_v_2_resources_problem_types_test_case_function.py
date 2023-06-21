@@ -40,9 +40,11 @@ class TestCaseFunction(pydantic.BaseModel):
         custom: typing.Callable[[VoidFunctionDefinition], T_Result],
     ) -> T_Result:
         if self.__root__.type == "withActualResult":
-            return with_actual_result(TestCaseWithActualResultImplementation(**self.__root__.dict(exclude_unset=True)))
+            return with_actual_result(
+                TestCaseWithActualResultImplementation(**self.__root__.dict(exclude_unset=True, exclude="type"))
+            )
         if self.__root__.type == "custom":
-            return custom(VoidFunctionDefinition(**self.__root__.dict(exclude_unset=True)))
+            return custom(VoidFunctionDefinition(**self.__root__.dict(exclude_unset=True, exclude="type")))
 
     __root__: typing_extensions.Annotated[
         typing.Union[_TestCaseFunction.WithActualResult, _TestCaseFunction.Custom], pydantic.Field(discriminator="type")

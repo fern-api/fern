@@ -118,23 +118,27 @@ class VariableValue(pydantic.BaseModel):
         if self.__root__.type == "charValue":
             return char_value(self.__root__.value)
         if self.__root__.type == "mapValue":
-            return map_value(resources_commons_types_map_value_MapValue(**self.__root__.dict(exclude_unset=True)))
+            return map_value(
+                resources_commons_types_map_value_MapValue(**self.__root__.dict(exclude_unset=True, exclude="type"))
+            )
         if self.__root__.type == "listValue":
             return list_value(self.__root__.value)
         if self.__root__.type == "binaryTreeValue":
             return binary_tree_value(
-                resources_commons_types_binary_tree_value_BinaryTreeValue(**self.__root__.dict(exclude_unset=True))
+                resources_commons_types_binary_tree_value_BinaryTreeValue(
+                    **self.__root__.dict(exclude_unset=True, exclude="type")
+                )
             )
         if self.__root__.type == "singlyLinkedListValue":
             return singly_linked_list_value(
                 resources_commons_types_singly_linked_list_value_SinglyLinkedListValue(
-                    **self.__root__.dict(exclude_unset=True)
+                    **self.__root__.dict(exclude_unset=True, exclude="type")
                 )
             )
         if self.__root__.type == "doublyLinkedListValue":
             return doubly_linked_list_value(
                 resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue(
-                    **self.__root__.dict(exclude_unset=True)
+                    **self.__root__.dict(exclude_unset=True, exclude="type")
                 )
             )
         if self.__root__.type == "nullValue":
