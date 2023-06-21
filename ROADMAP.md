@@ -31,11 +31,18 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Generate endpoint error decoders
 - [x] Generate core utilities
 - [x] Generate authorization options
-- [ ] Generate endpoint call method
-- [ ] Support path parameters (including service path parameters)
-- [ ] Serialize query parameters and headers
+- [x] Generate endpoint call method
+- [x] Support path parameters (including service path parameters)
 - [ ] Generate client (w/ root endpoints and nested service endpoints)
+  * Take the `__package__.yml` into account to distinguish different types of leaf nodes,
+    i.e. whether or not to create a `client.go` or `user_client.go`.
+- [ ] Rename `Service` to `Client` for symmetry with other SDKs.
+- [ ] Consolidate endpoint implementation in the un-exported client.
+- [ ] Serialize query parameters and headers
 - [ ] Generate documentation for all relevant types
 - [ ] Generate examples
 - [ ] Support optional client/endpoint variables (e.g. namespace)
 - [ ] Support environment settings (e.g. a `Production` URL)
+- [ ] Improve structured error formatting, where possible.
+- [ ] Add coordinator logging for better user-facing console progress updates.
+- [ ] Revisit default generator output (i.e. whether to generate a `go.mod` by default or not).
