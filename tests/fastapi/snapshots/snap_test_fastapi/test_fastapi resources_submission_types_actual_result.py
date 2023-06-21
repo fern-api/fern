@@ -42,7 +42,7 @@ class ActualResult(pydantic.BaseModel):
         if self.__root__.type == "value":
             return value(self.__root__.value)
         if self.__root__.type == "exception":
-            return exception(ExceptionInfo(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return exception(ExceptionInfo(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "exceptionV2":
             return exception_v_2(self.__root__.value)
 

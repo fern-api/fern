@@ -119,27 +119,29 @@ class CodeExecutionUpdate(pydantic.BaseModel):
         finished: typing.Callable[[FinishedResponse], T_Result],
     ) -> T_Result:
         if self.__root__.type == "buildingExecutor":
-            return building_executor(BuildingExecutorResponse(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return building_executor(
+                BuildingExecutorResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
+            )
         if self.__root__.type == "running":
-            return running(RunningResponse(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return running(RunningResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "errored":
-            return errored(ErroredResponse(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return errored(ErroredResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "stopped":
-            return stopped(StoppedResponse(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return stopped(StoppedResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "graded":
-            return graded(GradedResponse(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return graded(GradedResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "gradedV2":
-            return graded_v_2(GradedResponseV2(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return graded_v_2(GradedResponseV2(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "workspaceRan":
-            return workspace_ran(WorkspaceRanResponse(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return workspace_ran(WorkspaceRanResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "recording":
-            return recording(RecordingResponseNotification(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return recording(RecordingResponseNotification(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "recorded":
-            return recorded(RecordedResponseNotification(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return recorded(RecordedResponseNotification(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "invalidRequest":
-            return invalid_request(InvalidRequestResponse(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return invalid_request(InvalidRequestResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "finished":
-            return finished(FinishedResponse(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return finished(FinishedResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
     __root__: typing_extensions.Annotated[
         typing.Union[

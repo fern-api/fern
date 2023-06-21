@@ -51,11 +51,11 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
         traced: typing.Callable[[TracedTestCase], T_Result],
     ) -> T_Result:
         if self.__root__.type == "graded":
-            return graded(TestCaseResultWithStdout(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return graded(TestCaseResultWithStdout(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "gradedV2":
             return graded_v_2(self.__root__.value)
         if self.__root__.type == "traced":
-            return traced(TracedTestCase(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return traced(TracedTestCase(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
     __root__: typing_extensions.Annotated[
         typing.Union[

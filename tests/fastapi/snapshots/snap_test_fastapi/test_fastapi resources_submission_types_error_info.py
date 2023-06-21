@@ -42,19 +42,19 @@ class ErrorInfo(pydantic.BaseModel):
         if self.__root__.type == "compileError":
             return compile_error(
                 resources_submission_types_compile_error_CompileError(
-                    **self.__root__.dict(exclude_unset=True, exclude="type")
+                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
                 )
             )
         if self.__root__.type == "runtimeError":
             return runtime_error(
                 resources_submission_types_runtime_error_RuntimeError(
-                    **self.__root__.dict(exclude_unset=True, exclude="type")
+                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
                 )
             )
         if self.__root__.type == "internalError":
             return internal_error(
                 resources_submission_types_internal_error_InternalError(
-                    **self.__root__.dict(exclude_unset=True, exclude="type")
+                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
                 )
             )
 

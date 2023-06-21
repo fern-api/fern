@@ -42,10 +42,12 @@ class AssertCorrectnessCheck(pydantic.BaseModel):
         custom: typing.Callable[[VoidFunctionDefinitionThatTakesActualResult], T_Result],
     ) -> T_Result:
         if self.__root__.type == "deepEquality":
-            return deep_equality(DeepEqualityCorrectnessCheck(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return deep_equality(
+                DeepEqualityCorrectnessCheck(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
+            )
         if self.__root__.type == "custom":
             return custom(
-                VoidFunctionDefinitionThatTakesActualResult(**self.__root__.dict(exclude_unset=True, exclude="type"))
+                VoidFunctionDefinitionThatTakesActualResult(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
     __root__: typing_extensions.Annotated[

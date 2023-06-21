@@ -51,12 +51,12 @@ class FunctionSignature(pydantic.BaseModel):
         void_that_takes_actual_result: typing.Callable[[VoidFunctionSignatureThatTakesActualResult], T_Result],
     ) -> T_Result:
         if self.__root__.type == "void":
-            return void(VoidFunctionSignature(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return void(VoidFunctionSignature(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "nonVoid":
-            return non_void(NonVoidFunctionSignature(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return non_void(NonVoidFunctionSignature(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "voidThatTakesActualResult":
             return void_that_takes_actual_result(
-                VoidFunctionSignatureThatTakesActualResult(**self.__root__.dict(exclude_unset=True, exclude="type"))
+                VoidFunctionSignatureThatTakesActualResult(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
     __root__: typing_extensions.Annotated[

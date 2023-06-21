@@ -29,7 +29,7 @@ class CreateProblemError(pydantic.BaseModel):
 
     def visit(self, generic: typing.Callable[[GenericCreateProblemError], T_Result]) -> T_Result:
         if self.__root__.error_type == "generic":
-            return generic(GenericCreateProblemError(**self.__root__.dict(exclude_unset=True, exclude="_type")))
+            return generic(GenericCreateProblemError(**self.__root__.dict(exclude_unset=True, exclude={"_type"})))
 
     __root__: typing.Union[_CreateProblemError.Generic]
 

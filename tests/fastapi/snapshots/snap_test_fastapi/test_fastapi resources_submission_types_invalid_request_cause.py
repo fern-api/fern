@@ -72,18 +72,18 @@ class InvalidRequestCause(pydantic.BaseModel):
         if self.__root__.type == "submissionIdNotFound":
             return submission_id_not_found(
                 resources_submission_types_submission_id_not_found_SubmissionIdNotFound(
-                    **self.__root__.dict(exclude_unset=True, exclude="type")
+                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
                 )
             )
         if self.__root__.type == "customTestCasesUnsupported":
             return custom_test_cases_unsupported(
                 resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported(
-                    **self.__root__.dict(exclude_unset=True, exclude="type")
+                    **self.__root__.dict(exclude_unset=True, exclude={"type"})
                 )
             )
         if self.__root__.type == "unexpectedLanguage":
             return unexpected_language(
-                UnexpectedLanguageError(**self.__root__.dict(exclude_unset=True, exclude="type"))
+                UnexpectedLanguageError(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
     __root__: typing_extensions.Annotated[

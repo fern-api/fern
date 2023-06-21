@@ -89,11 +89,11 @@ class VariableType(pydantic.BaseModel):
             return char_type()
         if self.__root__.type == "listType":
             return list_type(
-                resources_commons_types_list_type_ListType(**self.__root__.dict(exclude_unset=True, exclude="type"))
+                resources_commons_types_list_type_ListType(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
         if self.__root__.type == "mapType":
             return map_type(
-                resources_commons_types_map_type_MapType(**self.__root__.dict(exclude_unset=True, exclude="type"))
+                resources_commons_types_map_type_MapType(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
         if self.__root__.type == "binaryTreeType":
             return binary_tree_type()

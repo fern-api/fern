@@ -189,7 +189,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                             ),
                                             args=[
                                                 AST.Expression(
-                                                    f'self.__root__.dict(exclude_unset=True, exclude="{self._union.discriminant.wire_value}")',
+                                                    f'self.__root__.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}})',
                                                     spread=AST.ExpressionSpread.TWO_ASTERISKS,
                                                 )
                                             ],

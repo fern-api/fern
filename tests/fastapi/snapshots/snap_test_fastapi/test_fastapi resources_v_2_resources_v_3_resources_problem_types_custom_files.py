@@ -39,7 +39,7 @@ class CustomFiles(pydantic.BaseModel):
         custom: typing.Callable[[typing.Dict[Language, Files]], T_Result],
     ) -> T_Result:
         if self.__root__.type == "basic":
-            return basic(BasicCustomFiles(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return basic(BasicCustomFiles(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "custom":
             return custom(self.__root__.value)
 

@@ -38,9 +38,9 @@ class TestCaseGrade(pydantic.BaseModel):
         non_hidden: typing.Callable[[TestCaseNonHiddenGrade], T_Result],
     ) -> T_Result:
         if self.__root__.type == "hidden":
-            return hidden(TestCaseHiddenGrade(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return hidden(TestCaseHiddenGrade(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
         if self.__root__.type == "nonHidden":
-            return non_hidden(TestCaseNonHiddenGrade(**self.__root__.dict(exclude_unset=True, exclude="type")))
+            return non_hidden(TestCaseNonHiddenGrade(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
     __root__: typing_extensions.Annotated[
         typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden], pydantic.Field(discriminator="type")
