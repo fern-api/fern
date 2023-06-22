@@ -24,11 +24,17 @@ OMIT = typing.cast(typing.Any, ...)
 
 class MovieClient:
     def __init__(
-        self, *, environment: str, api_key: typing.Optional[str] = None, api_secret: typing.Optional[str] = None
+        self,
+        *,
+        environment: str,
+        api_key: typing.Optional[str] = None,
+        api_secret: typing.Optional[str] = None,
+        client: httpx.Client,
     ):
         self._environment = environment
         self._api_key = api_key
         self._api_secret = api_secret
+        self._client = client
 
     def get_movie(self, movie_id: MovieId) -> Movie:
         _response = httpx.request(
@@ -135,11 +141,17 @@ class MovieClient:
 
 class AsyncMovieClient:
     def __init__(
-        self, *, environment: str, api_key: typing.Optional[str] = None, api_secret: typing.Optional[str] = None
+        self,
+        *,
+        environment: str,
+        api_key: typing.Optional[str] = None,
+        api_secret: typing.Optional[str] = None,
+        client: httpx.AsyncClient,
     ):
         self._environment = environment
         self._api_key = api_key
         self._api_secret = api_secret
+        self._client = client
 
     async def get_movie(self, movie_id: MovieId) -> Movie:
         async with httpx.AsyncClient() as _client:

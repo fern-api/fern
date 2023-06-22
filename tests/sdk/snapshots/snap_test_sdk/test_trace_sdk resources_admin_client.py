@@ -29,10 +29,12 @@ class AdminClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.Client,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     def update_test_submission_status(self, submission_id: SubmissionId, *, request: TestSubmissionStatus) -> None:
         _response = httpx.request(
@@ -41,7 +43,7 @@ class AdminClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -64,7 +66,7 @@ class AdminClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -89,7 +91,7 @@ class AdminClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -114,7 +116,7 @@ class AdminClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -145,7 +147,7 @@ class AdminClient:
             json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -171,7 +173,7 @@ class AdminClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -200,7 +202,7 @@ class AdminClient:
             json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -223,7 +225,7 @@ class AdminClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -245,10 +247,12 @@ class AsyncAdminClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.AsyncClient,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     async def update_test_submission_status(
         self, submission_id: SubmissionId, *, request: TestSubmissionStatus
@@ -262,7 +266,7 @@ class AsyncAdminClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -286,7 +290,7 @@ class AsyncAdminClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -312,7 +316,7 @@ class AsyncAdminClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -338,7 +342,7 @@ class AsyncAdminClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -370,7 +374,7 @@ class AsyncAdminClient:
                 json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -397,7 +401,7 @@ class AsyncAdminClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -429,7 +433,7 @@ class AsyncAdminClient:
                 ),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -455,7 +459,7 @@ class AsyncAdminClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),

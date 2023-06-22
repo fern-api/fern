@@ -2,6 +2,8 @@
 
 import typing
 
+import httpx
+
 from .resources.movie.client import AsyncMovieClient, MovieClient
 
 
@@ -12,7 +14,10 @@ class FernIr:
         self._environment = environment
         self._api_key = api_key
         self._api_secret = api_secret
-        self.movie = MovieClient(environment=self._environment, api_key=self._api_key, api_secret=self._api_secret)
+        self._client = httpx.Client(timeout=60)
+        self.movie = MovieClient(
+            environment=self._environment, api_key=self._api_key, api_secret=self._api_secret, client=self._client
+        )
 
 
 class AsyncFernIr:
@@ -22,4 +27,7 @@ class AsyncFernIr:
         self._environment = environment
         self._api_key = api_key
         self._api_secret = api_secret
-        self.movie = AsyncMovieClient(environment=self._environment, api_key=self._api_key, api_secret=self._api_secret)
+        self._client = httpx.AsyncClient(timeout=60)
+        self.movie = AsyncMovieClient(
+            environment=self._environment, api_key=self._api_key, api_secret=self._api_secret, client=self._client
+        )

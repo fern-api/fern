@@ -1,3 +1,4 @@
+import typing
 from dataclasses import dataclass
 from typing import List, Optional, Set, Tuple
 
@@ -60,15 +61,16 @@ class ClientGenerator:
         package: ir_types.Package,
         class_name: str,
         async_class_name: str,
+        is_root: bool,
     ):
         self._context = context
         self._package = package
         self._class_name = class_name
         self._async_class_name = async_class_name
+        self._is_root = is_root
         self._is_default_body_parameter_used = False
 
     def generate(self, source_file: SourceFile) -> None:
-
         class_declaration = self._create_class_declaration(is_async=False)
         if self._is_default_body_parameter_used:
             source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
@@ -92,7 +94,7 @@ class ClientGenerator:
                             type_hint=param.type_hint,
                             initializer=param.initializer,
                         )
-                        for param in self._get_constructor_parameters()
+                        for param in self._get_constructor_parameters(is_async=is_async)
                     ],
                 ),
                 body=AST.CodeWriter(self._get_write_constructor_body(is_async=is_async)),
@@ -159,7 +161,7 @@ class ClientGenerator:
 
         return class_declaration
 
-    def _get_constructor_parameters(self) -> List[ConstructorParameter]:
+    def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
         parameters: List[ConstructorParameter] = []
 
         parameters.append(
@@ -238,6 +240,15 @@ class ClientGenerator:
                 ]
             )
 
+        if not self._is_root:
+            parameters.append(
+                ConstructorParameter(
+                    constructor_parameter_name=self._get_client_constructor_parameter_name(params=parameters),
+                    private_member_name=self._get_client_constructor_member_name(params=parameters),
+                    type_hint=AST.TypeHint(HttpX.ASYNC_CLIENT) if is_async else AST.TypeHint(HttpX.CLIENT),
+                )
+            )
+
         return parameters
 
     def _environment_is_enum(self) -> bool:
@@ -245,21 +256,48 @@ class ClientGenerator:
 
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
-            for param in self._get_constructor_parameters():
+            constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+            for param in constructor_parameters:
                 writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+            if self._is_root:
+                writer.write(f"self.{self._get_client_constructor_member_name(constructor_parameters)} = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                        kwargs=[
+                            (
+                                "timeout",
+                                AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
+                                if isinstance(self._context.custom_config.timeout_in_seconds, int)
+                                else AST.Expression(AST.TypeHint.none()),
+                            )
+                        ],
+                    )
+                )
+                writer.write_newline_if_last_line_not()
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
                 if subpackage.has_endpoints_in_tree:
                     writer.write_node(AST.Expression(f"self.{subpackage.name.snake_case.safe_name} = "))
+                    kwargs = [
+                        (param.constructor_parameter_name, AST.Expression(f"self.{param.private_member_name}"))
+                        for param in self._get_constructor_parameters(is_async=is_async)
+                    ]
+                    if self._is_root:
+                        kwargs.append(
+                            (
+                                "client",
+                                AST.Expression(
+                                    f"self.{self._get_client_constructor_member_name(constructor_parameters)}"
+                                ),
+                            ),
+                        )
                     writer.write_node(
                         AST.ClassInstantiation(
                             class_=self._context.get_reference_to_async_subpackage_service(subpackage_id)
                             if is_async
                             else self._context.get_reference_to_subpackage_service(subpackage_id),
-                            kwargs=[
-                                (param.constructor_parameter_name, AST.Expression(f"self.{param.private_member_name}"))
-                                for param in self._get_constructor_parameters()
-                            ],
+                            kwargs=kwargs,
                         )
                     )
                     writer.write_line()
@@ -321,7 +359,7 @@ class ClientGenerator:
         return header.name.name.snake_case.unsafe_name
 
     def _get_header_private_member_name(self, header: ir_types.HttpHeader) -> str:
-        return header.name.name.snake_case.unsafe_name
+        return "_" + header.name.name.snake_case.unsafe_name
 
     def _get_header_constructor_parameter_name(self, header: ir_types.HttpHeader) -> str:
         return header.name.name.snake_case.unsafe_name
@@ -763,6 +801,18 @@ class ClientGenerator:
 
     def _get_password_member_name(self) -> str:
         return f"_{self._get_password_constructor_parameter_name()}"
+
+    def _get_client_constructor_parameter_name(self, params: typing.List[ConstructorParameter]) -> str:
+        for param in params:
+            if param.constructor_parameter_name == "client":
+                return "_client"
+        return "client"
+
+    def _get_client_constructor_member_name(self, params: typing.List[ConstructorParameter]) -> str:
+        for param in params:
+            if param.private_member_name == "_client":
+                return "__client"
+        return "_client"
 
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:

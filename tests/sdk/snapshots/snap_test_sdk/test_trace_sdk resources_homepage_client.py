@@ -21,10 +21,12 @@ class HomepageClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.Client,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     def get_homepage_problems(self) -> typing.List[ProblemId]:
         _response = httpx.request(
@@ -32,7 +34,7 @@ class HomepageClient:
             urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -53,7 +55,7 @@ class HomepageClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -75,10 +77,12 @@ class AsyncHomepageClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.AsyncClient,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     async def get_homepage_problems(self) -> typing.List[ProblemId]:
         async with httpx.AsyncClient() as _client:
@@ -87,7 +91,7 @@ class AsyncHomepageClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -109,7 +113,7 @@ class AsyncHomepageClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),

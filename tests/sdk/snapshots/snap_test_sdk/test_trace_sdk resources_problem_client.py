@@ -27,10 +27,12 @@ class ProblemClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.Client,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
         _response = httpx.request(
@@ -39,7 +41,7 @@ class ProblemClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -60,7 +62,7 @@ class ProblemClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -80,7 +82,7 @@ class ProblemClient:
             urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -103,7 +105,7 @@ class ProblemClient:
             json=jsonable_encoder({"inputParams": input_params, "outputType": output_type, "methodName": method_name}),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -125,10 +127,12 @@ class AsyncProblemClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.AsyncClient,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     async def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
         async with httpx.AsyncClient() as _client:
@@ -138,7 +142,7 @@ class AsyncProblemClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -160,7 +164,7 @@ class AsyncProblemClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -181,7 +185,7 @@ class AsyncProblemClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -207,7 +211,7 @@ class AsyncProblemClient:
                 ),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),

@@ -2,6 +2,8 @@
 
 import typing
 
+import httpx
+
 from .....environment import FernIrEnvironment
 from .resources.problem.client import AsyncProblemClient, ProblemClient
 
@@ -12,13 +14,15 @@ class V3Client:
         *,
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None
+        token: typing.Optional[str] = None,
+        client: httpx.Client
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
         self.problem = ProblemClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
 
 
@@ -28,11 +32,13 @@ class AsyncV3Client:
         *,
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None
+        token: typing.Optional[str] = None,
+        client: httpx.AsyncClient
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
         self.problem = AsyncProblemClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )

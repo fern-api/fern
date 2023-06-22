@@ -22,10 +22,12 @@ class SubmissionClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.Client,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     def create_execution_session(self, language: Language) -> ExecutionSessionResponse:
         _response = httpx.request(
@@ -33,7 +35,7 @@ class SubmissionClient:
             urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/create-session/{language}"),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -53,7 +55,7 @@ class SubmissionClient:
             urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/{session_id}"),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -73,7 +75,7 @@ class SubmissionClient:
             urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/stop/{session_id}"),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -93,7 +95,7 @@ class SubmissionClient:
             urllib.parse.urljoin(f"{self._environment.value}/", "sessions/execution-sessions-state"),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -115,10 +117,12 @@ class AsyncSubmissionClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.AsyncClient,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     async def create_execution_session(self, language: Language) -> ExecutionSessionResponse:
         async with httpx.AsyncClient() as _client:
@@ -127,7 +131,7 @@ class AsyncSubmissionClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/create-session/{language}"),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -148,7 +152,7 @@ class AsyncSubmissionClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/{session_id}"),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -169,7 +173,7 @@ class AsyncSubmissionClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/stop/{session_id}"),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -190,7 +194,7 @@ class AsyncSubmissionClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", "sessions/execution-sessions-state"),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),

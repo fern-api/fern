@@ -29,10 +29,12 @@ class PlaylistClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.Client,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     def create_playlist(
         self,
@@ -52,7 +54,7 @@ class PlaylistClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -88,7 +90,7 @@ class PlaylistClient:
             },
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -108,7 +110,7 @@ class PlaylistClient:
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -138,7 +140,7 @@ class PlaylistClient:
             json=jsonable_encoder(request),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -163,7 +165,7 @@ class PlaylistClient:
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -185,10 +187,12 @@ class AsyncPlaylistClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.AsyncClient,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     async def create_playlist(
         self,
@@ -211,7 +215,7 @@ class AsyncPlaylistClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -248,7 +252,7 @@ class AsyncPlaylistClient:
                 },
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -269,7 +273,7 @@ class AsyncPlaylistClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -300,7 +304,7 @@ class AsyncPlaylistClient:
                 json=jsonable_encoder(request),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -326,7 +330,7 @@ class AsyncPlaylistClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),

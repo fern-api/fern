@@ -12,8 +12,9 @@ from .types.movie_id import MovieId
 
 
 class MovieClient:
-    def __init__(self, *, environment: str):
+    def __init__(self, *, environment: str, client: httpx.Client):
         self._environment = environment
+        self._client = client
 
     def upload_movie(self, movie_id: MovieId, *, name: str, contents: typing.IO) -> None:
         _response = httpx.request(
@@ -33,8 +34,9 @@ class MovieClient:
 
 
 class AsyncMovieClient:
-    def __init__(self, *, environment: str):
+    def __init__(self, *, environment: str, client: httpx.AsyncClient):
         self._environment = environment
+        self._client = client
 
     async def upload_movie(self, movie_id: MovieId, *, name: str, contents: typing.IO) -> None:
         async with httpx.AsyncClient() as _client:

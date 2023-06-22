@@ -2,6 +2,8 @@
 
 import typing
 
+import httpx
+
 from .environment import FernIrEnvironment
 from .resources.admin.client import AdminClient, AsyncAdminClient
 from .resources.homepage.client import AsyncHomepageClient, HomepageClient
@@ -22,27 +24,32 @@ class FernIr:
         token: typing.Optional[str] = None
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
-        self.v_2 = V2Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
-        self.admin = AdminClient(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
+        self._client = httpx.Client(timeout=None)
+        self.v_2 = V2Client(
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
+        )
+        self.admin = AdminClient(
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
+        )
         self.homepage = HomepageClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.migration = MigrationClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.playlist = PlaylistClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.problem = ProblemClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.submission = SubmissionClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.sysprop = SyspropClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
 
 
@@ -55,27 +62,30 @@ class AsyncFernIr:
         token: typing.Optional[str] = None
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
-        self.v_2 = AsyncV2Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
+        self._client = httpx.AsyncClient(timeout=None)
+        self.v_2 = AsyncV2Client(
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
+        )
         self.admin = AsyncAdminClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.homepage = AsyncHomepageClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.migration = AsyncMigrationClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.playlist = AsyncPlaylistClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.problem = AsyncProblemClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.submission = AsyncSubmissionClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
         self.sysprop = AsyncSyspropClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )

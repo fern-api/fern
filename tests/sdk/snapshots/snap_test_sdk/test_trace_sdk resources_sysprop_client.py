@@ -20,10 +20,12 @@ class SyspropClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.Client,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
         _response = httpx.request(
@@ -33,7 +35,7 @@ class SyspropClient:
             ),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -53,7 +55,7 @@ class SyspropClient:
             urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -75,10 +77,12 @@ class AsyncSyspropClient:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.AsyncClient,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
 
     async def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
         async with httpx.AsyncClient() as _client:
@@ -89,7 +93,7 @@ class AsyncSyspropClient:
                 ),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),
@@ -110,7 +114,7 @@ class AsyncSyspropClient:
                 urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),

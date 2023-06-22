@@ -18,9 +18,10 @@ from .types.movie_id import MovieId
 
 
 class MovieClient:
-    def __init__(self, *, environment: str, header_auth: str):
+    def __init__(self, *, environment: str, header_auth: str, client: httpx.Client):
         self._environment = environment
         self.header_auth = header_auth
+        self._client = client
 
     def get_movie(self, movie_id: MovieId) -> Movie:
         _response = httpx.request(
@@ -93,9 +94,10 @@ class MovieClient:
 
 
 class AsyncMovieClient:
-    def __init__(self, *, environment: str, header_auth: str):
+    def __init__(self, *, environment: str, header_auth: str, client: httpx.AsyncClient):
         self._environment = environment
         self.header_auth = header_auth
+        self._client = client
 
     async def get_movie(self, movie_id: MovieId) -> Movie:
         async with httpx.AsyncClient() as _client:

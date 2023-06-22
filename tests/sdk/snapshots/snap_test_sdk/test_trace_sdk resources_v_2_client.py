@@ -19,14 +19,18 @@ class V2Client:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.Client,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
         self.problem = ProblemClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
-        self.v_3 = V3Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
+        self.v_3 = V3Client(
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
+        )
 
     def test(self) -> None:
         _response = httpx.request(
@@ -34,7 +38,7 @@ class V2Client:
             self._environment.value,
             headers=remove_none_from_headers(
                 {
-                    "X-Random-Header": self.x_random_header,
+                    "X-Random-Header": self._x_random_header,
                     "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                 }
             ),
@@ -56,14 +60,18 @@ class AsyncV2Client:
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[str] = None,
+        client: httpx.AsyncClient,
     ):
         self._environment = environment
-        self.x_random_header = x_random_header
+        self._x_random_header = x_random_header
         self._token = token
+        self._client = client
         self.problem = AsyncProblemClient(
-            environment=self._environment, x_random_header=self.x_random_header, token=self._token
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
-        self.v_3 = AsyncV3Client(environment=self._environment, x_random_header=self.x_random_header, token=self._token)
+        self.v_3 = AsyncV3Client(
+            environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
+        )
 
     async def test(self) -> None:
         async with httpx.AsyncClient() as _client:
@@ -72,7 +80,7 @@ class AsyncV2Client:
                 self._environment.value,
                 headers=remove_none_from_headers(
                     {
-                        "X-Random-Header": self.x_random_header,
+                        "X-Random-Header": self._x_random_header,
                         "Authorization": f"Bearer {self._token}" if self._token is not None else None,
                     }
                 ),

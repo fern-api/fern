@@ -14,6 +14,16 @@ HTTPX_MODULE = AST.Module.external(
 class HttpX:
     _ASYNC_CLIENT_NAME = "_client"
 
+    ASYNC_CLIENT = AST.ClassReference(
+        qualified_name_excluding_import=("AsyncClient",),
+        import_=AST.ReferenceImport(module=HTTPX_MODULE),
+    )
+
+    CLIENT = AST.ClassReference(
+        qualified_name_excluding_import=("Client",),
+        import_=AST.ReferenceImport(module=HTTPX_MODULE),
+    )
+
     @staticmethod
     def make_request(
         *,
