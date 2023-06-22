@@ -7,11 +7,17 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import decompress from "decompress";
-import { cp, readdir, rm } from "fs/promises";
+import { cp, readFile, readdir, rm } from "fs/promises";
 import os from "os";
 import path, { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
 import { runGenerator } from "./run-generator/runGenerator";
+import { existsSync } from "fs";
+import { globSync } from "glob";
+import { promisify } from "util";
+import { exec } from "child_process";
+
+const EXEC = promisify(exec);
 
 export async function runLocalGenerationForWorkspace({
     organization,
@@ -119,7 +125,22 @@ async function writeFilesToDiskAndRunGenerator({
     if (firstLocalOutputItem == null) {
         return;
     }
-    await rm(absolutePathToLocalOutput, { force: true, recursive: true });
+    // await rm(absolutePathToLocalOutput, { force: true, recursive: true });
+    const dotFernIgnoreFile = path.join(absolutePathToLocalOutput, ".fernignore");
+    let filesToBeIgnoredByFern: string[] = [".fernignore"];
+    const dotFernIgnoreFileExists = existsSync(dotFernIgnoreFile);
+
+    if (dotFernIgnoreFileExists) {
+        const dotFernIgnoreFileContent = await readFile(dotFernIgnoreFile, "utf-8");
+        filesToBeIgnoredByFern = filesToBeIgnoredByFern.concat(dotFernIgnoreFileContent.trim().split(/\r?\n/));
+        filesToBeIgnoredByFern = filesToBeIgnoredByFern.filter(filePattern => filePattern !== "" && !filePattern.startsWith("#"));
+        filesToBeIgnoredByFern = globSync(filesToBeIgnoredByFern, {
+            cwd: absolutePathToLocalOutput, root: "", dot: true, nobrace: false, noext: false, matchBase: true
+        });
+        await EXEC("git init && git add . && git commit -m \"initial\" && git rm -rf .", {cwd: absolutePathToLocalOutput});
+    } else {
+        await rm(absolutePathToLocalOutput, { force: true, recursive: true });
+    }
 
     if (firstLocalOutputItem.endsWith(".zip") && remaininglocalOutputItems.length === 0) {
         await decompress(join(absolutePathToTmpOutputDirectory, firstLocalOutputItem), absolutePathToLocalOutput, {
@@ -128,6 +149,12 @@ async function writeFilesToDiskAndRunGenerator({
     } else {
         await cp(absolutePathToTmpOutputDirectory, absolutePathToLocalOutput, { recursive: true });
     }
+
+    if (dotFernIgnoreFileExists) {
+        await EXEC(`git reset -- ${filesToBeIgnoredByFern.join(" ")} && git restore .`, {cwd: absolutePathToLocalOutput});
+        await rm(`${absolutePathToLocalOutput}${path.sep}.git`, { force: true, recursive: true});
+    }
+
 }
 
 async function writeIrToFile({
