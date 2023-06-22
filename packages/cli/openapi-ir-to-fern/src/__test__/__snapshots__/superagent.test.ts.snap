@@ -1,0 +1,828 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`open api parser superagent simple 1`] = `
+{
+  "definitionFiles": {
+    "__package__.yml": {
+      "errors": {
+        "UnprocessableEntityError": {
+          "status-code": 422,
+          "type": "HttpValidationError",
+        },
+      },
+      "service": undefined,
+      "types": {
+        "HttpValidationError": {
+          "docs": undefined,
+          "properties": {
+            "detail": {
+              "docs": undefined,
+              "type": "optional<list<ValidationError>>",
+            },
+          },
+        },
+        "ValidationError": {
+          "docs": undefined,
+          "properties": {
+            "loc": {
+              "docs": undefined,
+              "type": "list<ValidationErrorLocItem>",
+            },
+            "msg": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "type": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "ValidationErrorLocItem": {
+          "discriminated": false,
+          "docs": undefined,
+          "union": [
+            {
+              "docs": undefined,
+              "type": "string",
+            },
+            {
+              "docs": undefined,
+              "type": "integer",
+            },
+          ],
+        },
+      },
+    },
+    "agent.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "createAgent": {
+            "auth": true,
+            "display-name": "Create Agent",
+            "docs": "Create a new agent",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "POST",
+            "path": "/api/v1/agents",
+            "request": {
+              "body": {
+                "properties": {
+                  "documentId": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "has_memory": {
+                    "docs": undefined,
+                    "type": "optional<boolean>",
+                  },
+                  "llm": {
+                    "docs": undefined,
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "name": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "promptId": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "toolId": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "type": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "Agent",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "deleteAgent": {
+            "auth": true,
+            "display-name": "Delete Agent",
+            "docs": "Delete a specific agent",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "DELETE",
+            "path": "/api/v1/agents/{agentId}",
+            "path-parameters": {
+              "agentId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "getAgent": {
+            "auth": true,
+            "display-name": "Get Agent",
+            "docs": "Get a specific agent",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "GET",
+            "path": "/api/v1/agents/{agentId}",
+            "path-parameters": {
+              "agentId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "listAllAgents": {
+            "auth": true,
+            "display-name": "List All Agents",
+            "docs": "List all agents",
+            "errors": [],
+            "method": "GET",
+            "path": "/api/v1/agents",
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "patchAgent": {
+            "auth": true,
+            "display-name": "Patch Agent",
+            "docs": "Patch a specific agent",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "PATCH",
+            "path": "/api/v1/agents/{agentId}",
+            "path-parameters": {
+              "agentId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "map<string, unknown>",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "promptAgent": {
+            "auth": true,
+            "display-name": "Prompt Agent",
+            "docs": "Invoke a specific agent",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "POST",
+            "path": "/api/v1/agents/{agentId}/predict",
+            "path-parameters": {
+              "agentId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "has_streaming": {
+                    "docs": undefined,
+                    "type": "optional<boolean>",
+                  },
+                  "input": {
+                    "docs": undefined,
+                    "type": "map<string, unknown>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "PredictAgent",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+        },
+      },
+    },
+    "apiToken.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "createApiToken": {
+            "auth": true,
+            "display-name": "Create Api Token",
+            "docs": "Create a new API token",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "POST",
+            "path": "/api/v1/api-tokens",
+            "request": {
+              "body": {
+                "properties": {
+                  "description": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ApiToken",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "deleteApiToken": {
+            "auth": true,
+            "display-name": "Delete Api Token",
+            "docs": "Delete a specific API token",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "DELETE",
+            "path": "/api/v1/api-tokens/{tokenId}",
+            "path-parameters": {
+              "tokenId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "getApiToken": {
+            "auth": true,
+            "display-name": "Get Api Token",
+            "docs": "Get a specific API token",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "GET",
+            "path": "/api/v1/api-tokens/{tokenId}",
+            "path-parameters": {
+              "tokenId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "listApiTokens": {
+            "auth": true,
+            "display-name": "List Api Tokens",
+            "docs": "List all API tokens",
+            "errors": [],
+            "method": "GET",
+            "path": "/api/v1/api-tokens",
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+        },
+      },
+    },
+    "auth.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "signIn": {
+            "auth": false,
+            "display-name": "Sign In",
+            "docs": undefined,
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "POST",
+            "path": "/api/v1/auth/sign-in",
+            "request": {
+              "body": {
+                "properties": {
+                  "email": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "password": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "SignIn",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "signUp": {
+            "auth": false,
+            "display-name": "Sign Up",
+            "docs": undefined,
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "POST",
+            "path": "/api/v1/auth/sign-up",
+            "request": {
+              "body": {
+                "properties": {
+                  "email": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "metadata": {
+                    "docs": undefined,
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "name": {
+                    "docs": undefined,
+                    "type": "optional<string>",
+                  },
+                  "password": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "SignUp",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+        },
+      },
+    },
+    "documents.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "createDocument": {
+            "auth": true,
+            "display-name": "Create Document",
+            "docs": "Create a new document",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "POST",
+            "path": "/api/v1/documents",
+            "request": {
+              "body": {
+                "properties": {
+                  "authorization": {
+                    "docs": undefined,
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "from_page": {
+                    "docs": undefined,
+                    "type": "optional<integer>",
+                  },
+                  "name": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "splitter": {
+                    "docs": undefined,
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "to_page": {
+                    "docs": undefined,
+                    "type": "optional<integer>",
+                  },
+                  "type": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "url": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "Document",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "deleteDocument": {
+            "auth": true,
+            "display-name": "Delete Document",
+            "docs": "Delete a specific document",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "DELETE",
+            "path": "/api/v1/documents/{documentId}",
+            "path-parameters": {
+              "documentId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "getDocument": {
+            "auth": true,
+            "display-name": "Get Document",
+            "docs": "Get a specific document",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "GET",
+            "path": "/api/v1/documents/{documentId}",
+            "path-parameters": {
+              "documentId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "listDocuments": {
+            "auth": true,
+            "display-name": "List Documents",
+            "docs": "List all documents",
+            "errors": [],
+            "method": "GET",
+            "path": "/api/v1/documents",
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+        },
+      },
+    },
+    "prompts.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "createAPrompt": {
+            "auth": true,
+            "display-name": "Create A Prompt",
+            "docs": "Create a new prompt",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "POST",
+            "path": "/api/v1/prompts",
+            "request": {
+              "body": {
+                "properties": {
+                  "input_variables": {
+                    "docs": undefined,
+                    "type": "list<unknown>",
+                  },
+                  "name": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "template": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "Prompt",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "deletePrompt": {
+            "auth": true,
+            "display-name": "Delete Prompt",
+            "docs": "Delete a specific prompt",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "DELETE",
+            "path": "/api/v1/prompts/{promptId}",
+            "path-parameters": {
+              "promptId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "getPrompt": {
+            "auth": true,
+            "display-name": "Get Prompt",
+            "docs": "Get a specific prompt",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "GET",
+            "path": "/api/v1/prompts/{promptId}",
+            "path-parameters": {
+              "promptId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "listPrompts": {
+            "auth": true,
+            "display-name": "List Prompts",
+            "docs": "List all prompts",
+            "errors": [],
+            "method": "GET",
+            "path": "/api/v1/prompts",
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "patchPrompt": {
+            "auth": true,
+            "display-name": "Patch Prompt",
+            "docs": "Patch a specific prompt",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "PATCH",
+            "path": "/api/v1/prompts/{promptId}",
+            "path-parameters": {
+              "promptId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "request": {
+              "body": {
+                "docs": undefined,
+                "type": "map<string, unknown>",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+        },
+      },
+    },
+    "tools.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "createATool": {
+            "auth": true,
+            "display-name": "Create A Tool",
+            "docs": "Create a new tool",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "POST",
+            "path": "/api/v1/tools",
+            "request": {
+              "body": {
+                "properties": {
+                  "authorization": {
+                    "docs": undefined,
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "name": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                  "type": {
+                    "docs": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "Tool",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "deleteTool": {
+            "auth": true,
+            "display-name": "Delete Tool",
+            "docs": "Delete a specific tool",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "DELETE",
+            "path": "/api/v1/tools/{toolId}",
+            "path-parameters": {
+              "toolId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "getTool": {
+            "auth": true,
+            "display-name": "Get Tool",
+            "docs": "Get a specific tool",
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "GET",
+            "path": "/api/v1/tools/{toolId}",
+            "path-parameters": {
+              "toolId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "listTools": {
+            "auth": true,
+            "display-name": "List Tools",
+            "docs": "List all tools",
+            "errors": [],
+            "method": "GET",
+            "path": "/api/v1/tools",
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+        },
+      },
+    },
+    "traces.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "listAgentTraces": {
+            "auth": true,
+            "display-name": "List Agent Traces",
+            "docs": "List all agent traces",
+            "errors": [],
+            "method": "GET",
+            "path": "/api/v1/traces",
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+        },
+      },
+    },
+    "user.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "readUser": {
+            "auth": false,
+            "display-name": "Read User",
+            "docs": undefined,
+            "errors": [
+              "root.UnprocessableEntityError",
+            ],
+            "method": "GET",
+            "path": "/api/v1/users/{userId}",
+            "path-parameters": {
+              "userId": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+          "readUserMe": {
+            "auth": true,
+            "display-name": "Read User Me",
+            "docs": undefined,
+            "errors": [],
+            "method": "GET",
+            "path": "/api/v1/users/me",
+            "response": {
+              "docs": "Successful Response",
+              "type": "unknown",
+            },
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "bearer",
+    "auth-schemes": {
+      "APIKeyHeader": {
+        "header": "X_SUPERAGENT_API_KEY",
+        "name": "apiKey",
+        "prefix": undefined,
+        "type": "string",
+      },
+    },
+    "display-name": "Superagent",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
+    },
+    "name": "api",
+  },
+}
+`;

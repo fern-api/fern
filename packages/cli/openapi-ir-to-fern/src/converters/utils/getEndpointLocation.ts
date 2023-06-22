@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
-import { Endpoint } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, HttpMethod } from "@fern-fern/openapi-ir-model/ir";
 import { camelCase, compact, isEqual } from "lodash-es";
 
 export interface EndpointLocation {
@@ -52,6 +52,17 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
         };
     }
 
+    // if operation id matches fastapi then generate endpoint location
+    const fastapiEndpointLocation = maybeGetFastApiEndpointLocation({
+        operationId,
+        tag,
+        path: endpoint.path,
+        method: endpoint.method,
+    });
+    if (fastapiEndpointLocation != null) {
+        return fastapiEndpointLocation;
+    }
+
     const fileParts: string[] = [];
     for (let i = 0; i < tagTokens.length; ++i) {
         const tagElement = tagTokens[i];
@@ -97,4 +108,31 @@ function tokenizeString(input: string): string[] {
     tokens = compact(tokens);
 
     return tokens;
+}
+
+// When the url is /users/{userId}/sigin-in we want the split to be ["users", "{userId}", "sign", "in"]
+const NON_ALPHANUMERIC_EXCEPT_BRACES_REGEX = new RegExp("[^a-zA-Z0-9{}]+");
+const BRACE_REGEX = new RegExp("[{}]", "g");
+
+function maybeGetFastApiEndpointLocation({
+    operationId,
+    tag,
+    path,
+    method,
+}: {
+    operationId: string;
+    tag: string;
+    path: string;
+    method: HttpMethod;
+}): EndpointLocation | undefined {
+    const pathSegment = path.split(NON_ALPHANUMERIC_EXCEPT_BRACES_REGEX).join("_").replaceAll(BRACE_REGEX, "_");
+    const operationIdSuffix = `${pathSegment}_${method.toLowerCase()}`;
+    if (operationId.endsWith(operationIdSuffix)) {
+        return {
+            file: RelativeFilePath.of(camelCase(tag) + ".yml"),
+            endpointId: camelCase(operationId.slice(0, -1 * operationIdSuffix.length)),
+            tag,
+        };
+    }
+    return undefined;
 }
