@@ -21,12 +21,13 @@ class FernIr:
         *,
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None
+        token: typing.Optional[str] = None,
+        timeout: typing.Optional[float] = None
     ):
         self._environment = environment
         self._x_random_header = x_random_header
         self._token = token
-        self._client = httpx.Client(timeout=None)
+        self._client = httpx.Client(timeout=timeout)
         self.v_2 = V2Client(
             environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )
@@ -59,12 +60,13 @@ class AsyncFernIr:
         *,
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None
+        token: typing.Optional[str] = None,
+        timeout: typing.Optional[float] = None
     ):
         self._environment = environment
         self._x_random_header = x_random_header
         self._token = token
-        self._client = httpx.AsyncClient(timeout=None)
+        self._client = httpx.AsyncClient(timeout=timeout)
         self.v_2 = AsyncV2Client(
             environment=self._environment, x_random_header=self._x_random_header, token=self._token, client=self._client
         )

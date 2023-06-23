@@ -29,8 +29,8 @@ from .request_body_parameters import (
 @dataclass
 class ConstructorParameter:
     constructor_parameter_name: str
-    private_member_name: str
     type_hint: AST.TypeHint
+    private_member_name: typing.Optional[str] = None
     initializer: Optional[AST.Expression] = None
 
 
@@ -84,18 +84,33 @@ class ClientGenerator:
         )
 
     def _create_class_declaration(self, *, is_async: bool) -> AST.ClassDeclaration:
+        constructor_parameters = self._get_constructor_parameters(is_async=is_async)
+
+        named_parameters = [
+            AST.NamedFunctionParameter(
+                name=param.constructor_parameter_name,
+                type_hint=param.type_hint,
+                initializer=param.initializer,
+            )
+            for param in constructor_parameters
+        ]
+
+        if self._is_root:
+            named_parameters.append(
+                AST.NamedFunctionParameter(
+                    name=self._get_timeout_constructor_parameter_name(constructor_parameters),
+                    type_hint=AST.TypeHint.optional(AST.TypeHint.float_()),
+                    initializer=AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
+                    if isinstance(self._context.custom_config.timeout_in_seconds, int)
+                    else AST.Expression(AST.TypeHint.none()),
+                )
+            )
+
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
             constructor=AST.ClassConstructor(
                 signature=AST.FunctionSignature(
-                    named_parameters=[
-                        AST.NamedFunctionParameter(
-                            name=param.constructor_parameter_name,
-                            type_hint=param.type_hint,
-                            initializer=param.initializer,
-                        )
-                        for param in self._get_constructor_parameters(is_async=is_async)
-                    ],
+                    named_parameters=named_parameters,
                 ),
                 body=AST.CodeWriter(self._get_write_constructor_body(is_async=is_async)),
             ),
@@ -244,7 +259,7 @@ class ClientGenerator:
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=self._get_client_constructor_parameter_name(params=parameters),
-                    private_member_name=self._get_client_constructor_member_name(params=parameters),
+                    private_member_name=self._get_client_member_name(params=parameters),
                     type_hint=AST.TypeHint(HttpX.ASYNC_CLIENT) if is_async else AST.TypeHint(HttpX.CLIENT),
                 )
             )
@@ -258,18 +273,19 @@ class ClientGenerator:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             constructor_parameters = self._get_constructor_parameters(is_async=is_async)
             for param in constructor_parameters:
-                writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
+                if param.private_member_name is not None:
+                    writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
             if self._is_root:
-                writer.write(f"self.{self._get_client_constructor_member_name(constructor_parameters)} = ")
+                writer.write(f"self.{self._get_client_member_name(constructor_parameters)} = ")
                 writer.write_node(
                     AST.ClassInstantiation(
                         HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
                         kwargs=[
                             (
                                 "timeout",
-                                AST.Expression(f"{self._context.custom_config.timeout_in_seconds}")
-                                if isinstance(self._context.custom_config.timeout_in_seconds, int)
-                                else AST.Expression(AST.TypeHint.none()),
+                                AST.Expression(
+                                    f"{self._get_timeout_constructor_parameter_name(constructor_parameters)}"
+                                ),
                             )
                         ],
                     )
@@ -287,9 +303,7 @@ class ClientGenerator:
                         kwargs.append(
                             (
                                 "client",
-                                AST.Expression(
-                                    f"self.{self._get_client_constructor_member_name(constructor_parameters)}"
-                                ),
+                                AST.Expression(f"self.{self._get_client_member_name(constructor_parameters)}"),
                             ),
                         )
                     writer.write_node(
@@ -808,11 +822,17 @@ class ClientGenerator:
                 return "_client"
         return "client"
 
-    def _get_client_constructor_member_name(self, params: typing.List[ConstructorParameter]) -> str:
+    def _get_client_member_name(self, params: typing.List[ConstructorParameter]) -> str:
         for param in params:
             if param.private_member_name == "_client":
                 return "__client"
         return "_client"
+
+    def _get_timeout_constructor_parameter_name(self, params: typing.List[ConstructorParameter]) -> str:
+        for param in params:
+            if param.constructor_parameter_name == "timeout":
+                return "_timeout"
+        return "timeout"
 
 
 def is_endpoint_path_empty(endpoint: ir_types.HttpEndpoint) -> bool:
