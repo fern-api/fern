@@ -11,15 +11,11 @@ export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         resolvedUrlPath: ResolvedUrlPath;
-        basePath: string | undefined;
-        pathname: string;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
-    basePath = "/",
-    pathname,
     resolvedUrlPath,
     children,
 }) => {
@@ -96,7 +92,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 
     const contextValue = useCallback(
         (): DocsContextValue => ({
-            basePath,
             resolveApi,
             resolvePage,
             resolveFile,
@@ -108,16 +103,13 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolvedPathFromUrl: resolvedUrlPath,
             nextPath: undefined,
             previousPath: undefined,
-            pathname,
             selectedSlug,
         }),
         [
-            basePath,
             docsDefinition,
             navigateToPath,
             navigateToPathListeners.registerListener,
             onScrollToPath,
-            pathname,
             resolveApi,
             resolveFile,
             resolvePage,

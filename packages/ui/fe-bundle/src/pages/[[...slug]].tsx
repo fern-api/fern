@@ -15,12 +15,11 @@ const REGISTRY_SERVICE = new FernRegistryClient({
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
-        pathname: string;
         resolvedUrlPath: ResolvedUrlPath;
     }
 }
 
-export default function Docs({ docs, pathname, resolvedUrlPath }: Docs.Props): JSX.Element {
+export default function Docs({ docs, resolvedUrlPath }: Docs.Props): JSX.Element {
     return (
         <main className={inter.className}>
             <Head>
@@ -29,7 +28,7 @@ export default function Docs({ docs, pathname, resolvedUrlPath }: Docs.Props): J
                     <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]}></link>
                 )}
             </Head>
-            <App docs={docs} pathname={pathname} resolvedUrlPath={resolvedUrlPath} />
+            <App docs={docs} resolvedUrlPath={resolvedUrlPath} />
         </main>
     );
 }
@@ -55,7 +54,16 @@ export const getServerSideProps: GetServerSideProps<Docs.Props> = async (context
         docs.body.baseUrl.basePath != null
             ? pathname.replace(new RegExp(`^${docs.body.baseUrl.basePath}`), "")
             : pathname;
-    const slugWithoutLeadingOrTrailingSlashes = removeLeadingAndTrailingSlashes(slug);
+    let slugWithoutLeadingOrTrailingSlashes = removeLeadingAndTrailingSlashes(slug);
+
+    if (slugWithoutLeadingOrTrailingSlashes === "") {
+        const firstNavigationItem = docs.body.definition.config.navigation.items[0];
+        if (firstNavigationItem != null) {
+            slugWithoutLeadingOrTrailingSlashes = firstNavigationItem.urlSlug;
+        } else {
+            return { notFound: true };
+        }
+    }
 
     const urlPathResolver = new UrlPathResolver(docs.body.definition);
     const resolvedUrlPath = await urlPathResolver.resolveSlug(slugWithoutLeadingOrTrailingSlashes);
@@ -67,7 +75,6 @@ export const getServerSideProps: GetServerSideProps<Docs.Props> = async (context
         props: {
             docs: docs.body,
             resolvedUrlPath,
-            pathname: context.query.slug != null ? (context.query.slug as string[]).join("/") : "",
         },
     };
 };
