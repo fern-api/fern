@@ -10,31 +10,31 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 import { Sidebar } from "../sidebar/Sidebar";
 
 export const MobileSidebar: React.FC = () => {
-    const { selectedPath } = useDocsContext();
+    const { resolvedPathFromUrl } = useDocsContext();
     const { value: isOpen, setTrue: open, setFalse: close } = useBooleanState(false);
 
     const title = useMemo(() => {
-        if (selectedPath == null) {
+        if (resolvedPathFromUrl == null) {
             return undefined;
         }
-        switch (selectedPath.type) {
+        switch (resolvedPathFromUrl.type) {
             case "api":
-                return selectedPath.apiSection.title;
+                return resolvedPathFromUrl.apiSection.title;
             case "apiSubpackage":
-                return <SubpackageTitle subpackage={selectedPath.subpackage} />;
+                return <SubpackageTitle subpackage={resolvedPathFromUrl.subpackage} />;
             case "endpoint":
             case "topLevelEndpoint":
-                return <EndpointTitle endpoint={selectedPath.endpoint} />;
+                return <EndpointTitle endpoint={resolvedPathFromUrl.endpoint} />;
             case "page":
-                return selectedPath.page.title;
+                return resolvedPathFromUrl.page.title;
             case "clientLibraries":
                 return <ApiArtifactsTitle />;
             case "section":
-                return selectedPath.section.title;
+                return resolvedPathFromUrl.section.title;
             default:
-                assertNever(selectedPath);
+                assertNever(resolvedPathFromUrl);
         }
-    }, [selectedPath]);
+    }, [resolvedPathFromUrl]);
 
     return (
         <>

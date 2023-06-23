@@ -2,8 +2,8 @@ import { NonIdealState } from "@blueprintjs/core";
 import { assertNever } from "@fern-api/core-utils";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { ApiPage } from "../api-page/ApiPage";
+import { CustomDocsPage } from "../custom-docs-page/CustomDocsPage";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { MarkdownPage } from "../markdown-page/MarkdownPage";
 import { RedirectToFirstNavigationItem } from "./RedirectToFirstNavigationItem";
 
 export const DocsMainContent: React.FC = () => {
@@ -18,7 +18,7 @@ export const DocsMainContent: React.FC = () => {
 
     switch (resolvedPathFromUrl.type) {
         case "page":
-            return <MarkdownPage path={resolvedPathFromUrl} key={resolvedPathFromUrl.slug} />;
+            return <CustomDocsPage path={resolvedPathFromUrl} key={resolvedPathFromUrl.slug} />;
         case "api":
             return (
                 <ApiDefinitionContextProvider

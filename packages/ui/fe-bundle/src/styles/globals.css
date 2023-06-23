@@ -10,7 +10,7 @@
         @apply transition;
         @apply pb-[2px];
         @apply text-white hover:text-accentPrimary;
-        @apply no-underline border-b border-border hover:border-accentPrimary;
+        @apply no-underline border-b border-b-border hover:border-b-accentPrimary;
     }
 
     a,

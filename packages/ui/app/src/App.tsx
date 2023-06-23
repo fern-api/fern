@@ -13,6 +13,7 @@ import styles from "./App.module.scss";
 import { CONTEXTS } from "./contexts";
 import { DocsContextProvider } from "./docs-context/DocsContextProvider";
 import { Docs } from "./docs/Docs";
+import { ResolvedUrlPath } from "./ResolvedUrlPath";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -20,10 +21,11 @@ export declare namespace App {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
         pathname: string;
+        resolvedUrlPath: ResolvedUrlPath;
     }
 }
 
-export const App: React.FC<App.Props> = ({ docs, pathname }) => {
+export const App: React.FC<App.Props> = ({ docs, resolvedUrlPath, pathname }) => {
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
@@ -40,6 +42,7 @@ export const App: React.FC<App.Props> = ({ docs, pathname }) => {
                     docsDefinition={docs.definition}
                     basePath={docs.baseUrl.basePath ?? undefined}
                     pathname={pathname}
+                    resolvedUrlPath={resolvedUrlPath}
                 >
                     <Docs />
                 </DocsContextProvider>
