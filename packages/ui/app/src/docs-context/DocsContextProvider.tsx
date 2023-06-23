@@ -1,8 +1,9 @@
+import { assertNever } from "@fern-api/core-utils";
 import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { useRouter } from "next/router";
-import { PropsWithChildren, useCallback, useState } from "react";
+import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { ResolvedUrlPath } from "../ResolvedUrlPath";
 import { DocsContext, DocsContextValue } from "./DocsContext";
 import { useSlugListeners } from "./useSlugListeners";
@@ -21,7 +22,27 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
 }) => {
     const router = useRouter();
 
-    const [selectedSlug, setSelectedSlug] = useState(resolvedUrlPath.slug);
+    const selectedSlugFromUrl = useMemo(() => {
+        switch (resolvedUrlPath.type) {
+            case "clientLibraries":
+            case "endpoint":
+            case "page":
+            case "topLevelEndpoint":
+            case "apiSubpackage":
+                return resolvedUrlPath.slug;
+            case "api":
+            case "section":
+                return undefined;
+            default:
+                assertNever(resolvedUrlPath);
+        }
+    }, [resolvedUrlPath]);
+    const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
+    useEffect(() => {
+        if (selectedSlug == null) {
+            setSelectedSlug(selectedSlugFromUrl);
+        }
+    }, [selectedSlug, selectedSlugFromUrl]);
 
     const resolveApi = useCallback(
         (apiId: FernRegistry.ApiDefinitionId): FernRegistryApiRead.ApiDefinition => {
