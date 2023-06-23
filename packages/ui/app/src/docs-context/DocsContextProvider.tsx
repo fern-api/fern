@@ -26,7 +26,8 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         switch (resolvedUrlPath.type) {
             case "clientLibraries":
             case "endpoint":
-            case "page":
+            case "markdown-page":
+            case "mdx-page":
             case "topLevelEndpoint":
             case "apiSubpackage":
                 return resolvedUrlPath.slug;

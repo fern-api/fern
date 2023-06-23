@@ -4,7 +4,8 @@ import { MDXRemoteSerializeResult } from "next-mdx-remote";
 
 export type ResolvedUrlPath =
     | ResolvedUrlPath.Section
-    | ResolvedUrlPath.Page
+    | ResolvedUrlPath.MarkdownPage
+    | ResolvedUrlPath.MdxPage
     | ResolvedUrlPath.Api
     | ResolvedUrlPath.ClientLibraries
     | ResolvedUrlPath.TopLevelEndpoint
@@ -18,8 +19,15 @@ export declare namespace ResolvedUrlPath {
         slug: string;
     }
 
-    export interface Page {
-        type: "page";
+    export interface MarkdownPage {
+        type: "markdown-page";
+        page: FernRegistryDocsRead.PageMetadata;
+        slug: string;
+        markdownContent: string;
+    }
+
+    export interface MdxPage {
+        type: "mdx-page";
         page: FernRegistryDocsRead.PageMetadata;
         slug: string;
         serializedMdxContent: MDXRemoteSerializeResult;

@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { ResolvedUrlPath, UrlSlugTree, UrlSlugTreeNode } from "@fern-api/ui";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { serialize } from "next-mdx-remote/serialize";
+import path from "path";
 
 export class UrlPathResolver {
     private urlSlugTree: UrlSlugTree;
@@ -27,12 +28,24 @@ export class UrlPathResolver {
                     slug: node.slug,
                 };
             case "page":
-                return {
-                    type: "page",
-                    page: node.page,
-                    slug: node.slug,
-                    serializedMdxContent: await serialize(this.getPage(node.page.id).markdown),
-                };
+                switch (path.extname(node.page.id)) {
+                    case ".md":
+                        return {
+                            type: "markdown-page",
+                            page: node.page,
+                            slug: node.slug,
+                            markdownContent: this.getPage(node.page.id).markdown,
+                        };
+                    case ".mdx":
+                        return {
+                            type: "mdx-page",
+                            page: node.page,
+                            slug: node.slug,
+                            serializedMdxContent: await serialize(this.getPage(node.page.id).markdown),
+                        };
+                    default:
+                        throw new Error("Unexpected page extension: " + node.page.id);
+                }
             case "api":
                 return {
                     type: "api",

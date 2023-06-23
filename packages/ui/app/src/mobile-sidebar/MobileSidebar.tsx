@@ -14,9 +14,6 @@ export const MobileSidebar: React.FC = () => {
     const { value: isOpen, setTrue: open, setFalse: close } = useBooleanState(false);
 
     const title = useMemo(() => {
-        if (resolvedPathFromUrl == null) {
-            return undefined;
-        }
         switch (resolvedPathFromUrl.type) {
             case "api":
                 return resolvedPathFromUrl.apiSection.title;
@@ -25,7 +22,8 @@ export const MobileSidebar: React.FC = () => {
             case "endpoint":
             case "topLevelEndpoint":
                 return <EndpointTitle endpoint={resolvedPathFromUrl.endpoint} />;
-            case "page":
+            case "markdown-page":
+            case "mdx-page":
                 return resolvedPathFromUrl.page.title;
             case "clientLibraries":
                 return <ApiArtifactsTitle />;
