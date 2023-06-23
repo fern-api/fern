@@ -44,10 +44,10 @@ export const MobileSidebar: React.FC = () => {
             </div>
             {isOpen && (
                 <>
-                    <div className="absolute inset-0 z-10 backdrop-blur-xl" onClick={close}>
+                    <div className="absolute inset-0 backdrop-blur-xl" onClick={close}>
                         <Sidebar expandAllSections />
                     </div>
-                    <Icon className="absolute right-5 top-5 z-10" icon={IconNames.CROSS} onClick={close} />
+                    <Icon className="absolute right-5 top-5" icon={IconNames.CROSS} onClick={close} />
                 </>
             )}
         </>
