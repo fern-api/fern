@@ -112,6 +112,7 @@ module.exports = {
         "react/prop-types": "off",
         "@typescript-eslint/await-thenable": "error",
         "@blueprintjs/classes-constants": "off",
-        "tailwindcss/no-custom-classname": ["off"],
+        "tailwindcss/no-custom-classname": "off",
+        "@blueprintjs/html-components": "off",
     },
 };

@@ -2,11 +2,11 @@ import { assertNever } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { noop, size } from "lodash-es";
-import { resolveSubpackage } from "../../api-context/ApiDefinitionContextProvider";
-import { areApiArtifactsNonEmpty } from "../../api-page/artifacts/areApiArtifactsNonEmpty";
-import { doesSubpackageHaveEndpointsRecursive } from "../../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
-import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
-import { joinUrlSlugs } from "../joinUrlSlugs";
+import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
+import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
+import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
+import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
+import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
 
 export class UrlSlugTree {
     private root: Record<UrlSlug, UrlSlugTreeNode>;

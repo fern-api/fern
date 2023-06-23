@@ -16,7 +16,7 @@ export const Docs: React.FC = () => {
             className="relative flex min-h-0 flex-1 flex-col bg-cover"
             style={{ backgroundImage: `url('${nebulaImage.src}')` }}
         >
-            <div className="border-border z-1 bg-background sticky inset-x-0 top-0 z-10 border-b">
+            <div className="border-border bg-background sticky inset-x-0 top-0 border-b">
                 <Header />
                 <div className="flex md:hidden">
                     <MobileSidebar />
