@@ -1,4 +1,11 @@
-import { Header, PathParameter, PrimitiveSchemaValue, QueryParameter, Schema } from "@fern-fern/openapi-ir-model/ir";
+import {
+    Header,
+    HttpMethod,
+    PathParameter,
+    PrimitiveSchemaValue,
+    QueryParameter,
+    Schema,
+} from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getVariableReference } from "../../extensions/getVariableReference";
@@ -11,11 +18,21 @@ export interface ConvertedParameters {
     headers: Header[];
 }
 
-export function convertParameters(
-    parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[],
-    context: AbstractOpenAPIV3ParserContext,
-    requestBreadcrumbs: string[]
-): ConvertedParameters {
+export function convertParameters({
+    path,
+    httpMethod,
+    operation,
+    parameters,
+    context,
+    requestBreadcrumbs,
+}: {
+    path: string;
+    httpMethod: HttpMethod;
+    operation: OpenAPIV3.OperationObject;
+    parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[];
+    context: AbstractOpenAPIV3ParserContext;
+    requestBreadcrumbs: string[];
+}): ConvertedParameters {
     const convertedParameters: ConvertedParameters = {
         pathParameters: [],
         queryParameters: [],
@@ -67,7 +84,11 @@ export function convertParameters(
         } else if (resolvedParameter.in === "header") {
             convertedParameters.headers.push(convertedParameter);
         } else {
-            throw new Error(`Doesn't support converting this path parameters: ${JSON.stringify(parameter)}`);
+            context.logger.warn(
+                `Skipping ${resolvedParameter.in} parameter, ${
+                    resolvedParameter.name
+                }, in ${httpMethod.toUpperCase()} ${path}`
+            );
         }
     }
     return convertedParameters;

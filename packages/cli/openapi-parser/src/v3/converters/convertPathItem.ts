@@ -144,6 +144,8 @@ function convertSyncAndAsyncEndpoints({
             parameters: parametersWithoutHeader,
             document,
             context,
+            path,
+            httpMethod,
         });
         endpoints.push({
             ...synchronousEndpoint,
@@ -159,6 +161,8 @@ function convertSyncAndAsyncEndpoints({
             context,
             responseStatusCode: asyncResponseStatusCode,
             suffix: "async",
+            path,
+            httpMethod,
         });
         asynchronousEndpoint.headers.push({
             name: headerToIgnore,
@@ -181,6 +185,8 @@ function convertSyncAndAsyncEndpoints({
                 parameters,
                 document,
                 context,
+                path,
+                httpMethod,
             }),
             path,
             method: httpMethod,
@@ -209,6 +215,8 @@ function convertToEndpoint({
     context,
     responseStatusCode,
     suffix,
+    path,
+    httpMethod,
 }: {
     sdkName?: EndpointSdkName;
     operation: OpenAPIV3.OperationObject;
@@ -217,6 +225,8 @@ function convertToEndpoint({
     context: AbstractOpenAPIV3ParserContext;
     responseStatusCode?: number;
     suffix?: string;
+    path: string;
+    httpMethod: HttpMethod;
 }): Omit<Endpoint, "path" | "method"> {
     const baseBreadcrumbs: string[] = [];
     if (sdkName != null) {
@@ -239,7 +249,14 @@ function convertToEndpoint({
     ]);
     const requestBreadcrumbs = [...baseBreadcrumbs, "Request"];
 
-    const convertedParameters = convertParameters(parameters, context, requestBreadcrumbs);
+    const convertedParameters = convertParameters({
+        operation,
+        parameters,
+        context,
+        requestBreadcrumbs,
+        path,
+        httpMethod,
+    });
     let convertedRequest =
         operation.requestBody != null
             ? convertRequest({
