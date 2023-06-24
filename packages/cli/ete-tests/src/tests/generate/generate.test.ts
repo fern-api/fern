@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
-import { writeFile, mkdir } from "fs/promises";
+import { createFilesToIgnore } from "../../utils/createFilesToIgnore";
 
 const FIXTURES = ["docs"];
 
@@ -40,18 +40,13 @@ describe("fern generate --local", () => {
         await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory,
         });
-
-        const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("generated/typescript"));
-
-        await writeFile(`${pathOfDirectory}/generated/typescript/.fernignore`, "fern.js\n**/*.txt");
-        await writeFile(`${pathOfDirectory}/generated/typescript/fern.js`, "#!/usr/bin/env node\nconsole.log('Fern >>> OpenAPI')");
-        await mkdir(`${pathOfDirectory}/generated/typescript/slam`);
-        await writeFile(`${pathOfDirectory}/generated/typescript/slam/slam.txt`, "Practice schema-first API design with Fern");
-
+        await createFilesToIgnore(pathOfDirectory);
+    
         await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory,
         });
 
+        const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("generated/typescript"));
         expect(await doesPathExist(join(absolutePathToLocalOutput, RelativeFilePath.of("fern.js")))).toBe(true);
         expect(await doesPathExist(join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore")))).toBe(true);
         expect(await doesPathExist(join(absolutePathToLocalOutput, RelativeFilePath.of("slam")))).toBe(true);
