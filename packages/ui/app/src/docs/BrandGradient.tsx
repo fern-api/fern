@@ -10,7 +10,7 @@ export const BrandGradient: React.FC<BrandGradient.Props> = ({ size, position })
         <div
             className="absolute inset-0"
             style={{
-                background: `radial-gradient(${size} at ${position},rgba(var(--accent-primary), 0.15),rgba(var(--accent-primary), 0.05),transparent)`,
+                background: `radial-gradient(${size} at ${position},rgba(175, 100, 239, 0.15),rgba(175, 100, 239, 0.05),transparent)`,
             }}
         />
     );
