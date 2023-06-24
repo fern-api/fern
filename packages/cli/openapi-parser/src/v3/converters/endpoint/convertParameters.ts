@@ -21,14 +21,12 @@ export interface ConvertedParameters {
 export function convertParameters({
     path,
     httpMethod,
-    operation,
     parameters,
     context,
     requestBreadcrumbs,
 }: {
     path: string;
     httpMethod: HttpMethod;
-    operation: OpenAPIV3.OperationObject;
     parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[];
     context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];

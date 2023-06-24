@@ -250,7 +250,6 @@ function convertToEndpoint({
     const requestBreadcrumbs = [...baseBreadcrumbs, "Request"];
 
     const convertedParameters = convertParameters({
-        operation,
         parameters,
         context,
         requestBreadcrumbs,
