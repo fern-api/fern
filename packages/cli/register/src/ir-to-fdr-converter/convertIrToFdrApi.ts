@@ -27,6 +27,7 @@ export function convertIrToFdrApi(ir: IntermediateRepresentation): FernRegistry.
         fdrApi.subpackages[convertedSubpackageId] = {
             subpackageId: convertedSubpackageId,
             name: service?.displayName ?? subpackage.name.originalName,
+            description: subpackage.docs ?? undefined,
             ...convertPackage(subpackage, ir),
         };
     }
