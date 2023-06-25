@@ -68,7 +68,7 @@ export const DiscriminatedUnionVariant: React.FC<DiscriminatedUnionVariant.Props
         >
             <MonospaceText>{startCase(unionVariant.discriminantValue)}</MonospaceText>
             <div className="flex flex-col">
-                <Description description={unionVariant.description ?? undefined} />
+                <Description htmlDescription={unionVariant.htmlDescription ?? undefined} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeDefinition typeShape={shape} isCollapsible={true} />
                 </TypeDefinitionContext.Provider>

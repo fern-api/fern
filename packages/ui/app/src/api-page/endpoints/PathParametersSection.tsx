@@ -15,7 +15,7 @@ export const PathParametersSection: React.FC<PathParametersSection.Props> = ({ p
             (pathParameter): EndpointParameter.Props => ({
                 name: pathParameter.key,
                 type: pathParameter.type,
-                description: pathParameter.description ?? undefined,
+                htmlDescription: pathParameter.htmlDescription ?? undefined,
             })
         );
     }, [pathParameters]);

@@ -37,7 +37,7 @@
     "@fern-api/react-commons": "workspace:*",
     "@fern-api/routing-utils": "workspace:*",
     "@fern-api/theme": "workspace:*",
-    "@fern-fern/registry-browser": "0.0.1113",
+    "@fern-fern/registry-browser": "0.0.1137",
     "@fontsource/ibm-plex-mono": "^4.5.13",
     "classnames": "^2.3.1",
     "lodash-es": "^4.17.21",

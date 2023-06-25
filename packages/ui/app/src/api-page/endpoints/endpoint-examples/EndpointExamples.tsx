@@ -14,7 +14,7 @@ export const EndpointExamples: React.FC<EndpointExamples.Props> = ({ endpoint })
         return endpoint.examples.map(
             (example): Example => ({
                 name: undefined,
-                description: example.description ?? undefined,
+                htmlDescription: example.htmlDescription ?? undefined,
                 render: () => <EndpointExample endpoint={endpoint} example={example} />,
             })
         );

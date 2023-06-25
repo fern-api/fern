@@ -61,15 +61,15 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
         };
     }, [contextValue, jsonPropertyPath]);
 
-    const description = useMemo(() => {
-        if (property.description != null) {
-            return property.description;
+    const htmlDescription = useMemo(() => {
+        if (property.htmlDescription != null) {
+            return property.htmlDescription;
         }
         if (property.valueType.type === "id") {
-            return resolveTypeById(property.valueType.value).description;
+            return resolveTypeById(property.valueType.value).htmlDescription;
         }
         return undefined;
-    }, [property.description, property.valueType, resolveTypeById]);
+    }, [property.htmlDescription, property.valueType, resolveTypeById]);
 
     return (
         <div
@@ -86,7 +86,7 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
                 </div>
             </div>
             <div className="flex flex-col">
-                <Description description={description ?? undefined} />
+                <Description htmlDescription={htmlDescription ?? undefined} />
                 <TypeDefinitionContext.Provider value={newContextValue}>
                     <InternalTypeReferenceDefinitions type={property.valueType} isCollapsible />
                 </TypeDefinitionContext.Provider>

@@ -16,7 +16,7 @@ export declare namespace EndpointResponseSection {
 export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = ({ httpResponse, onHoverProperty }) => {
     return (
         <div className="flex flex-col">
-            <Description description={httpResponse.description ?? undefined} />
+            <Description htmlDescription={httpResponse.htmlDescription ?? undefined} />
             <div className="text-text-default mb-5">
                 {"This endpoint returns "}
                 {visitDiscriminatedUnion(httpResponse.type, "type")._visit<JSX.Element | string>({

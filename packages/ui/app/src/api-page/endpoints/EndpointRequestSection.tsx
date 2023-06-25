@@ -16,7 +16,7 @@ export declare namespace EndpointRequestSection {
 export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({ httpRequest, onHoverProperty }) => {
     return (
         <div className="flex flex-col">
-            <Description description={httpRequest.description ?? undefined} />
+            <Description htmlDescription={httpRequest.htmlDescription ?? undefined} />
             <div className="text-text-default mb-5">
                 {"This endpoint expects "}
                 {visitDiscriminatedUnion(httpRequest.type, "type")._visit<JSX.Element | string>({

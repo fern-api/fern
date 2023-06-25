@@ -15,7 +15,7 @@ export const QueryParametersSection: React.FC<QueryParametersSection.Props> = ({
             (queryParameter): EndpointParameter.Props => ({
                 name: queryParameter.key,
                 type: queryParameter.type,
-                description: queryParameter.description ?? undefined,
+                htmlDescription: queryParameter.htmlDescription ?? undefined,
             })
         );
     }, [queryParameters]);

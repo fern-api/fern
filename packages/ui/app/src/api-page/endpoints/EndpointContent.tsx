@@ -4,8 +4,8 @@ import React, { useCallback, useMemo, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
-import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
+import { Description } from "../types/Description";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
 import { EndpointMethodPill } from "./EndpointMethodPill";
@@ -79,11 +79,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             ))}
                         </MonospaceText>
                     </div>
-                    {endpoint.description != null && (
-                        <div className="mt-6">
-                            <Markdown>{endpoint.description}</Markdown>
-                        </div>
-                    )}
+                    <Description className="mt-6" htmlDescription={endpoint.htmlDescription} />
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
                             {endpoint.path.pathParameters.length > 0 && (

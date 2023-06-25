@@ -1,23 +1,19 @@
-import { Markdown } from "../markdown/Markdown";
+import { Description } from "../types/Description";
 
 export declare namespace EndpointSection {
     export type Props = React.PropsWithChildren<{
         title: string;
-        description?: string;
+        htmlDescription?: string;
     }>;
 }
 
-export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, description, children }) => {
+export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, htmlDescription, children }) => {
     return (
         <div className="flex flex-col">
             <div className="mb-3 flex items-center gap-3">
                 <div className="text-lg font-medium">{title}</div>
             </div>
-            {description != null && (
-                <div className="mb-2">
-                    <Markdown>{description}</Markdown>
-                </div>
-            )}
+            <Description className="mb-2" htmlDescription={htmlDescription} />
             <div className="flex flex-col">{children}</div>
         </div>
     );

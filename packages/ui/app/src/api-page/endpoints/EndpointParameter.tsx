@@ -1,19 +1,19 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { Markdown } from "../markdown/Markdown";
+import { Description } from "../types/Description";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointParameter {
     export interface Props {
         name: string;
-        description?: string;
+        htmlDescription?: string;
         type: FernRegistryApiRead.TypeReference;
     }
 }
 
-export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, description, type }) => {
+export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, htmlDescription, type }) => {
     return (
         <div className="flex flex-col gap-2 py-4">
             <div className="flex items-baseline gap-1">
@@ -22,7 +22,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, des
                     <TypeShorthand type={type} plural={false} />
                 </div>
             </div>
-            {description != null && <Markdown>{description}</Markdown>}
+            <Description htmlDescription={htmlDescription} />
             <TypeReferenceDefinitions type={type} isCollapsible />
         </div>
     );

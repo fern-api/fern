@@ -1,8 +1,8 @@
-import { Markdown } from "../markdown/Markdown";
+import { Description } from "../types/Description";
 
 export interface Example {
     name: string | undefined;
-    description: string | undefined;
+    htmlDescription: string | undefined;
     render: () => JSX.Element;
 }
 
@@ -22,7 +22,7 @@ export const DefinitionItemExamples: React.FC<DefinitionItemExamples.Props> = ({
     return (
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
             {example.name != null && <div className="mb-1 text-lg font-medium">{example.name}</div>}
-            {example.description != null && <Markdown>{example.description}</Markdown>}
+            <Description htmlDescription={example.htmlDescription} />
             <div className="flex min-h-0 flex-1 flex-col">{example.render()}</div>
         </div>
     );

@@ -5818,7 +5818,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/ui", "workspace:packages/ui/app"],\
-            ["@fern-fern/registry-browser", "npm:0.0.1113"],\
+            ["@fern-fern/registry-browser", "npm:0.0.1137"],\
             ["@tailwindcss/typography", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:0.5.9"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6773,7 +6773,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fern-api/routing-utils", "workspace:packages/commons/react/routing-utils"],\
             ["@fern-api/theme", "workspace:packages/commons/react/theme"],\
-            ["@fern-fern/registry-browser", "npm:0.0.1113"],\
+            ["@fern-fern/registry-browser", "npm:0.0.1137"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -7237,10 +7237,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-browser", [\
-        ["npm:0.0.1113", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.0.1113-02e684e1e8-738a0314ce.zip/node_modules/@fern-fern/registry-browser/",\
+        ["npm:0.0.1137", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.0.1137-53108502e8-5308d4ddf9.zip/node_modules/@fern-fern/registry-browser/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-browser", "npm:0.0.1113"],\
+            ["@fern-fern/registry-browser", "npm:0.0.1137"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:1.4.0"],\
