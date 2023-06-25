@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
+import { createFilesToIgnore } from "../../utils/createFilesToIgnore";
 
 const FIXTURES = ["docs"];
 
@@ -29,4 +30,23 @@ describe("fern generate", () => {
             180_000
         );
     }
+});
+
+
+describe("fern generate --local", () => {
+    it("Keep files listed in .fernignore from unmodified", async () => {
+        const pathOfDirectory = await init();
+        await runFernCli(["generate", "--local", "--keepDocker"], {
+            cwd: pathOfDirectory,
+        });
+        await createFilesToIgnore(pathOfDirectory);
+        await runFernCli(["generate", "--local", "--keepDocker"], {
+            cwd: pathOfDirectory,
+        });
+        const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("generated/typescript"));
+        expect(await doesPathExist(join(absolutePathToLocalOutput, RelativeFilePath.of("fern.js")))).toBe(true);
+        expect(await doesPathExist(join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore")))).toBe(true);
+        expect(await doesPathExist(join(absolutePathToLocalOutput, RelativeFilePath.of("slam")))).toBe(true);
+        expect(await doesPathExist(join(absolutePathToLocalOutput, RelativeFilePath.of("slam/slam.txt")))).toBe(true);
+    }, 180_000);
 });
