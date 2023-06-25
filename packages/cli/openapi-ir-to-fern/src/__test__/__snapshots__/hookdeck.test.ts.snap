@@ -5154,6 +5154,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "attempts.yml": {
+      "docs": "An attempt is any request that Hookdeck makes on behalf of an event.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -5236,6 +5237,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "bookmarks.yml": {
+      "docs": "A bookmark lets you conveniently store and replay a specific request.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -5485,6 +5487,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "bulkRetryEvents.yml": {
+      "docs": "",
       "imports": {
         "root": "__package__.yml",
       },
@@ -5655,6 +5658,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "bulkRetryIgnoredEvents.yml": {
+      "docs": "",
       "imports": {
         "root": "__package__.yml",
       },
@@ -5825,6 +5829,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "bulkRetryRequests.yml": {
+      "docs": "",
       "imports": {
         "root": "__package__.yml",
       },
@@ -5995,6 +6000,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "connections.yml": {
+      "docs": "A connection lets you route webhooks from a source to a destination, using a ruleset.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -6351,6 +6357,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "destinations.yml": {
+      "docs": "A destination is any endpoint to which your webhooks can be routed.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -6653,6 +6660,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "events.yml": {
+      "docs": "An event is any request that Hookdeck receives from a source.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -6895,6 +6903,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "integrations.yml": {
+      "docs": "An integration configures platform-specific behaviors, such as signature verification.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7114,6 +7123,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "issueTriggers.yml": {
+      "docs": "Issue Triggers lets you setup rules that trigger issues when certain conditions are met.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7392,6 +7402,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "issues.yml": {
+      "docs": "Issues lets you track problems in your workspace and communicate resolution steps with your team.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7657,6 +7668,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "notifications.yml": {
+      "docs": "Notifications let your team receive alerts anytime an issue changes.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -7702,6 +7714,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "requests.yml": {
+      "docs": "A request represent a webhook received by Hookdeck.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8123,6 +8136,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "rulesets.yml": {
+      "docs": "A ruleset defines a group of rules that can be used across many connections.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8379,6 +8393,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "sources.yml": {
+      "docs": "A source represents any third party that sends webhooks to Hookdeck.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8616,6 +8631,7 @@ exports[`open api parser hookdeck simple 1`] = `
       },
     },
     "transformations.yml": {
+      "docs": "A transformation represents JavaScript code that will be executed on a connection's requests. Transformations are applied to connections using Rules.",
       "imports": {
         "root": "__package__.yml",
       },
