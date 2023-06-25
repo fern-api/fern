@@ -18,7 +18,7 @@ export async function loadDocsDefinition({
     return {
         absoluteFilepath: absolutePathToDocsDefinition,
         config: await loadDocsConfiguration({ absolutePathToDocsDefinition, context }),
-        pages: (await listFiles(absolutePathToDocsDefinition, "md")).reduce<Record<RelativeFilePath, string>>(
+        pages: (await listFiles(absolutePathToDocsDefinition, "md?(x)")).reduce<Record<RelativeFilePath, string>>(
             (pages, file) => ({
                 ...pages,
                 [file.filepath]: file.fileContents,

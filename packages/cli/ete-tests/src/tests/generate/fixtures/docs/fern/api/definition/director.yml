@@ -1,3 +1,5 @@
+docs: These are docs about directors.
+
 types:
   Director:
     properties:

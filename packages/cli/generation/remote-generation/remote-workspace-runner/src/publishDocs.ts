@@ -81,19 +81,18 @@ export async function publishDocs({
         })
     );
 
-    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
-        docsRegistrationId,
-        await constructRegisterDocsRequest({
-            docsDefinition,
-            organization,
-            workspace,
-            context,
-            token,
-            generatorGroup,
-            uploadUrls,
-            version,
-        })
-    );
+    const registerDocsRequest = await constructRegisterDocsRequest({
+        docsDefinition,
+        organization,
+        workspace,
+        context,
+        token,
+        generatorGroup,
+        uploadUrls,
+        version,
+    });
+    context.logger.debug(JSON.stringify(registerDocsRequest));
+    const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, registerDocsRequest);
     if (registerDocsResponse.ok) {
         const url = domain.startsWith("https://") ? domain : `https://${domain}`;
         context.logger.info(chalk.green(`Published docs to ${url}`));

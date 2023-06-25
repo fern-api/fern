@@ -51,11 +51,9 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
                     );
                 },
                 table({ node, ...props }) {
-                    // eslint-disable-next-line @blueprintjs/html-components
                     return <table {...props} className={classNames(props.className, "block overflow-x-auto")} />;
                 },
                 h1: ({ node, ...props }) => {
-                    // eslint-disable-next-line @blueprintjs/html-components
                     return <h1 {...props} className={classNames(props.className, "mt-10")} />;
                 },
             }}

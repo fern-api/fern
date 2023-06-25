@@ -10,31 +10,29 @@ import { useDocsContext } from "../docs-context/useDocsContext";
 import { Sidebar } from "../sidebar/Sidebar";
 
 export const MobileSidebar: React.FC = () => {
-    const { selectedPath } = useDocsContext();
+    const { resolvedPathFromUrl } = useDocsContext();
     const { value: isOpen, setTrue: open, setFalse: close } = useBooleanState(false);
 
     const title = useMemo(() => {
-        if (selectedPath == null) {
-            return undefined;
-        }
-        switch (selectedPath.type) {
+        switch (resolvedPathFromUrl.type) {
             case "api":
-                return selectedPath.apiSection.title;
+                return resolvedPathFromUrl.apiSection.title;
             case "apiSubpackage":
-                return <SubpackageTitle subpackage={selectedPath.subpackage} />;
+                return <SubpackageTitle subpackage={resolvedPathFromUrl.subpackage} />;
             case "endpoint":
             case "topLevelEndpoint":
-                return <EndpointTitle endpoint={selectedPath.endpoint} />;
-            case "page":
-                return selectedPath.page.title;
+                return <EndpointTitle endpoint={resolvedPathFromUrl.endpoint} />;
+            case "markdown-page":
+            case "mdx-page":
+                return resolvedPathFromUrl.page.title;
             case "clientLibraries":
                 return <ApiArtifactsTitle />;
             case "section":
-                return selectedPath.section.title;
+                return resolvedPathFromUrl.section.title;
             default:
-                assertNever(selectedPath);
+                assertNever(resolvedPathFromUrl);
         }
-    }, [selectedPath]);
+    }, [resolvedPathFromUrl]);
 
     return (
         <>
@@ -44,10 +42,10 @@ export const MobileSidebar: React.FC = () => {
             </div>
             {isOpen && (
                 <>
-                    <div className="absolute inset-0 z-10 backdrop-blur-xl" onClick={close}>
+                    <div className="absolute inset-0 backdrop-blur-xl" onClick={close}>
                         <Sidebar expandAllSections />
                     </div>
-                    <Icon className="absolute right-5 top-5 z-10" icon={IconNames.CROSS} onClick={close} />
+                    <Icon className="absolute right-5 top-5" icon={IconNames.CROSS} onClick={close} />
                 </>
             )}
         </>

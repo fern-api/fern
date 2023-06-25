@@ -8,9 +8,14 @@ import { convertEndpoint } from "./convertEndpoint";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
 export interface ConvertedServices {
-    services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema>;
+    services: Record<RelativeFilePath, ConvertedService>;
     schemaIdsToExclude: string[];
     additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema>;
+}
+
+export interface ConvertedService {
+    value: RawSchemas.HttpServiceSchema;
+    docs?: string;
 }
 
 export function convertToServices({
@@ -25,20 +30,23 @@ export function convertToServices({
     const { endpoints, schemas, nonRequestReferencedSchemas } = openApiFile;
     let additionalTypeDeclarations: Record<string, RawSchemas.TypeDeclarationSchema> = {};
     let schemaIdsToExclude: string[] = [];
-    const services: Record<RelativeFilePath, RawSchemas.HttpServiceSchema> = {};
+    const services: Record<RelativeFilePath, ConvertedService> = {};
     for (const endpoint of endpoints) {
         const { endpointId, file, tag } = getEndpointLocation(endpoint);
         if (!(file in services)) {
             const serviceTag = tag == null ? undefined : openApiFile.tags[tag];
             const emptyService = getEmptyService();
-            if (serviceTag?.description != null) {
+            if (serviceTag?.id != null) {
                 emptyService["display-name"] = serviceTag.id;
             }
-            services[file] = emptyService;
+            services[file] = {
+                value: emptyService,
+                docs: serviceTag?.description ?? undefined,
+            };
         }
         const service = services[file];
         if (service != null) {
-            if (endpointId in service.endpoints) {
+            if (endpointId in service.value.endpoints) {
                 throw new Error(
                     `The OpenAPI Spec has conflicting sdk method names. See ${endpoint.method.toUpperCase()} ${
                         endpoint.path
@@ -66,7 +74,7 @@ export function convertToServices({
                     audiences: [EXTERNAL_AUDIENCE],
                 };
             }
-            service.endpoints[endpointId] = endpointDefinition;
+            service.value.endpoints[endpointId] = endpointDefinition;
         }
     }
     return {

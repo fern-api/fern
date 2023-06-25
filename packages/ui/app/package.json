@@ -43,6 +43,7 @@
     "lodash-es": "^4.17.21",
     "marked": "^5.0.3",
     "next": "^13.4.4",
+    "next-mdx-remote": "^4.4.1",
     "normalize.css": "^8.0.1",
     "posthog-js": "^1.50.0",
     "react": "^18.2.0",
