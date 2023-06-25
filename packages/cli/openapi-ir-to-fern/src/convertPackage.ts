@@ -39,15 +39,16 @@ export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): C
                     for (let i = 0; i < numDirectoriesNested; ++i) {
                         importPrefix += "../";
                     }
-                    return [
-                        file,
-                        {
-                            imports: {
-                                [ROOT_PREFIX]: `${importPrefix}${FERN_PACKAGE_MARKER_FILENAME}`,
-                            },
-                            service,
+                    const definitionFile: DefinitionFileSchema = {
+                        imports: {
+                            [ROOT_PREFIX]: `${importPrefix}${FERN_PACKAGE_MARKER_FILENAME}`,
                         },
-                    ];
+                        service: service.value,
+                    };
+                    if (service.docs != null) {
+                        definitionFile.docs = service.docs;
+                    }
+                    return [file, definitionFile];
                 })
             ),
             [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: getPackageYml(openApiFile, convertedServices),
@@ -156,7 +157,7 @@ function getPackageYml(openApiFile: OpenAPIFile, convertedServices: ConvertedSer
     }
     return {
         types,
-        service: convertedServices.services[RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)],
+        service: convertedServices.services[RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]?.value,
         errors,
     };
 }

@@ -10,6 +10,7 @@ exports[`open api parser hume simple 1`] = `
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "[1] Start Job",
         "endpoints": {
           "startJob": {
             "auth": false,
@@ -64,6 +65,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "[2] Get Job Predictions",
         "endpoints": {
           "getJobArtifacts": {
             "auth": false,
@@ -129,6 +131,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "[3] List Jobs",
         "endpoints": {
           "listJobs": {
             "auth": false,

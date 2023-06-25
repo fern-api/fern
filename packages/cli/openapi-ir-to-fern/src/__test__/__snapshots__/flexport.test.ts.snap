@@ -8673,6 +8673,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "booking.yml": {
+      "docs": "Endpoints relating to Booking objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -8933,6 +8934,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "bookingAmendment.yml": {
+      "docs": "Endpoints relating to BookingAmendment objects. An existing booking is required to create booking amendments for.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9040,6 +9042,8 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "bookingLineItem.yml": {
+      "docs": "Endpoints relating to BookingLineItem objects. **The Booking Line Item endpoints need special permission to access. Please contact
+  your Flexport Sales representative if you are interested in using these endpoints.**",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9156,6 +9160,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "carbonCalculation.yml": {
+      "docs": "Endpoints relating to Carbon Calculations",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9251,6 +9256,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "commercialInvoices.yml": {
+      "docs": "Endpoints relating to Commercial Invoice objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9444,6 +9450,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "company.yml": {
+      "docs": "Endpoints relating to Company objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9595,6 +9602,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "companyEntity.yml": {
+      "docs": "Endpoints relating to CompanyEntity objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9763,6 +9771,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "contact.yml": {
+      "docs": "Endpoints relating to Contact objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9919,6 +9928,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "container.yml": {
+      "docs": "Endpoints relating to Container objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -9995,6 +10005,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "containerLeg.yml": {
+      "docs": "Endpoints relating to ContainerLeg objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10071,6 +10082,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "customsEntries.yml": {
+      "docs": "Endpoints relating to Customs Entry objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10137,6 +10149,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "document.yml": {
+      "docs": "Endpoints relating to Document objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10271,6 +10284,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "event.yml": {
+      "docs": "Endpoints relating to Event objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10347,6 +10361,7 @@ exports[`open api parser flexport simple 1`] = `
       },
     },
     "invoices.yml": {
+      "docs": "Endpoints relating to Invoice objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10480,6 +10495,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "location.yml": {
+      "docs": "Endpoints relating to Location objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10662,6 +10678,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "ports.yml": {
+      "docs": "Endpoints relating to Ports objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10713,6 +10730,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "product.yml": {
+      "docs": "Endpoints relating to Product objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -10903,6 +10921,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "purchaseOrder.yml": {
+      "docs": "Endpoints relating to PurchaseOrder objects. **The Purchase Order endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
       "imports": {
         "root": "__package__.yml",
       },
@@ -11086,6 +11105,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "purchaseOrderLineItem.yml": {
+      "docs": "Endpoints relating to PurchaseOrderLineItem objects. **The Purchase Order Line Item endpoints need special permission to access. Please contact your Flexport Sales representative if you are interested in using these endpoints.**",
       "imports": {
         "root": "__package__.yml",
       },
@@ -11172,6 +11192,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "shipment.yml": {
+      "docs": "Endpoints relating to Shipment objects",
       "imports": {
         "root": "__package__.yml",
       },
@@ -11440,6 +11461,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       },
     },
     "shipmentLeg.yml": {
+      "docs": "Endpoints relating to ShipmentLeg objects",
       "imports": {
         "root": "__package__.yml",
       },

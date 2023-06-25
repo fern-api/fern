@@ -3026,6 +3026,7 @@ empty.
       },
     },
     "artifacts.yml": {
+      "docs": "Artifact (file) management APIs.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -3099,6 +3100,7 @@ empty.
       },
     },
     "authConnection.yml": {
+      "docs": "Auth Connections of DevOrg.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -3288,6 +3290,7 @@ organization.
       },
     },
     "authTokens.yml": {
+      "docs": "Security token interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -3561,6 +3564,7 @@ organization.
       },
     },
     "devUsers.yml": {
+      "docs": "Dev user interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -3650,6 +3654,7 @@ used.
       },
     },
     "parts.yml": {
+      "docs": "DevRev part interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -3838,6 +3843,7 @@ used.
       },
     },
     "revOrgs.yml": {
+      "docs": "Rev organization interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -4116,6 +4122,7 @@ records.
       },
     },
     "tags.yml": {
+      "docs": "DevRev tag interactions.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -4321,6 +4328,7 @@ tags.
       },
     },
     "timelineEntries.yml": {
+      "docs": "APIs to manage timeline entries for objects.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -4460,6 +4468,7 @@ used.
       },
     },
     "webhooks.yml": {
+      "docs": "Webhook event APIs.",
       "imports": {
         "root": "__package__.yml",
       },
@@ -4650,6 +4659,7 @@ won't receive any object events until successfully verified.
       },
     },
     "works.yml": {
+      "docs": "DevRev work interactions.",
       "imports": {
         "root": "__package__.yml",
       },
