@@ -1,6 +1,7 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { ApiPackageContents } from "../ApiPackageContents";
+import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { SubpackageTitle } from "./SubpackageTitle";
@@ -25,6 +26,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
                 <div ref={setTargetRef} className="pt-20 text-4xl font-bold">
                     <SubpackageTitle subpackage={subpackage} />
                 </div>
+                {subpackage.description != null && <Markdown className="mt-10">{subpackage.description}</Markdown>}
             </ApiPageMargins>
             <ApiPackageContents key={subpackageId} package={subpackage} slug={slug} />
         </>
