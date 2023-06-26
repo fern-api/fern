@@ -13,6 +13,26 @@ export declare namespace EndpointDescriptor {
 }
 
 export const EndpointDescriptor: React.FC<EndpointDescriptor.Props> = ({ endpointDefinition, onClick }) => {
+    const urlWithBreakpoints = endpointDefinition.path.parts
+        .map((part) =>
+            visitDiscriminatedUnion(part, "type")._visit({
+                literal: (literal) => literal.value,
+                pathParameter: (pathParameter) => getPathParameterAsString(pathParameter.value),
+                _other: () => "",
+            })
+        )
+        .join("")
+        .split("/")
+        .map((p, i) =>
+            i === 0 ? (
+                p
+            ) : (
+                <>
+                    <wbr />/{p}
+                </>
+            )
+        );
+
     return (
         <button className="group flex items-start justify-start space-x-2" onClick={onClick}>
             <div className="flex items-baseline space-x-2">
@@ -23,16 +43,8 @@ export const EndpointDescriptor: React.FC<EndpointDescriptor.Props> = ({ endpoin
             </div>
 
             <div className="flex">
-                <MonospaceText className="text-text-default break-all text-start transition-colors group-hover:text-white">
-                    {endpointDefinition.path.parts
-                        .map((part) =>
-                            visitDiscriminatedUnion(part, "type")._visit({
-                                literal: (literal) => literal.value,
-                                pathParameter: (pathParameter) => getPathParameterAsString(pathParameter.value),
-                                _other: () => "",
-                            })
-                        )
-                        .join("")}
+                <MonospaceText className="text-text-default break-words text-start transition-colors group-hover:text-white">
+                    {urlWithBreakpoints}
                 </MonospaceText>
             </div>
         </button>
