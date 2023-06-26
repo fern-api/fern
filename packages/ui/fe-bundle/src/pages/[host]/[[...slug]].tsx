@@ -1,10 +1,10 @@
 import { App, ResolvedUrlPath } from "@fern-api/ui";
 import { FernRegistryClient } from "@fern-fern/registry-browser";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
-import { GetServerSideProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
-import { UrlPathResolver } from "../url-path-resolver/UrlPathResolver";
+import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,14 +33,16 @@ export default function Docs({ docs, resolvedUrlPath }: Docs.Props): JSX.Element
     );
 }
 
-export const getServerSideProps: GetServerSideProps<Docs.Props> = async (context) => {
-    const host = context.req.headers["x-fern-host"] ?? context.req.headers.host;
+export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
+    const { host, slug: slugArray } = params;
+
     if (host == null) {
-        throw new Error("Host header is not defined");
+        throw new Error("host is not defined");
     }
 
+    const pathname = slugArray != null ? (slugArray as string[]).join("/") : "";
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? `${host}${context.resolvedUrl}`,
+        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? `${host}${pathname}`,
     });
 
     if (!docs.ok) {
@@ -49,7 +51,6 @@ export const getServerSideProps: GetServerSideProps<Docs.Props> = async (context
         return { notFound: true };
     }
 
-    const pathname = context.query.slug != null ? (context.query.slug as string[]).join("/") : "";
     const slug =
         docs.body.baseUrl.basePath != null
             ? pathname.replace(new RegExp(`^${docs.body.baseUrl.basePath}`), "")
@@ -77,6 +78,10 @@ export const getServerSideProps: GetServerSideProps<Docs.Props> = async (context
             resolvedUrlPath,
         },
     };
+};
+
+export const getStaticPaths: GetStaticPaths = () => {
+    return { paths: [], fallback: "blocking" };
 };
 
 function removeLeadingAndTrailingSlashes(s: string): string {
