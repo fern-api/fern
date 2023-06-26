@@ -61,7 +61,7 @@ public final class JavaDocUtils {
         String renderedHtml = excludeOuterParagraphTags
                 ? RENDERER_WITHOUT_OUTER_PARAGRAPH_TAGS.render(PARSER.parse(rawDocs))
                 : DEFAULT_RENDERER.render(PARSER.parse(rawDocs));
-        return StringUtils.appendIfMissing(renderedHtml, "\n");
+        return StringUtils.appendIfMissing(renderedHtml, "\n").replaceAll("<br />", "");
     }
 
     public static String getParameterJavadoc(String paramName, String docs) {
