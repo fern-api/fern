@@ -31,7 +31,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
                     <div className="flex flex-col items-start space-y-5 pt-10 md:flex-row md:space-x-[5vw] md:space-y-0">
                         <Markdown className="flex-1">{subpackage.description}</Markdown>
                         <div className="flex-1">
-                            <SubpackageEndpointsOverview subpackage={subpackage} />
+                            <SubpackageEndpointsOverview subpackage={subpackage} slug={slug} />
                         </div>
                     </div>
                 )}
