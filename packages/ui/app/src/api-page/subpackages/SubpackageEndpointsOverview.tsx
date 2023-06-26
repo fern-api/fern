@@ -1,7 +1,8 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { HttpMethodIcon } from "../../commons/HttpMethodIcon";
-import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { getPathParameterAsString } from "../endpoints/getEndpointTitleAsString";
+import { useCallback } from "react";
+import { joinUrlSlugs } from "../../docs-context/joinUrlSlugs";
+import { useDocsContext } from "../../docs-context/useDocsContext";
+import { EndpointDescriptor } from "./EndpointDescriptor";
 
 export declare namespace SubpackageEndpointsOverview {
     export interface Props {
@@ -10,6 +11,19 @@ export declare namespace SubpackageEndpointsOverview {
 }
 
 export const SubpackageEndpointsOverview: React.FC<SubpackageEndpointsOverview.Props> = ({ subpackage }) => {
+    const { navigateToPath, resolvedPathFromUrl } = useDocsContext();
+
+    const handleEndpointClick = useCallback(
+        (endpointDef: FernRegistryApiRead.EndpointDefinition) => {
+            if (resolvedPathFromUrl.type !== "apiSubpackage") {
+                return;
+            }
+            const slug = joinUrlSlugs(resolvedPathFromUrl.slug, endpointDef.urlSlug);
+            navigateToPath(slug);
+        },
+        [navigateToPath, resolvedPathFromUrl.type, resolvedPathFromUrl.slug]
+    );
+
     return (
         <div className="border-border flex flex-col overflow-hidden rounded-xl border">
             <div className="border-border flex h-10 items-center justify-between border-b bg-white/10 px-3 py-1">
@@ -17,14 +31,7 @@ export const SubpackageEndpointsOverview: React.FC<SubpackageEndpointsOverview.P
             </div>
             <div className="space-y-1.5 p-3">
                 {subpackage.endpoints.map((e) => (
-                    <div key={e.id} className="flex items-baseline space-x-2">
-                        <HttpMethodIcon method={e.method} />
-                        <MonospaceText className="text-text-default break-all">
-                            {e.path.parts
-                                .map((p) => (p.type === "literal" ? p.value : getPathParameterAsString(p.value)))
-                                .join("")}
-                        </MonospaceText>
-                    </div>
+                    <EndpointDescriptor key={e.id} endpointDefinition={e} onClick={() => handleEndpointClick(e)} />
                 ))}
             </div>
         </div>
