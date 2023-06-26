@@ -1,7 +1,8 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { MouseEventHandler } from "react";
 import { HttpMethodIcon } from "../../commons/HttpMethodIcon";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
+import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { getPathParameterAsString } from "../endpoints/getEndpointTitleAsString";
 
 export declare namespace EndpointDescriptor {
@@ -24,7 +25,13 @@ export const EndpointDescriptor: React.FC<EndpointDescriptor.Props> = ({ endpoin
             <div className="flex">
                 <MonospaceText className="text-text-default break-all text-start transition-colors group-hover:text-white">
                     {endpointDefinition.path.parts
-                        .map((p) => (p.type === "literal" ? p.value : getPathParameterAsString(p.value)))
+                        .map((part) =>
+                            visitDiscriminatedUnion(part, "type")._visit({
+                                literal: (literal) => literal.value,
+                                pathParameter: (pathParameter) => getPathParameterAsString(pathParameter.value),
+                                _other: () => "",
+                            })
+                        )
                         .join("")}
                 </MonospaceText>
             </div>
