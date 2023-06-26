@@ -85,6 +85,10 @@ The frontend is served at `localhost:3000`. You can configure which docs are loa
 
 ```bash
 # packages/ui/fe-bundle/.env.local
-NEXT_PUBLIC_DOCS_DOMAIN=proficientai.docs.buildwithfern.com # production environmen
-NEXT_PUBLIC_DOCS_DOMAIN=vellum.docs.dev.buildwithfern.com # dev environment
+
+# uncomment the next line when targeting the production cloud environment
+# NEXT_PUBLIC_DOCS_DOMAIN=proficientai.docs.buildwithfern.com
+
+# uncomment the next line when targeting the dev cloud environment
+# NEXT_PUBLIC_DOCS_DOMAIN=vellum.docs.dev.buildwithfern.com
 ```
