@@ -26,7 +26,12 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
                 <div ref={setTargetRef} className="pt-20 text-4xl font-bold">
                     <SubpackageTitle subpackage={subpackage} />
                 </div>
-                {subpackage.description != null && <Markdown className="mt-10">{subpackage.description}</Markdown>}
+                {subpackage.description != null && (
+                    <div className="flex space-x-[5vw] pt-10">
+                        <Markdown className="flex-1">{subpackage.description}</Markdown>
+                        <div className="hidden flex-1 md:flex" />
+                    </div>
+                )}
             </ApiPageMargins>
             <ApiPackageContents key={subpackageId} package={subpackage} slug={slug} />
         </>

@@ -57,7 +57,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
 
     return (
         <ApiPageMargins>
-            <div className={classNames("flex min-w-0 flex-1 gap-20", "flex-col md:flex-row")} ref={setContainerRef}>
+            <div
+                className={classNames("flex min-w-0 flex-1 space-x-[5vw]", "flex-col md:flex-row")}
+                ref={setContainerRef}
+            >
                 <div className="flex flex-1 flex-col">
                     <div className="pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
