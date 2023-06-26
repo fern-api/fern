@@ -79,4 +79,10 @@ To build and run the NextJS docs UI, run:
 
 - `yarn workspace @fern-api/fe-bundle dev:fern-prod`. This compiles and runs a NextJS app that communicates with our production environment.
 
-The frontend is served at `localhost:3000`.
+The frontend is served at `localhost:3000`. You can configure which docs are loaded by using `.env.local`:
+
+```bash
+# packages/ui/fe-bundle/.env.local
+NEXT_PUBLIC_DOCS_DOMAIN=proficientai.docs.buildwithfern.com # production environmen
+NEXT_PUBLIC_DOCS_DOMAIN=vellum.docs.dev.buildwithfern.com # dev environment
+```
