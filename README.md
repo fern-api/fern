@@ -221,6 +221,10 @@ You can view our documentation [here](https://www.buildwithfern.com/docs).
 
 [Join our Discord!](https://discord.com/invite/JkkXumPzcG)
 
+# Contributing
+
+Check out [CONTRIBUTING.md](CONTRIBUTING.md)!
+
 # Attribution
 
 Thanks to the folks at [Twemoji](https://twemoji.twitter.com), an open source project, who created the graphic that we use as our logo.
