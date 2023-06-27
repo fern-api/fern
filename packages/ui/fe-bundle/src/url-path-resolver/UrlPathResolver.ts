@@ -99,4 +99,14 @@ export class UrlPathResolver {
         }
         return page;
     }
+
+    public async getNextNavigatableItem(path: ResolvedUrlPath): Promise<ResolvedUrlPath | undefined> {
+        const { nextNavigatableItem } = this.urlSlugTree.getNeighbors(path.slug);
+        return nextNavigatableItem != null ? this.convertNode(nextNavigatableItem) : undefined;
+    }
+
+    public async getPreviousNavigatableItem(path: ResolvedUrlPath): Promise<ResolvedUrlPath | undefined> {
+        const { previousNavigatableItem } = this.urlSlugTree.getNeighbors(path.slug);
+        return previousNavigatableItem != null ? this.convertNode(previousNavigatableItem) : undefined;
+    }
 }
