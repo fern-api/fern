@@ -4,7 +4,12 @@ package api
 
 import (
 	context "context"
+	json "encoding/json"
+	errors "errors"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
+	io "io"
+	http "net/http"
 	strings "strings"
 )
 
@@ -24,58 +29,339 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
 	return &client{
-		getFooEndpoint:             newGetFooEndpoint(baseURL+"/"+"foo", httpClient, options),
-		postFooEndpoint:            newPostFooEndpoint(baseURL+"/"+"foo", httpClient, options),
-		getFooFooIdEndpoint:        newGetFooFooIdEndpoint(baseURL+"/"+"foo/%v", httpClient, options),
-		patchFooFooIdEndpoint:      newPatchFooFooIdEndpoint(baseURL+"/"+"foo/%v", httpClient, options),
-		deleteFooFooIdEndpoint:     newDeleteFooFooIdEndpoint(baseURL+"/"+"foo/%v", httpClient, options),
-		postFooFooIdRunEndpoint:    newPostFooFooIdRunEndpoint(baseURL+"/"+"foo/%v/run", httpClient, options),
-		postFooBatchCreateEndpoint: newPostFooBatchCreateEndpoint(baseURL+"/"+"foo/batch-create", httpClient, options),
-		postFooBatchDeleteEndpoint: newPostFooBatchDeleteEndpoint(baseURL+"/"+"foo/batch-delete", httpClient, options),
+		baseURL:    strings.TrimRight(baseURL, "/"),
+		httpClient: httpClient,
+		header:     options.ToHeader(),
 	}
 }
 
 type client struct {
-	getFooEndpoint             *getFooEndpoint
-	postFooEndpoint            *postFooEndpoint
-	getFooFooIdEndpoint        *getFooFooIdEndpoint
-	patchFooFooIdEndpoint      *patchFooFooIdEndpoint
-	deleteFooFooIdEndpoint     *deleteFooFooIdEndpoint
-	postFooFooIdRunEndpoint    *postFooFooIdRunEndpoint
-	postFooBatchCreateEndpoint *postFooBatchCreateEndpoint
-	postFooBatchDeleteEndpoint *postFooBatchDeleteEndpoint
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
 func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
-	return c.getFooEndpoint.Call(ctx)
+	endpointURL := c.baseURL + "/" + "foo"
+	var response []*Foo
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		c.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PostFoo(ctx context.Context, request *Bar) (*Foo, error) {
-	return c.postFooEndpoint.Call(ctx, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 409:
+			value := new(ConflictError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 422:
+			value := new(UnprocessableEntityError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := c.baseURL + "/" + "foo"
+	response := new(Foo)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) GetFooFooId(ctx context.Context, fooId Id) (*Foo, error) {
-	return c.getFooFooIdEndpoint.Call(ctx, fooId)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v", fooId)
+	response := new(Foo)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PatchFooFooId(ctx context.Context, fooId Id, request *Foo) (*Foo, error) {
-	return c.patchFooFooIdEndpoint.Call(ctx, fooId, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 409:
+			value := new(ConflictError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 422:
+			value := new(UnprocessableEntityError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v", fooId)
+	response := new(Foo)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPatch,
+		request,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) DeleteFooFooId(ctx context.Context, fooId Id) error {
-	return c.deleteFooFooIdEndpoint.Call(ctx, fooId)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v", fooId)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodDelete,
+		nil,
+		nil,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *client) PostFooFooIdRun(ctx context.Context, fooId Id) (*Foo, error) {
-	return c.postFooFooIdRunEndpoint.Call(ctx, fooId)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 409:
+			value := new(ConflictError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v/run", fooId)
+	response := new(Foo)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		nil,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PostFooBatchCreate(ctx context.Context, request []*Bar) ([]*Foo, error) {
-	return c.postFooBatchCreateEndpoint.Call(ctx, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 409:
+			value := new(ConflictError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 413:
+			value := new(ContentTooLargeError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 422:
+			value := new(UnprocessableEntityError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := c.baseURL + "/" + "foo/batch-create"
+	var response []*Foo
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PostFooBatchDelete(ctx context.Context, request []Id) error {
-	return c.postFooBatchDeleteEndpoint.Call(ctx, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 413:
+			value := new(ContentTooLargeError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := c.baseURL + "/" + "foo/batch-delete"
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		nil,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return err
+	}
+	return nil
 }

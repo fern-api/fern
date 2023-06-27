@@ -5,6 +5,7 @@ package api
 import (
 	context "context"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures/core"
+	http "net/http"
 	strings "strings"
 )
 
@@ -17,16 +18,33 @@ func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.Clie
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
 	return &userClient{
-		getAllUsersEndpoint: newGetAllUsersEndpoint(baseURL+"/"+"users/all", httpClient, options),
+		baseURL:    strings.TrimRight(baseURL, "/"),
+		httpClient: httpClient,
+		header:     options.ToHeader(),
 	}
 }
 
 type userClient struct {
-	getAllUsersEndpoint *getAllUsersEndpoint
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
 func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersRequest) (string, error) {
-	return u.getAllUsersEndpoint.Call(ctx, request)
+	endpointURL := u.baseURL + "/" + "/users/all"
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodGet,
+		request,
+		&response,
+		u.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }

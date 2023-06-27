@@ -4,7 +4,9 @@ package api
 
 import (
 	context "context"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/path-params/fixtures/core"
+	http "net/http"
 	strings "strings"
 )
 
@@ -19,28 +21,69 @@ func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.Clie
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
 	return &userClient{
-		getUserEndpoint:   newGetUserEndpoint(baseURL+"/"+"users/%v", httpClient, options),
-		getUserV2Endpoint: newGetUserV2Endpoint(baseURL+"/"+"users/get/%v/info", httpClient, options),
-		getUserV3Endpoint: newGetUserV3Endpoint(baseURL+"/"+"users/get/%v/info/%v", httpClient, options),
+		baseURL:    strings.TrimRight(baseURL, "/"),
+		httpClient: httpClient,
+		header:     options.ToHeader(),
 	}
 }
 
 type userClient struct {
-	getUserEndpoint   *getUserEndpoint
-	getUserV2Endpoint *getUserV2Endpoint
-	getUserV3Endpoint *getUserV3Endpoint
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
 func (u *userClient) GetUser(ctx context.Context, userId string) (string, error) {
-	return u.getUserEndpoint.Call(ctx, userId)
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v", userId)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		u.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (u *userClient) GetUserV2(ctx context.Context, userId string) (string, error) {
-	return u.getUserV2Endpoint.Call(ctx, userId)
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/get/%v/info", userId)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		u.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (u *userClient) GetUserV3(ctx context.Context, userId string, infoId string) (string, error) {
-	return u.getUserV3Endpoint.Call(ctx, userId, infoId)
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/get/%v/info/%v", userId, infoId)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		u.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }

@@ -4,8 +4,12 @@ package api
 
 import (
 	context "context"
+	json "encoding/json"
+	errors "errors"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	user "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user"
+	io "io"
+	http "net/http"
 	strings "strings"
 )
 
@@ -20,26 +24,80 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
 	return &client{
-		getFooEndpoint:  newGetFooEndpoint(baseURL+"/"+"foo", httpClient, options),
-		postFooEndpoint: newPostFooEndpoint(baseURL+"/"+"foo", httpClient, options),
-		userClient:      user.NewClient(baseURL, httpClient, opts...),
+		baseURL:    strings.TrimRight(baseURL, "/"),
+		httpClient: httpClient,
+		header:     options.ToHeader(),
+		userClient: user.NewClient(baseURL, httpClient, opts...),
 	}
 }
 
 type client struct {
-	getFooEndpoint  *getFooEndpoint
-	postFooEndpoint *postFooEndpoint
-	userClient      user.Client
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
+	userClient user.Client
 }
 
 func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
-	return c.getFooEndpoint.Call(ctx)
+	endpointURL := c.baseURL + "/" + "foo"
+	var response []*Foo
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		c.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PostFoo(ctx context.Context, request *Foo) (*Foo, error) {
-	return c.postFooEndpoint.Call(ctx, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 409:
+			value := new(ConflictError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 422:
+			value := new(UnprocessableEntityError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := c.baseURL + "/" + "foo"
+	response := new(Foo)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) User() user.Client {

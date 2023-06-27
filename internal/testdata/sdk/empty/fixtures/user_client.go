@@ -4,6 +4,7 @@ package api
 
 import (
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/empty/fixtures/core"
+	http "net/http"
 	strings "strings"
 )
 
@@ -15,9 +16,15 @@ func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.Clie
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
-	return &userClient{}
+	return &userClient{
+		baseURL:    strings.TrimRight(baseURL, "/"),
+		httpClient: httpClient,
+		header:     options.ToHeader(),
+	}
 }
 
 type userClient struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }

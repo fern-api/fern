@@ -123,16 +123,7 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 }
 
 // WriteClient writes a client for interacting with the given service.
-// This file includes all of the service's endpoints so that their
-// implementation(s) are visible within the same file.
-//
-// Note that the given subpackages are all expected to have endpoints
-// within their tree.
-//
-// TODO: Remove separate endpoint types; consolidate all logic
-// in the client's implementation.
-func (f *fileWriter) WriteClient(signatures []*signature, subpackages []*ir.Subpackage, namePrefix *ir.Name) error {
-	// Generate the service interface definition.
+func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*ir.Subpackage, fernFilepath *ir.FernFilepath, namePrefix *ir.Name) error {
 	var (
 		clientName     = "Client"
 		clientImplName = "client"
@@ -143,9 +134,19 @@ func (f *fileWriter) WriteClient(signatures []*signature, subpackages []*ir.Subp
 		clientName = namePrefix.PascalCase.UnsafeName + clientName
 		receiver = typeNameToReceiver(clientImplName)
 	}
+	// Reformat the endpoint data into a structure that's suitable for code generation.
+	var endpoints []*endpoint
+	for _, irEndpoint := range irEndpoints {
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, receiver)
+		if err != nil {
+			return err
+		}
+		endpoints = append(endpoints, endpoint)
+	}
+	// Generate the service interface definition.
 	f.P("type ", clientName, " interface {")
-	for _, signature := range signatures {
-		f.P(fmt.Sprintf("%s(%s) %s", signature.Name.PascalCase.UnsafeName, signature.Parameters, signature.ReturnValues))
+	for _, endpoint := range endpoints {
+		f.P(fmt.Sprintf("%s(%s) %s", endpoint.Name.PascalCase.UnsafeName, endpoint.SignatureParameters, endpoint.ReturnValues))
 	}
 	for _, subpackage := range subpackages {
 		// Define a getter method for the subpackage client.
@@ -174,21 +175,15 @@ func (f *fileWriter) WriteClient(signatures []*signature, subpackages []*ir.Subp
 	f.P()
 
 	// Generate the client constructor.
-	// TODO: Call the nested client constructors (e.g. user.NewClient)
 	f.P("func New", clientName, "(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) ", clientName, " {")
 	f.P("options := new(core.ClientOptions)")
 	f.P("for _, opt := range opts {")
 	f.P("opt(options)")
 	f.P("}")
-	f.P(`baseURL = strings.TrimRight(baseURL, "/")`)
 	f.P("return &", clientImplName, "{")
-	for _, signature := range signatures {
-		urlFormat := "baseURL"
-		if signature.PathSuffix != "" {
-			urlFormat = fmt.Sprintf(`baseURL + "/" + %q`, signature.PathSuffix)
-		}
-		f.P(signature.EndpointTypeName, ": new", signature.Name.PascalCase.UnsafeName, "Endpoint(", urlFormat, ", httpClient, options),")
-	}
+	f.P(`baseURL: strings.TrimRight(baseURL, "/"),`)
+	f.P("httpClient: httpClient,")
+	f.P("header: options.ToHeader(),")
 	for _, subpackage := range subpackages {
 		// TODO: Temporary solution - refactor this conditional when the IR is updated.
 		if subpackage.FernFilepath.File != nil {
@@ -209,9 +204,9 @@ func (f *fileWriter) WriteClient(signatures []*signature, subpackages []*ir.Subp
 
 	// Generate the client implementation.
 	f.P("type ", clientImplName, " struct {")
-	for _, signature := range signatures {
-		f.P(signature.EndpointTypeName, " *", signature.EndpointTypeName)
-	}
+	f.P("baseURL string")
+	f.P("httpClient core.HTTPClient")
+	f.P("header http.Header")
 	for _, subpackage := range subpackages {
 		// TODO: Temporary solution - refactor this conditional when the IR is updated.
 		var (
@@ -227,9 +222,51 @@ func (f *fileWriter) WriteClient(signatures []*signature, subpackages []*ir.Subp
 	f.P()
 
 	// Implement this service's methods.
-	for _, signature := range signatures {
-		f.P("func (", receiver, " *", clientImplName, ") ", signature.Name.PascalCase.UnsafeName, "(", signature.Parameters, ") ", signature.ReturnValues, " {")
-		f.P("return ", receiver, ".", signature.EndpointTypeName, ".Call(", signature.ParameterNames, ")")
+	// TODO: Add query parameters from request, if any.
+	// TODO: Add headers from request, if any.
+	for _, endpoint := range endpoints {
+		f.P("func (", receiver, " *", clientImplName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
+		if len(endpoint.Errors) > 0 {
+			f.P("errorDecoder := func(statusCode int, body io.Reader) error {")
+			f.P("decoder := json.NewDecoder(body)")
+			f.P("switch statusCode {")
+			for _, responseError := range endpoint.Errors {
+				errorDeclaration := f.errors[responseError.Error.ErrorId]
+				f.P("case ", errorDeclaration.StatusCode, ":")
+				f.P("value := new(", errorDeclaration.Name.Name.PascalCase.UnsafeName, ")")
+				f.P("if err := decoder.Decode(value); err != nil {")
+				f.P("return err")
+				f.P("}")
+				f.P("value.StatusCode = statusCode")
+				f.P("return value")
+			}
+			// Close the switch statement.
+			f.P("}")
+			f.P("bytes, err := io.ReadAll(body)")
+			f.P("if err != nil {")
+			f.P("return err")
+			f.P("}")
+			f.P("return errors.New(string(bytes))")
+			f.P("}")
+			f.P()
+		}
+		f.P(endpoint.URLStatement)
+		if endpoint.ResponseType != "" {
+			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, strings.TrimLeft(endpoint.ResponseType, "*")))
+		}
+		f.P("if err := core.DoRequest(")
+		f.P("ctx,")
+		f.P(receiver, ".httpClient,")
+		f.P("endpointURL, ")
+		f.P(endpoint.Method, ",")
+		f.P(endpoint.RequestParameterName, ",")
+		f.P(endpoint.ResponseParameterName, ",")
+		f.P(receiver, ".header,")
+		f.P(endpoint.ErrorDecoderParameterName, ",")
+		f.P("); err != nil {")
+		f.P("return ", endpoint.ErrorReturnValues)
+		f.P("}")
+		f.P("return ", endpoint.SuccessfulReturnValues)
 		f.P("}")
 		f.P()
 	}
@@ -253,131 +290,103 @@ func (f *fileWriter) WriteClient(signatures []*signature, subpackages []*ir.Subp
 	return nil
 }
 
-// signature holds the fields required to generate a signautre used by the generated client.
-type signature struct {
-	Name             *ir.Name
-	EndpointTypeName string
-	Parameters       string
-	ParameterNames   string
-	ReturnValues     string
-	PathSuffix       string
+// endpoint holds the fields required to generate a client endpoint.
+//
+// All of the fields are pre-formatted so that they can all be simple
+// strings.
+type endpoint struct {
+	Name                      *ir.Name
+	ImportPath                string
+	RequestParameterName      string
+	ResponseType              string
+	ResponseParameterName     string
+	ResponseInitializerFormat string
+	PathParameterNames        string
+	AllParameterNames         string
+	SignatureParameters       string
+	ReturnValues              string
+	SuccessfulReturnValues    string
+	ErrorReturnValues         string
+	URLStatement              string
+	Method                    string
+	ErrorDecoderParameterName string
+	Errors                    ir.ResponseErrors
 }
 
-// WriteEndpoint writes the endpoint type, which includes its error decoder and call methods.
-func (f *fileWriter) WriteEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) (*signature, error) {
-	// Generate the type definition.
-	var (
-		typeName   = fmt.Sprintf("%sEndpoint", endpoint.Name.CamelCase.UnsafeName)
-		receiver   = typeNameToReceiver(typeName)
-		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
-	)
-	f.P("type ", typeName, " struct {")
-	f.P("url string")
-	f.P("httpClient core.HTTPClient")
-	f.P("header http.Header")
-	f.P("}")
-	f.P()
+// signatureForEndpoint returns a signature template for the given endpoint.
+func (f *fileWriter) endpointFromIR(fernFilepath *ir.FernFilepath, irEndpoint *ir.HttpEndpoint, receiver string) (*endpoint, error) {
+	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 
-	// Generate the constructor.
-	f.P("func new", endpoint.Name.PascalCase.UnsafeName, "Endpoint(url string, httpClient core.HTTPClient, clientOptions *core.ClientOptions) *", typeName, " {")
-	f.P("return &", typeName, "{")
-	f.P("url: url,")
-	f.P("httpClient: httpClient,")
-	f.P("header: clientOptions.ToHeader(),")
-	f.P("}")
-	f.P("}")
-	f.P()
-
-	// Generate the error decoder.
-	// TODO: Make sure that we preserve the status code from every
-	// error returned from this function.
-	f.P("func (", receiver, "*", typeName, ") decodeError(statusCode int, body io.Reader) error {")
-	if len(endpoint.Errors) > 0 {
-		f.P("decoder := json.NewDecoder(body)")
-		f.P("switch statusCode {")
-		for _, responseError := range endpoint.Errors {
-			errorDeclaration := f.errors[responseError.Error.ErrorId]
-			f.P("case ", errorDeclaration.StatusCode, ":")
-			f.P("value := new(", errorDeclaration.Name.Name.PascalCase.UnsafeName, ")")
-			f.P("if err := decoder.Decode(value); err != nil {")
-			f.P("return err")
-			f.P("}")
-			f.P("value.StatusCode = statusCode")
-			f.P("return value")
-		}
-		// Close the switch statement.
-		f.P("}")
+	// Add path parameters and request body, if any.
+	signatureParameters := "ctx context.Context"
+	var pathParameterNames []string
+	for _, pathParameter := range irEndpoint.AllPathParameters {
+		pathParameterName := pathParameter.Name.CamelCase.SafeName
+		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+		signatureParameters += fmt.Sprintf(", %s %s", pathParameterName, parameterType)
+		pathParameterNames = append(pathParameterNames, pathParameterName)
 	}
-	f.P("bytes, err := io.ReadAll(body)")
-	f.P("if err != nil {")
-	f.P("return err")
-	f.P("}")
-	f.P("return errors.New(string(bytes))")
-	f.P("}")
-	f.P()
 
-	// Generate the Call method.
+	// Format the rest of the request parameters.
+	requestParameterName := "nil"
+	if irEndpoint.SdkRequest != nil {
+		var requestType string
+		if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
+			requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath)
+		}
+		if irEndpoint.SdkRequest.Shape.Wrapper != nil {
+			// If this is a wrapper type, it's guaranteed to be generated in the same package,
+			// so we don't need to consult its Fern filepath.
+			requestType = fmt.Sprintf("*%s", irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+		}
+		requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
+		signatureParameters += fmt.Sprintf(", %s %s", requestParameterName, requestType)
+	}
+
+	// Format the parameter names so that they're suitable for
+	// the client method call.
+	allParameterNames := append([]string{"ctx"}, pathParameterNames...)
+	if requestParameterName != "nil" {
+		allParameterNames = append(allParameterNames, requestParameterName)
+	}
+
+	// Format all of the response values.
 	var (
 		responseType              string
-		responseParameter         string
+		responseParameterName     string
 		responseInitializerFormat string
 		signatureReturnValues     string
 		successfulReturnValues    string
 		errorReturnValues         string
 	)
-	if endpoint.Response != nil {
-		if endpoint.Response.Json == nil {
-			return nil, fmt.Errorf("the SDK generator only supports JSON-based responses, but found %q", endpoint.Response.Type)
+	if irEndpoint.Response != nil {
+		if irEndpoint.Response.Json == nil {
+			return nil, fmt.Errorf("the SDK generator only supports JSON-based responses, but found %q", irEndpoint.Response.Type)
 		}
-		responseType = typeReferenceToGoType(endpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
+		responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
 		responseInitializerFormat = "var response %s"
-		if named := endpoint.Response.Json.ResponseBodyType.Named; named != nil && isPointer(f.types[named.TypeId]) {
+		if named := irEndpoint.Response.Json.ResponseBodyType.Named; named != nil && isPointer(f.types[named.TypeId]) {
 			responseInitializerFormat = "response := new(%s)"
 		}
-		responseParameter = "&response"
+		responseParameterName = "&response"
 		signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
 		successfulReturnValues = "response, nil"
 		errorReturnValues = "response, err"
 	} else {
-		responseParameter = "nil"
+		responseParameterName = "nil"
 		signatureReturnValues = "error"
 		successfulReturnValues = "nil"
 		errorReturnValues = "err"
 	}
 
-	// Add path parameters and request body, if any.
-	parameters := "ctx context.Context"
-	var parameterNames []string
-	for _, pathParameter := range endpoint.AllPathParameters {
-		parameterName := pathParameter.Name.CamelCase.SafeName
-		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.imports, f.baseImportPath, importPath)
-		parameters += fmt.Sprintf(", %s %s", parameterName, parameterType)
-		parameterNames = append(parameterNames, parameterName)
-	}
-
-	requestParameter := "nil"
-	if endpoint.SdkRequest != nil {
-		var requestType string
-		if requestBody := endpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
-			requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath)
-		}
-		if endpoint.SdkRequest.Shape.Wrapper != nil {
-			// If this is a wrapper type, it's guaranteed to be generated in the same package,
-			// so we don't need to consult its Fern filepath.
-			requestType = fmt.Sprintf("*%s", endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
-		}
-		requestParameter = endpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
-		parameters += fmt.Sprintf(", %s %s", requestParameter, requestType)
-	}
-
-	// Consolidate the endpoint's full path into a path suffix that
-	// can be applied to the endpoint at construction time.
+	// Consolidate the irEndpoint's full path into a path suffix that
+	// can be applied to the irEndpoint at construction time.
 	var pathSuffix string
-	if endpoint.FullPath != nil {
-		if endpoint.FullPath.Head != "/" {
-			pathSuffix = endpoint.FullPath.Head
+	if irEndpoint.FullPath != nil {
+		if irEndpoint.FullPath.Head != "/" {
+			pathSuffix = irEndpoint.FullPath.Head
 		}
-		for _, part := range endpoint.FullPath.Parts {
+		for _, part := range irEndpoint.FullPath.Parts {
 			if part.PathParameter != "" {
 				pathSuffix += "%v"
 			}
@@ -387,48 +396,39 @@ func (f *fileWriter) WriteEndpoint(fernFilepath *ir.FernFilepath, endpoint *ir.H
 		}
 	}
 
-	urlStatement := fmt.Sprintf("endpointURL := %s.url", receiver)
-	if len(parameterNames) > 0 {
-		urlStatement = "endpointURL := fmt.Sprintf(" + receiver + ".url, " + strings.Join(parameterNames, ", ") + ")"
+	// Determine the URL statement used in the endpoint implementation.
+	baseURL := fmt.Sprintf("%s.baseURL", receiver)
+	if len(pathSuffix) > 0 {
+		baseURL = baseURL + ` + "/" + ` + fmt.Sprintf("%q", pathSuffix)
+	}
+	urlStatement := fmt.Sprintf("endpointURL := %s", baseURL)
+	if len(pathParameterNames) > 0 {
+		urlStatement = "endpointURL := fmt.Sprintf(" + baseURL + ", " + strings.Join(pathParameterNames, ", ") + ")"
 	}
 
-	// TODO: Add query parameters from request, if any.
-	// TODO: Add headers from request, if any.
-
-	f.P("func (", receiver, "*", typeName, ") Call(", parameters, ")", signatureReturnValues, " {")
-	f.P(urlStatement)
-	if responseType != "" {
-		f.P(fmt.Sprintf(responseInitializerFormat, strings.TrimLeft(responseType, "*")))
-	}
-	f.P("if err := core.DoRequest(")
-	f.P("ctx,")
-	f.P(receiver, ".httpClient,")
-	f.P("endpointURL, ")
-	f.P(irMethodToMethodEnum(endpoint.Method), ",")
-	f.P(requestParameter, ",")
-	f.P(responseParameter, ",")
-	f.P(receiver, ".header,")
-	f.P(receiver, ".decodeError,")
-	f.P("); err != nil {")
-	f.P("return ", errorReturnValues)
-	f.P("}")
-	f.P("return ", successfulReturnValues)
-	f.P("}")
-
-	// Reformat the parameter names so that they're suitable for
-	// the client method call.
-	parameterNames = append([]string{"ctx"}, parameterNames...)
-	if requestParameter != "nil" {
-		parameterNames = append(parameterNames, requestParameter)
+	// An error decoder is required when there are endpoint-specific errors.
+	errorDecoderParameterName := "nil"
+	if len(irEndpoint.Errors) > 0 {
+		errorDecoderParameterName = "errorDecoder"
 	}
 
-	return &signature{
-		Name:             endpoint.Name,
-		EndpointTypeName: typeName,
-		Parameters:       parameters,
-		ParameterNames:   strings.Join(parameterNames, ", "),
-		ReturnValues:     signatureReturnValues,
-		PathSuffix:       strings.TrimLeft(pathSuffix, "/"),
+	return &endpoint{
+		Name:                      irEndpoint.Name,
+		ImportPath:                importPath,
+		RequestParameterName:      requestParameterName,
+		ResponseType:              responseType,
+		ResponseParameterName:     responseParameterName,
+		ResponseInitializerFormat: responseInitializerFormat,
+		PathParameterNames:        strings.Join(pathParameterNames, ", "),
+		AllParameterNames:         strings.Join(allParameterNames, ", "),
+		SignatureParameters:       signatureParameters,
+		ReturnValues:              signatureReturnValues,
+		SuccessfulReturnValues:    successfulReturnValues,
+		ErrorReturnValues:         errorReturnValues,
+		URLStatement:              urlStatement,
+		Method:                    irMethodToMethodEnum(irEndpoint.Method),
+		ErrorDecoderParameterName: errorDecoderParameterName,
+		Errors:                    irEndpoint.Errors,
 	}, nil
 }
 

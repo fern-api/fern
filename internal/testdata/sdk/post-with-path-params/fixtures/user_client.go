@@ -4,7 +4,9 @@ package api
 
 import (
 	context "context"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
+	http "net/http"
 	strings "strings"
 )
 
@@ -21,40 +23,105 @@ func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.Clie
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
 	return &userClient{
-		setNameEndpoint:   newSetNameEndpoint(baseURL+"/"+"users/%v/set-name", httpClient, options),
-		setNameV2Endpoint: newSetNameV2Endpoint(baseURL+"/"+"users/%v/set-name-v2", httpClient, options),
-		setNameV3Endpoint: newSetNameV3Endpoint(baseURL+"/"+"users/%v/set-name-v3", httpClient, options),
-		setNameV4Endpoint: newSetNameV4Endpoint(baseURL+"/"+"users/%v/set-name-v4", httpClient, options),
-		setNameV5Endpoint: newSetNameV5Endpoint(baseURL+"/"+"users/%v/set-name-v5", httpClient, options),
+		baseURL:    strings.TrimRight(baseURL, "/"),
+		httpClient: httpClient,
+		header:     options.ToHeader(),
 	}
 }
 
 type userClient struct {
-	setNameEndpoint   *setNameEndpoint
-	setNameV2Endpoint *setNameV2Endpoint
-	setNameV3Endpoint *setNameV3Endpoint
-	setNameV4Endpoint *setNameV4Endpoint
-	setNameV5Endpoint *setNameV5Endpoint
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
 func (u *userClient) SetName(ctx context.Context, userId string, request string) (string, error) {
-	return u.setNameEndpoint.Call(ctx, userId, request)
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name", userId)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		u.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (u *userClient) SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error) {
-	return u.setNameV2Endpoint.Call(ctx, userId, request)
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v2", userId)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		u.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error) {
-	return u.setNameV3Endpoint.Call(ctx, userId, request)
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v3", userId)
+	response := new(SetNameRequestV3Body)
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		u.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (u *userClient) SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error) {
-	return u.setNameV4Endpoint.Call(ctx, userId, request)
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v4", userId)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		u.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (u *userClient) SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error) {
-	return u.setNameV5Endpoint.Call(ctx, userId, request)
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v5", userId)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		u.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }

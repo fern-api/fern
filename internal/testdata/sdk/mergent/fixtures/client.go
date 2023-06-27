@@ -4,7 +4,12 @@ package api
 
 import (
 	context "context"
+	json "encoding/json"
+	errors "errors"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
+	io "io"
+	http "net/http"
 	strings "strings"
 )
 
@@ -30,94 +35,543 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
 	return &client{
-		getTasksEndpoint:                    newGetTasksEndpoint(baseURL+"/"+"tasks", httpClient, options),
-		postTasksEndpoint:                   newPostTasksEndpoint(baseURL+"/"+"tasks", httpClient, options),
-		getTasksTaskIdEndpoint:              newGetTasksTaskIdEndpoint(baseURL+"/"+"tasks/%v", httpClient, options),
-		patchTasksTaskIdEndpoint:            newPatchTasksTaskIdEndpoint(baseURL+"/"+"tasks/%v", httpClient, options),
-		deleteTasksTaskIdEndpoint:           newDeleteTasksTaskIdEndpoint(baseURL+"/"+"tasks/%v", httpClient, options),
-		postTasksTaskIdRunEndpoint:          newPostTasksTaskIdRunEndpoint(baseURL+"/"+"tasks/%v/run", httpClient, options),
-		postTasksBatchCreateEndpoint:        newPostTasksBatchCreateEndpoint(baseURL+"/"+"tasks/batch-create", httpClient, options),
-		postTasksBatchDeleteEndpoint:        newPostTasksBatchDeleteEndpoint(baseURL+"/"+"tasks/batch-delete", httpClient, options),
-		getSchedulesEndpoint:                newGetSchedulesEndpoint(baseURL+"/"+"schedules", httpClient, options),
-		postSchedulesEndpoint:               newPostSchedulesEndpoint(baseURL+"/"+"schedules", httpClient, options),
-		getSchedulesScheduleIdEndpoint:      newGetSchedulesScheduleIdEndpoint(baseURL+"/"+"schedules/%v", httpClient, options),
-		patchSchedulesScheduleIdEndpoint:    newPatchSchedulesScheduleIdEndpoint(baseURL+"/"+"schedules/%v", httpClient, options),
-		deleteSchedulesScheduleIdEndpoint:   newDeleteSchedulesScheduleIdEndpoint(baseURL+"/"+"schedules/%v", httpClient, options),
-		getSchedulesScheduleIdTasksEndpoint: newGetSchedulesScheduleIdTasksEndpoint(baseURL+"/"+"schedules/%v/tasks", httpClient, options),
+		baseURL:    strings.TrimRight(baseURL, "/"),
+		httpClient: httpClient,
+		header:     options.ToHeader(),
 	}
 }
 
 type client struct {
-	getTasksEndpoint                    *getTasksEndpoint
-	postTasksEndpoint                   *postTasksEndpoint
-	getTasksTaskIdEndpoint              *getTasksTaskIdEndpoint
-	patchTasksTaskIdEndpoint            *patchTasksTaskIdEndpoint
-	deleteTasksTaskIdEndpoint           *deleteTasksTaskIdEndpoint
-	postTasksTaskIdRunEndpoint          *postTasksTaskIdRunEndpoint
-	postTasksBatchCreateEndpoint        *postTasksBatchCreateEndpoint
-	postTasksBatchDeleteEndpoint        *postTasksBatchDeleteEndpoint
-	getSchedulesEndpoint                *getSchedulesEndpoint
-	postSchedulesEndpoint               *postSchedulesEndpoint
-	getSchedulesScheduleIdEndpoint      *getSchedulesScheduleIdEndpoint
-	patchSchedulesScheduleIdEndpoint    *patchSchedulesScheduleIdEndpoint
-	deleteSchedulesScheduleIdEndpoint   *deleteSchedulesScheduleIdEndpoint
-	getSchedulesScheduleIdTasksEndpoint *getSchedulesScheduleIdTasksEndpoint
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
 func (c *client) GetTasks(ctx context.Context) ([]*Task, error) {
-	return c.getTasksEndpoint.Call(ctx)
+	endpointURL := c.baseURL + "/" + "tasks"
+	var response []*Task
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		c.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error) {
-	return c.postTasksEndpoint.Call(ctx, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 409:
+			value := new(ConflictError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 422:
+			value := new(UnprocessableEntityError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := c.baseURL + "/" + "tasks"
+	response := new(Task)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
-	return c.getTasksTaskIdEndpoint.Call(ctx, taskId)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
+	response := new(Task)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task) (*Task, error) {
-	return c.patchTasksTaskIdEndpoint.Call(ctx, taskId, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 409:
+			value := new(ConflictError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 422:
+			value := new(UnprocessableEntityError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
+	response := new(Task)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPatch,
+		request,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
-	return c.deleteTasksTaskIdEndpoint.Call(ctx, taskId)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodDelete,
+		nil,
+		nil,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, error) {
-	return c.postTasksTaskIdRunEndpoint.Call(ctx, taskId)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 409:
+			value := new(ConflictError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v/run", taskId)
+	response := new(Task)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		nil,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) ([]*Task, error) {
-	return c.postTasksBatchCreateEndpoint.Call(ctx, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 409:
+			value := new(ConflictError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 413:
+			value := new(ContentTooLargeError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 422:
+			value := new(UnprocessableEntityError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := c.baseURL + "/" + "tasks/batch-create"
+	var response []*Task
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
-	return c.postTasksBatchDeleteEndpoint.Call(ctx, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 413:
+			value := new(ContentTooLargeError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := c.baseURL + "/" + "tasks/batch-delete"
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		nil,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
-	return c.getSchedulesEndpoint.Call(ctx)
+	endpointURL := c.baseURL + "/" + "schedules"
+	var response []*Schedule
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		c.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Schedule, error) {
-	return c.postSchedulesEndpoint.Call(ctx, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 422:
+			value := new(UnprocessableEntityError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := c.baseURL + "/" + "schedules"
+	response := new(Schedule)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Schedule, error) {
-	return c.getSchedulesScheduleIdEndpoint.Call(ctx, scheduleId)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
+	response := new(Schedule)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, request *Schedule) (*Schedule, error) {
-	return c.patchSchedulesScheduleIdEndpoint.Call(ctx, scheduleId, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 422:
+			value := new(UnprocessableEntityError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
+	response := new(Schedule)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPatch,
+		request,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) error {
-	return c.deleteSchedulesScheduleIdEndpoint.Call(ctx, scheduleId)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodDelete,
+		nil,
+		nil,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id) ([]*Task, error) {
-	return c.getSchedulesScheduleIdTasksEndpoint.Call(ctx, scheduleId)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(NotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v/tasks", scheduleId)
+	var response []*Task
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		c.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }

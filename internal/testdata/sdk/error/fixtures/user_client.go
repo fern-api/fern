@@ -4,7 +4,12 @@ package api
 
 import (
 	context "context"
+	json "encoding/json"
+	errors "errors"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
+	io "io"
+	http "net/http"
 	strings "strings"
 )
 
@@ -18,22 +23,108 @@ func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.Clie
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
 	return &userClient{
-		getEndpoint:    newGetEndpoint(baseURL+"/"+"%v", httpClient, options),
-		updateEndpoint: newUpdateEndpoint(baseURL+"/"+"%v", httpClient, options),
+		baseURL:    strings.TrimRight(baseURL, "/"),
+		httpClient: httpClient,
+		header:     options.ToHeader(),
 	}
 }
 
 type userClient struct {
-	getEndpoint    *getEndpoint
-	updateEndpoint *updateEndpoint
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
 func (u *userClient) Get(ctx context.Context, id string) (string, error) {
-	return u.getEndpoint.Call(ctx, id)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 404:
+			value := new(UserNotFoundError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 501:
+			value := new(NotImplementedError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 418:
+			value := new(TeapotError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		case 426:
+			value := new(UpgradeError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		u.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (u *userClient) Update(ctx context.Context, id string, request string) (string, error) {
-	return u.updateEndpoint.Call(ctx, id, request)
+	errorDecoder := func(statusCode int, body io.Reader) error {
+		decoder := json.NewDecoder(body)
+		switch statusCode {
+		case 426:
+			value := new(UpgradeError)
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			value.StatusCode = statusCode
+			return value
+		}
+		bytes, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		return errors.New(string(bytes))
+	}
+
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		u.header,
+		errorDecoder,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }

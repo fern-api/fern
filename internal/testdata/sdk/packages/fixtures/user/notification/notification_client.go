@@ -4,7 +4,9 @@ package notification
 
 import (
 	context "context"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	http "net/http"
 	strings "strings"
 )
 
@@ -17,16 +19,33 @@ func NewNotificationClient(baseURL string, httpClient core.HTTPClient, opts ...c
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
 	return &notificationClient{
-		listEndpoint: newListEndpoint(baseURL+"/"+"users/%v/notifications", httpClient, options),
+		baseURL:    strings.TrimRight(baseURL, "/"),
+		httpClient: httpClient,
+		header:     options.ToHeader(),
 	}
 }
 
 type notificationClient struct {
-	listEndpoint *listEndpoint
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
 func (n *notificationClient) List(ctx context.Context, userId string) ([]*Notification, error) {
-	return n.listEndpoint.Call(ctx, userId)
+	endpointURL := fmt.Sprintf(n.baseURL+"/"+"users/%v/notifications", userId)
+	var response []*Notification
+	if err := core.DoRequest(
+		ctx,
+		n.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		n.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }

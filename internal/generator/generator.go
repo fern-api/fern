@@ -261,28 +261,6 @@ func (g *Generator) generateService(
 		}
 		files = append(files, file)
 	}
-	// Generate the endpoint implementations.
-	signatures := make([]*signature, len(irService.Endpoints))
-	for i, endpoint := range irService.Endpoints {
-		fileInfo := fileInfoForEndpoint(ir.ApiName, irService.Name.FernFilepath, endpoint.Name)
-		writer := newFileWriter(
-			fileInfo.filename,
-			fileInfo.packageName,
-			g.config.ImportPath,
-			ir.Types,
-			ir.Errors,
-		)
-		signature, err := writer.WriteEndpoint(irService.Name.FernFilepath, endpoint)
-		if err != nil {
-			return nil, err
-		}
-		signatures[i] = signature
-		file, err := writer.File()
-		if err != nil {
-			return nil, err
-		}
-		files = append(files, file)
-	}
 	// Generate the client interface.
 	var namePrefix *fernir.Name
 	// TODO: Temporary solution - refactor this so we more accurately
@@ -299,7 +277,7 @@ func (g *Generator) generateService(
 		ir.Types,
 		ir.Errors,
 	)
-	if err := writer.WriteClient(signatures, irSubpackages, namePrefix); err != nil {
+	if err := writer.WriteClient(irService.Endpoints, irSubpackages, irService.Name.FernFilepath, namePrefix); err != nil {
 		return nil, err
 	}
 	file, err := writer.File()
@@ -337,7 +315,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		ir.Types,
 		ir.Errors,
 	)
-	if err := writer.WriteClient(nil /* signatures */, irSubpackages, namePrefix); err != nil {
+	if err := writer.WriteClient(nil /* endpoints */, irSubpackages, irSubpackage.FernFilepath, namePrefix); err != nil {
 		return nil, err
 	}
 	return writer.File()

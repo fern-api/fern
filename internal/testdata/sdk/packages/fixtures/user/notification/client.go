@@ -4,7 +4,9 @@ package notification
 
 import (
 	context "context"
+	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
+	http "net/http"
 	strings "strings"
 )
 
@@ -18,20 +20,37 @@ func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOp
 	for _, opt := range opts {
 		opt(options)
 	}
-	baseURL = strings.TrimRight(baseURL, "/")
 	return &client{
-		getUserNotificationEndpoint: newGetUserNotificationEndpoint(baseURL+"/"+"users/%v/notifications/%v", httpClient, options),
-		notificationClient:          NewNotificationClient(baseURL, httpClient, opts...),
+		baseURL:            strings.TrimRight(baseURL, "/"),
+		httpClient:         httpClient,
+		header:             options.ToHeader(),
+		notificationClient: NewNotificationClient(baseURL, httpClient, opts...),
 	}
 }
 
 type client struct {
-	getUserNotificationEndpoint *getUserNotificationEndpoint
-	notificationClient          NotificationClient
+	baseURL            string
+	httpClient         core.HTTPClient
+	header             http.Header
+	notificationClient NotificationClient
 }
 
 func (c *client) GetUserNotification(ctx context.Context, userId string, notificationId string) (*Notification, error) {
-	return c.getUserNotificationEndpoint.Call(ctx, userId, notificationId)
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"users/%v/notifications/%v", userId, notificationId)
+	response := new(Notification)
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodGet,
+		nil,
+		&response,
+		c.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
 }
 
 func (c *client) Notification() NotificationClient {
