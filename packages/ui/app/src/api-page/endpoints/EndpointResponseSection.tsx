@@ -1,5 +1,5 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Description } from "../types/Description";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
