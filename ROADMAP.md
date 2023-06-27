@@ -35,6 +35,7 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Support path parameters (including service path parameters)
 - [x] Generate client (w/ root endpoints and nested service endpoints)
 - [x] Rename `Service` to `Client` for symmetry with other SDKs.
+- [ ] If a `Client` type exists, prefix the filename with a `_` to avoid conflicts.
 - [ ] Consolidate endpoint implementation in the un-exported client.
 - [ ] Serialize query parameters and headers
 - [ ] Generate documentation for all relevant types
