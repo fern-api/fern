@@ -102,12 +102,12 @@ func (f *fileWriter) File() (*File, error) {
 }
 
 // DocsFile acts like File, but is tailored to write docs.go files.
-func (f *fileWriter) DocsFile() (*File, error) {
+func (f *fileWriter) DocsFile() *File {
 	f.P("package ", f.packageName)
 	return &File{
 		Path:    f.filename,
 		Content: append([]byte(fileHeader), f.buffer.Bytes()...),
-	}, nil
+	}
 }
 
 // WriteDocs is a convenience function to writes the given documentation, if any.

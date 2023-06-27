@@ -1,6 +1,7 @@
 package generator
 
 import (
+	_ "embed"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -11,8 +12,16 @@ import (
 	"github.com/fern-api/fern-go/internal/fern/ir"
 )
 
-// packageDocsFilename represents the standard package documentation filename.
-const packageDocsFilename = "doc.go"
+const (
+	// packageDocsFilename represents the standard package documentation filename.
+	packageDocsFilename = "doc.go"
+
+	// licenseFilename is the generated license filename.
+	licenseFilename = "LICENSE"
+)
+
+//go:embed license/MIT.md
+var licenseMIT string
 
 // Mode is an enum for different generator modes (i.e. types, client, etc).
 type Mode uint8
@@ -73,11 +82,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 		fileInfo := fileInfoForPackage(ir.ApiName, ir.RootPackage.FernFilepath)
 		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil)
 		writer.WriteDocs(ir.RootPackage.Docs)
-		file, err := writer.DocsFile()
-		if err != nil {
-			return nil, err
-		}
-		files = append(files, file)
+		files = append(files, writer.DocsFile())
 	}
 	for _, subpackage := range ir.Subpackages {
 		if subpackage.Docs == nil || len(*subpackage.Docs) == 0 {
@@ -86,11 +91,7 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 		fileInfo := fileInfoForPackage(ir.ApiName, subpackage.FernFilepath)
 		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil)
 		writer.WriteDocs(subpackage.Docs)
-		file, err := writer.DocsFile()
-		if err != nil {
-			return nil, err
-		}
-		files = append(files, file)
+		files = append(files, writer.DocsFile())
 	}
 	for _, irType := range ir.Types {
 		fileInfo := fileInfoForType(ir.ApiName, irType.Name.FernFilepath, irType.Name.Name)
@@ -231,8 +232,28 @@ func (g *Generator) generate(ir *ir.IntermediateRepresentation, mode Mode) ([]*F
 			return nil, err
 		}
 		files = append(files, file)
+
+		// If a go.mod was generated, we treat the result
+		// as a packaged SDK, so we also write a license
+		// file.
+		//
+		// Note that the license file is required to support
+		// Go's package docs (re: https://pkg.go.dev/license-policy).
+		files = append(files, newLicenseFile())
 	}
 	return files, nil
+}
+
+// newLicenseFile returns a *File for the generated LICENSE file.
+// For now, this is always the MIT license.
+//
+// Note that this is a temporary solution - ideally this integration
+// exists outside of the generator and is handled at the layer above.
+func newLicenseFile() *File {
+	return &File{
+		Path:    licenseFilename,
+		Content: []byte(licenseMIT),
+	}
 }
 
 // readIR reads the *InermediateRepresentation from the given filename.

@@ -46,3 +46,4 @@ The following outlines a roadmap for the development of the Go generator.
 - [ ] Improve structured error formatting, where possible.
 - [ ] Add coordinator logging for better user-facing console progress updates.
 - [ ] Revisit default generator output (i.e. whether to generate a `go.mod` by default or not).
+- [ ] Better support for licenses (i.e. move implementation to the layer above the generator).
