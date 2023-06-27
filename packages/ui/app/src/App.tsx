@@ -21,10 +21,12 @@ export declare namespace App {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
         resolvedUrlPath: ResolvedUrlPath;
+        nextPath: ResolvedUrlPath | undefined;
+        previousPath: ResolvedUrlPath | undefined;
     }
 }
 
-export const App: React.FC<App.Props> = ({ docs, resolvedUrlPath }) => {
+export const App: React.FC<App.Props> = ({ docs, resolvedUrlPath, nextPath, previousPath }) => {
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
@@ -37,7 +39,12 @@ export const App: React.FC<App.Props> = ({ docs, resolvedUrlPath }) => {
                 (children, Context) => (
                     <Context>{children}</Context>
                 ),
-                <DocsContextProvider docsDefinition={docs.definition} resolvedUrlPath={resolvedUrlPath}>
+                <DocsContextProvider
+                    docsDefinition={docs.definition}
+                    resolvedUrlPath={resolvedUrlPath}
+                    nextPath={nextPath}
+                    previousPath={previousPath}
+                >
                     <Docs />
                 </DocsContextProvider>
             )}

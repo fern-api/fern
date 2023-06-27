@@ -12,12 +12,16 @@ export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         resolvedUrlPath: ResolvedUrlPath;
+        nextPath: ResolvedUrlPath | undefined;
+        previousPath: ResolvedUrlPath | undefined;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
     resolvedUrlPath,
+    nextPath,
+    previousPath,
     children,
 }) => {
     const router = useRouter();
@@ -122,15 +126,17 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             onScrollToPath,
             registerScrolledToPathListener: scrollToPathListeners.registerListener,
             resolvedPathFromUrl: resolvedUrlPath,
-            nextPath: undefined,
-            previousPath: undefined,
+            nextPath,
+            previousPath,
             selectedSlug,
         }),
         [
             docsDefinition,
             navigateToPath,
             navigateToPathListeners.registerListener,
+            nextPath,
             onScrollToPath,
+            previousPath,
             resolveApi,
             resolveFile,
             resolvePage,

@@ -15,10 +15,12 @@ export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
         resolvedUrlPath: ResolvedUrlPath;
+        nextPath: ResolvedUrlPath | null;
+        previousPath: ResolvedUrlPath | null;
     }
 }
 
-export default function Docs({ docs, resolvedUrlPath }: Docs.Props): JSX.Element {
+export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath }: Docs.Props): JSX.Element {
     return (
         <main className={inter.className}>
             <Head>
@@ -27,7 +29,12 @@ export default function Docs({ docs, resolvedUrlPath }: Docs.Props): JSX.Element
                     <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]}></link>
                 )}
             </Head>
-            <App docs={docs} resolvedUrlPath={resolvedUrlPath} />
+            <App
+                docs={docs}
+                resolvedUrlPath={resolvedUrlPath}
+                nextPath={nextPath ?? undefined}
+                previousPath={previousPath ?? undefined}
+            />
         </main>
     );
 }
@@ -93,6 +100,8 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 props: {
                     docs: docs.body,
                     resolvedUrlPath,
+                    nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
+                    previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
                 },
             };
         default:
