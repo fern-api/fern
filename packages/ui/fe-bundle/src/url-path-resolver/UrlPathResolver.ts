@@ -3,6 +3,7 @@ import { ResolvedUrlPath, UrlSlugTree, UrlSlugTreeNode } from "@fern-api/ui";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { serialize } from "next-mdx-remote/serialize";
 import path from "path";
+import { getSlugFromUrl } from "./getSlugFromUrl";
 
 export class UrlPathResolver {
     private urlSlugTree: UrlSlugTree;
@@ -11,7 +12,25 @@ export class UrlPathResolver {
         this.urlSlugTree = new UrlSlugTree(docsDefinition);
     }
 
-    public async resolveSlug(slug: string): Promise<ResolvedUrlPath | undefined> {
+    public async resolveUrl({
+        pathname,
+        docsBasePath,
+    }: {
+        pathname: string;
+        docsBasePath: string | undefined;
+    }): Promise<ResolvedUrlPath | undefined> {
+        const slug = getSlugFromUrl({
+            pathname,
+            docsBasePath,
+            docsDefinition: this.docsDefinition,
+        });
+        if (slug == null) {
+            return undefined;
+        }
+        return this.resolveSlug(slug);
+    }
+
+    private async resolveSlug(slug: string): Promise<ResolvedUrlPath | undefined> {
         const node = this.urlSlugTree.resolveSlug(slug);
         if (node == null) {
             return undefined;
@@ -50,6 +69,7 @@ export class UrlPathResolver {
                 return {
                     type: "api",
                     apiSection: node.apiSection,
+                    apiSlug: node.apiSlug,
                     slug: node.slug,
                 };
             case "clientLibraries":
@@ -97,16 +117,4 @@ export class UrlPathResolver {
         }
         return page;
     }
-
-    /*
-    public getNextNavigatableItem(path: ResolvedUrlPath): ResolvedUrlPath | undefined {
-        const { nextNavigatableItem } = this.urlSlugTree.getNeighbors(path.slug);
-        return nextNavigatableItem != null ? this.convertNode(nextNavigatableItem) : undefined;
-    }
-
-    public getPreviousNavigatableItem(path: ResolvedUrlPath): ResolvedUrlPath | undefined {
-        const { previousNavigatableItem } = this.urlSlugTree.getNeighbors(path.slug);
-        return previousNavigatableItem != null ? this.convertNode(previousNavigatableItem) : undefined;
-    }
-    */
 }

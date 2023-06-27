@@ -1,16 +1,12 @@
 import { App, ResolvedUrlPath } from "@fern-api/ui";
-import { FernRegistryClient } from "@fern-fern/registry-browser";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
+import { REGISTRY_SERVICE } from "../../service";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
 
 const inter = Inter({ subsets: ["latin"] });
-
-const REGISTRY_SERVICE = new FernRegistryClient({
-    environment: process.env.NEXT_PUBLIC_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
-});
 
 export declare namespace Docs {
     export interface Props {
@@ -47,27 +43,12 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
     if (!docs.ok) {
         // eslint-disable-next-line no-console
-        console.error(docs.error);
+        console.error("Failed to fetch docs", docs.error);
         return { notFound: true };
     }
 
-    const slug =
-        docs.body.baseUrl.basePath != null
-            ? pathname.replace(new RegExp(`^${docs.body.baseUrl.basePath}`), "")
-            : pathname;
-    let slugWithoutLeadingOrTrailingSlashes = removeLeadingAndTrailingSlashes(slug);
-
-    if (slugWithoutLeadingOrTrailingSlashes === "") {
-        const firstNavigationItem = docs.body.definition.config.navigation.items[0];
-        if (firstNavigationItem != null) {
-            slugWithoutLeadingOrTrailingSlashes = firstNavigationItem.urlSlug;
-        } else {
-            return { notFound: true };
-        }
-    }
-
     const urlPathResolver = new UrlPathResolver(docs.body.definition);
-    const resolvedUrlPath = await urlPathResolver.resolveSlug(slugWithoutLeadingOrTrailingSlashes);
+    const resolvedUrlPath = await urlPathResolver.resolveUrl({ pathname, docsBasePath: docs.body.baseUrl.basePath });
     if (resolvedUrlPath == null) {
         return { notFound: true };
     }
@@ -83,13 +64,3 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 export const getStaticPaths: GetStaticPaths = () => {
     return { paths: [], fallback: "blocking" };
 };
-
-function removeLeadingAndTrailingSlashes(s: string): string {
-    if (s.startsWith("/")) {
-        s = s.substring(1);
-    }
-    if (s.endsWith("/")) {
-        s = s.substring(0, s.length - 1);
-    }
-    return s;
-}

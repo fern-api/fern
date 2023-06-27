@@ -1,5 +1,6 @@
 import { Text } from "@blueprintjs/core";
 import classNames from "classnames";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
@@ -77,7 +78,9 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({
 
     return (
         <div className={className} ref={setRef}>
-            <SidebarItemLayout title={renderTitle} onClick={handleClick} isSelected={isSelected} />
+            <Link href={`/${slug}`} onClick={handleClick} className="!no-underline">
+                <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
+            </Link>
         </div>
     );
 };

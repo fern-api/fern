@@ -85,7 +85,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         (slug: string) => {
             setJustNavigated(true);
             setSelectedSlug(slug);
-            void router.push(slug);
             navigateToPathListeners.invokeListeners(slug);
 
             const timeout = setTimeout(() => {
@@ -95,7 +94,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 clearTimeout(timeout);
             };
         },
-        [navigateToPathListeners, router]
+        [navigateToPathListeners]
     );
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
