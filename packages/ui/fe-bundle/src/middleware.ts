@@ -25,17 +25,13 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     );
     const docs = (await response.json()) as LoadDocsForUrlResponse;
 
-    const slug = getSlugFromUrl({
-        pathname: request.nextUrl.pathname,
-        docsBasePath: docs.baseUrl.basePath,
-        docsDefinition: docs.definition,
-    });
-    if (slug == null) {
-        return NextResponse.next();
-    }
-
     const urlSlugTree = new UrlSlugTree(docs.definition);
-    const resolvedSlug = urlSlugTree.resolveSlug(slug);
+    const resolvedSlug = urlSlugTree.resolveSlug(
+        getSlugFromUrl({
+            pathname: request.nextUrl.pathname,
+            basePath: docs.baseUrl.basePath,
+        })
+    );
     if (resolvedSlug == null) {
         return NextResponse.next();
     }

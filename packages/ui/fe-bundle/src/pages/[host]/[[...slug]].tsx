@@ -1,16 +1,19 @@
+import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils";
 import { App, ResolvedUrlPath } from "@fern-api/ui";
-import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
+import * as FernRegistryDocsReadV1 from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
+import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export declare namespace Docs {
     export interface Props {
-        docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
+        docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
         resolvedUrlPath: ResolvedUrlPath;
     }
 }
@@ -47,20 +50,77 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         return { notFound: true };
     }
 
+    let slug = getSlugFromUrl({ pathname, basePath: docs.body.baseUrl.basePath });
+    if (slug === "") {
+        const firstNavigationItem = docs.body.definition.config.navigation.items[0];
+        if (firstNavigationItem != null) {
+            slug = firstNavigationItem.urlSlug;
+        } else {
+            return { notFound: true };
+        }
+    }
+
     const urlPathResolver = new UrlPathResolver(docs.body.definition);
-    const resolvedUrlPath = await urlPathResolver.resolveUrl({ pathname, docsBasePath: docs.body.baseUrl.basePath });
+    const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
     if (resolvedUrlPath == null) {
         return { notFound: true };
     }
 
-    return {
-        props: {
-            docs: docs.body,
-            resolvedUrlPath,
-        },
-    };
+    switch (resolvedUrlPath.type) {
+        case "section": {
+            const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
+            if (firstNavigatableItem != null) {
+                return {
+                    redirect: {
+                        permanent: false,
+                        destination: firstNavigatableItem,
+                    },
+                };
+            } else {
+                return {
+                    notFound: true,
+                };
+            }
+        }
+        case "api":
+        case "apiSubpackage":
+        case "clientLibraries":
+        case "endpoint":
+        case "markdown-page":
+        case "mdx-page":
+        case "topLevelEndpoint":
+            return {
+                props: {
+                    docs: docs.body,
+                    resolvedUrlPath,
+                },
+            };
+        default:
+            assertNever(resolvedUrlPath);
+    }
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
     return { paths: [], fallback: "blocking" };
 };
+
+function getFirstNavigatableItem(section: FernRegistryDocsReadV1.DocsSection, slugPrefix?: string): string | undefined {
+    for (const item of section.items) {
+        switch (item.type) {
+            case "api":
+            case "page": {
+                const parts = [];
+                if (slugPrefix != null) {
+                    parts.push(slugPrefix);
+                }
+                parts.push(section.urlSlug, item.urlSlug);
+                return parts.join("/");
+            }
+            case "section":
+                return getFirstNavigatableItem(item, section.urlSlug);
+            default:
+                assertNeverNoThrow(item);
+        }
+    }
+    return undefined;
+}

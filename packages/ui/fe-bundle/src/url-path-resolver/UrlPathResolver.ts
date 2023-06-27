@@ -3,7 +3,6 @@ import { ResolvedUrlPath } from "@fern-api/ui";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { serialize } from "next-mdx-remote/serialize";
 import path from "path";
-import { getSlugFromUrl } from "./getSlugFromUrl";
 import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 
 export class UrlPathResolver {
@@ -13,25 +12,7 @@ export class UrlPathResolver {
         this.urlSlugTree = new UrlSlugTree(docsDefinition);
     }
 
-    public async resolveUrl({
-        pathname,
-        docsBasePath,
-    }: {
-        pathname: string;
-        docsBasePath: string | undefined;
-    }): Promise<ResolvedUrlPath | undefined> {
-        const slug = getSlugFromUrl({
-            pathname,
-            docsBasePath,
-            docsDefinition: this.docsDefinition,
-        });
-        if (slug == null) {
-            return undefined;
-        }
-        return this.resolveSlug(slug);
-    }
-
-    private async resolveSlug(slug: string): Promise<ResolvedUrlPath | undefined> {
+    public async resolveSlug(slug: string): Promise<ResolvedUrlPath | undefined> {
         const node = this.urlSlugTree.resolveSlug(slug);
         if (node == null) {
             return undefined;
