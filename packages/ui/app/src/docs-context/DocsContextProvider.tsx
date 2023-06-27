@@ -105,7 +105,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 return;
             }
             setSelectedSlug(slug);
-            void router.push(slug, undefined, { shallow: true });
+            void router.push(`/${slug}`, undefined, { shallow: true });
             scrollToPathListeners.invokeListeners(slug);
         },
         [justNavigated, router, scrollToPathListeners, selectedSlug]
