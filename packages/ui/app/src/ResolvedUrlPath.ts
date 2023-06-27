@@ -36,6 +36,7 @@ export declare namespace ResolvedUrlPath {
     export interface Api {
         type: "api";
         apiSection: FernRegistryDocsRead.ApiSection;
+        apiSlug: string;
         slug: string;
     }
 

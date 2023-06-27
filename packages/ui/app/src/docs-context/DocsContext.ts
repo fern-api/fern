@@ -23,6 +23,7 @@ export interface DocsContextValue {
 
     // controlled
     selectedSlug: string | undefined;
+
     // from URL
     resolvedPathFromUrl: ResolvedUrlPath;
 

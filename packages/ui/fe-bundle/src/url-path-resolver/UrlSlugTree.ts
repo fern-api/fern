@@ -1,12 +1,6 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { noop, size } from "lodash-es";
-import { resolveSubpackage } from "../api-context/ApiDefinitionContextProvider";
-import { areApiArtifactsNonEmpty } from "../api-page/artifacts/areApiArtifactsNonEmpty";
-import { doesSubpackageHaveEndpointsRecursive } from "../api-page/subpackages/doesSubpackageHaveEndpointsRecursive";
-import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
-import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
 
 export class UrlSlugTree {
     private root: Record<UrlSlug, UrlSlugTreeNode>;
@@ -259,7 +253,7 @@ export class UrlSlugTree {
                     subpackage: resolvedSubpackage,
                     apiSlug,
                     slugInsideApi: joinUrlSlugs(slugInsideApi, subpackage.urlSlug),
-                    isFirstItemInApi: isFirstItemInApi && size(acc) === 0,
+                    isFirstItemInApi: isFirstItemInApi && Object.keys(acc).length === 0,
                 });
             }
             return acc;
@@ -504,4 +498,48 @@ function getApiSlug(node: UrlSlugTreeNode): string | undefined {
         default:
             assertNever(node);
     }
+}
+
+function areApiArtifactsNonEmpty(apiArtifacts: FernRegistryDocsRead.ApiArtifacts): boolean {
+    return apiArtifacts.sdks.length > 0 || apiArtifacts.postman != null;
+}
+
+function joinUrlSlugs(...parts: [string, ...string[]]): string {
+    return parts.reduce((a, b) => {
+        if (a === "") {
+            return b;
+        }
+        return `${a}/${b}`;
+    });
+}
+
+function resolveSubpackage(
+    apiDefinition: FernRegistryApiRead.ApiDefinition,
+    subpackageId: FernRegistryApiRead.SubpackageId
+): FernRegistryApiRead.ApiDefinitionSubpackage {
+    const subpackage = apiDefinition.subpackages[subpackageId];
+    if (subpackage == null) {
+        throw new Error("Subpackage does not exist");
+    }
+    if (subpackage.pointsTo != null) {
+        const resolvedSubpackage = resolveSubpackage(apiDefinition, subpackage.pointsTo);
+        return {
+            ...resolvedSubpackage,
+            name: subpackage.name,
+            urlSlug: subpackage.urlSlug,
+        };
+    } else {
+        return subpackage;
+    }
+}
+
+function doesSubpackageHaveEndpointsRecursive(
+    subpackageId: FernRegistryApiRead.SubpackageId,
+    resolveSubpackage: (subpackageId: FernRegistryApiRead.SubpackageId) => FernRegistryApiRead.ApiDefinitionSubpackage
+): boolean {
+    const subpackage = resolveSubpackage(subpackageId);
+    if (subpackage.endpoints.length > 0) {
+        return true;
+    }
+    return subpackage.subpackages.some((s) => doesSubpackageHaveEndpointsRecursive(s, resolveSubpackage));
 }

@@ -1,7 +1,7 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { ApiDefinitionContextProvider } from "../api-context/ApiDefinitionContextProvider";
 import { joinUrlSlugs } from "../docs-context/joinUrlSlugs";
-import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
 import { ApiSidebarSection } from "./ApiSidebarSection";
 import { PageSidebarItem } from "./PageSidebarItem";
 import { SidebarDocsSection } from "./SidebarDocsSection";
