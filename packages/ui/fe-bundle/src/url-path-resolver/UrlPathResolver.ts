@@ -1,9 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ResolvedUrlPath, UrlSlugTree, UrlSlugTreeNode } from "@fern-api/ui";
+import { ResolvedUrlPath } from "@fern-api/ui";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { serialize } from "next-mdx-remote/serialize";
 import path from "path";
 import { getSlugFromUrl } from "./getSlugFromUrl";
+import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 
 export class UrlPathResolver {
     private urlSlugTree: UrlSlugTree;

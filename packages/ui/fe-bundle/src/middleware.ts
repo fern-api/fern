@@ -1,10 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { UrlSlugTree } from "@fern-api/ui";
 import { LoadDocsForUrlResponse } from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
 import { NextURL } from "next/dist/server/web/next-url";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getSlugFromUrl } from "./url-path-resolver/getSlugFromUrl";
+import { UrlSlugTree } from "./url-path-resolver/UrlSlugTree";
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest): Promise<NextResponse> {
