@@ -32,8 +32,8 @@ type userClient struct {
 }
 
 func (u *userClient) Get(ctx context.Context) (string, error) {
-	headers := u.header.Clone()
 	endpointURL := u.baseURL
+
 	var response string
 	if err := core.DoRequest(
 		ctx,
@@ -42,7 +42,7 @@ func (u *userClient) Get(ctx context.Context) (string, error) {
 		http.MethodGet,
 		nil,
 		&response,
-		headers,
+		u.header,
 		nil,
 	); err != nil {
 		return response, err

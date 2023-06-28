@@ -40,8 +40,8 @@ type client struct {
 }
 
 func (c *client) GetUser(ctx context.Context, userId string) (*User, error) {
-	headers := c.header.Clone()
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"users/%v", userId)
+
 	response := new(User)
 	if err := core.DoRequest(
 		ctx,
@@ -50,7 +50,7 @@ func (c *client) GetUser(ctx context.Context, userId string) (*User, error) {
 		http.MethodGet,
 		nil,
 		&response,
-		headers,
+		c.header,
 		nil,
 	); err != nil {
 		return response, err

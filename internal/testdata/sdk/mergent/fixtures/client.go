@@ -50,8 +50,8 @@ type client struct {
 }
 
 func (c *client) GetTasks(ctx context.Context) ([]*Task, error) {
-	headers := c.header.Clone()
 	endpointURL := c.baseURL + "/" + "tasks"
+
 	var response []*Task
 	if err := core.DoRequest(
 		ctx,
@@ -60,7 +60,7 @@ func (c *client) GetTasks(ctx context.Context) ([]*Task, error) {
 		http.MethodGet,
 		nil,
 		&response,
-		headers,
+		c.header,
 		nil,
 	); err != nil {
 		return response, err
@@ -69,6 +69,8 @@ func (c *client) GetTasks(ctx context.Context) ([]*Task, error) {
 }
 
 func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error) {
+	endpointURL := c.baseURL + "/" + "tasks"
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -95,8 +97,6 @@ func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := c.baseURL + "/" + "tasks"
 	response := new(Task)
 	if err := core.DoRequest(
 		ctx,
@@ -105,7 +105,7 @@ func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 		http.MethodPost,
 		request,
 		&response,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -114,6 +114,8 @@ func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 }
 
 func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -133,8 +135,6 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
 	response := new(Task)
 	if err := core.DoRequest(
 		ctx,
@@ -143,7 +143,7 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 		http.MethodGet,
 		nil,
 		&response,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -152,6 +152,8 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 }
 
 func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task) (*Task, error) {
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -185,8 +187,6 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task)
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
 	response := new(Task)
 	if err := core.DoRequest(
 		ctx,
@@ -195,7 +195,7 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task)
 		http.MethodPatch,
 		request,
 		&response,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -204,6 +204,8 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task)
 }
 
 func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -223,8 +225,6 @@ func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -232,7 +232,7 @@ func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 		http.MethodDelete,
 		nil,
 		nil,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return err
@@ -241,6 +241,8 @@ func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 }
 
 func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, error) {
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v/run", taskId)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -267,8 +269,6 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, erro
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v/run", taskId)
 	response := new(Task)
 	if err := core.DoRequest(
 		ctx,
@@ -277,7 +277,7 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, erro
 		http.MethodPost,
 		nil,
 		&response,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -286,6 +286,8 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, erro
 }
 
 func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) ([]*Task, error) {
+	endpointURL := c.baseURL + "/" + "tasks/batch-create"
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -326,8 +328,6 @@ func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) (
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := c.baseURL + "/" + "tasks/batch-create"
 	var response []*Task
 	if err := core.DoRequest(
 		ctx,
@@ -336,7 +336,7 @@ func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) (
 		http.MethodPost,
 		request,
 		&response,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -345,6 +345,8 @@ func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) (
 }
 
 func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
+	endpointURL := c.baseURL + "/" + "tasks/batch-delete"
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -371,8 +373,6 @@ func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := c.baseURL + "/" + "tasks/batch-delete"
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -380,7 +380,7 @@ func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
 		http.MethodPost,
 		request,
 		nil,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return err
@@ -389,8 +389,8 @@ func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
 }
 
 func (c *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
-	headers := c.header.Clone()
 	endpointURL := c.baseURL + "/" + "schedules"
+
 	var response []*Schedule
 	if err := core.DoRequest(
 		ctx,
@@ -399,7 +399,7 @@ func (c *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
 		http.MethodGet,
 		nil,
 		&response,
-		headers,
+		c.header,
 		nil,
 	); err != nil {
 		return response, err
@@ -408,6 +408,8 @@ func (c *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
 }
 
 func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Schedule, error) {
+	endpointURL := c.baseURL + "/" + "schedules"
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -427,8 +429,6 @@ func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Sche
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := c.baseURL + "/" + "schedules"
 	response := new(Schedule)
 	if err := core.DoRequest(
 		ctx,
@@ -437,7 +437,7 @@ func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Sche
 		http.MethodPost,
 		request,
 		&response,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -446,6 +446,8 @@ func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Sche
 }
 
 func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Schedule, error) {
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -465,8 +467,6 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Sc
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
 	response := new(Schedule)
 	if err := core.DoRequest(
 		ctx,
@@ -475,7 +475,7 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Sc
 		http.MethodGet,
 		nil,
 		&response,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -484,6 +484,8 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Sc
 }
 
 func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, request *Schedule) (*Schedule, error) {
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -510,8 +512,6 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, re
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
 	response := new(Schedule)
 	if err := core.DoRequest(
 		ctx,
@@ -520,7 +520,7 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, re
 		http.MethodPatch,
 		request,
 		&response,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -529,6 +529,8 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, re
 }
 
 func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) error {
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -548,8 +550,6 @@ func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) e
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -557,7 +557,7 @@ func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) e
 		http.MethodDelete,
 		nil,
 		nil,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return err
@@ -566,6 +566,8 @@ func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) e
 }
 
 func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id) ([]*Task, error) {
+	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v/tasks", scheduleId)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -585,8 +587,6 @@ func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id)
 		return apiError
 	}
 
-	headers := c.header.Clone()
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v/tasks", scheduleId)
 	var response []*Task
 	if err := core.DoRequest(
 		ctx,
@@ -595,7 +595,7 @@ func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id)
 		http.MethodGet,
 		nil,
 		&response,
-		headers,
+		c.header,
 		errorDecoder,
 	); err != nil {
 		return response, err

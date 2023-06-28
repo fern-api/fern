@@ -33,8 +33,8 @@ type notificationClient struct {
 }
 
 func (n *notificationClient) List(ctx context.Context, userId string) ([]*Notification, error) {
-	headers := n.header.Clone()
 	endpointURL := fmt.Sprintf(n.baseURL+"/"+"users/%v/notifications", userId)
+
 	var response []*Notification
 	if err := core.DoRequest(
 		ctx,
@@ -43,7 +43,7 @@ func (n *notificationClient) List(ctx context.Context, userId string) ([]*Notifi
 		http.MethodGet,
 		nil,
 		&response,
-		headers,
+		n.header,
 		nil,
 	); err != nil {
 		return response, err

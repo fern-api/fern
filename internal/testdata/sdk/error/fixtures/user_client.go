@@ -38,6 +38,8 @@ type userClient struct {
 }
 
 func (u *userClient) Get(ctx context.Context, id string) (string, error) {
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -78,8 +80,6 @@ func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 		return apiError
 	}
 
-	headers := u.header.Clone()
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)
 	var response string
 	if err := core.DoRequest(
 		ctx,
@@ -88,7 +88,7 @@ func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 		http.MethodGet,
 		nil,
 		&response,
-		headers,
+		u.header,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -97,6 +97,8 @@ func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 }
 
 func (u *userClient) Update(ctx context.Context, id string, request string) (string, error) {
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)
+
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
 		if err != nil {
@@ -116,8 +118,6 @@ func (u *userClient) Update(ctx context.Context, id string, request string) (str
 		return apiError
 	}
 
-	headers := u.header.Clone()
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)
 	var response string
 	if err := core.DoRequest(
 		ctx,
@@ -126,7 +126,7 @@ func (u *userClient) Update(ctx context.Context, id string, request string) (str
 		http.MethodPost,
 		request,
 		&response,
-		headers,
+		u.header,
 		errorDecoder,
 	); err != nil {
 		return response, err

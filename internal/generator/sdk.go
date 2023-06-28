@@ -224,50 +224,10 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 	// Implement this service's methods.
 	for _, endpoint := range endpoints {
 		f.P("func (", receiver, " *", clientImplName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
-		if len(endpoint.Errors) > 0 {
-			f.P("errorDecoder := func(statusCode int, body io.Reader) error {")
-			f.P("raw, err := io.ReadAll(body)")
-			f.P("if err != nil {")
-			f.P("return err")
-			f.P("}")
-			f.P("apiError := core.NewAPIError(statusCode, errors.New(string(raw)))")
-			f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
-			f.P("switch statusCode {")
-			for _, responseError := range endpoint.Errors {
-				errorDeclaration := f.errors[responseError.Error.ErrorId]
-				f.P("case ", errorDeclaration.StatusCode, ":")
-				f.P("value := new(", errorDeclaration.Name.Name.PascalCase.UnsafeName, ")")
-				f.P("if err := decoder.Decode(value); err != nil {")
-				f.P("return err")
-				f.P("}")
-				f.P("value.APIError = apiError")
-				f.P("return value")
-			}
-			// Close the switch statement.
-			f.P("}")
-			f.P("return apiError")
-			f.P("}")
-			f.P()
-		}
-		// Add endpoint-specific headers from the request, if any.
-		f.P("headers := ", receiver, ".header.Clone()")
-		if len(endpoint.Headers) > 0 {
-			for _, header := range endpoint.Headers {
-				headerType := typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
-				requestField := endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName
-				if header.ValueType.Container != nil && header.ValueType.Container.Optional != nil {
-					requestField = fmt.Sprintf("*%s", requestField)
-				}
-				f.P("var ", header.Name.Name.CamelCase.SafeName, "DefaultValue ", headerType)
-				f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= ", header.Name.Name.CamelCase.SafeName, "DefaultValue {")
-				f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
-				f.P("}")
-			}
-			f.P()
-		}
 		// Compose the URL, including any query parameters.
 		f.P(endpoint.URLStatement)
 		if len(endpoint.QueryParameters) > 0 {
+			f.P()
 			f.P("queryParams := make(url.Values)")
 			for _, queryParameter := range endpoint.QueryParameters {
 				queryParameterType := typeReferenceToGoType(queryParameter.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
@@ -299,8 +259,54 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 			f.P("if len(queryParams) > 0 {")
 			f.P(`endpointURL += "?" + queryParams.Encode()`)
 			f.P("}")
+		}
+		// Add endpoint-specific headers from the request, if any.
+		headersParameter := fmt.Sprintf("%s.header", receiver)
+		if len(endpoint.Headers) > 0 {
+			f.P()
+			f.P("headers := ", receiver, ".header.Clone()")
+			for _, header := range endpoint.Headers {
+				headerType := typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
+				requestField := endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName
+				if header.ValueType.Container != nil && header.ValueType.Container.Optional != nil {
+					requestField = fmt.Sprintf("*%s", requestField)
+				}
+				f.P("var ", header.Name.Name.CamelCase.SafeName, "DefaultValue ", headerType)
+				f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= ", header.Name.Name.CamelCase.SafeName, "DefaultValue {")
+				f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+				f.P("}")
+			}
+			headersParameter = "headers"
+		}
+		f.P()
+
+		// Include the error decoder, if any.
+		if len(endpoint.Errors) > 0 {
+			f.P("errorDecoder := func(statusCode int, body io.Reader) error {")
+			f.P("raw, err := io.ReadAll(body)")
+			f.P("if err != nil {")
+			f.P("return err")
+			f.P("}")
+			f.P("apiError := core.NewAPIError(statusCode, errors.New(string(raw)))")
+			f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
+			f.P("switch statusCode {")
+			for _, responseError := range endpoint.Errors {
+				errorDeclaration := f.errors[responseError.Error.ErrorId]
+				f.P("case ", errorDeclaration.StatusCode, ":")
+				f.P("value := new(", errorDeclaration.Name.Name.PascalCase.UnsafeName, ")")
+				f.P("if err := decoder.Decode(value); err != nil {")
+				f.P("return err")
+				f.P("}")
+				f.P("value.APIError = apiError")
+				f.P("return value")
+			}
+			// Close the switch statement.
+			f.P("}")
+			f.P("return apiError")
+			f.P("}")
 			f.P()
 		}
+
 		// Prepare a response variable and issue the request.
 		if endpoint.ResponseType != "" {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, strings.TrimLeft(endpoint.ResponseType, "*")))
@@ -312,7 +318,7 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 		f.P(endpoint.Method, ",")
 		f.P(endpoint.RequestParameterName, ",")
 		f.P(endpoint.ResponseParameterName, ",")
-		f.P("headers,")
+		f.P(headersParameter, ",")
 		f.P(endpoint.ErrorDecoderParameterName, ",")
 		f.P("); err != nil {")
 		f.P("return ", endpoint.ErrorReturnValues)

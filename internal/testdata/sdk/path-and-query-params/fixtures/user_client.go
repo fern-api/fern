@@ -34,8 +34,8 @@ type userClient struct {
 }
 
 func (u *userClient) GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error) {
-	headers := u.header.Clone()
 	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v", userId)
+
 	queryParams := make(url.Values)
 	var shallowDefaultValue *bool
 	if request.Shallow != shallowDefaultValue {
@@ -53,7 +53,7 @@ func (u *userClient) GetUser(ctx context.Context, userId string, request *GetUse
 		http.MethodGet,
 		request,
 		&response,
-		headers,
+		u.header,
 		nil,
 	); err != nil {
 		return response, err

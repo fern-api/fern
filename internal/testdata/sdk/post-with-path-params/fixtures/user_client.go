@@ -37,8 +37,8 @@ type userClient struct {
 }
 
 func (u *userClient) SetName(ctx context.Context, userId string, request string) (string, error) {
-	headers := u.header.Clone()
 	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name", userId)
+
 	var response string
 	if err := core.DoRequest(
 		ctx,
@@ -47,7 +47,7 @@ func (u *userClient) SetName(ctx context.Context, userId string, request string)
 		http.MethodPost,
 		request,
 		&response,
-		headers,
+		u.header,
 		nil,
 	); err != nil {
 		return response, err
@@ -56,8 +56,8 @@ func (u *userClient) SetName(ctx context.Context, userId string, request string)
 }
 
 func (u *userClient) SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error) {
-	headers := u.header.Clone()
 	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v2", userId)
+
 	var response string
 	if err := core.DoRequest(
 		ctx,
@@ -66,7 +66,7 @@ func (u *userClient) SetNameV2(ctx context.Context, userId string, request *SetN
 		http.MethodPost,
 		request,
 		&response,
-		headers,
+		u.header,
 		nil,
 	); err != nil {
 		return response, err
@@ -75,13 +75,14 @@ func (u *userClient) SetNameV2(ctx context.Context, userId string, request *SetN
 }
 
 func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error) {
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v3", userId)
+
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string
 	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
 		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 	}
 
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v3", userId)
 	response := new(SetNameRequestV3Body)
 	if err := core.DoRequest(
 		ctx,
@@ -99,13 +100,14 @@ func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetN
 }
 
 func (u *userClient) SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error) {
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v4", userId)
+
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string
 	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
 		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 	}
 
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v4", userId)
 	var response string
 	if err := core.DoRequest(
 		ctx,
@@ -123,13 +125,14 @@ func (u *userClient) SetNameV4(ctx context.Context, userId string, request *SetN
 }
 
 func (u *userClient) SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error) {
+	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v5", userId)
+
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string
 	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
 		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 	}
 
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v5", userId)
 	var response string
 	if err := core.DoRequest(
 		ctx,

@@ -34,13 +34,8 @@ type userClient struct {
 }
 
 func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersRequest) (string, error) {
-	headers := u.header.Clone()
-	var xEndpointHeaderDefaultValue string
-	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
-		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	}
-
 	endpointURL := u.baseURL + "/" + "/users/all"
+
 	queryParams := make(url.Values)
 	var tagDefaultValue int
 	if request.Tag != tagDefaultValue {
@@ -58,6 +53,12 @@ func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersReques
 	}
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
+	}
+
+	headers := u.header.Clone()
+	var xEndpointHeaderDefaultValue string
+	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
+		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 	}
 
 	var response string

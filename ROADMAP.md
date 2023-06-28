@@ -37,8 +37,8 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Rename `Service` to `Client` for symmetry with other SDKs.
 - [x] Consolidate endpoint implementation in the un-exported client.
 - [x] Add an API error type so that all RPC errors preserve the status code.
+- [x] Serialize query parameters and headers
 - [ ] If a `Client` type exists, prefix the filename with a `_` to avoid conflicts.
-- [ ] Serialize query parameters and headers
 - [ ] Generate documentation for all relevant types
 - [ ] Generate examples
 - [ ] Support optional client/endpoint variables (e.g. namespace)
