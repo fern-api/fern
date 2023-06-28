@@ -1,0 +1,18 @@
+{
+    "irFilepath": "ir.json",
+    "output": {
+        "mode": {
+            "type": "downloadFiles"
+        },
+        "path": "temp"
+    },
+    "customConfig": {
+      "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures"
+    },
+    "workspaceName": "test",
+    "organization": "fernbot",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false
+}

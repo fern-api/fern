@@ -36,9 +36,19 @@ type userClient struct {
 func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersRequest) (string, error) {
 	endpointURL := u.baseURL + "/" + "/users/all"
 	queryParams := make(url.Values)
-	var limitDefaultValue *int
-	if request.Limit != limitDefaultValue {
-		queryParams.Add("limit", fmt.Sprintf("%v", *request.Limit))
+	var tagDefaultValue int
+	if request.Tag != tagDefaultValue {
+		queryParams.Add("tag", fmt.Sprintf("%v", request.Tag))
+	}
+	for _, value := range request.Limit {
+		queryParams.Add("limit", fmt.Sprintf("%v", *value))
+	}
+	var filterDefaultValue *string
+	if request.Filter != filterDefaultValue {
+		queryParams.Add("filter", fmt.Sprintf("%v", *request.Filter))
+	}
+	for _, value := range request.Series {
+		queryParams.Add("series", fmt.Sprintf("%v", value))
 	}
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()

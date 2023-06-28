@@ -222,7 +222,6 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 	f.P()
 
 	// Implement this service's methods.
-	// TODO: Add query parameters from request, if any.
 	// TODO: Add headers from request, if any.
 	for _, endpoint := range endpoints {
 		f.P("func (", receiver, " *", clientImplName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
@@ -252,6 +251,39 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 			f.P()
 		}
 		f.P(endpoint.URLStatement)
+		if len(endpoint.QueryParameters) > 0 {
+			f.P("queryParams := make(url.Values)")
+			for _, queryParameter := range endpoint.QueryParameters {
+				queryParameterType := typeReferenceToGoType(queryParameter.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
+				if queryParameter.AllowMultiple {
+					requestField := "value"
+					if queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Optional != nil {
+						// TODO: For now, we recognize whether or not we need to dereference the query parameter based on whether or not it's an optional.
+						// As long as Fern supports them, we should support all different types of complex query parameter structures. To avoid complexity
+						// in the generated code, we might want to use a reflect-based approach.
+						requestField = fmt.Sprintf("*%s", requestField)
+					}
+					f.P("for _, value := range ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "{")
+					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+					f.P("}")
+				} else {
+					requestField := endpoint.RequestParameterName + "." + queryParameter.Name.Name.PascalCase.UnsafeName
+					if queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Optional != nil {
+						// TODO: For now, we recognize whether or not we need to dereference the query parameter based on whether or not it's an optional.
+						// As long as Fern supports them, we should support all different types of complex query parameter structures. To avoid complexity
+						// in the generated code, we might want to use a reflect-based approach.
+						requestField = fmt.Sprintf("*%s", requestField)
+					}
+					f.P("var ", queryParameter.Name.Name.CamelCase.SafeName, "DefaultValue ", queryParameterType)
+					f.P("if ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "!= ", queryParameter.Name.Name.CamelCase.SafeName, "DefaultValue {")
+					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+					f.P("}")
+				}
+			}
+			f.P("if len(queryParams) > 0 {")
+			f.P(`endpointURL += "?" + queryParams.Encode()`)
+			f.P("}")
+		}
 		if endpoint.ResponseType != "" {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, strings.TrimLeft(endpoint.ResponseType, "*")))
 		}
@@ -312,6 +344,8 @@ type endpoint struct {
 	Method                    string
 	ErrorDecoderParameterName string
 	Errors                    ir.ResponseErrors
+	QueryParameters           []*ir.QueryParameter
+	Headers                   []*ir.HttpHeader
 }
 
 // signatureForEndpoint returns a signature template for the given endpoint.
@@ -430,6 +464,8 @@ func (f *fileWriter) endpointFromIR(fernFilepath *ir.FernFilepath, irEndpoint *i
 		Method:                    irMethodToMethodEnum(irEndpoint.Method),
 		ErrorDecoderParameterName: errorDecoderParameterName,
 		Errors:                    irEndpoint.Errors,
+		QueryParameters:           irEndpoint.QueryParameters,
+		Headers:                   irEndpoint.Headers,
 	}, nil
 }
 
