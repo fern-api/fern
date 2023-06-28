@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"path"
+	"sort"
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
@@ -499,6 +500,11 @@ func (f *fileWriter) endpointFromIR(fernFilepath *ir.FernFilepath, irEndpoint *i
 	}, nil
 }
 
+// WriteEnvironments writes the environment constants.
+func (f *fileWriter) WriteEnvironments(environmentsConfig *ir.EnvironmentsConfig) error {
+	return environmentsToEnvironmentsVariable(environmentsConfig.Environments, f)
+}
+
 // WriteError writes the structured error types.
 func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	var (
@@ -579,10 +585,6 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 	for _, queryParam := range endpoint.QueryParameters {
 		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.imports, f.baseImportPath, importPath)
 		if queryParam.AllowMultiple {
-			// TODO: If the query parameter can be specified multiple times, it's not enough to just define it
-			// as a list. Otherwise, it's indistinguishable from a single query parameter with a list value.
-			//
-			// We'll need to track how the query parameter is applied at the call-site.
 			value = fmt.Sprintf("[]%s", value)
 		}
 		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\"`")
@@ -687,6 +689,113 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 	f.P("}")
 	f.P()
 
+	return nil
+}
+
+func environmentsToEnvironmentsVariable(
+	environments *ir.Environments,
+	writer *fileWriter,
+) error {
+	writer.P("var Environments = struct {")
+	declarationVisitor := &environmentsDeclarationVisitor{
+		types:  writer.types,
+		writer: writer,
+	}
+	if err := environments.Accept(declarationVisitor); err != nil {
+		return err
+	}
+	writer.P("}{")
+	valueVisitor := &environmentsValueVisitor{
+		types:  writer.types,
+		writer: writer,
+	}
+	if err := environments.Accept(valueVisitor); err != nil {
+		return err
+	}
+	writer.P("}")
+	return nil
+}
+
+// environmentURL is used to generate deterministic results (i.e. by iterating
+// over a sorted list rather than a map).
+type environmentURL struct {
+	ID  ir.EnvironmentBaseUrlId
+	URL ir.EnvironmentUrl
+}
+
+func environmentURLMapToSortedSlice(urls map[ir.EnvironmentBaseUrlId]ir.EnvironmentUrl) []*environmentURL {
+	result := make([]*environmentURL, 0, len(urls))
+	for id, url := range urls {
+		result = append(
+			result,
+			&environmentURL{
+				ID:  id,
+				URL: url,
+			},
+		)
+	}
+	sort.Slice(result, func(i, j int) bool { return result[i].ID < result[j].ID })
+	return result
+}
+
+type environmentsDeclarationVisitor struct {
+	types  map[ir.TypeId]*ir.TypeDeclaration
+	writer *fileWriter
+}
+
+func (e *environmentsDeclarationVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUrlEnvironments) error {
+	for _, environment := range url.Environments {
+		e.writer.WriteDocs(environment.Docs)
+		e.writer.P(environment.Name.PascalCase.UnsafeName, " string")
+	}
+	return nil
+}
+
+func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrlsEnvironments) error {
+	baseURLs := make(map[ir.EnvironmentBaseUrlId]string)
+	for _, baseURL := range url.BaseUrls {
+		baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
+	}
+	for _, environment := range url.Environments {
+		e.writer.WriteDocs(environment.Docs)
+		e.writer.P(environment.Name.PascalCase.UnsafeName, " struct {")
+		for _, environmentURL := range environmentURLMapToSortedSlice(environment.Urls) {
+			e.writer.P(baseURLs[environmentURL.ID], " string")
+		}
+		e.writer.P("}")
+	}
+	return nil
+}
+
+type environmentsValueVisitor struct {
+	types  map[ir.TypeId]*ir.TypeDeclaration
+	writer *fileWriter
+}
+
+func (e *environmentsValueVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUrlEnvironments) error {
+	for _, environment := range url.Environments {
+		e.writer.P(environment.Name.PascalCase.UnsafeName, fmt.Sprintf(": %q,", environment.Url))
+	}
+	return nil
+}
+
+func (e *environmentsValueVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrlsEnvironments) error {
+	baseURLs := make(map[ir.EnvironmentBaseUrlId]string)
+	for _, baseURL := range url.BaseUrls {
+		baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
+	}
+	for _, environment := range url.Environments {
+		environmentURLs := environmentURLMapToSortedSlice(environment.Urls)
+		e.writer.P(environment.Name.PascalCase.UnsafeName, ": struct {")
+		for _, environmentURL := range environmentURLs {
+			e.writer.P(baseURLs[environmentURL.ID], " string")
+		}
+		e.writer.P("}{")
+		for _, environmentURL := range environmentURLs {
+			e.writer.P(baseURLs[environmentURL.ID], fmt.Sprintf(": %q,", environmentURL.URL))
+		}
+		e.writer.P("},")
+	}
 	return nil
 }
 

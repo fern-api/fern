@@ -138,6 +138,25 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			return nil, err
 		}
 		files = append(files, file)
+		if ir.Environments != nil {
+			// Generate the core environments file.
+			fileInfo = fileInfoForEnvironments()
+			writer = newFileWriter(
+				fileInfo.filename,
+				fileInfo.packageName,
+				g.config.ImportPath,
+				ir.Types,
+				ir.Errors,
+			)
+			if err := writer.WriteEnvironments(ir.Environments); err != nil {
+				return nil, err
+			}
+			file, err = writer.File()
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, file)
+		}
 		files = append(files, newCoreFile())
 		// Generate the error types, if any.
 		for _, irError := range ir.Errors {
@@ -391,6 +410,13 @@ type fileInfo struct {
 func fileInfoForCoreClientOptions() *fileInfo {
 	return &fileInfo{
 		filename:    "core/client_option.go",
+		packageName: "core",
+	}
+}
+
+func fileInfoForEnvironments() *fileInfo {
+	return &fileInfo{
+		filename:    "core/environments.go",
 		packageName: "core",
 	}
 }
