@@ -66,6 +66,16 @@ export const FernOpenAPIExtension = {
      *       name: ONE
      */
     FERN_ENUM: "x-fern-enum",
+
+    /**
+     * Used to mark operations with audiences
+     *
+     * paths:
+     *   /path/to/my/endpoint/{id}:
+     *     x-fern-audiences:
+     *       - external
+     */
+    AUDIENCES: "x-fern-audiences",
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

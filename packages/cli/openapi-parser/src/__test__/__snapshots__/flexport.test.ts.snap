@@ -13,6 +13,7 @@ we still recommend setting the Content-Type header to the value \`application/js
 ",
       "endpoints": [
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -131,6 +132,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of booking line items linked to submitted bookings",
           "errorStatusCode": [
@@ -427,6 +429,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Creates and returns a booking line item",
           "errorStatusCode": [
@@ -545,6 +548,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of booking line items",
           "errorStatusCode": [
@@ -665,6 +669,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of bookings.",
           "errorStatusCode": [
@@ -1226,6 +1231,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -1344,6 +1350,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single booking.
 ",
@@ -1465,6 +1472,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Rate limited to 2,000 requests per hour",
           "errorStatusCode": [
@@ -1583,6 +1591,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of commercial invoices",
           "errorStatusCode": [],
@@ -1872,6 +1881,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "**The Commercial Invoices POST endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
           "errorStatusCode": [
@@ -1990,6 +2000,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "**The Commercial Invoices PATCH endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
           "errorStatusCode": [
@@ -2108,6 +2119,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single commercial invoice.",
           "errorStatusCode": [
@@ -2230,6 +2242,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of customs entries.",
           "errorStatusCode": [
@@ -2470,6 +2483,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single customs entry.",
           "errorStatusCode": [
@@ -2592,6 +2606,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of all documents associated with shipments.",
           "errorStatusCode": [
@@ -2950,6 +2965,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Create a new document for this client using the request payload",
           "errorStatusCode": [
@@ -3068,6 +3084,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single document.",
           "errorStatusCode": [
@@ -3190,6 +3207,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
           "errorStatusCode": [],
@@ -3231,6 +3249,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of all events delivered to any webhook registered by this client",
           "errorStatusCode": [
@@ -3542,6 +3561,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns the webhook event with ID ":id"",
           "errorStatusCode": [
@@ -3662,6 +3682,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of invoices.",
           "errorStatusCode": [
@@ -4145,6 +4166,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single invoice",
           "errorStatusCode": [
@@ -4267,6 +4289,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of companies in the network.",
           "errorStatusCode": [
@@ -4540,6 +4563,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -4658,6 +4682,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single company.",
           "errorStatusCode": [],
@@ -4778,6 +4803,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -4911,6 +4937,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of the company entity objects in the network.",
           "errorStatusCode": [
@@ -5201,6 +5228,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -5319,6 +5347,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single company entity",
           "errorStatusCode": [
@@ -5441,6 +5470,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -5574,6 +5604,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of contacts in the network.",
           "errorStatusCode": [
@@ -5864,6 +5895,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -5982,6 +6014,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single contact.",
           "errorStatusCode": [
@@ -6104,6 +6137,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -6237,6 +6271,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of location objects in the network.",
           "errorStatusCode": [
@@ -6561,6 +6596,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -6679,6 +6715,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single location",
           "errorStatusCode": [
@@ -6801,6 +6838,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -6934,6 +6972,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of your own organization.",
           "errorStatusCode": [
@@ -7041,6 +7080,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -7311,6 +7351,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -7431,6 +7472,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of containers. The containers are sorted descending by creation date.",
           "errorStatusCode": [
@@ -7703,6 +7745,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single container.",
           "errorStatusCode": [
@@ -7825,6 +7868,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -8121,6 +8165,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of all products belonging to this client",
           "errorStatusCode": [
@@ -8363,6 +8408,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Create a new product for this client using the request payload",
           "errorStatusCode": [
@@ -8481,6 +8527,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns the client's product with this ID",
           "errorStatusCode": [
@@ -8603,6 +8650,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Update this product to represent the request payload",
           "errorStatusCode": [
@@ -8736,6 +8784,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of purchase order line items",
           "errorStatusCode": [
@@ -9043,6 +9092,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns the details of a purchase order line item",
           "errorStatusCode": [
@@ -9163,6 +9213,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of purchase orders",
           "errorStatusCode": [
@@ -9694,6 +9745,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -9741,6 +9793,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single purchase order.
 ",
@@ -9878,6 +9931,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -9938,6 +9992,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of shipment route legs. The legs are sorted descending by creation date.",
           "errorStatusCode": [
@@ -10206,6 +10261,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -10342,6 +10398,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of shipments.",
           "errorStatusCode": [
@@ -11074,6 +11131,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieves the details of a single shipment.
 ",
@@ -11197,6 +11255,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -11328,6 +11387,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns a list of shipments status shareable url",
           "errorStatusCode": [

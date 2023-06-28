@@ -1,4 +1,5 @@
 import { Endpoint, EndpointSdkName, HttpMethod, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "../DummyOpenAPIV3ParserContext";
@@ -236,6 +237,8 @@ function convertToEndpoint({
         baseBreadcrumbs.push(sdkName.methodName);
     } else if (operation.operationId != null) {
         baseBreadcrumbs.push(operation.operationId);
+    } else {
+        baseBreadcrumbs.push(camelCase(`${httpMethod}_${path.split("/").join("_")}`));
     }
 
     if (suffix != null) {
@@ -302,6 +305,7 @@ function convertToEndpoint({
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
+        audiences: getExtension<string[]>(operation, FernOpenAPIExtension.AUDIENCES) ?? [],
         operationId:
             operation.operationId != null && suffix != null
                 ? operation.operationId + "_" + suffix

@@ -8,6 +8,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "description": "The Dopt Blocks API",
       "endpoints": [
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -450,6 +451,7 @@ exports[`open api parser dopt parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -552,6 +554,7 @@ exports[`open api parser dopt parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1158,6 +1161,7 @@ exports[`open api parser dopt parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
