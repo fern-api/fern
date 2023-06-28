@@ -23,6 +23,7 @@ exports[`open api parser vellum simple 1`] = `
         "base-path": "",
         "endpoints": {
           "generate": {
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -68,6 +69,7 @@ Generate a completion using a previously defined deployment.
             "url": "Default",
           },
           "search": {
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -113,6 +115,7 @@ Perform a search against a document index.
             "url": "Predict",
           },
           "submit-completion-actuals": {
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -775,6 +778,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-path": "",
         "endpoints": {
           "list": {
+            "audiences": [],
             "auth": true,
             "docs": "
 <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
@@ -816,6 +820,7 @@ Used to list documents. Optionally filter on supported fields.
             "url": "Default",
           },
           "upload": {
+            "audiences": [],
             "auth": true,
             "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -873,6 +878,7 @@ Upload a document to be indexed and used for search.
         "base-path": "",
         "endpoints": {
           "retrieve": {
+            "audiences": [],
             "auth": true,
             "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>

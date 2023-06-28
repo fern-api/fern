@@ -153,6 +153,7 @@ in the DevPortal.
 ",
       "endpoints": [
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all the existing links in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -580,6 +581,7 @@ in the DevPortal.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Register a new link with your Belvo account.
 
@@ -670,6 +672,7 @@ in the DevPortal.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume a Link register session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
@@ -755,6 +758,7 @@ in the DevPortal.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific link.",
           "errorStatusCode": [
@@ -842,6 +846,7 @@ in the DevPortal.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Update the credentials of a specific link. If the successfully updated link is a recurrent one, we automatically trigger an update of the link. If we find fresh data, you'll [receive historical update](https://developers.belvo.com/docs/webhooks) webhooks.
 <div style="background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Note: </strong> We recommend using our <a href="https://developers.belvo.com/docs/connect-widget" target="_blank">Connect Widget</a> to handle updating <code>invalid</code> or <code>token_required</code> links. </div>
@@ -945,6 +950,7 @@ in the DevPortal.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Change a link's access mode from \`single\` to \`recurrent\` or from \`recurrent\` to single.
 ℹ️ **Note**: When you change a link from \`single\`\` to \`recurrent\`, they will only be updated the next day at the scheduled interval.",
@@ -1047,6 +1053,7 @@ in the DevPortal.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
 # Deleting links in batches
@@ -1096,6 +1103,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing accounts in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -1781,6 +1789,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve accounts from an existing link.
 
@@ -1885,6 +1894,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume an Account retrieve session that was paused because an MFA token was required by the institution.
 
@@ -1989,6 +1999,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific account.
 
@@ -2090,6 +2101,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific account and all associated transactions, as well as owners, from your Belvo account.",
           "errorStatusCode": [
@@ -2131,6 +2143,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing transactions in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -3155,6 +3168,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
@@ -3248,6 +3262,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
@@ -3347,6 +3362,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume a Transaction retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
@@ -3437,6 +3453,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific transaction.",
           "errorStatusCode": [
@@ -3524,6 +3541,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific transaction from your Belvo account.",
           "errorStatusCode": [
@@ -3565,6 +3583,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing balances in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -4083,6 +4102,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve balances from one or more accounts for a specific link within a specified date range.",
           "errorStatusCode": [
@@ -4173,6 +4193,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume a Balance retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
@@ -4263,6 +4284,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific balance.",
           "errorStatusCode": [
@@ -4350,6 +4372,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific balance from your Belvo account.",
           "errorStatusCode": [
@@ -4391,6 +4414,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all the institutions currently supported by Belvo. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -4682,6 +4706,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific institution.",
           "errorStatusCode": [
@@ -4769,6 +4794,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing owners in your Belvo account. We return up to 100 results per page.",
           "errorStatusCode": [
@@ -5060,6 +5086,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve owner information from a specific link.",
           "errorStatusCode": [
@@ -5150,6 +5177,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume an Owner retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
@@ -5240,6 +5268,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific owner.",
           "errorStatusCode": [
@@ -5327,6 +5356,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific owner from your Belvo account.",
           "errorStatusCode": [
@@ -5368,6 +5398,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing invoices in your Belvo account. By default, we return 100 results per page.",
           "errorStatusCode": [
@@ -5934,6 +5965,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve invoice information from a specific fiscal link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> You can ask for up to **one** year (365 days) of invoices per request. If you need invoices for more than one year, just make another request. </div>
@@ -6044,6 +6076,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume an Invoice retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
@@ -6153,6 +6186,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific invoice.",
           "errorStatusCode": [
@@ -6259,6 +6293,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific invoice from your Belvo account.",
           "errorStatusCode": [
@@ -6300,6 +6335,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing tax returns in your Belvo account. By default, we return up to 100 results per page. The results will include a mix of both monthly and yearly tax returns.",
           "errorStatusCode": [
@@ -6731,6 +6767,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve tax return information for a specific fiscal link.",
           "errorStatusCode": [
@@ -6874,6 +6911,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific tax return.",
           "errorStatusCode": [
@@ -6996,6 +7034,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific tax return from your Belvo account.",
           "errorStatusCode": [
@@ -7037,6 +7076,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing tax status in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -7297,6 +7337,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve tax status information for a specific fiscal link.",
           "errorStatusCode": [
@@ -7401,6 +7442,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific tax status.",
           "errorStatusCode": [
@@ -7507,6 +7549,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific tax status from your Belvo account.",
           "errorStatusCode": [
@@ -7548,6 +7591,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing Tax compliance statuses in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -7808,6 +7852,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the Tax compliance status information for a specific fiscal link.",
           "errorStatusCode": [
@@ -7893,6 +7938,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific Tax compliance status.",
           "errorStatusCode": [
@@ -7980,6 +8026,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific Tax compliance status from your Belvo account.",
           "errorStatusCode": [
@@ -8021,6 +8068,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all incomes in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -8199,6 +8247,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve income insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
           "errorStatusCode": [
@@ -8285,6 +8334,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume an Income retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
@@ -8375,6 +8425,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific income.",
           "errorStatusCode": [
@@ -8466,6 +8517,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific income from your Belvo account.",
           "errorStatusCode": [
@@ -8507,6 +8559,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all recurring expenses in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -8719,6 +8772,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve recurring expense insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
           "errorStatusCode": [
@@ -8809,6 +8863,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume an Recurring Expenses retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
@@ -8899,6 +8954,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific recurring expense.",
           "errorStatusCode": [
@@ -8990,6 +9046,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific recurring expense from your Belvo account.",
           "errorStatusCode": [
@@ -9031,6 +9088,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -9257,6 +9315,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve all portfolios for an existing link.",
           "errorStatusCode": [
@@ -9342,6 +9401,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume a portfolio retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
@@ -9427,6 +9487,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific portfolio.",
           "errorStatusCode": [
@@ -9514,6 +9575,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific investment portfolio and all associated instruments, transactions, and owners from your Belvo account.",
           "errorStatusCode": [
@@ -9555,6 +9617,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all the existing receivable transactions in your Belvo account. We return up to 100 results per page.",
           "errorStatusCode": [
@@ -9920,6 +9983,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve all receivable transactions for an existing link.",
           "errorStatusCode": [
@@ -10005,6 +10069,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific receivable transaction.",
           "errorStatusCode": [
@@ -10092,6 +10157,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific receivable transaction from your Belvo account.",
           "errorStatusCode": [
@@ -10133,6 +10199,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all risk insight analyses in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -10308,6 +10375,7 @@ If you try to access older information than what we can access, we will return a
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Request the risk insights for a given link ID.
 
@@ -10400,6 +10468,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Used to resume an Risk insights retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
@@ -10490,6 +10559,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific risk insight.",
           "errorStatusCode": [
@@ -10581,6 +10651,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific risk insight from your Belvo account.",
           "errorStatusCode": [
@@ -10622,6 +10693,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing tax retentions in your Belvo account. We return up to 100 results per page.",
           "errorStatusCode": [
@@ -10848,6 +10920,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve tax retention information from a specific link. The maximum number of tax retentions that can be returned for a period is 500.",
           "errorStatusCode": [
@@ -10937,6 +11010,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific tax retention.",
           "errorStatusCode": [
@@ -11024,6 +11098,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific tax retention from your Belvo account.",
           "errorStatusCode": [
@@ -11065,6 +11140,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing tax declarations in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -11446,6 +11522,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve tax declaration information for a specific fiscal link.",
           "errorStatusCode": [
@@ -11554,6 +11631,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific Tax declaration.",
           "errorStatusCode": [
@@ -11660,6 +11738,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific Tax declaration from your Belvo account.",
           "errorStatusCode": [
@@ -11701,6 +11780,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing employment records in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -11805,6 +11885,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve employment record details for an individual.
 ",
@@ -11896,6 +11977,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details of a specific employment record.",
           "errorStatusCode": [
@@ -11983,6 +12065,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific employment record from your Belvo account.",
           "errorStatusCode": [
@@ -12024,6 +12107,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Send through your raw data and receive enriched information for each of your user's income streams.
 
@@ -12082,6 +12166,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Send through your raw transaction data and receive enriched information for each of your transactions.
 
@@ -12136,6 +12221,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a paginated list of all existing secret keys in your Belvo account. We return up to 100 results per page.
 
@@ -12175,6 +12261,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Request API keys to use with Belvo's Payments API.
 
@@ -12226,6 +12313,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "List all payment webhooks associated with your Belvo account.",
           "errorStatusCode": [
@@ -12262,6 +12350,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Register a new payments webhook for your Belvo account.
 ",
@@ -12317,6 +12406,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details about a specific payment webhook.",
           "errorStatusCode": [
@@ -12369,6 +12459,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a specific payment webhook from your Belvo account.",
           "errorStatusCode": [
@@ -12410,6 +12501,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "List all available payment institutions.",
           "errorStatusCode": [
@@ -12598,6 +12690,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details about a specific payment institution",
           "errorStatusCode": [
@@ -12650,6 +12743,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "List all customers associated with your Belvo account.",
           "errorStatusCode": [
@@ -12861,6 +12955,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new customer to send or request funds.",
           "errorStatusCode": [
@@ -12948,6 +13043,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details about a specific customer",
           "errorStatusCode": [
@@ -13019,6 +13115,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "List all bank accounts associated with your Belvo account.",
           "errorStatusCode": [
@@ -13309,6 +13406,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new bank account from which to send or request funds.",
           "errorStatusCode": [
@@ -13397,6 +13495,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details about a specific bank account",
           "errorStatusCode": [
@@ -13468,6 +13567,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "List all payment links associated with your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
@@ -13721,6 +13821,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new payment link to start a hosted-widget payment.",
           "errorStatusCode": [
@@ -13809,6 +13910,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details about a payment link.",
           "errorStatusCode": [
@@ -13882,6 +13984,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "List all payment intents associated with your Belvo account.",
           "errorStatusCode": [
@@ -14240,6 +14343,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a payment intent.",
           "errorStatusCode": [
@@ -14290,6 +14394,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details about a specific payment intent.",
           "errorStatusCode": [
@@ -14342,6 +14447,7 @@ For example:
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Complete a new payment intent.
 
@@ -14407,6 +14513,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "List all payment transactions associated with your Belvo account.",
           "errorStatusCode": [
@@ -14833,6 +14940,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the details about a specific payment transaction.",
           "errorStatusCode": [

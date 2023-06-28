@@ -3036,6 +3036,7 @@ empty.
         "display-name": "artifacts",
         "endpoints": {
           "locate": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets the download URL for the artifact.",
             "errors": [
@@ -3065,6 +3066,7 @@ empty.
             },
           },
           "prepare": {
+            "audiences": [],
             "auth": true,
             "docs": "Creates an artifact and generates an upload URL for its data.
 ",
@@ -3110,6 +3112,7 @@ empty.
         "display-name": "auth-connection",
         "endpoints": {
           "dev-org-auth-connections-create": {
+            "audiences": [],
             "auth": true,
             "docs": "Creates a new enterprise authentication connection for a Dev
 organization. This authentication connection will not be enabled by
@@ -3141,6 +3144,7 @@ enterprise connections can be created by an organization.
             },
           },
           "dev-org-auth-connections-delete": {
+            "audiences": [],
             "auth": true,
             "docs": "Deletes an authentication connection. Only enterprise connections which
 are explicitly set up for a Dev organization can be deleted. Default
@@ -3172,6 +3176,7 @@ connections can not be deleted using this method.
             },
           },
           "dev-org-auth-connections-get": {
+            "audiences": [],
             "auth": true,
             "docs": "Retrieves the details for an authentication connection.",
             "errors": [
@@ -3201,6 +3206,7 @@ connections can not be deleted using this method.
             },
           },
           "dev-org-auth-connections-list": {
+            "audiences": [],
             "auth": true,
             "docs": "Lists all the authentication connections available for a Dev
 organization. This list will include both social and enterprise
@@ -3223,6 +3229,7 @@ created by the user.
             },
           },
           "dev-org-auth-connections-toggle": {
+            "audiences": [],
             "auth": true,
             "docs": "Enable or disable an authentication connection for a Dev organization.
 Currently, only 1 authentication connection can be enabled at a time.
@@ -3260,6 +3267,7 @@ disabled.
             },
           },
           "dev-org-auth-connections-update": {
+            "audiences": [],
             "auth": true,
             "docs": "Updates an authentication connection.",
             "errors": [
@@ -3300,6 +3308,7 @@ organization.
         "display-name": "auth-tokens",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": true,
             "docs": "Creates a JWT corresponding to the requested token type for the
 authenticated user.
@@ -3379,6 +3388,7 @@ requesting an application access token (AAT).
             },
           },
           "delete": {
+            "audiences": [],
             "auth": true,
             "docs": "Revokes the token that matches the given token ID issued under the
 given Dev organization.
@@ -3412,6 +3422,7 @@ JTI claim of the token in the authorization header.
             },
           },
           "get": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets the token metadata corresponding to the given token ID under the
 given Dev organization.
@@ -3444,6 +3455,7 @@ given Dev organization.
             },
           },
           "list": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets the token metadata for all the tokens corresponding to the given
 token type issued for a given subject.
@@ -3492,6 +3504,7 @@ subject.
             },
           },
           "selfDelete": {
+            "audiences": [],
             "auth": true,
             "docs": "Revokes all the tokens that matches the given token type created by the
 authenticated user.
@@ -3522,6 +3535,7 @@ authenticated user.
             },
           },
           "update": {
+            "audiences": [],
             "auth": true,
             "docs": "Updates token metadata of a token issued under a given Dev
 organization.
@@ -3574,6 +3588,7 @@ organization.
         "display-name": "dev-users",
         "endpoints": {
           "list": {
+            "audiences": [],
             "auth": true,
             "docs": "Lists users within your organization.",
             "errors": [
@@ -3633,6 +3648,7 @@ used.
             },
           },
           "self": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets the authenticated user's information.",
             "errors": [
@@ -3664,6 +3680,7 @@ used.
         "display-name": "parts",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": true,
             "docs": "Creates new [part](https://devrev.ai/docs/product/parts).",
             "errors": [
@@ -3688,6 +3705,7 @@ used.
             },
           },
           "delete": {
+            "audiences": [],
             "auth": true,
             "docs": "Deletes a [part](https://devrev.ai/docs/product/parts).",
             "errors": [
@@ -3720,6 +3738,7 @@ used.
             },
           },
           "get": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
@@ -3750,6 +3769,7 @@ used.
             },
           },
           "list": {
+            "audiences": [],
             "auth": true,
             "docs": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
@@ -3814,6 +3834,7 @@ used.
             },
           },
           "update": {
+            "audiences": [],
             "auth": true,
             "docs": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
@@ -3853,6 +3874,7 @@ used.
         "display-name": "rev-orgs",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": true,
             "docs": "Creates a Rev organization in the authenticated user's Dev
 organization.
@@ -3909,6 +3931,7 @@ records.
             },
           },
           "delete": {
+            "audiences": [],
             "auth": true,
             "docs": "Deletes the Rev organization.",
             "errors": [
@@ -3941,6 +3964,7 @@ records.
             },
           },
           "get": {
+            "audiences": [],
             "auth": true,
             "docs": "Retrieves the Rev organization's information.",
             "errors": [
@@ -3970,6 +3994,7 @@ records.
             },
           },
           "list": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets the list of Rev organizations' information belonging to the
 authenticated user's Dev Organization which the user is also authorized
@@ -4060,6 +4085,7 @@ them.
             },
           },
           "update": {
+            "audiences": [],
             "auth": true,
             "docs": "Updates the Rev organization's information.",
             "errors": [
@@ -4132,6 +4158,7 @@ records.
         "display-name": "tags",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": true,
             "docs": "Creates a new tag, which is used to create associations between objects
 and a logical concept denoted by the tag's name.
@@ -4176,6 +4203,7 @@ permitted.
             },
           },
           "delete": {
+            "audiences": [],
             "auth": true,
             "docs": "Deletes a tag.",
             "errors": [
@@ -4208,6 +4236,7 @@ permitted.
             },
           },
           "get": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets a tag's information.",
             "errors": [
@@ -4237,6 +4266,7 @@ permitted.
             },
           },
           "list": {
+            "audiences": [],
             "auth": true,
             "docs": "Lists the available tags.",
             "errors": [
@@ -4279,6 +4309,7 @@ used.
             },
           },
           "update": {
+            "audiences": [],
             "auth": true,
             "docs": "Updates a tag's information.",
             "errors": [
@@ -4338,6 +4369,7 @@ tags.
         "display-name": "timeline-entries",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": true,
             "docs": "Creates a new entry on an object's timeline.",
             "errors": [
@@ -4362,6 +4394,7 @@ tags.
             },
           },
           "get": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets an entry on an object's timeline.",
             "errors": [
@@ -4391,6 +4424,7 @@ tags.
             },
           },
           "list": {
+            "audiences": [],
             "auth": true,
             "docs": "Lists the timeline entries for an object.",
             "errors": [
@@ -4441,6 +4475,7 @@ used.
             },
           },
           "update": {
+            "audiences": [],
             "auth": true,
             "docs": "Updates an entry on an object's timeline.",
             "errors": [
@@ -4478,6 +4513,7 @@ used.
         "display-name": "webhooks",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": true,
             "docs": "Creates a new webhook target.",
             "errors": [
@@ -4521,6 +4557,7 @@ response.
             },
           },
           "delete": {
+            "audiences": [],
             "auth": true,
             "docs": "Deletes the requested webhook.",
             "errors": [
@@ -4553,6 +4590,7 @@ response.
             },
           },
           "get": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets the requested webhook's information.",
             "errors": [
@@ -4582,6 +4620,7 @@ response.
             },
           },
           "list": {
+            "audiences": [],
             "auth": true,
             "docs": "Lists the webhooks.",
             "errors": [
@@ -4600,6 +4639,7 @@ response.
             },
           },
           "update": {
+            "audiences": [],
             "auth": true,
             "docs": "Updates the requested webhook.",
             "errors": [
@@ -4669,6 +4709,7 @@ won't receive any object events until successfully verified.
         "display-name": "works",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": true,
             "docs": "Creates new work ([issue](https://devrev.ai/docs/product/build),
 [ticket](https://devrev.ai/docs/product/support)) item.
@@ -4695,6 +4736,7 @@ won't receive any object events until successfully verified.
             },
           },
           "delete": {
+            "audiences": [],
             "auth": true,
             "docs": "Deletes a work item.",
             "errors": [
@@ -4727,6 +4769,7 @@ won't receive any object events until successfully verified.
             },
           },
           "export": {
+            "audiences": [],
             "auth": true,
             "docs": "Exports a collection of work items.",
             "errors": [
@@ -4805,6 +4848,7 @@ organizations.
             },
           },
           "get": {
+            "audiences": [],
             "auth": true,
             "docs": "Gets a work item's information.",
             "errors": [
@@ -4834,6 +4878,7 @@ organizations.
             },
           },
           "list": {
+            "audiences": [],
             "auth": true,
             "docs": "Lists a collection of work items.",
             "errors": [
@@ -4925,6 +4970,7 @@ organizations.
             },
           },
           "update": {
+            "audiences": [],
             "auth": true,
             "docs": "Updates a work item's information.",
             "errors": [

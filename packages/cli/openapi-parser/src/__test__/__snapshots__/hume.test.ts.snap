@@ -8,6 +8,7 @@ exports[`open api parser hume parse open api 1`] = `
       "description": "The Batch API provides access to Hume models through an asynchronous job-based interface. You can submit a job to have many different files processed in parallel. The status of a job can then be checked with the job ID. Email notifications are available to alert on completed jobs.",
       "endpoints": [
         {
+          "audiences": [],
           "authed": false,
           "description": "Sort and filter jobs.",
           "errorStatusCode": [],
@@ -145,6 +146,7 @@ exports[`open api parser hume parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Start a new batch job.",
           "errorStatusCode": [],
@@ -190,6 +192,7 @@ exports[`open api parser hume parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get the JSON predictions of a completed job.",
           "errorStatusCode": [],
@@ -243,6 +246,7 @@ exports[`open api parser hume parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get the artifacts ZIP of a completed job.",
           "errorStatusCode": [],
@@ -284,6 +288,7 @@ exports[`open api parser hume parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get the request details and state of a given job.",
           "errorStatusCode": [],

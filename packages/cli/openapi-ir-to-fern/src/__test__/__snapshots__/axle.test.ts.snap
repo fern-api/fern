@@ -554,6 +554,7 @@ exports[`open api parser axle simple 1`] = `
         "base-path": "",
         "endpoints": {
           "GetAccount": {
+            "audiences": [],
             "auth": false,
             "display-name": "Get Account",
             "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
@@ -593,6 +594,7 @@ exports[`open api parser axle simple 1`] = `
         "base-path": "",
         "endpoints": {
           "GetCarrier": {
+            "audiences": [],
             "auth": false,
             "display-name": "Get Carrier",
             "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
@@ -611,6 +613,7 @@ exports[`open api parser axle simple 1`] = `
             },
           },
           "GetCarriers": {
+            "audiences": [],
             "auth": false,
             "display-name": "Get Carriers",
             "docs": "The Get Carriers method returns an array of Carrier objects.",
@@ -634,6 +637,7 @@ exports[`open api parser axle simple 1`] = `
         "base-path": "",
         "endpoints": {
           "StartIgnition": {
+            "audiences": [],
             "auth": false,
             "display-name": "Start Ignition",
             "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
@@ -682,6 +686,7 @@ exports[`open api parser axle simple 1`] = `
         "base-path": "",
         "endpoints": {
           "GetPolicy": {
+            "audiences": [],
             "auth": false,
             "display-name": "Get Policy",
             "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
@@ -721,6 +726,7 @@ exports[`open api parser axle simple 1`] = `
         "base-path": "",
         "endpoints": {
           "ExchangeToken": {
+            "audiences": [],
             "auth": false,
             "display-name": "Exchange Token",
             "docs": "Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.

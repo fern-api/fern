@@ -8683,6 +8683,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Booking",
         "endpoints": {
           "bookings_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all bookings",
             "docs": "Returns a list of bookings.",
@@ -8803,6 +8804,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create and return a booking",
             "docs": undefined,
@@ -8910,6 +8912,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a booking",
             "docs": "Retrieves the details of a single booking.
@@ -8944,6 +8947,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "BookingAmendment",
         "endpoints": {
           "booking_amendment_create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create a new booking amendment.",
             "docs": undefined,
@@ -9053,6 +9057,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "BookingLineItem",
         "endpoints": {
           "booking_line_item_create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create a booking line item",
             "docs": "Creates and returns a booking line item",
@@ -9088,6 +9093,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "booking_line_item_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all booking line items",
             "docs": "Returns a list of booking line items linked to submitted bookings",
@@ -9137,6 +9143,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "booking_line_item_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieves the details of a single booking line item.",
             "docs": "Returns a list of booking line items",
@@ -9170,6 +9177,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Carbon Calculation",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Calculate carbon emissions",
             "docs": "Rate limited to 2,000 requests per hour",
@@ -9266,6 +9274,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Commercial Invoices",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create and return a new commercial invoice",
             "docs": "**The Commercial Invoices POST endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
@@ -9329,6 +9338,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List commercial invoices",
             "docs": "Returns a list of commercial invoices",
@@ -9376,6 +9386,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a commercial invoice",
             "docs": "Retrieves the details of a single commercial invoice.",
@@ -9396,6 +9407,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "update": {
+            "audiences": [],
             "auth": false,
             "display-name": "Update an existing commercial invoice",
             "docs": "**The Commercial Invoices PATCH endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
@@ -9460,6 +9472,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Company",
         "endpoints": {
           "network_company_create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create a new company object",
             "docs": undefined,
@@ -9491,6 +9504,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_company_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List company objects",
             "docs": "Returns a list of companies in the network.",
@@ -9530,6 +9544,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_company_me": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve your company",
             "docs": "Retrieves the details of your own organization.",
@@ -9544,6 +9559,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_company_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a company",
             "docs": "Retrieves the details of a single company.",
@@ -9562,6 +9578,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_company_update": {
+            "audiences": [],
             "auth": false,
             "display-name": "Update an existing company",
             "docs": undefined,
@@ -9612,6 +9629,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "CompanyEntity",
         "endpoints": {
           "company_entity_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List of company entity objects",
             "docs": "Returns a list of the company entity objects in the network.",
@@ -9656,6 +9674,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_company_entity_create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create and return a new company entity",
             "docs": undefined,
@@ -9703,6 +9722,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_company_entity_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a company entity",
             "docs": "Retrieves the details of a single company entity",
@@ -9723,6 +9743,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_company_entity_update": {
+            "audiences": [],
             "auth": false,
             "display-name": "Update a company entity",
             "docs": undefined,
@@ -9781,6 +9802,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Contact",
         "endpoints": {
           "network_contact_create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create a new contact object",
             "docs": undefined,
@@ -9820,6 +9842,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_contact_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List contact objects",
             "docs": "Returns a list of contacts in the network.",
@@ -9864,6 +9887,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_contact_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a contact",
             "docs": "Retrieves the details of a single contact.",
@@ -9884,6 +9908,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "network_contact_update": {
+            "audiences": [],
             "auth": false,
             "display-name": "Update an existing contact",
             "docs": undefined,
@@ -9938,6 +9963,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Container",
         "endpoints": {
           "list": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all containers.",
             "docs": "Returns a list of containers. The containers are sorted descending by creation date.",
@@ -9982,6 +10008,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a container.",
             "docs": "Retrieves the details of a single container.",
@@ -10015,6 +10042,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "ContainerLeg",
         "endpoints": {
           "ocean_container_legs_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all container legs",
             "docs": undefined,
@@ -10059,6 +10087,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "ocean_container_legs_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a container leg on an Ocean shipment",
             "docs": undefined,
@@ -10092,6 +10121,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Customs Entries",
         "endpoints": {
           "customs_entry_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List customs entry objects",
             "docs": "Returns a list of customs entries.",
@@ -10126,6 +10156,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a customs entry",
             "docs": "Retrieves the details of a single customs entry.",
@@ -10159,6 +10190,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Document",
         "endpoints": {
           "documents_create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create a document",
             "docs": "Create a new document for this client using the request payload",
@@ -10179,6 +10211,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "documents_download": {
+            "audiences": [],
             "auth": false,
             "display-name": "Download a document",
             "docs": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
@@ -10197,6 +10230,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "documents_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List document objects",
             "docs": "Returns a list of all documents associated with shipments.",
@@ -10261,6 +10295,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "documents_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a document",
             "docs": "Retrieves the details of a single document.",
@@ -10294,6 +10329,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Event",
         "endpoints": {
           "events_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all webhook events",
             "docs": "Returns a list of all events delivered to any webhook registered by this client",
@@ -10338,6 +10374,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
           "events_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a single webhook event",
             "docs": "Returns the webhook event with ID ":id"",
@@ -10371,6 +10408,7 @@ exports[`open api parser flexport simple 1`] = `
         "display-name": "Invoices",
         "endpoints": {
           "invoice_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all invoices",
             "docs": "Returns a list of invoices.",
@@ -10472,6 +10510,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve an invoice",
             "docs": "Retrieves the details of a single invoice",
@@ -10505,6 +10544,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "display-name": "Location",
         "endpoints": {
           "index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List of location objects",
             "docs": "Returns a list of location objects in the network.",
@@ -10559,6 +10599,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "network_location_create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create and return a new location",
             "docs": undefined,
@@ -10606,6 +10647,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "network_location_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a location by id",
             "docs": "Retrieves the details of a single location",
@@ -10626,6 +10668,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "update": {
+            "audiences": [],
             "auth": false,
             "display-name": "Update a network location",
             "docs": undefined,
@@ -10688,6 +10731,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "display-name": "Ports",
         "endpoints": {
           "index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List of ports",
             "docs": undefined,
@@ -10740,6 +10784,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "display-name": "Product",
         "endpoints": {
           "create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create a product",
             "docs": "Create a new product for this client using the request payload",
@@ -10799,6 +10844,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all products for a client",
             "docs": "Returns a list of all products belonging to this client",
@@ -10833,6 +10879,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a single product",
             "docs": "Returns the client's product with this ID",
@@ -10853,6 +10900,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "update": {
+            "audiences": [],
             "auth": false,
             "display-name": "Update a product",
             "docs": "Update this product to represent the request payload",
@@ -10931,6 +10979,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "display-name": "PurchaseOrder",
         "endpoints": {
           "purchase_order_create": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create and return a purchase order",
             "docs": undefined,
@@ -10951,6 +11000,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "purchase_order_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all purchase orders",
             "docs": "Returns a list of purchase orders",
@@ -11045,6 +11095,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "purchase_order_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a purchase order",
             "docs": "Retrieves the details of a single purchase order.
@@ -11076,6 +11127,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "purchase_order_update": {
+            "audiences": [],
             "auth": false,
             "display-name": "Update and return a purchase order",
             "docs": undefined,
@@ -11115,6 +11167,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "display-name": "PurchaseOrderLineItem",
         "endpoints": {
           "purchase_order_line_item_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all purchase order line items.",
             "docs": "Returns a list of purchase order line items",
@@ -11169,6 +11222,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "purchase_order_line_item_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a purchase order line item",
             "docs": "Returns the details of a purchase order line item",
@@ -11202,6 +11256,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "display-name": "Shipment",
         "endpoints": {
           "index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all shipments",
             "docs": "Returns a list of shipments.",
@@ -11377,6 +11432,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "shipments_shareable": {
+            "audiences": [],
             "auth": false,
             "display-name": "Create shareable URLs for shipments",
             "docs": "Returns a list of shipments status shareable url",
@@ -11404,6 +11460,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a shipment",
             "docs": "Retrieves the details of a single shipment.
@@ -11425,6 +11482,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "update": {
+            "audiences": [],
             "auth": false,
             "display-name": "Update an existing shipment",
             "docs": undefined,
@@ -11471,6 +11529,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
         "display-name": "ShipmentLeg",
         "endpoints": {
           "shipment_leg_index": {
+            "audiences": [],
             "auth": false,
             "display-name": "List all shipment route legs",
             "docs": "Returns a list of shipment route legs. The legs are sorted descending by creation date.",
@@ -11515,6 +11574,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             },
           },
           "shipment_leg_show": {
+            "audiences": [],
             "auth": false,
             "display-name": "Retrieve a shipment route leg",
             "docs": undefined,

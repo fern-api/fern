@@ -11402,6 +11402,7 @@ client.accounts.list(params: {
         "display-name": "Accounts",
         "endpoints": {
           "DestroyAccount": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete an account",
             "docs": "Delete a specific account and all associated transactions, as well as owners, from your Belvo account.",
@@ -11419,6 +11420,7 @@ client.accounts.list(params: {
             },
           },
           "DetailAccount": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get an account's details",
             "docs": "Get the details of a specific account.
@@ -11469,6 +11471,7 @@ client.accounts.list(params: {
             },
           },
           "ListAccounts": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all accounts",
             "docs": "Get a paginated list of all existing accounts in your Belvo account. By default, we return up to 100 results per page.",
@@ -11684,6 +11687,7 @@ client.accounts.list(params: {
             },
           },
           "PatchAccounts": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete an accounts request",
             "docs": "Used to resume an Account retrieve session that was paused because an MFA token was required by the institution.
@@ -11735,6 +11739,7 @@ client.accounts.list(params: {
             },
           },
           "RetrieveAccounts": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve accounts for a link",
             "docs": "Retrieve accounts from an existing link.
@@ -11878,6 +11883,7 @@ client.balances.list(params: {
         "display-name": "Balances",
         "endpoints": {
           "DestroyBalance": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a balance",
             "docs": "Delete a specific balance from your Belvo account.",
@@ -11895,6 +11901,7 @@ client.balances.list(params: {
             },
           },
           "DetailBalance": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a balance's details",
             "docs": "Get the details of a specific balance.",
@@ -11931,6 +11938,7 @@ client.balances.list(params: {
             },
           },
           "ListBalances": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all balances",
             "docs": "Get a paginated list of all existing balances in your Belvo account. By default, we return up to 100 results per page.",
@@ -12099,6 +12107,7 @@ client.balances.list(params: {
             },
           },
           "PatchBalances": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete a balances request",
             "docs": "Used to resume a Balance retrieve session that was paused because an MFA token was required by the institution.",
@@ -12136,6 +12145,7 @@ client.balances.list(params: {
             },
           },
           "RetrieveBalances": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve balances for a link",
             "docs": "Retrieve balances from one or more accounts for a specific link within a specified date range.",
@@ -12220,6 +12230,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "display-name": "Bank Accounts",
         "endpoints": {
           "CreateBankAccount": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create a new bank account",
             "docs": "Create a new bank account from which to send or request funds.",
@@ -12243,6 +12254,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "DetailBankAccount": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get details about a bank account",
             "docs": "Get the details about a specific bank account",
@@ -12264,6 +12276,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "ListBankAccount": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all bank accounts",
             "docs": "List all bank accounts associated with your Belvo account.",
@@ -12373,6 +12386,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "display-name": "Categorization",
         "endpoints": {
           "CategorizeTransactions": {
+            "audiences": [],
             "auth": true,
             "display-name": "Categorize transactions",
             "docs": "Send through your raw transaction data and receive enriched information for each of your transactions.
@@ -12427,6 +12441,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "display-name": "Customers",
         "endpoints": {
           "CreateCustomer": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create a new customer",
             "docs": "Create a new customer to send or request funds.",
@@ -12449,6 +12464,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "DetailCustomer": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get details about a customer",
             "docs": "Get the details about a specific customer",
@@ -12470,6 +12486,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
           },
           "ListCustomers": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all customers",
             "docs": "List all customers associated with your Belvo account.",
@@ -12571,6 +12588,7 @@ At the moment, the employment records resource is available for:
         "display-name": "Employment Records",
         "endpoints": {
           "DestroyEmploymentRecord": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete an employment record",
             "docs": "Delete a specific employment record from your Belvo account.",
@@ -12588,6 +12606,7 @@ At the moment, the employment records resource is available for:
             },
           },
           "DetailEmploymentRecord": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get an employment record's details",
             "docs": "Get the details of a specific employment record.",
@@ -12624,6 +12643,7 @@ At the moment, the employment records resource is available for:
             },
           },
           "ListEmploymentRecords": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all employment records",
             "docs": "Get a paginated list of all existing employment records in your Belvo account. By default, we return up to 100 results per page.",
@@ -12666,6 +12686,7 @@ At the moment, the employment records resource is available for:
             },
           },
           "RetrieveEmploymentRecordDetails": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve employment record details",
             "docs": "Retrieve employment record details for an individual.
@@ -12735,6 +12756,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "display-name": "Income Verification",
         "endpoints": {
           "VerifyIncome": {
+            "audiences": [],
             "auth": true,
             "display-name": "Verify incomes",
             "docs": "Send through your raw data and receive enriched information for each of your user's income streams.
@@ -12868,6 +12890,7 @@ client.incomes.list(params: {
         "display-name": "Incomes",
         "endpoints": {
           "DestroyIncomes": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete an income",
             "docs": "Delete a specific income from your Belvo account.",
@@ -12885,6 +12908,7 @@ client.incomes.list(params: {
             },
           },
           "DetailIncome": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get an income's details",
             "docs": "Get the details of a specific income.",
@@ -12921,6 +12945,7 @@ client.incomes.list(params: {
             },
           },
           "ListIncomes": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all incomes",
             "docs": "Get a paginated list of all incomes in your Belvo account. By default, we return up to 100 results per page.",
@@ -12989,6 +13014,7 @@ client.incomes.list(params: {
             },
           },
           "PatchIncomes": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete an incomes request",
             "docs": "Used to resume an Income retrieve session that was paused because an MFA token was required by the institution.",
@@ -13026,6 +13052,7 @@ client.incomes.list(params: {
             },
           },
           "RetrieveIncome": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve incomes for a link",
             "docs": "Retrieve income insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
@@ -13121,6 +13148,7 @@ You can see a complete list of institutions by either consulting our [Institutio
         "display-name": "Institutions",
         "endpoints": {
           "DetailInstitution": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get an institution's details",
             "docs": "Get the details of a specific institution.",
@@ -13157,6 +13185,7 @@ You can see a complete list of institutions by either consulting our [Institutio
             },
           },
           "ListInstitutions": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all institutions",
             "docs": "Get a paginated list of all the institutions currently supported by Belvo. By default, we return up to 100 results per page.",
@@ -13312,6 +13341,7 @@ client. investments_portfolio.list(params: {
         "display-name": "Investment Portfolios",
         "endpoints": {
           "DestroyPortfolio": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a portfolio",
             "docs": "Delete a specific investment portfolio and all associated instruments, transactions, and owners from your Belvo account.",
@@ -13329,6 +13359,7 @@ client. investments_portfolio.list(params: {
             },
           },
           "DetailPortfolio": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a portfolio's details",
             "docs": "Get the details of a specific portfolio.",
@@ -13365,6 +13396,7 @@ client. investments_portfolio.list(params: {
             },
           },
           "ListPortfolio": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all portfolios",
             "docs": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
@@ -13445,6 +13477,7 @@ client. investments_portfolio.list(params: {
             },
           },
           "PatchPortfolio": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete a portfolios request",
             "docs": "Used to resume a portfolio retrieve session that was paused because an MFA token was required by the institution.",
@@ -13481,6 +13514,7 @@ client. investments_portfolio.list(params: {
             },
           },
           "RetrievePortfolio": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve portfolios for a link",
             "docs": "Retrieve all portfolios for an existing link.",
@@ -13596,6 +13630,7 @@ client.invoices.list(params: {
         "display-name": "Invoices",
         "endpoints": {
           "DestroyInvoice": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete an invoice",
             "docs": "Delete a specific invoice from your Belvo account.",
@@ -13613,6 +13648,7 @@ client.invoices.list(params: {
             },
           },
           "DetailInvoice": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get an invoice's details",
             "docs": "Get the details of a specific invoice.",
@@ -13649,6 +13685,7 @@ client.invoices.list(params: {
             },
           },
           "ListInvoices": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all invoices",
             "docs": "Get a paginated list of all existing invoices in your Belvo account. By default, we return 100 results per page.",
@@ -13829,6 +13866,7 @@ client.invoices.list(params: {
             },
           },
           "PatchInvoices": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete an invoices request",
             "docs": "Used to resume an Invoice retrieve session that was paused because an MFA token was required by the institution.",
@@ -13866,6 +13904,7 @@ client.invoices.list(params: {
             },
           },
           "RetrieveInvoices": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve invoices for a link",
             "docs": "Retrieve invoice information from a specific fiscal link.
@@ -13979,6 +14018,7 @@ For single links, you have to perform POST calls to an institution **every time*
         "display-name": "Links",
         "endpoints": {
           "ChangeLinkAccessMode": {
+            "audiences": [],
             "auth": true,
             "display-name": "Change a link's access mode",
             "docs": "Change a link's access mode from \`single\` to \`recurrent\` or from \`recurrent\` to single.
@@ -14028,6 +14068,7 @@ For single links, you have to perform POST calls to an institution **every time*
             },
           },
           "DestroyLink": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a link",
             "docs": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
@@ -14053,6 +14094,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
           },
           "DetailLink": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a link's details",
             "docs": "Get the details of a specific link.",
@@ -14089,6 +14131,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
           },
           "ListLinks": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all links",
             "docs": "Get a paginated list of all the existing links in your Belvo account. By default, we return up to 100 results per page.",
@@ -14226,6 +14269,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
           },
           "PatchLinks": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete a links request",
             "docs": "Used to resume a Link register session that was paused because an MFA token was required by the institution.",
@@ -14262,6 +14306,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
           },
           "RegisterLink": {
+            "audiences": [],
             "auth": true,
             "display-name": "Register a new link",
             "docs": "Register a new link with your Belvo account.
@@ -14431,6 +14476,7 @@ For a list of standards codes, see the table below.
             },
           },
           "UpdateLink": {
+            "audiences": [],
             "auth": true,
             "display-name": "Update a link's credentials",
             "docs": "Update the credentials of a specific link. If the successfully updated link is a recurrent one, we automatically trigger an update of the link. If we find fresh data, you'll [receive historical update](https://developers.belvo.com/docs/webhooks) webhooks.
@@ -14610,6 +14656,7 @@ client.owners.list(params: {
         "display-name": "Owners",
         "endpoints": {
           "DestroyOwner": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete an owner",
             "docs": "Delete a specific owner from your Belvo account.",
@@ -14627,6 +14674,7 @@ client.owners.list(params: {
             },
           },
           "DetailOwner": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get an owner's details",
             "docs": "Get the details of a specific owner.",
@@ -14663,6 +14711,7 @@ client.owners.list(params: {
             },
           },
           "ListOwners": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all owners",
             "docs": "Get a paginated list of all existing owners in your Belvo account. We return up to 100 results per page.",
@@ -14760,6 +14809,7 @@ client.owners.list(params: {
             },
           },
           "PatchOwners": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete an owners request",
             "docs": "Used to resume an Owner retrieve session that was paused because an MFA token was required by the institution.",
@@ -14797,6 +14847,7 @@ client.owners.list(params: {
             },
           },
           "RetrieveOwners": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve owners for a link",
             "docs": "Retrieve owner information from a specific link.",
@@ -14848,6 +14899,7 @@ client.owners.list(params: {
         "display-name": "Payment Institutions",
         "endpoints": {
           "DetailPaymentInstitution": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get details about a payment institution",
             "docs": "Get the details about a specific payment institution",
@@ -14869,6 +14921,7 @@ client.owners.list(params: {
             },
           },
           "ListPaymentInstitutions": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all payment institutions",
             "docs": "List all available payment institutions.",
@@ -14950,6 +15003,7 @@ A payment intent captures all payment information (such as the amount to be char
         "display-name": "Payment Intents",
         "endpoints": {
           "CreatePaymentIntent": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create a new payment intent",
             "docs": "Create a payment intent.",
@@ -14973,6 +15027,7 @@ A payment intent captures all payment information (such as the amount to be char
             },
           },
           "DetailPaymentIntent": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get details about a payment intent",
             "docs": "Get the details about a specific payment intent.",
@@ -14994,6 +15049,7 @@ A payment intent captures all payment information (such as the amount to be char
             },
           },
           "ListPaymentIntents": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all payment intents",
             "docs": "List all payment intents associated with your Belvo account.",
@@ -15108,6 +15164,7 @@ A payment intent captures all payment information (such as the amount to be char
             },
           },
           "PatchPaymentIntent": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete a payment intent",
             "docs": "Complete a new payment intent.
@@ -15164,6 +15221,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "display-name": "Payment Links",
         "endpoints": {
           "CreatePaymentlink": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create a payment link",
             "docs": "Create a new payment link to start a hosted-widget payment.",
@@ -15187,6 +15245,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             },
           },
           "DetailCreatePaymentlink": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get details about a payment link",
             "docs": "Get the details about a payment link.",
@@ -15210,6 +15269,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             },
           },
           "ListPaymentLinks": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all payment links",
             "docs": "List all payment links associated with your Belvo account. By default, we return up to 100 results per page.",
@@ -15311,6 +15371,7 @@ You can use the Payment Transactions resource in order to get useful information
         "display-name": "Payment Transactions",
         "endpoints": {
           "DetailPaymentTransactions": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get details about a payment transaction",
             "docs": "Get the details about a specific payment transaction.",
@@ -15332,6 +15393,7 @@ You can use the Payment Transactions resource in order to get useful information
             },
           },
           "ListPaymentTransactions": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all payment transactions",
             "docs": "List all payment transactions associated with your Belvo account.",
@@ -15481,6 +15543,7 @@ You can use the Payment Transactions resource in order to get useful information
         "display-name": "Payment Webhooks",
         "endpoints": {
           "DeletePaymentWebhooks": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a payment webhook",
             "docs": "Delete a specific payment webhook from your Belvo account.",
@@ -15498,6 +15561,7 @@ You can use the Payment Transactions resource in order to get useful information
             },
           },
           "DetailPaymentWebhooks": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get details about a payment webhook",
             "docs": "Get the details about a specific payment webhook.",
@@ -15519,6 +15583,7 @@ You can use the Payment Transactions resource in order to get useful information
             },
           },
           "ListPaymentWebhooks": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all payment webhooks",
             "docs": "List all payment webhooks associated with your Belvo account.",
@@ -15533,6 +15598,7 @@ You can use the Payment Transactions resource in order to get useful information
             },
           },
           "RegisterPaymentWebhook": {
+            "audiences": [],
             "auth": true,
             "display-name": "Register a new payment webhook",
             "docs": "Register a new payments webhook for your Belvo account.
@@ -15598,6 +15664,7 @@ You can use the Payment Transactions resource in order to get useful information
         "display-name": "Receivable Transactions",
         "endpoints": {
           "DestroyReceivableTransaction": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a receivable transaction",
             "docs": "Delete a specific receivable transaction from your Belvo account.",
@@ -15615,6 +15682,7 @@ You can use the Payment Transactions resource in order to get useful information
             },
           },
           "DetailReceivableTransaction": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a receivable transaction's details",
             "docs": "Get the details of a specific receivable transaction.",
@@ -15651,6 +15719,7 @@ You can use the Payment Transactions resource in order to get useful information
             },
           },
           "ListReceivableTransactions": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all receivable transactions",
             "docs": "Get a paginated list of all the existing receivable transactions in your Belvo account. We return up to 100 results per page.",
@@ -15774,6 +15843,7 @@ You can use the Payment Transactions resource in order to get useful information
             },
           },
           "RetrieveReceivableTransactions": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve receivable transactions for a link",
             "docs": "Retrieve all receivable transactions for an existing link.",
@@ -15889,6 +15959,7 @@ client. recurring_expenses.list(params: {
         "display-name": "Recurring Expenses",
         "endpoints": {
           "DestroyRecurringExpense": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a recurring expense",
             "docs": "Delete a specific recurring expense from your Belvo account.",
@@ -15906,6 +15977,7 @@ client. recurring_expenses.list(params: {
             },
           },
           "DetailRecurringExpense": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a recurring expense's details",
             "docs": "Get the details of a specific recurring expense.",
@@ -15942,6 +16014,7 @@ client. recurring_expenses.list(params: {
             },
           },
           "ListRecurringExpenses": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all recurring expenses",
             "docs": "Get a paginated list of all recurring expenses in your Belvo account. By default, we return up to 100 results per page.",
@@ -16020,6 +16093,7 @@ client. recurring_expenses.list(params: {
             },
           },
           "PatchRecurringExpenses": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete a recurring expenses request",
             "docs": "Used to resume an Recurring Expenses retrieve session that was paused because an MFA token was required by the institution.",
@@ -16057,6 +16131,7 @@ client. recurring_expenses.list(params: {
             },
           },
           "RetrieveRecurringExpenses": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve recurring expenses for a link",
             "docs": "Retrieve recurring expense insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
@@ -16176,6 +16251,7 @@ client. risk_insights.list(params: {
         "display-name": "Risk Insights",
         "endpoints": {
           "DestroyRiskInsights": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a risk insight",
             "docs": "Delete a specific risk insight from your Belvo account.",
@@ -16193,6 +16269,7 @@ client. risk_insights.list(params: {
             },
           },
           "DetailRiskInsights": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a risk insight's details",
             "docs": "Get the details of a specific risk insight.",
@@ -16229,6 +16306,7 @@ client. risk_insights.list(params: {
             },
           },
           "ListRiskInsights": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all risk insights",
             "docs": "Get a paginated list of all risk insight analyses in your Belvo account. By default, we return up to 100 results per page.",
@@ -16294,6 +16372,7 @@ client. risk_insights.list(params: {
             },
           },
           "PatchRiskInsights": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete a risk insights request",
             "docs": "Used to resume an Risk insights retrieve session that was paused because an MFA token was required by the institution.",
@@ -16331,6 +16410,7 @@ client. risk_insights.list(params: {
             },
           },
           "RetrieveRiskInsights": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve risk insights for a link",
             "docs": "Request the risk insights for a given link ID.
@@ -16409,6 +16489,7 @@ If you have entered your credentials correctly, you will receive a **201 Respons
         "display-name": "Secret Keys",
         "endpoints": {
           "CreateSecretKeys": {
+            "audiences": [],
             "auth": true,
             "display-name": "Request API keys",
             "docs": "Request API keys to use with Belvo's Payments API.
@@ -16434,6 +16515,7 @@ For example:
             },
           },
           "ListSecretKeys": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all secret keys",
             "docs": "Get a paginated list of all existing secret keys in your Belvo account. We return up to 100 results per page.
@@ -16517,6 +16599,7 @@ client.tax_compliance_status.list(params: {
         "display-name": "Tax compliance status",
         "endpoints": {
           "DestroyTaxComplianceStatus": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a tax compliance status",
             "docs": "Delete a specific Tax compliance status from your Belvo account.",
@@ -16534,6 +16617,7 @@ client.tax_compliance_status.list(params: {
             },
           },
           "DetailTaxComplianceStatus": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a tax compliance status's details",
             "docs": "Get the details of a specific Tax compliance status.",
@@ -16570,6 +16654,7 @@ client.tax_compliance_status.list(params: {
             },
           },
           "ListTaxComplianceStatus": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all tax compliance statuses",
             "docs": "Get a paginated list of all existing Tax compliance statuses in your Belvo account. By default, we return up to 100 results per page.",
@@ -16660,6 +16745,7 @@ client.tax_compliance_status.list(params: {
             },
           },
           "RetrieveTaxComplianceStatus": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve tax compliance statuses for a link",
             "docs": "Retrieve the Tax compliance status information for a specific fiscal link.",
@@ -16727,6 +16813,7 @@ At the moment, the Tax Declaration resource is available for:
         "display-name": "Tax declarations",
         "endpoints": {
           "DestroyTaxDeclaration": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a tax declration",
             "docs": "Delete a specific Tax declaration from your Belvo account.",
@@ -16744,6 +16831,7 @@ At the moment, the Tax Declaration resource is available for:
             },
           },
           "DetailTaxDeclaration": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a tax declaration's details",
             "docs": "Get the details of a specific Tax declaration.",
@@ -16780,6 +16868,7 @@ At the moment, the Tax Declaration resource is available for:
             },
           },
           "ListTaxDeclarations": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all tax declarations",
             "docs": "Get a paginated list of all existing tax declarations in your Belvo account. By default, we return up to 100 results per page.",
@@ -16900,6 +16989,7 @@ At the moment, the Tax Declaration resource is available for:
             },
           },
           "RetrieveTaxDeclarations": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve tax declarations for a link",
             "docs": "Retrieve tax declaration information for a specific fiscal link.",
@@ -17033,6 +17123,7 @@ client.tax_retentions.list(params: {
         "display-name": "Tax retentions",
         "endpoints": {
           "DestroyTaxRetention": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a tax retention",
             "docs": "Delete a specific tax retention from your Belvo account.",
@@ -17050,6 +17141,7 @@ client.tax_retentions.list(params: {
             },
           },
           "DetailTaxRetentions": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a tax retention's details",
             "docs": "Get the details of a specific tax retention.",
@@ -17086,6 +17178,7 @@ client.tax_retentions.list(params: {
             },
           },
           "ListTaxRetentions": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all tax retentions",
             "docs": "Get a paginated list of all existing tax retentions in your Belvo account. We return up to 100 results per page.",
@@ -17166,6 +17259,7 @@ client.tax_retentions.list(params: {
             },
           },
           "RetrieveTaxRetentions": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve tax retentions for a link",
             "docs": "Retrieve tax retention information from a specific link. The maximum number of tax retentions that can be returned for a period is 500.",
@@ -17305,6 +17399,7 @@ client.tax_returns.list(params: {
         "display-name": "Tax returns",
         "endpoints": {
           "DestroyTaxReturn": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a tax return",
             "docs": "Delete a specific tax return from your Belvo account.",
@@ -17322,6 +17417,7 @@ client.tax_returns.list(params: {
             },
           },
           "DetailTaxReturn": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a tax return's details",
             "docs": "Get the details of a specific tax return.",
@@ -17358,6 +17454,7 @@ client.tax_returns.list(params: {
             },
           },
           "ListTaxReturns": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all tax returns",
             "docs": "Get a paginated list of all existing tax returns in your Belvo account. By default, we return up to 100 results per page. The results will include a mix of both monthly and yearly tax returns.",
@@ -17488,6 +17585,7 @@ client.tax_returns.list(params: {
             },
           },
           "RetrieveTaxReturns": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve tax returns for a link",
             "docs": "Retrieve tax return information for a specific fiscal link.",
@@ -17576,6 +17674,7 @@ client.tax_status.list(params: {
         "display-name": "Tax status",
         "endpoints": {
           "DestroyTaxStatus": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a tax status",
             "docs": "Delete a specific tax status from your Belvo account.",
@@ -17593,6 +17692,7 @@ client.tax_status.list(params: {
             },
           },
           "DetailTaxStatus": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a tax status's details",
             "docs": "Get the details of a specific tax status.",
@@ -17629,6 +17729,7 @@ client.tax_status.list(params: {
             },
           },
           "ListTaxStatus": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all tax statuses",
             "docs": "Get a paginated list of all existing tax status in your Belvo account. By default, we return up to 100 results per page.",
@@ -17719,6 +17820,7 @@ client.tax_status.list(params: {
             },
           },
           "RetrieveTaxStatus": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve tax statuses for a link",
             "docs": "Retrieve tax status information for a specific fiscal link.",
@@ -17852,6 +17954,7 @@ client.transactions.list(params: {
         "display-name": "Transactions",
         "endpoints": {
           "DestroyTransaction": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete a transaction",
             "docs": "Delete a specific transaction from your Belvo account.",
@@ -17869,6 +17972,7 @@ client.transactions.list(params: {
             },
           },
           "DetailTransaction": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get a transaction's details",
             "docs": "Get the details of a specific transaction.",
@@ -17905,6 +18009,7 @@ client.transactions.list(params: {
             },
           },
           "ListTransactions": {
+            "audiences": [],
             "auth": true,
             "display-name": "List all transactions",
             "docs": "Get a paginated list of all existing transactions in your Belvo account. By default, we return up to 100 results per page.",
@@ -18223,6 +18328,7 @@ client.transactions.list(params: {
             },
           },
           "PatchTransactions": {
+            "audiences": [],
             "auth": true,
             "display-name": "Complete a transactions request",
             "docs": "Used to resume a Transaction retrieve session that was paused because an MFA token was required by the institution.",
@@ -18260,6 +18366,7 @@ client.transactions.list(params: {
             },
           },
           "RetrieveTransactions": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve transactions for a link",
             "docs": "Retrieve transactions for one or more accounts from a specific link.
@@ -18300,6 +18407,7 @@ If you try to access older information than what we can access, we will return a
             },
           },
           "RetrieveTransactions_async": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve transactions for a link",
             "docs": "Retrieve transactions for one or more accounts from a specific link.

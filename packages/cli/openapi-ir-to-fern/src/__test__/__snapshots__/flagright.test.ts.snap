@@ -23,6 +23,7 @@ exports[`open api parser flagright simple 1`] = `
         "base-path": "",
         "endpoints": {
           "get-business-user-userId": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve a Business User",
             "docs": "### GET Business User
@@ -48,6 +49,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
             },
           },
           "get-consumer-transaction": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve a Transaction",
             "docs": "### GET Transactions
@@ -73,6 +75,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
             },
           },
           "get-consumer-user": {
+            "audiences": [],
             "auth": true,
             "display-name": "Retrieve a Consumer User",
             "docs": "### GET Consumer User
@@ -98,6 +101,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
             },
           },
           "post-business-user": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create a Business User",
             "docs": "## POST Business User
@@ -133,6 +137,7 @@ Each consumer Business entity needs three mandatory fields:
             },
           },
           "post-business-user-event": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create a Business User Event",
             "docs": "## POST Business User Events
@@ -201,6 +206,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "post-consumer-transaction": {
+            "audiences": [],
             "auth": true,
             "display-name": "Verify a Transaction",
             "docs": "## POST Transactions
@@ -256,6 +262,7 @@ Here are some of the most used payload fields explained (you can find the full p
             },
           },
           "post-consumer-user": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create a Consumer User",
             "docs": "## POST Consumer User
@@ -290,6 +297,7 @@ Each consumer User entity needs three mandatory fields:
             },
           },
           "post-transaction-event": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create a Transaction Event",
             "docs": "## POST Transaction Events
@@ -367,6 +375,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
           },
           "post-user-event": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create a Consumer User Event",
             "docs": "## POST Consumer User Events

@@ -8,6 +8,7 @@ exports[`open api parser flagright parse open api 1`] = `
       "description": "",
       "endpoints": [
         {
+          "audiences": [],
           "authed": true,
           "description": "## POST Transactions
 
@@ -139,6 +140,7 @@ Here are some of the most used payload fields explained (you can find the full p
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "### GET Transactions
 
@@ -193,6 +195,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "## POST Transaction Events
 
@@ -260,6 +263,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "## POST Consumer User
 
@@ -365,6 +369,7 @@ Each consumer User entity needs three mandatory fields:
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "### GET Consumer User
 
@@ -419,6 +424,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "## POST Business User
 
@@ -525,6 +531,7 @@ Each consumer Business entity needs three mandatory fields:
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "### GET Business User
 
@@ -579,6 +586,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "## POST Consumer User Events
 
@@ -645,6 +653,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "## POST Business User Events
 

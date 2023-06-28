@@ -63,6 +63,7 @@ exports[`open api parser superagent simple 1`] = `
         "base-path": "",
         "endpoints": {
           "createAgent": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create Agent",
             "docs": "Create a new agent",
@@ -114,6 +115,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "deleteAgent": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete Agent",
             "docs": "Delete a specific agent",
@@ -134,6 +136,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "getAgent": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get Agent",
             "docs": "Get a specific agent",
@@ -154,6 +157,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "listAllAgents": {
+            "audiences": [],
             "auth": true,
             "display-name": "List All Agents",
             "docs": "List all agents",
@@ -166,6 +170,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "patchAgent": {
+            "audiences": [],
             "auth": true,
             "display-name": "Patch Agent",
             "docs": "Patch a specific agent",
@@ -192,6 +197,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "promptAgent": {
+            "audiences": [],
             "auth": true,
             "display-name": "Prompt Agent",
             "docs": "Invoke a specific agent",
@@ -240,6 +246,7 @@ exports[`open api parser superagent simple 1`] = `
         "base-path": "",
         "endpoints": {
           "createApiToken": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create Api Token",
             "docs": "Create a new API token",
@@ -267,6 +274,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "deleteApiToken": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete Api Token",
             "docs": "Delete a specific API token",
@@ -287,6 +295,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "getApiToken": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get Api Token",
             "docs": "Get a specific API token",
@@ -307,6 +316,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "listApiTokens": {
+            "audiences": [],
             "auth": true,
             "display-name": "List Api Tokens",
             "docs": "List all API tokens",
@@ -330,6 +340,7 @@ exports[`open api parser superagent simple 1`] = `
         "base-path": "",
         "endpoints": {
           "signIn": {
+            "audiences": [],
             "auth": false,
             "display-name": "Sign In",
             "docs": undefined,
@@ -361,6 +372,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "signUp": {
+            "audiences": [],
             "auth": false,
             "display-name": "Sign Up",
             "docs": undefined,
@@ -411,6 +423,7 @@ exports[`open api parser superagent simple 1`] = `
         "base-path": "",
         "endpoints": {
           "createDocument": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create Document",
             "docs": "Create a new document",
@@ -462,6 +475,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "deleteDocument": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete Document",
             "docs": "Delete a specific document",
@@ -482,6 +496,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "getDocument": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get Document",
             "docs": "Get a specific document",
@@ -502,6 +517,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "listDocuments": {
+            "audiences": [],
             "auth": true,
             "display-name": "List Documents",
             "docs": "List all documents",
@@ -525,6 +541,7 @@ exports[`open api parser superagent simple 1`] = `
         "base-path": "",
         "endpoints": {
           "createAPrompt": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create A Prompt",
             "docs": "Create a new prompt",
@@ -560,6 +577,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "deletePrompt": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete Prompt",
             "docs": "Delete a specific prompt",
@@ -580,6 +598,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "getPrompt": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get Prompt",
             "docs": "Get a specific prompt",
@@ -600,6 +619,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "listPrompts": {
+            "audiences": [],
             "auth": true,
             "display-name": "List Prompts",
             "docs": "List all prompts",
@@ -612,6 +632,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "patchPrompt": {
+            "audiences": [],
             "auth": true,
             "display-name": "Patch Prompt",
             "docs": "Patch a specific prompt",
@@ -649,6 +670,7 @@ exports[`open api parser superagent simple 1`] = `
         "base-path": "",
         "endpoints": {
           "createATool": {
+            "audiences": [],
             "auth": true,
             "display-name": "Create A Tool",
             "docs": "Create a new tool",
@@ -684,6 +706,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "deleteTool": {
+            "audiences": [],
             "auth": true,
             "display-name": "Delete Tool",
             "docs": "Delete a specific tool",
@@ -704,6 +727,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "getTool": {
+            "audiences": [],
             "auth": true,
             "display-name": "Get Tool",
             "docs": "Get a specific tool",
@@ -724,6 +748,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "listTools": {
+            "audiences": [],
             "auth": true,
             "display-name": "List Tools",
             "docs": "List all tools",
@@ -747,6 +772,7 @@ exports[`open api parser superagent simple 1`] = `
         "base-path": "",
         "endpoints": {
           "listAgentTraces": {
+            "audiences": [],
             "auth": true,
             "display-name": "List Agent Traces",
             "docs": "List all agent traces",
@@ -770,6 +796,7 @@ exports[`open api parser superagent simple 1`] = `
         "base-path": "",
         "endpoints": {
           "readUser": {
+            "audiences": [],
             "auth": false,
             "display-name": "Read User",
             "docs": undefined,
@@ -790,6 +817,7 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
           "readUserMe": {
+            "audiences": [],
             "auth": true,
             "display-name": "Read User Me",
             "docs": undefined,
