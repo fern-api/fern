@@ -144,7 +144,11 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 		endpoints = append(endpoints, endpoint)
 	}
 	// Generate the service interface definition.
-	f.P("type ", clientName, " interface {")
+	if len(endpoints) == 0 && len(subpackages) == 0 {
+		f.P("type ", clientName, " interface {}")
+	} else {
+		f.P("type ", clientName, " interface {")
+	}
 	for _, endpoint := range endpoints {
 		f.P(fmt.Sprintf("%s(%s) %s", endpoint.Name.PascalCase.UnsafeName, endpoint.SignatureParameters, endpoint.ReturnValues))
 	}
@@ -171,7 +175,9 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 		)
 		f.P(subpackage.Name.PascalCase.UnsafeName, "()", clientTypeName)
 	}
-	f.P("}")
+	if len(endpoints) > 0 || len(subpackages) > 0 {
+		f.P("}")
+	}
 	f.P()
 
 	// Generate the client constructor.

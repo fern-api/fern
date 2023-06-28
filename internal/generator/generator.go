@@ -159,21 +159,29 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, file)
 		}
 		// First generate the client at the root package, if any.
-		if ir.RootPackage != nil && ir.RootPackage.Service != nil {
-			var subpackages []*fernir.Subpackage
+		if ir.RootPackage != nil {
+			var rootSubpackages []*fernir.Subpackage
 			for _, subpackageID := range ir.RootPackage.Subpackages {
 				subpackage := ir.Subpackages[subpackageID]
 				if !subpackage.HasEndpointsInTree {
 					// We only want to include subpackages that have endpoints.
 					continue
 				}
-				subpackages = append(subpackages, subpackage)
+				rootSubpackages = append(rootSubpackages, subpackage)
 			}
-			serviceFiles, err := g.generateService(ir, ir.Services[*ir.RootPackage.Service], subpackages)
-			if err != nil {
-				return nil, err
+			if ir.RootPackage.Service != nil {
+				serviceFiles, err := g.generateService(ir, ir.Services[*ir.RootPackage.Service], rootSubpackages)
+				if err != nil {
+					return nil, err
+				}
+				files = append(files, serviceFiles...)
+			} else {
+				serviceFile, err := g.generateRootServiceWithoutEndpoints(ir, ir.RootPackage.FernFilepath, rootSubpackages)
+				if err != nil {
+					return nil, err
+				}
+				files = append(files, serviceFile)
 			}
-			files = append(files, serviceFiles...)
 		}
 		// Then generate the client for all of the subpackages.
 		for _, irSubpackage := range ir.Subpackages {
@@ -316,6 +324,28 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		ir.Errors,
 	)
 	if err := writer.WriteClient(nil /* endpoints */, irSubpackages, irSubpackage.FernFilepath, namePrefix); err != nil {
+		return nil, err
+	}
+	return writer.File()
+}
+
+// generateRootServiceWithoutEndpoints is behaviorally similar to g.generateService, but
+// it's suited to write purely intermediary services (i.e. those that don't include
+// any endpoints) for the root package.
+func (g *Generator) generateRootServiceWithoutEndpoints(
+	ir *fernir.IntermediateRepresentation,
+	fernFilepath *fernir.FernFilepath,
+	irSubpackages []*fernir.Subpackage,
+) (*File, error) {
+	fileInfo := fileInfoForService(ir.ApiName, fernFilepath, nil /* namePrefix */)
+	writer := newFileWriter(
+		fileInfo.filename,
+		fileInfo.packageName,
+		g.config.ImportPath,
+		ir.Types,
+		ir.Errors,
+	)
+	if err := writer.WriteClient(nil /* endpoints */, irSubpackages, fernFilepath, nil /* namePrefix */); err != nil {
 		return nil, err
 	}
 	return writer.File()
