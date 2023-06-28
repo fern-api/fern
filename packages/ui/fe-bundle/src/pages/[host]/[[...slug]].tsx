@@ -49,6 +49,13 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     }
 
     const pathname = slugArray != null ? (slugArray as string[]).join("/") : "";
+    // eslint-disable-next-line no-console
+    console.log(
+        JSON.stringify({
+            pathname,
+            url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? `${host}${pathname}`,
+        })
+    );
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
         url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? `${host}${pathname}`,
     });
