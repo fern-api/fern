@@ -65,22 +65,24 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     <div className="pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
-                    <div className="flex items-center gap-2">
-                        <EndpointMethodPill endpoint={endpoint} />
-                        <MonospaceText className="text-text-default break-all">
-                            {environmentUrl}
-                            {endpoint.path.parts.map((part, index) => (
-                                <React.Fragment key={index}>
-                                    {visitDiscriminatedUnion(part, "type")._visit<JSX.Element | string | null>({
-                                        literal: (literal) => literal.value,
-                                        pathParameter: (pathParameter) => (
-                                            <EndpointPathParameter pathParameter={pathParameter.value} />
-                                        ),
-                                        _other: () => null,
-                                    })}
-                                </React.Fragment>
-                            ))}
-                        </MonospaceText>
+                    <div className="flex">
+                        <div className="flex overflow-hidden rounded">
+                            <EndpointMethodPill endpoint={endpoint} />
+                            <MonospaceText className="text-text-default flex items-center break-all bg-white/5 px-2">
+                                {environmentUrl}
+                                {endpoint.path.parts.map((part, index) => (
+                                    <React.Fragment key={index}>
+                                        {visitDiscriminatedUnion(part, "type")._visit<JSX.Element | string | null>({
+                                            literal: (literal) => literal.value,
+                                            pathParameter: (pathParameter) => (
+                                                <EndpointPathParameter pathParameter={pathParameter.value} />
+                                            ),
+                                            _other: () => null,
+                                        })}
+                                    </React.Fragment>
+                                ))}
+                            </MonospaceText>
+                        </div>
                     </div>
                     {endpoint.description != null && (
                         <div className="mt-6">
