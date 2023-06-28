@@ -15,7 +15,7 @@ export const JsonExampleLine = React.forwardRef<HTMLDivElement, PropsWithChildre
     return (
         <div
             className={classNames(
-                "relative w-fit min-w-full px-2 transition py-px",
+                "relative w-fit min-w-full px-4 transition py-px",
                 isSelected ? "bg-accentPrimary/20" : "bg-transparent"
             )}
             ref={ref}
