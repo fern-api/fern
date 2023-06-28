@@ -68,7 +68,7 @@ export function convertToServices({
             };
             schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
             let endpointDefinition = convertedEndpoint.value;
-            if (endpoint.audiences.length >= 0) {
+            if (endpoint.audiences.length > 0) {
                 endpointDefinition = {
                     ...endpointDefinition,
                     audiences: endpoint.audiences,

@@ -4303,7 +4303,6 @@ exports[`open api parser squidex simple 1`] = `
         "base-path": "",
         "endpoints": {
           "deleteApp": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete the app.",
             "docs": undefined,
@@ -4322,7 +4321,6 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "deleteClient": {
-            "audiences": [],
             "auth": true,
             "display-name": "Revoke an app client.",
             "docs": "The application that uses this client credentials cannot access the API after it has been revoked.",
@@ -4349,7 +4347,6 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "deleteContributor": {
-            "audiences": [],
             "auth": true,
             "display-name": "Remove contributor.",
             "docs": undefined,
@@ -4376,7 +4373,6 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "deleteImage": {
-            "audiences": [],
             "auth": true,
             "display-name": "Remove the app image.",
             "docs": undefined,
@@ -4399,7 +4395,6 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "deleteLanguage": {
-            "audiences": [],
             "auth": true,
             "display-name": "Deletes an app language.",
             "docs": undefined,
@@ -4426,7 +4421,6 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "deleteMyself": {
-            "audiences": [],
             "auth": true,
             "display-name": "Remove yourself.",
             "docs": undefined,
@@ -4449,7 +4443,6 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "deleteRole": {
-            "audiences": [],
             "auth": true,
             "display-name": "Remove role from app.",
             "docs": undefined,
@@ -4476,7 +4469,6 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "deleteWorkflow": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a workflow.",
             "docs": undefined,
@@ -4503,7 +4495,6 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "getApp": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get an app by name.",
             "docs": undefined,
@@ -4525,7 +4516,6 @@ exports[`open api parser squidex simple 1`] = `
             },
           },
           "getApps": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get your apps.",
             "docs": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
@@ -4541,7 +4531,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getAssetScripts": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get the app asset scripts.",
             "docs": undefined,
@@ -4563,7 +4552,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getClients": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get app clients.",
             "docs": "Gets all configured clients for the app with the specified name.",
@@ -4585,7 +4573,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getContributors": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get app contributors.",
             "docs": undefined,
@@ -4607,7 +4594,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getImage": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get the app image.",
             "docs": undefined,
@@ -4626,7 +4612,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getLanguages": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get app languages.",
             "docs": undefined,
@@ -4648,7 +4633,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getPermissions": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get app permissions.",
             "docs": undefined,
@@ -4670,7 +4654,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getRoles": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get app roles.",
             "docs": undefined,
@@ -4692,7 +4675,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getSettings": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get the app settings.",
             "docs": undefined,
@@ -4714,7 +4696,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getTeamApps": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get team apps.",
             "docs": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
@@ -4736,7 +4717,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "getWorkflows": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get app workflow.",
             "docs": undefined,
@@ -4758,7 +4738,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
           },
           "postApp": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new app.",
             "docs": "You can only create an app when you are authenticated as a user (OpenID implicit flow).
@@ -4793,7 +4772,6 @@ You will be assigned as owner of the new app automatically.",
             },
           },
           "postClient": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new app client.",
             "docs": "Create a new client for the app with the specified name.
@@ -4830,7 +4808,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postContributor": {
-            "audiences": [],
             "auth": true,
             "display-name": "Assign contributor to app.",
             "docs": undefined,
@@ -4859,7 +4836,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postLanguage": {
-            "audiences": [],
             "auth": true,
             "display-name": "Attaches an app language.",
             "docs": undefined,
@@ -4895,7 +4871,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postRole": {
-            "audiences": [],
             "auth": true,
             "display-name": "Add role to app.",
             "docs": undefined,
@@ -4931,7 +4906,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postWorkflow": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a workflow.",
             "docs": undefined,
@@ -4967,7 +4941,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putApp": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update the app.",
             "docs": undefined,
@@ -5007,7 +4980,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putAppTeam": {
-            "audiences": [],
             "auth": true,
             "display-name": "Transfer the app.",
             "docs": undefined,
@@ -5043,7 +5015,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putAssetScripts": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update the app asset scripts.",
             "docs": undefined,
@@ -5103,7 +5074,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putClient": {
-            "audiences": [],
             "auth": true,
             "display-name": "Updates an app client.",
             "docs": "Only the display name can be changed, create a new client if necessary.",
@@ -5159,7 +5129,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putLanguage": {
-            "audiences": [],
             "auth": true,
             "display-name": "Updates an app language.",
             "docs": undefined,
@@ -5207,7 +5176,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putRole": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update an app role.",
             "docs": undefined,
@@ -5251,7 +5219,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putSettings": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update the app settings.",
             "docs": undefined,
@@ -5299,7 +5266,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putWorkflow": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a workflow.",
             "docs": undefined,
@@ -5351,7 +5317,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "uploadImage": {
-            "audiences": [],
             "auth": true,
             "display-name": "Upload the app image.",
             "docs": undefined,
@@ -5395,7 +5360,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "bulkUpdateAssets": {
-            "audiences": [],
             "auth": true,
             "display-name": "Bulk update assets.",
             "docs": undefined,
@@ -5443,7 +5407,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteAsset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete an asset.",
             "docs": undefined,
@@ -5481,7 +5444,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteAssetFolder": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete an asset folder.",
             "docs": undefined,
@@ -5504,7 +5466,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getAsset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get an asset by id.",
             "docs": undefined,
@@ -5530,7 +5491,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getAssetContent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get the asset content.",
             "docs": undefined,
@@ -5624,7 +5584,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getAssetContentBySlug": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get the asset content.",
             "docs": undefined,
@@ -5726,7 +5685,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getAssetFolders": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get asset folders.",
             "docs": "Get all asset folders for the app.",
@@ -5763,7 +5721,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getAssets": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get assets.",
             "docs": "Get all assets for the app.",
@@ -5825,7 +5782,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getAssetsPost": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get assets.",
             "docs": "Get all assets for the app.",
@@ -5854,7 +5810,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getTags": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get assets tags.",
             "docs": "Get all tags for assets.",
@@ -5876,7 +5831,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postAsset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Upload a new asset.",
             "docs": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
@@ -5926,7 +5880,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postAssetFolder": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create an asset folder.",
             "docs": undefined,
@@ -5966,7 +5919,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postUpsertAsset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Upsert an asset.",
             "docs": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
@@ -6015,7 +5967,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putAsset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update an asset.",
             "docs": undefined,
@@ -6071,7 +6022,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putAssetContent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Replace asset content.",
             "docs": "Use multipart request to upload an asset.",
@@ -6109,7 +6059,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putAssetFolder": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update an asset folder.",
             "docs": undefined,
@@ -6149,7 +6098,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putAssetFolderParent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Move an asset folder.",
             "docs": undefined,
@@ -6189,7 +6137,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putAssetParent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Moves the asset.",
             "docs": undefined,
@@ -6229,7 +6176,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putTag": {
-            "audiences": [],
             "auth": true,
             "display-name": "Rename an asset tag.",
             "docs": undefined,
@@ -6280,7 +6226,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "deleteBackup": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a backup.",
             "docs": undefined,
@@ -6303,7 +6248,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getBackupContent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get the backup content.",
             "docs": undefined,
@@ -6326,7 +6270,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getBackupContentV2": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get the backup content.",
             "docs": undefined,
@@ -6360,7 +6303,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getBackups": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get all backup jobs.",
             "docs": undefined,
@@ -6382,7 +6324,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getRestoreJob": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get current restore status.",
             "docs": undefined,
@@ -6397,7 +6338,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postBackup": {
-            "audiences": [],
             "auth": true,
             "display-name": "Start a new backup.",
             "docs": undefined,
@@ -6416,7 +6356,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postRestoreJob": {
-            "audiences": [],
             "auth": true,
             "display-name": "Restore a backup.",
             "docs": undefined,
@@ -6456,7 +6395,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "deleteComment": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a comment.",
             "docs": undefined,
@@ -6483,7 +6421,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getComments": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get all comments.",
             "docs": "When passing in a version you can retrieve all updates since then.",
@@ -6519,7 +6456,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getWatchingUsers": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get all watching users..",
             "docs": undefined,
@@ -6545,7 +6481,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postComment": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new comment.",
             "docs": undefined,
@@ -6578,7 +6513,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putComment": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a comment.",
             "docs": undefined,
@@ -6622,7 +6556,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "bulkUpdateContents": {
-            "audiences": [],
             "auth": true,
             "display-name": "Bulk update content items.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -6686,7 +6619,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "createDraft": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new draft version.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -6717,7 +6649,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteContent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a content item.",
             "docs": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
@@ -6759,7 +6690,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteContentStatus": {
-            "audiences": [],
             "auth": true,
             "display-name": "Cancel status change of a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -6790,7 +6720,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteVersion": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete the draft version.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -6821,7 +6750,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getContent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -6861,7 +6789,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getContentValidity": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a content item validity.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -6888,7 +6815,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getContentVersion": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a content by version.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -6919,7 +6845,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getContents": {
-            "audiences": [],
             "auth": true,
             "display-name": "Queries contents.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -6960,7 +6885,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getContentsPost": {
-            "audiences": [],
             "auth": true,
             "display-name": "Queries contents.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -6993,7 +6917,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getReferences": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get all references of a content.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -7033,7 +6956,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getReferencing": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a referencing contents of a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -7073,7 +6995,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "patchContent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Patchs a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -7110,7 +7031,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postContent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -7161,7 +7081,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postContents": {
-            "audiences": [],
             "auth": true,
             "display-name": "Import content items.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -7213,7 +7132,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postUpsertContent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Upsert a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -7268,7 +7186,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putContent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -7305,7 +7222,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putContentStatus": {
-            "audiences": [],
             "auth": true,
             "display-name": "Change status of a content item.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -7368,7 +7284,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "getDump": {
-            "audiences": [],
             "auth": true,
             "display-name": "Creates a dump and writes it into storage..",
             "docs": undefined,
@@ -7380,7 +7295,6 @@ The client secret is auto generated on the server and returned. The client does 
             "path": "/api/diagnostics/dump",
           },
           "getGCDump": {
-            "audiences": [],
             "auth": true,
             "display-name": "Creates a gc dump and writes it into storage.",
             "docs": undefined,
@@ -7403,7 +7317,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "getEventConsumers": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get event consumers.",
             "docs": undefined,
@@ -7418,7 +7331,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "resetEventConsumer": {
-            "audiences": [],
             "auth": true,
             "display-name": "Reset an event consumer.",
             "docs": undefined,
@@ -7441,7 +7353,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "startEventConsumer": {
-            "audiences": [],
             "auth": true,
             "display-name": "Start an event consumer.",
             "docs": undefined,
@@ -7464,7 +7375,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "stopEventConsumer": {
-            "audiences": [],
             "auth": true,
             "display-name": "Stop an event consumer.",
             "docs": undefined,
@@ -7498,7 +7408,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "getAppHistory": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get historical events.",
             "docs": undefined,
@@ -7530,7 +7439,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getTeamHistory": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get historical events for a team.",
             "docs": undefined,
@@ -7573,7 +7481,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "getLanguages": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get supported languages.",
             "docs": "Provide a list of supported language codes, following the ISO2Code standard.",
@@ -7599,7 +7506,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "getNews": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get features since version.",
             "docs": undefined,
@@ -7635,7 +7541,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "deleteComment": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a notification.",
             "docs": undefined,
@@ -7658,7 +7563,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getNotifications": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get all notifications.",
             "docs": "When passing in a version you can retrieve all updates since then.",
@@ -7700,7 +7604,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "getAppPing": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get ping status.",
             "docs": "Can be used to test, if the Squidex API is alive and responding.",
@@ -7717,7 +7620,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getInfo": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get API information.",
             "docs": undefined,
@@ -7732,7 +7634,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getPing": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get ping status of the API.",
             "docs": "Can be used to test, if the Squidex API is alive and responding.",
@@ -7754,7 +7655,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "getPlans": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get app plan information.",
             "docs": undefined,
@@ -7776,7 +7676,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getTeamPlans": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get team plan information.",
             "docs": undefined,
@@ -7798,7 +7697,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putPlan": {
-            "audiences": [],
             "auth": true,
             "display-name": "Change the app plan.",
             "docs": undefined,
@@ -7827,7 +7725,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putTeamPlan": {
-            "audiences": [],
             "auth": true,
             "display-name": "Change the team plan.",
             "docs": undefined,
@@ -7867,7 +7764,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "deleteEvent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Cancels an event.",
             "docs": undefined,
@@ -7890,7 +7786,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteEvents": {
-            "audiences": [],
             "auth": true,
             "display-name": "Cancels all events.",
             "docs": undefined,
@@ -7908,7 +7803,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteRule": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a rule.",
             "docs": undefined,
@@ -7931,7 +7825,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteRuleEvents": {
-            "audiences": [],
             "auth": true,
             "display-name": "Cancels all rule events.",
             "docs": undefined,
@@ -7953,7 +7846,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteRuleRun": {
-            "audiences": [],
             "auth": true,
             "display-name": "Cancel the current run.",
             "docs": undefined,
@@ -7971,7 +7863,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "disableRule": {
-            "audiences": [],
             "auth": true,
             "display-name": "Disable a rule.",
             "docs": undefined,
@@ -7998,7 +7889,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "enableRule": {
-            "audiences": [],
             "auth": true,
             "display-name": "Enable a rule.",
             "docs": undefined,
@@ -8025,7 +7915,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getActions": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get supported rule actions.",
             "docs": undefined,
@@ -8040,7 +7929,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getEventSchema": {
-            "audiences": [],
             "auth": true,
             "display-name": "Provide the json schema for the event with the specified name.",
             "docs": undefined,
@@ -8062,7 +7950,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getEventTypes": {
-            "audiences": [],
             "auth": true,
             "display-name": "Provide a list of all event types that are used in rules.",
             "docs": undefined,
@@ -8077,7 +7964,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getEvents": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get rule events.",
             "docs": undefined,
@@ -8119,7 +8005,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getRules": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get rules.",
             "docs": undefined,
@@ -8141,7 +8026,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postRule": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new rule.",
             "docs": undefined,
@@ -8170,7 +8054,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putEvent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Retry the event immediately.",
             "docs": undefined,
@@ -8193,7 +8076,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putRule": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a rule.",
             "docs": undefined,
@@ -8245,7 +8127,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putRuleRun": {
-            "audiences": [],
             "auth": true,
             "display-name": "Run a rule.",
             "docs": undefined,
@@ -8277,7 +8158,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "simulateGET": {
-            "audiences": [],
             "auth": true,
             "display-name": "Simulate a rule.",
             "docs": undefined,
@@ -8303,7 +8183,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "simulatePOST": {
-            "audiences": [],
             "auth": true,
             "display-name": "Simulate a rule.",
             "docs": undefined,
@@ -8332,7 +8211,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "triggerRule": {
-            "audiences": [],
             "auth": true,
             "display-name": "Trigger a rule.",
             "docs": undefined,
@@ -8366,7 +8244,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "deleteField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a schema field.",
             "docs": undefined,
@@ -8397,7 +8274,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteNestedField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a nested field.",
             "docs": undefined,
@@ -8432,7 +8308,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteSchema": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a schema.",
             "docs": undefined,
@@ -8455,7 +8330,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "disableField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Disable a schema field.",
             "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
@@ -8486,7 +8360,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "disableNestedField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Disable a nested field.",
             "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
@@ -8521,7 +8394,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "enableField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Enable a schema field.",
             "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
@@ -8552,7 +8424,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "enableNestedField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Enable a nested field.",
             "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
@@ -8587,7 +8458,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getSchema": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a schema by name.",
             "docs": undefined,
@@ -8613,7 +8483,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getSchemas": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get schemas.",
             "docs": undefined,
@@ -8635,7 +8504,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "hideField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Hide a schema field.",
             "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
@@ -8666,7 +8534,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "hideNestedField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Hide a nested field.",
             "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
@@ -8701,7 +8568,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "lockField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Lock a schema field.",
             "docs": "A locked field cannot be updated or deleted.",
@@ -8732,7 +8598,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "lockNestedField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Lock a nested field.",
             "docs": "A locked field cannot be edited or deleted.",
@@ -8767,7 +8632,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Add a schema field.",
             "docs": undefined,
@@ -8801,7 +8665,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postNestedField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Add a nested field.",
             "docs": undefined,
@@ -8839,7 +8702,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "postSchema": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new schema.",
             "docs": undefined,
@@ -8886,7 +8748,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "publishSchema": {
-            "audiences": [],
             "auth": true,
             "display-name": "Publish a schema.",
             "docs": undefined,
@@ -8913,7 +8774,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putCategory": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a schema category.",
             "docs": undefined,
@@ -8953,7 +8813,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a schema field.",
             "docs": undefined,
@@ -8990,7 +8849,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putNestedField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a nested field.",
             "docs": undefined,
@@ -9031,7 +8889,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putNestedFieldOrdering": {
-            "audiences": [],
             "auth": true,
             "display-name": "Reorder all nested fields.",
             "docs": undefined,
@@ -9068,7 +8925,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putPreviewUrls": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update the preview urls.",
             "docs": undefined,
@@ -9101,7 +8957,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putRules": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update the rules.",
             "docs": undefined,
@@ -9141,7 +8996,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putSchema": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a schema.",
             "docs": undefined,
@@ -9205,7 +9059,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putSchemaFieldOrdering": {
-            "audiences": [],
             "auth": true,
             "display-name": "Reorder all fields.",
             "docs": undefined,
@@ -9238,7 +9091,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putSchemaSync": {
-            "audiences": [],
             "auth": true,
             "display-name": "Synchronize a schema.",
             "docs": undefined,
@@ -9285,7 +9137,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putSchemaUIFields": {
-            "audiences": [],
             "auth": true,
             "display-name": "Configure UI fields.",
             "docs": undefined,
@@ -9329,7 +9180,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "putScripts": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update the scripts.",
             "docs": undefined,
@@ -9362,7 +9212,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "showField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Show a schema field.",
             "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
@@ -9393,7 +9242,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "showNestedField": {
-            "audiences": [],
             "auth": true,
             "display-name": "Show a nested field.",
             "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
@@ -9428,7 +9276,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "unpublishSchema": {
-            "audiences": [],
             "auth": true,
             "display-name": "Unpublish a schema.",
             "docs": undefined,
@@ -9466,7 +9313,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "getSearchResults": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get search results.",
             "docs": undefined,
@@ -9509,7 +9355,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "getCurrentStorageSize": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get total asset size.",
             "docs": undefined,
@@ -9531,7 +9376,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getLog": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get api calls as log file.",
             "docs": undefined,
@@ -9553,7 +9397,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getStorageSizes": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get asset usage by date.",
             "docs": undefined,
@@ -9583,7 +9426,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getStorageSizesForTeam": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get asset usage by date for team.",
             "docs": undefined,
@@ -9613,7 +9455,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getTeamCurrentStorageSizeForTeam": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get total asset size by team.",
             "docs": undefined,
@@ -9635,7 +9476,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getUsages": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get api calls in date range.",
             "docs": undefined,
@@ -9665,7 +9505,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getUsagesForTeam": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get api calls in date range for team.",
             "docs": undefined,
@@ -9706,7 +9545,6 @@ The client secret is auto generated on the server and returned. The client does 
         "base-path": "",
         "endpoints": {
           "deleteContributor": {
-            "audiences": [],
             "auth": true,
             "display-name": "Remove contributor.",
             "docs": undefined,
@@ -9733,7 +9571,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "deleteMyself": {
-            "audiences": [],
             "auth": true,
             "display-name": "Remove yourself.",
             "docs": undefined,
@@ -9756,7 +9593,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getContributors": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get team contributors.",
             "docs": undefined,
@@ -9778,7 +9614,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getTeam": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get an team by name.",
             "docs": undefined,
@@ -9800,7 +9635,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
           },
           "getTeams": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get your teams.",
             "docs": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).
@@ -9816,7 +9650,6 @@ You will retrieve all teams, where you are assigned as a contributor.",
             },
           },
           "postContributor": {
-            "audiences": [],
             "auth": true,
             "display-name": "Assign contributor to team.",
             "docs": undefined,
@@ -9845,7 +9678,6 @@ You will retrieve all teams, where you are assigned as a contributor.",
             },
           },
           "postTeam": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new team.",
             "docs": "You can only create an team when you are authenticated as a user (OpenID implicit flow).
@@ -9876,7 +9708,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "putTeam": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update the team.",
             "docs": undefined,
@@ -9923,7 +9754,6 @@ You will be assigned as owner of the new team automatically.",
         "base-path": "",
         "endpoints": {
           "getTemplate": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get template details.",
             "docs": undefined,
@@ -9945,7 +9775,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "getTemplates": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get all templates.",
             "docs": undefined,
@@ -9971,7 +9800,6 @@ You will be assigned as owner of the new team automatically.",
         "base-path": "",
         "endpoints": {
           "postTranslation": {
-            "audiences": [],
             "auth": true,
             "display-name": "Translate a text.",
             "docs": undefined,
@@ -10025,7 +9853,6 @@ You will be assigned as owner of the new team automatically.",
         "base-path": "",
         "endpoints": {
           "deleteUser": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a User.",
             "docs": undefined,
@@ -10045,7 +9872,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "getUser": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a user by ID.",
             "docs": undefined,
@@ -10067,7 +9893,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "getUsers": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get users by query.",
             "docs": undefined,
@@ -10102,7 +9927,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "lockUser": {
-            "audiences": [],
             "auth": true,
             "display-name": "Lock a user.",
             "docs": undefined,
@@ -10126,7 +9950,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "postUser": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new user.",
             "docs": undefined,
@@ -10167,7 +9990,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "putUser": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a user.",
             "docs": undefined,
@@ -10215,7 +10037,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "unlockUser": {
-            "audiences": [],
             "auth": true,
             "display-name": "Unlock a user.",
             "docs": undefined,
@@ -10250,7 +10071,6 @@ You will be assigned as owner of the new team automatically.",
         "base-path": "",
         "endpoints": {
           "getUser": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get user by id.",
             "docs": undefined,
@@ -10272,7 +10092,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "getUserPicture": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get user picture by id.",
             "docs": undefined,
@@ -10291,7 +10110,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "getUserResources": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get the user resources.",
             "docs": undefined,
@@ -10306,7 +10124,6 @@ You will be assigned as owner of the new team automatically.",
             },
           },
           "getUsers": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get users by query.",
             "docs": "Search the user by query that contains the email address or the part of the email address.",

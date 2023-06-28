@@ -7413,7 +7413,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Accounting",
         "endpoints": {
           "GetPaymentsBreakDownById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Retrieve a payment breakdown",
             "docs": "Get a full breakdown of a payment made to Deel. Breakdown will include individual invoices and Deel fee as line items.",
@@ -7439,7 +7441,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getBillingInvoiceDownloadLink": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Download Deel invoice PDF",
             "docs": "Get a link to download the Deel billing invoice PDF.",
@@ -7465,7 +7469,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getInvoiceDownloadLink": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Download invoice PDF",
             "docs": "Get link to download the invoice PDF.",
@@ -7491,7 +7497,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getInvoiceList": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Retrieve invoices",
             "docs": "Retrieve a list of paid invoices for your workforce.",
@@ -7535,7 +7543,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getPaymentList": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Retrieve payment reciepts",
             "docs": "Retrieve a list of payments made to Deel.",
@@ -7595,7 +7605,6 @@ exports[`open api parser deel simple 1`] = `
         "base-path": "",
         "endpoints": {
           "createFileRef": {
-            "audiences": [],
             "auth": true,
             "display-name": "Upload file to Deel",
             "docs": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
@@ -7638,7 +7647,9 @@ exports[`open api parser deel simple 1`] = `
         "base-path": "",
         "endpoints": {
           "getPeople": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Get my current profile",
             "docs": undefined,
@@ -7658,7 +7669,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getPeopleList": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Get people list",
             "docs": undefined,
@@ -7706,7 +7719,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Contractors",
         "endpoints": {
           "addPremium": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Upgrade to Premium",
             "docs": "Add additional protection against misclassification by upgrading to Deel Premium.",
@@ -7743,7 +7758,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "amendContractDetails": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Amend contract",
             "docs": "Amend payment details of a contract.",
@@ -7782,7 +7799,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Create a new contract",
             "docs": "Create a new Deel contract.",
@@ -7815,7 +7834,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createContractFixedRate": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new contract (fixed-rate)",
             "docs": undefined,
@@ -7848,7 +7866,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createContractMilestoneBased": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new contract (milestone-based)",
             "docs": undefined,
@@ -7881,7 +7898,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createContractTaskBased": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new contract (task-based)",
             "docs": undefined,
@@ -7914,7 +7930,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createContractTimeBased": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a new contract (time-based)",
             "docs": undefined,
@@ -7947,7 +7962,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getContractPreview": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Preview a contract agreement",
             "docs": "Retrieve an IC contract agreement content in HTML. If no template is specified, the default or currently assigned template will be used. This endpoint does not support EOR and Global Payroll contract types.",
@@ -7979,7 +7996,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "removePremiumFromContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Downgrade from Premium",
             "docs": "Remove Deel Premium from an existing contract.",
@@ -8015,7 +8034,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "terminateContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Terminate contract",
             "docs": "Terminate an active contract.",
@@ -8067,7 +8088,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Contracts",
         "endpoints": {
           "addContractDocument": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Add documents",
             "docs": "Attach document to a contract. You can only add one document at a time. If you need to attach more documents please attach a Zip file.",
@@ -8103,7 +8126,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "archiveContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Archive a contract",
             "docs": "Archive a terminated, cancelled or completed contract.",
@@ -8128,7 +8153,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "attachExternalId": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "External Id",
             "docs": "Add an external Id to a Deel contract. You can use this to add a Deel contract's refernece Id in your platform. External Id can be passed as a query parameter in List contract endpoint to find this conract later.",
@@ -8167,7 +8194,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "calculateFinalPayment": {
-            "audiences": [],
             "auth": true,
             "display-name": "Calculate final payment",
             "docs": "Calculate the final payment due to the contractor when ending the contract.",
@@ -8216,7 +8242,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "editContractDocument": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Edit the file attached to contract document.",
             "docs": "Overwrite the file currently attached to contract document.",
@@ -8252,7 +8280,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getAlternateEmailsByContractId": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Find contract emails by ID",
             "docs": "Returns an array of alternate email objects",
@@ -8277,7 +8307,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getContractById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Retrieve a single contract",
             "docs": "Retrieve a single contract.",
@@ -8303,7 +8335,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getContractList": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List of contracts",
             "docs": "Retrieve a list of contracts.",
@@ -8383,7 +8417,6 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getContractTemplates": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get contract templates",
             "docs": "Retrieve a list of contract templates in your organization.",
@@ -8402,7 +8435,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "inviteToSignContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Send contract to worker",
             "docs": "Invite a worker to sign the contract. Worker will be notified via email.",
@@ -8441,7 +8476,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "postContractEstimate": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Calculate first payment amount",
             "docs": "First payment is calculated from the number of working/calendar days between their start date and the start of the payment cycle.",
@@ -8472,7 +8509,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "signContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Sign a contract",
             "docs": "Sign a contract as a client.",
@@ -8511,7 +8550,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "uninviteToSignContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Remove invite",
             "docs": "Remove invite in order to re-invite a worker to sign the contract.",
@@ -8550,7 +8591,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "EOR",
         "endpoints": {
           "createEorContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Create an EOR contract",
             "docs": "Create an Employee of Record (EOR) contract quote. The endpoints creates a contract quote request. Deel will process the information and get back with a quote for this contract.",
@@ -8581,7 +8624,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getEorCountryValidations": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Retrieve country guide",
             "docs": "Retrieve the hiring guide data for a country. This data can be used to create Employee of Record (EOR) contract quotes.",
@@ -8618,7 +8663,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Hris",
         "endpoints": {
           "createDirectEmployee": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": false,
             "display-name": "Create a new Hris direct employee",
             "docs": undefined,
@@ -8657,7 +8704,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Invoices",
         "endpoints": {
           "createInvoiceAdjustment": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Create an invoice adjustment",
             "docs": "Create an invoice adjustment using this endpoint. For example, you can add a bonus, commission, VAT %, deduction etc. to an invoice.",
@@ -8685,7 +8734,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createInvoiceAdjustmentReview": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Review an invoice adjustment",
             "docs": "Review an invoice adjustment to approve or decline it.",
@@ -8724,7 +8775,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createInvoiceAdjustmentReviews": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Bulk review invoice adjustments",
             "docs": "Review multiple invoice adjustments to approve or decline a batch.",
@@ -8757,7 +8810,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "deleteInvoiceAdjustmentById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Delete an invoice adjustment",
             "docs": "Update an existing invoice adjustment.",
@@ -8793,7 +8848,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getInvoiceAdjustments": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List of invoice details",
             "docs": "Retrieve a list of invoice details. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
@@ -8868,7 +8925,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getInvoiceAdjustmentsByContractId": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Invoice details by contract",
             "docs": "Retrieve a list of invoice details for the given contract id.",
@@ -8944,7 +9003,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "updateInvoiceAdjustmentById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Update an invoice adjustment",
             "docs": "Update an existing invoice adjustment. It is not possible to update VAT adjustments, we recommend you to delete the existing VAT adjust and create a new one.",
@@ -8996,7 +9057,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Lookups",
         "endpoints": {
           "getCountries": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Country list",
             "docs": "Retrieve a list of countries supported by Deel.",
@@ -9016,7 +9079,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getCurrencies": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Currency list",
             "docs": "Retrieve the list of currencies used by Deel.",
@@ -9036,7 +9101,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getJobTitleList": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Job titles list",
             "docs": "Retrieve a list of pre-defined job titles in Deel platform.",
@@ -9071,7 +9138,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getSeniorityList": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Seniority levels",
             "docs": "Retrieve a list of pre-defined seniority level for roles in Deel platform.",
@@ -9101,7 +9170,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getTimeoffTypeList": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Time-off types",
             "docs": "Retrieve a list of pre-defined time off types to register in Deel platform.",
@@ -9134,7 +9205,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Milestones",
         "endpoints": {
           "createMilestone": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Create a milestone",
             "docs": "Add a new milestone to contract.",
@@ -9168,7 +9241,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createMilestoneReview": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Review a single milestone",
             "docs": "Review a milestone to approve or decline submitted work.",
@@ -9211,7 +9286,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createMilestoneReviews": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Review multiple milestones",
             "docs": "Review a batch of milestones to approve or reject submitted work.",
@@ -9250,7 +9327,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "deleteMilestoneById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Delete a milestone",
             "docs": "Delete a single milestone from a contract.",
@@ -9280,7 +9359,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getMilestonesByContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List of milestones by contract",
             "docs": "Retrieve a list of milestones found for a contract.",
@@ -9306,7 +9387,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getMilestonesByContractAndId": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Retrieve a single milestone",
             "docs": "Retrieve a single milestone.",
@@ -9349,7 +9432,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Off-cycle Payments",
         "endpoints": {
           "createOffCyclePayment": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Add off-cycle payment",
             "docs": "Add a new invoice line-item for the purpose of off-cycle payment for a given contract.",
@@ -9388,7 +9473,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getOffCyclePaymentByContractAndId": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Retrieve a single off-cycle payment",
             "docs": "Retrieve a single off-cycle payment.",
@@ -9418,7 +9505,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getOffCyclePaymentsByContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List of off-cycle payments",
             "docs": "Retrieve a list of off-cycle payments for the given contract id.",
@@ -9457,7 +9546,6 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Organizations",
         "endpoints": {
           "getAgreements": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get agreements with Deel.",
             "docs": "This end-point returns a list of your agreements with Deel.",
@@ -9496,7 +9584,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getLegalEntityList": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List of legal entities",
             "docs": "Retrieve a list of legal entities in your account.",
@@ -9516,7 +9606,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getOrganizations": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Get current organization",
             "docs": "Retrieve the current organization details. Organization is automatically detected from the auth token.",
@@ -9536,7 +9628,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getTeams": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Get team list",
             "docs": "Retrieve a list of teams in your organization.",
@@ -9569,7 +9663,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Tasks",
         "endpoints": {
           "createContractPgoTak": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Create new task",
             "docs": "Create a new task for the contractor.",
@@ -9608,7 +9704,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createTaskManyReview": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Review multiple tasks",
             "docs": "Review multiple tasks to approve or decline the submitted work.",
@@ -9647,7 +9745,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createTaskReviewById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Review a single task",
             "docs": "Review a single task to approve or decline the submitted work.",
@@ -9690,7 +9790,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "deleteContractPgoTak": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Delete task",
             "docs": "Delete task from the contract.",
@@ -9730,7 +9832,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getTasksByContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List of tasks",
             "docs": "Retrieve a list of tasks for a given contract.",
@@ -9769,7 +9873,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Time Off",
         "endpoints": {
           "createEorTimeOffs": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Add a time off request",
             "docs": "Add a time off request for a full-time employee.",
@@ -9799,7 +9905,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "deleteEorTimeOffs": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Cancel a time off request",
             "docs": "Cancel a time off request for an employee.",
@@ -9827,7 +9935,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "editEorTimeOffs": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Edit a time off request",
             "docs": "Edit a time off request for a full-time employee.",
@@ -9861,7 +9971,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getEorClientTimeOffs": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": false,
             "display-name": "List of time offs",
             "docs": "List of time offs for all employees in your organization.",
@@ -9879,7 +9991,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getEorEntitlements": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List time off entitlements",
             "docs": "Retrieve a list of time off entitlements for a full-time employee.",
@@ -9903,7 +10017,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getEorTimeOffs": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List time off by contract",
             "docs": "Retrieve the list of time off requests by an employee.",
@@ -9927,7 +10043,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "reviewTimeoff": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Review a time off request",
             "docs": "Approve or decline an employee's time off request.",
@@ -9979,7 +10097,9 @@ exports[`open api parser deel simple 1`] = `
         "display-name": "Timesheets",
         "endpoints": {
           "createTimesheet": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Create a timesheet entry",
             "docs": "Submit work for a contractor.",
@@ -10007,7 +10127,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createTimesheetReview": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Review a single timesheet",
             "docs": "Review a timesheet to approve or decline submitted work.",
@@ -10046,7 +10168,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createTimesheetReviews": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Review multiple timesheets",
             "docs": "Review a batch of timesheets to approve or reject submitted work.",
@@ -10079,7 +10203,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "deleteTimesheetById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Delete a timesheet entry",
             "docs": "Delete a single timesheet entry.",
@@ -10115,7 +10241,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getTimesheetById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Retrieve a single timesheet entry",
             "docs": "Retrieve a single timesheet entry by Id.",
@@ -10141,7 +10269,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getTimesheets": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List of timesheets",
             "docs": "Retrieve a list of timesheets in your Deel account. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
@@ -10206,7 +10336,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getTimesheetsByContract": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List of timesheets by contract",
             "docs": "Retrieve a list of timesheets found for a contract.",
@@ -10272,7 +10404,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "updateTimesheetById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Update a timesheet entry",
             "docs": "Update a single timesheet entry.",
@@ -10322,7 +10456,9 @@ exports[`open api parser deel simple 1`] = `
         "base-path": "",
         "endpoints": {
           "WebhookController_deleteById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Delete a webhook",
             "docs": "Delete a webhook subscription.",
@@ -10344,7 +10480,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "WebhookController_editById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Edit a webhook",
             "docs": "Edit a webhook subscription.",
@@ -10403,7 +10541,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "WebhookController_getById": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Retrieve a single webhook",
             "docs": "Retrieve a single webhook subscription.",
@@ -10429,7 +10569,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "createWebhook": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "Create a webhook",
             "docs": "Create a new webhooks subscription.",
@@ -10486,7 +10628,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "getAllWebhooks": {
-            "audiences": [],
+            "audiences": [
+              "external",
+            ],
             "auth": true,
             "display-name": "List of webhooks",
             "docs": "Retrieve a list of webhook subscriptions.",

@@ -620,7 +620,6 @@ exports[`open api parser buzzshot simple 1`] = `
         "base-path": "",
         "endpoints": {
           "listAccounts": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -642,7 +641,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "listGames": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -684,7 +682,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "listGroups": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -716,7 +713,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "listLocations": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -738,7 +734,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "listPhotos": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -760,7 +755,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "listPlayers": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -782,7 +776,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "retrieveAccount": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -800,7 +793,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "retrieveGame": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -843,7 +835,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "retrieveGroup": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -876,7 +867,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "retrieveLocation": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -894,7 +884,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "retrievePhoto": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],
@@ -912,7 +901,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "retrievePlayer": {
-            "audiences": [],
             "auth": false,
             "docs": "",
             "errors": [],

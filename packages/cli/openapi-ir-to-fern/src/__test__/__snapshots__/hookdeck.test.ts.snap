@@ -5164,7 +5164,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Attempts",
         "endpoints": {
           "getAttempt": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a single attempt",
             "docs": "",
@@ -5185,7 +5184,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getAttempts": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get attempts",
             "docs": "",
@@ -5249,7 +5247,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Bookmarks",
         "endpoints": {
           "createBookmark": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a bookmark",
             "docs": "",
@@ -5290,7 +5287,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "deleteBookmark": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete a bookmark",
             "docs": "",
@@ -5311,7 +5307,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getBookmark": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a single bookmark",
             "docs": "",
@@ -5332,7 +5327,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getBookmarks": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get bookmarks",
             "docs": "",
@@ -5408,7 +5402,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "triggerBookmark": {
-            "audiences": [],
             "auth": true,
             "display-name": "Trigger a bookmark",
             "docs": "",
@@ -5444,7 +5437,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "updateBookmark": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a bookmark",
             "docs": "",
@@ -5505,7 +5497,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Bulk retry events",
         "endpoints": {
           "cancelEventBulkRetry": {
-            "audiences": [],
             "auth": true,
             "display-name": "Cancel an events bulk retry",
             "docs": "",
@@ -5526,7 +5517,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "createEventBulkRetry": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create an events bulk retry",
             "docs": "",
@@ -5555,7 +5545,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "generateEventBulkRetryPlan": {
-            "audiences": [],
             "auth": true,
             "display-name": "Generate an events bulk retry plan",
             "docs": "",
@@ -5571,7 +5560,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getEventBulkRetries": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get events bulk retries",
             "docs": "",
@@ -5647,7 +5635,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getEventBulkRetry": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get an events bulk retry",
             "docs": "",
@@ -5681,7 +5668,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Bulk retry ignored events",
         "endpoints": {
           "cancelIgnoredEventBulkRetry": {
-            "audiences": [],
             "auth": true,
             "display-name": "Cancel an ignored events bulk retry",
             "docs": "",
@@ -5702,7 +5688,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "createIgnoredEventBulkRetry": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create an ignored events bulk retry",
             "docs": "",
@@ -5731,7 +5716,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "generateIgnoredEventBulkRetryPlan": {
-            "audiences": [],
             "auth": true,
             "display-name": "Generate an ignored events bulk retry plan",
             "docs": "",
@@ -5747,7 +5731,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getIgnoredEventBulkRetries": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get ignored events bulk retries",
             "docs": "",
@@ -5823,7 +5806,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getIgnoredEventBulkRetry": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get an ignored events bulk retry",
             "docs": "",
@@ -5857,7 +5839,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Bulk retry requests",
         "endpoints": {
           "cancelRequestBulkRetry": {
-            "audiences": [],
             "auth": true,
             "display-name": "Cancel a requests bulk retry",
             "docs": "",
@@ -5878,7 +5859,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "createRequestBulkRetry": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a requests bulk retry",
             "docs": "",
@@ -5907,7 +5887,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "generateRequestBulkRetryPlan": {
-            "audiences": [],
             "auth": true,
             "display-name": "Generate a requests bulk retry plan",
             "docs": "",
@@ -5923,7 +5902,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getRequestBulkRetries": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get request bulk retries",
             "docs": "",
@@ -5999,7 +5977,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getRequestBulkRetry": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a requests bulk retry",
             "docs": "",
@@ -6033,7 +6010,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Connections",
         "endpoints": {
           "archiveConnection": {
-            "audiences": [],
             "auth": true,
             "display-name": "Archive a connection",
             "docs": "",
@@ -6054,7 +6030,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "createConnection": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a connection",
             "docs": "",
@@ -6111,7 +6086,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getConnection": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a single connection",
             "docs": "",
@@ -6132,7 +6106,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getConnections": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get connections",
             "docs": "",
@@ -6218,7 +6191,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "pauseConnection": {
-            "audiences": [],
             "auth": true,
             "display-name": "Pause a connection",
             "docs": "",
@@ -6239,7 +6211,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "unarchiveConnection": {
-            "audiences": [],
             "auth": true,
             "display-name": "Unarchive a connection",
             "docs": "",
@@ -6260,7 +6231,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "unpauseConnection": {
-            "audiences": [],
             "auth": true,
             "display-name": "Unpause a connection",
             "docs": "",
@@ -6281,7 +6251,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "updateConnection": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a connection",
             "docs": "",
@@ -6329,7 +6298,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "upsertConnection": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update or create a connection",
             "docs": "",
@@ -6399,7 +6367,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Destinations",
         "endpoints": {
           "archiveDestination": {
-            "audiences": [],
             "auth": true,
             "display-name": "Archive a destination",
             "docs": "",
@@ -6420,7 +6387,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "createDestination": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a destination",
             "docs": "",
@@ -6469,7 +6435,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getDestination": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a destination",
             "docs": "",
@@ -6490,7 +6455,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getDestinations": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get destinations",
             "docs": "",
@@ -6566,7 +6530,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "unarchiveDestination": {
-            "audiences": [],
             "auth": true,
             "display-name": "Unarchive a destination",
             "docs": "",
@@ -6587,7 +6550,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "updateDestination": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a destination",
             "docs": "",
@@ -6647,7 +6609,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "upsertDestination": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update or create a destination",
             "docs": "",
@@ -6709,7 +6670,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Events",
         "endpoints": {
           "getEvent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get an event",
             "docs": "",
@@ -6730,7 +6690,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getEvents": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get events",
             "docs": "",
@@ -6881,7 +6840,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getRequestRawBody": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a event raw body data",
             "docs": "",
@@ -6902,7 +6860,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "muteEvent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Mute an event",
             "docs": "",
@@ -6923,7 +6880,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "retryEvent": {
-            "audiences": [],
             "auth": true,
             "display-name": "Retry an event",
             "docs": "",
@@ -6957,7 +6913,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Integrations",
         "endpoints": {
           "attachIntegrationToSource": {
-            "audiences": [],
             "auth": true,
             "display-name": "Attach an integration to a source",
             "docs": "",
@@ -6983,7 +6938,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "createIntegration": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create an integration",
             "docs": "",
@@ -7024,7 +6978,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "deleteIntegration": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete an integration",
             "docs": "",
@@ -7045,7 +6998,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "detachIntegrationToSource": {
-            "audiences": [],
             "auth": true,
             "display-name": "Detach an integration from a source",
             "docs": "",
@@ -7071,7 +7023,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getIntegration": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get an integration",
             "docs": "",
@@ -7092,7 +7043,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getIntegrations": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get integrations",
             "docs": "",
@@ -7123,7 +7073,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "updateIntegration": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update an integration",
             "docs": "",
@@ -7184,7 +7133,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Issue Triggers",
         "endpoints": {
           "createIssueTrigger": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create an issue trigger",
             "docs": "",
@@ -7225,7 +7173,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "deleteIssueTrigger": {
-            "audiences": [],
             "auth": true,
             "display-name": "Delete an issue trigger",
             "docs": "",
@@ -7246,7 +7193,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "disableIssueTrigger": {
-            "audiences": [],
             "auth": true,
             "display-name": "Disable an issue trigger",
             "docs": "",
@@ -7267,7 +7213,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "enableIssueTrigger": {
-            "audiences": [],
             "auth": true,
             "display-name": "Enable an issue trigger",
             "docs": "",
@@ -7288,7 +7233,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getIssueTrigger": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a single issue trigger",
             "docs": "",
@@ -7309,7 +7253,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getIssueTriggers": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get issue triggers",
             "docs": "",
@@ -7370,7 +7313,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "updateIssueTrigger": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update an issue trigger",
             "docs": "",
@@ -7417,7 +7359,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "upsertIssueTrigger": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create or update an issue trigger",
             "docs": "",
@@ -7471,7 +7412,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Issues",
         "endpoints": {
           "dismissIssue": {
-            "audiences": [],
             "auth": true,
             "display-name": "Dismiss an issue",
             "docs": "",
@@ -7492,7 +7432,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getIssue": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a single issue",
             "docs": "",
@@ -7513,7 +7452,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getIssueCount": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get the number of issues",
             "docs": "",
@@ -7603,7 +7541,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getIssues": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get issues",
             "docs": "",
@@ -7694,7 +7631,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "updateIssue": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update issue",
             "docs": "",
@@ -7742,7 +7678,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Notifications",
         "endpoints": {
           "toggleWebhookNotifications": {
-            "audiences": [],
             "auth": true,
             "display-name": "Toggle webhook notifications for the workspace",
             "docs": "",
@@ -7789,7 +7724,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Requests",
         "endpoints": {
           "getRequest": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a request",
             "docs": "",
@@ -7810,7 +7744,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getRequestEvents": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get request events",
             "docs": "",
@@ -7968,7 +7901,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getRequestIgnoredEvents": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get request ignored events",
             "docs": "",
@@ -8026,7 +7958,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getRequestRawBody": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a request raw body data",
             "docs": "",
@@ -8047,7 +7978,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getRequests": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get requests",
             "docs": "",
@@ -8168,7 +8098,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "retryRequest": {
-            "audiences": [],
             "auth": true,
             "display-name": "Retry a request",
             "docs": "",
@@ -8217,7 +8146,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Rulesets",
         "endpoints": {
           "archiveRuleset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Archive a ruleset",
             "docs": "",
@@ -8238,7 +8166,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "createRuleset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a ruleset",
             "docs": "",
@@ -8275,7 +8202,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getRuleset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a ruleset",
             "docs": "",
@@ -8296,7 +8222,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getRulesets": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get rulesets",
             "docs": "",
@@ -8362,7 +8287,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "unarchiveRuleset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Unarchive a ruleset",
             "docs": "",
@@ -8383,7 +8307,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "updateRuleset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a ruleset",
             "docs": "",
@@ -8431,7 +8354,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "upsertRuleset": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update or create a ruleset",
             "docs": "",
@@ -8481,7 +8403,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Sources",
         "endpoints": {
           "archiveSource": {
-            "audiences": [],
             "auth": true,
             "display-name": "Archive a source",
             "docs": "",
@@ -8502,7 +8423,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "createSource": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a source",
             "docs": "",
@@ -8531,7 +8451,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getSource": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a source",
             "docs": "",
@@ -8552,7 +8471,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getSources": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get sources",
             "docs": "",
@@ -8623,7 +8541,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "unarchiveSource": {
-            "audiences": [],
             "auth": true,
             "display-name": "Unarchive a source",
             "docs": "",
@@ -8644,7 +8561,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "updateSource": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a source",
             "docs": "",
@@ -8684,7 +8600,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "upsertSource": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update or create a source",
             "docs": "",
@@ -8726,7 +8641,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "display-name": "Transformations",
         "endpoints": {
           "createTransformation": {
-            "audiences": [],
             "auth": true,
             "display-name": "Create a transformation",
             "docs": "",
@@ -8763,7 +8677,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getTransformation": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a transformation",
             "docs": "",
@@ -8784,7 +8697,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getTransformationExecution": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get a transformation execution",
             "docs": "",
@@ -8809,7 +8721,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getTransformationExecutions": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get transformation executions",
             "docs": "",
@@ -8881,7 +8792,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "getTransformations": {
-            "audiences": [],
             "auth": true,
             "display-name": "Get transformations",
             "docs": "",
@@ -8937,7 +8847,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "testTransformation": {
-            "audiences": [],
             "auth": true,
             "display-name": "Test a transformation code",
             "docs": "",
@@ -8986,7 +8895,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "updateTransformation": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update a transformation",
             "docs": "",
@@ -9030,7 +8938,6 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           },
           "upsertTransformation": {
-            "audiences": [],
             "auth": true,
             "display-name": "Update or create a transformation",
             "docs": "",
