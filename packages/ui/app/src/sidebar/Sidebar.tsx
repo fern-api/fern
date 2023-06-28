@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useSearchContext } from "../search-context/useSearchContext";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { SidebarContext, SidebarContextValue } from "./context/SidebarContext";
 import styles from "./Sidebar.module.scss";
@@ -14,7 +15,8 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) => {
-    const { docsDefinition, openSearchDialog } = useDocsContext();
+    const { docsDefinition } = useDocsContext();
+    const { openSearchDialog } = useSearchContext();
 
     const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
 

@@ -1,7 +1,8 @@
 import classNames from "classnames";
-import { SearchDialog } from "../commons/SearchDialog";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MobileSidebar } from "../mobile-sidebar/MobileSidebar";
+import { useSearchContext } from "../search-context/useSearchContext";
+import { SearchDialog } from "../search/SearchDialog";
 import { Sidebar } from "../sidebar/Sidebar";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
@@ -9,7 +10,8 @@ import nebulaImage from "./nebula.png";
 import { useCustomTheme } from "./useCustomTheme";
 
 export const Docs: React.FC = () => {
-    const { docsDefinition, isSearchDialogOpen, closeSearchDialog } = useDocsContext();
+    const { docsDefinition } = useDocsContext();
+    const { isSearchDialogOpen, closeSearchDialog } = useSearchContext();
     useCustomTheme(docsDefinition);
 
     return (
