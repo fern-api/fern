@@ -41,6 +41,7 @@ type client struct {
 }
 
 func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
+	headers := c.header.Clone()
 	endpointURL := c.baseURL + "/" + "foo"
 	var response []*Foo
 	if err := core.DoRequest(
@@ -50,7 +51,7 @@ func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
 		http.MethodGet,
 		nil,
 		&response,
-		c.header,
+		headers,
 		nil,
 	); err != nil {
 		return response, err
@@ -85,6 +86,7 @@ func (c *client) PostFoo(ctx context.Context, request *Foo) (*Foo, error) {
 		return apiError
 	}
 
+	headers := c.header.Clone()
 	endpointURL := c.baseURL + "/" + "foo"
 	response := new(Foo)
 	if err := core.DoRequest(
@@ -94,7 +96,7 @@ func (c *client) PostFoo(ctx context.Context, request *Foo) (*Foo, error) {
 		http.MethodPost,
 		request,
 		&response,
-		c.header,
+		headers,
 		errorDecoder,
 	); err != nil {
 		return response, err

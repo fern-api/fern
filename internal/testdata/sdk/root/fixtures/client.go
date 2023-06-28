@@ -44,6 +44,7 @@ type client struct {
 }
 
 func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
+	headers := c.header.Clone()
 	endpointURL := c.baseURL + "/" + "foo"
 	var response []*Foo
 	if err := core.DoRequest(
@@ -53,7 +54,7 @@ func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
 		http.MethodGet,
 		nil,
 		&response,
-		c.header,
+		headers,
 		nil,
 	); err != nil {
 		return response, err
@@ -88,6 +89,7 @@ func (c *client) PostFoo(ctx context.Context, request *Bar) (*Foo, error) {
 		return apiError
 	}
 
+	headers := c.header.Clone()
 	endpointURL := c.baseURL + "/" + "foo"
 	response := new(Foo)
 	if err := core.DoRequest(
@@ -97,7 +99,7 @@ func (c *client) PostFoo(ctx context.Context, request *Bar) (*Foo, error) {
 		http.MethodPost,
 		request,
 		&response,
-		c.header,
+		headers,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -125,6 +127,7 @@ func (c *client) GetFooFooId(ctx context.Context, fooId Id) (*Foo, error) {
 		return apiError
 	}
 
+	headers := c.header.Clone()
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v", fooId)
 	response := new(Foo)
 	if err := core.DoRequest(
@@ -134,7 +137,7 @@ func (c *client) GetFooFooId(ctx context.Context, fooId Id) (*Foo, error) {
 		http.MethodGet,
 		nil,
 		&response,
-		c.header,
+		headers,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -176,6 +179,7 @@ func (c *client) PatchFooFooId(ctx context.Context, fooId Id, request *Foo) (*Fo
 		return apiError
 	}
 
+	headers := c.header.Clone()
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v", fooId)
 	response := new(Foo)
 	if err := core.DoRequest(
@@ -185,7 +189,7 @@ func (c *client) PatchFooFooId(ctx context.Context, fooId Id, request *Foo) (*Fo
 		http.MethodPatch,
 		request,
 		&response,
-		c.header,
+		headers,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -213,6 +217,7 @@ func (c *client) DeleteFooFooId(ctx context.Context, fooId Id) error {
 		return apiError
 	}
 
+	headers := c.header.Clone()
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v", fooId)
 	if err := core.DoRequest(
 		ctx,
@@ -221,7 +226,7 @@ func (c *client) DeleteFooFooId(ctx context.Context, fooId Id) error {
 		http.MethodDelete,
 		nil,
 		nil,
-		c.header,
+		headers,
 		errorDecoder,
 	); err != nil {
 		return err
@@ -256,6 +261,7 @@ func (c *client) PostFooFooIdRun(ctx context.Context, fooId Id) (*Foo, error) {
 		return apiError
 	}
 
+	headers := c.header.Clone()
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v/run", fooId)
 	response := new(Foo)
 	if err := core.DoRequest(
@@ -265,7 +271,7 @@ func (c *client) PostFooFooIdRun(ctx context.Context, fooId Id) (*Foo, error) {
 		http.MethodPost,
 		nil,
 		&response,
-		c.header,
+		headers,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -314,6 +320,7 @@ func (c *client) PostFooBatchCreate(ctx context.Context, request []*Bar) ([]*Foo
 		return apiError
 	}
 
+	headers := c.header.Clone()
 	endpointURL := c.baseURL + "/" + "foo/batch-create"
 	var response []*Foo
 	if err := core.DoRequest(
@@ -323,7 +330,7 @@ func (c *client) PostFooBatchCreate(ctx context.Context, request []*Bar) ([]*Foo
 		http.MethodPost,
 		request,
 		&response,
-		c.header,
+		headers,
 		errorDecoder,
 	); err != nil {
 		return response, err
@@ -358,6 +365,7 @@ func (c *client) PostFooBatchDelete(ctx context.Context, request []Id) error {
 		return apiError
 	}
 
+	headers := c.header.Clone()
 	endpointURL := c.baseURL + "/" + "foo/batch-delete"
 	if err := core.DoRequest(
 		ctx,
@@ -366,7 +374,7 @@ func (c *client) PostFooBatchDelete(ctx context.Context, request []Id) error {
 		http.MethodPost,
 		request,
 		nil,
-		c.header,
+		headers,
 		errorDecoder,
 	); err != nil {
 		return err

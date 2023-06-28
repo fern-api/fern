@@ -35,6 +35,7 @@ type userClient struct {
 }
 
 func (u *userClient) GetUser(ctx context.Context, userId string) (string, error) {
+	headers := u.header.Clone()
 	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v", userId)
 	var response string
 	if err := core.DoRequest(
@@ -44,7 +45,7 @@ func (u *userClient) GetUser(ctx context.Context, userId string) (string, error)
 		http.MethodGet,
 		nil,
 		&response,
-		u.header,
+		headers,
 		nil,
 	); err != nil {
 		return response, err
@@ -53,6 +54,7 @@ func (u *userClient) GetUser(ctx context.Context, userId string) (string, error)
 }
 
 func (u *userClient) GetUserV2(ctx context.Context, userId string) (string, error) {
+	headers := u.header.Clone()
 	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/get/%v/info", userId)
 	var response string
 	if err := core.DoRequest(
@@ -62,7 +64,7 @@ func (u *userClient) GetUserV2(ctx context.Context, userId string) (string, erro
 		http.MethodGet,
 		nil,
 		&response,
-		u.header,
+		headers,
 		nil,
 	); err != nil {
 		return response, err
@@ -71,6 +73,7 @@ func (u *userClient) GetUserV2(ctx context.Context, userId string) (string, erro
 }
 
 func (u *userClient) GetUserV3(ctx context.Context, userId string, infoId string) (string, error) {
+	headers := u.header.Clone()
 	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/get/%v/info/%v", userId, infoId)
 	var response string
 	if err := core.DoRequest(
@@ -80,7 +83,7 @@ func (u *userClient) GetUserV3(ctx context.Context, userId string, infoId string
 		http.MethodGet,
 		nil,
 		&response,
-		u.header,
+		headers,
 		nil,
 	); err != nil {
 		return response, err

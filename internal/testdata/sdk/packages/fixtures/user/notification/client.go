@@ -36,6 +36,7 @@ type client struct {
 }
 
 func (c *client) GetUserNotification(ctx context.Context, userId string, notificationId string) (*Notification, error) {
+	headers := c.header.Clone()
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"users/%v/notifications/%v", userId, notificationId)
 	response := new(Notification)
 	if err := core.DoRequest(
@@ -45,7 +46,7 @@ func (c *client) GetUserNotification(ctx context.Context, userId string, notific
 		http.MethodGet,
 		nil,
 		&response,
-		c.header,
+		headers,
 		nil,
 	); err != nil {
 		return response, err

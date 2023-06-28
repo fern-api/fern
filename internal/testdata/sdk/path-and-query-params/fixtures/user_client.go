@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/path-and-query-params/fixtures/core"
 	http "net/http"
+	url "net/url"
 	strings "strings"
 )
 
@@ -33,7 +34,17 @@ type userClient struct {
 }
 
 func (u *userClient) GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error) {
+	headers := u.header.Clone()
 	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v", userId)
+	queryParams := make(url.Values)
+	var shallowDefaultValue *bool
+	if request.Shallow != shallowDefaultValue {
+		queryParams.Add("shallow", fmt.Sprintf("%v", *request.Shallow))
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+
 	var response string
 	if err := core.DoRequest(
 		ctx,
@@ -42,7 +53,7 @@ func (u *userClient) GetUser(ctx context.Context, userId string, request *GetUse
 		http.MethodGet,
 		request,
 		&response,
-		u.header,
+		headers,
 		nil,
 	); err != nil {
 		return response, err

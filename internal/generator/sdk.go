@@ -222,7 +222,6 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 	f.P()
 
 	// Implement this service's methods.
-	// TODO: Add headers from request, if any.
 	for _, endpoint := range endpoints {
 		f.P("func (", receiver, " *", clientImplName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
 		if len(endpoint.Errors) > 0 {
@@ -250,6 +249,23 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 			f.P("}")
 			f.P()
 		}
+		// Add endpoint-specific headers from the request, if any.
+		f.P("headers := ", receiver, ".header.Clone()")
+		if len(endpoint.Headers) > 0 {
+			for _, header := range endpoint.Headers {
+				headerType := typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
+				requestField := endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName
+				if header.ValueType.Container != nil && header.ValueType.Container.Optional != nil {
+					requestField = fmt.Sprintf("*%s", requestField)
+				}
+				f.P("var ", header.Name.Name.CamelCase.SafeName, "DefaultValue ", headerType)
+				f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= ", header.Name.Name.CamelCase.SafeName, "DefaultValue {")
+				f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+				f.P("}")
+			}
+			f.P()
+		}
+		// Compose the URL, including any query parameters.
 		f.P(endpoint.URLStatement)
 		if len(endpoint.QueryParameters) > 0 {
 			f.P("queryParams := make(url.Values)")
@@ -283,7 +299,9 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 			f.P("if len(queryParams) > 0 {")
 			f.P(`endpointURL += "?" + queryParams.Encode()`)
 			f.P("}")
+			f.P()
 		}
+		// Prepare a response variable and issue the request.
 		if endpoint.ResponseType != "" {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, strings.TrimLeft(endpoint.ResponseType, "*")))
 		}
@@ -294,7 +312,7 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 		f.P(endpoint.Method, ",")
 		f.P(endpoint.RequestParameterName, ",")
 		f.P(endpoint.ResponseParameterName, ",")
-		f.P(receiver, ".header,")
+		f.P("headers,")
 		f.P(endpoint.ErrorDecoderParameterName, ",")
 		f.P("); err != nil {")
 		f.P("return ", endpoint.ErrorReturnValues)
