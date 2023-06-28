@@ -15,7 +15,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) 
         >
             <div className="flex items-center space-x-2">
                 <Icon className="text-text-muted group-hover:text-text-default transition" icon="search" size={14} />
-                <div className="text-text-muted group-hover:text-text-default lea transition">Search</div>
+                <div className="text-text-muted group-hover:text-text-default transition">Search</div>
             </div>
 
             <div className="text-text-muted group-hover:text-text-default ml-auto text-start text-xs tracking-wide transition">
