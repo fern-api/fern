@@ -23,7 +23,7 @@ func NewUnionWithPrimitiveFromString(value string) *UnionWithPrimitive {
 
 func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -32,7 +32,7 @@ func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "boolean":
 		var valueUnmarshaler struct {
-			Boolean bool `json:"value"`
+			Boolean bool `json:"value,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -40,7 +40,7 @@ func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 		u.Boolean = valueUnmarshaler.Boolean
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"value"`
+			String string `json:"value,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -56,8 +56,8 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "boolean":
 		var marshaler = struct {
-			Type    string `json:"type"`
-			Boolean bool   `json:"value"`
+			Type    string `json:"type,omitempty"`
+			Boolean bool   `json:"value,omitempty"`
 		}{
 			Type:    u.Type,
 			Boolean: u.Boolean,
@@ -65,8 +65,8 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "string":
 		var marshaler = struct {
-			Type   string `json:"type"`
-			String string `json:"value"`
+			Type   string `json:"type,omitempty"`
+			String string `json:"value,omitempty"`
 		}{
 			Type:   u.Type,
 			String: u.String,

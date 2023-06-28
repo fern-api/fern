@@ -3,5 +3,5 @@
 package api
 
 type Error struct {
-	Message string `json:"message"`
+	Message string `json:"message,omitempty"`
 }

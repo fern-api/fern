@@ -156,7 +156,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("var marshaler = struct{")
 	t.writer.P("embed")
 	for _, literal := range literals {
-		t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
+		t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, ",omitempty\"`")
 	}
 	t.writer.P("}{")
 	t.writer.P("embed: embed(*", receiver, "),")
@@ -250,7 +250,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Implement the json.Unmarshaler interface.
 	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 	t.writer.P("var unmarshaler struct {")
-	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
+	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, ",omitempty\"`")
 	var propertyNames []string
 	for _, extend := range union.Extends {
 		extendedProperties, _ := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)
@@ -261,7 +261,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			continue
 		}
 		propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
-		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.WireValue, "\"`")
+		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.WireValue, ",omitempty\"`")
 	}
 	t.writer.P("}")
 	t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
@@ -299,7 +299,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			//  }
 			t.writer.P("var valueUnmarshaler struct {")
 			typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath)
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.Shape.SingleProperty.Name.WireValue, "\"`")
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.Shape.SingleProperty.Name.WireValue, ",omitempty\"`")
 			t.writer.P("}")
 			t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
 			t.writer.P("return err")
@@ -329,7 +329,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		}
 		t.writer.P("case \"", unionType.DiscriminantValue.Name.OriginalName, "\":")
 		t.writer.P("var marshaler = struct {")
-		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
+		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, ",omitempty\"`")
 		// Include all of the extended and base properties.
 		for _, extend := range union.Extends {
 			_, _ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)
@@ -338,19 +338,19 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 				continue
 			}
-			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.WireValue, "\"`")
+			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.WireValue, ",omitempty\"`")
 		}
 		for _, literal := range literals {
-			t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
+			t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, ",omitempty\"`")
 		}
 		typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath)
 		switch unionType.Shape.PropertiesType {
 		case "singleProperty":
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.Shape.SingleProperty.Name.WireValue, "\"`")
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.Shape.SingleProperty.Name.WireValue, ",omitempty\"`")
 		case "samePropertiesAsObject":
 			t.writer.P(typeName)
 		case "noProperties":
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.DiscriminantValue.WireValue, "\"`")
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.DiscriminantValue.WireValue, ",omitempty\"`")
 		}
 		// Set all of the values in the marshaler.
 		t.writer.P("}{")
@@ -668,7 +668,7 @@ func (t *typeVisitor) visitObjectProperties(object *ir.ObjectTypeDeclaration, in
 		}
 		names = append(names, property.Name.Name.PascalCase.UnsafeName)
 		if includeTags {
-			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.WireValue, "\"`")
+			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), " `json:\"", property.Name.WireValue, ",omitempty\"`")
 			continue
 		}
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath))

@@ -24,7 +24,7 @@ func NewUnionWithDiscriminantFromBar(value *Bar) *UnionWithDiscriminant {
 
 func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"_type"`
+		Type string `json:"_type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -33,7 +33,7 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "foo":
 		var valueUnmarshaler struct {
-			Foo *Foo `json:"foo"`
+			Foo *Foo `json:"foo,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -41,7 +41,7 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 		u.Foo = valueUnmarshaler.Foo
 	case "bar":
 		var valueUnmarshaler struct {
-			Bar *Bar `json:"bar"`
+			Bar *Bar `json:"bar,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -57,8 +57,8 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
 		var marshaler = struct {
-			Type string `json:"_type"`
-			Foo  *Foo   `json:"foo"`
+			Type string `json:"_type,omitempty"`
+			Foo  *Foo   `json:"foo,omitempty"`
 		}{
 			Type: u.Type,
 			Foo:  u.Foo,
@@ -66,8 +66,8 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "bar":
 		var marshaler = struct {
-			Type string `json:"_type"`
-			Bar  *Bar   `json:"bar"`
+			Type string `json:"_type,omitempty"`
+			Bar  *Bar   `json:"bar,omitempty"`
 		}{
 			Type: u.Type,
 			Bar:  u.Bar,

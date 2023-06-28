@@ -3,6 +3,6 @@
 package ir
 
 type BearerAuthScheme struct {
-	Docs  *string `json:"docs"`
-	Token *Name   `json:"token"`
+	Docs  *string `json:"docs,omitempty"`
+	Token *Name   `json:"token,omitempty"`
 }

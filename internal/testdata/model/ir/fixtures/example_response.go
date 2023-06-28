@@ -23,7 +23,7 @@ func NewExampleResponseFromError(value *ExampleEndpointErrorResponse) *ExampleRe
 
 func (e *ExampleResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -52,7 +52,7 @@ func (e ExampleResponse) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "ok":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*ExampleEndpointSuccessResponse
 		}{
 			Type:                           e.Type,
@@ -61,7 +61,7 @@ func (e ExampleResponse) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "error":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*ExampleEndpointErrorResponse
 		}{
 			Type:                         e.Type,

@@ -3,6 +3,6 @@
 package ir
 
 type SdkRequestWrapper struct {
-	WrapperName *Name `json:"wrapperName"`
-	BodyKey     *Name `json:"bodyKey"`
+	WrapperName *Name `json:"wrapperName,omitempty"`
+	BodyKey     *Name `json:"bodyKey,omitempty"`
 }

@@ -3,7 +3,7 @@
 package ir
 
 type FernFilepath struct {
-	AllParts    []*Name `json:"allParts"`
-	PackagePath []*Name `json:"packagePath"`
-	File        *Name   `json:"file"`
+	AllParts    []*Name `json:"allParts,omitempty"`
+	PackagePath []*Name `json:"packagePath,omitempty"`
+	File        *Name   `json:"file,omitempty"`
 }

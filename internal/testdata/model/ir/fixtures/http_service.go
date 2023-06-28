@@ -3,11 +3,11 @@
 package ir
 
 type HttpService struct {
-	Availability   *Availability        `json:"availability"`
-	Name           *DeclaredServiceName `json:"name"`
-	DisplayName    *string              `json:"displayName"`
-	BasePath       *HttpPath            `json:"basePath"`
-	Endpoints      []*HttpEndpoint      `json:"endpoints"`
-	Headers        []*HttpHeader        `json:"headers"`
-	PathParameters []*PathParameter     `json:"pathParameters"`
+	Availability   *Availability        `json:"availability,omitempty"`
+	Name           *DeclaredServiceName `json:"name,omitempty"`
+	DisplayName    *string              `json:"displayName,omitempty"`
+	BasePath       *HttpPath            `json:"basePath,omitempty"`
+	Endpoints      []*HttpEndpoint      `json:"endpoints,omitempty"`
+	Headers        []*HttpHeader        `json:"headers,omitempty"`
+	PathParameters []*PathParameter     `json:"pathParameters,omitempty"`
 }

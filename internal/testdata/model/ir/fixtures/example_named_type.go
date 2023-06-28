@@ -3,6 +3,6 @@
 package ir
 
 type ExampleNamedType struct {
-	TypeName *DeclaredTypeName `json:"typeName"`
-	Shape    *ExampleTypeShape `json:"shape"`
+	TypeName *DeclaredTypeName `json:"typeName,omitempty"`
+	Shape    *ExampleTypeShape `json:"shape,omitempty"`
 }

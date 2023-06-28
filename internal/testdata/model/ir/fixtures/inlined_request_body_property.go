@@ -3,7 +3,7 @@
 package ir
 
 type InlinedRequestBodyProperty struct {
-	Docs      *string           `json:"docs"`
-	Name      *NameAndWireValue `json:"name"`
-	ValueType *TypeReference    `json:"valueType"`
+	Docs      *string           `json:"docs,omitempty"`
+	Name      *NameAndWireValue `json:"name,omitempty"`
+	ValueType *TypeReference    `json:"valueType,omitempty"`
 }

@@ -3,6 +3,6 @@
 package ir
 
 type AliasTypeDeclaration struct {
-	AliasOf      *TypeReference         `json:"aliasOf"`
-	ResolvedType *ResolvedTypeReference `json:"resolvedType"`
+	AliasOf      *TypeReference         `json:"aliasOf,omitempty"`
+	ResolvedType *ResolvedTypeReference `json:"resolvedType,omitempty"`
 }

@@ -3,6 +3,6 @@
 package ir
 
 type ExamplePathParameter struct {
-	Key   string                `json:"key"`
-	Value *ExampleTypeReference `json:"value"`
+	Key   string                `json:"key,omitempty"`
+	Value *ExampleTypeReference `json:"value,omitempty"`
 }

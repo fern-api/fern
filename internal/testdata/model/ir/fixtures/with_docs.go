@@ -3,5 +3,5 @@
 package ir
 
 type WithDocs struct {
-	Docs *string `json:"docs"`
+	Docs *string `json:"docs,omitempty"`
 }

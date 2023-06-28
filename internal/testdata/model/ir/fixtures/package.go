@@ -3,11 +3,11 @@
 package ir
 
 type Package struct {
-	Docs               *string        `json:"docs"`
-	FernFilepath       *FernFilepath  `json:"fernFilepath"`
-	Service            *ServiceId     `json:"service"`
-	Types              []TypeId       `json:"types"`
-	Errors             []ErrorId      `json:"errors"`
-	Subpackages        []SubpackageId `json:"subpackages"`
-	HasEndpointsInTree bool           `json:"hasEndpointsInTree"`
+	Docs               *string        `json:"docs,omitempty"`
+	FernFilepath       *FernFilepath  `json:"fernFilepath,omitempty"`
+	Service            *ServiceId     `json:"service,omitempty"`
+	Types              []TypeId       `json:"types,omitempty"`
+	Errors             []ErrorId      `json:"errors,omitempty"`
+	Subpackages        []SubpackageId `json:"subpackages,omitempty"`
+	HasEndpointsInTree bool           `json:"hasEndpointsInTree,omitempty"`
 }

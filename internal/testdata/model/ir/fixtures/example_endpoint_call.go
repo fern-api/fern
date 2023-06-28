@@ -3,15 +3,15 @@
 package ir
 
 type ExampleEndpointCall struct {
-	Docs                   *string                  `json:"docs"`
-	Name                   *Name                    `json:"name"`
-	Url                    string                   `json:"url"`
-	RootPathParameters     []*ExamplePathParameter  `json:"rootPathParameters"`
-	ServicePathParameters  []*ExamplePathParameter  `json:"servicePathParameters"`
-	EndpointPathParameters []*ExamplePathParameter  `json:"endpointPathParameters"`
-	ServiceHeaders         []*ExampleHeader         `json:"serviceHeaders"`
-	EndpointHeaders        []*ExampleHeader         `json:"endpointHeaders"`
-	QueryParameters        []*ExampleQueryParameter `json:"queryParameters"`
-	Request                *ExampleRequestBody      `json:"request"`
-	Response               *ExampleResponse         `json:"response"`
+	Docs                   *string                  `json:"docs,omitempty"`
+	Name                   *Name                    `json:"name,omitempty"`
+	Url                    string                   `json:"url,omitempty"`
+	RootPathParameters     []*ExamplePathParameter  `json:"rootPathParameters,omitempty"`
+	ServicePathParameters  []*ExamplePathParameter  `json:"servicePathParameters,omitempty"`
+	EndpointPathParameters []*ExamplePathParameter  `json:"endpointPathParameters,omitempty"`
+	ServiceHeaders         []*ExampleHeader         `json:"serviceHeaders,omitempty"`
+	EndpointHeaders        []*ExampleHeader         `json:"endpointHeaders,omitempty"`
+	QueryParameters        []*ExampleQueryParameter `json:"queryParameters,omitempty"`
+	Request                *ExampleRequestBody      `json:"request,omitempty"`
+	Response               *ExampleResponse         `json:"response,omitempty"`
 }

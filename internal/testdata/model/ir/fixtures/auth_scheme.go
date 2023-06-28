@@ -28,7 +28,7 @@ func NewAuthSchemeFromHeader(value *HeaderAuthScheme) *AuthScheme {
 
 func (a *AuthScheme) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"_type"`
+		Type string `json:"_type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -63,7 +63,7 @@ func (a AuthScheme) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", a.Type, a)
 	case "bearer":
 		var marshaler = struct {
-			Type string `json:"_type"`
+			Type string `json:"_type,omitempty"`
 			*BearerAuthScheme
 		}{
 			Type:             a.Type,
@@ -72,7 +72,7 @@ func (a AuthScheme) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "basic":
 		var marshaler = struct {
-			Type string `json:"_type"`
+			Type string `json:"_type,omitempty"`
 			*BasicAuthScheme
 		}{
 			Type:            a.Type,
@@ -81,7 +81,7 @@ func (a AuthScheme) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "header":
 		var marshaler = struct {
-			Type string `json:"_type"`
+			Type string `json:"_type,omitempty"`
 			*HeaderAuthScheme
 		}{
 			Type:             a.Type,

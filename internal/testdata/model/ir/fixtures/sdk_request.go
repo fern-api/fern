@@ -3,6 +3,6 @@
 package ir
 
 type SdkRequest struct {
-	RequestParameterName *Name            `json:"requestParameterName"`
-	Shape                *SdkRequestShape `json:"shape"`
+	RequestParameterName *Name            `json:"requestParameterName,omitempty"`
+	Shape                *SdkRequestShape `json:"shape,omitempty"`
 }

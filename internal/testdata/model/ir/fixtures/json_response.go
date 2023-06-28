@@ -3,6 +3,6 @@
 package ir
 
 type JsonResponse struct {
-	Docs             *string        `json:"docs"`
-	ResponseBodyType *TypeReference `json:"responseBodyType"`
+	Docs             *string        `json:"docs,omitempty"`
+	ResponseBodyType *TypeReference `json:"responseBodyType,omitempty"`
 }

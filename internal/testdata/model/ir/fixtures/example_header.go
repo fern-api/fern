@@ -3,6 +3,6 @@
 package ir
 
 type ExampleHeader struct {
-	WireKey string                `json:"wireKey"`
-	Value   *ExampleTypeReference `json:"value"`
+	WireKey string                `json:"wireKey,omitempty"`
+	Value   *ExampleTypeReference `json:"value,omitempty"`
 }

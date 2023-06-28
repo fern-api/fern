@@ -23,7 +23,7 @@ func NewHttpResponseFromFileDownload(value *FileDownloadResponse) *HttpResponse 
 
 func (h *HttpResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -52,7 +52,7 @@ func (h HttpResponse) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "json":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*JsonResponse
 		}{
 			Type:         h.Type,
@@ -61,7 +61,7 @@ func (h HttpResponse) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "fileDownload":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*FileDownloadResponse
 		}{
 			Type:                 h.Type,

@@ -3,5 +3,5 @@
 package ir
 
 type ExampleAliasType struct {
-	Value *ExampleTypeReference `json:"value"`
+	Value *ExampleTypeReference `json:"value,omitempty"`
 }

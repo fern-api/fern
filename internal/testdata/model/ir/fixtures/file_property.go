@@ -3,6 +3,6 @@
 package ir
 
 type FileProperty struct {
-	Key        *NameAndWireValue `json:"key"`
-	IsOptional bool              `json:"isOptional"`
+	Key        *NameAndWireValue `json:"key,omitempty"`
+	IsOptional bool              `json:"isOptional,omitempty"`
 }

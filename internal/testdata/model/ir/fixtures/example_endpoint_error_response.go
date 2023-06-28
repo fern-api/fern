@@ -3,6 +3,6 @@
 package ir
 
 type ExampleEndpointErrorResponse struct {
-	Error *DeclaredErrorName    `json:"error"`
-	Body  *ExampleTypeReference `json:"body"`
+	Error *DeclaredErrorName    `json:"error,omitempty"`
+	Body  *ExampleTypeReference `json:"body,omitempty"`
 }

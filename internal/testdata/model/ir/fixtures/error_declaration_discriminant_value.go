@@ -23,7 +23,7 @@ func NewErrorDeclarationDiscriminantValueFromStatusCode(value any) *ErrorDeclara
 
 func (e *ErrorDeclarationDiscriminantValue) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -52,7 +52,7 @@ func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "property":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*NameAndWireValue
 		}{
 			Type:             e.Type,
@@ -61,8 +61,8 @@ func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "statusCode":
 		var marshaler = struct {
-			Type       string `json:"type"`
-			StatusCode any    `json:"statusCode"`
+			Type       string `json:"type,omitempty"`
+			StatusCode any    `json:"statusCode,omitempty"`
 		}{
 			Type:       e.Type,
 			StatusCode: e.StatusCode,

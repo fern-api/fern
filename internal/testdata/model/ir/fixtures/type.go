@@ -38,7 +38,7 @@ func NewTypeFromUndiscriminatedUnion(value *UndiscriminatedUnionTypeDeclaration)
 
 func (t *Type) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"_type"`
+		Type string `json:"_type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -85,7 +85,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", t.Type, t)
 	case "alias":
 		var marshaler = struct {
-			Type string `json:"_type"`
+			Type string `json:"_type,omitempty"`
 			*AliasTypeDeclaration
 		}{
 			Type:                 t.Type,
@@ -94,7 +94,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "enum":
 		var marshaler = struct {
-			Type string `json:"_type"`
+			Type string `json:"_type,omitempty"`
 			*EnumTypeDeclaration
 		}{
 			Type:                t.Type,
@@ -103,7 +103,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "object":
 		var marshaler = struct {
-			Type string `json:"_type"`
+			Type string `json:"_type,omitempty"`
 			*ObjectTypeDeclaration
 		}{
 			Type:                  t.Type,
@@ -112,7 +112,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "union":
 		var marshaler = struct {
-			Type string `json:"_type"`
+			Type string `json:"_type,omitempty"`
 			*UnionTypeDeclaration
 		}{
 			Type:                 t.Type,
@@ -121,7 +121,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "undiscriminatedUnion":
 		var marshaler = struct {
-			Type string `json:"_type"`
+			Type string `json:"_type,omitempty"`
 			*UndiscriminatedUnionTypeDeclaration
 		}{
 			Type:                                t.Type,

@@ -3,5 +3,5 @@
 package ir
 
 type ExampleEndpointSuccessResponse struct {
-	Body *ExampleTypeReference `json:"body"`
+	Body *ExampleTypeReference `json:"body,omitempty"`
 }

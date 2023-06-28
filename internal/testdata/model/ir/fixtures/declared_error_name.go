@@ -3,7 +3,7 @@
 package ir
 
 type DeclaredErrorName struct {
-	ErrorId      ErrorId       `json:"errorId"`
-	FernFilepath *FernFilepath `json:"fernFilepath"`
-	Name         *Name         `json:"name"`
+	ErrorId      ErrorId       `json:"errorId,omitempty"`
+	FernFilepath *FernFilepath `json:"fernFilepath,omitempty"`
+	Name         *Name         `json:"name,omitempty"`
 }

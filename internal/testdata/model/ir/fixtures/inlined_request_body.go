@@ -3,7 +3,7 @@
 package ir
 
 type InlinedRequestBody struct {
-	Name       *Name                         `json:"name"`
-	Extends    []*DeclaredTypeName           `json:"extends"`
-	Properties []*InlinedRequestBodyProperty `json:"properties"`
+	Name       *Name                         `json:"name,omitempty"`
+	Extends    []*DeclaredTypeName           `json:"extends,omitempty"`
+	Properties []*InlinedRequestBodyProperty `json:"properties,omitempty"`
 }

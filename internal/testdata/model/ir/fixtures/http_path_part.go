@@ -3,6 +3,6 @@
 package ir
 
 type HttpPathPart struct {
-	PathParameter string `json:"pathParameter"`
-	Tail          string `json:"tail"`
+	PathParameter string `json:"pathParameter,omitempty"`
+	Tail          string `json:"tail,omitempty"`
 }

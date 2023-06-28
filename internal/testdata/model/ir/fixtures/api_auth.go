@@ -3,7 +3,7 @@
 package ir
 
 type ApiAuth struct {
-	Docs        *string                `json:"docs"`
-	Requirement AuthSchemesRequirement `json:"requirement"`
-	Schemes     []*AuthScheme          `json:"schemes"`
+	Docs        *string                `json:"docs,omitempty"`
+	Requirement AuthSchemesRequirement `json:"requirement,omitempty"`
+	Schemes     []*AuthScheme          `json:"schemes,omitempty"`
 }

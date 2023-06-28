@@ -3,8 +3,8 @@
 package ir
 
 type SingleBaseUrlEnvironment struct {
-	Docs *string        `json:"docs"`
-	Id   EnvironmentId  `json:"id"`
-	Name *Name          `json:"name"`
-	Url  EnvironmentUrl `json:"url"`
+	Docs *string        `json:"docs,omitempty"`
+	Id   EnvironmentId  `json:"id,omitempty"`
+	Name *Name          `json:"name,omitempty"`
+	Url  EnvironmentUrl `json:"url,omitempty"`
 }

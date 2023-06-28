@@ -3,6 +3,6 @@
 package ir
 
 type MultipleBaseUrlsEnvironments struct {
-	BaseUrls     []*EnvironmentBaseUrlWithId    `json:"baseUrls"`
-	Environments []*MultipleBaseUrlsEnvironment `json:"environments"`
+	BaseUrls     []*EnvironmentBaseUrlWithId    `json:"baseUrls,omitempty"`
+	Environments []*MultipleBaseUrlsEnvironment `json:"environments,omitempty"`
 }

@@ -3,6 +3,6 @@
 package ir
 
 type ErrorDiscriminationByPropertyStrategy struct {
-	Discriminant    *NameAndWireValue `json:"discriminant"`
-	ContentProperty *NameAndWireValue `json:"contentProperty"`
+	Discriminant    *NameAndWireValue `json:"discriminant,omitempty"`
+	ContentProperty *NameAndWireValue `json:"contentProperty,omitempty"`
 }

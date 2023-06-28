@@ -38,7 +38,7 @@ func NewContainerTypeFromLiteral(value *Literal) *ContainerType {
 
 func (c *ContainerType) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"_type"`
+		Type string `json:"_type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -47,7 +47,7 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
-			List *TypeReference `json:"list"`
+			List *TypeReference `json:"list,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -61,7 +61,7 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 		c.Map = value
 	case "optional":
 		var valueUnmarshaler struct {
-			Optional *TypeReference `json:"optional"`
+			Optional *TypeReference `json:"optional,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -69,7 +69,7 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 		c.Optional = valueUnmarshaler.Optional
 	case "set":
 		var valueUnmarshaler struct {
-			Set *TypeReference `json:"set"`
+			Set *TypeReference `json:"set,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -77,7 +77,7 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 		c.Set = valueUnmarshaler.Set
 	case "literal":
 		var valueUnmarshaler struct {
-			Literal *Literal `json:"literal"`
+			Literal *Literal `json:"literal,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -93,8 +93,8 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", c.Type, c)
 	case "list":
 		var marshaler = struct {
-			Type string         `json:"_type"`
-			List *TypeReference `json:"list"`
+			Type string         `json:"_type,omitempty"`
+			List *TypeReference `json:"list,omitempty"`
 		}{
 			Type: c.Type,
 			List: c.List,
@@ -102,7 +102,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "map":
 		var marshaler = struct {
-			Type string `json:"_type"`
+			Type string `json:"_type,omitempty"`
 			*MapType
 		}{
 			Type:    c.Type,
@@ -111,8 +111,8 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "optional":
 		var marshaler = struct {
-			Type     string         `json:"_type"`
-			Optional *TypeReference `json:"optional"`
+			Type     string         `json:"_type,omitempty"`
+			Optional *TypeReference `json:"optional,omitempty"`
 		}{
 			Type:     c.Type,
 			Optional: c.Optional,
@@ -120,8 +120,8 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "set":
 		var marshaler = struct {
-			Type string         `json:"_type"`
-			Set  *TypeReference `json:"set"`
+			Type string         `json:"_type,omitempty"`
+			Set  *TypeReference `json:"set,omitempty"`
 		}{
 			Type: c.Type,
 			Set:  c.Set,
@@ -129,8 +129,8 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "literal":
 		var marshaler = struct {
-			Type    string   `json:"_type"`
-			Literal *Literal `json:"literal"`
+			Type    string   `json:"_type,omitempty"`
+			Literal *Literal `json:"literal,omitempty"`
 		}{
 			Type:    c.Type,
 			Literal: c.Literal,

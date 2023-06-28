@@ -3,5 +3,5 @@
 package api
 
 type UserNotFoundErrorBody struct {
-	RequestedUserId string `json:"requestedUserId"`
+	RequestedUserId string `json:"requestedUserId,omitempty"`
 }

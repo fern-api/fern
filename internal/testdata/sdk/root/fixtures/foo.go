@@ -3,10 +3,10 @@
 package api
 
 type Foo struct {
-	Id      *Id      `json:"id"`
-	Name    *string  `json:"name"`
-	List    *string  `json:"list"`
-	Type    *FooType `json:"type"`
-	Request *Request `json:"request"`
-	Delay   *string  `json:"delay"`
+	Id      *Id      `json:"id,omitempty"`
+	Name    *string  `json:"name,omitempty"`
+	List    *string  `json:"list,omitempty"`
+	Type    *FooType `json:"type,omitempty"`
+	Request *Request `json:"request,omitempty"`
+	Delay   *string  `json:"delay,omitempty"`
 }

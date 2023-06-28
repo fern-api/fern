@@ -3,5 +3,5 @@
 package v2
 
 type Baz struct {
-	Name string `json:"name"`
+	Name string `json:"name,omitempty"`
 }

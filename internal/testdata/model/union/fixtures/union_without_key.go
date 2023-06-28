@@ -24,7 +24,7 @@ func NewUnionWithoutKeyFromBar(value *Bar) *UnionWithoutKey {
 
 func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -53,7 +53,7 @@ func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*Foo
 		}{
 			Type: u.Type,
@@ -62,7 +62,7 @@ func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "bar":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*Bar
 		}{
 			Type: u.Type,

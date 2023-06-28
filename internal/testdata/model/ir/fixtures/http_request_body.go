@@ -28,7 +28,7 @@ func NewHttpRequestBodyFromFileUpload(value *FileUploadRequest) *HttpRequestBody
 
 func (h *HttpRequestBody) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -63,7 +63,7 @@ func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "inlinedRequestBody":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*InlinedRequestBody
 		}{
 			Type:               h.Type,
@@ -72,7 +72,7 @@ func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "reference":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*HttpRequestBodyReference
 		}{
 			Type:                     h.Type,
@@ -81,7 +81,7 @@ func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "fileUpload":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*FileUploadRequest
 		}{
 			Type:              h.Type,

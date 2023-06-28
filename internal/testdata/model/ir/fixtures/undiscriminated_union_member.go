@@ -3,6 +3,6 @@
 package ir
 
 type UndiscriminatedUnionMember struct {
-	Docs *string        `json:"docs"`
-	Type *TypeReference `json:"type"`
+	Docs *string        `json:"docs,omitempty"`
+	Type *TypeReference `json:"type,omitempty"`
 }

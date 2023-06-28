@@ -8,13 +8,13 @@ import (
 )
 
 type Type struct {
-	One   int       `json:"one"`
-	Two   float64   `json:"two"`
-	Three string    `json:"three"`
-	Four  bool      `json:"four"`
-	Five  int64     `json:"five"`
-	Six   time.Time `json:"six"`
-	Seven time.Time `json:"seven"`
-	Eight uuid.UUID `json:"eight"`
-	Nine  []byte    `json:"nine"`
+	One   int       `json:"one,omitempty"`
+	Two   float64   `json:"two,omitempty"`
+	Three string    `json:"three,omitempty"`
+	Four  bool      `json:"four,omitempty"`
+	Five  int64     `json:"five,omitempty"`
+	Six   time.Time `json:"six,omitempty"`
+	Seven time.Time `json:"seven,omitempty"`
+	Eight uuid.UUID `json:"eight,omitempty"`
+	Nine  []byte    `json:"nine,omitempty"`
 }

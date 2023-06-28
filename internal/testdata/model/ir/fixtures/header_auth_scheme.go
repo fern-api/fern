@@ -3,8 +3,8 @@
 package ir
 
 type HeaderAuthScheme struct {
-	Docs      *string           `json:"docs"`
-	Name      *NameAndWireValue `json:"name"`
-	ValueType *TypeReference    `json:"valueType"`
-	Prefix    *string           `json:"prefix"`
+	Docs      *string           `json:"docs,omitempty"`
+	Name      *NameAndWireValue `json:"name,omitempty"`
+	ValueType *TypeReference    `json:"valueType,omitempty"`
+	Prefix    *string           `json:"prefix,omitempty"`
 }

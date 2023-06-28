@@ -5,7 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	bar "github.com/fern-api/fern-go/internal/testdata/packages/fixtures/bar"
+	bar "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/bar"
 )
 
 type Union struct {
@@ -34,7 +34,7 @@ func NewUnionFromAnotherBar(value *bar.Bar) *Union {
 
 func (u *Union) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -49,7 +49,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		u.Value = value
 	case "anotherValue":
 		var valueUnmarshaler struct {
-			AnotherValue *Value `json:"anotherValue"`
+			AnotherValue *Value `json:"anotherValue,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -63,7 +63,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		u.Bar = value
 	case "anotherBar":
 		var valueUnmarshaler struct {
-			AnotherBar *bar.Bar `json:"anotherBar"`
+			AnotherBar *bar.Bar `json:"anotherBar,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -79,7 +79,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "value":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*Value
 		}{
 			Type:  u.Type,
@@ -88,8 +88,8 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "anotherValue":
 		var marshaler = struct {
-			Type         string `json:"type"`
-			AnotherValue *Value `json:"anotherValue"`
+			Type         string `json:"type,omitempty"`
+			AnotherValue *Value `json:"anotherValue,omitempty"`
 		}{
 			Type:         u.Type,
 			AnotherValue: u.AnotherValue,
@@ -97,7 +97,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "bar":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*bar.Bar
 		}{
 			Type: u.Type,
@@ -106,8 +106,8 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "anotherBar":
 		var marshaler = struct {
-			Type       string   `json:"type"`
-			AnotherBar *bar.Bar `json:"anotherBar"`
+			Type       string   `json:"type,omitempty"`
+			AnotherBar *bar.Bar `json:"anotherBar,omitempty"`
 		}{
 			Type:       u.Type,
 			AnotherBar: u.AnotherBar,

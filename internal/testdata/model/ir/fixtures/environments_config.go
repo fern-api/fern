@@ -3,6 +3,6 @@
 package ir
 
 type EnvironmentsConfig struct {
-	DefaultEnvironment *EnvironmentId `json:"defaultEnvironment"`
-	Environments       *Environments  `json:"environments"`
+	DefaultEnvironment *EnvironmentId `json:"defaultEnvironment,omitempty"`
+	Environments       *Environments  `json:"environments,omitempty"`
 }

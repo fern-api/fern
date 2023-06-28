@@ -3,12 +3,12 @@
 package api
 
 type Baz struct {
-	Id          *Id     `json:"id"`
-	Name        *string `json:"name"`
-	List        *string `json:"list"`
-	Description *string `json:"description"`
+	Id          *Id     `json:"id,omitempty"`
+	Name        *string `json:"name,omitempty"`
+	List        *string `json:"list,omitempty"`
+	Description *string `json:"description,omitempty"`
 	// This field has documentation, so it should be rendered
 	// just above the field.
 	// Note: Newlines should be preserved.
-	HasDocs *string `json:"hasDocs"`
+	HasDocs *string `json:"hasDocs,omitempty"`
 }

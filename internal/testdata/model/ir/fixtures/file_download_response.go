@@ -3,5 +3,5 @@
 package ir
 
 type FileDownloadResponse struct {
-	Docs *string `json:"docs"`
+	Docs *string `json:"docs,omitempty"`
 }

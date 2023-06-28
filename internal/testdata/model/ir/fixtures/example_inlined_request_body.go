@@ -3,6 +3,6 @@
 package ir
 
 type ExampleInlinedRequestBody struct {
-	JsonExample any                                  `json:"jsonExample"`
-	Properties  []*ExampleInlinedRequestBodyProperty `json:"properties"`
+	JsonExample any                                  `json:"jsonExample,omitempty"`
+	Properties  []*ExampleInlinedRequestBodyProperty `json:"properties,omitempty"`
 }

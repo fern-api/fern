@@ -3,6 +3,6 @@
 package ir
 
 type NameAndWireValue struct {
-	WireValue string `json:"wireValue"`
-	Name      *Name  `json:"name"`
+	WireValue string `json:"wireValue,omitempty"`
+	Name      *Name  `json:"name,omitempty"`
 }

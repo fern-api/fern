@@ -4,9 +4,9 @@ package api
 
 type Error struct {
 	// A human-readable message providing more details about the error(s).
-	Message *string `json:"message"`
+	Message *string `json:"message,omitempty"`
 	// If the error is parameter-specific, the parameter related to the error.
-	Param *string `json:"param"`
+	Param *string `json:"param,omitempty"`
 	// If multiple errors occured (e.g., with param validation), the list of errors that occured.
-	Errors *[]*Error `json:"errors"`
+	Errors *[]*Error `json:"errors,omitempty"`
 }

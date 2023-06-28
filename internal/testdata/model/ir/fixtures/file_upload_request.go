@@ -3,6 +3,6 @@
 package ir
 
 type FileUploadRequest struct {
-	Name       *Name                        `json:"name"`
-	Properties []*FileUploadRequestProperty `json:"properties"`
+	Name       *Name                        `json:"name,omitempty"`
+	Properties []*FileUploadRequestProperty `json:"properties,omitempty"`
 }

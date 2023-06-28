@@ -28,7 +28,7 @@ func NewUnionFromDoubleAlias(value Double) *Union {
 
 func (u *Union) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -43,7 +43,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		u.FooAlias = value
 	case "barAlias":
 		var valueUnmarshaler struct {
-			BarAlias BarAlias `json:"barAlias"`
+			BarAlias BarAlias `json:"barAlias,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -51,7 +51,7 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		u.BarAlias = valueUnmarshaler.BarAlias
 	case "doubleAlias":
 		var valueUnmarshaler struct {
-			DoubleAlias Double `json:"doubleAlias"`
+			DoubleAlias Double `json:"doubleAlias,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -67,7 +67,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "fooAlias":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*Foo
 		}{
 			Type: u.Type,
@@ -76,8 +76,8 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "barAlias":
 		var marshaler = struct {
-			Type     string   `json:"type"`
-			BarAlias BarAlias `json:"barAlias"`
+			Type     string   `json:"type,omitempty"`
+			BarAlias BarAlias `json:"barAlias,omitempty"`
 		}{
 			Type:     u.Type,
 			BarAlias: u.BarAlias,
@@ -85,8 +85,8 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "doubleAlias":
 		var marshaler = struct {
-			Type        string `json:"type"`
-			DoubleAlias Double `json:"doubleAlias"`
+			Type        string `json:"type,omitempty"`
+			DoubleAlias Double `json:"doubleAlias,omitempty"`
 		}{
 			Type:        u.Type,
 			DoubleAlias: u.DoubleAlias,

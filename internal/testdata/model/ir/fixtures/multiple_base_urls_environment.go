@@ -3,8 +3,8 @@
 package ir
 
 type MultipleBaseUrlsEnvironment struct {
-	Docs *string                                 `json:"docs"`
-	Id   EnvironmentId                           `json:"id"`
-	Name *Name                                   `json:"name"`
-	Urls map[EnvironmentBaseUrlId]EnvironmentUrl `json:"urls"`
+	Docs *string                                 `json:"docs,omitempty"`
+	Id   EnvironmentId                           `json:"id,omitempty"`
+	Name *Name                                   `json:"name,omitempty"`
+	Urls map[EnvironmentBaseUrlId]EnvironmentUrl `json:"urls,omitempty"`
 }

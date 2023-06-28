@@ -3,6 +3,6 @@
 package ir
 
 type Availability struct {
-	Status  AvailabilityStatus `json:"status"`
-	Message *string            `json:"message"`
+	Status  AvailabilityStatus `json:"status,omitempty"`
+	Message *string            `json:"message,omitempty"`
 }

@@ -33,7 +33,7 @@ func NewExampleTypeShapeFromUnion(value *ExampleSingleUnionType) *ExampleTypeSha
 
 func (e *ExampleTypeShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -74,7 +74,7 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "alias":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*ExampleAliasType
 		}{
 			Type:             e.Type,
@@ -83,7 +83,7 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "enum":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*ExampleEnumType
 		}{
 			Type:            e.Type,
@@ -92,7 +92,7 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "object":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*ExampleObjectType
 		}{
 			Type:              e.Type,
@@ -101,7 +101,7 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "union":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*ExampleSingleUnionType
 		}{
 			Type:                   e.Type,

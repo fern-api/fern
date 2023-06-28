@@ -3,9 +3,9 @@
 package foo
 
 import (
-	fixtures "github.com/fern-api/fern-go/internal/testdata/packages/fixtures"
+	fixtures "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures"
 )
 
 type Foo struct {
-	Foo *fixtures.Foo `json:"foo"`
+	Foo *fixtures.Foo `json:"foo,omitempty"`
 }

@@ -3,6 +3,6 @@
 package ir
 
 type ExampleTypeReference struct {
-	JsonExample any                        `json:"jsonExample"`
-	Shape       *ExampleTypeReferenceShape `json:"shape"`
+	JsonExample any                        `json:"jsonExample,omitempty"`
+	Shape       *ExampleTypeReferenceShape `json:"shape,omitempty"`
 }

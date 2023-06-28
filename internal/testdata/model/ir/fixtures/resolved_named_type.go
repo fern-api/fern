@@ -3,6 +3,6 @@
 package ir
 
 type ResolvedNamedType struct {
-	Name  *DeclaredTypeName `json:"name"`
-	Shape ShapeType         `json:"shape"`
+	Name  *DeclaredTypeName `json:"name,omitempty"`
+	Shape ShapeType         `json:"shape,omitempty"`
 }

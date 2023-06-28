@@ -3,6 +3,6 @@
 package ir
 
 type HttpPath struct {
-	Head  string          `json:"head"`
-	Parts []*HttpPathPart `json:"parts"`
+	Head  string          `json:"head,omitempty"`
+	Parts []*HttpPathPart `json:"parts,omitempty"`
 }

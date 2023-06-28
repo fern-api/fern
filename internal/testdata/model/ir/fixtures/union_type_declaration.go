@@ -3,9 +3,9 @@
 package ir
 
 type UnionTypeDeclaration struct {
-	Discriminant *NameAndWireValue `json:"discriminant"`
+	Discriminant *NameAndWireValue `json:"discriminant,omitempty"`
 	// A list of other types to inherit from
-	Extends        []*DeclaredTypeName `json:"extends"`
-	Types          []*SingleUnionType  `json:"types"`
-	BaseProperties []*ObjectProperty   `json:"baseProperties"`
+	Extends        []*DeclaredTypeName `json:"extends,omitempty"`
+	Types          []*SingleUnionType  `json:"types,omitempty"`
+	BaseProperties []*ObjectProperty   `json:"baseProperties,omitempty"`
 }

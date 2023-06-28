@@ -3,5 +3,5 @@
 package api
 
 type Bar struct {
-	Foo *Foo `json:"foo"`
+	Foo *Foo `json:"foo,omitempty"`
 }

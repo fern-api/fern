@@ -3,7 +3,7 @@
 package ir
 
 type SingleUnionType struct {
-	Docs              *string                    `json:"docs"`
-	DiscriminantValue *NameAndWireValue          `json:"discriminantValue"`
-	Shape             *SingleUnionTypeProperties `json:"shape"`
+	Docs              *string                    `json:"docs,omitempty"`
+	DiscriminantValue *NameAndWireValue          `json:"discriminantValue,omitempty"`
+	Shape             *SingleUnionTypeProperties `json:"shape,omitempty"`
 }

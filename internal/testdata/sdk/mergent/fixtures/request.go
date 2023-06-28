@@ -7,11 +7,11 @@ type Request struct {
 	// For localhost development, use something like ngrok to get a publicly
 	// accessible URL for your local service. See https://docs.mergent.co for
 	// more info.
-	Url string `json:"url"`
+	Url string `json:"url,omitempty"`
 	// The headers that will accompany any Task's HTTP request. For
 	// example, you can use this to set Content-Type to "application/json"
 	// or "application/octet-stream".
-	Headers *map[string]any `json:"headers"`
+	Headers *map[string]any `json:"headers,omitempty"`
 	// The HTTP request body as a string.
-	Body *string `json:"body"`
+	Body *string `json:"body,omitempty"`
 }

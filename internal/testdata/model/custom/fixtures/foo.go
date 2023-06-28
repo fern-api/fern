@@ -8,6 +8,6 @@ import (
 
 // This is a Foo.
 type Foo struct {
-	Id   uuid.UUID `json:"id"`
-	Name string    `json:"name"`
+	Id   uuid.UUID `json:"id,omitempty"`
+	Name string    `json:"name,omitempty"`
 }

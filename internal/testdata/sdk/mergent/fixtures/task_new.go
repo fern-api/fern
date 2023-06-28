@@ -3,17 +3,17 @@
 package api
 
 type TaskNew struct {
-	Id *Id `json:"id"`
+	Id *Id `json:"id,omitempty"`
 	// An optional name of the Task. This string must not contain more than 100 characters.
-	Name *string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// The name of the of the Task queue. This string must not contain more than 100 characters.
-	Queue *string `json:"queue"`
+	Queue *string `json:"queue,omitempty"`
 	// The status of this Task.
-	Status  *TaskStatus `json:"status"`
-	Request *Request    `json:"request"`
+	Status  *TaskStatus `json:"status,omitempty"`
+	Request *Request    `json:"request,omitempty"`
 	// The [ISO 8601 timestamp](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) for when the Task is scheduled to be executed. Example: "2021-10-01T15:53:05Z". When not present, the Task will be scheduled for immediate execution.
-	ScheduledFor *string `json:"scheduled_for"`
+	ScheduledFor *string `json:"scheduled_for,omitempty"`
 	// A duration string containing numbers and a unit suffix of "s" for seconds, "m" for minutes, and "h" for hours. Examples: "5s"; "1.5h"; "2h45m" When both `delay` and `scheduled_for` are present, `delay` will be added to `scheduled_for`.
-	Delay     *string    `json:"delay"`
-	CreatedAt *CreatedAt `json:"created_at"`
+	Delay     *string    `json:"delay,omitempty"`
+	CreatedAt *CreatedAt `json:"created_at,omitempty"`
 }

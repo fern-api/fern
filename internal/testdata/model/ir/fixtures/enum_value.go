@@ -3,7 +3,7 @@
 package ir
 
 type EnumValue struct {
-	Docs         *string           `json:"docs"`
-	Availability *Availability     `json:"availability"`
-	Name         *NameAndWireValue `json:"name"`
+	Docs         *string           `json:"docs,omitempty"`
+	Availability *Availability     `json:"availability,omitempty"`
+	Name         *NameAndWireValue `json:"name,omitempty"`
 }

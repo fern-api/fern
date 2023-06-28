@@ -8,7 +8,7 @@ import (
 )
 
 type Foo struct {
-	Name string    `json:"name"`
-	Bar  *bar.Bar  `json:"bar"`
-	Uuid uuid.UUID `json:"uuid"`
+	Name string    `json:"name,omitempty"`
+	Bar  *bar.Bar  `json:"bar,omitempty"`
+	Uuid uuid.UUID `json:"uuid,omitempty"`
 }

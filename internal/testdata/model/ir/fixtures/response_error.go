@@ -3,6 +3,6 @@
 package ir
 
 type ResponseError struct {
-	Docs  *string            `json:"docs"`
-	Error *DeclaredErrorName `json:"error"`
+	Docs  *string            `json:"docs,omitempty"`
+	Error *DeclaredErrorName `json:"error,omitempty"`
 }

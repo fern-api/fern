@@ -3,11 +3,11 @@
 package api
 
 import (
-	bar "github.com/fern-api/fern-go/internal/testdata/packages/fixtures/bar"
+	bar "github.com/fern-api/fern-go/internal/testdata/model/packages/fixtures/bar"
 )
 
 type Foo struct {
-	Name  string   `json:"name"`
-	Value *Value   `json:"value"`
-	Bar   *bar.Bar `json:"bar"`
+	Name  string   `json:"name,omitempty"`
+	Value *Value   `json:"value,omitempty"`
+	Bar   *bar.Bar `json:"bar,omitempty"`
 }

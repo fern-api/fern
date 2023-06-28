@@ -3,6 +3,6 @@
 package ir
 
 type ExampleKeyValuePair struct {
-	Key   *ExampleTypeReference `json:"key"`
-	Value *ExampleTypeReference `json:"value"`
+	Key   *ExampleTypeReference `json:"key,omitempty"`
+	Value *ExampleTypeReference `json:"value,omitempty"`
 }

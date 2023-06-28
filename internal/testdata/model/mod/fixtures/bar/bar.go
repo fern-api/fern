@@ -3,5 +3,5 @@
 package bar
 
 type Bar struct {
-	Name string `json:"name"`
+	Name string `json:"name,omitempty"`
 }

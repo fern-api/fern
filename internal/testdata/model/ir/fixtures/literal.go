@@ -18,7 +18,7 @@ func NewLiteralFromString(value string) *Literal {
 
 func (l *Literal) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -27,7 +27,7 @@ func (l *Literal) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"string"`
+			String string `json:"string,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -43,8 +43,8 @@ func (l Literal) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", l.Type, l)
 	case "string":
 		var marshaler = struct {
-			Type   string `json:"type"`
-			String string `json:"string"`
+			Type   string `json:"type,omitempty"`
+			String string `json:"string,omitempty"`
 		}{
 			Type:   l.Type,
 			String: l.String,

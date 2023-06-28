@@ -23,7 +23,7 @@ func NewEnvironmentsFromMultipleBaseUrls(value *MultipleBaseUrlsEnvironments) *E
 
 func (e *Environments) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -52,7 +52,7 @@ func (e Environments) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "singleBaseUrl":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*SingleBaseUrlEnvironments
 		}{
 			Type:                      e.Type,
@@ -61,7 +61,7 @@ func (e Environments) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "multipleBaseUrls":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*MultipleBaseUrlsEnvironments
 		}{
 			Type:                         e.Type,

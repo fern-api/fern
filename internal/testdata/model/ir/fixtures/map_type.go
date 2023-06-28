@@ -3,6 +3,6 @@
 package ir
 
 type MapType struct {
-	KeyType   *TypeReference `json:"keyType"`
-	ValueType *TypeReference `json:"valueType"`
+	KeyType   *TypeReference `json:"keyType,omitempty"`
+	ValueType *TypeReference `json:"valueType,omitempty"`
 }

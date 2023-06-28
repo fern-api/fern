@@ -3,5 +3,5 @@
 package api
 
 type SetNameRequest struct {
-	UserName string `json:"userName"`
+	UserName string `json:"userName,omitempty"`
 }

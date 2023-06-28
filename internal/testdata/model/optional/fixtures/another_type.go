@@ -3,6 +3,6 @@
 package api
 
 type AnotherType struct {
-	String *string `json:"string"`
-	Type   *Type   `json:"type"`
+	String *string `json:"string,omitempty"`
+	Type   *Type   `json:"type,omitempty"`
 }

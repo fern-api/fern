@@ -3,7 +3,7 @@
 package ir
 
 type MaybeStreamingResponse struct {
-	Condition    *StreamCondition   `json:"condition"`
-	NonStreaming *HttpResponse      `json:"nonStreaming"`
-	Streaming    *StreamingResponse `json:"streaming"`
+	Condition    *StreamCondition   `json:"condition,omitempty"`
+	NonStreaming *HttpResponse      `json:"nonStreaming,omitempty"`
+	Streaming    *StreamingResponse `json:"streaming,omitempty"`
 }

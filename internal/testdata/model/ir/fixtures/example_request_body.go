@@ -23,7 +23,7 @@ func NewExampleRequestBodyFromReference(value *ExampleTypeReference) *ExampleReq
 
 func (e *ExampleRequestBody) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -52,7 +52,7 @@ func (e ExampleRequestBody) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "inlinedRequestBody":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*ExampleInlinedRequestBody
 		}{
 			Type:                      e.Type,
@@ -61,7 +61,7 @@ func (e ExampleRequestBody) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "reference":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*ExampleTypeReference
 		}{
 			Type:                 e.Type,

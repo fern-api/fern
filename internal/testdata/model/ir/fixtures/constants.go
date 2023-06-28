@@ -3,5 +3,5 @@
 package ir
 
 type Constants struct {
-	ErrorInstanceIdKey *NameAndWireValue `json:"errorInstanceIdKey"`
+	ErrorInstanceIdKey *NameAndWireValue `json:"errorInstanceIdKey,omitempty"`
 }

@@ -33,7 +33,7 @@ func NewExampleTypeReferenceShapeFromNamed(value *ExampleNamedType) *ExampleType
 
 func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type"`
+		Type string `json:"type,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -42,7 +42,7 @@ func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "primitive":
 		var valueUnmarshaler struct {
-			Primitive *ExamplePrimitive `json:"primitive"`
+			Primitive *ExamplePrimitive `json:"primitive,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -50,7 +50,7 @@ func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 		e.Primitive = valueUnmarshaler.Primitive
 	case "container":
 		var valueUnmarshaler struct {
-			Container *ExampleContainer `json:"container"`
+			Container *ExampleContainer `json:"container,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -58,7 +58,7 @@ func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 		e.Container = valueUnmarshaler.Container
 	case "unknown":
 		var valueUnmarshaler struct {
-			Unknown any `json:"unknown"`
+			Unknown any `json:"unknown,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -80,8 +80,8 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "primitive":
 		var marshaler = struct {
-			Type      string            `json:"type"`
-			Primitive *ExamplePrimitive `json:"primitive"`
+			Type      string            `json:"type,omitempty"`
+			Primitive *ExamplePrimitive `json:"primitive,omitempty"`
 		}{
 			Type:      e.Type,
 			Primitive: e.Primitive,
@@ -89,8 +89,8 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "container":
 		var marshaler = struct {
-			Type      string            `json:"type"`
-			Container *ExampleContainer `json:"container"`
+			Type      string            `json:"type,omitempty"`
+			Container *ExampleContainer `json:"container,omitempty"`
 		}{
 			Type:      e.Type,
 			Container: e.Container,
@@ -98,8 +98,8 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "unknown":
 		var marshaler = struct {
-			Type    string `json:"type"`
-			Unknown any    `json:"unknown"`
+			Type    string `json:"type,omitempty"`
+			Unknown any    `json:"unknown,omitempty"`
 		}{
 			Type:    e.Type,
 			Unknown: e.Unknown,
@@ -107,7 +107,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "named":
 		var marshaler = struct {
-			Type string `json:"type"`
+			Type string `json:"type,omitempty"`
 			*ExampleNamedType
 		}{
 			Type:             e.Type,

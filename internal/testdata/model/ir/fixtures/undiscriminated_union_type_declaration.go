@@ -3,5 +3,5 @@
 package ir
 
 type UndiscriminatedUnionTypeDeclaration struct {
-	Members []*UndiscriminatedUnionMember `json:"members"`
+	Members []*UndiscriminatedUnionMember `json:"members,omitempty"`
 }

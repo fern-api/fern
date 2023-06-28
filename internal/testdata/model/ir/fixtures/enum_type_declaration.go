@@ -3,5 +3,5 @@
 package ir
 
 type EnumTypeDeclaration struct {
-	Values []*EnumValue `json:"values"`
+	Values []*EnumValue `json:"values,omitempty"`
 }

@@ -3,6 +3,6 @@
 package api
 
 type Error struct {
-	Message   *string   `json:"message"`
-	Recursive *[]*Error `json:"recursive"`
+	Message   *string   `json:"message,omitempty"`
+	Recursive *[]*Error `json:"recursive,omitempty"`
 }

@@ -29,7 +29,7 @@ func (b *Baz) MarshalJSON() ([]byte, error) {
 	type embed Baz
 	var marshaler = struct {
 		embed
-		Extended string `json:"extended"`
+		Extended string `json:"extended,omitempty"`
 	}{
 		embed:    embed(*b),
 		Extended: "extended",
