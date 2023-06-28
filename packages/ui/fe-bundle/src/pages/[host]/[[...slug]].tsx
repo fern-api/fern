@@ -40,8 +40,6 @@ export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath }: 
 }
 
 export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
-    // eslint-disable-next-line no-console
-    console.log("params", JSON.stringify(params));
     const host = params.host as string | undefined;
     const slugArray = params.slug as string[] | undefined;
 
@@ -50,13 +48,6 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     }
 
     const pathname = slugArray != null ? slugArray.join("/") : "";
-    // eslint-disable-next-line no-console
-    console.log(
-        JSON.stringify({
-            pathname,
-            url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host, pathname }),
-        })
-    );
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
         url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host, pathname }),
     });
