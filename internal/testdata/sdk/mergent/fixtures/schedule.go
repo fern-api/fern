@@ -23,5 +23,5 @@ type Schedule struct {
 	// If `true`, the Schedule will be paused immediately. If `false`, a paused Schedule will be resumed.
 	Paused    *bool      `json:"paused"`
 	Request   *Request   `json:"request"`
-	CreatedAt *CreatedAt `json:"createdAt"`
+	CreatedAt *CreatedAt `json:"created_at"`
 }
