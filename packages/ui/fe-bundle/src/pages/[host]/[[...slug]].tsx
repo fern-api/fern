@@ -40,15 +40,16 @@ export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath }: 
 }
 
 export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
-    const { host, slug: slugArray } = params;
+    const host = params.host as string | undefined;
+    const slugArray = params.slug as string[] | undefined;
 
     if (host == null) {
         throw new Error("host is not defined");
     }
 
-    const pathname = slugArray != null ? (slugArray as string[]).join("/") : "";
+    const pathname = slugArray != null ? slugArray.join("/") : "";
     const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
-        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? `${host}${pathname}`,
+        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? buildUrl({ host, pathname }),
     });
 
     if (!docs.ok) {
@@ -132,4 +133,12 @@ function getFirstNavigatableItem(section: FernRegistryDocsReadV1.DocsSection, sl
         }
     }
     return undefined;
+}
+
+function buildUrl({ host, pathname }: { host: string; pathname: string }): string {
+    const hostWithoutTrailingSlash = host.endsWith("/") ? host.slice(0, -1) : host;
+    if (pathname.length === 0) {
+        return hostWithoutTrailingSlash;
+    }
+    return `${hostWithoutTrailingSlash}/${pathname}`;
 }
