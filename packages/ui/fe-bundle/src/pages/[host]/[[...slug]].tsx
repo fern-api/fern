@@ -40,6 +40,8 @@ export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath }: 
 }
 
 export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
+    // eslint-disable-next-line no-console
+    console.log("params", JSON.stringify(params));
     const { host, slug: slugArray } = params;
 
     if (host == null) {
