@@ -11,6 +11,8 @@ import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const CACHE_TIME_IN_SECONDS = 60;
+
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
@@ -55,7 +57,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     if (!docs.ok) {
         // eslint-disable-next-line no-console
         console.error("Failed to fetch docs", docs.error);
-        return { notFound: true };
+        return {
+            notFound: true,
+            revalidate: true,
+        };
     }
 
     let slug = getSlugFromUrl({ pathname, basePath: docs.body.baseUrl.basePath });
@@ -64,14 +69,14 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         if (firstNavigationItem != null) {
             slug = firstNavigationItem.urlSlug;
         } else {
-            return { notFound: true };
+            return { notFound: true, revalidate: CACHE_TIME_IN_SECONDS };
         }
     }
 
     const urlPathResolver = new UrlPathResolver(docs.body.definition);
     const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
     if (resolvedUrlPath == null) {
-        return { notFound: true };
+        return { notFound: true, revalidate: CACHE_TIME_IN_SECONDS };
     }
 
     switch (resolvedUrlPath.type) {
@@ -83,10 +88,12 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                         permanent: false,
                         destination: firstNavigatableItem,
                     },
+                    revalidate: CACHE_TIME_IN_SECONDS,
                 };
             } else {
                 return {
                     notFound: true,
+                    revalidate: CACHE_TIME_IN_SECONDS,
                 };
             }
         }
@@ -104,6 +111,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
                     previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
                 },
+                revalidate: CACHE_TIME_IN_SECONDS,
             };
         default:
             assertNever(resolvedUrlPath);
