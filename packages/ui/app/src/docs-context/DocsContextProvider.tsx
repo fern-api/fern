@@ -112,6 +112,16 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         [justNavigated, router, scrollToPathListeners, selectedSlug]
     );
 
+    const [isSearchDialogOpen, setIsSearchDialogOpen] = useState(false);
+
+    const openSearchDialog = useCallback(() => {
+        setIsSearchDialogOpen(true);
+    }, []);
+
+    const closeSearchDialog = useCallback(() => {
+        setIsSearchDialogOpen(false);
+    }, []);
+
     const contextValue = useCallback(
         (): DocsContextValue => ({
             resolveApi,
@@ -126,6 +136,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             nextPath: undefined,
             previousPath: undefined,
             selectedSlug,
+            isSearchDialogOpen,
+            openSearchDialog,
+            closeSearchDialog,
         }),
         [
             docsDefinition,
@@ -138,6 +151,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolvedUrlPath,
             scrollToPathListeners.registerListener,
             selectedSlug,
+            isSearchDialogOpen,
+            openSearchDialog,
+            closeSearchDialog,
         ]
     );
 

@@ -17,6 +17,9 @@ export interface DocsContextValue {
     registerNavigateToPathListener: (slug: string, listener: () => void) => () => void;
 
     onScrollToPath: (slug: string) => void;
+    isSearchDialogOpen: boolean;
+    openSearchDialog: () => void;
+    closeSearchDialog: () => void;
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
