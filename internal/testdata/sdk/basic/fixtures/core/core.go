@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -64,15 +65,24 @@ func NewAPIError(statusCode int, err error) *APIError {
 // Unwrap returns the underlying error. This also makes the error compatible
 // with errors.As and errors.Is.
 func (a *APIError) Unwrap() error {
+	if a == nil {
+		return nil
+	}
 	return a.err
 }
 
 // Error returns the API error's message.
 func (a *APIError) Error() string {
-	if a.err == nil {
+	if a == nil || (a.err == nil && a.StatusCode == 0) {
 		return ""
 	}
-	return a.err.Error()
+	if a.err == nil {
+		return fmt.Sprintf("%d", a.StatusCode)
+	}
+	if a.StatusCode == 0 {
+		return a.err.Error()
+	}
+	return fmt.Sprintf("%d: %s", a.StatusCode, a.err.Error())
 }
 
 // DoRequest issues a JSON request to the given url.

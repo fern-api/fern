@@ -72,17 +72,17 @@ func (c *client) PostFoo(ctx context.Context, request *Foo) (*Foo, error) {
 		switch statusCode {
 		case 409:
 			value := new(ConflictError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError

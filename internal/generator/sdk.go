@@ -300,10 +300,10 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 				errorDeclaration := f.errors[responseError.Error.ErrorId]
 				f.P("case ", errorDeclaration.StatusCode, ":")
 				f.P("value := new(", errorDeclaration.Name.Name.PascalCase.UnsafeName, ")")
+				f.P("value.APIError = apiError")
 				f.P("if err := decoder.Decode(value); err != nil {")
 				f.P("return err")
 				f.P("}")
-				f.P("value.APIError = apiError")
 				f.P("return value")
 			}
 			// Close the switch statement.

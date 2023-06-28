@@ -75,17 +75,17 @@ func (c *client) PostFoo(ctx context.Context, request *Bar) (*Foo, error) {
 		switch statusCode {
 		case 409:
 			value := new(ConflictError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -120,10 +120,10 @@ func (c *client) GetFooFooId(ctx context.Context, fooId Id) (*Foo, error) {
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -158,24 +158,24 @@ func (c *client) PatchFooFooId(ctx context.Context, fooId Id, request *Foo) (*Fo
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 409:
 			value := new(ConflictError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -210,10 +210,10 @@ func (c *client) DeleteFooFooId(ctx context.Context, fooId Id) error {
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -247,17 +247,17 @@ func (c *client) PostFooFooIdRun(ctx context.Context, fooId Id) (*Foo, error) {
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 409:
 			value := new(ConflictError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -292,31 +292,31 @@ func (c *client) PostFooBatchCreate(ctx context.Context, request []*Bar) ([]*Foo
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 409:
 			value := new(ConflictError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 413:
 			value := new(ContentTooLargeError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -351,17 +351,17 @@ func (c *client) PostFooBatchDelete(ctx context.Context, request []Id) error {
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 413:
 			value := new(ContentTooLargeError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError

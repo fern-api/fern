@@ -50,31 +50,31 @@ func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 		switch statusCode {
 		case 404:
 			value := new(UserNotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 501:
 			value := new(NotImplementedError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 418:
 			value := new(TeapotError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 426:
 			value := new(UpgradeError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -109,10 +109,10 @@ func (u *userClient) Update(ctx context.Context, id string, request string) (str
 		switch statusCode {
 		case 426:
 			value := new(UpgradeError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError

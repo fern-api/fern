@@ -81,17 +81,17 @@ func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 		switch statusCode {
 		case 409:
 			value := new(ConflictError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -126,10 +126,10 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -164,24 +164,24 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task)
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 409:
 			value := new(ConflictError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -216,10 +216,10 @@ func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -253,17 +253,17 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, erro
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 409:
 			value := new(ConflictError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -298,31 +298,31 @@ func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) (
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 409:
 			value := new(ConflictError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 413:
 			value := new(ContentTooLargeError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -357,17 +357,17 @@ func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 413:
 			value := new(ContentTooLargeError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -420,10 +420,10 @@ func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Sche
 		switch statusCode {
 		case 422:
 			value := new(UnprocessableEntityError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -458,10 +458,10 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Sc
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -496,17 +496,17 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, re
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -541,10 +541,10 @@ func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) e
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
@@ -578,10 +578,10 @@ func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id)
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
+			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.APIError = apiError
 			return value
 		}
 		return apiError
