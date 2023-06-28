@@ -4,16 +4,12 @@ package api
 
 import (
 	json "encoding/json"
-	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 )
 
 type TeapotError struct {
-	StatusCode int
-	Body       []string
-}
-
-func (t *TeapotError) Error() string {
-	return fmt.Sprintf("418: %+v", *t)
+	*core.APIError
+	Body []string
 }
 
 func (t *TeapotError) UnmarshalJSON(data []byte) error {

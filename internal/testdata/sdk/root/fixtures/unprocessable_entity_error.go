@@ -4,16 +4,12 @@ package api
 
 import (
 	json "encoding/json"
-	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
 )
 
 type UnprocessableEntityError struct {
-	StatusCode int
-	Body       *Error
-}
-
-func (u *UnprocessableEntityError) Error() string {
-	return fmt.Sprintf("422: %+v", *u)
+	*core.APIError
+	Body *Error
 }
 
 func (u *UnprocessableEntityError) UnmarshalJSON(data []byte) error {

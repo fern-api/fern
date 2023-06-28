@@ -3,6 +3,7 @@
 package api
 
 import (
+	bytes "bytes"
 	context "context"
 	json "encoding/json"
 	errors "errors"
@@ -59,28 +60,29 @@ func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
 
 func (c *client) PostFoo(ctx context.Context, request *Foo) (*Foo, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 409:
 			value := new(ConflictError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := c.baseURL + "/" + "foo"

@@ -4,16 +4,12 @@ package api
 
 import (
 	json "encoding/json"
-	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
 )
 
 type ContentTooLargeError struct {
-	StatusCode int
-	Body       *Error
-}
-
-func (c *ContentTooLargeError) Error() string {
-	return fmt.Sprintf("413: %+v", *c)
+	*core.APIError
+	Body *Error
 }
 
 func (c *ContentTooLargeError) UnmarshalJSON(data []byte) error {

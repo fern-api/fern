@@ -45,6 +45,36 @@ type HTTPClient interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
+// APIError is a lightweight wrapper around the standard error
+// interface that preserves the status code from the RPC, if any.
+type APIError struct {
+	err error
+
+	StatusCode int `json:"-"`
+}
+
+// NewAPIError constructs a new API error.
+func NewAPIError(statusCode int, err error) *APIError {
+	return &APIError{
+		err:        err,
+		StatusCode: statusCode,
+	}
+}
+
+// Unwrap returns the underlying error. This also makes the error compatible
+// with errors.As and errors.Is.
+func (a *APIError) Unwrap() error {
+	return a.err
+}
+
+// Error returns the API error's message.
+func (a *APIError) Error() string {
+	if a.err == nil {
+		return ""
+	}
+	return a.err.Error()
+}
+
 // DoRequest issues a JSON request to the given url.
 func DoRequest(
 	ctx context.Context,
@@ -101,7 +131,7 @@ func DoRequest(
 		if err != nil {
 			return err
 		}
-		return errors.New(string(bytes))
+		return NewAPIError(resp.StatusCode, errors.New(string(bytes)))
 	}
 
 	// Mutate the response parameter in-place.

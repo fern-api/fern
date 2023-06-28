@@ -4,16 +4,12 @@ package api
 
 import (
 	json "encoding/json"
-	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/root/fixtures/core"
 )
 
 type NotFoundError struct {
-	StatusCode int
-	Body       *Error
-}
-
-func (n *NotFoundError) Error() string {
-	return fmt.Sprintf("404: %+v", *n)
+	*core.APIError
+	Body *Error
 }
 
 func (n *NotFoundError) UnmarshalJSON(data []byte) error {

@@ -3,6 +3,7 @@
 package api
 
 import (
+	bytes "bytes"
 	context "context"
 	json "encoding/json"
 	errors "errors"
@@ -68,28 +69,29 @@ func (c *client) GetTasks(ctx context.Context) ([]*Task, error) {
 
 func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 409:
 			value := new(ConflictError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := c.baseURL + "/" + "tasks"
@@ -111,21 +113,22 @@ func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 
 func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
@@ -147,35 +150,36 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 
 func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task) (*Task, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 409:
 			value := new(ConflictError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
@@ -197,21 +201,22 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task)
 
 func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
@@ -232,28 +237,29 @@ func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 
 func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 409:
 			value := new(ConflictError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v/run", taskId)
@@ -275,42 +281,43 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, erro
 
 func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) ([]*Task, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 409:
 			value := new(ConflictError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 413:
 			value := new(ContentTooLargeError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := c.baseURL + "/" + "tasks/batch-create"
@@ -332,28 +339,29 @@ func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) (
 
 func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 413:
 			value := new(ContentTooLargeError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := c.baseURL + "/" + "tasks/batch-delete"
@@ -392,21 +400,22 @@ func (c *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
 
 func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Schedule, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 422:
 			value := new(UnprocessableEntityError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := c.baseURL + "/" + "schedules"
@@ -428,21 +437,22 @@ func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Sche
 
 func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Schedule, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
@@ -464,28 +474,29 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Sc
 
 func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, request *Schedule) (*Schedule, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 422:
 			value := new(UnprocessableEntityError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
@@ -507,21 +518,22 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, re
 
 func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) error {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
@@ -542,21 +554,22 @@ func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) e
 
 func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id) ([]*Task, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(NotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v/tasks", scheduleId)

@@ -3,6 +3,7 @@
 package api
 
 import (
+	bytes "bytes"
 	context "context"
 	json "encoding/json"
 	errors "errors"
@@ -38,42 +39,43 @@ type userClient struct {
 
 func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 404:
 			value := new(UserNotFoundError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 501:
 			value := new(NotImplementedError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 418:
 			value := new(TeapotError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		case 426:
 			value := new(UpgradeError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)
@@ -95,21 +97,22 @@ func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 
 func (u *userClient) Update(ctx context.Context, id string, request string) (string, error) {
 	errorDecoder := func(statusCode int, body io.Reader) error {
-		decoder := json.NewDecoder(body)
+		raw, err := io.ReadAll(body)
+		if err != nil {
+			return err
+		}
+		apiError := core.NewAPIError(statusCode, errors.New(string(raw)))
+		decoder := json.NewDecoder(bytes.NewReader(raw))
 		switch statusCode {
 		case 426:
 			value := new(UpgradeError)
 			if err := decoder.Decode(value); err != nil {
 				return err
 			}
-			value.StatusCode = statusCode
+			value.APIError = apiError
 			return value
 		}
-		bytes, err := io.ReadAll(body)
-		if err != nil {
-			return err
-		}
-		return errors.New(string(bytes))
+		return apiError
 	}
 
 	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)

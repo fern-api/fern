@@ -4,16 +4,12 @@ package api
 
 import (
 	json "encoding/json"
-	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 )
 
 type UserNotFoundError struct {
-	StatusCode int
-	Body       *UserNotFoundErrorBody
-}
-
-func (u *UserNotFoundError) Error() string {
-	return fmt.Sprintf("404: %+v", *u)
+	*core.APIError
+	Body *UserNotFoundErrorBody
 }
 
 func (u *UserNotFoundError) UnmarshalJSON(data []byte) error {

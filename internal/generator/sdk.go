@@ -228,7 +228,12 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 		f.P("func (", receiver, " *", clientImplName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
 		if len(endpoint.Errors) > 0 {
 			f.P("errorDecoder := func(statusCode int, body io.Reader) error {")
-			f.P("decoder := json.NewDecoder(body)")
+			f.P("raw, err := io.ReadAll(body)")
+			f.P("if err != nil {")
+			f.P("return err")
+			f.P("}")
+			f.P("apiError := core.NewAPIError(statusCode, errors.New(string(raw)))")
+			f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
 			f.P("switch statusCode {")
 			for _, responseError := range endpoint.Errors {
 				errorDeclaration := f.errors[responseError.Error.ErrorId]
@@ -237,16 +242,12 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 				f.P("if err := decoder.Decode(value); err != nil {")
 				f.P("return err")
 				f.P("}")
-				f.P("value.StatusCode = statusCode")
+				f.P("value.APIError = apiError")
 				f.P("return value")
 			}
 			// Close the switch statement.
 			f.P("}")
-			f.P("bytes, err := io.ReadAll(body)")
-			f.P("if err != nil {")
-			f.P("return err")
-			f.P("}")
-			f.P("return errors.New(string(bytes))")
+			f.P("return apiError")
 			f.P("}")
 			f.P()
 		}
@@ -448,7 +449,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 
 	// Generate the error type declaration.
 	f.P("type ", typeName, " struct {")
-	f.P("StatusCode int")
+	f.P("*core.APIError")
 	if errorDeclaration.Type == nil {
 		// This error doesn't have a body, so we only need to include the status code.
 		f.P("}")
@@ -456,12 +457,6 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 		return nil
 	}
 	f.P("Body ", value)
-	f.P("}")
-	f.P()
-
-	// Implement the error interface.
-	f.P("func (", receiver, "*", typeName, ") Error() string {")
-	f.P(`return fmt.Sprintf("`, errorDeclaration.StatusCode, `: %+v", *`, receiver, ")")
 	f.P("}")
 	f.P()
 

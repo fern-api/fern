@@ -4,16 +4,12 @@ package api
 
 import (
 	json "encoding/json"
-	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
 )
 
 type ConflictError struct {
-	StatusCode int
-	Body       *Error
-}
-
-func (c *ConflictError) Error() string {
-	return fmt.Sprintf("409: %+v", *c)
+	*core.APIError
+	Body *Error
 }
 
 func (c *ConflictError) UnmarshalJSON(data []byte) error {

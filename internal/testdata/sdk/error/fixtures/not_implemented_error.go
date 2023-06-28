@@ -4,16 +4,12 @@ package api
 
 import (
 	json "encoding/json"
-	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 )
 
 type NotImplementedError struct {
-	StatusCode int
-	Body       string
-}
-
-func (n *NotImplementedError) Error() string {
-	return fmt.Sprintf("501: %+v", *n)
+	*core.APIError
+	Body string
 }
 
 func (n *NotImplementedError) UnmarshalJSON(data []byte) error {

@@ -5,15 +5,12 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures/core"
 )
 
 type UpgradeError struct {
-	StatusCode int
-	Body       string
-}
-
-func (u *UpgradeError) Error() string {
-	return fmt.Sprintf("426: %+v", *u)
+	*core.APIError
+	Body string
 }
 
 func (u *UpgradeError) UnmarshalJSON(data []byte) error {

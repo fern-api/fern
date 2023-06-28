@@ -41,6 +41,7 @@ func newFileWriter(
 	// These imports are removed from the generated output if
 	// they aren't used.
 	imports := make(imports)
+	imports.Add("bytes")
 	imports.Add("context")
 	imports.Add("encoding/base64")
 	imports.Add("encoding/json")
