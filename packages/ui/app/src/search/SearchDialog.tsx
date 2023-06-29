@@ -1,7 +1,7 @@
 import { Icon } from "@blueprintjs/core";
 import { Dialog } from "@headlessui/react";
 import algolia from "algoliasearch/lite";
-import { Hits, InstantSearch, SearchBox } from "react-instantsearch-hooks-web";
+import { Configure, Hits, InstantSearch, Pagination, SearchBox } from "react-instantsearch-hooks-web";
 import { SearchHit } from "./SearchHit";
 
 if (
@@ -27,8 +27,8 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
     const { isOpen, onClose } = providedProps;
 
     return (
-        <InstantSearch searchClient={searchClient} indexName={searchIndexName}>
-            <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" open={isOpen} onClose={onClose}>
+        <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" open={isOpen} onClose={onClose}>
+            <InstantSearch searchClient={searchClient} indexName={searchIndexName}>
                 <div className="flex min-h-screen items-start justify-center p-4">
                     <Dialog.Overlay className="fixed inset-0 bg-gray-800/75" />
                     <div className="border-border mx-3 mb-8 mt-10 flex w-full max-w-2xl flex-col overflow-hidden rounded-md border bg-gray-900 text-left align-middle shadow-2xl backdrop-blur-xl">
@@ -52,7 +52,14 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                         <Hits hitComponent={SearchHit} className="p-2" />
                     </div>
                 </div>
-            </Dialog>
-        </InstantSearch>
+
+                {/* Algolia has incorrectly typed the props for this component so we need to ignore the TS error for now. */}
+                {/* eslint-disable-next-line */}
+                {/* @ts-ignore */}
+                <Configure hitsPerPage={6} />
+
+                <Pagination />
+            </InstantSearch>
+        </Dialog>
     );
 };
