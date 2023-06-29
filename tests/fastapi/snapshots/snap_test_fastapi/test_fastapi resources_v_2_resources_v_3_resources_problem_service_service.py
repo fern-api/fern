@@ -98,7 +98,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
         wrapper.__globals__.update(cls.get_lightweight_problems.__globals__)
 
         router.get(
-            path="/problems-v2/lightweight-problem-info",
+            path="/api/trace/problems-v2/lightweight-problem-info",
             response_model=typing.List[LightweightProblemInfoV2],
             description=AbstractV2V3ProblemService.get_lightweight_problems.__doc__,
             **get_route_args(cls.get_lightweight_problems, default_tag="v_2.v_3.problem"),
@@ -134,7 +134,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
         wrapper.__globals__.update(cls.get_problems.__globals__)
 
         router.get(
-            path="/problems-v2/problem-info",
+            path="/api/trace/problems-v2/problem-info",
             response_model=typing.List[ProblemInfoV2],
             description=AbstractV2V3ProblemService.get_problems.__doc__,
             **get_route_args(cls.get_problems, default_tag="v_2.v_3.problem"),
@@ -172,7 +172,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
         wrapper.__globals__.update(cls.get_latest_problem.__globals__)
 
         router.get(
-            path="/problems-v2/problem-info/{problem_id}",
+            path="/api/trace/problems-v2/problem-info/{problem_id}",
             response_model=ProblemInfoV2,
             description=AbstractV2V3ProblemService.get_latest_problem.__doc__,
             **get_route_args(cls.get_latest_problem, default_tag="v_2.v_3.problem"),
@@ -212,7 +212,7 @@ class AbstractV2V3ProblemService(AbstractFernService):
         wrapper.__globals__.update(cls.get_problem_version.__globals__)
 
         router.get(
-            path="/problems-v2/problem-info/{problem_id}/version/{problem_version}",
+            path="/api/trace/problems-v2/problem-info/{problem_id}/version/{problem_version}",
             response_model=ProblemInfoV2,
             description=AbstractV2V3ProblemService.get_problem_version.__doc__,
             **get_route_args(cls.get_problem_version, default_tag="v_2.v_3.problem"),

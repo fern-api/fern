@@ -70,7 +70,7 @@ class AbstractMigrationService(AbstractFernService):
         wrapper.__globals__.update(cls.get_attempted_migrations.__globals__)
 
         router.get(
-            path="/migration-info/all",
+            path="/api/trace/migration-info/all",
             response_model=typing.List[Migration],
             description=AbstractMigrationService.get_attempted_migrations.__doc__,
             **get_route_args(cls.get_attempted_migrations, default_tag="migration"),

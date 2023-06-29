@@ -1,5 +1,6 @@
 name: my-api
 auth: bearer
+base-path: /api/trace
 headers:
   X-Random-Header: optional<string>
 error-discrimination:

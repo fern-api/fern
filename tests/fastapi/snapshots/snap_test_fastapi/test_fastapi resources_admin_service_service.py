@@ -149,7 +149,7 @@ class AbstractAdminService(AbstractFernService):
         wrapper.__globals__.update(cls.update_test_submission_status.__globals__)
 
         router.post(
-            path="/admin/store-test-submission-status/{submission_id}",
+            path="/api/trace/admin/store-test-submission-status/{submission_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.update_test_submission_status.__doc__,
@@ -190,7 +190,7 @@ class AbstractAdminService(AbstractFernService):
         wrapper.__globals__.update(cls.send_test_submission_update.__globals__)
 
         router.post(
-            path="/admin/store-test-submission-status-v2/{submission_id}",
+            path="/api/trace/admin/store-test-submission-status-v2/{submission_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.send_test_submission_update.__doc__,
@@ -235,7 +235,7 @@ class AbstractAdminService(AbstractFernService):
         wrapper.__globals__.update(cls.update_workspace_submission_status.__globals__)
 
         router.post(
-            path="/admin/store-workspace-submission-status/{submission_id}",
+            path="/api/trace/admin/store-workspace-submission-status/{submission_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.update_workspace_submission_status.__doc__,
@@ -278,7 +278,7 @@ class AbstractAdminService(AbstractFernService):
         wrapper.__globals__.update(cls.send_workspace_submission_update.__globals__)
 
         router.post(
-            path="/admin/store-workspace-submission-status-v2/{submission_id}",
+            path="/api/trace/admin/store-workspace-submission-status-v2/{submission_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.send_workspace_submission_update.__doc__,
@@ -321,7 +321,7 @@ class AbstractAdminService(AbstractFernService):
         wrapper.__globals__.update(cls.store_traced_test_case.__globals__)
 
         router.post(
-            path="/admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
+            path="/api/trace/admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_test_case.__doc__,
@@ -364,7 +364,7 @@ class AbstractAdminService(AbstractFernService):
         wrapper.__globals__.update(cls.store_traced_test_case_v_2.__globals__)
 
         router.post(
-            path="/admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
+            path="/api/trace/admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_test_case_v_2.__doc__,
@@ -405,7 +405,7 @@ class AbstractAdminService(AbstractFernService):
         wrapper.__globals__.update(cls.store_traced_workspace.__globals__)
 
         router.post(
-            path="/admin/store-workspace-trace/submission/{submission_id}",
+            path="/api/trace/admin/store-workspace-trace/submission/{submission_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_workspace.__doc__,
@@ -446,7 +446,7 @@ class AbstractAdminService(AbstractFernService):
         wrapper.__globals__.update(cls.store_traced_workspace_v_2.__globals__)
 
         router.post(
-            path="/admin/store-workspace-trace-v2/submission/{submission_id}",
+            path="/api/trace/admin/store-workspace-trace-v2/submission/{submission_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractAdminService.store_traced_workspace_v_2.__doc__,

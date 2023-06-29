@@ -101,7 +101,7 @@ class AbstractSubmissionService(AbstractFernService):
         wrapper.__globals__.update(cls.create_execution_session.__globals__)
 
         router.post(
-            path="/sessions/create-session/{language}",
+            path="/api/trace/sessions/create-session/{language}",
             response_model=ExecutionSessionResponse,
             description=AbstractSubmissionService.create_execution_session.__doc__,
             **get_route_args(cls.create_execution_session, default_tag="submission"),
@@ -139,7 +139,7 @@ class AbstractSubmissionService(AbstractFernService):
         wrapper.__globals__.update(cls.get_execution_session.__globals__)
 
         router.get(
-            path="/sessions/{session_id}",
+            path="/api/trace/sessions/{session_id}",
             response_model=typing.Optional[ExecutionSessionResponse],
             description=AbstractSubmissionService.get_execution_session.__doc__,
             **get_route_args(cls.get_execution_session, default_tag="submission"),
@@ -177,7 +177,7 @@ class AbstractSubmissionService(AbstractFernService):
         wrapper.__globals__.update(cls.stop_execution_session.__globals__)
 
         router.delete(
-            path="/sessions/stop/{session_id}",
+            path="/api/trace/sessions/stop/{session_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractSubmissionService.stop_execution_session.__doc__,
@@ -214,7 +214,7 @@ class AbstractSubmissionService(AbstractFernService):
         wrapper.__globals__.update(cls.get_execution_sessions_state.__globals__)
 
         router.get(
-            path="/sessions/execution-sessions-state",
+            path="/api/trace/sessions/execution-sessions-state",
             response_model=GetExecutionSessionStateResponse,
             description=AbstractSubmissionService.get_execution_sessions_state.__doc__,
             **get_route_args(cls.get_execution_sessions_state, default_tag="submission"),

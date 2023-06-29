@@ -143,7 +143,7 @@ class AbstractPlaylistService(AbstractFernService):
         wrapper.__globals__.update(cls.create_playlist.__globals__)
 
         router.post(
-            path="/v2/playlist/{service_param}/create",
+            path="/api/trace/v2/playlist/{service_param}/create",
             response_model=Playlist,
             description=AbstractPlaylistService.create_playlist.__doc__,
             **get_route_args(cls.create_playlist, default_tag="playlist"),
@@ -205,7 +205,7 @@ class AbstractPlaylistService(AbstractFernService):
         wrapper.__globals__.update(cls.get_playlists.__globals__)
 
         router.get(
-            path="/v2/playlist/{service_param}/all",
+            path="/api/trace/v2/playlist/{service_param}/all",
             response_model=typing.List[Playlist],
             description=AbstractPlaylistService.get_playlists.__doc__,
             **get_route_args(cls.get_playlists, default_tag="playlist"),
@@ -247,7 +247,7 @@ class AbstractPlaylistService(AbstractFernService):
         wrapper.__globals__.update(cls.get_playlist.__globals__)
 
         router.get(
-            path="/v2/playlist/{service_param}/{playlist_id}",
+            path="/api/trace/v2/playlist/{service_param}/{playlist_id}",
             response_model=Playlist,
             description=AbstractPlaylistService.get_playlist.__doc__,
             **get_route_args(cls.get_playlist, default_tag="playlist"),
@@ -293,7 +293,7 @@ class AbstractPlaylistService(AbstractFernService):
         wrapper.__globals__.update(cls.update_playlist.__globals__)
 
         router.put(
-            path="/v2/playlist/{service_param}/{playlist_id}",
+            path="/api/trace/v2/playlist/{service_param}/{playlist_id}",
             response_model=typing.Optional[Playlist],
             description=AbstractPlaylistService.update_playlist.__doc__,
             **get_route_args(cls.update_playlist, default_tag="playlist"),
@@ -335,7 +335,7 @@ class AbstractPlaylistService(AbstractFernService):
         wrapper.__globals__.update(cls.delete_playlist.__globals__)
 
         router.delete(
-            path="/v2/playlist/{service_param}/{playlist_id}",
+            path="/api/trace/v2/playlist/{service_param}/{playlist_id}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractPlaylistService.delete_playlist.__doc__,

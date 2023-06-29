@@ -78,6 +78,17 @@ class EndpointGenerator:
         return self._get_response_body_type(response)
 
     def _get_endpoint_path(self) -> str:
+        api_base_path = self._context.ir.base_path
+        api_prefix_part = (
+            api_base_path.head
+            + "".join(
+                self._get_path_parameter_part_as_str(self._context.ir.path_parameters[i], part.tail)
+                for i, part in enumerate(api_base_path.parts)
+            )
+            if api_base_path is not None
+            else ""
+        )
+
         base_path = self._service.base_path
         service_part = (
             base_path.head
@@ -92,12 +103,19 @@ class EndpointGenerator:
             self._get_path_parameter_part_as_str(self._endpoint.path_parameters[i], part.tail)
             for i, part in enumerate(self._endpoint.path.parts)
         )
+
+        if api_prefix_part.endswith("/"):
+            api_prefix_part = api_prefix_part[:-1]
+
+        if service_part.startswith("/"):
+            service_part = service_part[1:]
         if service_part.endswith("/"):
             service_part = service_part[:-1]
+
         if endpoint_part.startswith("/"):
             endpoint_part = endpoint_part[1:]
 
-        endpoint_path = f"{service_part}/{endpoint_part}"
+        endpoint_path = f"{api_prefix_part}/{service_part}/{endpoint_part}"
         if endpoint_path.endswith("/"):
             endpoint_path = endpoint_path[:-1]
         return endpoint_path
