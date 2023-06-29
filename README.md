@@ -148,7 +148,7 @@ It is possible to generate the code on your own machine by using the `--local` f
 
 ## Adding Generators
 
-You can add [﻿generators](https://app.eraser.io/workspace/compiler/generators) using the `fern add`. You can have multiple generators for a single project, e.g. a single `fern generate` call could generate SDKs in Python, TypeScript and Java all in one go.
+You can add ﻿generators using the `fern add`. You can have multiple generators for a single project, e.g. a single `fern generate` call could generate SDKs in Python, TypeScript and Java all in one go.
 
 For instance, if you'd like to add a TypeScript generator to your project, simply run:
 
@@ -182,7 +182,7 @@ That's all there's to it.
 
 ## Next Steps
 
-Define _your_ API in Fern. Check out our [﻿docs](https://www.buildwithfern.com/docs/definition) to learn more.
+Define _your_ API in Fern. Check out our [﻿Definition Documentation](https://www.buildwithfern.com/docs/definition) to learn more.
 
 # Examples
 
@@ -262,7 +262,7 @@ You can view our documentation [﻿here](https://www.buildwithfern.com/docs).
 
 # Contributing
 
-Check out [﻿CONTRIBUTING.md](https://app.eraser.io/workspace/CONTRIBUTING.md)!
+Check out [﻿CONTRIBUTING.md](/CONTRIBUTING.md)!
 
 # Attribution
 
