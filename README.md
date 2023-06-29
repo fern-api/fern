@@ -18,7 +18,7 @@ Backed by Y Combinator
 
 # Fern
 
-**Fern** is an **open source toolset** for **defining, building and generating APIs and SDKs**. Fern can be used in your existing projects through OpenAPI, and integrate effortlessly into your existing workflows, or it can serve as the basis of your API development, by describing your endpoints in a Fern specification, and having it generate your API backend code for you.
+**Fern** is an **open source toolset** for **defining, building and generating APIs and SDKs**. Fern can be used in your existing projects through OpenAPI, and integrate effortlessly into your existing workflows. It can also serve as the basis of your API development, by describing your endpoints in a Fern specification, and having Fern generate your API backend code for you.
 
 This repository contains the Fern **compiler**. The compiler transforms an API definition, either in Fern or OpenAPI format into various code artifacts, such as Client Libraries, SDKs, or even fully-fledged **Express** or **FastAPI** backends.
 
