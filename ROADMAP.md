@@ -34,16 +34,19 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Generate endpoint call method
 - [x] Support path parameters (including service path parameters)
 - [x] Generate client (w/ root endpoints and nested service endpoints)
-- [x] Rename `Service` to `Client` for symmetry with other SDKs.
-- [x] Consolidate endpoint implementation in the un-exported client.
-- [x] Add an API error type so that all RPC errors preserve the status code.
+- [x] Rename `Service` to `Client` for symmetry with other SDKs
+- [x] Consolidate endpoint implementation in the un-exported client
+- [x] Add an API error type so that all RPC errors preserve the status code
 - [x] Serialize query parameters and headers
-- [ ] If a `Client` type exists, prefix the filename with a `_` to avoid conflicts.
+- [x] Improve structured error formatting, where possible.
+- [ ] If a `Client` type exists, prefix the filename with a `_` to avoid conflicts
+- [ ] Improve client constructor (i.e. reduce required parameters w/ options for environment and http client)
+- [ ] Introduce a better solution for using optional parameters (i.e. `stringPtr` helpers)
+- [ ] Edit the file header to match Fern's other SDKs
 - [ ] Generate documentation for all relevant types
 - [ ] Generate examples
 - [ ] Support optional client/endpoint variables (e.g. namespace)
 - [ ] Support environment settings (e.g. a `Production` URL)
-- [ ] Improve structured error formatting, where possible.
-- [ ] Add coordinator logging for better user-facing console progress updates.
-- [ ] Revisit default generator output (i.e. whether to generate a `go.mod` by default or not).
-- [ ] Better support for licenses (i.e. move implementation to the layer above the generator).
+- [ ] Add coordinator logging for better user-facing console progress updates
+- [ ] Revisit default generator output (i.e. whether to generate a `go.mod` by default or not)
+- [ ] Better support for licenses (i.e. move implementation to the layer above the generator)
