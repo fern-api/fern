@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useDocsContext } from "../docs-context/useDocsContext";
+import { useKeyboardCommand } from "../hooks/useKeyboardCommand";
 import { MobileSidebar } from "../mobile-sidebar/MobileSidebar";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
@@ -11,8 +12,9 @@ import { useCustomTheme } from "./useCustomTheme";
 
 export const Docs: React.FC = () => {
     const { docsDefinition } = useDocsContext();
-    const { isSearchDialogOpen, closeSearchDialog } = useSearchContext();
+    const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = useSearchContext();
     useCustomTheme(docsDefinition);
+    useKeyboardCommand("K", openSearchDialog);
 
     return (
         <div
