@@ -1,3 +1,4 @@
+import { Icon } from "@blueprintjs/core";
 import { Highlight } from "react-instantsearch-hooks-web";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -22,25 +23,29 @@ export const SearchHit: React.FC<SearchHit.Props> = (providedProps) => {
 
     return (
         <button
-            className="hover:bg-accentPrimary group flex w-full flex-col space-y-1 rounded-md p-2"
+            className="hover:bg-accentPrimary group flex w-full items-center space-x-3 space-y-1 rounded-md p-2"
             onClick={() => {
                 closeSearchDialog();
                 navigateToPath(hit.path);
             }}
         >
-            <div className="flex flex-col items-start">
-                <Highlight
-                    className="text-text-default text-start group-hover:text-white"
-                    attribute="title"
-                    hit={hit}
-                />
-            </div>
-            <div className="flex flex-col items-start">
-                <Highlight
-                    className="text-text-default text-start group-hover:text-white"
-                    attribute="subtitle"
-                    hit={hit}
-                />
+            <Icon className="text-text-default group-hover:text-white" size={18} icon="document" />
+
+            <div className="flex flex-col">
+                <div className="flex flex-col items-start">
+                    <Highlight
+                        className="text-text-default text-start group-hover:text-white"
+                        attribute="title"
+                        hit={hit}
+                    />
+                </div>
+                <div className="flex flex-col items-start">
+                    <Highlight
+                        className="text-text-default line-clamp-2 text-start group-hover:text-white"
+                        attribute="subtitle"
+                        hit={hit}
+                    />
+                </div>
             </div>
         </button>
     );
