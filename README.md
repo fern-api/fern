@@ -1,3 +1,21 @@
+<a href="https://www.buildwithfern.com/">
+  <img src="header.png" alt="header" />
+</a>
+
+<div align="center">
+  <a href="https://www.buildwithfern.com/docs/intro" alt="documentation">Documentation</a>
+  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+  <a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Join the Discord</a>
+</div>
+
+<br />
+
+<div align="center">
+Backed by Y Combinator
+</div>
+
+---
+
 # Fern
 
 **Fern** is an **open source toolset** for **defining, building and generating APIs and SDKs**. Fern can be used in your existing projects through OpenAPI, and integrate effortlessly into your existing workflows, or it can serve as the basis of your API development, by describing your endpoints in a Fern specification, and having it generate your API backend code for you.
