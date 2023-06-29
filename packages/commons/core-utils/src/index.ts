@@ -11,3 +11,4 @@ export { entries, type Entries } from "./objects/entries";
 export { isPlainObject } from "./objects/isPlainObject";
 export { keys } from "./objects/keys";
 export { values, type Values } from "./objects/values";
+export type { Digit, LowercaseLetter, UppercaseLetter } from "./types";
