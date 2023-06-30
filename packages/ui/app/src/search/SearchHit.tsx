@@ -24,7 +24,15 @@ export const SearchHit: React.FC<SearchHit.Props> = (providedProps) => {
                 navigateToPath(hit.path);
             }}
         >
-            <Icon className="text-text-default group-hover:text-white" size={18} icon="document" />
+            <Icon
+                className="text-text-default group-hover:text-white"
+                size={18}
+                icon={visitDiscriminatedUnion(hit, "type")._visit({
+                    endpoint: () => "code",
+                    page: () => "document",
+                    _other: () => "document",
+                })}
+            />
 
             <div className="flex w-full flex-col space-y-1.5">
                 <div className="flex justify-between">
@@ -35,6 +43,7 @@ export const SearchHit: React.FC<SearchHit.Props> = (providedProps) => {
                     />
                     <div className="text-text-default text-xs uppercase tracking-widest group-hover:text-white">
                         {visitDiscriminatedUnion(hit, "type")._visit({
+                            page: () => "Page",
                             endpoint: () => "Endpoint",
                             _other: () => null,
                         })}
