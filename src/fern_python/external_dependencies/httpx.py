@@ -24,6 +24,11 @@ class HttpX:
         import_=AST.ReferenceImport(module=HTTPX_MODULE),
     )
 
+    BASIC_AUTH = AST.ClassReference(
+        qualified_name_excluding_import=("BasicAuth",),
+        import_=AST.ReferenceImport(module=HTTPX_MODULE),
+    )
+
     @staticmethod
     def make_request(
         *,

@@ -8,26 +8,28 @@ import httpx
 import pydantic
 
 from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.remove_none_from_headers import remove_none_from_headers
 from .errors.invalid_movie_error import InvalidMovieError
 from .errors.movie_already_exists_error import MovieAlreadyExistsError
 from .errors.movie_not_found_error import MovieNotFoundError
 from .types.movie import Movie
 from .types.movie_id import MovieId
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class MovieClient:
-    def __init__(self, *, environment: str, header_auth: str, client: httpx.Client):
+    def __init__(self, *, environment: str, client_wrapper: SyncClientWrapper):
         self._environment = environment
-        self.header_auth = header_auth
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     def get_movie(self, movie_id: MovieId) -> Movie:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
-            headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
+            headers=self._client_wrapper.get_headers(),
             timeout=5,
         )
         if 200 <= _response.status_code < 300:
@@ -44,7 +46,7 @@ class MovieClient:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
-            headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
+            headers=self._client_wrapper.get_headers(),
             timeout=5,
         )
         if 200 <= _response.status_code < 300:
@@ -60,7 +62,7 @@ class MovieClient:
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
+            headers=self._client_wrapper.get_headers(),
             timeout=5,
         )
         if 200 <= _response.status_code < 300:
@@ -79,7 +81,7 @@ class MovieClient:
         _response = httpx.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
-            headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
+            headers=self._client_wrapper.get_headers(),
             timeout=5,
         )
         if 200 <= _response.status_code < 300:
@@ -94,17 +96,16 @@ class MovieClient:
 
 
 class AsyncMovieClient:
-    def __init__(self, *, environment: str, header_auth: str, client: httpx.AsyncClient):
+    def __init__(self, *, environment: str, client_wrapper: AsyncClientWrapper):
         self._environment = environment
-        self.header_auth = header_auth
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     async def get_movie(self, movie_id: MovieId) -> Movie:
         async with httpx.AsyncClient() as _client:
             _response = await _client.request(
                 "GET",
                 urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
-                headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
+                headers=self._client_wrapper.get_headers(),
                 timeout=5,
             )
         if 200 <= _response.status_code < 300:
@@ -122,7 +123,7 @@ class AsyncMovieClient:
             _response = await _client.request(
                 "GET",
                 urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
-                headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
+                headers=self._client_wrapper.get_headers(),
                 timeout=5,
             )
         if 200 <= _response.status_code < 300:
@@ -139,7 +140,7 @@ class AsyncMovieClient:
                 "POST",
                 urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
+                headers=self._client_wrapper.get_headers(),
                 timeout=5,
             )
         if 200 <= _response.status_code < 300:
@@ -159,7 +160,7 @@ class AsyncMovieClient:
             _response = await _client.request(
                 "DELETE",
                 urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
-                headers=remove_none_from_headers({"X-Header-Auth": f"MyPrefix {self.header_auth}"}),
+                headers=self._client_wrapper.get_headers(),
                 timeout=5,
             )
         if 200 <= _response.status_code < 300:

@@ -5,6 +5,7 @@ from fern.generator_exec.resources.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
+from fern_python.codegen.filepath import Filepath
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import (
     PydanticModelCustomConfig,
@@ -14,9 +15,13 @@ from fern_python.generators.sdk.context.sdk_generator_context import SdkGenerato
 from fern_python.generators.sdk.context.sdk_generator_context_impl import (
     SdkGeneratorContextImpl,
 )
+from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
+    ClientWrapperGenerator,
+)
 from fern_python.source_file_generator import SourceFileGenerator
 
 from .client_generator.client_generator import ClientGenerator
+from .client_generator.root_client_generator import RootClientGenerator
 from .custom_config import SDKCustomConfig
 from .environment_generators import (
     MultipleBaseUrlsEnvironmentGenerator,
@@ -93,6 +98,12 @@ class SdkGenerator(AbstractGenerator):
                 project=project,
             )
 
+        self._generate_client_wrapper(
+            context=context,
+            generator_exec_wrapper=generator_exec_wrapper,
+            project=project,
+        )
+
         self._generate_root_client(
             context=context,
             ir=ir,
@@ -143,6 +154,23 @@ class SdkGenerator(AbstractGenerator):
                 ).generate(source_file=source_file),
             )
 
+    def _generate_client_wrapper(
+        self,
+        context: SdkGeneratorContext,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        project: Project,
+    ) -> None:
+        filepath = Filepath(
+            directories=context.core_utilities.filepath,
+            file=Filepath.FilepathPart(module_name="client_wrapper"),
+        )
+        with SourceFileGenerator.generate(
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
+        ) as source_file:
+            ClientWrapperGenerator(context=context).generate(source_file=source_file)
+
     def _generate_root_client(
         self,
         context: SdkGeneratorContext,
@@ -155,12 +183,11 @@ class SdkGenerator(AbstractGenerator):
             filepath=context.get_filepath_for_root_client(),
             generator_exec_wrapper=generator_exec_wrapper,
         ) as source_file:
-            ClientGenerator(
+            RootClientGenerator(
                 context=context,
                 package=ir.root_package,
                 class_name=context.get_class_name_for_root_client(),
                 async_class_name="Async" + context.get_class_name_for_root_client(),
-                is_root=True,
             ).generate(source_file=source_file)
 
     def _generate_subpackage_client(
@@ -181,7 +208,6 @@ class SdkGenerator(AbstractGenerator):
                 package=subpackage,
                 class_name=context.get_class_name_of_subpackage_service(subpackage_id),
                 async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
-                is_root=False,
             ).generate(source_file=source_file)
 
     def _generate_error(

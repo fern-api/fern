@@ -7,14 +7,18 @@ from json.decoder import JSONDecodeError
 import httpx
 
 from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from .types.movie_id import MovieId
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class MovieClient:
-    def __init__(self, *, environment: str, client: httpx.Client):
+    def __init__(self, *, environment: str, client_wrapper: SyncClientWrapper):
         self._environment = environment
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     def upload_movie(self, movie_id: MovieId, *, name: str, contents: typing.IO) -> None:
         _response = httpx.request(
@@ -22,6 +26,7 @@ class MovieClient:
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
             data=jsonable_encoder({"name": name}),
             files={"contents": contents},
+            headers=self._client_wrapper.get_headers(),
             timeout=60,
         )
         if 200 <= _response.status_code < 300:
@@ -34,9 +39,9 @@ class MovieClient:
 
 
 class AsyncMovieClient:
-    def __init__(self, *, environment: str, client: httpx.AsyncClient):
+    def __init__(self, *, environment: str, client_wrapper: AsyncClientWrapper):
         self._environment = environment
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     async def upload_movie(self, movie_id: MovieId, *, name: str, contents: typing.IO) -> None:
         async with httpx.AsyncClient() as _client:
@@ -45,6 +50,7 @@ class AsyncMovieClient:
                 urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
                 data=jsonable_encoder({"name": name}),
                 files={"contents": contents},
+                headers=self._client_wrapper.get_headers(),
                 timeout=60,
             )
         if 200 <= _response.status_code < 300:

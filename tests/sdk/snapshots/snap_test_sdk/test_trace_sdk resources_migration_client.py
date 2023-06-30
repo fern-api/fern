@@ -8,35 +8,23 @@ import httpx
 import pydantic
 
 from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.remove_none_from_headers import remove_none_from_headers
 from ...environment import FernIrEnvironment
 from .types.migration import Migration
 
 
 class MigrationClient:
-    def __init__(
-        self,
-        *,
-        environment: FernIrEnvironment = FernIrEnvironment.PROD,
-        x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
-        client: httpx.Client,
-    ):
+    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
         self._environment = environment
-        self._x_random_header = x_random_header
-        self._token = token
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     def get_attempted_migrations(self, *, admin_key_header: str) -> typing.List[Migration]:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
             headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "admin-key-header": admin_key_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
+                {**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}
             ),
             timeout=None,
         )
@@ -50,18 +38,9 @@ class MigrationClient:
 
 
 class AsyncMigrationClient:
-    def __init__(
-        self,
-        *,
-        environment: FernIrEnvironment = FernIrEnvironment.PROD,
-        x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
-        client: httpx.AsyncClient,
-    ):
+    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
         self._environment = environment
-        self._x_random_header = x_random_header
-        self._token = token
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     async def get_attempted_migrations(self, *, admin_key_header: str) -> typing.List[Migration]:
         async with httpx.AsyncClient() as _client:
@@ -69,11 +48,7 @@ class AsyncMigrationClient:
                 "GET",
                 urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
                 headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "admin-key-header": admin_key_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
+                    {**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}
                 ),
                 timeout=None,
             )

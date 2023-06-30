@@ -6,6 +6,9 @@ from fern_python.source_file_generator import SourceFileGenerator
 
 
 class CoreUtilities:
+    ASYNC_CLIENT_WRAPPER_CLASS_NAME = "AsyncClientWrapper"
+    SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
+
     def __init__(self) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -106,6 +109,24 @@ class CoreUtilities:
             writer.write_line(")")
 
         return AST.CodeWriter(code_writer=_write)
+
+    def get_reference_to_client_wrapper(self, *, is_async: bool) -> AST.ClassReference:
+        if is_async:
+            return AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "client_wrapper"),
+                    named_import=CoreUtilities.ASYNC_CLIENT_WRAPPER_CLASS_NAME,
+                ),
+            )
+        else:
+            return AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "client_wrapper"),
+                    named_import=CoreUtilities.SYNC_CLIENT_WRAPPER_CLASS_NAME,
+                ),
+            )
 
     def remove_none_from_headers(self, headers: AST.Expression) -> AST.Expression:
         return AST.Expression(

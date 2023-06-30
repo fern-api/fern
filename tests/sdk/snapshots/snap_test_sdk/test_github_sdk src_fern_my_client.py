@@ -4,6 +4,7 @@ import typing
 
 import httpx
 
+from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .resources.movie.client import AsyncMovieClient, MovieClient
 
 
@@ -12,17 +13,14 @@ class FernIr:
         self,
         *,
         environment: str,
-        api_key: typing.Optional[str] = None,
-        api_secret: typing.Optional[str] = None,
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        api_secret: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = 60
     ):
-        self._environment = environment
-        self._api_key = api_key
-        self._api_secret = api_secret
-        self._client = httpx.Client(timeout=timeout)
-        self.movie = MovieClient(
-            environment=self._environment, api_key=self._api_key, api_secret=self._api_secret, client=self._client
+        self._client_wrapper = SyncClientWrapper(
+            api_key=api_key, api_secret=api_secret, httpx_client=httpx.Client(timeout=timeout)
         )
+        self.movie = MovieClient(environment=environment, client_wrapper=self._client_wrapper)
 
 
 class AsyncFernIr:
@@ -30,14 +28,11 @@ class AsyncFernIr:
         self,
         *,
         environment: str,
-        api_key: typing.Optional[str] = None,
-        api_secret: typing.Optional[str] = None,
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        api_secret: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = 60
     ):
-        self._environment = environment
-        self._api_key = api_key
-        self._api_secret = api_secret
-        self._client = httpx.AsyncClient(timeout=timeout)
-        self.movie = AsyncMovieClient(
-            environment=self._environment, api_key=self._api_key, api_secret=self._api_secret, client=self._client
+        self._client_wrapper = AsyncClientWrapper(
+            api_key=api_key, api_secret=api_secret, httpx_client=httpx.AsyncClient(timeout=timeout)
         )
+        self.movie = AsyncMovieClient(environment=environment, client_wrapper=self._client_wrapper)

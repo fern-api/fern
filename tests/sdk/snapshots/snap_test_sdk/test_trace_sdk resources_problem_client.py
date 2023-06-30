@@ -8,8 +8,8 @@ import httpx
 import pydantic
 
 from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.remove_none_from_headers import remove_none_from_headers
 from ...environment import FernIrEnvironment
 from ..commons.types.problem_id import ProblemId
 from ..commons.types.variable_type import VariableType
@@ -19,32 +19,21 @@ from .types.get_default_starter_files_response import GetDefaultStarterFilesResp
 from .types.update_problem_response import UpdateProblemResponse
 from .types.variable_type_and_name import VariableTypeAndName
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class ProblemClient:
-    def __init__(
-        self,
-        *,
-        environment: FernIrEnvironment = FernIrEnvironment.PROD,
-        x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
-        client: httpx.Client,
-    ):
+    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
         self._environment = environment
-        self._x_random_header = x_random_header
-        self._token = token
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/create"),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         try:
@@ -60,12 +49,7 @@ class ProblemClient:
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/update/{problem_id}"),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         try:
@@ -80,12 +64,7 @@ class ProblemClient:
         _response = httpx.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -103,12 +82,7 @@ class ProblemClient:
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/default-starter-files"),
             json=jsonable_encoder({"inputParams": input_params, "outputType": output_type, "methodName": method_name}),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         try:
@@ -121,18 +95,9 @@ class ProblemClient:
 
 
 class AsyncProblemClient:
-    def __init__(
-        self,
-        *,
-        environment: FernIrEnvironment = FernIrEnvironment.PROD,
-        x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
-        client: httpx.AsyncClient,
-    ):
+    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
         self._environment = environment
-        self._x_random_header = x_random_header
-        self._token = token
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     async def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
         async with httpx.AsyncClient() as _client:
@@ -140,12 +105,7 @@ class AsyncProblemClient:
                 "POST",
                 urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/create"),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         try:
@@ -162,12 +122,7 @@ class AsyncProblemClient:
                 "POST",
                 urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/update/{problem_id}"),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         try:
@@ -183,12 +138,7 @@ class AsyncProblemClient:
             _response = await _client.request(
                 "DELETE",
                 urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:
@@ -209,12 +159,7 @@ class AsyncProblemClient:
                 json=jsonable_encoder(
                     {"inputParams": input_params, "outputType": output_type, "methodName": method_name}
                 ),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         try:

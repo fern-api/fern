@@ -7,8 +7,8 @@ from json.decoder import JSONDecodeError
 import httpx
 
 from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.remove_none_from_headers import remove_none_from_headers
 from ...environment import FernIrEnvironment
 from ..submission.types.submission_id import SubmissionId
 from ..submission.types.test_case_result_with_stdout import TestCaseResultWithStdout
@@ -21,32 +21,21 @@ from ..submission.types.workspace_submission_status import WorkspaceSubmissionSt
 from ..submission.types.workspace_submission_update import WorkspaceSubmissionUpdate
 from ..v_2.resources.problem.types.test_case_id import TestCaseId
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class AdminClient:
-    def __init__(
-        self,
-        *,
-        environment: FernIrEnvironment = FernIrEnvironment.PROD,
-        x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
-        client: httpx.Client,
-    ):
+    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
         self._environment = environment
-        self._x_random_header = x_random_header
-        self._token = token
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     def update_test_submission_status(self, submission_id: SubmissionId, *, request: TestSubmissionStatus) -> None:
         _response = httpx.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -64,12 +53,7 @@ class AdminClient:
                 f"{self._environment.value}/", f"admin/store-test-submission-status-v2/{submission_id}"
             ),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -89,12 +73,7 @@ class AdminClient:
                 f"{self._environment.value}/", f"admin/store-workspace-submission-status/{submission_id}"
             ),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -114,12 +93,7 @@ class AdminClient:
                 f"{self._environment.value}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
             ),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -145,12 +119,7 @@ class AdminClient:
                 f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             ),
             json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -171,12 +140,7 @@ class AdminClient:
                 f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             ),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -200,12 +164,7 @@ class AdminClient:
                 f"{self._environment.value}/", f"admin/store-workspace-trace/submission/{submission_id}"
             ),
             json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -223,12 +182,7 @@ class AdminClient:
                 f"{self._environment.value}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
             ),
             json=jsonable_encoder(request),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -241,18 +195,9 @@ class AdminClient:
 
 
 class AsyncAdminClient:
-    def __init__(
-        self,
-        *,
-        environment: FernIrEnvironment = FernIrEnvironment.PROD,
-        x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
-        client: httpx.AsyncClient,
-    ):
+    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
         self._environment = environment
-        self._x_random_header = x_random_header
-        self._token = token
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     async def update_test_submission_status(
         self, submission_id: SubmissionId, *, request: TestSubmissionStatus
@@ -264,12 +209,7 @@ class AsyncAdminClient:
                     f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"
                 ),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:
@@ -288,12 +228,7 @@ class AsyncAdminClient:
                     f"{self._environment.value}/", f"admin/store-test-submission-status-v2/{submission_id}"
                 ),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:
@@ -314,12 +249,7 @@ class AsyncAdminClient:
                     f"{self._environment.value}/", f"admin/store-workspace-submission-status/{submission_id}"
                 ),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:
@@ -340,12 +270,7 @@ class AsyncAdminClient:
                     f"{self._environment.value}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
                 ),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:
@@ -372,12 +297,7 @@ class AsyncAdminClient:
                     f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
                 ),
                 json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:
@@ -399,12 +319,7 @@ class AsyncAdminClient:
                     f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
                 ),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:
@@ -431,12 +346,7 @@ class AsyncAdminClient:
                 json=jsonable_encoder(
                     {"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}
                 ),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:
@@ -457,12 +367,7 @@ class AsyncAdminClient:
                     f"{self._environment.value}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
                 ),
                 json=jsonable_encoder(request),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:

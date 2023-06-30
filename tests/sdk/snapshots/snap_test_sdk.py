@@ -16,6 +16,8 @@ snapshots['test_file_upload_sdk core___init__'] = FileSnapshot('snap_test_sdk/te
 
 snapshots['test_file_upload_sdk core_api_error'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_api_error.py')
 
+snapshots['test_file_upload_sdk core_client_wrapper'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_client_wrapper.py')
+
 snapshots['test_file_upload_sdk core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_datetime_utils.py')
 
 snapshots['test_file_upload_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_jsonable_encoder.py')
@@ -27,6 +29,7 @@ snapshots['test_file_upload_sdk filepaths'] = [
     'client.py',
     'core/__init__.py',
     'core/api_error.py',
+    'core/client_wrapper.py',
     'core/datetime_utils.py',
     'core/jsonable_encoder.py',
     'core/remove_none_from_headers.py',
@@ -52,6 +55,7 @@ snapshots['test_github_no_publish_sdk filepaths'] = [
     'src/fern/client.py',
     'src/fern/core/__init__.py',
     'src/fern/core/api_error.py',
+    'src/fern/core/client_wrapper.py',
     'src/fern/core/datetime_utils.py',
     'src/fern/core/jsonable_encoder.py',
     'src/fern/core/remove_none_from_headers.py',
@@ -74,6 +78,8 @@ snapshots['test_github_no_publish_sdk src_fern_client'] = FileSnapshot('snap_tes
 snapshots['test_github_no_publish_sdk src_fern_core___init__'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk src_fern_core___init__.py')
 
 snapshots['test_github_no_publish_sdk src_fern_core_api_error'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk src_fern_core_api_error.py')
+
+snapshots['test_github_no_publish_sdk src_fern_core_client_wrapper'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk src_fern_core_client_wrapper.py')
 
 snapshots['test_github_no_publish_sdk src_fern_core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk src_fern_core_datetime_utils.py')
 
@@ -105,6 +111,7 @@ snapshots['test_github_sdk filepaths'] = [
     'src/fern/__init__.py',
     'src/fern/core/__init__.py',
     'src/fern/core/api_error.py',
+    'src/fern/core/client_wrapper.py',
     'src/fern/core/datetime_utils.py',
     'src/fern/core/jsonable_encoder.py',
     'src/fern/core/remove_none_from_headers.py',
@@ -128,6 +135,8 @@ snapshots['test_github_sdk src_fern___init__'] = FileSnapshot('snap_test_sdk/tes
 snapshots['test_github_sdk src_fern_core___init__'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_core___init__.py')
 
 snapshots['test_github_sdk src_fern_core_api_error'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_core_api_error.py')
+
+snapshots['test_github_sdk src_fern_core_client_wrapper'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_core_client_wrapper.py')
 
 snapshots['test_github_sdk src_fern_core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_core_datetime_utils.py')
 
@@ -169,6 +178,8 @@ snapshots['test_multiple_urls_sdk core___init__'] = FileSnapshot('snap_test_sdk/
 
 snapshots['test_multiple_urls_sdk core_api_error'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_api_error.py')
 
+snapshots['test_multiple_urls_sdk core_client_wrapper'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_client_wrapper.py')
+
 snapshots['test_multiple_urls_sdk core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_datetime_utils.py')
 
 snapshots['test_multiple_urls_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_jsonable_encoder.py')
@@ -182,6 +193,7 @@ snapshots['test_multiple_urls_sdk filepaths'] = [
     'client.py',
     'core/__init__.py',
     'core/api_error.py',
+    'core/client_wrapper.py',
     'core/datetime_utils.py',
     'core/jsonable_encoder.py',
     'core/remove_none_from_headers.py',
@@ -235,6 +247,7 @@ snapshots['test_publish_sdk filepaths'] = [
     'src/fern/api/client.py',
     'src/fern/api/core/__init__.py',
     'src/fern/api/core/api_error.py',
+    'src/fern/api/core/client_wrapper.py',
     'src/fern/api/core/datetime_utils.py',
     'src/fern/api/core/jsonable_encoder.py',
     'src/fern/api/core/remove_none_from_headers.py',
@@ -257,6 +270,8 @@ snapshots['test_publish_sdk src_fern_api_client'] = FileSnapshot('snap_test_sdk/
 snapshots['test_publish_sdk src_fern_api_core___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core___init__.py')
 
 snapshots['test_publish_sdk src_fern_api_core_api_error'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_api_error.py')
+
+snapshots['test_publish_sdk src_fern_api_core_client_wrapper'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_client_wrapper.py')
 
 snapshots['test_publish_sdk src_fern_api_core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_datetime_utils.py')
 
@@ -292,6 +307,8 @@ snapshots['test_streaming_sdk core___init__'] = FileSnapshot('snap_test_sdk/test
 
 snapshots['test_streaming_sdk core_api_error'] = FileSnapshot('snap_test_sdk/test_streaming_sdk core_api_error.py')
 
+snapshots['test_streaming_sdk core_client_wrapper'] = FileSnapshot('snap_test_sdk/test_streaming_sdk core_client_wrapper.py')
+
 snapshots['test_streaming_sdk core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_streaming_sdk core_datetime_utils.py')
 
 snapshots['test_streaming_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_streaming_sdk core_jsonable_encoder.py')
@@ -303,6 +320,7 @@ snapshots['test_streaming_sdk filepaths'] = [
     'client.py',
     'core/__init__.py',
     'core/api_error.py',
+    'core/client_wrapper.py',
     'core/datetime_utils.py',
     'core/jsonable_encoder.py',
     'core/remove_none_from_headers.py',
@@ -331,6 +349,8 @@ snapshots['test_trace_sdk core___init__'] = FileSnapshot('snap_test_sdk/test_tra
 
 snapshots['test_trace_sdk core_api_error'] = FileSnapshot('snap_test_sdk/test_trace_sdk core_api_error.py')
 
+snapshots['test_trace_sdk core_client_wrapper'] = FileSnapshot('snap_test_sdk/test_trace_sdk core_client_wrapper.py')
+
 snapshots['test_trace_sdk core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_trace_sdk core_datetime_utils.py')
 
 snapshots['test_trace_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_trace_sdk core_jsonable_encoder.py')
@@ -344,6 +364,7 @@ snapshots['test_trace_sdk filepaths'] = [
     'client.py',
     'core/__init__.py',
     'core/api_error.py',
+    'core/client_wrapper.py',
     'core/datetime_utils.py',
     'core/jsonable_encoder.py',
     'core/remove_none_from_headers.py',

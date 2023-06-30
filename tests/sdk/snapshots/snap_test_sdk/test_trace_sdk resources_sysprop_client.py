@@ -8,24 +8,15 @@ import httpx
 import pydantic
 
 from ...core.api_error import ApiError
-from ...core.remove_none_from_headers import remove_none_from_headers
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...environment import FernIrEnvironment
 from ..commons.types.language import Language
 
 
 class SyspropClient:
-    def __init__(
-        self,
-        *,
-        environment: FernIrEnvironment = FernIrEnvironment.PROD,
-        x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
-        client: httpx.Client,
-    ):
+    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
         self._environment = environment
-        self._x_random_header = x_random_header
-        self._token = token
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
         _response = httpx.request(
@@ -33,12 +24,7 @@ class SyspropClient:
             urllib.parse.urljoin(
                 f"{self._environment.value}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
             ),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         if 200 <= _response.status_code < 300:
@@ -53,12 +39,7 @@ class SyspropClient:
         _response = httpx.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
-            headers=remove_none_from_headers(
-                {
-                    "X-Random-Header": self._x_random_header,
-                    "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                }
-            ),
+            headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
         try:
@@ -71,18 +52,9 @@ class SyspropClient:
 
 
 class AsyncSyspropClient:
-    def __init__(
-        self,
-        *,
-        environment: FernIrEnvironment = FernIrEnvironment.PROD,
-        x_random_header: typing.Optional[str] = None,
-        token: typing.Optional[str] = None,
-        client: httpx.AsyncClient,
-    ):
+    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
         self._environment = environment
-        self._x_random_header = x_random_header
-        self._token = token
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     async def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
         async with httpx.AsyncClient() as _client:
@@ -91,12 +63,7 @@ class AsyncSyspropClient:
                 urllib.parse.urljoin(
                     f"{self._environment.value}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
                 ),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         if 200 <= _response.status_code < 300:
@@ -112,12 +79,7 @@ class AsyncSyspropClient:
             _response = await _client.request(
                 "GET",
                 urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
-                headers=remove_none_from_headers(
-                    {
-                        "X-Random-Header": self._x_random_header,
-                        "Authorization": f"Bearer {self._token}" if self._token is not None else None,
-                    }
-                ),
+                headers=self._client_wrapper.get_headers(),
                 timeout=None,
             )
         try:

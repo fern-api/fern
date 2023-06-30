@@ -9,20 +9,25 @@ import httpx
 import pydantic
 
 from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from .types.stream_response import StreamResponse
 
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
+
 
 class AiClient:
-    def __init__(self, *, environment: str, client: httpx.Client):
+    def __init__(self, *, environment: str, client_wrapper: SyncClientWrapper):
         self._environment = environment
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     def generate_stream(self, *, num_events: int) -> typing.Iterator[StreamResponse]:
         with httpx.stream(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "generate-stream"),
             json=jsonable_encoder({"num_events": num_events}),
+            headers=self._client_wrapper.get_headers(),
             timeout=60,
         ) as _response:
             if 200 <= _response.status_code < 300:
@@ -39,9 +44,9 @@ class AiClient:
 
 
 class AsyncAiClient:
-    def __init__(self, *, environment: str, client: httpx.AsyncClient):
+    def __init__(self, *, environment: str, client_wrapper: AsyncClientWrapper):
         self._environment = environment
-        self._client = client
+        self._client_wrapper = client_wrapper
 
     async def generate_stream(self, *, num_events: int) -> typing.AsyncIterator[StreamResponse]:
         async with httpx.AsyncClient() as _client:
@@ -49,6 +54,7 @@ class AsyncAiClient:
                 "POST",
                 urllib.parse.urljoin(f"{self._environment}/", "generate-stream"),
                 json=jsonable_encoder({"num_events": num_events}),
+                headers=self._client_wrapper.get_headers(),
                 timeout=60,
             ) as _response:
                 if 200 <= _response.status_code < 300:
