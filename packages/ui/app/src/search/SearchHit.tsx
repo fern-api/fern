@@ -2,17 +2,11 @@ import { Icon } from "@blueprintjs/core";
 import { Highlight } from "react-instantsearch-hooks-web";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
+import type { SearchRecord } from "../types";
 
 export declare namespace SearchHit {
     export interface Props {
-        // TODO: Needs to be imported from our sdk
-        hit: {
-            __position: number;
-            objectID: string;
-            title: string;
-            subtitle: string;
-            path: string;
-        };
+        hit: SearchRecord;
     }
 }
 
