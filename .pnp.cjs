@@ -6971,6 +6971,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["classnames", "npm:2.3.1"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
+            ["instantsearch.js", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.56.3"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["marked", "npm:5.0.3"],\
@@ -10214,10 +10215,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:e2ba3317451726b94e2d6ee5442d0be07831800cd61c8da7d00605123e43bdaabdf0dce78010a6fe9ac03ce9c286c82dc9784bbd4a47b7750824ea009de4ebc4#npm:3.13.3", {\
-          "packageLocation": "./.yarn/__virtual__/algoliasearch-helper-virtual-bcc451340f/0/cache/algoliasearch-helper-npm-3.13.3-54bbd606ea-a59bcf0ee7.zip/node_modules/algoliasearch-helper/",\
+        ["virtual:8d416b2d02a64350f0cf484cafe18a5afae747850953c5abc27d0e3ca7bccff5e8b272614dca3aca401cd4edeef1eb8d2826167df5308453913c3e2754be8af6#npm:3.13.3", {\
+          "packageLocation": "./.yarn/__virtual__/algoliasearch-helper-virtual-966c5704b1/0/cache/algoliasearch-helper-npm-3.13.3-54bbd606ea-a59bcf0ee7.zip/node_modules/algoliasearch-helper/",\
           "packageDependencies": [\
-            ["algoliasearch-helper", "virtual:e2ba3317451726b94e2d6ee5442d0be07831800cd61c8da7d00605123e43bdaabdf0dce78010a6fe9ac03ce9c286c82dc9784bbd4a47b7750824ea009de4ebc4#npm:3.13.3"],\
+            ["algoliasearch-helper", "virtual:8d416b2d02a64350f0cf484cafe18a5afae747850953c5abc27d0e3ca7bccff5e8b272614dca3aca401cd4edeef1eb8d2826167df5308453913c3e2754be8af6#npm:3.13.3"],\
             ["@algolia/events", "npm:4.0.1"],\
             ["@types/algoliasearch", null],\
             ["algoliasearch", "npm:4.18.0"]\
@@ -15168,10 +15169,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:034e19e65ac4ce5793f7d6742d177f02791199d5bf943950466dd3266667f282c765d598549c5d4c9de0ad5a8a9607415be489b1c1af81608c2ac5c8bf0c1c66#npm:4.56.3", {\
-          "packageLocation": "./.yarn/__virtual__/instantsearch.js-virtual-e2ba331745/0/cache/instantsearch.js-npm-4.56.3-0b2ee8bb4d-6320263ae4.zip/node_modules/instantsearch.js/",\
+        ["virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.56.3", {\
+          "packageLocation": "./.yarn/__virtual__/instantsearch.js-virtual-8d416b2d02/0/cache/instantsearch.js-npm-4.56.3-0b2ee8bb4d-6320263ae4.zip/node_modules/instantsearch.js/",\
           "packageDependencies": [\
-            ["instantsearch.js", "virtual:034e19e65ac4ce5793f7d6742d177f02791199d5bf943950466dd3266667f282c765d598549c5d4c9de0ad5a8a9607415be489b1c1af81608c2ac5c8bf0c1c66#npm:4.56.3"],\
+            ["instantsearch.js", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.56.3"],\
             ["@algolia/events", "npm:4.0.1"],\
             ["@algolia/ui-components-highlight-vdom", "npm:1.2.1"],\
             ["@algolia/ui-components-shared", "npm:1.2.1"],\
@@ -15181,7 +15182,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/hogan.js", "npm:3.0.1"],\
             ["@types/qs", "npm:6.9.7"],\
             ["algoliasearch", "npm:4.18.0"],\
-            ["algoliasearch-helper", "virtual:e2ba3317451726b94e2d6ee5442d0be07831800cd61c8da7d00605123e43bdaabdf0dce78010a6fe9ac03ce9c286c82dc9784bbd4a47b7750824ea009de4ebc4#npm:3.13.3"],\
+            ["algoliasearch-helper", "virtual:8d416b2d02a64350f0cf484cafe18a5afae747850953c5abc27d0e3ca7bccff5e8b272614dca3aca401cd4edeef1eb8d2826167df5308453913c3e2754be8af6#npm:3.13.3"],\
             ["hogan.js", "npm:3.0.2"],\
             ["htm", "npm:3.1.1"],\
             ["preact", "npm:10.15.1"],\
@@ -20160,8 +20161,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/algoliasearch", null],\
             ["@types/react", "npm:18.0.20"],\
             ["algoliasearch", "npm:4.18.0"],\
-            ["algoliasearch-helper", "virtual:e2ba3317451726b94e2d6ee5442d0be07831800cd61c8da7d00605123e43bdaabdf0dce78010a6fe9ac03ce9c286c82dc9784bbd4a47b7750824ea009de4ebc4#npm:3.13.3"],\
-            ["instantsearch.js", "virtual:034e19e65ac4ce5793f7d6742d177f02791199d5bf943950466dd3266667f282c765d598549c5d4c9de0ad5a8a9607415be489b1c1af81608c2ac5c8bf0c1c66#npm:4.56.3"],\
+            ["algoliasearch-helper", "virtual:8d416b2d02a64350f0cf484cafe18a5afae747850953c5abc27d0e3ca7bccff5e8b272614dca3aca401cd4edeef1eb8d2826167df5308453913c3e2754be8af6#npm:3.13.3"],\
+            ["instantsearch.js", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.56.3"],\
             ["react", "npm:18.2.0"],\
             ["use-sync-external-store", "virtual:a517ffaecaa519aad775c050abb23fa5f7206483f20dccb39aa5b4cccdc2c97b878c62c8078c0837cae45326846ca4d143474ccbdc0ccfcab42a0d870b70f2fc#npm:1.2.0"]\
           ],\
@@ -20191,7 +20192,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/react", "npm:18.0.20"],\
             ["@types/react-dom", null],\
             ["algoliasearch", "npm:4.18.0"],\
-            ["instantsearch.js", "virtual:034e19e65ac4ce5793f7d6742d177f02791199d5bf943950466dd3266667f282c765d598549c5d4c9de0ad5a8a9607415be489b1c1af81608c2ac5c8bf0c1c66#npm:4.56.3"],\
+            ["instantsearch.js", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:4.56.3"],\
             ["react", "npm:18.2.0"],\
             ["react-dom", "virtual:5859ca6455b1300e5c14a40a0e9dfd22c3c72703e63a89ae86f290b9c13d7e92836c0c40bb85ba0f8a308601ec19634c366ca3f4bec5fed1a79eee5fbf98d0ae#npm:18.2.0"],\
             ["react-instantsearch-hooks", "virtual:034e19e65ac4ce5793f7d6742d177f02791199d5bf943950466dd3266667f282c765d598549c5d4c9de0ad5a8a9607415be489b1c1af81608c2ac5c8bf0c1c66#npm:6.45.0"]\

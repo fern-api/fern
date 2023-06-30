@@ -3883,6 +3883,7 @@ __metadata:
     classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
+    instantsearch.js: ^4.56.3
     jest: ^29.4.0
     lodash-es: ^4.17.21
     marked: ^5.0.3
@@ -10775,7 +10776,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"instantsearch.js@npm:4.56.3":
+"instantsearch.js@npm:4.56.3, instantsearch.js@npm:^4.56.3":
   version: 4.56.3
   resolution: "instantsearch.js@npm:4.56.3"
   dependencies:
