@@ -1,4 +1,5 @@
 import { Icon } from "@blueprintjs/core";
+import dynamic from "next/dynamic";
 import { type MouseEventHandler } from "react";
 import { platform } from "../utils/platform";
 
@@ -8,7 +9,7 @@ export declare namespace SidebarSearchBar {
     }
 }
 
-export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) => {
+export const SidebarSearchBarCore: React.FC<SidebarSearchBar.Props> = ({ onClick }) => {
     return (
         <button
             onClick={onClick}
@@ -27,3 +28,7 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) 
         </button>
     );
 };
+
+export const SidebarSearchBar = dynamic(() => Promise.resolve(SidebarSearchBarCore), {
+    ssr: false,
+});
