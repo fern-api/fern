@@ -18,9 +18,9 @@ Backed by Y Combinator
 
 # Fern
 
-**Fern** is an **open source toolset** for **defining, building and generating APIs and SDKs**. Fern can be used in your existing projects through OpenAPI, and integrate effortlessly into your existing workflows. It can also serve as the basis of your API development, by describing your endpoints in a Fern specification, and having Fern generate your API backend code for you.
+**Fern** is an **open source toolkit** for defining, building and generating **APIs, documentation and SDKs**. Bring an existing OpenAPI definition or describe your endpoints in a Fern specification. Fern generates backend code, specifications in various formats, and client libraries with a single command.
 
-This repository contains the Fern **compiler**. The compiler transforms an API definition, either in Fern or OpenAPI format into various code artifacts, such as Client Libraries, SDKs, or even fully-fledged **Express** or **FastAPI** backends.
+This repository contains the Fern **compiler**. The compiler transforms an API definition into various code artifacts, such as client libraries, SDKs, or even full-fledged **Express**, **Fast API** or **Spring Boot** backends.
 
 In short, Fern takes care of the boilerplate associated with developing APIs, so you can **focus on delivering business value**.
 
@@ -42,9 +42,9 @@ Fern supports the generation of development resources such as Postman collection
 
 ## Fern and OpenAPI
 
-We have designed Fern to complement existing OpenAPI toolchains and workflows, rather than replace them. We believe OpenAPI does a good job at as a declarative standard for defining APIs, but at times it is too verbose and complex, which harms the quality of automatically generated code as a result.
+We have designed Fern to complement existing OpenAPI toolchains and workflows, rather than replace them. We believe OpenAPI does a good job at as a declarative standard for defining APIs, but at times it is too verbose and complex, which harms the quality of automatically generated code.
 
-The goal of Fern is to be **complimentary to OpenAPI**, not to replace it. As such, you are never locked in to Fern, its specifications, or its toolset.
+The goal of Fern is to be **complimentary to OpenAPI**, not to replace it. As such, you are never locked in to Fern, its specifications, or its tools.
 
 If you want to read more about where Fern and OpenAPI differ, read [﻿Fern vs. OpenAPI](https://buildwithfern.com/docs/comparison-with-openapi) for an in-depth comparison.
 
