@@ -3,6 +3,7 @@ import { Highlight } from "react-instantsearch-hooks-web";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import type { SearchRecord } from "../types";
+import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
 
 export declare namespace SearchHit {
     export interface Props {
@@ -25,13 +26,19 @@ export const SearchHit: React.FC<SearchHit.Props> = (providedProps) => {
         >
             <Icon className="text-text-default group-hover:text-white" size={18} icon="document" />
 
-            <div className="flex flex-col">
-                <div className="flex flex-col items-start">
+            <div className="flex w-full flex-col space-y-1.5">
+                <div className="flex justify-between">
                     <Highlight
                         className="text-text-default line-clamp-1 text-start group-hover:text-white"
                         attribute="title"
                         hit={hit}
                     />
+                    <div className="text-text-default text-xs uppercase tracking-widest group-hover:text-white">
+                        {visitDiscriminatedUnion(hit, "type")._visit({
+                            endpoint: () => "Endpoint",
+                            _other: () => null,
+                        })}
+                    </div>
                 </div>
                 <div className="flex flex-col items-start">
                     <Highlight
