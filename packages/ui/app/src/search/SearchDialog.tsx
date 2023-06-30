@@ -27,7 +27,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
     const { isOpen, onClose } = providedProps;
 
     return (
-        <Dialog as="div" className="fixed inset-0 z-10 overflow-y-auto" open={isOpen} onClose={onClose}>
+        <Dialog as="div" className="fixed inset-0 z-10" open={isOpen} onClose={onClose}>
             <InstantSearch searchClient={searchClient} indexName={searchIndexName}>
                 <div className="flex min-h-screen items-start justify-center p-4">
                     <Dialog.Overlay className="fixed inset-0 bg-gray-800/75" />
