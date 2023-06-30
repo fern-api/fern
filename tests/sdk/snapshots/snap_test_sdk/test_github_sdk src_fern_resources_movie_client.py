@@ -5,7 +5,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 
 from ...core.api_error import ApiError
@@ -29,7 +28,7 @@ class MovieClient:
         self._client_wrapper = client_wrapper
 
     def get_movie(self, movie_id: MovieId) -> Movie:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
             headers=self._client_wrapper.get_headers(),
@@ -46,7 +45,7 @@ class MovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_all_movies(self, *, string_header: str) -> typing.List[Movie]:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
             headers=remove_none_from_headers(
@@ -73,7 +72,7 @@ class MovieClient:
         optional_boolean: typing.Optional[bool] = None,
         request: Movie,
     ) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
             params={
@@ -106,7 +105,7 @@ class MovieClient:
         _request: typing.Dict[str, typing.Any] = {"required_property": required_property}
         if optional_property is not OMIT:
             _request["optional_property"] = optional_property
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
             json=jsonable_encoder(_request),
@@ -130,13 +129,12 @@ class AsyncMovieClient:
         self._client_wrapper = client_wrapper
 
     async def get_movie(self, movie_id: MovieId) -> Movie:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=60,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore
         if _response.status_code == 404:
@@ -148,19 +146,14 @@ class AsyncMovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_all_movies(self, *, string_header: str) -> typing.List[Movie]:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
-                headers=remove_none_from_headers(
-                    {
-                        **self._client_wrapper.get_headers(),
-                        "literal_header": "hello world",
-                        "string_header": string_header,
-                    }
-                ),
-                timeout=60,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
+            headers=remove_none_from_headers(
+                {**self._client_wrapper.get_headers(), "literal_header": "hello world", "string_header": string_header}
+            ),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
         try:
@@ -180,24 +173,21 @@ class AsyncMovieClient:
         optional_boolean: typing.Optional[bool] = None,
         request: Movie,
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
-                params={
-                    "date": str(date),
-                    "datetime": serialize_datetime(datetime),
-                    "optional_date": str(optional_date) if optional_date is not None else None,
-                    "optional_datetime": serialize_datetime(optional_datetime)
-                    if optional_datetime is not None
-                    else None,
-                    "boolean": boolean,
-                    "optional_boolean": optional_boolean,
-                },
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=60,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
+            params={
+                "date": str(date),
+                "datetime": serialize_datetime(datetime),
+                "optional_date": str(optional_date) if optional_date is not None else None,
+                "optional_datetime": serialize_datetime(optional_datetime) if optional_datetime is not None else None,
+                "boolean": boolean,
+                "optional_boolean": optional_boolean,
+            },
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return
         if _response.status_code == 429:
@@ -216,14 +206,13 @@ class AsyncMovieClient:
         _request: typing.Dict[str, typing.Any] = {"required_property": required_property}
         if optional_property is not OMIT:
             _request["optional_property"] = optional_property
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "DELETE",
-                urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
-                json=jsonable_encoder(_request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=60,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "DELETE",
+            urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
+            json=jsonable_encoder(_request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return
         if _response.status_code == 404:

@@ -4,8 +4,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
-
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
@@ -31,7 +29,7 @@ class AdminClient:
         self._client_wrapper = client_wrapper
 
     def update_test_submission_status(self, submission_id: SubmissionId, *, request: TestSubmissionStatus) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"),
             json=jsonable_encoder(request),
@@ -47,7 +45,7 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._environment.value}/", f"admin/store-test-submission-status-v2/{submission_id}"
@@ -67,7 +65,7 @@ class AdminClient:
     def update_workspace_submission_status(
         self, submission_id: SubmissionId, *, request: WorkspaceSubmissionStatus
     ) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._environment.value}/", f"admin/store-workspace-submission-status/{submission_id}"
@@ -87,7 +85,7 @@ class AdminClient:
     def send_workspace_submission_update(
         self, submission_id: SubmissionId, *, request: WorkspaceSubmissionUpdate
     ) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._environment.value}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
@@ -112,7 +110,7 @@ class AdminClient:
         result: TestCaseResultWithStdout,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._environment.value}/",
@@ -133,7 +131,7 @@ class AdminClient:
     def store_traced_test_case_v_2(
         self, submission_id: SubmissionId, test_case_id: TestCaseId, *, request: typing.List[TraceResponseV2]
     ) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._environment.value}/",
@@ -158,7 +156,7 @@ class AdminClient:
         workspace_run_details: WorkspaceRunDetails,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._environment.value}/", f"admin/store-workspace-trace/submission/{submission_id}"
@@ -176,7 +174,7 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def store_traced_workspace_v_2(self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._environment.value}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
@@ -202,16 +200,13 @@ class AsyncAdminClient:
     async def update_test_submission_status(
         self, submission_id: SubmissionId, *, request: TestSubmissionStatus
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"
-                ),
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:
@@ -221,16 +216,15 @@ class AsyncAdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/", f"admin/store-test-submission-status-v2/{submission_id}"
-                ),
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"admin/store-test-submission-status-v2/{submission_id}"
+            ),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:
@@ -242,16 +236,15 @@ class AsyncAdminClient:
     async def update_workspace_submission_status(
         self, submission_id: SubmissionId, *, request: WorkspaceSubmissionStatus
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/", f"admin/store-workspace-submission-status/{submission_id}"
-                ),
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"admin/store-workspace-submission-status/{submission_id}"
+            ),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:
@@ -263,16 +256,15 @@ class AsyncAdminClient:
     async def send_workspace_submission_update(
         self, submission_id: SubmissionId, *, request: WorkspaceSubmissionUpdate
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
-                ),
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
+            ),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:
@@ -289,17 +281,16 @@ class AsyncAdminClient:
         result: TestCaseResultWithStdout,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/",
-                    f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
-                ),
-                json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._environment.value}/",
+                f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
+            ),
+            json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:
@@ -311,17 +302,16 @@ class AsyncAdminClient:
     async def store_traced_test_case_v_2(
         self, submission_id: SubmissionId, test_case_id: TestCaseId, *, request: typing.List[TraceResponseV2]
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/",
-                    f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
-                ),
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._environment.value}/",
+                f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
+            ),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:
@@ -337,18 +327,15 @@ class AsyncAdminClient:
         workspace_run_details: WorkspaceRunDetails,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/", f"admin/store-workspace-trace/submission/{submission_id}"
-                ),
-                json=jsonable_encoder(
-                    {"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}
-                ),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"admin/store-workspace-trace/submission/{submission_id}"
+            ),
+            json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:
@@ -360,16 +347,15 @@ class AsyncAdminClient:
     async def store_traced_workspace_v_2(
         self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]
     ) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
-                ),
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
+            ),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:

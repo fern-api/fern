@@ -5,7 +5,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 
 from ...core.api_error import ApiError
@@ -23,7 +22,7 @@ class AiClient:
         self._client_wrapper = client_wrapper
 
     def generate_stream(self, *, num_events: int) -> typing.Iterator[StreamResponse]:
-        with httpx.stream(
+        with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "generate-stream"),
             json=jsonable_encoder({"num_events": num_events}),
@@ -49,22 +48,21 @@ class AsyncAiClient:
         self._client_wrapper = client_wrapper
 
     async def generate_stream(self, *, num_events: int) -> typing.AsyncIterator[StreamResponse]:
-        async with httpx.AsyncClient() as _client:
-            async with _client.stream(
-                "POST",
-                urllib.parse.urljoin(f"{self._environment}/", "generate-stream"),
-                json=jsonable_encoder({"num_events": num_events}),
-                headers=self._client_wrapper.get_headers(),
-                timeout=60,
-            ) as _response:
-                if 200 <= _response.status_code < 300:
-                    async for _text in _response.aiter_text():
-                        if len(_text) == 0:
-                            continue
-                        yield pydantic.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
-                    return
-                try:
-                    _response_json = _response.json()
-                except JSONDecodeError:
-                    raise ApiError(status_code=_response.status_code, body=_response.text)
-                raise ApiError(status_code=_response.status_code, body=_response_json)
+        async with self._client_wrapper.httpx_client.stream(
+            "POST",
+            urllib.parse.urljoin(f"{self._environment}/", "generate-stream"),
+            json=jsonable_encoder({"num_events": num_events}),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                async for _text in _response.aiter_text():
+                    if len(_text) == 0:
+                        continue
+                    yield pydantic.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
+                return
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)

@@ -2,8 +2,6 @@
 
 from json.decoder import JSONDecodeError
 
-import httpx
-
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...environment import FernIrEnvironment
@@ -19,7 +17,7 @@ class V2Client:
         self.v_3 = V3Client(environment=self._environment, client_wrapper=self._client_wrapper)
 
     def test(self) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET", self._environment.value, headers=self._client_wrapper.get_headers(), timeout=None
         )
         if 200 <= _response.status_code < 300:
@@ -39,10 +37,9 @@ class AsyncV2Client:
         self.v_3 = AsyncV3Client(environment=self._environment, client_wrapper=self._client_wrapper)
 
     async def test(self) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET", self._environment.value, headers=self._client_wrapper.get_headers(), timeout=None
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET", self._environment.value, headers=self._client_wrapper.get_headers(), timeout=None
+        )
         if 200 <= _response.status_code < 300:
             return
         try:

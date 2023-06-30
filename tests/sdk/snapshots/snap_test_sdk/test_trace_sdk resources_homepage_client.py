@@ -4,7 +4,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 
 from ...core.api_error import ApiError
@@ -23,7 +22,7 @@ class HomepageClient:
         self._client_wrapper = client_wrapper
 
     def get_homepage_problems(self) -> typing.List[ProblemId]:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
             headers=self._client_wrapper.get_headers(),
@@ -38,7 +37,7 @@ class HomepageClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def set_homepage_problems(self, *, request: typing.List[ProblemId]) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
             json=jsonable_encoder(request),
@@ -60,13 +59,12 @@ class AsyncHomepageClient:
         self._client_wrapper = client_wrapper
 
     async def get_homepage_problems(self) -> typing.List[ProblemId]:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -76,14 +74,13 @@ class AsyncHomepageClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def set_homepage_problems(self, *, request: typing.List[ProblemId]) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:

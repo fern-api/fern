@@ -4,7 +4,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 
 from .......core.api_error import ApiError
@@ -21,7 +20,7 @@ class ProblemClient:
         self._client_wrapper = client_wrapper
 
     def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/lightweight-problem-info"),
             headers=self._client_wrapper.get_headers(),
@@ -36,7 +35,7 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problems(self) -> typing.List[ProblemInfoV2]:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/problem-info"),
             headers=self._client_wrapper.get_headers(),
@@ -51,7 +50,7 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_latest_problem(self, problem_id: ProblemId) -> ProblemInfoV2:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}"),
             headers=self._client_wrapper.get_headers(),
@@ -66,7 +65,7 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problem_version(self, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
                 f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
@@ -89,13 +88,12 @@ class AsyncProblemClient:
         self._client_wrapper = client_wrapper
 
     async def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/lightweight-problem-info"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/lightweight-problem-info"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -105,13 +103,12 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_problems(self) -> typing.List[ProblemInfoV2]:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/problem-info"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/problem-info"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -121,13 +118,12 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_latest_problem(self, problem_id: ProblemId) -> ProblemInfoV2:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -137,15 +133,14 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_problem_version(self, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
-                ),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
+            ),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:

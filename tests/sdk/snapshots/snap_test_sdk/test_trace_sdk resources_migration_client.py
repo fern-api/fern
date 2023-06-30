@@ -4,7 +4,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 
 from ...core.api_error import ApiError
@@ -20,7 +19,7 @@ class MigrationClient:
         self._client_wrapper = client_wrapper
 
     def get_attempted_migrations(self, *, admin_key_header: str) -> typing.List[Migration]:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
             headers=remove_none_from_headers(
@@ -43,15 +42,14 @@ class AsyncMigrationClient:
         self._client_wrapper = client_wrapper
 
     async def get_attempted_migrations(self, *, admin_key_header: str) -> typing.List[Migration]:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
-                headers=remove_none_from_headers(
-                    {**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}
-                ),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
+            headers=remove_none_from_headers(
+                {**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}
+            ),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:

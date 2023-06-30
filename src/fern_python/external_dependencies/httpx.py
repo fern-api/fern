@@ -44,8 +44,9 @@ class HttpX:
         is_async: bool,
         is_streaming: bool,
         response_code_writer: AST.CodeWriter,
+        reference_to_client: AST.Expression,
     ) -> AST.Expression:
-        def add_request_params(*, writer: AST.NodeWriter, reference_to_client: AST.Expression) -> None:
+        def add_request_params(*, writer: AST.NodeWriter) -> None:
             if len(query_parameters) > 0:
                 writer.write("params={")
 
@@ -81,19 +82,15 @@ class HttpX:
             writer.write_node(timeout)
 
         def write_non_streaming_call(
-            *, writer: AST.NodeWriter, reference_to_client: AST.Expression, indent_request: bool
+            *,
+            writer: AST.NodeWriter,
         ) -> None:
-            if indent_request:
-                with writer.indent():
-                    make_non_streaming_request(writer=writer, reference_to_client=reference_to_client)
-            else:
-                make_non_streaming_request(writer=writer, reference_to_client=reference_to_client)
+            make_non_streaming_request(writer=writer)
             response_code_writer.write(writer=writer)
 
         def make_non_streaming_request(
             *,
             writer: AST.NodeWriter,
-            reference_to_client: AST.Expression,
         ) -> None:
             writer.write(f"{response_variable_name} = ")
             if is_async:
@@ -103,10 +100,10 @@ class HttpX:
             writer.write_node(url)
             writer.write(", ")
             with writer.indent():
-                add_request_params(writer=writer, reference_to_client=reference_to_client)
+                add_request_params(writer=writer)
             writer.write_line(")")
 
-        def write_streaming_call(*, writer: AST.NodeWriter, reference_to_client: AST.Expression) -> None:
+        def write_streaming_call(*, writer: AST.NodeWriter) -> None:
             if is_async:
                 writer.write("async ")
             writer.write("with ")
@@ -115,7 +112,7 @@ class HttpX:
             writer.write_node(url)
             writer.write(", ")
             with writer.indent():
-                add_request_params(writer=writer, reference_to_client=reference_to_client)
+                add_request_params(writer=writer)
             writer.write_line(f") as {response_variable_name}:")
 
             with writer.indent():
@@ -123,47 +120,22 @@ class HttpX:
 
         def write(writer: AST.NodeWriter) -> None:
             if is_async:
-                writer.write("async with ")
-                writer.write_node(
-                    AST.ClassInstantiation(
-                        class_=AST.ClassReference(
-                            qualified_name_excluding_import=("AsyncClient",),
-                            import_=AST.ReferenceImport(module=HTTPX_MODULE),
-                        )
-                    )
-                )
-                writer.write_line(f" as {HttpX._ASYNC_CLIENT_NAME}:")
                 if is_streaming:
-                    with writer.indent():
-                        write_streaming_call(
-                            writer=writer,
-                            reference_to_client=AST.Expression(HttpX._ASYNC_CLIENT_NAME),
-                        )
+                    write_streaming_call(
+                        writer=writer,
+                    )
                 else:
                     write_non_streaming_call(
                         writer=writer,
-                        reference_to_client=AST.Expression(HttpX._ASYNC_CLIENT_NAME),
-                        indent_request=True,
                     )
             else:
                 if is_streaming:
                     write_streaming_call(
                         writer=writer,
-                        reference_to_client=AST.Expression(
-                            AST.ClassReference(
-                                qualified_name_excluding_import=(), import_=AST.ReferenceImport(module=HTTPX_MODULE)
-                            )
-                        ),
                     )
                 else:
                     write_non_streaming_call(
                         writer=writer,
-                        reference_to_client=AST.Expression(
-                            AST.ClassReference(
-                                qualified_name_excluding_import=(), import_=AST.ReferenceImport(module=HTTPX_MODULE)
-                            )
-                        ),
-                        indent_request=False,
                     )
 
         return AST.Expression(AST.CodeWriter(write))

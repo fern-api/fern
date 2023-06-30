@@ -4,7 +4,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 
 from ...core.api_error import ApiError
@@ -19,7 +18,7 @@ class SyspropClient:
         self._client_wrapper = client_wrapper
 
     def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
                 f"{self._environment.value}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
@@ -36,7 +35,7 @@ class SyspropClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_num_warm_instances(self) -> typing.Dict[Language, int]:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
             headers=self._client_wrapper.get_headers(),
@@ -57,15 +56,14 @@ class AsyncSyspropClient:
         self._client_wrapper = client_wrapper
 
     async def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "PUT",
-                urllib.parse.urljoin(
-                    f"{self._environment.value}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
-                ),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "PUT",
+            urllib.parse.urljoin(
+                f"{self._environment.value}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
+            ),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:
@@ -75,13 +73,12 @@ class AsyncSyspropClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_num_warm_instances(self) -> typing.Dict[Language, int]:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:

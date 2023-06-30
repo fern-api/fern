@@ -218,6 +218,9 @@ class EndpointFunctionGenerator:
                         else f"{self._context.custom_config.timeout_in_seconds}"
                     ),
                     response_code_writer=response_code_writer.get_writer(),
+                    reference_to_client=AST.Expression(
+                        f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME}"
+                    ),
                 )
             )
 

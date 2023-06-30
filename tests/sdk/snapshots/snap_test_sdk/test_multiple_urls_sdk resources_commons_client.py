@@ -4,7 +4,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 
 from ...core.api_error import ApiError
@@ -29,7 +28,7 @@ class CommonsClient:
         self._client_wrapper = client_wrapper
 
     def get_movie(self, movie_id: MovieId) -> Movie:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/movie/{movie_id}"),
             headers=self._client_wrapper.get_headers(),
@@ -46,7 +45,7 @@ class CommonsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_all_movies(self) -> typing.List[Movie]:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/all-movies"),
             headers=self._client_wrapper.get_headers(),
@@ -61,7 +60,7 @@ class CommonsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_movie(self, *, request: Movie) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/movie"),
             json=jsonable_encoder(request),
@@ -81,7 +80,7 @@ class CommonsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_movie(self, movie_id: MovieId) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/{movie_id}"),
             headers=self._client_wrapper.get_headers(),
@@ -106,13 +105,12 @@ class AsyncCommonsClient:
         self._client_wrapper = client_wrapper
 
     async def get_movie(self, movie_id: MovieId) -> Movie:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/movie/{movie_id}"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=60,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/movie/{movie_id}"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore
         if _response.status_code == 404:
@@ -124,13 +122,12 @@ class AsyncCommonsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_all_movies(self) -> typing.List[Movie]:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/all-movies"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=60,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/all-movies"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[Movie], _response.json())  # type: ignore
         try:
@@ -140,14 +137,13 @@ class AsyncCommonsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_movie(self, *, request: Movie) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/movie"),
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=60,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/movie"),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return
         if _response.status_code == 429:
@@ -161,13 +157,12 @@ class AsyncCommonsClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_movie(self, movie_id: MovieId) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "DELETE",
-                urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/{movie_id}"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=60,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "DELETE",
+            urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/{movie_id}"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
         if 200 <= _response.status_code < 300:
             return
         if _response.status_code == 404:

@@ -5,7 +5,6 @@ import typing
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-import httpx
 import pydantic
 
 from ...core.api_error import ApiError
@@ -38,7 +37,7 @@ class PlaylistClient:
         optional_datetime: typing.Optional[dt.datetime] = None,
         request: PlaylistCreateRequest,
     ) -> Playlist:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/create"),
             params={
@@ -67,7 +66,7 @@ class PlaylistClient:
         optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]],
         multiple_field: typing.Union[str, typing.List[str]],
     ) -> typing.List[Playlist]:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
             params={
@@ -89,7 +88,7 @@ class PlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_playlist(self, service_param: int, playlist_id: PlaylistId) -> Playlist:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
             headers=self._client_wrapper.get_headers(),
@@ -113,7 +112,7 @@ class PlaylistClient:
     def update_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request: typing.Optional[UpdatePlaylistRequest] = None
     ) -> typing.Optional[Playlist]:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
             json=jsonable_encoder(request),
@@ -134,7 +133,7 @@ class PlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_playlist(self, service_param: int, playlist_id: PlaylistId) -> None:
-        _response = httpx.request(
+        _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
             headers=self._client_wrapper.get_headers(),
@@ -162,20 +161,17 @@ class AsyncPlaylistClient:
         optional_datetime: typing.Optional[dt.datetime] = None,
         request: PlaylistCreateRequest,
     ) -> Playlist:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "POST",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/create"),
-                params={
-                    "datetime": serialize_datetime(datetime),
-                    "optionalDatetime": serialize_datetime(optional_datetime)
-                    if optional_datetime is not None
-                    else None,
-                },
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/create"),
+            params={
+                "datetime": serialize_datetime(datetime),
+                "optionalDatetime": serialize_datetime(optional_datetime) if optional_datetime is not None else None,
+            },
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -194,20 +190,19 @@ class AsyncPlaylistClient:
         optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]],
         multiple_field: typing.Union[str, typing.List[str]],
     ) -> typing.List[Playlist]:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
-                params={
-                    "limit": limit,
-                    "otherField": other_field,
-                    "multiLineDocs": multi_line_docs,
-                    "optionalMultipleField": optional_multiple_field,
-                    "multipleField": multiple_field,
-                },
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
+            params={
+                "limit": limit,
+                "otherField": other_field,
+                "multiLineDocs": multi_line_docs,
+                "optionalMultipleField": optional_multiple_field,
+                "multipleField": multiple_field,
+            },
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -217,13 +212,12 @@ class AsyncPlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_playlist(self, service_param: int, playlist_id: PlaylistId) -> Playlist:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "GET",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -242,14 +236,13 @@ class AsyncPlaylistClient:
     async def update_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request: typing.Optional[UpdatePlaylistRequest] = None
     ) -> typing.Optional[Playlist]:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "PUT",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
-                json=jsonable_encoder(request),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "PUT",
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -264,13 +257,12 @@ class AsyncPlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_playlist(self, service_param: int, playlist_id: PlaylistId) -> None:
-        async with httpx.AsyncClient() as _client:
-            _response = await _client.request(
-                "DELETE",
-                urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
-                headers=self._client_wrapper.get_headers(),
-                timeout=None,
-            )
+        _response = await self._client_wrapper.httpx_client.request(
+            "DELETE",
+            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=None,
+        )
         if 200 <= _response.status_code < 300:
             return
         try:
