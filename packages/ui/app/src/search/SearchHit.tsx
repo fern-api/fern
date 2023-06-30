@@ -34,14 +34,14 @@ export const SearchHit: React.FC<SearchHit.Props> = (providedProps) => {
             <div className="flex flex-col">
                 <div className="flex flex-col items-start">
                     <Highlight
-                        className="text-text-default text-start group-hover:text-white"
+                        className="text-text-default line-clamp-1 text-start group-hover:text-white"
                         attribute="title"
                         hit={hit}
                     />
                 </div>
                 <div className="flex flex-col items-start">
                     <Highlight
-                        className="text-text-default line-clamp-2 text-start group-hover:text-white"
+                        className="text-text-default line-clamp-1 text-start group-hover:text-white"
                         attribute="subtitle"
                         hit={hit}
                     />
