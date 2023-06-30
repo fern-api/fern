@@ -1,5 +1,6 @@
 import { Icon } from "@blueprintjs/core";
 import { type MouseEventHandler } from "react";
+import { platform } from "../utils/platform";
 
 export declare namespace SidebarSearchBar {
     export interface Props {
@@ -18,9 +19,11 @@ export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) 
                 <div className="text-text-muted group-hover:text-text-default transition">Search</div>
             </div>
 
-            <div className="text-text-muted group-hover:text-text-default ml-auto text-start text-xs tracking-wide transition">
-                CMD+K
-            </div>
+            {platform !== "other" && (
+                <div className="text-text-muted group-hover:text-text-default ml-auto text-start text-xs tracking-wide transition">
+                    {platform === "mac" ? "CMD+K" : "CTRL+K"}
+                </div>
+            )}
         </button>
     );
 };
