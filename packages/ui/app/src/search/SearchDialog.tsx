@@ -1,30 +1,27 @@
 import { Icon } from "@blueprintjs/core";
 import { Dialog } from "@headlessui/react";
-import algolia from "algoliasearch/lite";
 import { Configure, Hits, InstantSearch, Pagination, SearchBox } from "react-instantsearch-hooks-web";
+import { useSearchService } from "../services/useSearchService";
 import { SearchHit } from "./SearchHit";
-
-if (!process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || !process.env.NEXT_PUBLIC_ALGOLIA_API_KEY) {
-    // TODO: Move this validation elsewhere
-    throw new Error("Missing Algolia variables.");
-}
-
-const searchClient = algolia(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_API_KEY);
 
 export declare namespace SearchDialog {
     export interface Props {
         isOpen: boolean;
         onClose: () => void;
-        searchIndexName: string;
     }
 }
 
 export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
-    const { isOpen, onClose, searchIndexName } = providedProps;
+    const { isOpen, onClose } = providedProps;
+    const searchService = useSearchService();
+
+    if (!searchService.isAvailable) {
+        return null;
+    }
 
     return (
         <Dialog as="div" className="fixed inset-0 z-10" open={isOpen} onClose={onClose}>
-            <InstantSearch searchClient={searchClient} indexName={searchIndexName}>
+            <InstantSearch searchClient={searchService.client} indexName={searchService.index}>
                 <div className="flex min-h-screen items-start justify-center p-4">
                     <Dialog.Overlay className="fixed inset-0 bg-gray-800/75" />
                     <div className="border-border mx-3 mb-8 mt-10 flex w-full max-w-2xl flex-col overflow-hidden rounded-md border bg-gray-900 text-left align-middle shadow-2xl backdrop-blur-xl">
