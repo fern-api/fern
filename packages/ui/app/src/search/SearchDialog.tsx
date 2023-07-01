@@ -4,27 +4,23 @@ import algolia from "algoliasearch/lite";
 import { Configure, Hits, InstantSearch, Pagination, SearchBox } from "react-instantsearch-hooks-web";
 import { SearchHit } from "./SearchHit";
 
-if (
-    !process.env.NEXT_PUBLIC_ALGOLIA_APP_ID ||
-    !process.env.NEXT_PUBLIC_ALGOLIA_API_KEY ||
-    !process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX
-) {
+if (!process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || !process.env.NEXT_PUBLIC_ALGOLIA_API_KEY) {
     // TODO: Move this validation elsewhere
     throw new Error("Missing Algolia variables.");
 }
 
 const searchClient = algolia(process.env.NEXT_PUBLIC_ALGOLIA_APP_ID, process.env.NEXT_PUBLIC_ALGOLIA_API_KEY);
-const searchIndexName = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_INDEX;
 
 export declare namespace SearchDialog {
     export interface Props {
         isOpen: boolean;
         onClose: () => void;
+        searchIndexName: string;
     }
 }
 
 export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
-    const { isOpen, onClose } = providedProps;
+    const { isOpen, onClose, searchIndexName } = providedProps;
 
     return (
         <Dialog as="div" className="fixed inset-0 z-10" open={isOpen} onClose={onClose}>

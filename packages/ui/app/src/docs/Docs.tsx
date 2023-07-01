@@ -16,12 +16,21 @@ export const Docs: React.FC = () => {
     useCustomTheme(docsDefinition);
     useKeyboardCommand("K", openSearchDialog);
 
+    const { algoliaSearchIndex } = docsDefinition;
+    const isSearchAvailable = !!algoliaSearchIndex;
+
     return (
         <div
             className="relative flex min-h-0 flex-1 flex-col bg-cover"
             style={{ backgroundImage: `url('${nebulaImage.src}')` }}
         >
-            <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />
+            {isSearchAvailable && (
+                <SearchDialog
+                    isOpen={isSearchDialogOpen}
+                    onClose={closeSearchDialog}
+                    searchIndexName={algoliaSearchIndex}
+                />
+            )}
             <div className="border-border bg-background sticky inset-x-0 top-0 border-b">
                 <Header />
                 <div className="flex md:hidden">
