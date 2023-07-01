@@ -3871,7 +3871,7 @@ __metadata:
     "@fern-api/react-commons": "workspace:*"
     "@fern-api/routing-utils": "workspace:*"
     "@fern-api/theme": "workspace:*"
-    "@fern-fern/registry-browser": ^0.0.1209
+    "@fern-fern/registry-browser": 0.0.1209
     "@fontsource/ibm-plex-mono": ^4.5.13
     "@headlessui/react": ^1.7.15
     "@types/jest": ^29.0.3
@@ -4280,7 +4280,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.0.1209, @fern-fern/registry-browser@npm:^0.0.1209":
+"@fern-fern/registry-browser@npm:0.0.1209":
   version: 0.0.1209
   resolution: "@fern-fern/registry-browser@npm:0.0.1209"
   dependencies:
