@@ -1,9 +1,4 @@
+import type * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { Hit as AlgoliaHit } from "instantsearch.js";
 
-// TODO: Import the type from our sdk
-export type SearchRecord = AlgoliaHit<{
-    type: "page" | "endpoint";
-    title: string;
-    subtitle: string;
-    path: string;
-}>;
+export type SearchRecord = AlgoliaHit<FernRegistryDocsRead.AlgoliaRecord & Record<string, unknown>>;
