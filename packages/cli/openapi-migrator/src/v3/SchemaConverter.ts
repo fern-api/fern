@@ -213,7 +213,7 @@ export class SchemaConverter {
 
                     if (!convertedPropertyType.startsWith("optional<")) {
                         const isRequired = schema.required != null && schema.required.includes(property);
-                        const isNullable = !isReferenceObject(propertyType) && propertyType.nullable;
+                        const isNullable = !isReferenceObject(propertyType) && (propertyType.nullable ?? false);
 
                         if (!isRequired || isNullable) {
                             convertedPropertyType = `optional<${convertedPropertyType}>`;

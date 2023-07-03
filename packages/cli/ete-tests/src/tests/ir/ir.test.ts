@@ -56,7 +56,8 @@ interface Fixture {
 
 describe("ir", () => {
     for (const fixture of FIXTURES) {
-        (fixture.only ? it.only : it)(
+        const { only = false } = fixture;
+        (only ? it.only : it)(
             `${JSON.stringify(fixture)}`,
             async () => {
                 const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));

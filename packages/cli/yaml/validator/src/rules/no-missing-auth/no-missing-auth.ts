@@ -18,7 +18,7 @@ export const NoMissingAuthRule: Rule = {
                     return [];
                 },
                 httpEndpoint: ({ endpoint }) => {
-                    if (endpoint.auth && !authIsDefined) {
+                    if (endpoint.auth != null && !authIsDefined) {
                         return [
                             {
                                 severity: "error",

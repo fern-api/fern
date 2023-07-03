@@ -12,7 +12,7 @@ export declare namespace SidebarItemLayout {
     }
 }
 
-export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className, title, isSelected }) => {
+export const SidebarItemLayout: React.FC<SidebarItemLayout.Props> = ({ className, title, isSelected = false }) => {
     const { isHovering, ...hoveringCallbacks } = useIsHovering();
 
     const sidebarContext = useContext(SidebarDepthContext);
