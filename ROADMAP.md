@@ -39,10 +39,10 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Add an API error type so that all RPC errors preserve the status code
 - [x] Serialize query parameters and headers
 - [x] Improve structured error formatting, where possible.
+- [x] Edit the file header to match Fern's other SDKs
 - [ ] If a `Client` type exists, prefix the filename with a `_` to avoid conflicts
 - [ ] Improve client constructor (i.e. reduce required parameters w/ options for environment and http client)
 - [ ] Introduce a better solution for using optional parameters (i.e. `stringPtr` helpers)
-- [ ] Edit the file header to match Fern's other SDKs
 - [ ] Generate documentation for all relevant types
 - [ ] Generate examples
 - [ ] Support optional client/endpoint variables (e.g. namespace)
