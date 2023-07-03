@@ -1,8 +1,8 @@
 import { Icon } from "@blueprintjs/core";
 import { Dialog } from "@headlessui/react";
-import { Configure, Hits, InstantSearch, Pagination, SearchBox } from "react-instantsearch-hooks-web";
+import { InstantSearch, SearchBox } from "react-instantsearch-hooks-web";
 import { useSearchService } from "../services/useSearchService";
-import { SearchHit } from "./SearchHit";
+import { SearchHits } from "./SearchHits";
 
 export declare namespace SearchDialog {
     export interface Props {
@@ -42,16 +42,9 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                                 }}
                             />
                         </div>
-                        <Hits hitComponent={SearchHit} className="border-border border-t p-2" />
+                        <SearchHits />
                     </div>
                 </div>
-
-                {/* Algolia has incorrectly typed the props for this component so we need to ignore the TS error for now. */}
-                {/* eslint-disable-next-line */}
-                {/* @ts-ignore */}
-                <Configure hitsPerPage={6} />
-
-                <Pagination />
             </InstantSearch>
         </Dialog>
     );
