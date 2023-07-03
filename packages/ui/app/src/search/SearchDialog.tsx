@@ -29,6 +29,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                             <Icon className="text-text-muted" icon="search" size={14} />
                             <SearchBox
                                 inputMode="text"
+                                autoFocus
                                 placeholder="Find something..."
                                 classNames={{
                                     root: "w-full",
