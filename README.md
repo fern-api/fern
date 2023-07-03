@@ -134,7 +134,7 @@ All SDKs are generated server side, so you don't have to worry about installing 
 fern login
 ```
 
-You'll be prompted to log in in a new browser tab using your GitHub account.
+You'll be prompted to log in to your GitHub account using your preferred browser.
 
 After you have logged in, simply run the generate command to generate your SDKs:
 
@@ -148,7 +148,7 @@ It is possible to generate the code on your own machine by using the `--local` f
 
 ## Adding Generators
 
-You can add ﻿generators using the `fern add`. You can have multiple generators for a single project, e.g. a single `fern generate` call could generate SDKs in Python, TypeScript and Java all in one go.
+You can add generators using the `fern add`. You can have multiple generators for a single project, e.g. a single `fern generate` call could generate SDKs in Python, TypeScript and Java all in one go.
 
 For instance, if you'd like to add a TypeScript generator to your project, simply run:
 
@@ -166,7 +166,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.6.4
+        version: 0.7.1
         output:
           location: local-file-system
           path: ../../generated/typescript
@@ -176,22 +176,22 @@ Note the `local-file-system` output may not be present by default. If it's not, 
 
 ## Publishing Clients
 
-Fern supports automatically publishing clients to an NPM registry. By default, Node packages are published to `npm.buildwithfern.com` and are named `@organisation-fern/package`
+Fern supports automatically publishing clients to an NPM registry. By default, Node packages are published to `npm.buildwithfern.com` and are named `@organization-fern/package`
 
 That's all there's to it.
 
 ## Next Steps
 
-Define _your_ API in Fern. Check out our [﻿Definition Documentation](https://www.buildwithfern.com/docs/definition) to learn more.
+Define _your_ API in Fern. Check out our [Definition Documentation](https://www.buildwithfern.com/docs/definition) to learn more.
 
 # Examples
 
 Our Plant Store provides a full example of both an API defined in Fern, as well as the SDKs generated from it in both TypeScript and Java. We have also included the generated Postman Collections and OpenAPI Specification that was generated from the Fern spec.
 
-- [﻿Generated TypeScript SDK](https://github.com/fern-api/plantstore-node)
-- [﻿Generated Java SDK](https://github.com/fern-api/plantstore-java)
-- [﻿Generated Postman Collection](https://github.com/fern-api/plantstore-postman)
-- [﻿Generated OpenAPI spec](https://github.com/fern-api/plantstore-openapi)
+- [Generated TypeScript SDK](https://github.com/fern-api/plantstore-node)
+- [Generated Java SDK](https://github.com/fern-api/plantstore-java)
+- [Generated Postman Collection](https://github.com/fern-api/plantstore-postman)
+- [Generated OpenAPI spec](https://github.com/fern-api/plantstore-openapi)
 
 # CLI reference
 
@@ -220,25 +220,25 @@ By default, Fern will delete the container after running. To keep the container 
 
 ---
 
-| Command         | Description                                                                                                                                                                                                      |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fern init`     | Initialised a new Fern workspace.                                                                                                                                                                                |
-| `fern check`    | Runs validation on the current workspace, ensuring all specifications are valid.                                                                                                                                 |
-| `fern add`      | Adds a generator to the Fern compiler. You can view the full list of supported generators in our [﻿docs](https://www.buildwithfern.com/docs/compiler/generators).                                                |
-| `fern register` | _Advanced feature_ allowing for the registration of dependent APIs, i.e APIs that depend on this API to function. Read more in our [﻿docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis). |
+| Command         | Description                                                                                                                                                                                                     |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fern init`     | Initialised a new Fern workspace.                                                                                                                                                                               |
+| `fern check`    | Runs validation on the current workspace, ensuring all specifications are valid.                                                                                                                                |
+| `fern add`      | Adds a generator to the Fern compiler. You can view the full list of supported generators in our [docs](https://www.buildwithfern.com/docs/compiler/generators).                                                |
+| `fern register` | _Advanced feature_ allowing for the registration of dependent APIs, i.e APIs that depend on this API to function. Read more in our [docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis). |
 
 # Documentation
 
-Our full documentation can be found [﻿here](https://www.buildwithfern.com/docs).
+Our full documentation can be found [here](https://www.buildwithfern.com/docs).
 
 # Community
 
-[﻿Join our Discord!](https://discord.com/invite/JkkXumPzcG) We are always here to answer questions and help you get the most use out of Fern.
+[Join our Discord!](https://discord.com/invite/JkkXumPzcG) We are always here to answer questions and help you get the most use out of Fern.
 
 # Contributing
 
-We highly value community contributions. See our [﻿CONTRIBUTING.md](/CONTRIBUTING.md) document for more info on how you can contribute!
+We highly value community contributions. See our [CONTRIBUTING.md](/CONTRIBUTING.md) document for more info on how you can contribute!
 
 # Attribution
 
-Thanks to the folks at [﻿Twemoji](https://twemoji.twitter.com/), an open source project, who created the graphic that we use as our logo.
+Thanks to the folks at [Twemoji](https://twemoji.twitter.com/), an open source project, who created the graphic that we use as our logo.
