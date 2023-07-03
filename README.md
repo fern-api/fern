@@ -1,11 +1,12 @@
-<a href="https://www.buildwithfern.com/">
-  <img src="header.png" alt="header" />
-</a>
-
 <div align="center">
-  <a href="https://www.buildwithfern.com/docs/intro" alt="documentation">Documentation</a>
-  <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-  <a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Join the Discord</a>
+  <a href="https://www.buildwithfern.com/">
+    <img src="fern.png" height="120" align="center" alt="header" />
+  </a>
+
+<a href="https://www.buildwithfern.com/docs/intro" alt="documentation">Documentation</a>
+<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
+<a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Join the Discord</a>
+
 </div>
 
 <br />
@@ -13,8 +14,6 @@
 <div align="center">
 Backed by Y Combinator
 </div>
-
----
 
 # Fern
 
@@ -50,16 +49,12 @@ If you want to read more about where Fern and OpenAPI differ, read [﻿Fern vs. 
 
 **TL;DR: we differ from OpenAPI in these areas:**
 
--   [﻿New features in specification](https://www.buildwithfern.com/docs/comparison-with-openapi#new-features-in-specification)
-    
--   [﻿Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
-    
--   [﻿Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
-    
--   [﻿Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
-    
--   [﻿Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
-    
+- [﻿New features in specification](https://www.buildwithfern.com/docs/comparison-with-openapi#new-features-in-specification)
+- [﻿Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
+- [﻿Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
+- [﻿Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
+- [﻿Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
+
 # Getting Started
 
 The Fern tools are available as a Node package. To install it, simply run:
@@ -81,6 +76,7 @@ fern init --openapi ./path/to/openapi.yml
 ```
 
 This will initialise a Fern workspace in the current folder, including the `./fern` directory that Fern will use to hold its resources. This will create roughly the following folder structure in your project:
+
 ```
 fern/
 ├─ fern.config.json # root-level configuration
@@ -188,12 +184,10 @@ Define _your_ API in Fern. Check out our [﻿Definition Documentation](https://w
 
 Our Plant Store provides a full example of both an API defined in Fern, as well as the SDKs generated from it in both TypeScript and Java. We have also included the generated Postman Collections and OpenAPI Specification that was generated from the Fern spec.
 
--   [﻿Generated TypeScript SDK](https://github.com/fern-api/plantstore-node)    
--   [﻿Generated Java SDK](https://github.com/fern-api/plantstore-java)    
--   [﻿Generated Postman Collection](https://github.com/fern-api/plantstore-postman)    
--   [﻿Generated OpenAPI spec](https://github.com/fern-api/plantstore-openapi)
-    
-
+- [﻿Generated TypeScript SDK](https://github.com/fern-api/plantstore-node)
+- [﻿Generated Java SDK](https://github.com/fern-api/plantstore-java)
+- [﻿Generated Postman Collection](https://github.com/fern-api/plantstore-postman)
+- [﻿Generated OpenAPI spec](https://github.com/fern-api/plantstore-openapi)
 
 # CLI reference
 
@@ -220,14 +214,14 @@ You can specify a version using the `--version` option. This version string is u
 Generation runs in the cloud by default. If you want to run it on your local machine, you can use the `--local` option. This will run each generator in a Docker container.
 By default, Fern will delete the container after running. To keep the container around (e.g. to look at the generator's logs), use the `--keepDocker` option.
 
-----------
+---
 
-| Command                | Description                                                                                                                                                                                                     |
-|------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `fern init`            | Initialised a new Fern workspace.                                                                                                                                                                               |
-| `fern check`           | Runs validation on the current workspace, ensuring all specifications are valid.                                                                                                                                |
-| `fern add`             | Adds a generator to the Fern compiler. You can view the full list of supported generators in our [﻿docs](https://www.buildwithfern.com/docs/compiler/generators).                                                |
-| `fern register`        | *Advanced feature* allowing for the registration of dependent APIs, i.e APIs that depend on this API to function. Read more in our [﻿docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis). |
+| Command         | Description                                                                                                                                                                                                      |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fern init`     | Initialised a new Fern workspace.                                                                                                                                                                                |
+| `fern check`    | Runs validation on the current workspace, ensuring all specifications are valid.                                                                                                                                 |
+| `fern add`      | Adds a generator to the Fern compiler. You can view the full list of supported generators in our [﻿docs](https://www.buildwithfern.com/docs/compiler/generators).                                                |
+| `fern register` | _Advanced feature_ allowing for the registration of dependent APIs, i.e APIs that depend on this API to function. Read more in our [﻿docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis). |
 
 # Documentation
 
