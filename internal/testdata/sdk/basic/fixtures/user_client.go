@@ -31,7 +31,11 @@ type userClient struct {
 }
 
 func (u *userClient) Get(ctx context.Context) (string, error) {
-	endpointURL := u.baseURL
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := baseURL
 
 	var response string
 	if err := core.DoRequest(

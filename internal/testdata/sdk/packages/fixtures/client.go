@@ -40,7 +40,11 @@ type client struct {
 }
 
 func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
-	endpointURL := c.baseURL + "/" + "foo"
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "foo"
 
 	var response []*Foo
 	if err := core.DoRequest(
@@ -59,7 +63,11 @@ func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
 }
 
 func (c *client) PostFoo(ctx context.Context, request *Foo) (*Foo, error) {
-	endpointURL := c.baseURL + "/" + "foo"
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "foo"
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)

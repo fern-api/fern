@@ -49,7 +49,11 @@ type client struct {
 }
 
 func (c *client) GetTasks(ctx context.Context) ([]*Task, error) {
-	endpointURL := c.baseURL + "/" + "tasks"
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "tasks"
 
 	var response []*Task
 	if err := core.DoRequest(
@@ -68,7 +72,11 @@ func (c *client) GetTasks(ctx context.Context) ([]*Task, error) {
 }
 
 func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error) {
-	endpointURL := c.baseURL + "/" + "tasks"
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "tasks"
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -113,7 +121,11 @@ func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 }
 
 func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v", taskId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -151,7 +163,11 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 }
 
 func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task) (*Task, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v", taskId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -203,7 +219,11 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task)
 }
 
 func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v", taskId)
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v", taskId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -240,7 +260,11 @@ func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 }
 
 func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"tasks/%v/run", taskId)
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v/run", taskId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -285,7 +309,11 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, erro
 }
 
 func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) ([]*Task, error) {
-	endpointURL := c.baseURL + "/" + "tasks/batch-create"
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "tasks/batch-create"
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -344,7 +372,11 @@ func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) (
 }
 
 func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
-	endpointURL := c.baseURL + "/" + "tasks/batch-delete"
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "tasks/batch-delete"
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -388,7 +420,11 @@ func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
 }
 
 func (c *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
-	endpointURL := c.baseURL + "/" + "schedules"
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "schedules"
 
 	var response []*Schedule
 	if err := core.DoRequest(
@@ -407,7 +443,11 @@ func (c *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
 }
 
 func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Schedule, error) {
-	endpointURL := c.baseURL + "/" + "schedules"
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "schedules"
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -445,7 +485,11 @@ func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Sche
 }
 
 func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Schedule, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v", scheduleId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -483,7 +527,11 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Sc
 }
 
 func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, request *Schedule) (*Schedule, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v", scheduleId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -528,7 +576,11 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, re
 }
 
 func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) error {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v", scheduleId)
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v", scheduleId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -565,7 +617,11 @@ func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) e
 }
 
 func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id) ([]*Task, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"schedules/%v/tasks", scheduleId)
+	baseURL := "https://api.mergent.co/v2"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v/tasks", scheduleId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)

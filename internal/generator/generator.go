@@ -304,7 +304,13 @@ func (g *Generator) generateService(
 		ir.Types,
 		ir.Errors,
 	)
-	if err := writer.WriteClient(irService.Endpoints, irSubpackages, irService.Name.FernFilepath, namePrefix); err != nil {
+	if err := writer.WriteClient(
+		irService.Endpoints,
+		irSubpackages,
+		ir.Environments,
+		irService.Name.FernFilepath,
+		namePrefix,
+	); err != nil {
 		return nil, err
 	}
 	file, err := writer.File()
@@ -342,7 +348,13 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		ir.Types,
 		ir.Errors,
 	)
-	if err := writer.WriteClient(nil /* endpoints */, irSubpackages, irSubpackage.FernFilepath, namePrefix); err != nil {
+	if err := writer.WriteClient(
+		nil,
+		irSubpackages,
+		nil,
+		irSubpackage.FernFilepath,
+		namePrefix,
+	); err != nil {
 		return nil, err
 	}
 	return writer.File()
@@ -364,7 +376,13 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		ir.Types,
 		ir.Errors,
 	)
-	if err := writer.WriteClient(nil /* endpoints */, irSubpackages, fernFilepath, nil /* namePrefix */); err != nil {
+	if err := writer.WriteClient(
+		nil,
+		irSubpackages,
+		nil,
+		fernFilepath,
+		nil,
+	); err != nil {
 		return nil, err
 	}
 	return writer.File()

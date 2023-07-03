@@ -4,48 +4,48 @@ package api
 
 import (
 	context "context"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/auth/fixtures/core"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/multi-environments/fixtures/core"
 	http "net/http"
 )
 
-type UserClient interface {
-	Get(ctx context.Context) (string, error)
+type PlantClient interface {
+	GetPlant(ctx context.Context) (string, error)
 }
 
-func NewUserClient(opts ...core.ClientOption) UserClient {
+func NewPlantClient(opts ...core.ClientOption) PlantClient {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &userClient{
+	return &plantClient{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }
 
-type userClient struct {
+type plantClient struct {
 	baseURL    string
 	httpClient core.HTTPClient
 	header     http.Header
 }
 
-func (u *userClient) Get(ctx context.Context) (string, error) {
-	baseURL := ""
-	if u.baseURL != "" {
-		baseURL = u.baseURL
+func (p *plantClient) GetPlant(ctx context.Context) (string, error) {
+	baseURL := "https://plants.yoursite.com"
+	if p.baseURL != "" {
+		baseURL = p.baseURL
 	}
-	endpointURL := baseURL
+	endpointURL := baseURL + "/" + "/plants"
 
 	var response string
 	if err := core.DoRequest(
 		ctx,
-		u.httpClient,
+		p.httpClient,
 		endpointURL,
 		http.MethodGet,
 		nil,
 		&response,
-		u.header,
+		p.header,
 		nil,
 	); err != nil {
 		return response, err

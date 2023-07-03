@@ -36,7 +36,11 @@ type userClient struct {
 }
 
 func (u *userClient) SetName(ctx context.Context, userId string, request string) (string, error) {
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name", userId)
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name", userId)
 
 	var response string
 	if err := core.DoRequest(
@@ -55,7 +59,11 @@ func (u *userClient) SetName(ctx context.Context, userId string, request string)
 }
 
 func (u *userClient) SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error) {
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v2", userId)
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v2", userId)
 
 	var response string
 	if err := core.DoRequest(
@@ -74,7 +82,11 @@ func (u *userClient) SetNameV2(ctx context.Context, userId string, request *SetN
 }
 
 func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error) {
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v3", userId)
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v3", userId)
 
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string
@@ -99,7 +111,11 @@ func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetN
 }
 
 func (u *userClient) SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error) {
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v4", userId)
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v4", userId)
 
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string
@@ -124,7 +140,11 @@ func (u *userClient) SetNameV4(ctx context.Context, userId string, request *SetN
 }
 
 func (u *userClient) SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error) {
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v/set-name-v5", userId)
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v5", userId)
 
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string

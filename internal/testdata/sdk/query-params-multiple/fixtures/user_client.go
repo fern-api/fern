@@ -33,7 +33,11 @@ type userClient struct {
 }
 
 func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersRequest) (string, error) {
-	endpointURL := u.baseURL + "/" + "/users/all"
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := baseURL + "/" + "/users/all"
 
 	queryParams := make(url.Values)
 	var tagDefaultValue int

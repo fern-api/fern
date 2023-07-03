@@ -43,7 +43,11 @@ type client struct {
 }
 
 func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
-	endpointURL := c.baseURL + "/" + "foo"
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "foo"
 
 	var response []*Foo
 	if err := core.DoRequest(
@@ -62,7 +66,11 @@ func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
 }
 
 func (c *client) PostFoo(ctx context.Context, request *Bar) (*Foo, error) {
-	endpointURL := c.baseURL + "/" + "foo"
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "foo"
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -107,7 +115,11 @@ func (c *client) PostFoo(ctx context.Context, request *Bar) (*Foo, error) {
 }
 
 func (c *client) GetFooFooId(ctx context.Context, fooId Id) (*Foo, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v", fooId)
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -145,7 +157,11 @@ func (c *client) GetFooFooId(ctx context.Context, fooId Id) (*Foo, error) {
 }
 
 func (c *client) PatchFooFooId(ctx context.Context, fooId Id, request *Foo) (*Foo, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v", fooId)
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -197,7 +213,11 @@ func (c *client) PatchFooFooId(ctx context.Context, fooId Id, request *Foo) (*Fo
 }
 
 func (c *client) DeleteFooFooId(ctx context.Context, fooId Id) error {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v", fooId)
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -234,7 +254,11 @@ func (c *client) DeleteFooFooId(ctx context.Context, fooId Id) error {
 }
 
 func (c *client) PostFooFooIdRun(ctx context.Context, fooId Id) (*Foo, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"foo/%v/run", fooId)
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v/run", fooId)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -279,7 +303,11 @@ func (c *client) PostFooFooIdRun(ctx context.Context, fooId Id) (*Foo, error) {
 }
 
 func (c *client) PostFooBatchCreate(ctx context.Context, request []*Bar) ([]*Foo, error) {
-	endpointURL := c.baseURL + "/" + "foo/batch-create"
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "foo/batch-create"
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -338,7 +366,11 @@ func (c *client) PostFooBatchCreate(ctx context.Context, request []*Bar) ([]*Foo
 }
 
 func (c *client) PostFooBatchDelete(ctx context.Context, request []Id) error {
-	endpointURL := c.baseURL + "/" + "foo/batch-delete"
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "foo/batch-delete"
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)

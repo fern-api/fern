@@ -7,7 +7,10 @@ import (
 	http "net/http"
 )
 
-type Client interface{}
+type Client interface {
+	Auth() AuthClient
+	Plant() PlantClient
+}
 
 func NewClient(opts ...core.ClientOption) Client {
 	options := core.NewClientOptions()
@@ -15,14 +18,26 @@ func NewClient(opts ...core.ClientOption) Client {
 		opt(options)
 	}
 	return &client{
-		baseURL:    options.BaseURL,
-		httpClient: options.HTTPClient,
-		header:     options.ToHeader(),
+		baseURL:     options.BaseURL,
+		httpClient:  options.HTTPClient,
+		header:      options.ToHeader(),
+		authClient:  NewAuthClient(opts...),
+		plantClient: NewPlantClient(opts...),
 	}
 }
 
 type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
+	baseURL     string
+	httpClient  core.HTTPClient
+	header      http.Header
+	authClient  AuthClient
+	plantClient PlantClient
+}
+
+func (c *client) Auth() AuthClient {
+	return c.authClient
+}
+
+func (c *client) Plant() PlantClient {
+	return c.plantClient
 }

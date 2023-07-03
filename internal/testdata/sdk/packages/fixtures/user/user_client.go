@@ -31,7 +31,11 @@ type userClient struct {
 }
 
 func (u *userClient) List(ctx context.Context) ([]*User, error) {
-	endpointURL := u.baseURL + "/" + "users"
+	baseURL := "https://api.foo.io/v1"
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := baseURL + "/" + "users"
 
 	var response []*User
 	if err := core.DoRequest(

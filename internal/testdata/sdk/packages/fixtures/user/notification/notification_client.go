@@ -32,7 +32,11 @@ type notificationClient struct {
 }
 
 func (n *notificationClient) List(ctx context.Context, userId string) ([]*Notification, error) {
-	endpointURL := fmt.Sprintf(n.baseURL+"/"+"users/%v/notifications", userId)
+	baseURL := "https://api.foo.io/v1"
+	if n.baseURL != "" {
+		baseURL = n.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/notifications", userId)
 
 	var response []*Notification
 	if err := core.DoRequest(

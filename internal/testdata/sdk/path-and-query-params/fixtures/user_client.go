@@ -33,7 +33,11 @@ type userClient struct {
 }
 
 func (u *userClient) GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error) {
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"/users/%v", userId)
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v", userId)
 
 	queryParams := make(url.Values)
 	var shallowDefaultValue *bool

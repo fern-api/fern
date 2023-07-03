@@ -37,7 +37,11 @@ type userClient struct {
 }
 
 func (u *userClient) Get(ctx context.Context, id string) (string, error) {
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"%v", id)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -96,7 +100,11 @@ func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 }
 
 func (u *userClient) Update(ctx context.Context, id string, request string) (string, error) {
-	endpointURL := fmt.Sprintf(u.baseURL+"/"+"%v", id)
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"%v", id)
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)

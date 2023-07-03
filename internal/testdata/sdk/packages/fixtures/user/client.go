@@ -39,7 +39,11 @@ type client struct {
 }
 
 func (c *client) GetUser(ctx context.Context, userId string) (*User, error) {
-	endpointURL := fmt.Sprintf(c.baseURL+"/"+"users/%v", userId)
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
 	response := new(User)
 	if err := core.DoRequest(

@@ -144,7 +144,13 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 }
 
 // WriteClient writes a client for interacting with the given service.
-func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*ir.Subpackage, fernFilepath *ir.FernFilepath, namePrefix *ir.Name) error {
+func (f *fileWriter) WriteClient(
+	irEndpoints []*ir.HttpEndpoint,
+	subpackages []*ir.Subpackage,
+	environmentsConfig *ir.EnvironmentsConfig,
+	fernFilepath *ir.FernFilepath,
+	namePrefix *ir.Name,
+) error {
 	var (
 		clientName     = "Client"
 		clientImplName = "client"
@@ -158,7 +164,7 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, receiver)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, receiver)
 		if err != nil {
 			return err
 		}
@@ -252,7 +258,19 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 	for _, endpoint := range endpoints {
 		f.P("func (", receiver, " *", clientImplName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
 		// Compose the URL, including any query parameters.
-		f.P(endpoint.URLStatement)
+		f.P(fmt.Sprintf("baseURL := %q", endpoint.BaseURL))
+		f.P("if ", fmt.Sprintf("%s.baseURL", receiver), ` != "" {`)
+		f.P("baseURL = ", fmt.Sprintf("%s.baseURL", receiver))
+		f.P("}")
+		baseURLVariable := "baseURL"
+		if len(endpoint.PathSuffix) > 0 {
+			baseURLVariable = `baseURL + "/" + ` + fmt.Sprintf("%q", endpoint.PathSuffix)
+		}
+		urlStatement := fmt.Sprintf("endpointURL := %s", baseURLVariable)
+		if len(endpoint.PathParameterNames) > 0 {
+			urlStatement = "endpointURL := fmt.Sprintf(" + baseURLVariable + ", " + endpoint.PathParameterNames + ")"
+		}
+		f.P(urlStatement)
 		if len(endpoint.QueryParameters) > 0 {
 			f.P()
 			f.P("queryParams := make(url.Values)")
@@ -391,7 +409,8 @@ type endpoint struct {
 	ReturnValues              string
 	SuccessfulReturnValues    string
 	ErrorReturnValues         string
-	URLStatement              string
+	BaseURL                   string
+	PathSuffix                string
 	Method                    string
 	ErrorDecoderParameterName string
 	Errors                    ir.ResponseErrors
@@ -400,7 +419,12 @@ type endpoint struct {
 }
 
 // signatureForEndpoint returns a signature template for the given endpoint.
-func (f *fileWriter) endpointFromIR(fernFilepath *ir.FernFilepath, irEndpoint *ir.HttpEndpoint, receiver string) (*endpoint, error) {
+func (f *fileWriter) endpointFromIR(
+	fernFilepath *ir.FernFilepath,
+	irEndpoint *ir.HttpEndpoint,
+	irEnvironmentsConfig *ir.EnvironmentsConfig,
+	receiver string,
+) (*endpoint, error) {
 	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 
 	// Add path parameters and request body, if any.
@@ -465,6 +489,19 @@ func (f *fileWriter) endpointFromIR(fernFilepath *ir.FernFilepath, irEndpoint *i
 		errorReturnValues = "err"
 	}
 
+	// Determine this endpoint's base URL based on the environment, if any.
+	var environmentID string
+	if irEnvironmentsConfig != nil && irEnvironmentsConfig.DefaultEnvironment != nil {
+		environmentID = *irEnvironmentsConfig.DefaultEnvironment
+	}
+	if irEndpoint.BaseUrl != nil {
+		environmentID = *irEndpoint.BaseUrl
+	}
+	baseURL, err := environmentURLFromID(irEnvironmentsConfig, environmentID)
+	if err != nil {
+		return nil, err
+	}
+
 	// Consolidate the irEndpoint's full path into a path suffix that
 	// can be applied to the irEndpoint at construction time.
 	var pathSuffix string
@@ -480,16 +517,6 @@ func (f *fileWriter) endpointFromIR(fernFilepath *ir.FernFilepath, irEndpoint *i
 				pathSuffix += part.Tail
 			}
 		}
-	}
-
-	// Determine the URL statement used in the endpoint implementation.
-	baseURL := fmt.Sprintf("%s.baseURL", receiver)
-	if len(pathSuffix) > 0 {
-		baseURL = baseURL + ` + "/" + ` + fmt.Sprintf("%q", pathSuffix)
-	}
-	urlStatement := fmt.Sprintf("endpointURL := %s", baseURL)
-	if len(pathParameterNames) > 0 {
-		urlStatement = "endpointURL := fmt.Sprintf(" + baseURL + ", " + strings.Join(pathParameterNames, ", ") + ")"
 	}
 
 	// An error decoder is required when there are endpoint-specific errors.
@@ -511,7 +538,8 @@ func (f *fileWriter) endpointFromIR(fernFilepath *ir.FernFilepath, irEndpoint *i
 		ReturnValues:              signatureReturnValues,
 		SuccessfulReturnValues:    successfulReturnValues,
 		ErrorReturnValues:         errorReturnValues,
-		URLStatement:              urlStatement,
+		BaseURL:                   baseURL,
+		PathSuffix:                pathSuffix,
 		Method:                    irMethodToMethodEnum(irEndpoint.Method),
 		ErrorDecoderParameterName: errorDecoderParameterName,
 		Errors:                    irEndpoint.Errors,
@@ -815,6 +843,46 @@ func (e *environmentsValueVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrl
 			e.writer.P(baseURLs[environmentURL.ID], fmt.Sprintf(": %q,", environmentURL.URL))
 		}
 		e.writer.P("},")
+	}
+	return nil
+}
+
+func environmentURLFromID(environmentsConfig *ir.EnvironmentsConfig, id ir.EnvironmentBaseUrlId) (ir.EnvironmentUrl, error) {
+	if environmentsConfig == nil {
+		return "", nil
+	}
+	urlVisitor := &environmentsURLVisitor{
+		id: id,
+	}
+	if err := environmentsConfig.Environments.Accept(urlVisitor); err != nil {
+		return "", err
+	}
+	return urlVisitor.value, nil
+}
+
+type environmentsURLVisitor struct {
+	value ir.EnvironmentUrl
+	id    ir.EnvironmentBaseUrlId
+}
+
+func (e *environmentsURLVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUrlEnvironments) error {
+	for _, environment := range url.Environments {
+		if environment.Id == e.id {
+			e.value = environment.Url
+			return nil
+		}
+	}
+	return nil
+}
+
+func (e *environmentsURLVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrlsEnvironments) error {
+	for _, environment := range url.Environments {
+		for id, environmentURL := range environment.Urls {
+			if id == e.id {
+				e.value = environmentURL
+				return nil
+			}
+		}
 	}
 	return nil
 }
