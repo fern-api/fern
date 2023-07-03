@@ -52,9 +52,9 @@ We currently supported:
 - Spring Boot
 - FastAPI
 
-### 🌿 Developer Resources
+### 🌿 Documentation
 
-Fern supports the generation of developer resources such as a Postman collection, allowing you to easily keep your API and Postman Workspace synchronized.
+Fern provides first class support for generating documentation, ranging from [fully features documentation websites](https://docs.vellum.ai/api-reference/generate) to Postman Collections. This allows you to always keep your documentation, API and Postman collections in sync with ease.
 
 ## Fern and OpenAPI
 
@@ -201,12 +201,12 @@ Define _your_ API in Fern. Check out our [Definition Documentation](https://www.
 
 # Examples
 
-Our Plant Store provides a full example of both an API defined in Fern, as well as the SDKs generated from it in both TypeScript and Java. We have also included the generated Postman Collections and OpenAPI Specification that was generated from the Fern spec.
+These are some real world examples of Fern generating documentation and SDKs used in production:
 
-- [Generated TypeScript SDK](https://github.com/fern-api/plantstore-node)
-- [Generated Java SDK](https://github.com/fern-api/plantstore-java)
-- [Generated Postman Collection](https://github.com/fern-api/plantstore-postman)
-- [Generated OpenAPI spec](https://github.com/fern-api/plantstore-openapi)
+* [Flatfile TypeScript SDK](https://github.com/FlatFilers/flatfile-node)
+* [Vellum Python SDK](https://pypi.org/project/vellum-ai/)
+* [Vellum Docs](https://docs.vellum.ai/api-reference/generate)
+* [Flipt Java SDK](https://github.com/flipt-io/flipt-java)
 
 # CLI reference
 
