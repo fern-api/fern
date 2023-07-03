@@ -19,11 +19,11 @@ Backed by Y Combinator
 
 # Fern
 
-**Fern** is an **open source toolkit** for defining, building and generating **APIs, documentation and SDKs**. Bring an existing OpenAPI definition or describe your endpoints in a Fern specification. Fern generates backend code, specifications in various formats, and client libraries with a single command.
+Fern is an open source toolkit for designing, building and consuming REST APIs. Fern can be used in your existing projects through OpenAPI, and integrate effortlessly into your existing workflows. It can also serve as the basis of your API development, by describing your endpoints in a Fern specification, and having Fern generate your API backend code, as well as SDKs.
 
-This repository contains the Fern **compiler**. The compiler transforms an API definition into various code artifacts, such as client libraries, SDKs, or even full-fledged **Express**, **Fast API** or **Spring Boot** backends.
+This repository contains the Fern compiler. The compiler takes an API definition, either in Fern or OpenAPI format, and turns it into code artifacts such as client libraries and SDKs, or even full fledged **Express**, **Spring Boot** or **FastAPI** backends. Fern's compiler is modular and extensible, allowing it to build several artifact types using a single command. Fern focuses on generating idiomatic code, following language-specific idioms and standards.
 
-In short, Fern takes care of the boilerplate associated with developing APIs, so you can **focus on delivering business value**.
+Fern takes care of the boilerplate associated with developing APIs, so you can **focus on delivering value**.
 
 # Capabilities
 
@@ -35,7 +35,7 @@ Fern generates idiomatic SDKs you can use to interact with your APIs, or publish
 
 ### 🌿 Backend Code Generation
 
-Define your API, and Fern will generate the boilerplate for you. All the generated code is validated at build time, ensuring your all your endpoints and their data are being served correctly.
+Define your API, and Fern will generate models, endpoints and boilerplate application code. All the generated code is validated at build time, ensuring your all your endpoints and their data are being served correctly.
 
 ### 🌿 Developer Resources
 
@@ -51,11 +51,11 @@ If you want to read more about where Fern and OpenAPI differ, read [﻿Fern vs. 
 
 **TL;DR: we differ from OpenAPI in these areas:**
 
-- [﻿New features in specification](https://www.buildwithfern.com/docs/comparison-with-openapi#new-features-in-specification)
-- [﻿Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
-- [﻿Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
-- [﻿Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
-- [﻿Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
+- [New features in specification](https://www.buildwithfern.com/docs/comparison-with-openapi#new-features-in-specification)
+- [Quality of code generation](https://www.buildwithfern.com/docs/comparison-with-openapi#quality-of-code-generation)
+- [Focus on server-side API development](https://www.buildwithfern.com/docs/comparison-with-openapi#focus-on-server-side-api-development)
+- [Change management](https://www.buildwithfern.com/docs/comparison-with-openapi#change-management)
+- [Cloud-based code generation and publishing](https://www.buildwithfern.com/docs/comparison-with-openapi#cloud-based-code-generation-and-publishing)
 
 # Getting Started
 
