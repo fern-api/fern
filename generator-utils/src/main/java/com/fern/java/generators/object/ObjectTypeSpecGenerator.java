@@ -58,6 +58,7 @@ public final class ObjectTypeSpecGenerator {
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addFields(allEnrichedProperties.stream()
                         .map(EnrichedObjectProperty::fieldSpec)
+                        .flatMap(Optional::stream)
                         .collect(Collectors.toList()))
                 .addSuperinterfaces(interfaces.stream()
                         .map(ImplementsInterface::interfaceClassName)
@@ -90,12 +91,15 @@ public final class ObjectTypeSpecGenerator {
 
     private MethodSpec generatePrivateConstructor() {
         MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder();
-        allEnrichedProperties.stream().map(EnrichedObjectProperty::fieldSpec).forEach(fieldSpec -> {
-            ParameterSpec parameterSpec =
-                    ParameterSpec.builder(fieldSpec.type, fieldSpec.name).build();
-            constructorBuilder.addParameter(parameterSpec);
-            constructorBuilder.addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name);
-        });
+        allEnrichedProperties.stream()
+                .map(EnrichedObjectProperty::fieldSpec)
+                .flatMap(Optional::stream)
+                .forEach(fieldSpec -> {
+                    ParameterSpec parameterSpec = ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
+                            .build();
+                    constructorBuilder.addParameter(parameterSpec);
+                    constructorBuilder.addStatement("this.$L = $L", fieldSpec.name, fieldSpec.name);
+                });
         return constructorBuilder.build();
     }
 
@@ -104,12 +108,14 @@ public final class ObjectTypeSpecGenerator {
                 objectClassName,
                 allEnrichedProperties.stream()
                         .map(EnrichedObjectProperty::fieldSpec)
+                        .flatMap(Optional::stream)
                         .collect(Collectors.toList()));
     }
 
     private Optional<MethodSpec> generateHashCode() {
         return ObjectMethodFactory.createHashCodeMethod(allEnrichedProperties.stream()
                 .map(EnrichedObjectProperty::fieldSpec)
+                .flatMap(Optional::stream)
                 .collect(Collectors.toList()));
     }
 
@@ -118,6 +124,7 @@ public final class ObjectTypeSpecGenerator {
                 objectClassName,
                 allEnrichedProperties.stream()
                         .map(EnrichedObjectProperty::fieldSpec)
+                        .flatMap(Optional::stream)
                         .collect(Collectors.toList()));
     }
 

@@ -1364,15 +1364,12 @@ public final class BlogPost {
 
     private final String content;
 
-    private final String lit;
-
-    BlogPost(String id, PostType type, String title, Author author, String content, String lit) {
+    BlogPost(String id, PostType type, String title, Author author, String content) {
         this.id = id;
         this.type = type;
         this.title = title;
         this.author = author;
         this.content = content;
-        this.lit = lit;
     }
 
     @JsonProperty("id")
@@ -1405,7 +1402,7 @@ public final class BlogPost {
 
     @JsonProperty("lit")
     public String getLit() {
-        return lit;
+        return "hello";
     }
 
     @Override
@@ -1419,19 +1416,18 @@ public final class BlogPost {
                 && type.equals(other.type)
                 && title.equals(other.title)
                 && author.equals(other.author)
-                && content.equals(other.content)
-                && lit.equals(other.lit);
+                && content.equals(other.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.type, this.title, this.author, this.content, this.lit);
+        return Objects.hash(this.id, this.type, this.title, this.author, this.content);
     }
 
     @Override
     public String toString() {
         return "BlogPost{" + "id: " + id + ", type: " + type + ", title: " + title + ", author: " + author
-                + ", content: " + content + ", lit: " + lit + "}";
+                + ", content: " + content + "}";
     }
 
     public static IdStage builder() {
@@ -1457,11 +1453,7 @@ public final class BlogPost {
     }
 
     public interface ContentStage {
-        LitStage content(String content);
-    }
-
-    public interface LitStage {
-        _FinalStage lit(String lit);
+        _FinalStage content(String content);
     }
 
     public interface _FinalStage {
@@ -1470,7 +1462,7 @@ public final class BlogPost {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder
-            implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, LitStage, _FinalStage {
+            implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
         private String id;
 
         private PostType type;
@@ -1481,8 +1473,6 @@ public final class BlogPost {
 
         private String content;
 
-        private String lit;
-
         private Builder() {}
 
         @Override
@@ -1492,7 +1482,6 @@ public final class BlogPost {
             title(other.getTitle());
             author(other.getAuthor());
             content(other.getContent());
-            lit(other.getLit());
             return this;
         }
 
@@ -1530,21 +1519,14 @@ public final class BlogPost {
 
         @Override
         @JsonSetter("content")
-        public LitStage content(String content) {
+        public _FinalStage content(String content) {
             this.content = content;
             return this;
         }
 
         @Override
-        @JsonSetter("lit")
-        public _FinalStage lit(String lit) {
-            this.lit = lit;
-            return this;
-        }
-
-        @Override
         public BlogPost build() {
-            return new BlogPost(id, type, title, author, content, lit);
+            return new BlogPost(id, type, title, author, content);
         }
     }
 }

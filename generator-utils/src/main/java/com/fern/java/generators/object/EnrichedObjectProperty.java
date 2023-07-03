@@ -18,6 +18,8 @@ package com.fern.java.generators.object;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.irV12.model.commons.Name;
+import com.fern.irV12.model.types.ContainerType;
+import com.fern.irV12.model.types.Literal;
 import com.fern.irV12.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
@@ -46,22 +48,31 @@ public interface EnrichedObjectProperty {
 
     Optional<String> docs();
 
+    Optional<String> literalValue();
+
     @Value.Lazy
-    default FieldSpec fieldSpec() {
-        return FieldSpec.builder(
+    default Optional<FieldSpec> fieldSpec() {
+        if (literalValue().isPresent()) {
+            return Optional.empty();
+        }
+        return Optional.of(FieldSpec.builder(
                         poetTypeName(),
                         KeyWordUtils.getKeyWordCompatibleName(camelCaseKey()),
                         Modifier.PRIVATE,
                         Modifier.FINAL)
-                .build();
+                .build());
     }
 
     @Value.Lazy
     default MethodSpec getterProperty() {
         MethodSpec.Builder getterBuilder = MethodSpec.methodBuilder("get" + pascalCaseKey())
                 .addModifiers(Modifier.PUBLIC)
-                .returns(fieldSpec().type)
-                .addStatement("return $L", fieldSpec().name);
+                .returns(poetTypeName());
+        if (literalValue().isPresent()) {
+            getterBuilder.addStatement("return $S", literalValue().get());
+        } else {
+            getterBuilder.addStatement("return $L", fieldSpec().get().name);
+        }
         if (wireKey().isPresent()) {
             getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                     .addMember("value", "$S", wireKey().get())
@@ -82,6 +93,11 @@ public interface EnrichedObjectProperty {
 
     static EnrichedObjectProperty of(ObjectProperty objectProperty, boolean fromInterface, TypeName poetTypeName) {
         Name name = objectProperty.getName().getName();
+        Optional<String> maybeLiteral = objectProperty
+                .getValueType()
+                .getContainer()
+                .flatMap(ContainerType::getLiteral)
+                .flatMap(Literal::getString);
         return EnrichedObjectProperty.builder()
                 .camelCaseKey(name.getCamelCase().getSafeName())
                 .pascalCaseKey(name.getPascalCase().getSafeName())
@@ -89,6 +105,7 @@ public interface EnrichedObjectProperty {
                 .fromInterface(fromInterface)
                 .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
+                .literalValue(maybeLiteral)
                 .build();
     }
 }

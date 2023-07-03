@@ -54,14 +54,17 @@ public final class BuilderGenerator {
 
     private final ClassName objectClassName;
     private final ClassName nestedBuilderClassName;
-    private final List<EnrichedObjectProperty> objectPropertyWithFields;
+    private final List<EnrichedObjectPropertyWithField> objectPropertyWithFields;
 
     private final boolean isSerialized;
 
     public BuilderGenerator(
             ClassName objectClassName, List<EnrichedObjectProperty> objectPropertyWithFields, boolean isSerialized) {
         this.objectClassName = objectClassName;
-        this.objectPropertyWithFields = objectPropertyWithFields;
+        this.objectPropertyWithFields = objectPropertyWithFields.stream()
+                .map(BuilderGenerator::maybeGetEnrichedObjectPropertyWithField)
+                .flatMap(Optional::stream)
+                .collect(Collectors.toList());
         this.nestedBuilderClassName = objectClassName.nestedClass(NESTED_BUILDER_CLASS_NAME);
         this.isSerialized = isSerialized;
     }
@@ -142,14 +145,14 @@ public final class BuilderGenerator {
         objectPropertyWithFields.forEach(objectProperty -> {
             fromSetterImpl.addStatement(
                     "$L($L.$N())",
-                    objectProperty.fieldSpec().name,
+                    objectProperty.fieldSpec.name,
                     StageBuilderConstants.FROM_METHOD_OTHER_PARAMETER_NAME,
-                    objectProperty.getterProperty());
+                    objectProperty.enrichedObjectProperty.getterProperty());
         });
         builderImplTypeSpec.addMethod(fromSetterImpl.addStatement("return this").build());
 
-        for (EnrichedObjectProperty enrichedProperty : defaultBuilderConfig.properties()) {
-            TypeName poetTypeName = enrichedProperty.poetTypeName();
+        for (EnrichedObjectPropertyWithField enrichedProperty : defaultBuilderConfig.properties()) {
+            TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
             if (poetTypeName instanceof ParameterizedTypeName) {
                 addAdditionalSetters(
                         (ParameterizedTypeName) poetTypeName,
@@ -170,7 +173,7 @@ public final class BuilderGenerator {
                         "return new $T($L)",
                         objectClassName,
                         objectPropertyWithFields.stream()
-                                .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec().name)
+                                .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec.name)
                                 .collect(Collectors.joining(", ")))
                 .build());
 
@@ -185,10 +188,11 @@ public final class BuilderGenerator {
         reverseStageInterfaces.add(finalStage);
 
         for (int i = stagedBuilderConfig.stages().size() - 1; i >= 0; i--) {
-            EnrichedObjectProperty enrichedObjectProperty =
+            EnrichedObjectPropertyWithField enrichedObjectProperty =
                     stagedBuilderConfig.stages().get(i);
             PoetTypeWithClassName previousStage = reverseStageInterfaces.get(reverseStageInterfaces.size() - 1);
-            String stageInterfaceName = enrichedObjectProperty.pascalCaseKey() + StageBuilderConstants.STAGE_SUFFIX;
+            String stageInterfaceName =
+                    enrichedObjectProperty.enrichedObjectProperty.pascalCaseKey() + StageBuilderConstants.STAGE_SUFFIX;
             ClassName stageInterfaceClassName = objectClassName.nestedClass(stageInterfaceName);
 
             TypeSpec.Builder stageInterfaceBuilder = TypeSpec.interfaceBuilder(stageInterfaceClassName)
@@ -198,8 +202,8 @@ public final class BuilderGenerator {
                             .build());
 
             builderImpl.addReversedFields(FieldSpec.builder(
-                            enrichedObjectProperty.fieldSpec().type,
-                            enrichedObjectProperty.fieldSpec().name,
+                            enrichedObjectProperty.fieldSpec.type,
+                            enrichedObjectProperty.fieldSpec.name,
                             Modifier.PRIVATE)
                     .build());
             builderImpl.addReversedMethods(
@@ -213,9 +217,9 @@ public final class BuilderGenerator {
                 objectPropertyWithFields.forEach(objectProperty -> {
                     fromSetterImpl.addStatement(
                             "$L($L.$N())",
-                            objectProperty.fieldSpec().name,
+                            objectProperty.fieldSpec.name,
                             StageBuilderConstants.FROM_METHOD_OTHER_PARAMETER_NAME,
-                            objectProperty.getterProperty());
+                            objectProperty.enrichedObjectProperty.getterProperty());
                 });
                 builderImpl.addReversedMethods(fromSetterImpl
                         .addAnnotation(Override.class)
@@ -229,34 +233,39 @@ public final class BuilderGenerator {
     }
 
     private MethodSpec getRequiredFieldSetterWithImpl(
-            EnrichedObjectProperty enrichedObjectProperty, ClassName returnClass) {
+            EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
         MethodSpec.Builder methodBuilder = getRequiredFieldSetter(enrichedObjectProperty, returnClass)
                 .addAnnotation(Override.class)
                 .addStatement(
-                        "this.$L = $L",
-                        enrichedObjectProperty.fieldSpec().name,
-                        enrichedObjectProperty.fieldSpec().name)
+                        "this.$L = $L", enrichedObjectProperty.fieldSpec.name, enrichedObjectProperty.fieldSpec.name)
                 .addStatement("return this");
-        if (enrichedObjectProperty.docs().isPresent()) {
-            methodBuilder.addJavadoc(
-                    JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        if (enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            methodBuilder.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             methodBuilder.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
-        if (enrichedObjectProperty.wireKey().isPresent()) {
+        if (enrichedObjectProperty.enrichedObjectProperty.wireKey().isPresent()) {
             methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
-                    .addMember("value", "$S", enrichedObjectProperty.wireKey().get())
+                    .addMember(
+                            "value",
+                            "$S",
+                            enrichedObjectProperty
+                                    .enrichedObjectProperty
+                                    .wireKey()
+                                    .get())
                     .build());
         }
         return methodBuilder.build();
     }
 
     private MethodSpec.Builder getRequiredFieldSetter(
-            EnrichedObjectProperty enrichedObjectProperty, ClassName returnClass) {
-        MethodSpec.Builder setterBuilder = MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec().name)
+            EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass) {
+        MethodSpec.Builder setterBuilder = MethodSpec.methodBuilder(enrichedObjectProperty.fieldSpec.name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(returnClass)
                 .addParameter(ParameterSpec.builder(
-                                enrichedObjectProperty.poetTypeName(), enrichedObjectProperty.fieldSpec().name)
+                                enrichedObjectProperty.enrichedObjectProperty.poetTypeName(),
+                                enrichedObjectProperty.fieldSpec.name)
                         .build());
         return setterBuilder;
     }
@@ -278,7 +287,7 @@ public final class BuilderGenerator {
                         "return new $T($L)",
                         objectClassName,
                         objectPropertyWithFields.stream()
-                                .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec().name)
+                                .map(enrichedObjectProperty -> enrichedObjectProperty.fieldSpec.name)
                                 .collect(Collectors.joining(", ")))
                 .build());
 
@@ -288,9 +297,9 @@ public final class BuilderGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .addMethod(getBaseBuildMethod().addModifiers(Modifier.ABSTRACT).build());
 
-        List<EnrichedObjectProperty> finalStageProperties = stagedBuilderConfig.finalStage();
-        for (EnrichedObjectProperty enrichedProperty : finalStageProperties) {
-            TypeName poetTypeName = enrichedProperty.poetTypeName();
+        List<EnrichedObjectPropertyWithField> finalStageProperties = stagedBuilderConfig.finalStage();
+        for (EnrichedObjectPropertyWithField enrichedProperty : finalStageProperties) {
+            TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
             if (poetTypeName instanceof ParameterizedTypeName) {
                 addAdditionalSetters(
                         (ParameterizedTypeName) poetTypeName,
@@ -315,11 +324,17 @@ public final class BuilderGenerator {
     }
 
     private MethodSpec.Builder getDefaultSetterForImpl(
-            EnrichedObjectProperty enrichedObjectProperty, ClassName returnClass, boolean isOverriden) {
+            EnrichedObjectPropertyWithField enrichedObjectProperty, ClassName returnClass, boolean isOverriden) {
         MethodSpec.Builder methodBuilder = getDefaultSetter(enrichedObjectProperty, returnClass, isOverriden);
-        if (enrichedObjectProperty.wireKey().isPresent()) {
+        if (enrichedObjectProperty.enrichedObjectProperty.wireKey().isPresent()) {
             methodBuilder.addAnnotation(AnnotationSpec.builder(JsonSetter.class)
-                    .addMember("value", "$S", enrichedObjectProperty.wireKey().get())
+                    .addMember(
+                            "value",
+                            "$S",
+                            enrichedObjectProperty
+                                    .enrichedObjectProperty
+                                    .wireKey()
+                                    .get())
                     .addMember("nulls", "$T.$L", Nulls.class, Nulls.SKIP.name())
                     .build());
         }
@@ -327,9 +342,9 @@ public final class BuilderGenerator {
     }
 
     private MethodSpec.Builder getDefaultSetter(
-            EnrichedObjectProperty enrichedProperty, ClassName returnClass, boolean isOverriden) {
-        TypeName poetTypeName = enrichedProperty.poetTypeName();
-        FieldSpec fieldSpec = enrichedProperty.fieldSpec();
+            EnrichedObjectPropertyWithField enrichedProperty, ClassName returnClass, boolean isOverriden) {
+        TypeName poetTypeName = enrichedProperty.enrichedObjectProperty.poetTypeName();
+        FieldSpec fieldSpec = enrichedProperty.fieldSpec;
         MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldSpec.name)
                 .addParameter(
                         ParameterSpec.builder(poetTypeName, fieldSpec.name).build())
@@ -343,13 +358,13 @@ public final class BuilderGenerator {
 
     private void addAdditionalSetters(
             ParameterizedTypeName propertyTypeName,
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ClassName finalStageClassName,
             Consumer<MethodSpec> interfaceSetterConsumer,
             Consumer<FieldSpec> implFieldConsumer,
             Consumer<MethodSpec> implSetterConsumer,
             boolean implsOverride) {
-        FieldSpec fieldSpec = enrichedObjectProperty.fieldSpec();
+        FieldSpec fieldSpec = enrichedObjectProperty.fieldSpec;
         FieldSpec.Builder implFieldSpecBuilder = FieldSpec.builder(fieldSpec.type, fieldSpec.name, Modifier.PRIVATE);
 
         interfaceSetterConsumer.accept(getDefaultSetter(enrichedObjectProperty, finalStageClassName, false)
@@ -468,16 +483,18 @@ public final class BuilderGenerator {
     }
 
     private static MethodSpec.Builder createMapEntryAppender(
-            EnrichedObjectProperty enrichedObjectProperty, ParameterizedTypeName mapTypeName, ClassName returnClass) {
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
+            ParameterizedTypeName mapTypeName,
+            ClassName returnClass) {
         return createMapEntryAppender(enrichedObjectProperty, mapTypeName, returnClass, false);
     }
 
     private static MethodSpec.Builder createMapEntryAppender(
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName mapTypeName,
             ClassName returnClass,
             boolean isOverriden) {
-        String fieldName = enrichedObjectProperty.fieldSpec().name;
+        String fieldName = enrichedObjectProperty.fieldSpec.name;
         TypeName keyTypeName = getIndexedTypeArgumentOrThrow(mapTypeName, 0);
         TypeName valueTypeName = getIndexedTypeArgumentOrThrow(mapTypeName, 1);
         MethodSpec.Builder setter = defaultSetter(fieldName, returnClass)
@@ -486,115 +503,123 @@ public final class BuilderGenerator {
         if (isOverriden) {
             setter.addAnnotation(Override.class);
         }
-        if (isOverriden && enrichedObjectProperty.docs().isPresent()) {
-            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        if (isOverriden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
     }
 
     private static MethodSpec.Builder createMapPutAllSetter(
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass) {
         return createMapPutAllSetter(enrichedObjectProperty, collectionTypeName, returnClass, false);
     }
 
     private static MethodSpec.Builder createMapPutAllSetter(
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass,
             boolean isOverridden) {
-        String fieldName = enrichedObjectProperty.fieldSpec().name;
+        String fieldName = enrichedObjectProperty.fieldSpec.name;
         MethodSpec.Builder setter = defaultSetter(
-                        StageBuilderConstants.PUT_ALL_METHOD_PREFIX + enrichedObjectProperty.pascalCaseKey(),
+                        StageBuilderConstants.PUT_ALL_METHOD_PREFIX
+                                + enrichedObjectProperty.enrichedObjectProperty.pascalCaseKey(),
                         returnClass)
                 .addParameter(collectionTypeName, fieldName);
         if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
-        if (isOverridden && enrichedObjectProperty.docs().isPresent()) {
-            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
     }
 
     private static MethodSpec.Builder createCollectionItemAppender(
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass) {
         return createCollectionItemAppender(enrichedObjectProperty, collectionTypeName, returnClass, false);
     }
 
     private static MethodSpec.Builder createCollectionItemAppender(
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass,
             boolean isOverridden) {
-        String fieldName = enrichedObjectProperty.fieldSpec().name;
+        String fieldName = enrichedObjectProperty.fieldSpec.name;
         TypeName itemTypeName = getOnlyTypeArgumentOrThrow(collectionTypeName);
         MethodSpec.Builder setter = defaultSetter(
-                        StageBuilderConstants.APPEND_METHOD_PREFIX + enrichedObjectProperty.pascalCaseKey(),
+                        StageBuilderConstants.APPEND_METHOD_PREFIX
+                                + enrichedObjectProperty.enrichedObjectProperty.pascalCaseKey(),
                         returnClass)
                 .addParameter(itemTypeName, fieldName);
         if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
-        if (isOverridden && enrichedObjectProperty.docs().isPresent()) {
-            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
     }
 
     private static MethodSpec.Builder createCollectionAddAllSetter(
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass) {
         return createCollectionAddAllSetter(enrichedObjectProperty, collectionTypeName, returnClass, false);
     }
 
     private static MethodSpec.Builder createCollectionAddAllSetter(
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName collectionTypeName,
             ClassName returnClass,
             boolean isOverridden) {
-        String fieldName = enrichedObjectProperty.fieldSpec().name;
+        String fieldName = enrichedObjectProperty.fieldSpec.name;
         MethodSpec.Builder setter = defaultSetter(
-                        StageBuilderConstants.ADD_ALL_METHOD_PREFIX + enrichedObjectProperty.pascalCaseKey(),
+                        StageBuilderConstants.ADD_ALL_METHOD_PREFIX
+                                + enrichedObjectProperty.enrichedObjectProperty.pascalCaseKey(),
                         returnClass)
                 .addParameter(collectionTypeName, fieldName);
         if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
-        if (isOverridden && enrichedObjectProperty.docs().isPresent()) {
-            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
     }
 
     private static MethodSpec.Builder createOptionalItemTypeNameSetter(
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName optionalTypeName,
             ClassName returnClass) {
         return createOptionalItemTypeNameSetter(enrichedObjectProperty, optionalTypeName, returnClass, false);
     }
 
     private static MethodSpec.Builder createOptionalItemTypeNameSetter(
-            EnrichedObjectProperty enrichedObjectProperty,
+            EnrichedObjectPropertyWithField enrichedObjectProperty,
             ParameterizedTypeName optionalTypeName,
             ClassName returnClass,
             boolean isOverridden) {
-        String fieldName = enrichedObjectProperty.fieldSpec().name;
+        String fieldName = enrichedObjectProperty.fieldSpec.name;
         TypeName itemTypeName = getOnlyTypeArgumentOrThrow(optionalTypeName);
         MethodSpec.Builder setter = defaultSetter(fieldName, returnClass).addParameter(itemTypeName, fieldName);
         if (isOverridden) {
             setter.addAnnotation(Override.class);
         }
-        if (isOverridden && enrichedObjectProperty.docs().isPresent()) {
-            setter.addJavadoc(JavaDocUtils.render(enrichedObjectProperty.docs().get()));
+        if (isOverridden && enrichedObjectProperty.enrichedObjectProperty.docs().isPresent()) {
+            setter.addJavadoc(JavaDocUtils.render(
+                    enrichedObjectProperty.enrichedObjectProperty.docs().get()));
             setter.addJavadoc(JavaDocUtils.getReturnDocs(CHAINED_RETURN_DOCS));
         }
         return setter;
@@ -619,9 +644,9 @@ public final class BuilderGenerator {
     }
 
     private Optional<BuilderConfig> getBuilderConfig() {
-        List<EnrichedObjectProperty> nonRequiredFields = new ArrayList<>();
-        List<EnrichedObjectProperty> requiredFields = new ArrayList<>();
-        for (EnrichedObjectProperty objectPropertyWithField : objectPropertyWithFields) {
+        List<EnrichedObjectPropertyWithField> nonRequiredFields = new ArrayList<>();
+        List<EnrichedObjectPropertyWithField> requiredFields = new ArrayList<>();
+        for (EnrichedObjectPropertyWithField objectPropertyWithField : objectPropertyWithFields) {
             boolean isRequired = isRequired(objectPropertyWithField);
             if (isRequired) {
                 requiredFields.add(objectPropertyWithField);
@@ -644,8 +669,8 @@ public final class BuilderGenerator {
         }
     }
 
-    private boolean isRequired(EnrichedObjectProperty enrichedObjectProperty) {
-        TypeName poetTypeName = enrichedObjectProperty.poetTypeName();
+    private boolean isRequired(EnrichedObjectPropertyWithField enrichedObjectProperty) {
+        TypeName poetTypeName = enrichedObjectProperty.enrichedObjectProperty.poetTypeName();
         if (poetTypeName instanceof ParameterizedTypeName) {
             ParameterizedTypeName poetParameterizedTypeName = (ParameterizedTypeName) poetTypeName;
             return !isEqual(poetParameterizedTypeName, ClassName.get(Optional.class))
@@ -674,7 +699,7 @@ public final class BuilderGenerator {
     @Value.Immutable
     @StagedBuilderImmutablesStyle
     interface DefaultBuilderConfig extends BuilderConfig {
-        List<EnrichedObjectProperty> properties();
+        List<EnrichedObjectPropertyWithField> properties();
 
         static ImmutableDefaultBuilderConfig.Builder builder() {
             return ImmutableDefaultBuilderConfig.builder();
@@ -684,9 +709,9 @@ public final class BuilderGenerator {
     @Value.Immutable
     @StagedBuilderImmutablesStyle
     interface StagedBuilderConfig extends BuilderConfig {
-        List<EnrichedObjectProperty> stages();
+        List<EnrichedObjectPropertyWithField> stages();
 
-        List<EnrichedObjectProperty> finalStage();
+        List<EnrichedObjectPropertyWithField> finalStage();
 
         static ImmutableStagedBuilderConfig.Builder builder() {
             return ImmutableStagedBuilderConfig.builder();
@@ -715,6 +740,25 @@ public final class BuilderGenerator {
 
         static ImmutableBuilderImplBuilder.Builder builder() {
             return ImmutableBuilderImplBuilder.builder();
+        }
+    }
+
+    private static Optional<EnrichedObjectPropertyWithField> maybeGetEnrichedObjectPropertyWithField(
+            EnrichedObjectProperty enrichedObjectProperty) {
+        if (enrichedObjectProperty.fieldSpec().isPresent()) {
+            return Optional.of(new EnrichedObjectPropertyWithField(
+                    enrichedObjectProperty, enrichedObjectProperty.fieldSpec().get()));
+        }
+        return Optional.empty();
+    }
+
+    public static class EnrichedObjectPropertyWithField {
+        private final EnrichedObjectProperty enrichedObjectProperty;
+        private final FieldSpec fieldSpec;
+
+        private EnrichedObjectPropertyWithField(EnrichedObjectProperty enrichedObjectProperty, FieldSpec fieldSpec) {
+            this.enrichedObjectProperty = enrichedObjectProperty;
+            this.fieldSpec = fieldSpec;
         }
     }
 }
