@@ -42,7 +42,7 @@ Currently, the following languages are supported:
 
 If you'd like to see a language supported, head over to [the Fern issues page](https://github.com/fern-api/fern/issues) and vote for the language you'd like to see supported next.
 
-### 🌿 Backend Code Generation
+### 🌿 Backend Code
 
 Define your API, and Fern will generate models, endpoints and boilerplate application code. All the generated code is validated at build time, ensuring your all your endpoints and their data are being served correctly.
 
