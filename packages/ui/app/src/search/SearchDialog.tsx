@@ -23,9 +23,9 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
         <Dialog as="div" className="fixed inset-0 z-10" open={isOpen} onClose={onClose}>
             <InstantSearch searchClient={searchService.client} indexName={searchService.index}>
                 <div className="flex min-h-screen items-start justify-center p-4">
-                    <Dialog.Overlay className="fixed inset-0 bg-gray-800/75" />
-                    <div className="border-border mx-3 mb-8 mt-10 flex w-full max-w-2xl flex-col overflow-hidden rounded-md border bg-gray-900 text-left align-middle shadow-2xl backdrop-blur-xl">
-                        <div className="border-border flex items-center space-x-3 border-b px-3">
+                    <Dialog.Overlay className="fixed inset-0 bg-gray-800/75 backdrop-blur-sm" />
+                    <div className="border-border z-10 mx-3 mb-8 mt-10 flex w-full max-w-2xl flex-col overflow-hidden rounded-md border bg-gray-900 text-left align-middle shadow-2xl">
+                        <div className="flex items-center space-x-3 px-3">
                             <Icon className="text-text-muted" icon="search" size={14} />
                             <SearchBox
                                 inputMode="text"
@@ -42,7 +42,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                                 }}
                             />
                         </div>
-                        <Hits hitComponent={SearchHit} className="p-2" />
+                        <Hits hitComponent={SearchHit} className="border-border border-t p-2" />
                     </div>
                 </div>
 
