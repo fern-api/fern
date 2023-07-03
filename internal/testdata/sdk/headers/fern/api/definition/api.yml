@@ -1,0 +1,27 @@
+name: api
+auth: optionalBytes
+auth-schemes:
+  id:
+    header: X-API-ID-Key
+    type: uuid
+  datetime:
+    header: X-API-Datetime-Key
+    type: datetime
+  date:
+    header: X-API-Date-Key
+    type: date
+  bytes:
+    header: X-API-Bytes-Key
+    type: base64
+  optionalId:
+    header: X-API-Optional-ID-Key
+    type: optional<uuid>
+  optionalDatetime:
+    header: X-API-Optional-Datetime-Key
+    type: optional<datetime>
+  optionalDate:
+    header: X-API-Optional-Date-Key
+    type: optional<date>
+  optionalBytes:
+    header: X-API-Optional-Bytes-Key
+    type: optional<base64>

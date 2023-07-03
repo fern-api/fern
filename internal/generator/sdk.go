@@ -130,9 +130,16 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 			if header.Prefix != nil {
 				prefix = *header.Prefix + " "
 			}
-			f.P("var value ", typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath))
-			f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != value {")
-			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v", c.`, header.Name.Name.PascalCase.UnsafeName, "))")
+			valueTypeFormat := formatForValueType(header.ValueType)
+			value := valueTypeFormat.Prefix + "c." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+			if valueTypeFormat.IsDefaultNil {
+				// The only header type that can't use the default value approach is base64 (aka a []byte).
+				f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+			} else {
+				f.P("var value ", typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath))
+				f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != value {")
+			}
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
 			f.P("}")
 		}
 	}
@@ -276,39 +283,15 @@ func (f *fileWriter) WriteClient(
 			f.P("queryParams := make(url.Values)")
 			for _, queryParameter := range endpoint.QueryParameters {
 				queryParameterType := typeReferenceToGoType(queryParameter.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
-				var (
-					requestFieldPrefix string
-					requestFieldSuffix string
-				)
-				if queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Optional != nil {
-					requestFieldPrefix = "*"
-				}
-				if primitive := maybePrimitive(queryParameter.ValueType); primitive != 0 {
-					// Several of the primitive types require special handling for query parameter serialization.
-					switch primitive {
-					case ir.PrimitiveTypeDateTime:
-						requestFieldPrefix = ""
-						requestFieldSuffix = ".Format(time.RFC3339)"
-					case ir.PrimitiveTypeDate:
-						requestFieldPrefix = ""
-						requestFieldSuffix = `.Format("2006-01-02")`
-					case ir.PrimitiveTypeBase64:
-						requestFieldPrefix = "base64.StdEncoding.EncodeToString(" + requestFieldPrefix
-						requestFieldSuffix = ")"
-					}
-				}
-				var isBytes bool
-				if queryParameter.ValueType.Primitive == ir.PrimitiveTypeBase64 {
-					isBytes = true
-				}
+				valueTypeFormat := formatForValueType(queryParameter.ValueType)
 				if queryParameter.AllowMultiple {
-					requestField := requestFieldPrefix + "value" + requestFieldSuffix
+					requestField := valueTypeFormat.Prefix + "value" + valueTypeFormat.Suffix
 					f.P("for _, value := range ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "{")
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 					f.P("}")
 				} else {
-					requestField := requestFieldPrefix + endpoint.RequestParameterName + "." + queryParameter.Name.Name.PascalCase.UnsafeName + requestFieldSuffix
-					if isBytes {
+					requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + queryParameter.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+					if valueTypeFormat.IsDefaultNil {
 						// The only query parameter that can't use the default value approach is base64 (aka a []byte).
 						f.P("if ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "!= nil {")
 					} else {
@@ -330,12 +313,14 @@ func (f *fileWriter) WriteClient(
 			f.P("headers := ", receiver, ".header.Clone()")
 			for _, header := range endpoint.Headers {
 				headerType := typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
-				requestField := endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName
-				if header.ValueType.Container != nil && header.ValueType.Container.Optional != nil {
-					requestField = fmt.Sprintf("*%s", requestField)
+				valueTypeFormat := formatForValueType(header.ValueType)
+				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+				if valueTypeFormat.IsDefaultNil {
+					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= nil {")
+				} else {
+					f.P("var ", header.Name.Name.CamelCase.SafeName, "DefaultValue ", headerType)
+					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= ", header.Name.Name.CamelCase.SafeName, "DefaultValue {")
 				}
-				f.P("var ", header.Name.Name.CamelCase.SafeName, "DefaultValue ", headerType)
-				f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= ", header.Name.Name.CamelCase.SafeName, "DefaultValue {")
 				f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 				f.P("}")
 			}
@@ -998,6 +983,41 @@ func irMethodToMethodEnum(method ir.HttpMethod) string {
 		return "http.MethodDelete"
 	}
 	return ""
+}
+
+type valueTypeFormat struct {
+	Prefix       string
+	Suffix       string
+	IsDefaultNil bool
+}
+
+func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
+	var (
+		prefix string
+		suffix string
+	)
+	if typeReference.Container != nil && typeReference.Container.Optional != nil {
+		prefix = "*"
+	}
+	if primitive := maybePrimitive(typeReference); primitive != 0 {
+		// Several of the primitive types require special handling for query parameter serialization.
+		switch primitive {
+		case ir.PrimitiveTypeDateTime:
+			prefix = ""
+			suffix = ".Format(time.RFC3339)"
+		case ir.PrimitiveTypeDate:
+			prefix = ""
+			suffix = `.Format("2006-01-02")`
+		case ir.PrimitiveTypeBase64:
+			prefix = "base64.StdEncoding.EncodeToString(" + prefix
+			suffix = ")"
+		}
+	}
+	return &valueTypeFormat{
+		Prefix:       prefix,
+		Suffix:       suffix,
+		IsDefaultNil: typeReference.Primitive == ir.PrimitiveTypeBase64,
+	}
 }
 
 // maybePrimitive recurses into the given value type, returning its underlying primitive
