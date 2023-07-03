@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { PropsWithChildren, useEffect, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
 import type { SearchRecord } from "../types";
 import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
@@ -38,20 +38,20 @@ export const SearchHits: React.FC = () => {
                 "border-border border-t": (progress === "success" || progress === "pending") && results.length > 0,
             })}
         >
-            {visitDiscriminatedUnion({ progress }, "progress")._visit({
-                pending: () => results,
-                error: () => (
-                    <EmptyStateView>An unexpected error has occurred while loading the results.</EmptyStateView>
-                ),
-                nil: () => null,
-                success: () => {
-                    if (hits.length === 0) {
-                        return <EmptyStateView>No results</EmptyStateView>;
-                    }
-                    return results;
-                },
-                _other: () => null,
-            })}
+            <div
+                className={classNames("text-text-default flex w-full flex-col items-center", {
+                    "py-3": progress !== "nil" && hits.length === 0,
+                    "min-h-[6rem]": progress !== "nil",
+                })}
+            >
+                {visitDiscriminatedUnion({ progress }, "progress")._visit<React.ReactNode>({
+                    nil: () => null,
+                    pending: () => null,
+                    error: () => "An unexpected error has occurred while loading the results.",
+                    success: () => (results.length > 0 ? results : "No results"),
+                    _other: () => null,
+                })}
+            </div>
         </div>
     );
 };
