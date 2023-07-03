@@ -10,7 +10,27 @@ import (
 type ClientOption func(*ClientOptions)
 
 type ClientOptions struct {
-	Custom string
+	BaseURL    string
+	HTTPClient HTTPClient
+	Custom     string
+}
+
+func NewClientOptions() *ClientOptions {
+	return &ClientOptions{
+		HTTPClient: http.DefaultClient,
+	}
+}
+
+func ClientWithBaseURL(baseURL string) ClientOption {
+	return func(opts *ClientOptions) {
+		opts.BaseURL = baseURL
+	}
+}
+
+func ClientWithHTTPClient(httpClient HTTPClient) ClientOption {
+	return func(opts *ClientOptions) {
+		opts.HTTPClient = httpClient
+	}
 }
 
 func ClientWithAuthCustom(custom string) ClientOption {

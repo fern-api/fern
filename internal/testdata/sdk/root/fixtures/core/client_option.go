@@ -9,7 +9,27 @@ import (
 type ClientOption func(*ClientOptions)
 
 type ClientOptions struct {
-	Bearer string
+	BaseURL    string
+	HTTPClient HTTPClient
+	Bearer     string
+}
+
+func NewClientOptions() *ClientOptions {
+	return &ClientOptions{
+		HTTPClient: http.DefaultClient,
+	}
+}
+
+func ClientWithBaseURL(baseURL string) ClientOption {
+	return func(opts *ClientOptions) {
+		opts.BaseURL = baseURL
+	}
+}
+
+func ClientWithHTTPClient(httpClient HTTPClient) ClientOption {
+	return func(opts *ClientOptions) {
+		opts.HTTPClient = httpClient
+	}
 }
 
 func ClientWithAuthBearer(bearer string) ClientOption {

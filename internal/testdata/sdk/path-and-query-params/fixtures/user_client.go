@@ -8,21 +8,20 @@ import (
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/path-and-query-params/fixtures/core"
 	http "net/http"
 	url "net/url"
-	strings "strings"
 )
 
 type UserClient interface {
 	GetUser(ctx context.Context, userId string, request *GetUserRequest) (string, error)
 }
 
-func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) UserClient {
-	options := new(core.ClientOptions)
+func NewUserClient(opts ...core.ClientOption) UserClient {
+	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
 	return &userClient{
-		baseURL:    strings.TrimRight(baseURL, "/"),
-		httpClient: httpClient,
+		baseURL:    options.BaseURL,
+		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }

@@ -11,7 +11,6 @@ import (
 	user "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user"
 	io "io"
 	http "net/http"
-	strings "strings"
 )
 
 type Client interface {
@@ -20,16 +19,16 @@ type Client interface {
 	User() user.Client
 }
 
-func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) Client {
-	options := new(core.ClientOptions)
+func NewClient(opts ...core.ClientOption) Client {
+	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
 	return &client{
-		baseURL:    strings.TrimRight(baseURL, "/"),
-		httpClient: httpClient,
+		baseURL:    options.BaseURL,
+		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
-		userClient: user.NewClient(baseURL, httpClient, opts...),
+		userClient: user.NewClient(opts...),
 	}
 }
 

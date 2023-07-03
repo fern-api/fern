@@ -41,9 +41,9 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Improve structured error formatting, where possible.
 - [x] Edit the file header to match Fern's other SDKs
 - [x] Generate exported environments
+- [x] Improve client constructor (i.e. reduce required parameters w/ options for environment and http client)
 - [ ] Support default environment settings (i.e. automatically set base URL based on service URL)
 - [ ] If a `Client` type exists, prefix the filename with a `_` to avoid conflicts
-- [ ] Improve client constructor (i.e. reduce required parameters w/ options for environment and http client)
 - [ ] Introduce a better solution for using optional parameters (i.e. `stringPtr` helpers)
 - [ ] Support custom error discriminiation strategy
 - [ ] Support file download and file upload RPCs

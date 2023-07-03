@@ -7,21 +7,20 @@ import (
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	http "net/http"
-	strings "strings"
 )
 
 type NotificationClient interface {
 	List(ctx context.Context, userId string) ([]*Notification, error)
 }
 
-func NewNotificationClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) NotificationClient {
-	options := new(core.ClientOptions)
+func NewNotificationClient(opts ...core.ClientOption) NotificationClient {
+	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
 	return &notificationClient{
-		baseURL:    strings.TrimRight(baseURL, "/"),
-		httpClient: httpClient,
+		baseURL:    options.BaseURL,
+		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }

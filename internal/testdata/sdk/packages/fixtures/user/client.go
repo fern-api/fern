@@ -8,7 +8,6 @@ import (
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	notification "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/notification"
 	http "net/http"
-	strings "strings"
 )
 
 type Client interface {
@@ -17,17 +16,17 @@ type Client interface {
 	User() UserClient
 }
 
-func NewClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) Client {
-	options := new(core.ClientOptions)
+func NewClient(opts ...core.ClientOption) Client {
+	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
 	return &client{
-		baseURL:            strings.TrimRight(baseURL, "/"),
-		httpClient:         httpClient,
+		baseURL:            options.BaseURL,
+		httpClient:         options.HTTPClient,
 		header:             options.ToHeader(),
-		notificationClient: notification.NewClient(baseURL, httpClient, opts...),
-		userClient:         NewUserClient(baseURL, httpClient, opts...),
+		notificationClient: notification.NewClient(opts...),
+		userClient:         NewUserClient(opts...),
 	}
 }
 

@@ -7,7 +7,6 @@ import (
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
 	http "net/http"
-	strings "strings"
 )
 
 type UserClient interface {
@@ -18,14 +17,14 @@ type UserClient interface {
 	SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error)
 }
 
-func NewUserClient(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) UserClient {
-	options := new(core.ClientOptions)
+func NewUserClient(opts ...core.ClientOption) UserClient {
+	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
 	return &userClient{
-		baseURL:    strings.TrimRight(baseURL, "/"),
-		httpClient: httpClient,
+		baseURL:    options.BaseURL,
+		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }

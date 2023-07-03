@@ -8,6 +8,15 @@ import (
 
 type ClientOption func(*ClientOptions)
 
-type ClientOptions struct{}
+type ClientOptions struct {
+	BaseURL    string
+	HTTPClient HTTPClient
+}
+
+func NewClientOptions() *ClientOptions {
+	return &ClientOptions{
+		HTTPClient: http.DefaultClient,
+	}
+}
 
 func (c *ClientOptions) ToHeader() http.Header { return nil }

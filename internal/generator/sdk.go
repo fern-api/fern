@@ -24,19 +24,11 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 	f.P("type ClientOption func(*ClientOptions)")
 	f.P()
 
-	if auth == nil || len(auth.Schemes) == 0 {
-		// We don't have any auth options to write, but we still generate
-		// the ClientOptions structure for the endpoints to act upon.
-		f.P("type ClientOptions struct {}")
-		f.P()
-
-		f.P("func (c *ClientOptions) ToHeader() http.Header { return nil }")
-		f.P()
-		return nil
-	}
+	f.P("type ClientOptions struct {")
+	f.P("BaseURL string")
+	f.P("HTTPClient HTTPClient")
 
 	// Generate the exported ClientOptions type that all clients can act upon.
-	f.P("type ClientOptions struct {")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			f.P("Bearer string")
@@ -53,6 +45,34 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 			)
 		}
 	}
+	f.P("}")
+	f.P()
+
+	// Generate the constructor.
+	f.P("func NewClientOptions() *ClientOptions {")
+	f.P("return &ClientOptions{")
+	f.P("HTTPClient: http.DefaultClient,")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	if auth == nil || len(auth.Schemes) == 0 {
+		f.P("func (c *ClientOptions) ToHeader() http.Header { return nil }")
+		f.P()
+		return nil
+	}
+
+	// Generate the options for setting the base URL and HTTP client.
+	f.P("func ClientWithBaseURL(baseURL string) ClientOption {")
+	f.P("return func(opts *ClientOptions) {")
+	f.P("opts.BaseURL = baseURL")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("func ClientWithHTTPClient(httpClient HTTPClient) ClientOption {")
+	f.P("return func(opts *ClientOptions) {")
+	f.P("opts.HTTPClient = httpClient")
+	f.P("}")
 	f.P("}")
 	f.P()
 
@@ -182,26 +202,26 @@ func (f *fileWriter) WriteClient(irEndpoints []*ir.HttpEndpoint, subpackages []*
 	f.P()
 
 	// Generate the client constructor.
-	f.P("func New", clientName, "(baseURL string, httpClient core.HTTPClient, opts ...core.ClientOption) ", clientName, " {")
-	f.P("options := new(core.ClientOptions)")
+	f.P("func New", clientName, "(opts ...core.ClientOption) ", clientName, " {")
+	f.P("options := core.NewClientOptions()")
 	f.P("for _, opt := range opts {")
 	f.P("opt(options)")
 	f.P("}")
 	f.P("return &", clientImplName, "{")
-	f.P(`baseURL: strings.TrimRight(baseURL, "/"),`)
-	f.P("httpClient: httpClient,")
+	f.P(`baseURL: options.BaseURL,`)
+	f.P("httpClient: options.HTTPClient,")
 	f.P("header: options.ToHeader(),")
 	for _, subpackage := range subpackages {
 		// TODO: Temporary solution - refactor this conditional when the IR is updated.
 		if subpackage.FernFilepath.File != nil {
 			clientTypeName := subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
-			clientConstructor := "New" + clientTypeName + "(baseURL, httpClient, opts...),"
+			clientConstructor := "New" + clientTypeName + "(opts...),"
 			f.P(subpackage.Name.CamelCase.UnsafeName, "Client: ", clientConstructor)
 			continue
 		}
 		var (
 			importPath        = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
-			clientConstructor = f.imports.Add(importPath) + ".NewClient(baseURL, httpClient, opts...),"
+			clientConstructor = f.imports.Add(importPath) + ".NewClient(opts...),"
 		)
 		f.P(subpackage.Name.CamelCase.UnsafeName, "Client: ", clientConstructor)
 	}
