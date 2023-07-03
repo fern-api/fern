@@ -114,5 +114,6 @@ module.exports = {
         "@blueprintjs/classes-constants": "off",
         "tailwindcss/no-custom-classname": "off",
         "@blueprintjs/html-components": "off",
+        "@typescript-eslint/strict-boolean-expressions": "error",
     },
 };
