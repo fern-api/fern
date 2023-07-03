@@ -107,6 +107,7 @@ module.exports = {
                 null: "never",
             },
         ],
+        curly: "error",
         "no-console": "error",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",

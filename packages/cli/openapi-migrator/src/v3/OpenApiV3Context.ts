@@ -40,10 +40,14 @@ export class OpenApiV3Context {
         this.document = document;
         // initialize this.endpoints with all endpoints
         Object.entries(this.document.paths).forEach(([path, pathDefinition]) => {
-            if (pathDefinition == null) return;
+            if (pathDefinition == null) {
+                return;
+            }
             Object.values(OpenAPIV3.HttpMethods).forEach((httpMethod) => {
                 const httpMethodDefinition = pathDefinition[httpMethod];
-                if (httpMethodDefinition == null) return;
+                if (httpMethodDefinition == null) {
+                    return;
+                }
                 this.endpoints.push({
                     path,
                     httpMethod,
