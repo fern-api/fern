@@ -276,27 +276,45 @@ func (f *fileWriter) WriteClient(
 			f.P("queryParams := make(url.Values)")
 			for _, queryParameter := range endpoint.QueryParameters {
 				queryParameterType := typeReferenceToGoType(queryParameter.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
-				if queryParameter.AllowMultiple {
-					requestField := "value"
-					if queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Optional != nil {
-						// TODO: For now, we recognize whether or not we need to dereference the query parameter based on whether or not it's an optional.
-						// As long as Fern supports them, we should support all different types of complex query parameter structures. To avoid complexity
-						// in the generated code, we might want to use a reflect-based approach.
-						requestField = fmt.Sprintf("*%s", requestField)
+				var (
+					requestFieldPrefix string
+					requestFieldSuffix string
+				)
+				if queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Optional != nil {
+					requestFieldPrefix = "*"
+				}
+				if primitive := maybePrimitive(queryParameter.ValueType); primitive != 0 {
+					// Several of the primitive types require special handling for query parameter serialization.
+					switch primitive {
+					case ir.PrimitiveTypeDateTime:
+						requestFieldPrefix = ""
+						requestFieldSuffix = ".Format(time.RFC3339)"
+					case ir.PrimitiveTypeDate:
+						requestFieldPrefix = ""
+						requestFieldSuffix = `.Format("2006-01-02")`
+					case ir.PrimitiveTypeBase64:
+						requestFieldPrefix = "base64.StdEncoding.EncodeToString(" + requestFieldPrefix
+						requestFieldSuffix = ")"
 					}
+				}
+				var isBytes bool
+				if queryParameter.ValueType.Primitive == ir.PrimitiveTypeBase64 {
+					isBytes = true
+				}
+				if queryParameter.AllowMultiple {
+					requestField := requestFieldPrefix + "value" + requestFieldSuffix
 					f.P("for _, value := range ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "{")
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 					f.P("}")
 				} else {
-					requestField := endpoint.RequestParameterName + "." + queryParameter.Name.Name.PascalCase.UnsafeName
-					if queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Optional != nil {
-						// TODO: For now, we recognize whether or not we need to dereference the query parameter based on whether or not it's an optional.
-						// As long as Fern supports them, we should support all different types of complex query parameter structures. To avoid complexity
-						// in the generated code, we might want to use a reflect-based approach.
-						requestField = fmt.Sprintf("*%s", requestField)
+					requestField := requestFieldPrefix + endpoint.RequestParameterName + "." + queryParameter.Name.Name.PascalCase.UnsafeName + requestFieldSuffix
+					if isBytes {
+						// The only query parameter that can't use the default value approach is base64 (aka a []byte).
+						f.P("if ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "!= nil {")
+					} else {
+						f.P("var ", queryParameter.Name.Name.CamelCase.SafeName, "DefaultValue ", queryParameterType)
+						f.P("if ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "!= ", queryParameter.Name.Name.CamelCase.SafeName, "DefaultValue {")
 					}
-					f.P("var ", queryParameter.Name.Name.CamelCase.SafeName, "DefaultValue ", queryParameterType)
-					f.P("if ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "!= ", queryParameter.Name.Name.CamelCase.SafeName, "DefaultValue {")
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 					f.P("}")
 				}
@@ -980,4 +998,17 @@ func irMethodToMethodEnum(method ir.HttpMethod) string {
 		return "http.MethodDelete"
 	}
 	return ""
+}
+
+// maybePrimitive recurses into the given value type, returning its underlying primitive
+// value, if any. Note that this only recurses through nested optional containers; all
+// other container types are ignored.
+func maybePrimitive(typeReference *ir.TypeReference) ir.PrimitiveType {
+	if typeReference.Primitive != 0 {
+		return typeReference.Primitive
+	}
+	if typeReference.Container != nil && typeReference.Container.Optional != nil {
+		return maybePrimitive(typeReference.Container.Optional)
+	}
+	return 0
 }
