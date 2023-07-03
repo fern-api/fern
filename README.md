@@ -3,6 +3,8 @@
     <img src="fern.png" height="120" align="center" alt="header" />
   </a>
 
+  <br/>
+
 <a href="https://www.buildwithfern.com/docs/intro" alt="documentation">Documentation</a>
 <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
 <a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Join the Discord</a>
