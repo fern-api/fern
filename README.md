@@ -71,12 +71,6 @@ Once you have installed the Fern CLI, navigate to the root of your repository - 
 fern init
 ```
 
-Or, you can use an existing OpenAPI specification as your starting point by specifying the `--openapi` option:
-
-```
-fern init --openapi ./path/to/openapi.yml
-```
-
 This will initialise a Fern workspace in the current folder, including the `./fern` directory that Fern will use to hold its resources. This will create roughly the following folder structure in your project:
 
 ```
@@ -88,8 +82,6 @@ fern/
     ├─ api.yml  # API-level configuration
     └─ imdb.yml # endpoints, types, and errors
 ```
-
-If you're starting from an existing OpenAPI specificaiton, your `fern` directory will contain your specification rather than the standard `imdb.yml` file.
 
 Here's what the `imdb.yml` starter file looks like:
 
@@ -123,6 +115,16 @@ errors:
   MovieDoesNotExistError:
     status-code: 404 type: MovieId
 ```
+
+### Starting from OpenAPI
+
+If you have an existing OpenAPI definition, you can use that as your starting point by specifying the `--openapi` option:
+
+```
+fern init --openapi ./path/to/openapi.yml
+```
+
+The path to the definition can either be a local file, or a HTTP resource. If you start from an OpenAPI definition, the `init` command will forego generating the default project files such as `imbd.yml`, and instead will use your definition as a starting point.
 
 ## Generating an SDK
 
