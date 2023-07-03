@@ -65,13 +65,13 @@ The Fern tools are available as a Node package. To install it, simply run:
 npm install -g fern-api
 ```
 
-Once you have installed the Fern CLI, navigate to the root of your repository - or a different folder if you want to keep your SDKs separate from your backend code. You can either initialise a clean workspace using:
+Once you have installed the Fern CLI, navigate to the root of your repository - or a different folder if you want to keep your SDKs separate from your backend code. You can either initialize a clean workspace using:
 
 ```
 fern init
 ```
 
-This will initialise a Fern workspace in the current folder, including the `./fern` directory that Fern will use to hold its resources. This will create roughly the following folder structure in your project:
+This will initialize a Fern workspace in the current folder, including the `./fern` directory that Fern will use to hold its resources. This will create roughly the following folder structure in your project:
 
 ```
 fern/
@@ -222,7 +222,7 @@ By default, Fern will delete the container after running. To keep the container 
 
 | Command         | Description                                                                                                                                                                                                     |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fern init`     | Initialised a new Fern workspace.                                                                                                                                                                               |
+| `fern init`     | Initialize a new Fern workspace.                                                                                                                                                                                |
 | `fern check`    | Runs validation on the current workspace, ensuring all specifications are valid.                                                                                                                                |
 | `fern add`      | Adds a generator to the Fern compiler. You can view the full list of supported generators in our [docs](https://www.buildwithfern.com/docs/compiler/generators).                                                |
 | `fern register` | _Advanced feature_ allowing for the registration of dependent APIs, i.e APIs that depend on this API to function. Read more in our [docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis). |
