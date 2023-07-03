@@ -27,7 +27,7 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
             remarkPlugins={REMARK_PLUGINS}
             rehypePlugins={REHYPE_PLUGINS}
             components={{
-                code({ node, inline, className, children, ...props }) {
+                code({ node, inline = false, className, children, ...props }) {
                     if (!inline && className != null) {
                         const match = PRISM_CLASSNAME_REGEX.exec(className);
                         if (match != null) {

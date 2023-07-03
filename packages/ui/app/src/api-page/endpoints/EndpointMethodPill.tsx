@@ -8,7 +8,7 @@ export declare namespace EndpointMethodPill {
     }
 }
 
-export const EndpointMethodPill: React.FC<EndpointMethodPill.Props> = ({ endpoint, small }) => {
+export const EndpointMethodPill: React.FC<EndpointMethodPill.Props> = ({ endpoint, small = false }) => {
     return (
         <div
             className={classNames("font-medium uppercase", small ? "px-1 py-px" : "px-2 py-1", {
