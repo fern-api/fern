@@ -31,15 +31,30 @@ Currently, the Fern compiler can generate the following types of artifacts:
 
 ### 🌿 Client Libraries and SDKs
 
-Fern generates idiomatic SDKs you can use to interact with your APIs, or publish for third party usage. This makes keeping your client libraries up to date with your API endpoints trivial, and speeds up your workflows dramatically.
+Whether you call them SDKs, client libraries, bindings, or wrappers, Fern generates idiomatic SDKs you can use to interact with your APIs, or publish for third party usage. This makes keeping your client libraries up to date with your API endpoints trivial, and speeds up your workflows dramatically.
+
+Currently, the following languages are supported:
+
+- TypeScript
+- Java
+- Python
+- Go
+
+If you'd like to see a language supported, head over to [the Fern issues page](https://github.com/fern-api/fern/issues) and vote for the language you'd like to see supported next.
 
 ### 🌿 Backend Code Generation
 
 Define your API, and Fern will generate models, endpoints and boilerplate application code. All the generated code is validated at build time, ensuring your all your endpoints and their data are being served correctly.
 
+We currently supported:
+
+- Express
+- Spring Boot
+- FastAPI
+
 ### 🌿 Developer Resources
 
-Fern supports the generation of development resources such as Postman collections, and OpenAPI specifications, making integration into existing development workflows effortless.
+Fern supports the generation of developer resources such as a Postman collection, allowing you to easily keep your API and Postman Workspace synchronized.
 
 ## Fern and OpenAPI
 
