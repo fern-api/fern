@@ -1,9 +1,9 @@
 import classNames from "classnames";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { useInfiniteHits, useInstantSearch } from "react-instantsearch-hooks-web";
-import type { SearchRecord } from "../types";
 import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
 import { SearchHit } from "./SearchHit";
+import type { SearchRecord } from "./types";
 
 type Progress = "nil" | "error" | "pending" | "success";
 
