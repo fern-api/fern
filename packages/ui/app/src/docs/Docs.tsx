@@ -1,11 +1,12 @@
+import { useKeyboardCommand } from "@fern-api/react-commons";
 import classNames from "classnames";
 import { useDocsContext } from "../docs-context/useDocsContext";
-import { useKeyboardCommand } from "../hooks/useKeyboardCommand";
 import { MobileSidebar } from "../mobile-sidebar/MobileSidebar";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
+import { platform } from "../utils/platform";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import nebulaImage from "./nebula.png";
@@ -16,7 +17,7 @@ export const Docs: React.FC = () => {
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = useSearchContext();
     const searchService = useSearchService();
     useCustomTheme(docsDefinition);
-    useKeyboardCommand("K", openSearchDialog);
+    useKeyboardCommand({ key: "K", platform, onCommand: openSearchDialog });
 
     return (
         <div
