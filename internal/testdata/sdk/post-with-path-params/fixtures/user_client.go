@@ -13,6 +13,7 @@ type UserClient interface {
 	SetName(ctx context.Context, userId string, request string) (string, error)
 	SetNameV2(ctx context.Context, userId string, request *SetNameRequest) (string, error)
 	SetNameV3(ctx context.Context, userId string, request *SetNameRequestV3) (*SetNameRequestV3Body, error)
+	SetNameV3Optional(ctx context.Context, userId string, request *SetNameRequestV3Optional) (*SetNameRequestV3Body, error)
 	SetNameV4(ctx context.Context, userId string, request *SetNameRequestV4) (string, error)
 	SetNameV5(ctx context.Context, userId string, request *SetNameRequestV5) (string, error)
 }
@@ -87,6 +88,35 @@ func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetN
 		baseURL = u.baseURL
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v3", userId)
+
+	headers := u.header.Clone()
+	var xEndpointHeaderDefaultValue string
+	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
+		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
+	}
+
+	response := new(SetNameRequestV3Body)
+	if err := core.DoRequest(
+		ctx,
+		u.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		headers,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
+func (u *userClient) SetNameV3Optional(ctx context.Context, userId string, request *SetNameRequestV3Optional) (*SetNameRequestV3Body, error) {
+	baseURL := ""
+	if u.baseURL != "" {
+		baseURL = u.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v3-optional", userId)
 
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string

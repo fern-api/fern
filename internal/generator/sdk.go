@@ -483,7 +483,7 @@ func (f *fileWriter) endpointFromIR(
 		}
 		responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
 		responseInitializerFormat = "var response %s"
-		if named := irEndpoint.Response.Json.ResponseBodyType.Named; named != nil && isPointer(f.types[named.TypeId]) {
+		if named := maybeDeclaredTypeName(irEndpoint.Response.Json.ResponseBodyType); named != nil && isPointer(f.types[named.TypeId]) {
 			responseInitializerFormat = "response := new(%s)"
 		}
 		responseParameterName = "&response"
@@ -1023,6 +1023,19 @@ func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 		Suffix:       suffix,
 		IsDefaultNil: typeReference.Primitive == ir.PrimitiveTypeBase64,
 	}
+}
+
+// maybeDeclaredTypeName returns the declared type name associated with
+// the given type reference, if any. Note that this only recurses through
+// nested optional containers; all other container types are ignored.
+func maybeDeclaredTypeName(typeReference *ir.TypeReference) *ir.DeclaredTypeName {
+	if typeReference.Named != nil {
+		return typeReference.Named
+	}
+	if typeReference.Container != nil && typeReference.Container.Optional != nil {
+		return maybeDeclaredTypeName(typeReference.Container.Optional)
+	}
+	return nil
 }
 
 // maybePrimitive recurses into the given value type, returning its underlying primitive

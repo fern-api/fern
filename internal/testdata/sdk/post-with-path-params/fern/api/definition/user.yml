@@ -39,6 +39,18 @@ service:
         body: SetNameRequestV3Body
       response: SetNameRequestV3Body
 
+    setNameV3Optional:
+      method: POST
+      path: /{userId}/set-name-v3-optional
+      path-parameters:
+        userId: string
+      request:
+        name: SetNameRequestV3Optional
+        headers:
+          X-Endpoint-Header: string
+        body: SetNameRequestV3Body
+      response: optional<SetNameRequestV3Body>
+
     setNameV4:
       method: POST
       path: /{userId}/set-name-v4
