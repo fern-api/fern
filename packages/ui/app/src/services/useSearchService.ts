@@ -11,7 +11,7 @@ export type SearchService =
           isAvailable: false;
       };
 
-if (!process.env.NEXT_PUBLIC_ALGOLIA_APP_ID || !process.env.NEXT_PUBLIC_ALGOLIA_API_KEY) {
+if (process.env.NEXT_PUBLIC_ALGOLIA_APP_ID == null || process.env.NEXT_PUBLIC_ALGOLIA_API_KEY == null) {
     // TODO: Move this validation elsewhere
     throw new Error("Missing Algolia variables.");
 }

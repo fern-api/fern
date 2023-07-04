@@ -57,8 +57,7 @@
     "react-markdown": "^8.0.5",
     "react-syntax-highlighter": "^15.5.0",
     "rehype-raw": "^6.1.1",
-    "remark-gfm": "^3.0.1",
-    "ua-parser-js": "^1.0.35"
+    "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -70,7 +69,6 @@
     "@types/node": "^18.7.18",
     "@types/react": "^18.0.20",
     "@types/react-syntax-highlighter": "^15.5.6",
-    "@types/ua-parser-js": "^0.7.36",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
     "jest": "^29.4.0",
