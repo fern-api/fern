@@ -14,7 +14,6 @@ import { CONTEXTS } from "./contexts";
 import { DocsContextProvider } from "./docs-context/DocsContextProvider";
 import { Docs } from "./docs/Docs";
 import { ResolvedUrlPath } from "./ResolvedUrlPath";
-import { SearchContextProvider } from "./search-context/SearchContextProvider";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -39,9 +38,7 @@ export const App: React.FC<App.Props> = ({ docs, resolvedUrlPath }) => {
                     <Context>{children}</Context>
                 ),
                 <DocsContextProvider docsDefinition={docs.definition} resolvedUrlPath={resolvedUrlPath}>
-                    <SearchContextProvider>
-                        <Docs />
-                    </SearchContextProvider>
+                    <Docs />
                 </DocsContextProvider>
             )}
         </div>
