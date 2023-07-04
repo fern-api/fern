@@ -1,3 +1,4 @@
+import { PLATFORM } from "@fern-api/core-utils";
 import { useKeyboardCommand } from "@fern-api/react-commons";
 import classNames from "classnames";
 import { useDocsContext } from "../docs-context/useDocsContext";
@@ -6,7 +7,6 @@ import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
-import { PLATFORM } from "../utils/platform";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import nebulaImage from "./nebula.png";

@@ -1,8 +1,8 @@
 import { Icon } from "@blueprintjs/core";
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { Highlight } from "react-instantsearch-hooks-web";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
-import { visitDiscriminatedUnion } from "../utils/visitDiscriminatedUnion";
 import type { SearchRecord } from "./types";
 
 export declare namespace SearchHit {

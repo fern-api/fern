@@ -12,4 +12,7 @@ export { entries, type Entries } from "./objects/entries";
 export { isPlainObject } from "./objects/isPlainObject";
 export { keys } from "./objects/keys";
 export { values, type Values } from "./objects/values";
+export { PLATFORM } from "./platform";
+export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
+

@@ -1,7 +1,7 @@
 import { Icon } from "@blueprintjs/core";
+import { PLATFORM } from "@fern-api/core-utils";
 import dynamic from "next/dynamic";
 import { type MouseEventHandler } from "react";
-import { PLATFORM } from "../utils/platform";
 
 export declare namespace SidebarSearchBar {
     export interface Props {
