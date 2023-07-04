@@ -11,14 +11,13 @@ export declare namespace SearchHit {
     }
 }
 
-export const SearchHit: React.FC<SearchHit.Props> = (providedProps) => {
+export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
     const { navigateToPath } = useDocsContext();
     const { closeSearchDialog } = useSearchContext();
-    const { hit } = providedProps;
 
     return (
         <button
-            className="hover:bg-accentPrimary group flex w-full items-center space-x-3 space-y-1 rounded-md p-2"
+            className="hover:bg-accentHighlight group flex w-full items-center space-x-3 space-y-1 rounded-md p-2"
             onClick={() => {
                 closeSearchDialog();
                 navigateToPath(hit.path);
