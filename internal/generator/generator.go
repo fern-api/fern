@@ -158,6 +158,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, file)
 		}
 		files = append(files, newCoreFile())
+		files = append(files, newPointerFile())
 		// Generate the error types, if any.
 		for _, irError := range ir.Errors {
 			fileInfo := fileInfoForType(ir.ApiName, irError.Name.FernFilepath, irError.Name.Name)
@@ -417,6 +418,13 @@ func newCoreFile() *File {
 	return &File{
 		Path:    "core/core.go",
 		Content: []byte(coreFile),
+	}
+}
+
+func newPointerFile() *File {
+	return &File{
+		Path:    "core/pointer.go",
+		Content: []byte(pointerFile),
 	}
 }
 

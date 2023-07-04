@@ -11,8 +11,13 @@ import (
 	"github.com/fern-api/fern-go/internal/fern/ir"
 )
 
-//go:embed sdk/core/core.go
-var coreFile string
+var (
+	//go:embed sdk/core/core.go
+	coreFile string
+
+	//go:embed sdk/core/pointer.go
+	pointerFile string
+)
 
 // WriteCore writes the core utilities required by the generated
 // service code. This includes the ClientOption type, auth options,
