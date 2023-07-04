@@ -6,7 +6,7 @@ import { useSearchContext } from "../search-context/useSearchContext";
 import { SearchDialog } from "../search/SearchDialog";
 import { useSearchService } from "../services/useSearchService";
 import { Sidebar } from "../sidebar/Sidebar";
-import { platform } from "../utils/platform";
+import { PLATFORM } from "../utils/platform";
 import { DocsMainContent } from "./DocsMainContent";
 import { Header } from "./Header";
 import nebulaImage from "./nebula.png";
@@ -17,7 +17,7 @@ export const Docs: React.FC = () => {
     const { isSearchDialogOpen, openSearchDialog, closeSearchDialog } = useSearchContext();
     const searchService = useSearchService();
     useCustomTheme(docsDefinition);
-    useKeyboardCommand({ key: "K", platform, onCommand: openSearchDialog });
+    useKeyboardCommand({ key: "K", platform: PLATFORM, onCommand: openSearchDialog });
 
     return (
         <div
