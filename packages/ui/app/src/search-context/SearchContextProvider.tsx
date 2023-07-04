@@ -1,4 +1,5 @@
-import { PropsWithChildren, useCallback, useState } from "react";
+import { useBooleanState } from "@fern-api/react-commons";
+import { PropsWithChildren, useCallback } from "react";
 import { SearchContext, SearchContextValue } from "./SearchContext";
 
 export declare namespace SearchContextProvider {
@@ -8,15 +9,11 @@ export declare namespace SearchContextProvider {
 }
 
 export const SearchContextProvider: React.FC<SearchContextProvider.Props> = ({ children }) => {
-    const [isSearchDialogOpen, setIsSearchDialogOpen] = useState(false);
-
-    const openSearchDialog = useCallback(() => {
-        setIsSearchDialogOpen(true);
-    }, []);
-
-    const closeSearchDialog = useCallback(() => {
-        setIsSearchDialogOpen(false);
-    }, []);
+    const {
+        value: isSearchDialogOpen,
+        setTrue: openSearchDialog,
+        setFalse: closeSearchDialog,
+    } = useBooleanState(false);
 
     const contextValue = useCallback(
         (): SearchContextValue => ({
