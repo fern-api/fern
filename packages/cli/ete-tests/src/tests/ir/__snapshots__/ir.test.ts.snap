@@ -22516,14 +22516,20 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "headers": [],
                     "streamingResponse": {
                         "dataEventType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
+                            "json": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "type": "json"
                         }
                     },
                     "sdkResponse": {
                         "dataEventType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
+                            "json": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "type": "json"
                         },
                         "type": "streaming"
                     },
@@ -22691,16 +22697,22 @@ exports[`ir {"name":"streaming"} 1`] = `
                     },
                     "streamingResponse": {
                         "dataEventType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
+                            "json": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "type": "json"
                         },
                         "terminator": "[DONE]"
                     },
                     "sdkResponse": {
                         "streaming": {
                             "dataEventType": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
+                                "json": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "type": "json"
                             },
                             "terminator": "[DONE]"
                         },
