@@ -3,22 +3,17 @@
   <a href="https://www.buildwithfern.com/">
     <img src="fern.png" height="120" align="center" alt="header" />
   </a>
-
   <br/>
 
-<a href="https://www.buildwithfern.com/docs/intro" alt="documentation">Documentation</a>
-<span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-<a href="https://discord.com/invite/JkkXumPzcG" alt="discord">Join the Discord</a>
-
-</div>
-
-<br />
-
-<div align="center">
-Backed by Y Combinator
-</div>
-
 # Fern
+
+![YC](https://img.shields.io/badge/Y%20Combinator-2023-orange)
+![License](https://img.shields.io/badge/License-MIT-blue)
+
+[![Discord](https://img.shields.io/badge/Join%20Our%20Community-black?logo=discord)](https://discord.com/invite/JkkXumPzcG)
+[![Documentation](https://img.shields.io/badge/Read%20our%20Documentation-black?logo=book)](https://www.buildwithfern.com/docs/intro)
+
+</div>
 
 Fern is an open source toolkit for designing, building and consuming REST APIs. With Fern, you can generate client libraries, documentation and boilerplate for your backend server in your chosen framework (e.g. FastAPI, Express).
 
