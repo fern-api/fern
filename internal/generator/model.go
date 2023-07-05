@@ -43,11 +43,37 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " uint8")
 	t.writer.P()
 
+	// We first need to determine whether or not this enum requires us to
+	// use its wire value (as opposed to just its enum name). This prevents
+	// collisions that would otherwise occur by an equivalent pascal case
+	// representation. For example,
+	//
+	// type Something uint8
+	//
+	// const (
+	//   SomethingOne Something = iota + 1
+	//   SomethingONE Something
+	// )
+	//
+	var useEnumWireValue bool
+	enumNames := make(map[string]struct{}, len(enum.Values))
+	for _, enumValue := range enum.Values {
+		enumName := enumValue.Name.Name.PascalCase.UnsafeName
+		if _, ok := enumNames[enumName]; ok {
+			useEnumWireValue = true
+			break
+		}
+		enumNames[enumName] = struct{}{}
+	}
+
 	// Write all of the supported enum values in a single const block.
 	t.writer.P("const (")
 	for i, enumValue := range enum.Values {
 		t.writer.WriteDocs(enumValue.Docs)
 		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
+		if useEnumWireValue {
+			enumName = t.typeName + enumValue.Name.WireValue
+		}
 		if i == 0 {
 			t.writer.P(enumName, " ", t.typeName, " = iota + 1")
 			continue
@@ -69,6 +95,9 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 			t.writer.P("return strconv.Itoa(int(", receiver, "))")
 		}
 		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
+		if useEnumWireValue {
+			enumName = t.typeName + enumValue.Name.WireValue
+		}
 		t.writer.P("case ", enumName, ":")
 		t.writer.P("return \"", enumValue.Name.WireValue, "\"")
 	}
@@ -91,6 +120,9 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 	t.writer.P("switch raw {")
 	for _, enumValue := range enum.Values {
 		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
+		if useEnumWireValue {
+			enumName = t.typeName + enumValue.Name.WireValue
+		}
 		t.writer.P("case \"", enumValue.Name.WireValue, "\":")
 		t.writer.P("value := ", enumName)
 		t.writer.P("*", receiver, " = value")

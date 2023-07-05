@@ -6,3 +6,10 @@ types:
         docs: "The first enum value."
       - TWO
       - THREE
+
+  Something:
+    enum:
+      - one
+      - One
+      - ONe
+      - ONE
