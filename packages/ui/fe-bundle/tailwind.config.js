@@ -20,6 +20,8 @@ module.exports = {
                 "gray-medium": colors.neutral[700],
                 "gray-dark": colors.neutral[800],
                 border: colors.neutral[700],
+                "border-concealed": colors.neutral[800],
+                "text-stark": colors.neutral[200],
                 "text-default": colors.neutral[400],
                 "text-muted": colors.neutral[600],
             };
