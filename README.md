@@ -31,10 +31,10 @@ Whether you call them SDKs, client libraries, bindings, or wrappers, Fern genera
 
 Currently, the following languages are supported:
 
-- TypeScript
-- Java
-- Python
-- Go
+- [TypeScript](https://github.com/fern-api/fern-typescript)
+- [Java](https://github.com/fern-api/fern-java)
+- [Python](https://github.com/fern-api/fern-python)
+- [Go](https://github.com/fern-api/fern-go)
 
 If you'd like to see a language supported, head over to [the Fern issues page](https://github.com/fern-api/fern/issues) and vote for the language you'd like to see supported next.
 
@@ -42,7 +42,7 @@ If you'd like to see a language supported, head over to [the Fern issues page](h
 
 Define your API, and Fern will generate models, endpoints and boilerplate application code. All the generated code is validated at build time, ensuring your all your endpoints and their data are being served correctly.
 
-We currently supported:
+Fern currently supports:
 
 - Express
 - Spring Boot
