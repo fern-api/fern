@@ -169,8 +169,11 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.
                 FernRegistry.api.v1.register.HttpResponseBodyShape.reference(
                     convertTypeReference(jsonResponse.responseBodyType)
                 ),
-            streaming: () => {
-                throw new Error("Streaming is not supported");
+            streaming: (streamingResponse) => {
+                if (streamingResponse.dataEventType.type === "text") {
+                    return FernRegistry.api.v1.register.HttpResponseBodyShape.streamingText();
+                }
+                throw new Error("Non-text streaming response is not supported");
             },
             _unknown: () => {
                 throw new Error("Unknown HttpResponse: " + irResponse.type);
