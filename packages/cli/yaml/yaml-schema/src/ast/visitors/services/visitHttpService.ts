@@ -194,12 +194,6 @@ async function visitEndpoint({
         audiences: noop,
         method: noop,
         auth: noop,
-        "stream-condition": async (streamCondition) => {
-            await visitor.streamCondition?.({ streamCondition, endpoint }, [
-                ...nodePathForEndpoint,
-                "stream-condition",
-            ]);
-        },
         "response-stream": async (responseStream) => {
             if (responseStream == null) {
                 return;

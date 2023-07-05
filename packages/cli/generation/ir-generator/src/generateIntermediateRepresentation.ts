@@ -276,7 +276,7 @@ export async function generateIntermediateRepresentation({
         });
 
     const hasStreamingEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
-        return service.endpoints.some((endpoint) => endpoint.streamingResponse != null);
+        return service.endpoints.some((endpoint) => endpoint.response?.type === "streaming");
     });
 
     const hasFileDownloadEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {

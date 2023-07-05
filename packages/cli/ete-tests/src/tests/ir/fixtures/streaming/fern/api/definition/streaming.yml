@@ -14,8 +14,6 @@ service:
         body:
           properties:
             stream: boolean
-      stream-condition: $request.stream
-      response: boolean
       response-stream:
         type: string
         terminator: "[DONE]"

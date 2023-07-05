@@ -9361,75 +9361,6 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Response",
-                                "camelCase": {
-                                    "unsafeName": "response",
-                                    "safeName": "response"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "response",
-                                    "safeName": "response"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "RESPONSE",
-                                    "safeName": "RESPONSE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Response",
-                                    "safeName": "Response"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
-                                        "originalName": "nested",
-                                        "camelCase": {
-                                            "unsafeName": "nested",
-                                            "safeName": "nested"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "nested",
-                                            "safeName": "nested"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NESTED",
-                                            "safeName": "NESTED"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Nested",
-                                            "safeName": "Nested"
-                                        }
-                                    }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "nested",
-                                    "camelCase": {
-                                        "unsafeName": "nested",
-                                        "safeName": "nested"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "nested",
-                                        "safeName": "nested"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NESTED",
-                                        "safeName": "NESTED"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Nested",
-                                        "safeName": "Nested"
-                                    }
-                                }
-                            },
-                            "typeId": "type_nested:Response",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": [
                         {
@@ -12040,75 +11971,6 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "MovieId",
-                                "camelCase": {
-                                    "unsafeName": "movieId",
-                                    "safeName": "movieId"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "movie_id",
-                                    "safeName": "movie_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MOVIE_ID",
-                                    "safeName": "MOVIE_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "MovieId",
-                                    "safeName": "MovieId"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
-                                        "originalName": "imdb",
-                                        "camelCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "IMDB",
-                                            "safeName": "IMDB"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Imdb",
-                                            "safeName": "Imdb"
-                                        }
-                                    }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "imdb",
-                                    "camelCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "IMDB",
-                                        "safeName": "IMDB"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Imdb",
-                                        "safeName": "Imdb"
-                                    }
-                                }
-                            },
-                            "typeId": "type_imdb:MovieId",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "responseBodyType": {
                             "name": {
                                 "originalName": "MovieId",
@@ -19410,75 +19272,6 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "MovieId",
-                                "camelCase": {
-                                    "unsafeName": "movieId",
-                                    "safeName": "movieId"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "movie_id",
-                                    "safeName": "movie_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MOVIE_ID",
-                                    "safeName": "MOVIE_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "MovieId",
-                                    "safeName": "MovieId"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
-                                        "originalName": "imdb",
-                                        "camelCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "IMDB",
-                                            "safeName": "IMDB"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Imdb",
-                                            "safeName": "Imdb"
-                                        }
-                                    }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "imdb",
-                                    "camelCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "IMDB",
-                                        "safeName": "IMDB"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Imdb",
-                                        "safeName": "Imdb"
-                                    }
-                                }
-                            },
-                            "typeId": "type_imdb:MovieId",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
                     "errors": [
                         {
                             "error": {
@@ -20694,75 +20487,6 @@ exports[`ir {"name":"simple"} 1`] = `
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Movie",
-                                "camelCase": {
-                                    "unsafeName": "movie",
-                                    "safeName": "movie"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "movie",
-                                    "safeName": "movie"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MOVIE",
-                                    "safeName": "MOVIE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Movie",
-                                    "safeName": "Movie"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
-                                        "originalName": "imdb",
-                                        "camelCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "IMDB",
-                                            "safeName": "IMDB"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Imdb",
-                                            "safeName": "Imdb"
-                                        }
-                                    }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "imdb",
-                                    "camelCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "IMDB",
-                                        "safeName": "IMDB"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Imdb",
-                                        "safeName": "Imdb"
-                                    }
-                                }
-                            },
-                            "typeId": "type_imdb:Movie",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "responseBodyType": {
                             "name": {
                                 "originalName": "Movie",
@@ -22514,16 +22238,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
-                    "streamingResponse": {
-                        "dataEventType": {
-                            "json": {
-                                "primitive": "STRING",
-                                "_type": "primitive"
-                            },
-                            "type": "json"
-                        }
-                    },
-                    "sdkResponse": {
+                    "response": {
                         "dataEventType": {
                             "json": {
                                 "primitive": "STRING",
@@ -22689,13 +22404,6 @@ exports[`ir {"name":"streaming"} 1`] = `
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "BOOLEAN",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
-                    "streamingResponse": {
                         "dataEventType": {
                             "json": {
                                 "primitive": "STRING",
@@ -22703,31 +22411,8 @@ exports[`ir {"name":"streaming"} 1`] = `
                             },
                             "type": "json"
                         },
-                        "terminator": "[DONE]"
-                    },
-                    "sdkResponse": {
-                        "streaming": {
-                            "dataEventType": {
-                                "json": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
-                                },
-                                "type": "json"
-                            },
-                            "terminator": "[DONE]"
-                        },
-                        "nonStreaming": {
-                            "responseBodyType": {
-                                "primitive": "BOOLEAN",
-                                "_type": "primitive"
-                            },
-                            "type": "json"
-                        },
-                        "condition": {
-                            "requestPropertyKey": "stream",
-                            "type": "requestPropertyKey"
-                        },
-                        "type": "maybeStreaming"
+                        "terminator": "[DONE]",
+                        "type": "streaming"
                     },
                     "errors": [],
                     "examples": []
