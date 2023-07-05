@@ -154,6 +154,14 @@ fern init --openapi ./path/to/openapi.yml
 
 The path to the definition can either be a local file, or a HTTP resource. If you start from an OpenAPI definition, the `init` command will forego generating the default project files such as `imbd.yml`, and instead will use your definition as a starting point.
 
+For example, you can use the following command to start a new Fern workspace based on an OpenAPI Pet Store definition:
+
+```
+fern init --openapi fern init --openapi https://petstore.swagger.io/v2/swagger.json
+```
+
+Which will allow you to directly generate clients in the next step.
+
 ## Generating an SDK
 
 All SDKs are generated server side, so you don't have to worry about installing all the prerequisite tools locally. Before you can start generating files, you'll need to log in:
