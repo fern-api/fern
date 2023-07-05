@@ -19,13 +19,11 @@ var (
 	pointerFile string
 )
 
-// WriteCore writes the core utilities required by the generated
-// service code. This includes the ClientOption type, auth options,
-// and HTTPClient interface declaration.
-func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
+// WriteClientOptionsDefinition writes the ClientOption interface and
+// *ClientOptions type. These types are always deposited in the core
+// package to prevent import cycles in the generated SDK.
+func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth) error {
 	importPath := path.Join(f.baseImportPath, "core")
-
-	// We have at least one auth scheme, so we need to generate the ClientOption.
 	f.P("type ClientOption func(*ClientOptions)")
 	f.P()
 
@@ -67,55 +65,6 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 		return nil
 	}
 
-	// Generate the options for setting the base URL and HTTP client.
-	f.P("func ClientWithBaseURL(baseURL string) ClientOption {")
-	f.P("return func(opts *ClientOptions) {")
-	f.P("opts.BaseURL = baseURL")
-	f.P("}")
-	f.P("}")
-	f.P()
-	f.P("func ClientWithHTTPClient(httpClient HTTPClient) ClientOption {")
-	f.P("return func(opts *ClientOptions) {")
-	f.P("opts.HTTPClient = httpClient")
-	f.P("}")
-	f.P("}")
-	f.P()
-
-	// Generat the authorization functional options.
-	for _, authScheme := range auth.Schemes {
-		if authScheme.Bearer != nil {
-			f.P("func ClientWithAuthBearer(bearer string) ClientOption {")
-			f.P("return func(opts *ClientOptions) {")
-			f.P("opts.Bearer = bearer")
-			f.P("}")
-			f.P("}")
-			f.P()
-		}
-		if authScheme.Basic != nil {
-			f.P("func ClientWithAuthBasic(username, password string) ClientOption {")
-			f.P("return func(opts *ClientOptions) {")
-			f.P("opts.Username = username")
-			f.P("opts.Password = password")
-			f.P("}")
-			f.P("}")
-			f.P()
-		}
-		if authScheme.Header != nil {
-			var (
-				optionName = fmt.Sprintf("ClientWithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)
-				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
-				param      = authScheme.Header.Name.Name.CamelCase.SafeName
-				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath)
-			)
-			f.P("func ", optionName, "(", param, " ", value, ") ClientOption {")
-			f.P("return func(opts *ClientOptions) {")
-			f.P("opts.", field, " = ", param)
-			f.P("}")
-			f.P("}")
-			f.P()
-		}
-	}
-
 	// Generate the ToHeader method.
 	f.P("func (c *ClientOptions) ToHeader() http.Header {")
 	f.P("header := make(http.Header)")
@@ -153,6 +102,105 @@ func (f *fileWriter) WriteCoreClientOptions(auth *ir.ApiAuth) error {
 	f.P()
 
 	return nil
+}
+
+// WriteClientOptions writes the client options available to the generated
+// client code. By default, the options are deposited at the root of the SDK
+// so that users can access the helpers alongside the rest of the top-level
+// definitions. However, if any naming conflict exists between the generated
+// types, this file is deposited in the core package.
+//
+// This function returns true if the client options should be written in the core
+// package.
+func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, generatedNames map[string]struct{}) bool {
+	// First determine if there are any conflicts with the generated names.
+	clientOptionNames := map[string]struct{}{
+		"ClientWithBaseURL":    struct{}{},
+		"ClientWithHTTPClient": struct{}{},
+	}
+	for _, authScheme := range auth.Schemes {
+		if authScheme.Bearer != nil {
+			clientOptionNames["ClientWithAuthBearer"] = struct{}{}
+		}
+		if authScheme.Basic != nil {
+			clientOptionNames["ClientWithAuthBasic"] = struct{}{}
+		}
+		if authScheme.Header != nil {
+			clientOptionNames[fmt.Sprintf("ClientWithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)] = struct{}{}
+		}
+	}
+	var useCore bool
+	for clientOptionName := range clientOptionNames {
+		if _, ok := generatedNames[clientOptionName]; ok {
+			useCore = true
+			break
+		}
+	}
+
+	// Now that we know where the types will be generated, format the generated type names as needed.
+	var (
+		importPath        = f.baseImportPath
+		httpClientType    = "core.HTTPClient"
+		clientOptionType  = "core.ClientOption"
+		clientOptionsType = "*core.ClientOptions"
+	)
+	if useCore {
+		importPath = path.Join(f.baseImportPath, "core")
+		httpClientType = "HTTPClient"
+		clientOptionType = "ClientOption"
+		clientOptionsType = "*ClientOptions"
+	}
+
+	// Generate the options for setting the base URL and HTTP client.
+	f.P("func ClientWithBaseURL(baseURL string) ", clientOptionType, " {")
+	f.P("return func(opts ", clientOptionsType, ") {")
+	f.P("opts.BaseURL = baseURL")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("func ClientWithHTTPClient(httpClient ", httpClientType, ") ", clientOptionType, " {")
+	f.P("return func(opts ", clientOptionsType, ") {")
+	f.P("opts.HTTPClient = httpClient")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Generat the authorization functional options.
+	for _, authScheme := range auth.Schemes {
+		if authScheme.Bearer != nil {
+			f.P("func ClientWithAuthBearer(bearer string) ", clientOptionType, " {")
+			f.P("return func(opts ", clientOptionsType, ") {")
+			f.P("opts.Bearer = bearer")
+			f.P("}")
+			f.P("}")
+			f.P()
+		}
+		if authScheme.Basic != nil {
+			f.P("func ClientWithAuthBasic(username, password string) ", clientOptionType, " {")
+			f.P("return func(opts ", clientOptionsType, ") {")
+			f.P("opts.Username = username")
+			f.P("opts.Password = password")
+			f.P("}")
+			f.P("}")
+			f.P()
+		}
+		if authScheme.Header != nil {
+			var (
+				optionName = fmt.Sprintf("ClientWithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)
+				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
+				param      = authScheme.Header.Name.Name.CamelCase.SafeName
+				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+			)
+			f.P("func ", optionName, "(", param, " ", value, ") ", clientOptionType, " {")
+			f.P("return func(opts ", clientOptionsType, ") {")
+			f.P("opts.", field, " = ", param)
+			f.P("}")
+			f.P("}")
+			f.P()
+		}
+	}
+
+	return useCore
 }
 
 // WriteClient writes a client for interacting with the given service.

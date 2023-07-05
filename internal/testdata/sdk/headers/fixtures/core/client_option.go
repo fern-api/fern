@@ -22,24 +22,6 @@ func NewClientOptions() *ClientOptions {
 	}
 }
 
-func ClientWithBaseURL(baseURL string) ClientOption {
-	return func(opts *ClientOptions) {
-		opts.BaseURL = baseURL
-	}
-}
-
-func ClientWithHTTPClient(httpClient HTTPClient) ClientOption {
-	return func(opts *ClientOptions) {
-		opts.HTTPClient = httpClient
-	}
-}
-
-func ClientWithAuthOptionalBytes(optionalBytes *[]byte) ClientOption {
-	return func(opts *ClientOptions) {
-		opts.OptionalBytes = optionalBytes
-	}
-}
-
 func (c *ClientOptions) ToHeader() http.Header {
 	header := make(http.Header)
 	var value *[]byte

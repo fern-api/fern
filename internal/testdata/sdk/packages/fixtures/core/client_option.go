@@ -20,24 +20,6 @@ func NewClientOptions() *ClientOptions {
 	}
 }
 
-func ClientWithBaseURL(baseURL string) ClientOption {
-	return func(opts *ClientOptions) {
-		opts.BaseURL = baseURL
-	}
-}
-
-func ClientWithHTTPClient(httpClient HTTPClient) ClientOption {
-	return func(opts *ClientOptions) {
-		opts.HTTPClient = httpClient
-	}
-}
-
-func ClientWithAuthBearer(bearer string) ClientOption {
-	return func(opts *ClientOptions) {
-		opts.Bearer = bearer
-	}
-}
-
 func (c *ClientOptions) ToHeader() http.Header {
 	header := make(http.Header)
 	if c.Bearer != "" {

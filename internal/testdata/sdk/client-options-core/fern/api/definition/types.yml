@@ -1,0 +1,4 @@
+types:
+  ClientWithAuthBearer:
+    properties:
+      value: string

@@ -77,6 +77,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			}
 		}
 	}
+	// First determine what types will be generated so that we can determine whether or not there will
+	// be any conflicts.
+	generatedNames := generatedNamesFromIR(ir)
 	var files []*File
 	// First write all of the package-level documentation, if any (i.e. in a doc.go file).
 	if ir.RootPackage != nil && ir.RootPackage.Docs != nil && len(*ir.RootPackage.Docs) > 0 {
@@ -122,7 +125,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		//return nil, errors.New("this generator only supports the status-code error discrimination strategy")
 		//}
 		// Generate the core API files.
-		fileInfo := fileInfoForCoreClientOptions()
+		fileInfo := fileInfoForClientOptionsDefinition()
 		writer := newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
@@ -130,7 +133,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Types,
 			ir.Errors,
 		)
-		if err := writer.WriteCoreClientOptions(ir.Auth); err != nil {
+		if err := writer.WriteClientOptionsDefinition(ir.Auth); err != nil {
 			return nil, err
 		}
 		file, err := writer.File()
@@ -157,8 +160,29 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			}
 			files = append(files, file)
 		}
+		// Generate the client options.
+		fileInfo = fileInfoForClientOptions(ir.ApiName, generatedNames)
+		writer = newFileWriter(
+			fileInfo.filename,
+			fileInfo.packageName,
+			g.config.ImportPath,
+			ir.Types,
+			ir.Errors,
+		)
+		if generatedInCore := writer.WriteClientOptions(ir.Auth, generatedNames); generatedInCore {
+			// Rewrite the client options file destination.
+			fileInfo = fileInfoForCoreClientOptions()
+			writer.SetFilename(fileInfo.filename)
+			writer.SetPackage(fileInfo.packageName)
+		}
+		file, err = writer.File()
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
 		files = append(files, newCoreFile())
-		files = append(files, newPointerFile(ir))
+		files = append(files, newPointerFile(ir.ApiName, generatedNames))
+
 		// Generate the error types, if any.
 		for _, irError := range ir.Errors {
 			fileInfo := fileInfoForType(ir.ApiName, irError.Name.FernFilepath, irError.Name.Name)
@@ -421,17 +445,7 @@ func readIR(irFilename string) (*ir.IntermediateRepresentation, error) {
 // access the helpers alongside the rest of the top-level definitions. However,
 // if any naming conflict exists between the generated types, this file is
 // deposited in the core package.
-func newPointerFile(ir *ir.IntermediateRepresentation) *File {
-	generatedNames := make(map[string]struct{})
-	for _, irType := range ir.Types {
-		generatedNames[irType.Name.Name.PascalCase.UnsafeName] = struct{}{}
-	}
-	for _, irError := range ir.Errors {
-		generatedNames[irError.Name.Name.PascalCase.UnsafeName] = struct{}{}
-	}
-	for _, irVariable := range ir.Variables {
-		generatedNames[irVariable.Name.PascalCase.UnsafeName] = struct{}{}
-	}
+func newPointerFile(apiName *ir.Name, generatedNames map[string]struct{}) *File {
 	// First determine whether or not we need to generate the type in the
 	// core package.
 	var useCorePackage bool
@@ -459,7 +473,7 @@ func newPointerFile(ir *ir.IntermediateRepresentation) *File {
 	content := strings.Replace(
 		pointerFile,
 		"package core",
-		fmt.Sprintf("package %s", strings.ToLower(ir.ApiName.CamelCase.SafeName)),
+		fmt.Sprintf("package %s", strings.ToLower(apiName.CamelCase.SafeName)),
 		1,
 	)
 	return &File{
@@ -480,9 +494,32 @@ type fileInfo struct {
 	packageName string
 }
 
-func fileInfoForCoreClientOptions() *fileInfo {
+func fileInfoForClientOptionsDefinition() *fileInfo {
 	return &fileInfo{
 		filename:    "core/client_option.go",
+		packageName: "core",
+	}
+}
+
+func fileInfoForClientOptions(apiName *ir.Name, generatedNames map[string]struct{}) *fileInfo {
+	// By default, we generate the client options at the root of the repository,
+	// so now we need to determine whether or not we can use the standard
+	// filename, or if it needs a prefix.
+	filename := "client_options.go"
+	if _, ok := generatedNames["ClientOptions"]; ok {
+		filename = "_client_options.go"
+	}
+	return &fileInfo{
+		filename:    filename,
+		packageName: strings.ToLower(apiName.CamelCase.SafeName),
+	}
+}
+
+// fileInfoForCoreClientOptions is used when the client options need to be generated in
+// the core package.
+func fileInfoForCoreClientOptions() *fileInfo {
+	return &fileInfo{
+		filename:    "core/client_options.go",
 		packageName: "core",
 	}
 }
@@ -576,6 +613,20 @@ func fileInfoForPackage(apiName *ir.Name, fernFilepath *ir.FernFilepath) *fileIn
 		filename:    filepath.Join(append(packages, packageDocsFilename)...),
 		packageName: packages[len(packages)-1],
 	}
+}
+
+func generatedNamesFromIR(ir *ir.IntermediateRepresentation) map[string]struct{} {
+	generatedNames := make(map[string]struct{})
+	for _, irType := range ir.Types {
+		generatedNames[irType.Name.Name.PascalCase.UnsafeName] = struct{}{}
+	}
+	for _, irError := range ir.Errors {
+		generatedNames[irError.Name.Name.PascalCase.UnsafeName] = struct{}{}
+	}
+	for _, irVariable := range ir.Variables {
+		generatedNames[irVariable.Name.PascalCase.UnsafeName] = struct{}{}
+	}
+	return generatedNames
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.

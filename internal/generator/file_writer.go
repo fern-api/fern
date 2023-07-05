@@ -125,6 +125,16 @@ func (f *fileWriter) WriteDocs(docs *string) {
 	}
 }
 
+// SetFilename overwrites the file writer's configured filename.
+func (f *fileWriter) SetFilename(filename string) {
+	f.filename = filename
+}
+
+// SetPackage overwrites the file writer's configured package name.
+func (f *fileWriter) SetPackage(packageName string) {
+	f.packageName = packageName
+}
+
 // removeUnusedImports parses the buffer, interpreting it as Go code,
 // and removes all unused imports. If successful, the result is then
 // formatted.

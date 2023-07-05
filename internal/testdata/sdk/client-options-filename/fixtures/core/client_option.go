@@ -3,7 +3,6 @@
 package core
 
 import (
-	fmt "fmt"
 	http "net/http"
 )
 
@@ -12,7 +11,6 @@ type ClientOption func(*ClientOptions)
 type ClientOptions struct {
 	BaseURL    string
 	HTTPClient HTTPClient
-	Custom     string
 }
 
 func NewClientOptions() *ClientOptions {
@@ -21,11 +19,4 @@ func NewClientOptions() *ClientOptions {
 	}
 }
 
-func (c *ClientOptions) ToHeader() http.Header {
-	header := make(http.Header)
-	var value string
-	if c.Custom != value {
-		header.Set("X-API-Key", fmt.Sprintf("%v", c.Custom))
-	}
-	return header
-}
+func (c *ClientOptions) ToHeader() http.Header { return nil }
