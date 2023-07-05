@@ -493,6 +493,7 @@ workflows:
             - live-test
           context:
             - vercel-prod
+            - fe-algolia-prod
 
       - check-release-is-allowed:
           filters:
