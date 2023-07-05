@@ -35,7 +35,7 @@ export const SearchHits: React.FC = () => {
     return (
         <div
             className={classNames("max-h-80 overflow-y-auto p-2", {
-                "border-border border-t": (progress === "success" || progress === "pending") && hits.length > 0,
+                "border-gray-800/50 border-t": (progress === "success" || progress === "pending") && hits.length > 0,
             })}
         >
             <div
