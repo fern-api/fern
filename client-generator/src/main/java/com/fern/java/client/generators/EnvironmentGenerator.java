@@ -52,7 +52,7 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
     private String defaultEnvironmentConstant;
     private boolean optionsPresent = false;
 
-    public EnvironmentGenerator(AbstractGeneratorContext<?> generatorContext) {
+    public EnvironmentGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName("Environment"), generatorContext);
         this.maybeEnvironmentsConfig = generatorContext.getIr().getEnvironments();
     }

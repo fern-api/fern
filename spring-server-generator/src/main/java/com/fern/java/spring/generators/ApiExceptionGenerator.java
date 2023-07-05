@@ -26,7 +26,7 @@ public final class ApiExceptionGenerator extends AbstractFileGenerator {
 
     public static final String API_EXCEPTION_CLASSNAME = "APIException";
 
-    public ApiExceptionGenerator(AbstractGeneratorContext<?> generatorContext) {
+    public ApiExceptionGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName(API_EXCEPTION_CLASSNAME), generatorContext);
     }
 

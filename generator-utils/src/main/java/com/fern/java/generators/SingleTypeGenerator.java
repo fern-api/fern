@@ -36,29 +36,33 @@ import java.util.stream.Collectors;
 
 public final class SingleTypeGenerator implements Type.Visitor<Optional<GeneratedJavaFile>> {
 
-    private final AbstractGeneratorContext<?> generatorContext;
+    private final AbstractGeneratorContext<?, ?> generatorContext;
     private final DeclaredTypeName declaredTypeName;
     private final ClassName className;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final boolean fromErrorDeclaration;
+    private final boolean publicConstructorsEnabled;
 
     public SingleTypeGenerator(
-            AbstractGeneratorContext<?> generatorContext,
+            AbstractGeneratorContext<?, ?> generatorContext,
             DeclaredTypeName declaredTypeName,
             ClassName className,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
-            boolean fromErrorDeclaration) {
+            boolean fromErrorDeclaration,
+            boolean publicConstructorsEnabled) {
         this.generatorContext = generatorContext;
         this.className = className;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.declaredTypeName = declaredTypeName;
         this.fromErrorDeclaration = fromErrorDeclaration;
+        this.publicConstructorsEnabled = publicConstructorsEnabled;
     }
 
     @Override
     public Optional<GeneratedJavaFile> visitAlias(AliasTypeDeclaration value) {
         if (generatorContext.getCustomConfig().wrappedAliases() || fromErrorDeclaration) {
-            AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, value);
+            AliasGenerator aliasGenerator =
+                    new AliasGenerator(className, generatorContext, value, publicConstructorsEnabled);
             return Optional.of(aliasGenerator.generateFile());
         }
         return Optional.empty();
@@ -82,7 +86,8 @@ public final class SingleTypeGenerator implements Type.Visitor<Optional<Generate
                 extendedInterfaces,
                 generatorContext,
                 allGeneratedInterfaces,
-                className);
+                className,
+                publicConstructorsEnabled);
         GeneratedObject generatedObject = objectGenerator.generateFile();
         return Optional.of(GeneratedJavaFile.builder()
                 .className(generatedObject.getClassName())

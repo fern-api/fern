@@ -61,7 +61,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private final FieldSpec environmentField;
 
     public ClientOptionsGenerator(
-            AbstractGeneratorContext<?> generatorContext, GeneratedEnvironmentsClass generatedEnvironmentsClass) {
+            AbstractGeneratorContext<?, ?> generatorContext, GeneratedEnvironmentsClass generatedEnvironmentsClass) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName(CLIENT_OPTIONS_CLASS_NAME), generatorContext);
         this.builderClassName = className.nestedClass("Builder");
         this.environmentField = FieldSpec.builder(

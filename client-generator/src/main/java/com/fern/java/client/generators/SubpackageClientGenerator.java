@@ -42,7 +42,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
 
     public SubpackageClientGenerator(
             Subpackage subpackage,
-            AbstractGeneratorContext<?> generatorContext,
+            AbstractGeneratorContext<?, ?> generatorContext,
             GeneratedObjectMapper generatedObjectMapper,
             ClientGeneratorContext clientGeneratorContext,
             GeneratedClientOptions generatedClientOptions,

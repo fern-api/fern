@@ -32,7 +32,7 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
 
     public static final String JSON_MAPPER_STATIC_FIELD_NAME = "JSON_MAPPER";
 
-    public ObjectMappersGenerator(AbstractGeneratorContext<?> generatorContext) {
+    public ObjectMappersGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getObjectMapperClassName(), generatorContext);
     }
 

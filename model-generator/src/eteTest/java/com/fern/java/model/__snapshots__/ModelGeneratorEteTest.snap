@@ -543,7 +543,7 @@ public final class BlogPost {
 
     private final String content;
 
-    BlogPost(PostId id, PostType type, String title, Author author, String content) {
+    private BlogPost(PostId id, PostType type, String title, Author author, String content) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -716,7 +716,7 @@ public final class GeneratorIdAndVersion {
 
     private final String version;
 
-    GeneratorIdAndVersion(String id, String version) {
+    private GeneratorIdAndVersion(String id, String version) {
         this.id = id;
         this.version = version;
     }
@@ -867,7 +867,7 @@ import java.util.Objects;
 public final class PostNotFoundErrorBody {
     private final PostId id;
 
-    PostNotFoundErrorBody(PostId id) {
+    private PostNotFoundErrorBody(PostId id) {
         this.id = id;
     }
 
@@ -980,7 +980,7 @@ import java.util.Objects;
 public final class UnauthorizedErrorBody {
     private final String reason;
 
-    UnauthorizedErrorBody(String reason) {
+    private UnauthorizedErrorBody(String reason) {
         this.reason = reason;
     }
 

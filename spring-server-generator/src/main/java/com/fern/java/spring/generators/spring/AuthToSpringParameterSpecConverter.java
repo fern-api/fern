@@ -37,11 +37,11 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public final class AuthToSpringParameterSpecConverter {
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
 
-    private final AbstractGeneratorContext<?> generatorContext;
+    private final AbstractGeneratorContext<?, ?> generatorContext;
     private final GeneratedAuthFiles generatedAuthFiles;
 
     public AuthToSpringParameterSpecConverter(
-            AbstractGeneratorContext<?> generatorContext, GeneratedAuthFiles generatedAuthFiles) {
+            AbstractGeneratorContext<?, ?> generatorContext, GeneratedAuthFiles generatedAuthFiles) {
         this.generatorContext = generatorContext;
         this.generatedAuthFiles = generatedAuthFiles;
     }

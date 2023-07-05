@@ -36,7 +36,7 @@ public final class EnumGenerator extends AbstractFileGenerator {
 
     public EnumGenerator(
             ClassName className,
-            AbstractGeneratorContext<?> generatorContext,
+            AbstractGeneratorContext<?, ?> generatorContext,
             EnumTypeDeclaration enumTypeDeclaration) {
         super(className, generatorContext);
         this.enumTypeDeclaration = enumTypeDeclaration;

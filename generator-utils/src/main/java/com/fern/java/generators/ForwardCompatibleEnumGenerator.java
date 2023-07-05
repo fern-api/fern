@@ -60,7 +60,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
 
     public ForwardCompatibleEnumGenerator(
             ClassName className,
-            AbstractGeneratorContext<?> generatorContext,
+            AbstractGeneratorContext<?, ?> generatorContext,
             EnumTypeDeclaration enumTypeDeclaration) {
         super(className, generatorContext);
         this.enumTypeDeclaration = enumTypeDeclaration;

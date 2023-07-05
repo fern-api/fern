@@ -28,9 +28,9 @@ import java.util.Optional;
 public final class AuthGenerator {
 
     private final ApiAuth apiAuth;
-    private final AbstractGeneratorContext<?> generatorContext;
+    private final AbstractGeneratorContext<?, ?> generatorContext;
 
-    public AuthGenerator(AbstractGeneratorContext<?> generatorContext) {
+    public AuthGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         this.apiAuth = generatorContext.getIr().getAuth();
         this.generatorContext = generatorContext;
     }

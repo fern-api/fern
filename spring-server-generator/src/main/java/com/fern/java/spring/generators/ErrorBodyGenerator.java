@@ -43,7 +43,7 @@ public final class ErrorBodyGenerator extends AbstractFileGenerator {
 
     public ErrorBodyGenerator(
             ErrorDiscriminationByPropertyStrategy errorDiscriminationByPropertyStrategy,
-            AbstractGeneratorContext<?> generatorContext) {
+            AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName(ERROR_BODY_CLASS_NAME), generatorContext);
         this.errorDiscriminationByPropertyStrategy = errorDiscriminationByPropertyStrategy;
         this.errorNameField = FieldSpec.builder(

@@ -35,7 +35,7 @@ public final class SuppliersGenerator extends AbstractFileGenerator {
 
     public static final String MEMOIZE_METHOD_NAME = "memoize";
 
-    public SuppliersGenerator(AbstractGeneratorContext<?> generatorContext) {
+    public SuppliersGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName("Suppliers"), generatorContext);
     }
 

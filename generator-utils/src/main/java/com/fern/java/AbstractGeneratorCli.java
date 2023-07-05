@@ -54,7 +54,7 @@ import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractGeneratorCli<T extends CustomConfig, K extends DownloadFilesCustomConfig> {
+public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends DownloadFilesCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(AbstractGeneratorCli.class);
 
@@ -276,7 +276,7 @@ public abstract class AbstractGeneratorCli<T extends CustomConfig, K extends Dow
         }
     }
 
-    public abstract <T extends CustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
+    public abstract <T extends ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
 
     public abstract <K extends DownloadFilesCustomConfig> K getDownloadFilesCustomConfig(
             GeneratorConfig generatorConfig);

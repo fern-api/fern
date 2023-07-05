@@ -16,7 +16,6 @@
 
 package com.fern.java;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import org.immutables.value.Value;
@@ -24,19 +23,7 @@ import org.immutables.value.Value;
 @Value.Immutable
 @StagedBuilderImmutablesStyle
 @JsonDeserialize(as = ImmutableCustomConfig.class)
-public interface CustomConfig {
-
-    @Value.Default
-    @JsonProperty("wrapped-aliases")
-    default Boolean wrappedAliases() {
-        return false;
-    }
-
-    @Value.Default
-    @JsonProperty("enable-forward-compatible-enums")
-    default Boolean enableForwardCompatibleEnum() {
-        return false;
-    }
+public interface CustomConfig extends ICustomConfig {
 
     static ImmutableCustomConfig.Builder builder() {
         return ImmutableCustomConfig.builder();

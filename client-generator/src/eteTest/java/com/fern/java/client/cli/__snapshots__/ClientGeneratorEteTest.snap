@@ -836,7 +836,7 @@ public final class CreatePostRequest {
 
     private final List<List<String>> list;
 
-    CreatePostRequest(
+    private CreatePostRequest(
             String title,
             Author author,
             String content,
@@ -1088,7 +1088,7 @@ import java.util.Objects;
 public final class GetPostRequest {
     private final String dummy;
 
-    GetPostRequest(String dummy) {
+    private GetPostRequest(String dummy) {
         this.dummy = dummy;
     }
 
@@ -1364,7 +1364,7 @@ public final class BlogPost {
 
     private final String content;
 
-    BlogPost(String id, PostType type, String title, Author author, String content) {
+    private BlogPost(String id, PostType type, String title, Author author, String content) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -1549,7 +1549,7 @@ public final class GeneratorIdAndVersion {
 
     private final String version;
 
-    GeneratorIdAndVersion(String id, String version) {
+    private GeneratorIdAndVersion(String id, String version) {
         this.id = id;
         this.version = version;
     }
@@ -1654,7 +1654,7 @@ import java.util.Objects;
 public final class PostNotFoundErrorBody {
     private final String id;
 
-    PostNotFoundErrorBody(String id) {
+    private PostNotFoundErrorBody(String id) {
         this.id = id;
     }
 
@@ -1767,7 +1767,7 @@ import java.util.Objects;
 public final class UnauthorizedErrorBody {
     private final String reason;
 
-    UnauthorizedErrorBody(String reason) {
+    private UnauthorizedErrorBody(String reason) {
         this.reason = reason;
     }
 
@@ -2138,7 +2138,7 @@ public final class Device {
 
     private final Optional<Long> updatedAt;
 
-    Device(
+    private Device(
             Optional<String> id,
             Optional<Platform> platform,
             Optional<String> onesignalPlayerId,
@@ -2662,7 +2662,7 @@ public final class BulkSendEventRequest {
 
     private final List<BatchEvent> batch;
 
-    BulkSendEventRequest(Optional<String> idempotencyKey, String event, List<BatchEvent> batch) {
+    private BulkSendEventRequest(Optional<String> idempotencyKey, String event, List<BatchEvent> batch) {
         this.idempotencyKey = idempotencyKey;
         this.event = event;
         this.batch = batch;
@@ -2853,7 +2853,7 @@ public final class SendEventRequest {
 
     private final Optional<EventOverride> override;
 
-    SendEventRequest(
+    private SendEventRequest(
             Optional<String> idempotencyKey,
             String event,
             Map<String, Object> data,
@@ -3149,7 +3149,7 @@ public final class Attachment {
 
     private final String url;
 
-    Attachment(String fileName, String content, String url) {
+    private Attachment(String fileName, String content, String url) {
         this.fileName = fileName;
         this.content = content;
         this.url = url;
@@ -3282,7 +3282,7 @@ public final class BatchEvent {
 
     private final Optional<EventOverride> override;
 
-    BatchEvent(Map<String, Object> data, Optional<User> user, Optional<EventOverride> override) {
+    private BatchEvent(Map<String, Object> data, Optional<User> user, Optional<EventOverride> override) {
         this.data = data;
         this.user = user;
         this.override = override;
@@ -3412,7 +3412,7 @@ import java.util.Objects;
 public final class ChannelOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    ChannelOverride(long scheduleAt) {
+    private ChannelOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
 
@@ -3502,7 +3502,7 @@ public final class EmailMessage {
 
     private final String subject;
 
-    EmailMessage(String text, String htmlBody, String subject) {
+    private EmailMessage(String text, String htmlBody, String subject) {
         this.text = text;
         this.htmlBody = htmlBody;
         this.subject = subject;
@@ -3640,7 +3640,7 @@ public final class EmailOverride implements IChannelOverride {
 
     private final EmailMessage message;
 
-    EmailOverride(
+    private EmailOverride(
             long scheduleAt,
             EmailRecipient from,
             List<EmailRecipient> cc,
@@ -3885,7 +3885,7 @@ public final class EmailRecipient {
 
     private final String address;
 
-    EmailRecipient(String name, String address) {
+    private EmailRecipient(String name, String address) {
         this.name = name;
         this.address = address;
     }
@@ -4012,7 +4012,7 @@ public final class EventOverride {
 
     private final Map<String, ProviderOverride> providers;
 
-    EventOverride(
+    private EventOverride(
             Optional<EmailOverride> email,
             Optional<SmsOverride> sms,
             Optional<WhatsappOverride> whatsapp,
@@ -4316,7 +4316,7 @@ import java.util.Objects;
 public final class InAppOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    InAppOverride(long scheduleAt) {
+    private InAppOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
 
@@ -4404,7 +4404,7 @@ public final class Param {
 
     private final String value;
 
-    Param(String name, String value) {
+    private Param(String name, String value) {
         this.name = name;
         this.value = value;
     }
@@ -4522,7 +4522,7 @@ public final class ProviderOverride {
 
     private final List<Param> headers;
 
-    ProviderOverride(
+    private ProviderOverride(
             Map<String, Object> payload,
             List<Param> formParams,
             List<Param> queryParams,
@@ -4719,7 +4719,7 @@ import java.util.Objects;
 public final class PushOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    PushOverride(long scheduleAt) {
+    private PushOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
 
@@ -4807,7 +4807,7 @@ public final class SendEventResponse {
 
     private final boolean success;
 
-    SendEventResponse(String id, boolean success) {
+    private SendEventResponse(String id, boolean success) {
         this.id = id;
         this.success = success;
     }
@@ -4914,7 +4914,7 @@ public final class SlackMessage {
 
     private final Object blocks;
 
-    SlackMessage(String text, Object blocks) {
+    private SlackMessage(String text, Object blocks) {
         this.text = text;
         this.blocks = blocks;
     }
@@ -5021,7 +5021,7 @@ public final class SlackOverride implements IChannelOverride {
 
     private final SlackMessage message;
 
-    SlackOverride(long scheduleAt, SlackMessage message) {
+    private SlackOverride(long scheduleAt, SlackMessage message) {
         this.scheduleAt = scheduleAt;
         this.message = message;
     }
@@ -5127,7 +5127,7 @@ import java.util.Objects;
 public final class SmsMessage {
     private final String text;
 
-    SmsMessage(String text) {
+    private SmsMessage(String text) {
         this.text = text;
     }
 
@@ -5216,7 +5216,7 @@ public final class SmsOverride implements IChannelOverride {
 
     private final SmsMessage message;
 
-    SmsOverride(long scheduleAt, String sender, SmsMessage message) {
+    private SmsOverride(long scheduleAt, String sender, SmsMessage message) {
         this.scheduleAt = scheduleAt;
         this.sender = sender;
         this.message = message;
@@ -5342,7 +5342,7 @@ import java.util.Objects;
 public final class TelegramOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    TelegramOverride(long scheduleAt) {
+    private TelegramOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
 
@@ -5455,7 +5455,7 @@ public final class User {
 
     private final Optional<String> fcmDeviceGroup;
 
-    User(
+    private User(
             Optional<String> userId,
             Optional<String> email,
             Optional<String> mobile,
@@ -5819,7 +5819,7 @@ import java.util.Objects;
 public final class VoiceOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    VoiceOverride(long scheduleAt) {
+    private VoiceOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
 
@@ -5905,7 +5905,7 @@ import java.util.Objects;
 public final class WebhookOverride implements IChannelOverride {
     private final long scheduleAt;
 
-    WebhookOverride(long scheduleAt) {
+    private WebhookOverride(long scheduleAt) {
         this.scheduleAt = scheduleAt;
     }
 
@@ -5993,7 +5993,7 @@ public final class WhatsappOverride implements IChannelOverride {
 
     private final SmsMessage message;
 
-    WhatsappOverride(long scheduleAt, SmsMessage message) {
+    private WhatsappOverride(long scheduleAt, SmsMessage message) {
         this.scheduleAt = scheduleAt;
         this.message = message;
     }
@@ -6196,7 +6196,8 @@ public final class CreateUserRequest {
 
     private final Optional<String> whatsApp;
 
-    CreateUserRequest(String userId, Optional<String> mobile, Optional<String> email, Optional<String> whatsApp) {
+    private CreateUserRequest(
+            String userId, Optional<String> mobile, Optional<String> email, Optional<String> whatsApp) {
         this.userId = userId;
         this.mobile = mobile;
         this.email = email;
@@ -6419,7 +6420,7 @@ import java.util.Objects;
 public final class ChannelPreference {
     private final boolean disabled;
 
-    ChannelPreference(boolean disabled) {
+    private ChannelPreference(boolean disabled) {
         this.disabled = disabled;
     }
 
@@ -6518,7 +6519,7 @@ public final class ChannelPreferences {
 
     private final Optional<ChannelPreference> teams;
 
-    ChannelPreferences(
+    private ChannelPreferences(
             Optional<ChannelPreference> sms,
             Optional<ChannelPreference> push,
             Optional<ChannelPreference> whatsapp,
@@ -6756,7 +6757,7 @@ public final class RavenUser {
 
     private final Optional<Long> updatedAt;
 
-    RavenUser(
+    private RavenUser(
             String userId,
             Optional<String> userSid,
             Optional<String> onesignalExternalId,
@@ -7230,7 +7231,7 @@ public final class SlackProfile {
 
     private final Optional<String> channelId;
 
-    SlackProfile(String accessToken, Optional<String> email, Optional<String> channelId) {
+    private SlackProfile(String accessToken, Optional<String> email, Optional<String> channelId) {
         this.accessToken = accessToken;
         this.email = email;
         this.channelId = channelId;
@@ -7368,7 +7369,7 @@ import java.util.Objects;
 public final class TelegramProfile {
     private final String chatId;
 
-    TelegramProfile(String chatId) {
+    private TelegramProfile(String chatId) {
         this.chatId = chatId;
     }
 
@@ -7457,7 +7458,7 @@ public final class UserPreferences {
 
     private final Optional<ChannelPreferences> channelPreferences;
 
-    UserPreferences(Optional<Channel> preferredChannel, Optional<ChannelPreferences> channelPreferences) {
+    private UserPreferences(Optional<Channel> preferredChannel, Optional<ChannelPreferences> channelPreferences) {
         this.preferredChannel = preferredChannel;
         this.channelPreferences = channelPreferences;
     }

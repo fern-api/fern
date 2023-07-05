@@ -27,7 +27,7 @@ public abstract class AbstractFileGenerator extends AbstractFilesGenerator {
     @SuppressWarnings("checkstyle:VisibilityModifier")
     protected ClassName className;
 
-    public AbstractFileGenerator(ClassName className, AbstractGeneratorContext<?> generatorContext) {
+    public AbstractFileGenerator(ClassName className, AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext);
         this.className = className;
     }

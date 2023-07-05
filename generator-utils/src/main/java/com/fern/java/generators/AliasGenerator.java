@@ -37,15 +37,17 @@ public final class AliasGenerator extends AbstractFileGenerator {
 
     private static final String VALUE_FIELD_NAME = "value";
     private static final String OF_METHOD_NAME = "of";
-
     private final AliasTypeDeclaration aliasTypeDeclaration;
+    private final boolean publicConstructorsEnabled;
 
     public AliasGenerator(
             ClassName className,
-            AbstractGeneratorContext<?> generatorContext,
-            AliasTypeDeclaration aliasTypeDeclaration) {
+            AbstractGeneratorContext<?, ?> generatorContext,
+            AliasTypeDeclaration aliasTypeDeclaration,
+            boolean publicConstructorsEnabled) {
         super(className, generatorContext);
         this.aliasTypeDeclaration = aliasTypeDeclaration;
+        this.publicConstructorsEnabled = publicConstructorsEnabled;
     }
 
     @Override
@@ -82,7 +84,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
 
     private MethodSpec getConstructor(TypeName aliasTypeName) {
         return MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PRIVATE)
+                .addModifiers(publicConstructorsEnabled ? Modifier.PUBLIC : Modifier.PRIVATE)
                 .addParameter(aliasTypeName, VALUE_FIELD_NAME)
                 .addStatement("this.value = value")
                 .build();

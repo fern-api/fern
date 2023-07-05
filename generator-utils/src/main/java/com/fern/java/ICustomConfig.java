@@ -14,33 +14,22 @@
  * limitations under the License.
  */
 
-package com.fern.java.spring;
+package com.fern.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fern.java.ICustomConfig;
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import org.immutables.value.Value;
 
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-@JsonDeserialize(as = ImmutableSpringCustomConfig.class)
-public interface SpringCustomConfig extends ICustomConfig {
+public interface ICustomConfig {
 
     @Value.Default
     @JsonProperty("wrapped-aliases")
-    @Override
     default Boolean wrappedAliases() {
-        return true;
-    }
-
-    @Value.Default
-    @JsonProperty("enable-public-constructors")
-    default Boolean enablePublicConstructors() {
         return false;
     }
 
-    static ImmutableSpringCustomConfig.Builder builder() {
-        return ImmutableSpringCustomConfig.builder();
+    @Value.Default
+    @JsonProperty("enable-forward-compatible-enums")
+    default Boolean enableForwardCompatibleEnum() {
+        return false;
     }
 }

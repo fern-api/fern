@@ -28,7 +28,7 @@ public abstract class AbstractOptionalFileGenerator extends AbstractFilesGenerat
     @SuppressWarnings("checkstyle:VisibilityModifier")
     protected ClassName className;
 
-    public AbstractOptionalFileGenerator(ClassName className, AbstractGeneratorContext<?> generatorContext) {
+    public AbstractOptionalFileGenerator(ClassName className, AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext);
         this.className = className;
     }

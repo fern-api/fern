@@ -24,9 +24,9 @@ import com.fern.java.output.GeneratedJavaFile;
 
 public final class AuthSchemeGenerator implements AuthScheme.Visitor<GeneratedJavaFile> {
 
-    private final AbstractGeneratorContext<?> generatorContext;
+    private final AbstractGeneratorContext<?, ?> generatorContext;
 
-    public AuthSchemeGenerator(AbstractGeneratorContext<?> generatorContext) {
+    public AuthSchemeGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         this.generatorContext = generatorContext;
     }
 

@@ -174,7 +174,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                         .collect(Collectors.toList()),
                 generatorContext,
                 allGeneratedInterfaces,
-                className);
+                className,
+                false);
         GeneratedObject generatedObject = objectGenerator.generateFile();
         return GeneratedWrappedRequest.builder()
                 .className(generatedObject.getClassName())

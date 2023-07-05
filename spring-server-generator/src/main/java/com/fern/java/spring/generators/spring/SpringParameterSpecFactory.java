@@ -30,9 +30,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public final class SpringParameterSpecFactory {
 
-    private final AbstractGeneratorContext<?> generatorContext;
+    private final AbstractGeneratorContext<?, ?> generatorContext;
 
-    public SpringParameterSpecFactory(AbstractGeneratorContext<?> generatorContext) {
+    public SpringParameterSpecFactory(AbstractGeneratorContext<?, ?> generatorContext) {
         this.generatorContext = generatorContext;
     }
 

@@ -34,7 +34,7 @@ public final class InterfaceGenerator extends AbstractFileGenerator {
     private final ObjectTypeDeclaration objectTypeDeclaration;
 
     public InterfaceGenerator(
-            AbstractGeneratorContext<?> generatorContext,
+            AbstractGeneratorContext<?, ?> generatorContext,
             DeclaredTypeName declaredTypeName,
             ObjectTypeDeclaration objectTypeDeclaration) {
         super(generatorContext.getPoetClassNameFactory().getInterfaceClassName(declaredTypeName), generatorContext);

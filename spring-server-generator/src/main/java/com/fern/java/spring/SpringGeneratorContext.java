@@ -20,7 +20,8 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.irV12.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorContext;
 
-public final class SpringGeneratorContext extends AbstractGeneratorContext<SpringLocalFilesPoetClassNameFactory> {
+public final class SpringGeneratorContext
+        extends AbstractGeneratorContext<SpringLocalFilesPoetClassNameFactory, SpringCustomConfig> {
 
     public SpringGeneratorContext(
             IntermediateRepresentation ir,

@@ -23,9 +23,9 @@ import java.util.List;
 public abstract class AbstractFilesGenerator {
 
     @SuppressWarnings("checkstyle:VisibilityModifier")
-    protected AbstractGeneratorContext<?> generatorContext;
+    protected AbstractGeneratorContext<?, ?> generatorContext;
 
-    public AbstractFilesGenerator(AbstractGeneratorContext<?> generatorContext) {
+    public AbstractFilesGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         this.generatorContext = generatorContext;
     }
 

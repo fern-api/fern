@@ -121,7 +121,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
         this.addGeneratedFile(generatedSuppliersFile);
 
         // types
-        TypesGenerator typesGenerator = new TypesGenerator(context);
+        TypesGenerator typesGenerator = new TypesGenerator(context, false);
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);

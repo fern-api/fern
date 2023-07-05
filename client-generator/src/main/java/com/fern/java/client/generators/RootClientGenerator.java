@@ -54,7 +54,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     private final ClassName builderName;
 
     public RootClientGenerator(
-            AbstractGeneratorContext<?> generatorContext,
+            AbstractGeneratorContext<?, ?> generatorContext,
             GeneratedObjectMapper generatedObjectMapper,
             ClientGeneratorContext clientGeneratorContext,
             GeneratedClientOptions generatedClientOptions,
@@ -190,11 +190,11 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         return typeSpecBuilder.build();
     }
 
-    private static String getRootClientName(AbstractGeneratorContext<?> generatorContext) {
+    private static String getRootClientName(AbstractGeneratorContext<?, ?> generatorContext) {
         return getRootClientPrefix(generatorContext) + "Client";
     }
 
-    private static String getRootClientPrefix(AbstractGeneratorContext<?> generatorContext) {
+    private static String getRootClientPrefix(AbstractGeneratorContext<?, ?> generatorContext) {
         return CasingUtils.convertKebabCaseToUpperCamelCase(
                         generatorContext.getGeneratorConfig().getOrganization())
                 + CasingUtils.convertKebabCaseToUpperCamelCase(

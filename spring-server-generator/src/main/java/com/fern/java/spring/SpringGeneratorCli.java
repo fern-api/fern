@@ -92,6 +92,8 @@ public final class SpringGeneratorCli
 
     public void generateClient(SpringGeneratorContext context, IntermediateRepresentation ir) {
 
+        SpringCustomConfig springCustomConfig = getCustomConfig(context.getGeneratorConfig());
+
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
@@ -110,7 +112,7 @@ public final class SpringGeneratorCli
         maybeAuth.ifPresent(this::addGeneratedFile);
 
         // types
-        TypesGenerator typesGenerator = new TypesGenerator(context);
+        TypesGenerator typesGenerator = new TypesGenerator(context, springCustomConfig.enablePublicConstructors());
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);

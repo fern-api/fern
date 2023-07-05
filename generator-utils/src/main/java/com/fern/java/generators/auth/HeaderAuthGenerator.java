@@ -28,7 +28,7 @@ import com.fern.java.output.GeneratedJavaFile;
 public final class HeaderAuthGenerator extends AbstractFileGenerator {
     private final HeaderAuthScheme headerAuthScheme;
 
-    public HeaderAuthGenerator(AbstractGeneratorContext<?> generatorContext, HeaderAuthScheme headerAuthScheme) {
+    public HeaderAuthGenerator(AbstractGeneratorContext<?, ?> generatorContext, HeaderAuthScheme headerAuthScheme) {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
@@ -45,7 +45,7 @@ public final class HeaderAuthGenerator extends AbstractFileGenerator {
                 .aliasOf(headerAuthScheme.getValueType())
                 .resolvedType(ResolvedTypeReference.primitive(PrimitiveType.STRING))
                 .build();
-        AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, aliasTypeDeclaration);
+        AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, aliasTypeDeclaration, false);
         return aliasGenerator.generateFile();
     }
 }

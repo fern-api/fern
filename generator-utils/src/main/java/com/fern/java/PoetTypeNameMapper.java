@@ -42,12 +42,12 @@ public final class PoetTypeNameMapper {
     private final TypeReferenceToTypeNameConverter primitiveDisAllowedTypeReferenceConverter =
             new TypeReferenceToTypeNameConverter(false);
     private final ContainerToTypeNameConverter containerToTypeNameConverter = new ContainerToTypeNameConverter();
-    private final CustomConfig customConfig;
+    private final ICustomConfig customConfig;
     private final Map<TypeId, TypeDeclaration> typeDefinitionsByName;
 
     public PoetTypeNameMapper(
             AbstractPoetClassNameFactory poetClassNameFactory,
-            CustomConfig customConfig,
+            ICustomConfig customConfig,
             Map<TypeId, TypeDeclaration> typeDefinitionsByName) {
         this.poetClassNameFactory = poetClassNameFactory;
         this.customConfig = customConfig;

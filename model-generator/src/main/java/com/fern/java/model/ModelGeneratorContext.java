@@ -21,7 +21,7 @@ import com.fern.irV12.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.CustomConfig;
 
-public class ModelGeneratorContext extends AbstractGeneratorContext<ModelPoetClassNameFactory> {
+public class ModelGeneratorContext extends AbstractGeneratorContext<ModelPoetClassNameFactory, CustomConfig> {
 
     public ModelGeneratorContext(
             IntermediateRepresentation ir, GeneratorConfig generatorConfig, CustomConfig customConfig) {

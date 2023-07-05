@@ -74,7 +74,7 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli<CustomConfig, 
         this.addGeneratedFile(objectMappersGenerator.generateFile());
 
         // types
-        TypesGenerator typesGenerator = new TypesGenerator(context);
+        TypesGenerator typesGenerator = new TypesGenerator(context, false);
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
         generatedTypes.getInterfaces().values().forEach(this::addGeneratedFile);

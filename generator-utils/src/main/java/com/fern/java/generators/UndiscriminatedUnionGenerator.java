@@ -66,7 +66,7 @@ public final class UndiscriminatedUnionGenerator extends AbstractFileGenerator {
 
     public UndiscriminatedUnionGenerator(
             ClassName className,
-            AbstractGeneratorContext<?> generatorContext,
+            AbstractGeneratorContext<?, ?> generatorContext,
             UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
         super(className, generatorContext);
         this.undiscriminatedUnion = undiscriminatedUnion;

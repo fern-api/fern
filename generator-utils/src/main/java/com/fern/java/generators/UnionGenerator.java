@@ -53,7 +53,7 @@ public final class UnionGenerator extends AbstractFileGenerator {
 
     public UnionGenerator(
             ClassName className,
-            AbstractGeneratorContext<?> generatorContext,
+            AbstractGeneratorContext<?, ?> generatorContext,
             UnionTypeDeclaration unionTypeDeclaration) {
         super(className, generatorContext);
         this.unionTypeDeclaration = unionTypeDeclaration;
