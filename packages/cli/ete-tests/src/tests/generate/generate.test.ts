@@ -8,7 +8,7 @@ describe("fern generate", () => {
     it("default api (fern init)", async () => {
         const pathOfDirectory = await init();
 
-        await runFernCli(["generate", "--local", "--keepDocker"], {
+        await runFernCli(["generate", "--local", "--keepDocker", "--log-level", "debug"], {
             cwd: pathOfDirectory,
         });
 
@@ -22,7 +22,7 @@ describe("fern generate", () => {
             // eslint-disable-next-line jest/valid-title
             fixtureName,
             async () => {
-                await runFernCli(["generate"], {
+                await runFernCli(["generate", "--log-level", "debug"], {
                     cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
                 });
             },
