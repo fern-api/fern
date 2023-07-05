@@ -204,9 +204,18 @@ Note the `local-file-system` output may not be present by default. If it's not, 
 
 ## Publishing Clients
 
-Fern supports automatically publishing clients to an NPM registry. By default, Node packages are published to `npm.buildwithfern.com` and are named `@organization-fern/package`
+Fern supports automatically publishing clients to an NPM registry. By default, Node packages are published to `npm.buildwithfern.com` and are named `@organization-fern/package`, for example:
 
-That's all there's to it.
+```
+  - name: fernapi/fern-typescript-node-sdk
+    version: 0.7.1
+    output:
+      location: npm
+      url: npm.buildwithfern.com
+      package-name: "@fern-fern/registry-node"
+```
+
+After your generate command has completed successfully, the package will be available on the specified registry.
 
 ## Next Steps
 
