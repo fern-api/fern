@@ -75,7 +75,7 @@ If you want to read more about where Fern and OpenAPI differ, read [﻿Fern vs. 
 
 # Getting Started
 
-The Fern tools are available as a Node package. To install it, simply run:
+The Fern tools are available as a command line interface. To install it, simply run:
 
 ```
 npm install -g fern-api
