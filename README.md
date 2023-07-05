@@ -1,3 +1,4 @@
+<br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/">
     <img src="fern.png" height="120" align="center" alt="header" />
@@ -19,9 +20,9 @@ Backed by Y Combinator
 
 # Fern
 
-Fern is an open source toolkit for designing, building and consuming REST APIs. Fern can be used in your existing projects through OpenAPI, and integrate effortlessly into your existing workflows. It can also serve as the basis of your API development, by describing your endpoints in a Fern specification, and having Fern generate your API backend code, as well as SDKs.
+Fern is an open source toolkit for designing, building and consuming REST APIs. With Fern, you can generate client libraries, documentation and boilerplate for your backend server in your chosen framework (e.g. FastAPI, Express).
 
-This repository contains the Fern compiler. The compiler takes an API definition, either in Fern or OpenAPI format, and turns it into code artifacts such as client libraries and SDKs, or even full fledged **Express**, **Spring Boot** or **FastAPI** backends. Fern's compiler is modular and extensible, allowing it to build several artifact types using a single command. Fern focuses on generating idiomatic code, following language-specific idioms and standards.
+Fern can be used in your existing projects through OpenAPI or if you choose, you can describe your API in the Fern specification. In this sense, Fern is an alternative to the OpenAPI standard but does not aim to replace it.
 
 Fern takes care of the boilerplate associated with developing APIs, so you can **focus on delivering value**.
 
@@ -102,15 +103,24 @@ Here's what the `imdb.yml` starter file looks like:
 
 ```
 types:
-  MovieId: string Movie:
+  MovieId: string
+
+  Movie:
     properties:
       id: MovieId
-      title: string rating:
-        type: double docs: The rating scale is one to five stars
+      title: string
+      rating:
+        type: double
+        docs: The rating scale is one to five stars
+
   CreateMovieRequest:
     properties:
-      title: string rating: double service:
-  auth: false  base-path: /movies
+      title: string
+      rating: double
+
+service:
+  auth: false
+  base-path: /movies
   endpoints:
     createMovie:
       docs: Add a movie to the database
@@ -118,6 +128,7 @@ types:
       path: /create-movie
       request: CreateMovieRequest
       response: MovieId
+
     getMovie:
       method: GET
       path: /{movieId}
@@ -126,9 +137,11 @@ types:
       response: Movie
       errors:
         - MovieDoesNotExistError
+
 errors:
   MovieDoesNotExistError:
-    status-code: 404 type: MovieId
+    status-code: 404
+    type: MovieId
 ```
 
 ### Starting from OpenAPI
