@@ -1,11 +1,18 @@
 package writer
 
 import (
+	_ "embed"
 	"os"
 	"path/filepath"
 
 	"github.com/fern-api/fern-go/internal/generator"
 )
+
+// githubActionsFilename is the name of the generated GitHub actions file.
+const githubActionsFilename = ".github/workflows/ci.yml"
+
+//go:embed workflows/ci.yml
+var githubActionsFile string
 
 // GithubConfig is the GitHub output mode configuration.
 type GithubConfig struct {
@@ -41,6 +48,9 @@ func (g *githubWriter) WriteFiles(files []*generator.File) error {
 	if len(files) == 0 {
 		return nil
 	}
+	// If we're writing to a GitHub repository, we want to include a GitHub Actions
+	// workflow that verifies the generated code compiles.
+	files = append(files, newGitHubActionsFile())
 	if err := os.MkdirAll(g.config.Path, 0755); err != nil {
 		return err
 	}
@@ -54,4 +64,12 @@ func (g *githubWriter) WriteFiles(files []*generator.File) error {
 		}
 	}
 	return nil
+}
+
+// newCIWorkflowFile returns a new Github Actions
+func newGitHubActionsFile() *generator.File {
+	return &generator.File{
+		Path:    githubActionsFilename,
+		Content: []byte(githubActionsFile),
+	}
 }
