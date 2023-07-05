@@ -22,7 +22,7 @@ var (
 // WriteClientOptionsDefinition writes the ClientOption interface and
 // *ClientOptions type. These types are always deposited in the core
 // package to prevent import cycles in the generated SDK.
-func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth) error {
+func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*ir.HttpHeader) error {
 	importPath := path.Join(f.baseImportPath, "core")
 	f.P("type ClientOption func(*ClientOptions)")
 	f.P()
@@ -48,6 +48,13 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth) error {
 			)
 		}
 	}
+	for _, header := range headers {
+		f.P(
+			header.Name.Name.PascalCase.UnsafeName,
+			" ",
+			typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath),
+		)
+	}
 	f.P("}")
 	f.P()
 
@@ -59,7 +66,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth) error {
 	f.P("}")
 	f.P()
 
-	if auth == nil || len(auth.Schemes) == 0 {
+	if (auth == nil || len(auth.Schemes) == 0) && (headers == nil || len(headers) == 0) {
 		f.P("func (c *ClientOptions) ToHeader() http.Header { return nil }")
 		f.P()
 		return nil
@@ -90,12 +97,27 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth) error {
 				// The only header type that can't use the default value approach is base64 (aka a []byte).
 				f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
 			} else {
-				f.P("var value ", typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath))
-				f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != value {")
+				variableName := "auth" + header.Name.Name.PascalCase.UnsafeName + "Value"
+				f.P("var ", variableName, " ", typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath))
+				f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != ", variableName, " {")
 			}
 			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
 			f.P("}")
 		}
+	}
+	for _, header := range headers {
+		valueTypeFormat := formatForValueType(header.ValueType)
+		value := valueTypeFormat.Prefix + "c." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+		if valueTypeFormat.IsDefaultNil {
+			// The only header type that can't use the default value approach is base64 (aka a []byte).
+			f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+		} else {
+			variableName := "header" + header.Name.Name.PascalCase.UnsafeName + "Value"
+			f.P("var ", variableName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath))
+			f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != ", variableName, " {")
+		}
+		f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+		f.P("}")
 	}
 	f.P("return header")
 	f.P("}")
@@ -112,7 +134,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth) error {
 //
 // This function returns true if the client options should be written in the core
 // package.
-func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, generatedNames map[string]struct{}) bool {
+func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHeader, generatedNames map[string]struct{}) bool {
 	// First determine if there are any conflicts with the generated names.
 	clientOptionNames := map[string]struct{}{
 		"ClientWithBaseURL":    struct{}{},
@@ -128,6 +150,9 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, generatedNames map[str
 		if authScheme.Header != nil {
 			clientOptionNames[fmt.Sprintf("ClientWithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)] = struct{}{}
 		}
+	}
+	for _, header := range headers {
+		clientOptionNames[fmt.Sprintf("ClientWithHeader%s", header.Name.Name.PascalCase.UnsafeName)] = struct{}{}
 	}
 	var useCore bool
 	for clientOptionName := range clientOptionNames {
@@ -198,6 +223,21 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, generatedNames map[str
 			f.P("}")
 			f.P()
 		}
+	}
+
+	for _, header := range headers {
+		var (
+			optionName = fmt.Sprintf("ClientWithHeader%s", header.Name.Name.PascalCase.UnsafeName)
+			field      = header.Name.Name.PascalCase.UnsafeName
+			param      = header.Name.Name.CamelCase.SafeName
+			value      = typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+		)
+		f.P("func ", optionName, "(", param, " ", value, ") ", clientOptionType, " {")
+		f.P("return func(opts ", clientOptionsType, ") {")
+		f.P("opts.", field, " = ", param)
+		f.P("}")
+		f.P("}")
+		f.P()
 	}
 
 	return useCore

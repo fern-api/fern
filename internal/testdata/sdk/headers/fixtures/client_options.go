@@ -4,6 +4,8 @@ package api
 
 import (
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/headers/fixtures/core"
+	uuid "github.com/gofrs/uuid/v5"
+	time "time"
 )
 
 func ClientWithBaseURL(baseURL string) core.ClientOption {
@@ -18,8 +20,68 @@ func ClientWithHTTPClient(httpClient core.HTTPClient) core.ClientOption {
 	}
 }
 
-func ClientWithAuthOptionalBytes(optionalBytes *[]byte) core.ClientOption {
+func ClientWithAuthCustom(custom *[]byte) core.ClientOption {
 	return func(opts *core.ClientOptions) {
-		opts.OptionalBytes = optionalBytes
+		opts.Custom = custom
+	}
+}
+
+func ClientWithHeaderXApiName(xApiName string) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiName = xApiName
+	}
+}
+
+func ClientWithHeaderXApiId(xApiId uuid.UUID) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiId = xApiId
+	}
+}
+
+func ClientWithHeaderXApiDatetime(xApiDatetime time.Time) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiDatetime = xApiDatetime
+	}
+}
+
+func ClientWithHeaderXApiDate(xApiDate time.Time) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiDate = xApiDate
+	}
+}
+
+func ClientWithHeaderXApiBytes(xApiBytes []byte) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiBytes = xApiBytes
+	}
+}
+
+func ClientWithHeaderXApiOptionalName(xApiOptionalName *string) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiOptionalName = xApiOptionalName
+	}
+}
+
+func ClientWithHeaderXApiOptionalId(xApiOptionalId *uuid.UUID) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiOptionalId = xApiOptionalId
+	}
+}
+
+func ClientWithHeaderXApiOptionalDatetime(xApiOptionalDatetime *time.Time) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiOptionalDatetime = xApiOptionalDatetime
+	}
+}
+
+func ClientWithHeaderXApiOptionalDate(xApiOptionalDate *time.Time) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiOptionalDate = xApiOptionalDate
+	}
+}
+
+func ClientWithHeaderXApiOptionalBytes(xApiOptionalBytes *[]byte) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.XApiOptionalBytes = xApiOptionalBytes
 	}
 }

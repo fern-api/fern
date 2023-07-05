@@ -5,15 +5,27 @@ package core
 import (
 	base64 "encoding/base64"
 	fmt "fmt"
+	uuid "github.com/gofrs/uuid/v5"
 	http "net/http"
+	time "time"
 )
 
 type ClientOption func(*ClientOptions)
 
 type ClientOptions struct {
-	BaseURL       string
-	HTTPClient    HTTPClient
-	OptionalBytes *[]byte
+	BaseURL              string
+	HTTPClient           HTTPClient
+	Custom               *[]byte
+	XApiName             string
+	XApiId               uuid.UUID
+	XApiDatetime         time.Time
+	XApiDate             time.Time
+	XApiBytes            []byte
+	XApiOptionalName     *string
+	XApiOptionalId       *uuid.UUID
+	XApiOptionalDatetime *time.Time
+	XApiOptionalDate     *time.Time
+	XApiOptionalBytes    *[]byte
 }
 
 func NewClientOptions() *ClientOptions {
@@ -24,9 +36,48 @@ func NewClientOptions() *ClientOptions {
 
 func (c *ClientOptions) ToHeader() http.Header {
 	header := make(http.Header)
-	var value *[]byte
-	if c.OptionalBytes != value {
-		header.Set("X-API-Optional-Bytes-Key", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*c.OptionalBytes)))
+	var authCustomValue *[]byte
+	if c.Custom != authCustomValue {
+		header.Set("X-API-Custom-Key", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*c.Custom)))
+	}
+	var headerXApiNameValue string
+	if c.XApiName != headerXApiNameValue {
+		header.Set("X-API-Name", fmt.Sprintf("%v", c.XApiName))
+	}
+	var headerXApiIdValue uuid.UUID
+	if c.XApiId != headerXApiIdValue {
+		header.Set("X-API-ID", fmt.Sprintf("%v", c.XApiId))
+	}
+	var headerXApiDatetimeValue time.Time
+	if c.XApiDatetime != headerXApiDatetimeValue {
+		header.Set("X-API-Datetime", fmt.Sprintf("%v", c.XApiDatetime.Format(time.RFC3339)))
+	}
+	var headerXApiDateValue time.Time
+	if c.XApiDate != headerXApiDateValue {
+		header.Set("X-API-Date", fmt.Sprintf("%v", c.XApiDate.Format("2006-01-02")))
+	}
+	if c.XApiBytes != nil {
+		header.Set("X-API-Bytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(c.XApiBytes)))
+	}
+	var headerXApiOptionalNameValue *string
+	if c.XApiOptionalName != headerXApiOptionalNameValue {
+		header.Set("X-API-Optional-Name", fmt.Sprintf("%v", *c.XApiOptionalName))
+	}
+	var headerXApiOptionalIdValue *uuid.UUID
+	if c.XApiOptionalId != headerXApiOptionalIdValue {
+		header.Set("X-API-Optional-ID", fmt.Sprintf("%v", *c.XApiOptionalId))
+	}
+	var headerXApiOptionalDatetimeValue *time.Time
+	if c.XApiOptionalDatetime != headerXApiOptionalDatetimeValue {
+		header.Set("X-API-Optional-Datetime", fmt.Sprintf("%v", c.XApiOptionalDatetime.Format(time.RFC3339)))
+	}
+	var headerXApiOptionalDateValue *time.Time
+	if c.XApiOptionalDate != headerXApiOptionalDateValue {
+		header.Set("X-API-Optional-Date", fmt.Sprintf("%v", c.XApiOptionalDate.Format("2006-01-02")))
+	}
+	var headerXApiOptionalBytesValue *[]byte
+	if c.XApiOptionalBytes != headerXApiOptionalBytesValue {
+		header.Set("X-API-Optional-Bytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*c.XApiOptionalBytes)))
 	}
 	return header
 }

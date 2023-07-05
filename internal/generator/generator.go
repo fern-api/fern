@@ -133,7 +133,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Types,
 			ir.Errors,
 		)
-		if err := writer.WriteClientOptionsDefinition(ir.Auth); err != nil {
+		if err := writer.WriteClientOptionsDefinition(ir.Auth, ir.Headers); err != nil {
 			return nil, err
 		}
 		file, err := writer.File()
@@ -169,7 +169,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Types,
 			ir.Errors,
 		)
-		if generatedInCore := writer.WriteClientOptions(ir.Auth, generatedNames); generatedInCore {
+		if generatedInCore := writer.WriteClientOptions(ir.Auth, ir.Headers, generatedNames); generatedInCore {
 			// Rewrite the client options file destination.
 			fileInfo = fileInfoForCoreClientOptions()
 			writer.SetFilename(fileInfo.filename)

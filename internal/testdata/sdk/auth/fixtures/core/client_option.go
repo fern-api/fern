@@ -23,8 +23,8 @@ func NewClientOptions() *ClientOptions {
 
 func (c *ClientOptions) ToHeader() http.Header {
 	header := make(http.Header)
-	var value string
-	if c.Custom != value {
+	var authCustomValue string
+	if c.Custom != authCustomValue {
 		header.Set("X-API-Key", fmt.Sprintf("%v", c.Custom))
 	}
 	return header
