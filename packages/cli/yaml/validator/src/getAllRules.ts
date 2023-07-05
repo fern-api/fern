@@ -13,6 +13,7 @@ import { NoDuplicateFieldNamesRule } from "./rules/no-duplicate-field-names";
 import { NoErrorStatusCodeConflictRule } from "./rules/no-error-status-code-conflict";
 import { NoExtensionsWithFileUploadRule } from "./rules/no-extensions-with-file-upload";
 import { NoGetRequestBodyRule } from "./rules/no-get-request-body";
+import { NoMaybeStreamingRule } from "./rules/no-maybe-streaming";
 import { NoMissingAuthRule } from "./rules/no-missing-auth";
 import { NoMissingErrorDiscriminantRule } from "./rules/no-missing-error-discriminant";
 import { NoMissingRequestNameRule } from "./rules/no-missing-request-name";
@@ -31,7 +32,6 @@ import { ValidExampleTypeRule } from "./rules/valid-example-type";
 import { ValidFieldNamesRule } from "./rules/valid-field-names";
 import { ValidNavigationRule } from "./rules/valid-navigation";
 import { ValidServiceUrlsRule } from "./rules/valid-service-urls";
-import { ValidStreamConditionRule } from "./rules/valid-stream-condition";
 import { ValidTypeNameRule } from "./rules/valid-type-name";
 
 export function getAllRules(): Rule[] {
@@ -65,11 +65,11 @@ export function getAllRules(): Rule[] {
         ValidEndpointPathRule,
         NoConflictingEndpointPathsRule,
         ValidTypeNameRule,
-        ValidStreamConditionRule,
         NoExtensionsWithFileUploadRule,
         ValidNavigationRule,
         NoUndefinedVariableReferenceRule,
         OnlyObjectExtensionsRule,
+        NoMaybeStreamingRule,
     ];
 }
 

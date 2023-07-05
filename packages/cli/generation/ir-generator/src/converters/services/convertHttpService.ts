@@ -119,7 +119,7 @@ export function convertHttpService({
                     file,
                     typeResolver,
                 }),
-                ...convertHttpResponse({ endpoint, file }),
+                response: convertHttpResponse({ endpoint, file }),
                 errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
                 examples:
                     endpoint.examples != null

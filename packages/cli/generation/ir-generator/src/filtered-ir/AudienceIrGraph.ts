@@ -130,20 +130,20 @@ export class AudienceIrGraph {
                         referencedSubpackages
                     );
                 },
+                streaming: (streamingResponse) => {
+                    StreamingResponseChunkType._visit(streamingResponse.dataEventType, {
+                        json: (typeReference) =>
+                            populateReferencesFromTypeReference(typeReference, referencedTypes, referencedSubpackages),
+                        text: noop,
+                        _unknown: () => {
+                            throw new Error(
+                                "Unknown StreamingResponseChunkType: " + streamingResponse.dataEventType.type
+                            );
+                        },
+                    });
+                },
                 _unknown: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.type);
-                },
-            });
-        }
-        if (httpEndpoint.streamingResponse != null) {
-            StreamingResponseChunkType._visit(httpEndpoint.streamingResponse.dataEventType, {
-                json: (typeReference) =>
-                    populateReferencesFromTypeReference(typeReference, referencedTypes, referencedSubpackages),
-                text: noop,
-                _unknown: () => {
-                    throw new Error(
-                        "Unknown StreamingResponseChunkType: " + httpEndpoint.streamingResponse?.dataEventType.type
-                    );
                 },
             });
         }
