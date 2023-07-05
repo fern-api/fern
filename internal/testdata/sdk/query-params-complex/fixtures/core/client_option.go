@@ -11,12 +11,14 @@ type ClientOption func(*ClientOptions)
 type ClientOptions struct {
 	BaseURL    string
 	HTTPClient HTTPClient
+	HTTPHeader http.Header
 }
 
 func NewClientOptions() *ClientOptions {
 	return &ClientOptions{
 		HTTPClient: http.DefaultClient,
+		HTTPHeader: make(http.Header),
 	}
 }
 
-func (c *ClientOptions) ToHeader() http.Header { return nil }
+func (c *ClientOptions) ToHeader() http.Header { return c.HTTPHeader }

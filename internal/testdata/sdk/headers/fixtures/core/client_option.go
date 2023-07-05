@@ -15,6 +15,7 @@ type ClientOption func(*ClientOptions)
 type ClientOptions struct {
 	BaseURL              string
 	HTTPClient           HTTPClient
+	HTTPHeader           http.Header
 	Custom               *[]byte
 	XApiName             string
 	XApiId               uuid.UUID
@@ -31,11 +32,12 @@ type ClientOptions struct {
 func NewClientOptions() *ClientOptions {
 	return &ClientOptions{
 		HTTPClient: http.DefaultClient,
+		HTTPHeader: make(http.Header),
 	}
 }
 
 func (c *ClientOptions) ToHeader() http.Header {
-	header := make(http.Header)
+	header := c.HTTPHeader
 	var authCustomValue *[]byte
 	if c.Custom != authCustomValue {
 		header.Set("X-API-Custom-Key", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*c.Custom)))

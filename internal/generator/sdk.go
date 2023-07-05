@@ -30,6 +30,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	f.P("type ClientOptions struct {")
 	f.P("BaseURL string")
 	f.P("HTTPClient HTTPClient")
+	f.P("HTTPHeader http.Header")
 
 	// Generate the exported ClientOptions type that all clients can act upon.
 	for _, authScheme := range auth.Schemes {
@@ -62,19 +63,20 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	f.P("func NewClientOptions() *ClientOptions {")
 	f.P("return &ClientOptions{")
 	f.P("HTTPClient: http.DefaultClient,")
+	f.P("HTTPHeader: make(http.Header),")
 	f.P("}")
 	f.P("}")
 	f.P()
 
 	if (auth == nil || len(auth.Schemes) == 0) && (headers == nil || len(headers) == 0) {
-		f.P("func (c *ClientOptions) ToHeader() http.Header { return nil }")
+		f.P("func (c *ClientOptions) ToHeader() http.Header { return c.HTTPHeader }")
 		f.P()
 		return nil
 	}
 
 	// Generate the ToHeader method.
 	f.P("func (c *ClientOptions) ToHeader() http.Header {")
-	f.P("header := make(http.Header)")
+	f.P("header := c.HTTPHeader")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			f.P(`if c.Bearer != "" { `)
@@ -139,6 +141,7 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 	clientOptionNames := map[string]struct{}{
 		"ClientWithBaseURL":    struct{}{},
 		"ClientWithHTTPClient": struct{}{},
+		"ClientWithHTTPHeader": struct{}{},
 	}
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
@@ -177,15 +180,29 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 	}
 
 	// Generate the options for setting the base URL and HTTP client.
+	f.P("// ClientWithBaseURL sets the client's base URL, overriding the")
+	f.P("// default environment, if any.")
 	f.P("func ClientWithBaseURL(baseURL string) ", clientOptionType, " {")
 	f.P("return func(opts ", clientOptionsType, ") {")
 	f.P("opts.BaseURL = baseURL")
 	f.P("}")
 	f.P("}")
 	f.P()
+	f.P("// ClientWithHTTPClient uses the given HTTPClient to issue all HTTP requests.")
 	f.P("func ClientWithHTTPClient(httpClient ", httpClientType, ") ", clientOptionType, " {")
 	f.P("return func(opts ", clientOptionsType, ") {")
 	f.P("opts.HTTPClient = httpClient")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// ClientWithHTTPHeader adds the given http.Header to all requests")
+	f.P("// issued by the client. The given headers are added to the final set")
+	f.P("// after the standard headers (e.g. Content-Type), but before the")
+	f.P("// endpoint-specific headers.")
+	f.P("func ClientWithHTTPHeader(httpHeader http.Header) ", clientOptionType, " {")
+	f.P("return func(opts ", clientOptionsType, ") {")
+	f.P("// Clone the headers so they can't be modified after the option call.")
+	f.P("opts.HTTPHeader = httpHeader.Clone()")
 	f.P("}")
 	f.P("}")
 	f.P()

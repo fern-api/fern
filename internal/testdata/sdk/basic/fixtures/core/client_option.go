@@ -12,6 +12,7 @@ type ClientOption func(*ClientOptions)
 type ClientOptions struct {
 	BaseURL    string
 	HTTPClient HTTPClient
+	HTTPHeader http.Header
 	Username   string
 	Password   string
 }
@@ -19,11 +20,12 @@ type ClientOptions struct {
 func NewClientOptions() *ClientOptions {
 	return &ClientOptions{
 		HTTPClient: http.DefaultClient,
+		HTTPHeader: make(http.Header),
 	}
 }
 
 func (c *ClientOptions) ToHeader() http.Header {
-	header := make(http.Header)
+	header := c.HTTPHeader
 	if c.Username != "" && c.Password != "" {
 		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(c.Username+": "+c.Password)))
 	}
