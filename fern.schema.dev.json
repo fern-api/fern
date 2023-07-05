@@ -471,7 +471,6 @@
                       }
                     ]
                   },
-                  "stream-condition": { "type": "string" },
                   "response-stream": {
                     "anyOf": [
                       { "type": "string" },
