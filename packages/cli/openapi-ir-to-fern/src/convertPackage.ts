@@ -7,7 +7,7 @@ import { ConvertedServices, convertToServices } from "./converters/convertToServ
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
 import { convertPrimitiveToTypeReference, convertToTypeReference } from "./converters/convertToTypeReference";
 import { getTypeFromTypeReference } from "./converters/utils/getTypeFromTypeReference";
-import { Environment, getEnvironments } from "./getEnvironment";
+import { Environments, getEnvironments } from "./getEnvironments";
 import { getGlobalHeaders } from "./getGlobalHeaders";
 
 export const ROOT_PREFIX = "root";
@@ -22,11 +22,11 @@ export interface ConvertedPackage {
 }
 
 export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): ConvertedPackage {
-    const environment = getEnvironments(openApiFile);
-    const rootApiFile = getRootApiFile(openApiFile, environment);
+    const environments = getEnvironments(openApiFile);
+    const rootApiFile = getRootApiFile(openApiFile, environments);
     const convertedServices = convertToServices({
         openApiFile,
-        environment,
+        environments,
         globalHeaderNames: new Set(Object.keys(rootApiFile.headers ?? {})),
     });
     return {
@@ -56,7 +56,7 @@ export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): C
     };
 }
 
-function getRootApiFile(openApiFile: OpenAPIFile, environment: Environment | undefined): RootApiFileSchema {
+function getRootApiFile(openApiFile: OpenAPIFile, environment: Environments | undefined): RootApiFileSchema {
     const authSchemes = convertSecuritySchemes(openApiFile.securitySchemes);
     const globalHeaders = getGlobalHeaders(openApiFile);
 

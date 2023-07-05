@@ -1,19 +1,21 @@
 import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
+import { mapValues } from "lodash-es";
 
-export type Environment = SingleUrlEnvironment | MultiUrlEnvironment;
+export type Environments = SingleUrlEnvironments | MultiUrlEnvironments;
 
-export interface SingleUrlEnvironment {
+export interface SingleUrlEnvironments {
     type: "single";
     environmentToUrl: Record<string, string>;
+    endpointPathPrefix: string;
 }
 
-export interface MultiUrlEnvironment {
+export interface MultiUrlEnvironments {
     type: "multi";
     serviceToUrl: Record<string, string>;
     defaultUrl: string;
 }
 
-export function getEnvironments(openApiFile: OpenAPIFile): Environment | undefined {
+export function getEnvironments(openApiFile: OpenAPIFile): Environments | undefined {
     let endpointUrlOverrides = false;
 
     const defaultUrls: Record<string, string> = {};
@@ -47,15 +49,18 @@ export function getEnvironments(openApiFile: OpenAPIFile): Environment | undefin
                 environmentToUrl: {
                     default: maybeSanitizeUpgradedServerUrl(openApiFile.servers[0].url),
                 },
+                endpointPathPrefix: "",
             };
         }
         return undefined;
     }
 
     if (!endpointUrlOverrides) {
+        const sharedSuffix = getSharedSuffix(Object.values(defaultUrls).map(getPathname));
         return {
             type: "single",
-            environmentToUrl: defaultUrls,
+            environmentToUrl: mapValues(defaultUrls, (url) => url.slice(0, url.length - sharedSuffix.length)),
+            endpointPathPrefix: sharedSuffix,
         };
     }
 
@@ -75,4 +80,30 @@ export function getEnvironments(openApiFile: OpenAPIFile): Environment | undefin
 
 function maybeSanitizeUpgradedServerUrl(url: string): string {
     return url.replace("//https", "https");
+}
+
+function getPathname(url: string): string {
+    const parsedUrl = new URL(url);
+    const pathname = parsedUrl.pathname;
+    if (pathname.endsWith("/")) {
+        return pathname.slice(0, -1);
+    } else {
+        return pathname;
+    }
+}
+
+function getSharedSuffix(strings: string[]): string {
+    let suffix = "";
+
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, no-constant-condition
+    while (true) {
+        const chars = strings.map((s) => s[s.length - suffix.length - 1]);
+        const char = chars[0];
+        if (char == null || chars.some((c) => c !== char)) {
+            break;
+        }
+        suffix = char + suffix;
+    }
+
+    return suffix;
 }

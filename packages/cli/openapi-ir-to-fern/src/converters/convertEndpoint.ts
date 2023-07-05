@@ -1,7 +1,7 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { Endpoint, HttpError, Request, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { ROOT_PREFIX } from "../convertPackage";
-import { Environment } from "../getEnvironment";
+import { Environments } from "../getEnvironments";
 import { convertHeader } from "./convertHeader";
 import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
@@ -19,7 +19,7 @@ export function convertEndpoint({
     endpoint,
     isPackageYml,
     schemas,
-    environment,
+    environments,
     nonRequestReferencedSchemas,
     globalHeaderNames,
     errors,
@@ -27,7 +27,7 @@ export function convertEndpoint({
     endpoint: Endpoint;
     isPackageYml: boolean;
     schemas: Record<SchemaId, Schema>;
-    environment: Environment | undefined;
+    environments: Environments | undefined;
     nonRequestReferencedSchemas: SchemaId[];
     globalHeaderNames: Set<string>;
     errors: Record<StatusCode, HttpError>;
@@ -64,7 +64,7 @@ export function convertEndpoint({
     }
 
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
-        path: endpoint.path,
+        path: environments?.type === "single" ? `${environments.endpointPathPrefix}${endpoint.path}` : endpoint.path,
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
         docs: endpoint.description ?? undefined,
@@ -161,10 +161,10 @@ export function convertEndpoint({
         }
     }
 
-    if (environment?.type === "multi") {
+    if (environments?.type === "multi") {
         const serverOverride = endpoint.server[0];
         if (endpoint.server.length === 0) {
-            convertedEndpoint.url = environment.defaultUrl;
+            convertedEndpoint.url = environments.defaultUrl;
         } else if (serverOverride != null) {
             convertedEndpoint.url = serverOverride.name ?? undefined;
         } else {
