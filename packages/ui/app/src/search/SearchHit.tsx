@@ -1,6 +1,6 @@
 import { Icon } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { Highlight } from "react-instantsearch-hooks-web";
+import { Snippet } from "react-instantsearch-hooks-web";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import type { SearchRecord } from "./types";
@@ -35,7 +35,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
 
             <div className="flex w-full flex-col space-y-1.5">
                 <div className="flex justify-between">
-                    <Highlight
+                    <Snippet
                         className="text-text-default line-clamp-1 text-start group-hover:text-white"
                         attribute="title"
                         hit={hit}
@@ -49,7 +49,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                     </div>
                 </div>
                 <div className="flex flex-col items-start">
-                    <Highlight
+                    <Snippet
                         className="text-text-default line-clamp-1 text-start group-hover:text-white"
                         attribute="subtitle"
                         hit={hit}
