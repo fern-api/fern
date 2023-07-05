@@ -1,5 +1,12 @@
-import { parseRawFileType, RawSchemas } from "@fern-api/yaml-schema";
-import { HttpEndpoint, HttpResponse, SdkResponse, StreamCondition } from "@fern-fern/ir-model/http";
+import { isRawTextType, parseRawFileType, RawSchemas } from "@fern-api/yaml-schema";
+import {
+    HttpEndpoint,
+    HttpResponse,
+    SdkResponse,
+    StreamCondition,
+    StreamingResponse,
+    StreamingResponseChunkType,
+} from "@fern-fern/ir-model/http";
 import { FernFileContext } from "../../FernFileContext";
 
 export function convertHttpResponse({
@@ -12,12 +19,10 @@ export function convertHttpResponse({
     const { response, ["response-stream"]: responseStream, ["stream-condition"]: rawStreamCondition } = endpoint;
 
     const httpResponse = response != null ? constructHttpResponse(response, file) : undefined;
-    const streamingResponse =
+    const streamingResponse: StreamingResponse | undefined =
         responseStream != null
             ? {
-                  dataEventType: file.parseTypeReference(
-                      typeof responseStream === "string" ? responseStream : responseStream.type
-                  ),
+                  dataEventType: constructStreamingResponseChunkType(responseStream, file),
                   terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
               }
             : undefined;
@@ -61,6 +66,18 @@ export function convertHttpResponse({
         streamingResponse,
         sdkResponse: constructSdkResponse(),
     };
+}
+
+function constructStreamingResponseChunkType(
+    responseStream: RawSchemas.HttpResponseStreamSchema | string,
+    file: FernFileContext
+): StreamingResponseChunkType {
+    const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
+    if (isRawTextType(typeReference)) {
+        return StreamingResponseChunkType.text();
+    } else {
+        return StreamingResponseChunkType.json(file.parseTypeReference(typeReference));
+    }
 }
 
 function constructHttpResponse(response: RawSchemas.HttpResponseSchema, file: FernFileContext): HttpResponse {

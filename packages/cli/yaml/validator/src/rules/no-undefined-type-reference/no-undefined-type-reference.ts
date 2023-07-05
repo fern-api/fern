@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import {
+    isRawTextType,
     parseRawFileType,
     recursivelyVisitRawTypeReference,
     TypeReferenceLocation,
@@ -49,6 +50,15 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                                 return [];
                             }
                         }
+                    }
+
+                    if (isRawTextType(typeReference) && location !== TypeReferenceLocation.StreamingResponse) {
+                        return [
+                            {
+                                severity: "error",
+                                message: "The text type can only be used as the response-stream.",
+                            },
+                        ];
                     }
 
                     const namedTypes = getAllNamedTypes({

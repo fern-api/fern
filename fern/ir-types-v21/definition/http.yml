@@ -146,8 +146,13 @@ types:
 
   StreamingResponse:
     properties:
-      dataEventType: types.TypeReference
+      dataEventType: StreamingResponseChunkType
       terminator: optional<string>
+
+  StreamingResponseChunkType:
+    union:
+      json: types.TypeReference
+      text: {}
 
   MaybeStreamingResponse:
     properties:

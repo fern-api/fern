@@ -78,6 +78,7 @@ export type TypeDeclarationName = { isInlined: false; name: string } | { isInlin
 export const TypeReferenceLocation = {
     InlinedRequestProperty: "inlinedRequestProperty",
     Response: "response",
+    StreamingResponse: "streamingResponse",
 } as const;
 export type TypeReferenceLocation = Values<typeof TypeReferenceLocation>;
 
