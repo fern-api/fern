@@ -24,6 +24,7 @@ export * as RawSchemas from "./schemas";
 export * from "./schemas/file-schemas";
 export { getRequestBody } from "./utils/getRequestBody";
 export { isInlineRequestBody } from "./utils/isInlineRequestBody";
+export { isRawTextType } from "./utils/isRawTextType";
 export { parseFileUploadRequest, type RawFileUploadRequest } from "./utils/parseFileUploadRequest";
 export { parseRawFileType, type RawFileType } from "./utils/parseRawFileType";
 export { RawPrimitiveType } from "./utils/RawPrimitiveType";
