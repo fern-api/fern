@@ -24,7 +24,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
             }}
         >
             <Icon
-                className="text-text-default group-hover:text-white"
+                className="text-text-default group-hover:text-text-stark"
                 size={18}
                 icon={visitDiscriminatedUnion(hit, "type")._visit({
                     endpoint: () => "code",
@@ -36,11 +36,11 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
             <div className="flex w-full flex-col space-y-1.5">
                 <div className="flex justify-between">
                     <Snippet
-                        className="text-text-default line-clamp-1 text-start group-hover:text-white"
+                        className="text-text-stark group-hover:text-text-stark line-clamp-1 text-start"
                         attribute="title"
                         hit={hit}
                     />
-                    <div className="text-text-default text-xs uppercase tracking-widest group-hover:text-white">
+                    <div className="text-text-default group-hover:text-text-stark text-xs uppercase tracking-widest">
                         {visitDiscriminatedUnion(hit, "type")._visit({
                             page: () => "Page",
                             endpoint: () => "Endpoint",
@@ -50,7 +50,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                 </div>
                 <div className="flex flex-col items-start">
                     <Snippet
-                        className="text-text-default line-clamp-1 text-start group-hover:text-white"
+                        className="text-text-default group-hover:text-text-stark line-clamp-1 text-start"
                         attribute="subtitle"
                         hit={hit}
                     />
