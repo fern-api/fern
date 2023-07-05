@@ -158,7 +158,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, file)
 		}
 		files = append(files, newCoreFile())
-		files = append(files, newPointerFile())
+		files = append(files, newPointerFile(ir))
 		// Generate the error types, if any.
 		for _, irError := range ir.Errors {
 			fileInfo := fileInfoForType(ir.ApiName, irError.Name.FernFilepath, irError.Name.Name)
@@ -414,17 +414,64 @@ func readIR(irFilename string) (*ir.IntermediateRepresentation, error) {
 	return ir, nil
 }
 
+// newPointerFile returns a *File containing the pointer helper functions
+// used to more easily instantiate pointers to primitive values (e.g. *string).
+//
+// In general, this file is deposited at the root of the SDK so that users can
+// access the helpers alongside the rest of the top-level definitions. However,
+// if any naming conflict exists between the generated types, this file is
+// deposited in the core package.
+func newPointerFile(ir *ir.IntermediateRepresentation) *File {
+	generatedNames := make(map[string]struct{})
+	for _, irType := range ir.Types {
+		generatedNames[irType.Name.Name.PascalCase.UnsafeName] = struct{}{}
+	}
+	for _, irError := range ir.Errors {
+		generatedNames[irError.Name.Name.PascalCase.UnsafeName] = struct{}{}
+	}
+	for _, irVariable := range ir.Variables {
+		generatedNames[irVariable.Name.PascalCase.UnsafeName] = struct{}{}
+	}
+	// First determine whether or not we need to generate the type in the
+	// core package.
+	var useCorePackage bool
+	for generatedName := range generatedNames {
+		if _, ok := pointerFunctionNames[generatedName]; ok {
+			useCorePackage = true
+			break
+		}
+	}
+	if useCorePackage {
+		return &File{
+			Path:    "core/pointer.go",
+			Content: []byte(pointerFile),
+		}
+	}
+	// We're going to generate the pointers at the root of the repository,
+	// so now we need to determine whether or not we can use the standard
+	// filename, or if it needs a prefix.
+	filename := "pointer.go"
+	if _, ok := generatedNames["Pointer"]; ok {
+		filename = "_pointer.go"
+	}
+	// Finally, we need to replace the package declaration so that it matches
+	// the root package declaration of the generated SDK.
+	content := strings.Replace(
+		pointerFile,
+		"package core",
+		fmt.Sprintf("package %s", strings.ToLower(ir.ApiName.CamelCase.SafeName)),
+		1,
+	)
+	return &File{
+		Path:    filename,
+		Content: []byte(content),
+	}
+}
+
 func newCoreFile() *File {
 	return &File{
 		Path:    "core/core.go",
 		Content: []byte(coreFile),
-	}
-}
-
-func newPointerFile() *File {
-	return &File{
-		Path:    "core/pointer.go",
-		Content: []byte(pointerFile),
 	}
 }
 
@@ -529,4 +576,28 @@ func fileInfoForPackage(apiName *ir.Name, fernFilepath *ir.FernFilepath) *fileIn
 		filename:    filepath.Join(append(packages, packageDocsFilename)...),
 		packageName: packages[len(packages)-1],
 	}
+}
+
+// pointerFunctionNames enumerates all of the pointer function names.
+var pointerFunctionNames = map[string]struct{}{
+	"Bool":       struct{}{},
+	"Byte":       struct{}{},
+	"Complex64":  struct{}{},
+	"Complex128": struct{}{},
+	"Float32":    struct{}{},
+	"Float64":    struct{}{},
+	"Int":        struct{}{},
+	"Int8":       struct{}{},
+	"Int16":      struct{}{},
+	"Int32":      struct{}{},
+	"Int64":      struct{}{},
+	"Rune":       struct{}{},
+	"String":     struct{}{},
+	"Uint":       struct{}{},
+	"Uint8":      struct{}{},
+	"Uint16":     struct{}{},
+	"Uint32":     struct{}{},
+	"Uint64":     struct{}{},
+	"Uintptr":    struct{}{},
+	"Time":       struct{}{},
 }
