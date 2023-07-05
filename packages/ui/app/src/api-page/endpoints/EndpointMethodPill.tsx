@@ -11,7 +11,7 @@ export declare namespace EndpointMethodPill {
 export const EndpointMethodPill: React.FC<EndpointMethodPill.Props> = ({ endpoint, small = false }) => {
     return (
         <div
-            className={classNames("font-medium uppercase", small ? "px-1 py-px" : "px-2 py-1", {
+            className={classNames("flex items-center font-medium uppercase", small ? "px-1 py-px" : "px-2 py-1", {
                 "text-[10px]": small,
                 "text-green-400 bg-green-500/20": endpoint.method === "GET",
                 "text-accentPrimary bg-accentHighlight":

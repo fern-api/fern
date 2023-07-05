@@ -3,6 +3,7 @@ import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/
 import classNames from "classnames";
 import React, { useCallback, useMemo, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
+import { SeparatedElements } from "../../commons/SeparatedElements";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
@@ -68,14 +69,30 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     <div className="flex">
                         <div className="flex overflow-hidden rounded">
                             <EndpointMethodPill endpoint={endpoint} />
-                            <MonospaceText className="text-text-default flex items-center break-all bg-white/5 px-2">
+                            <MonospaceText className="text-text-default flex flex-wrap items-center bg-white/5 px-2 py-1">
                                 {environmentUrl}
                                 {endpoint.path.parts.map((part, index) => (
                                     <React.Fragment key={index}>
                                         {visitDiscriminatedUnion(part, "type")._visit<JSX.Element | string | null>({
-                                            literal: (literal) => literal.value,
+                                            literal: (literal) => (
+                                                <SeparatedElements
+                                                    separator={
+                                                        <>
+                                                            /<wbr />
+                                                        </>
+                                                    }
+                                                >
+                                                    {literal.value.split("/").map((part, index) => (
+                                                        <React.Fragment key={index}>{part}</React.Fragment>
+                                                    ))}
+                                                </SeparatedElements>
+                                            ),
                                             pathParameter: (pathParameter) => (
-                                                <EndpointPathParameter pathParameter={pathParameter.value} />
+                                                <>
+                                                    <wbr />
+                                                    <EndpointPathParameter pathParameter={pathParameter.value} />
+                                                    <wbr />
+                                                </>
                                             ),
                                             _other: () => null,
                                         })}
