@@ -253,32 +253,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
       security:
         - HTTPBearer: []
-  /dreambooth/model/{job_id}:
-    get:
-      tags:
-        - dreambooth
-      summary: Get Model
-      operationId: get_model_dreambooth_model__job_id__get
-      parameters:
-        - required: true
-          schema:
-            title: Job Id
-          name: job_id
-          in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - HTTPBearer: []
   /dreambooth/inference:
     post:
       tags:
@@ -585,7 +559,7 @@ paths:
       security:
         - HTTPBearer: []
   /v1/completions/:
-    get:
+    post:
       tags:
         - Completions
       summary: Creates a completion for the provided prompt and parameters.
@@ -594,12 +568,24 @@ paths:
         and can also return the probabilities of alternative tokens at each
         position.
       operationId: createCompletion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionsRequest'
+        required: true
       responses:
         '200':
           description: Successful Response
           content:
             application/json:
               schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
       security:
         - HTTPBearer: []
   /:
@@ -614,6 +600,46 @@ paths:
               schema: {}
 components:
   schemas:
+    CompletionsRequest:
+      title: CompletionsRequest
+      required:
+        - prompt
+      type: object
+      properties:
+        prompt:
+          title: Prompt
+          anyOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        max_tokens:
+          title: Max Tokens
+          type: integer
+          default: 16
+        temperature:
+          title: Temperature
+          type: number
+          default: 1
+        top_p:
+          title: Top P
+          type: number
+          default: 1
+        'n':
+          title: 'N'
+          type: integer
+          default: 1
+        stream:
+          title: Stream
+          type: boolean
+          default: false
+        logprobs:
+          title: Logprobs
+          type: integer
+        echo:
+          title: Echo
+          type: boolean
+          default: false
     ControlNet:
       title: ControlNet
       required:
@@ -768,8 +794,11 @@ components:
           default: []
         output:
           title: Output
-          type: string
-          default: video
+          type: array
+          items:
+            type: string
+          default:
+            - video
         args:
           title: Args
           type: array
@@ -994,9 +1023,11 @@ components:
         fps:
           title: Fps
           type: number
+          default: 0
         bitrate:
           title: Bitrate
           type: string
+          default: 0
         preset:
           title: Preset
           type: string
