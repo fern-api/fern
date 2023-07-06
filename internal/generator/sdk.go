@@ -2,7 +2,6 @@ package generator
 
 import (
 	_ "embed"
-	"errors"
 	"fmt"
 	"path"
 	"sort"
@@ -506,10 +505,62 @@ func (f *fileWriter) WriteClient(
 			f.P()
 		}
 
-		// Prepare a response variable and issue the request.
+		// Prepare a response variable.
 		if endpoint.ResponseType != "" {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, strings.TrimLeft(endpoint.ResponseType, "*")))
 		}
+
+		if len(endpoint.FileProperties) > 0 || len(endpoint.FileBodyProperties) > 0 {
+			f.P("writer := multipart.NewWriter(bytes.NewBuffer(nil))")
+			for _, fileProperty := range endpoint.FileProperties {
+				var (
+					fileVariable     = fileProperty.Key.Name.CamelCase.SafeName
+					filenameVariable = fileProperty.Key.Name.CamelCase.UnsafeName + "Filename"
+					filenameValue    = fileProperty.Key.Name.CamelCase.UnsafeName + "_filename"
+					partVariable     = fileProperty.Key.Name.CamelCase.UnsafeName + "Part"
+				)
+				if fileProperty.IsOptional {
+					f.P("if ", fileVariable, " != nil {")
+				}
+				f.P(fmt.Sprintf("%s := %q", filenameVariable, filenameValue))
+				f.P("if named, ok := ", fileVariable, ".(interface{ Name() string }); ok {")
+				f.P(fmt.Sprintf("%s = named.Name()", filenameVariable))
+				f.P("}")
+				f.P(partVariable, `, err := writer.CreateFormFile("`, fileProperty.Key.WireValue, `", `, filenameVariable, ")")
+				f.P("if err != nil {")
+				f.P("return ", endpoint.ErrorReturnValues)
+				f.P("}")
+				f.P("if _, err := io.Copy(", partVariable, ", ", fileVariable, "); err != nil {")
+				f.P("return ", endpoint.ErrorReturnValues)
+				f.P("}")
+				if fileProperty.IsOptional {
+					f.P("}")
+				}
+			}
+
+			for _, fileBodyProperty := range endpoint.FileBodyProperties {
+				propertyType := typeReferenceToGoType(fileBodyProperty.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
+				valueTypeFormat := formatForValueType(fileBodyProperty.ValueType)
+				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + fileBodyProperty.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+				if valueTypeFormat.IsDefaultNil {
+					f.P("if ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, "!= nil {")
+				} else {
+					f.P("var ", fileBodyProperty.Name.Name.CamelCase.SafeName, "DefaultValue ", propertyType)
+					f.P("if ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, "!= ", fileBodyProperty.Name.Name.CamelCase.SafeName, "DefaultValue {")
+				}
+				f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, ")); err != nil {")
+				f.P("return ", endpoint.ErrorReturnValues)
+				f.P("}")
+				f.P("}")
+			}
+			f.P("if err := writer.Close(); err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P(headersParameter, `.Set("Content-Type", writer.FormDataContentType())`)
+			f.P()
+		}
+
+		// Issue the request.
 		f.P("if err := core.DoRequest(")
 		f.P("ctx,")
 		f.P(receiver, ".httpClient,")
@@ -559,7 +610,6 @@ type endpoint struct {
 	ResponseParameterName     string
 	ResponseInitializerFormat string
 	PathParameterNames        string
-	AllParameterNames         string
 	SignatureParameters       string
 	ReturnValues              string
 	SuccessfulReturnValues    string
@@ -571,6 +621,8 @@ type endpoint struct {
 	Errors                    ir.ResponseErrors
 	QueryParameters           []*ir.QueryParameter
 	Headers                   []*ir.HttpHeader
+	FileProperties            []*ir.FileProperty
+	FileBodyProperties        []*ir.InlinedRequestBodyProperty
 }
 
 // signatureForEndpoint returns a signature template for the given endpoint.
@@ -592,6 +644,26 @@ func (f *fileWriter) endpointFromIR(
 		pathParameterNames = append(pathParameterNames, pathParameterName)
 	}
 
+	// Add the file parameter(s) after the path parameters, if any.
+	var (
+		fileProperties     []*ir.FileProperty
+		fileBodyProperties []*ir.InlinedRequestBodyProperty
+	)
+	if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
+		for _, fileUploadProperty := range irEndpoint.RequestBody.FileUpload.Properties {
+			if fileUploadProperty.File != nil {
+				parameterName := fileUploadProperty.File.Key.Name.CamelCase.SafeName
+				parameterType := "io.Reader"
+				signatureParameters += fmt.Sprintf(", %s %s", parameterName, parameterType)
+				pathParameterNames = append(pathParameterNames, parameterName)
+				fileProperties = append(fileProperties, fileUploadProperty.File)
+			}
+			if fileUploadProperty.BodyProperty != nil {
+				fileBodyProperties = append(fileBodyProperties, fileUploadProperty.BodyProperty)
+			}
+		}
+	}
+
 	// Format the rest of the request parameters.
 	requestParameterName := "nil"
 	if irEndpoint.SdkRequest != nil {
@@ -606,13 +678,6 @@ func (f *fileWriter) endpointFromIR(
 		}
 		requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 		signatureParameters += fmt.Sprintf(", %s %s", requestParameterName, requestType)
-	}
-
-	// Format the parameter names so that they're suitable for
-	// the client method call.
-	allParameterNames := append([]string{"ctx"}, pathParameterNames...)
-	if requestParameterName != "nil" {
-		allParameterNames = append(allParameterNames, requestParameterName)
 	}
 
 	// Format all of the response values.
@@ -697,7 +762,6 @@ func (f *fileWriter) endpointFromIR(
 		ResponseParameterName:     responseParameterName,
 		ResponseInitializerFormat: responseInitializerFormat,
 		PathParameterNames:        strings.Join(pathParameterNames, ", "),
-		AllParameterNames:         strings.Join(allParameterNames, ", "),
 		SignatureParameters:       signatureParameters,
 		ReturnValues:              signatureReturnValues,
 		SuccessfulReturnValues:    successfulReturnValues,
@@ -709,6 +773,8 @@ func (f *fileWriter) endpointFromIR(
 		Errors:                    irEndpoint.Errors,
 		QueryParameters:           irEndpoint.QueryParameters,
 		Headers:                   irEndpoint.Headers,
+		FileProperties:            fileProperties,
+		FileBodyProperties:        fileBodyProperties,
 	}, nil
 }
 
@@ -1116,7 +1182,28 @@ func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReferen
 }
 
 func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) error {
-	return errors.New("file upload requests are not yet supported")
+	var bodyProperties []*ir.InlinedRequestBodyProperty
+	for _, property := range fileUpload.Properties {
+		if bodyProperty := property.BodyProperty; bodyProperty != nil {
+			bodyProperties = append(bodyProperties, bodyProperty)
+		}
+	}
+	if len(bodyProperties) == 0 {
+		// We only want to create a separate request type if the file upload request
+		// has any body properties that aren't the file itself. The file is specified
+		// as a positional parameter.
+		return nil
+	}
+	typeVisitor := &typeVisitor{
+		typeName:       fileUpload.Name.PascalCase.UnsafeName,
+		baseImportPath: r.baseImportPath,
+		importPath:     r.importPath,
+		writer:         r.writer,
+	}
+	objectTypeDeclaration := inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties)
+	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */)
+	r.literals = literals
+	return nil
 }
 
 // inlinedRequestBodyToObjectTypeDeclaration maps the given inlined request body
@@ -1133,6 +1220,23 @@ func inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody *ir.InlinedReq
 	}
 	return &ir.ObjectTypeDeclaration{
 		Extends:    inlinedRequestBody.Extends,
+		Properties: properties,
+	}
+}
+
+// inlinedRequestBodyPropertiesToObjectTypeDeclaration maps the given inlined request body
+// properties into an object type declaration so that we can reuse the functionality required
+// to write object properties for a generated object.
+func inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties []*ir.InlinedRequestBodyProperty) *ir.ObjectTypeDeclaration {
+	properties := make([]*ir.ObjectProperty, len(bodyProperties))
+	for i, property := range bodyProperties {
+		properties[i] = &ir.ObjectProperty{
+			Docs:      property.Docs,
+			Name:      property.Name,
+			ValueType: property.ValueType,
+		}
+	}
+	return &ir.ObjectTypeDeclaration{
 		Properties: properties,
 	}
 }

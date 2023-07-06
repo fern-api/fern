@@ -1,0 +1,15 @@
+service:
+  base-path: /file
+  auth: false
+  endpoints:
+    upload:
+      path: /upload
+      method: POST
+      request:
+        name: CreateFileRequest
+        body:
+          properties:
+            status: string
+            file: file
+            optionalFile: optional<file>
+      response: string

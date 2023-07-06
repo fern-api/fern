@@ -48,6 +48,7 @@ func newFileWriter(
 	imports.Add("errors")
 	imports.Add("fmt")
 	imports.Add("io")
+	imports.Add("mime/multipart")
 	imports.Add("net/http")
 	imports.Add("net/url")
 	imports.Add("strconv")
