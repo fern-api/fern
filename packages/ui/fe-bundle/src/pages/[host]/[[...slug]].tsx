@@ -1,4 +1,4 @@
-import { assertNever, assertNeverNoThrow } from "@fern-api/core-utils";
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 import { App, ResolvedUrlPath } from "@fern-api/ui";
 import * as FernRegistryDocsReadV1 from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
@@ -74,48 +74,29 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     }
 
     const urlPathResolver = new UrlPathResolver(docs.body.definition);
-    const resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
+    let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
+    if (resolvedUrlPath?.type === "section") {
+        const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
+        if (firstNavigatableItem == null) {
+            resolvedUrlPath = undefined;
+        } else {
+            resolvedUrlPath = await urlPathResolver.resolveSlug(firstNavigatableItem);
+        }
+    }
+
     if (resolvedUrlPath == null) {
         return { notFound: true, revalidate: CACHE_TIME_IN_SECONDS };
     }
 
-    switch (resolvedUrlPath.type) {
-        case "section": {
-            const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
-            if (firstNavigatableItem != null) {
-                return {
-                    redirect: {
-                        permanent: false,
-                        destination: firstNavigatableItem,
-                    },
-                    revalidate: CACHE_TIME_IN_SECONDS,
-                };
-            } else {
-                return {
-                    notFound: true,
-                    revalidate: CACHE_TIME_IN_SECONDS,
-                };
-            }
-        }
-        case "api":
-        case "apiSubpackage":
-        case "clientLibraries":
-        case "endpoint":
-        case "markdown-page":
-        case "mdx-page":
-        case "topLevelEndpoint":
-            return {
-                props: {
-                    docs: docs.body,
-                    resolvedUrlPath,
-                    nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
-                    previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
-                },
-                revalidate: CACHE_TIME_IN_SECONDS,
-            };
-        default:
-            assertNever(resolvedUrlPath);
-    }
+    return {
+        props: {
+            docs: docs.body,
+            resolvedUrlPath,
+            nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
+            previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
+        },
+        revalidate: CACHE_TIME_IN_SECONDS,
+    };
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
