@@ -27,7 +27,9 @@ export const ReferencedTypePreviewPart: React.FC<ReferencedTypePreviewPart.Props
     return (
         <>
             {visitDiscriminatedUnion(shape, "type")._visit<JSX.Element | string>({
-                alias: (typeReference) => <TypeShorthand type={typeReference.value} plural={plural} />,
+                alias: (typeReference) => (
+                    <TypeShorthand type={typeReference.value} plural={plural} withArticle={withArticle} />
+                ),
                 object: () => (plural ? "objects" : maybeWithArticle("an", "object")),
                 undiscriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
                 discriminatedUnion: () => (plural ? "unions" : maybeWithArticle("a", "union")),
