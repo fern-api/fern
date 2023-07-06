@@ -40,7 +40,7 @@ If you'd like to see a language supported, head over to [the Fern issues page](h
 
 ### 🌿 Backend Code
 
-Define your API, and Fern will generate models, endpoints and boilerplate application code. All the generated code is validated at build time, ensuring your all your endpoints and their data are being served correctly.
+Define your API, and Fern will generate models, networking code and boilerplate application code. The generated code matches the API definition, is type safe, and the correct models are used when communicating with the API.
 
 Fern currently supports:
 
