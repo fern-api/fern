@@ -27,6 +27,7 @@ export async function convertDocsConfiguration({
             logo != null
                 ? convertImageReference(typeof logo === "string" ? logo : logo.path, absolutePathOfConfiguration)
                 : undefined,
+        logoHref: typeof logo === "object" ? FernRegistry.docs.v1.write.Url(logo.href) : undefined,
         favicon: favicon != null ? convertImageReference(favicon, absolutePathOfConfiguration) : undefined,
         colors: convertColorsConfiguration(colors ?? {}, context),
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,

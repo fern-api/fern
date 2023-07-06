@@ -190,6 +190,7 @@ async function convertDocsConfiguration({
                       context,
                   })
                 : undefined,
+        logoHref: docsDefinition.config.logoHref,
         favicon:
             docsDefinition.config.favicon != null
                 ? await convertImageReference({
