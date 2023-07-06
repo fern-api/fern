@@ -120,6 +120,7 @@ func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 	return response, nil
 }
 
+// Task ID
 func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
@@ -162,6 +163,7 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 	return response, nil
 }
 
+// Task ID
 func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task) (*Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
@@ -218,6 +220,7 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task)
 	return response, nil
 }
 
+// Task ID
 func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
@@ -259,6 +262,9 @@ func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 	return nil
 }
 
+// Reschedules a queued Task to be run immediately.
+//
+// Task ID
 func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
@@ -308,6 +314,10 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, erro
 	return response, nil
 }
 
+// A maximum of 100 Tasks are accepted per request.
+// This operation is atomic: it will succeed for all Tasks or fail for all
+// Tasks; there is no partial success.
+// This endpoint is in beta and may change at any time without notice.
 func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) ([]*Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
@@ -371,6 +381,10 @@ func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) (
 	return response, nil
 }
 
+// A maximum of 100 Task IDs are accepted per request.
+// This operation is atomic: it will succeed for all Tasks or fail for all
+// Tasks; there is no partial success.
+// This endpoint is in beta and may change at any time without notice.
 func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
@@ -484,6 +498,7 @@ func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Sche
 	return response, nil
 }
 
+// Schedule ID
 func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Schedule, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
@@ -526,6 +541,7 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Sc
 	return response, nil
 }
 
+// Schedule ID
 func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, request *Schedule) (*Schedule, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
@@ -575,6 +591,7 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, re
 	return response, nil
 }
 
+// Schedule ID
 func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) error {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
@@ -616,6 +633,7 @@ func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) e
 	return nil
 }
 
+// Schedule ID
 func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id) ([]*Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {

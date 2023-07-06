@@ -7,6 +7,7 @@ import (
 	time "time"
 )
 
+// GetUsersRequest is an in-lined request used by the GetUsername endpoint.
 type GetUsersRequest struct {
 	Id               uuid.UUID  `json:"-"`
 	Date             time.Time  `json:"-"`

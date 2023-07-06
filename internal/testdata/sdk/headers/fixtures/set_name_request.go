@@ -7,6 +7,7 @@ import (
 	time "time"
 )
 
+// SetNameRequest is an in-lined request used by the SetName endpoint.
 type SetNameRequest struct {
 	XEndpointHeader                 string     `json:"-"`
 	XEndpointIdHeader               uuid.UUID  `json:"-"`

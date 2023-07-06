@@ -24,9 +24,13 @@ var (
 // package to prevent import cycles in the generated SDK.
 func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*ir.HttpHeader) error {
 	importPath := path.Join(f.baseImportPath, "core")
+	f.P("// ClientOption adapts the behavior of the generated client.")
 	f.P("type ClientOption func(*ClientOptions)")
 	f.P()
 
+	f.P("// ClientOptions defines all of the possible client options.")
+	f.P("// This type is primarily used by the generated code and is")
+	f.P("// not meant to be used directly; use ClientOption instead.")
 	f.P("type ClientOptions struct {")
 	f.P("BaseURL string")
 	f.P("HTTPClient HTTPClient")
@@ -60,6 +64,9 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	f.P()
 
 	// Generate the constructor.
+	f.P("// NewClientOptions returns a new *ClientOptions value.")
+	f.P("// This function is primarily used by the generated code and is")
+	f.P("// not meant to be used directly; use ClientOption instead.")
 	f.P("func NewClientOptions() *ClientOptions {")
 	f.P("return &ClientOptions{")
 	f.P("HTTPClient: http.DefaultClient,")
@@ -69,12 +76,16 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	f.P()
 
 	if (auth == nil || len(auth.Schemes) == 0) && (headers == nil || len(headers) == 0) {
+		f.P("// ToHeader maps the configured client options into a http.Header issued")
+		f.P("// on every request.")
 		f.P("func (c *ClientOptions) ToHeader() http.Header { return c.HTTPHeader }")
 		f.P()
 		return nil
 	}
 
 	// Generate the ToHeader method.
+	f.P("// ToHeader maps the configured client options into a http.Header issued")
+	f.P("// on every request.")
 	f.P("func (c *ClientOptions) ToHeader() http.Header {")
 	f.P("header := c.HTTPHeader")
 	for _, authScheme := range auth.Schemes {
@@ -208,8 +219,14 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 	f.P()
 
 	// Generat the authorization functional options.
+	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
+			f.P("// ClientWithAuthBearer sets the 'Authorization: Bearer <token>' header on every request.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
 			f.P("func ClientWithAuthBearer(bearer string) ", clientOptionType, " {")
 			f.P("return func(opts ", clientOptionsType, ") {")
 			f.P("opts.Bearer = bearer")
@@ -218,6 +235,11 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 			f.P()
 		}
 		if authScheme.Basic != nil {
+			f.P("// ClientWithAuthBasic sets the 'Authorization: Basic <base64>' header on every request.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
 			f.P("func ClientWithAuthBasic(username, password string) ", clientOptionType, " {")
 			f.P("return func(opts ", clientOptionsType, ") {")
 			f.P("opts.Username = username")
@@ -233,6 +255,11 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 				param      = authScheme.Header.Name.Name.CamelCase.SafeName
 				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath)
 			)
+			f.P("// ", optionName, " sets the ", param, " auth header on every request.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
 			f.P("func ", optionName, "(", param, " ", value, ") ", clientOptionType, " {")
 			f.P("return func(opts ", clientOptionsType, ") {")
 			f.P("opts.", field, " = ", param)
@@ -249,6 +276,13 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 			param      = header.Name.Name.CamelCase.SafeName
 			value      = typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath)
 		)
+		f.P("// ", optionName, " sets the ", param, " header on every request.")
+		if header.Docs != nil && len(*header.Docs) > 0 {
+			// If the header has any custom documentation, include it immediately below the standard
+			// option signature comment.
+			f.P("//")
+			f.WriteDocs(header.Docs)
+		}
 		f.P("func ", optionName, "(", param, " ", value, ") ", clientOptionType, " {")
 		f.P("return func(opts ", clientOptionsType, ") {")
 		f.P("opts.", field, " = ", param)
@@ -306,8 +340,6 @@ func (f *fileWriter) WriteClient(
 		//    User() UserClient
 		//    Notification() NotificationClient
 		//  }
-		//
-		// TODO: Temporary solution - refactor this conditional when the IR is updated.
 		if subpackage.FernFilepath.File != nil {
 			clientTypeName := subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
 			f.P(subpackage.Name.PascalCase.UnsafeName, "()", clientTypeName)
@@ -335,7 +367,6 @@ func (f *fileWriter) WriteClient(
 	f.P("httpClient: options.HTTPClient,")
 	f.P("header: options.ToHeader(),")
 	for _, subpackage := range subpackages {
-		// TODO: Temporary solution - refactor this conditional when the IR is updated.
 		if subpackage.FernFilepath.File != nil {
 			clientTypeName := subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
 			clientConstructor := "New" + clientTypeName + "(opts...),"
@@ -358,7 +389,6 @@ func (f *fileWriter) WriteClient(
 	f.P("httpClient core.HTTPClient")
 	f.P("header http.Header")
 	for _, subpackage := range subpackages {
-		// TODO: Temporary solution - refactor this conditional when the IR is updated.
 		var (
 			importPath     = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
 			clientTypeName = f.imports.Add(importPath) + "." + clientName
@@ -373,6 +403,17 @@ func (f *fileWriter) WriteClient(
 
 	// Implement this service's methods.
 	for _, endpoint := range endpoints {
+		f.WriteDocs(endpoint.Docs)
+		if endpoint.Docs != nil && len(*endpoint.Docs) > 0 {
+			// Include a separator between the endpoint-level docs, and
+			// the path parameter-specific docs.
+			f.P("//")
+		}
+		if len(endpoint.PathParameterDocs) > 0 {
+			for _, pathParameterDoc := range endpoint.PathParameterDocs {
+				f.WriteDocs(pathParameterDoc)
+			}
+		}
 		f.P("func (", receiver, " *", clientImplName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
 		// Compose the URL, including any query parameters.
 		f.P(fmt.Sprintf("baseURL := %q", endpoint.BaseURL))
@@ -488,7 +529,6 @@ func (f *fileWriter) WriteClient(
 
 	// Implement the getter methods to nested clients, if any.
 	for _, subpackage := range subpackages {
-		// TODO: Temporary solution - refactor this conditional when the IR is updated.
 		var (
 			importPath     = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
 			clientTypeName = f.imports.Add(importPath) + ".Client"
@@ -511,6 +551,8 @@ func (f *fileWriter) WriteClient(
 // strings.
 type endpoint struct {
 	Name                      *ir.Name
+	Docs                      *string
+	PathParameterDocs         []*string
 	ImportPath                string
 	RequestParameterName      string
 	ResponseType              string
@@ -638,8 +680,17 @@ func (f *fileWriter) endpointFromIR(
 		errorDecoderParameterName = "errorDecoder"
 	}
 
+	var pathParameterDocs []*string
+	for _, pathParam := range irEndpoint.AllPathParameters {
+		if pathParam.Docs != nil && len(*pathParam.Docs) > 0 {
+			pathParameterDocs = append(pathParameterDocs, pathParam.Docs)
+		}
+	}
+
 	return &endpoint{
 		Name:                      irEndpoint.Name,
+		Docs:                      irEndpoint.Docs,
+		PathParameterDocs:         pathParameterDocs,
 		ImportPath:                importPath,
 		RequestParameterName:      requestParameterName,
 		ResponseType:              responseType,
@@ -681,6 +732,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	}
 
 	// Generate the error type declaration.
+	f.WriteDocs(errorDeclaration.Docs)
 	f.P("type ", typeName, " struct {")
 	f.P("*core.APIError")
 	if errorDeclaration.Type == nil {
@@ -739,8 +791,10 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 	)
 
+	f.P("// ", typeName, " is an in-lined request used by the ", endpoint.Name.PascalCase.UnsafeName, " endpoint.")
 	f.P("type ", typeName, " struct {")
 	for _, header := range endpoint.Headers {
+		f.WriteDocs(header.Docs)
 		f.P(header.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath), " `json:\"-\"`")
 	}
 	for _, queryParam := range endpoint.QueryParameters {
@@ -748,6 +802,7 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 		if queryParam.AllowMultiple {
 			value = fmt.Sprintf("[]%s", value)
 		}
+		f.WriteDocs(queryParam.Docs)
 		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\"`")
 	}
 	if endpoint.RequestBody == nil {
@@ -771,9 +826,11 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 		f.P()
 	}
 
-	var referenceType string
-	var referenceIsPointer bool
-	var referenceLiteral string
+	var (
+		referenceType      string
+		referenceIsPointer bool
+		referenceLiteral   string
+	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
 		referenceType = strings.TrimPrefix(
 			typeReferenceToGoType(reference.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath),
@@ -857,6 +914,10 @@ func environmentsToEnvironmentsVariable(
 	environments *ir.Environments,
 	writer *fileWriter,
 ) error {
+	writer.P("// Environments defines all of the API environments.")
+	writer.P("// These values can be used with the ClientWithBaseURL")
+	writer.P("// ClientOption to override the client's default environment,")
+	writer.P("// if any.")
 	writer.P("var Environments = struct {")
 	declarationVisitor := &environmentsDeclarationVisitor{
 		types:  writer.types,

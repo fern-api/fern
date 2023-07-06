@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 )
 
+// SetNameRequestV4 is an in-lined request used by the SetNameV4 endpoint.
 type SetNameRequestV4 struct {
 	XEndpointHeader string   `json:"-"`
 	Body            []string `json:"-"`

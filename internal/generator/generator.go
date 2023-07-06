@@ -315,9 +315,6 @@ func (g *Generator) generateService(
 	}
 	// Generate the client interface.
 	var namePrefix *fernir.Name
-	// TODO: Temporary solution - refactor this so we more accurately
-	// recognize whether or not the leaf is defined by a __package__.yml
-	// or a filename.
 	if irService.Name.FernFilepath.File != nil {
 		namePrefix = irService.Name.FernFilepath.File
 	}
@@ -355,15 +352,8 @@ func (g *Generator) generateServiceWithoutEndpoints(
 	irSubpackages []*fernir.Subpackage,
 ) (*File, error) {
 	var namePrefix *fernir.Name
-	if len(irSubpackages) > 0 {
-		// TODO: Temporary solution - refactor this so we more accurately
-		// recognize whether or not the leaf is defined by a __package__.yml
-		// or a filename.
-		//
-		// When refactored, consolidate the nested conditional into a single condition.
-		if irSubpackage.FernFilepath.File != nil {
-			namePrefix = irSubpackage.FernFilepath.File
-		}
+	if len(irSubpackages) > 0 && irSubpackage.FernFilepath.File != nil {
+		namePrefix = irSubpackage.FernFilepath.File
 	}
 	fileInfo := fileInfoForService(ir.ApiName, irSubpackage.FernFilepath, namePrefix)
 	writer := newFileWriter(

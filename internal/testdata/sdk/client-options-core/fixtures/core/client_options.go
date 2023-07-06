@@ -32,6 +32,7 @@ func ClientWithHTTPHeader(httpHeader http.Header) ClientOption {
 	}
 }
 
+// ClientWithAuthBearer sets the 'Authorization: Bearer <token>' header on every request.
 func ClientWithAuthBearer(bearer string) ClientOption {
 	return func(opts *ClientOptions) {
 		opts.Bearer = bearer

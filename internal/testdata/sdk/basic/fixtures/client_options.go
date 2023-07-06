@@ -33,6 +33,7 @@ func ClientWithHTTPHeader(httpHeader http.Header) core.ClientOption {
 	}
 }
 
+// ClientWithAuthBasic sets the 'Authorization: Basic <base64>' header on every request.
 func ClientWithAuthBasic(username, password string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.Username = username

@@ -2,6 +2,7 @@
 
 package api
 
+// GetAllUsersRequest is an in-lined request used by the GetAllUsers endpoint.
 type GetAllUsersRequest struct {
 	XEndpointHeader string   `json:"-"`
 	Tag             int      `json:"-"`

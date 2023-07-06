@@ -2,6 +2,7 @@
 
 package api
 
+// GetUserRequest is an in-lined request used by the GetUser endpoint.
 type GetUserRequest struct {
 	Shallow *bool `json:"-"`
 }

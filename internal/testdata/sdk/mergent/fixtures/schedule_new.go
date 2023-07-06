@@ -2,6 +2,7 @@
 
 package api
 
+// ScheduleNew is an in-lined request used by the PostSchedules endpoint.
 type ScheduleNew struct {
 	Id *Id `json:"id,omitempty"`
 	// An optional name of the Schedule. This string must not contain more than 100 characters.

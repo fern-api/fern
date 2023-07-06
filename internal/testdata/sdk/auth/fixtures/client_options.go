@@ -33,6 +33,7 @@ func ClientWithHTTPHeader(httpHeader http.Header) core.ClientOption {
 	}
 }
 
+// ClientWithAuthCustom sets the custom auth header on every request.
 func ClientWithAuthCustom(custom string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.Custom = custom

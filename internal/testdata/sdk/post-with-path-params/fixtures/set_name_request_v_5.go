@@ -7,6 +7,7 @@ import (
 	fmt "fmt"
 )
 
+// SetNameRequestV5 is an in-lined request used by the SetNameV5 endpoint.
 type SetNameRequestV5 struct {
 	XEndpointHeader string `json:"-"`
 	Body            string `json:"-"`
