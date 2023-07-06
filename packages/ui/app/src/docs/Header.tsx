@@ -6,8 +6,8 @@ export const Header: React.FC = () => {
     const { resolveFile, docsDefinition } = useDocsContext();
     const { logo, logoHref, navbarLinks } = docsDefinition.config;
 
-    const hasLogo = !!logo;
-    const hasLogoHref = !!logoHref;
+    const hasLogo = logo != null;
+    const hasLogoHref = logoHref != null;
 
     const logoContent = hasLogo && <img className="max-h-5" src={resolveFile(logo)} />;
     const logoSection = hasLogo && (
