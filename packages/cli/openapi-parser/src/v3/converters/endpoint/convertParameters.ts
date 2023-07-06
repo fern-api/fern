@@ -80,7 +80,13 @@ export function convertParameters({
                 variableReference: getVariableReference(resolvedParameter),
             });
         } else if (resolvedParameter.in === "header") {
-            convertedParameters.headers.push(convertedParameter);
+            if (!HEADERS_TO_SKIP.has(resolvedParameter.name)) {
+                convertedParameters.headers.push(convertedParameter);
+            } else {
+                context.logger.debug(
+                    `Ignoring ${resolvedParameter.name} header, in ${httpMethod.toUpperCase()} ${path}`
+                );
+            }
         } else {
             context.logger.warn(
                 `Skipping ${resolvedParameter.in} parameter, ${
@@ -91,3 +97,15 @@ export function convertParameters({
     }
     return convertedParameters;
 }
+
+const HEADERS_TO_SKIP = new Set([
+    "User-Agent",
+    "Authorization",
+    "Content-Length",
+    "Content-Type",
+    "X-Forwarded-For",
+    "Cookie",
+    "Origin",
+    "Content-Disposition",
+    "X-Ping-Custom-Domain",
+]);

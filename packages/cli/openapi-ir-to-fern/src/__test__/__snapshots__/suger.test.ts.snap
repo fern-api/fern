@@ -7720,16 +7720,6 @@ the same customer, dimension, and time, but a different quantity.",
                 "type": "root.ListOffersByPartnerRequestPartner",
               },
             },
-            "request": {
-              "headers": {
-                "Authorization": {
-                  "docs": "Bearer Access Token",
-                  "name": "authorization",
-                  "type": "string",
-                },
-              },
-              "name": "ListOffersByPartnerRequest",
-            },
             "response": {
               "docs": "OK",
               "type": "list<root.SharedWorkloadOffer>",

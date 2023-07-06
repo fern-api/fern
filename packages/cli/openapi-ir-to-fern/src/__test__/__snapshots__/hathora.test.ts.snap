@@ -1325,13 +1325,6 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "headers": {
-                "Authorization": {
-                  "docs": undefined,
-                  "name": "authorization",
-                  "type": "string",
-                },
-              },
               "name": "CreatePrivateLobbyDeprecatedRequest",
               "query-parameters": {
                 "local": {
@@ -1370,13 +1363,6 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "headers": {
-                "Authorization": {
-                  "docs": undefined,
-                  "name": "authorization",
-                  "type": "string",
-                },
-              },
               "name": "CreatePublicLobbyDeprecatedRequest",
               "query-parameters": {
                 "local": {
@@ -1412,13 +1398,6 @@ exports[`open api parser hathora simple 1`] = `
               },
             },
             "request": {
-              "headers": {
-                "Authorization": {
-                  "docs": undefined,
-                  "name": "authorization",
-                  "type": "string",
-                },
-              },
               "name": "ListActivePublicLobbiesDeprecatedRequest",
               "query-parameters": {
                 "local": {
@@ -1484,13 +1463,7 @@ exports[`open api parser hathora simple 1`] = `
                   },
                 },
               },
-              "headers": {
-                "Authorization": {
-                  "docs": undefined,
-                  "name": "authorization",
-                  "type": "string",
-                },
-              },
+              "headers": undefined,
               "name": "CreateLobbyRequest",
               "query-parameters": {
                 "roomId": {
@@ -1536,13 +1509,7 @@ exports[`open api parser hathora simple 1`] = `
                   },
                 },
               },
-              "headers": {
-                "Authorization": {
-                  "docs": undefined,
-                  "name": "authorization",
-                  "type": "string",
-                },
-              },
+              "headers": undefined,
               "name": "CreateLocalLobbyRequest",
               "query-parameters": {
                 "roomId": {
@@ -1588,13 +1555,7 @@ exports[`open api parser hathora simple 1`] = `
                   },
                 },
               },
-              "headers": {
-                "Authorization": {
-                  "docs": undefined,
-                  "name": "authorization",
-                  "type": "string",
-                },
-              },
+              "headers": undefined,
               "name": "CreatePrivateLobbyRequest",
               "query-parameters": {
                 "roomId": {
@@ -1640,13 +1601,7 @@ exports[`open api parser hathora simple 1`] = `
                   },
                 },
               },
-              "headers": {
-                "Authorization": {
-                  "docs": undefined,
-                  "name": "authorization",
-                  "type": "string",
-                },
-              },
+              "headers": undefined,
               "name": "CreatePublicLobbyRequest",
               "query-parameters": {
                 "roomId": {
