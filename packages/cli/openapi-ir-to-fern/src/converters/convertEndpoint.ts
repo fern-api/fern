@@ -162,14 +162,10 @@ export function convertEndpoint({
                 };
             },
             text: (textResponse) => {
-                if (endpoint.responseIsStreaming) {
-                    convertedEndpoint["response-stream"] = {
-                        docs: textResponse.description ?? undefined,
-                        type: "text",
-                    };
-                } else {
-                    // fern doesn't support non-streaming text
-                }
+                convertedEndpoint["response-stream"] = {
+                    docs: textResponse.description ?? undefined,
+                    type: "text",
+                };
             },
             _unknown: () => {
                 throw new Error("Unrecognized Response type: " + endpoint.response?.type);

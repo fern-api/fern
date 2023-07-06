@@ -1284,7 +1284,6 @@
     "/builds/v1/{appId}/run/{buildId}": {
       "post": {
         "operationId": "RunBuild",
-        "x-fern-streaming": true,
         "responses": {
           "200": {
             "description": "Ok",
@@ -2546,7 +2545,6 @@
     "/logs/v1/{appId}/all": {
       "get": {
         "operationId": "GetLogsForApp",
-        "x-fern-streaming": true,
         "responses": {
           "200": {
             "description": "Ok",
@@ -2618,7 +2616,6 @@
     "/logs/v1/{appId}/process/{processId}": {
       "get": {
         "operationId": "GetLogsForProcess",
-        "x-fern-streaming": true,
         "responses": {
           "200": {
             "description": "Ok",
@@ -2690,7 +2687,6 @@
     "/logs/v1/{appId}/deployment/{deploymentId}": {
       "get": {
         "operationId": "GetLogsForDeployment",
-        "x-fern-streaming": true,
         "responses": {
           "200": {
             "description": "Ok",
