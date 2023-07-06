@@ -152,7 +152,7 @@ The path to the definition can either be a local file, or a HTTP resource. If yo
 For example, you can use the following command to start a new Fern workspace based on an OpenAPI Pet Store definition:
 
 ```
-fern init --openapi fern init --openapi https://petstore.swagger.io/v2/swagger.json
+fern init --openapi https://petstore.swagger.io/v2/swagger.json
 ```
 
 Which will allow you to directly generate clients in the next step.
