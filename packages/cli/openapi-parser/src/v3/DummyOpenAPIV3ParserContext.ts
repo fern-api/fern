@@ -5,7 +5,7 @@ import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext
 
 export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
-        super({ document, taskContext });
+        super({ document, taskContext, authHeaders: new Set() });
     }
 
     public markSchemaAsReferencedByNonRequest(_schemaId: SchemaId): void {

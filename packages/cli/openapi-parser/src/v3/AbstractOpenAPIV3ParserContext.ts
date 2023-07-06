@@ -15,11 +15,21 @@ export abstract class AbstractOpenAPIV3ParserContext {
     public document: OpenAPIV3.Document;
     public taskContext: TaskContext;
     public refOccurrences: Record<string, number>;
+    public authHeaders: Set<string>;
 
-    constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
+    constructor({
+        document,
+        taskContext,
+        authHeaders,
+    }: {
+        document: OpenAPIV3.Document;
+        taskContext: TaskContext;
+        authHeaders: Set<string>;
+    }) {
         this.document = document;
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
+        this.authHeaders = authHeaders;
         this.refOccurrences = getReferenceOccurrences(document);
     }
 

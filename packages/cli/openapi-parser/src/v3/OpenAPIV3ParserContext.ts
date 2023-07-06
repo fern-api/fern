@@ -13,8 +13,16 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
 
     private errorBodies: Record<number, ErrorBodyCollector> = {};
 
-    constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
-        super({ document, taskContext });
+    constructor({
+        document,
+        taskContext,
+        authHeaders,
+    }: {
+        document: OpenAPIV3.Document;
+        taskContext: TaskContext;
+        authHeaders: Set<string>;
+    }) {
+        super({ document, taskContext, authHeaders });
     }
 
     public markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void {

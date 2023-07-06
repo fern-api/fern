@@ -80,7 +80,7 @@ export function convertParameters({
                 variableReference: getVariableReference(resolvedParameter),
             });
         } else if (resolvedParameter.in === "header") {
-            if (!HEADERS_TO_SKIP.has(resolvedParameter.name)) {
+            if (!HEADERS_TO_SKIP.has(resolvedParameter.name) && !context.authHeaders.has(resolvedParameter.name)) {
                 convertedParameters.headers.push(convertedParameter);
             } else {
                 context.logger.debug(
@@ -100,7 +100,6 @@ export function convertParameters({
 
 const HEADERS_TO_SKIP = new Set([
     "User-Agent",
-    "Authorization",
     "Content-Length",
     "Content-Type",
     "X-Forwarded-For",
