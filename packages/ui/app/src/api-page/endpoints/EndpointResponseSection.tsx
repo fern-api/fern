@@ -18,11 +18,16 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
         <div className="flex flex-col">
             <Description description={httpResponse.description ?? undefined} />
             <div className="text-text-default mb-5">
-                {"This endpoint returns "}
+                {"This endpoint "}
                 {visitDiscriminatedUnion(httpResponse.type, "type")._visit<JSX.Element | string>({
-                    object: () => "an object",
-                    reference: (type) => <TypeShorthand type={type.value} plural={false} withArticle />,
-                    fileDownload: () => "a file",
+                    object: () => "returns an object",
+                    reference: (type) => (
+                        <>
+                            returns <TypeShorthand type={type.value} plural={false} withArticle />
+                        </>
+                    ),
+                    fileDownload: () => "returns a file",
+                    streamingText: () => "sends text responses over a long-lived HTTP connection",
                     _other: () => "unknown",
                 })}
                 .
@@ -39,6 +44,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
                     />
                 ),
                 fileDownload: () => null,
+                streamingText: () => null,
                 _other: () => null,
             })}
         </div>
