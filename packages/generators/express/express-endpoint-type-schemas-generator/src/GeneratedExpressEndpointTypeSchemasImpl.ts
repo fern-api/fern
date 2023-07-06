@@ -144,6 +144,9 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
         if (this.endpoint.response.type === "fileDownload") {
             throw new Error("Cannot serialize file");
         }
+        if (this.endpoint.response.type === "streaming") {
+            throw new Error("Streaming is not supported");
+        }
 
         if (!this.includeSerdeLayer) {
             return referenceToParsedResponse;

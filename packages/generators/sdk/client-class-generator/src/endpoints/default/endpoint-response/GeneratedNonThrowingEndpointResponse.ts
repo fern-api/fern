@@ -1,4 +1,4 @@
-import { HttpEndpoint, SdkResponse } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpResponse } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
@@ -11,7 +11,7 @@ export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
         endpoint: HttpEndpoint;
-        response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
+        response: HttpResponse.Json | HttpResponse.FileDownload | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
@@ -23,7 +23,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
-    private response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
+    private response: HttpResponse.Json | HttpResponse.FileDownload | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
     private includeSerdeLayer: boolean;

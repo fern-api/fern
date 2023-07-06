@@ -23,29 +23,6 @@ service:
       path: /stream-unknown
       method: POST
       response-stream: unknown
-    maybeStream:
-      path: /maybe-stream
-      method: POST
-      request:
-        name: MaybeStreamRequest
-        body:
-          properties:
-            foo: string
-            stream: optional<boolean>
-      response: integer
-      response-stream: boolean
-      stream-condition: $request.stream
-    maybeStreamWithQueryParam:
-      path: /maybe-stream
-      method: POST
-      docs: I am some docs
-      request:
-        name: MaybeStreamWithQueryParamRequest
-        query-parameters:
-          stream: optional<boolean>
-      response: integer
-      response-stream: boolean
-      stream-condition: $query.stream
 
 types:
   StreamPart:

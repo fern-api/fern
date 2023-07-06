@@ -1,4 +1,4 @@
-import { HttpEndpoint, ResponseError, SdkResponse } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpResponse, ResponseError } from "@fern-fern/ir-model/http";
 import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
@@ -11,7 +11,7 @@ export declare namespace GeneratedThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
         endpoint: HttpEndpoint;
-        response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
+        response: HttpResponse.Json | HttpResponse.FileDownload | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
     }
@@ -22,7 +22,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
-    private response: SdkResponse.Json | SdkResponse.FileDownload | undefined;
+    private response: HttpResponse.Json | HttpResponse.FileDownload | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
 

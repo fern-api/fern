@@ -898,8 +898,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     }
 
     private getResponseBodyType(response: HttpResponse, context: ExpressContext): ts.TypeNode {
-        return HttpResponse._visit(response, {
+        return HttpResponse._visit<ts.TypeNode>(response, {
             json: (jsonResponse) => context.type.getReferenceToType(jsonResponse.responseBodyType).typeNode,
+            streaming: () => {
+                throw new Error("Streaming is not supported");
+            },
             fileDownload: () => {
                 throw new Error("File download is not supported");
             },

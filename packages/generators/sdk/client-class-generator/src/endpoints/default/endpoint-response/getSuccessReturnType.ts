@@ -1,10 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { SdkResponse } from "@fern-fern/ir-model/http";
+import { HttpResponse } from "@fern-fern/ir-model/http";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export function getSuccessReturnType(
-    response: SdkResponse.Json | SdkResponse.FileDownload | undefined,
+    response: HttpResponse.Json | HttpResponse.FileDownload | undefined,
     context: SdkContext
 ): ts.TypeNode {
     if (response == null) {

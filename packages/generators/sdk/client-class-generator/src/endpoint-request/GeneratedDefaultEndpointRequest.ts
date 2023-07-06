@@ -64,13 +64,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         });
     }
 
-    public getEndpointParameters(
-        context: SdkContext,
-        {
-            requestParameterIntersection,
-            excludeInitializers,
-        }: { requestParameterIntersection: ts.TypeNode | undefined; excludeInitializers: boolean }
-    ): OptionalKind<ParameterDeclarationStructure>[] {
+    public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
         const parameters: OptionalKind<ParameterDeclarationStructure>[] = [];
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
@@ -79,12 +73,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             });
         }
         if (this.requestParameter != null) {
-            parameters.push(
-                this.requestParameter.getParameterDeclaration(context, {
-                    typeIntersection: requestParameterIntersection,
-                    excludeInitializers,
-                })
-            );
+            parameters.push(this.requestParameter.getParameterDeclaration(context));
         }
         return parameters;
     }
@@ -95,10 +84,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         if (this.requestParameter != null) {
             statements.push(
                 ...this.requestParameter.getInitialStatements(context, {
-                    variablesInScope: this.getEndpointParameters(context, {
-                        requestParameterIntersection: undefined,
-                        excludeInitializers: false,
-                    }).map((param) => param.name),
+                    variablesInScope: this.getEndpointParameters(context).map((param) => param.name),
                 })
             );
         }

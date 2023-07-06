@@ -29,7 +29,7 @@
     "@fern-api/fs-utils": "0.0.248-7-gb4189be0",
     "@fern-api/logger": "0.0.248-7-gb4189be0",
     "@fern-api/logging-execa": "0.0.248-7-gb4189be0",
-    "@fern-fern/ir-model": "0.0.1901",
+    "@fern-fern/ir-model": "0.0.2473",
     "@fern-typescript/fetcher": "workspace:*",
     "@fern-typescript/streaming-fetcher": "workspace:*",
     "@fern-typescript/zurg": "workspace:*",

@@ -198,21 +198,6 @@ export declare class File_ {
     stream(param: string, request: FernApi.StreamRequest, cb: (data: FernApi.StreamPart) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">): Promise<stream.Readable>;
     streamBooleans(param: string, cb: (data: boolean) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">): Promise<stream.Readable>;
     streamUnknowns(param: string, cb: (data: unknown) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">): Promise<stream.Readable>;
-    maybeStream(param: string, request: FernApi.MaybeStreamRequest & {
-        stream?: false;
-    }): Promise<number>;
-    maybeStream(param: string, request: FernApi.MaybeStreamRequest & {
-        stream: true;
-    }, cb: (data: boolean) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">): Promise<stream.Readable>;
-    /**
-     * I am some docs
-     */
-    maybeStreamWithQueryParam(param: string, request: FernApi.MaybeStreamWithQueryParamRequest & {
-        stream?: false;
-    }): Promise<number>;
-    maybeStreamWithQueryParam(param: string, request: FernApi.MaybeStreamWithQueryParamRequest & {
-        stream: true;
-    }, cb: (data: boolean) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">): Promise<stream.Readable>;
 }
 ",
                         "name": "Client.d.ts",
@@ -265,7 +250,6 @@ const url_search_params_1 = __importDefault(require(\\"@ungap/url-search-params\
 const serializers = __importStar(require(\\"../../../../serialization\\"));
 const environments = __importStar(require(\\"../../../../environments\\"));
 const url_join_1 = __importDefault(require(\\"url-join\\"));
-const errors = __importStar(require(\\"../../../../errors\\"));
 class File_ {
     constructor(_options) {
         this._options = _options;
@@ -371,169 +355,6 @@ class File_ {
             return _response.data;
         });
     }
-    maybeStream(param, request, cb, opts) {
-        var _a, _b;
-        return __awaiter(this, void 0, void 0, function* () {
-            if (request.stream) {
-                const _queue = new core.CallbackQueue();
-                const _response = yield ((_a = this._options.streamingFetcher) !== null && _a !== void 0 ? _a : core.streamingFetcher)({
-                    url: (0, url_join_1.default)(environments.FernApiEnvironment.Production, \`/\${param}/maybe-stream\`),
-                    method: \\"POST\\",
-                    headers: {
-                        \\"X-Fern-Language\\": \\"JavaScript\\",
-                        \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
-                        \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
-                    },
-                    body: yield serializers.MaybeStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-                    timeoutMs: 2000,
-                    onData: _queue.wrap((data) => __awaiter(this, void 0, void 0, function* () {
-                        var _c;
-                        const parsed = yield serializers.file.maybeStream.StreamData.parse(data, {
-                            unrecognizedObjectKeys: \\"passthrough\\",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: [\\"response\\"],
-                        });
-                        if (parsed.ok) {
-                            cb === null || cb === void 0 ? void 0 : cb(parsed.value);
-                        }
-                        else {
-                            (_c = opts === null || opts === void 0 ? void 0 : opts.onError) === null || _c === void 0 ? void 0 : _c.call(opts, parsed.errors);
-                        }
-                    })),
-                    onError: (opts === null || opts === void 0 ? void 0 : opts.onError) != null ? _queue.wrap(opts.onError) : undefined,
-                    onFinish: (opts === null || opts === void 0 ? void 0 : opts.onFinish) != null ? _queue.wrap(opts.onFinish) : undefined,
-                    abortController: opts === null || opts === void 0 ? void 0 : opts.abortController,
-                });
-                return _response.data;
-            }
-            else {
-                const _response = yield ((_b = this._options.fetcher) !== null && _b !== void 0 ? _b : core.fetcher)({
-                    url: (0, url_join_1.default)(environments.FernApiEnvironment.Production, \`/\${param}/maybe-stream\`),
-                    method: \\"POST\\",
-                    headers: {
-                        \\"X-Fern-Language\\": \\"JavaScript\\",
-                        \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
-                        \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
-                    },
-                    contentType: \\"application/json\\",
-                    body: yield serializers.MaybeStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-                    timeoutMs: 2000,
-                });
-                if (_response.ok) {
-                    return yield serializers.file.maybeStream.Response.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: \\"passthrough\\",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: [\\"response\\"],
-                    });
-                }
-                if (_response.error.reason === \\"status-code\\") {
-                    throw new errors.FernApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case \\"non-json\\":
-                        throw new errors.FernApiError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case \\"timeout\\":
-                        throw new errors.FernApiTimeoutError();
-                    case \\"unknown\\":
-                        throw new errors.FernApiError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            }
-        });
-    }
-    maybeStreamWithQueryParam(param, request = {}, cb, opts) {
-        var _a, _b;
-        return __awaiter(this, void 0, void 0, function* () {
-            const { stream } = request;
-            const _queryParams = new url_search_params_1.default();
-            if (stream != null) {
-                _queryParams.append(\\"stream\\", stream.toString());
-            }
-            if (stream) {
-                const _queue = new core.CallbackQueue();
-                const _response = yield ((_a = this._options.streamingFetcher) !== null && _a !== void 0 ? _a : core.streamingFetcher)({
-                    url: (0, url_join_1.default)(environments.FernApiEnvironment.Production, \`/\${param}/maybe-stream\`),
-                    method: \\"POST\\",
-                    headers: {
-                        \\"X-Fern-Language\\": \\"JavaScript\\",
-                        \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
-                        \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
-                    },
-                    queryParameters: _queryParams,
-                    timeoutMs: 2000,
-                    onData: _queue.wrap((data) => __awaiter(this, void 0, void 0, function* () {
-                        var _c;
-                        const parsed = yield serializers.file.maybeStreamWithQueryParam.StreamData.parse(data, {
-                            unrecognizedObjectKeys: \\"passthrough\\",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: [\\"response\\"],
-                        });
-                        if (parsed.ok) {
-                            cb === null || cb === void 0 ? void 0 : cb(parsed.value);
-                        }
-                        else {
-                            (_c = opts === null || opts === void 0 ? void 0 : opts.onError) === null || _c === void 0 ? void 0 : _c.call(opts, parsed.errors);
-                        }
-                    })),
-                    onError: (opts === null || opts === void 0 ? void 0 : opts.onError) != null ? _queue.wrap(opts.onError) : undefined,
-                    onFinish: (opts === null || opts === void 0 ? void 0 : opts.onFinish) != null ? _queue.wrap(opts.onFinish) : undefined,
-                    abortController: opts === null || opts === void 0 ? void 0 : opts.abortController,
-                });
-                return _response.data;
-            }
-            else {
-                const _response = yield ((_b = this._options.fetcher) !== null && _b !== void 0 ? _b : core.fetcher)({
-                    url: (0, url_join_1.default)(environments.FernApiEnvironment.Production, \`/\${param}/maybe-stream\`),
-                    method: \\"POST\\",
-                    headers: {
-                        \\"X-Fern-Language\\": \\"JavaScript\\",
-                        \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
-                        \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
-                    },
-                    contentType: \\"application/json\\",
-                    queryParameters: _queryParams,
-                    timeoutMs: 2000,
-                });
-                if (_response.ok) {
-                    return yield serializers.file.maybeStreamWithQueryParam.Response.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: \\"passthrough\\",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: [\\"response\\"],
-                    });
-                }
-                if (_response.error.reason === \\"status-code\\") {
-                    throw new errors.FernApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case \\"non-json\\":
-                        throw new errors.FernApiError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                        });
-                    case \\"timeout\\":
-                        throw new errors.FernApiTimeoutError();
-                    case \\"unknown\\":
-                        throw new errors.FernApiError({
-                            message: _response.error.errorMessage,
-                        });
-                }
-            }
-        });
-    }
 }
 exports.File_ = File_;
 ",
@@ -574,49 +395,6 @@ __exportStar(require(\\"./requests\\"), exports);
                             "contents": "/**
  * This file was auto-generated by Fern from our API Definition.
  */
-export interface MaybeStreamRequest {
-    foo: string;
-    stream?: boolean;
-}
-",
-                            "name": "MaybeStreamRequest.d.ts",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "\\"use strict\\";
-/**
- * This file was auto-generated by Fern from our API Definition.
- */
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-",
-                            "name": "MaybeStreamRequest.js",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-export interface MaybeStreamWithQueryParamRequest {
-    stream?: boolean;
-}
-",
-                            "name": "MaybeStreamWithQueryParamRequest.d.ts",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "\\"use strict\\";
-/**
- * This file was auto-generated by Fern from our API Definition.
- */
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-",
-                            "name": "MaybeStreamWithQueryParamRequest.js",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
 export interface StreamRequest {
     query?: string;
     body: boolean;
@@ -637,8 +415,6 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
                           },
                           Object {
                             "contents": "export { StreamRequest } from \\"./StreamRequest\\";
-export { MaybeStreamRequest } from \\"./MaybeStreamRequest\\";
-export { MaybeStreamWithQueryParamRequest } from \\"./MaybeStreamWithQueryParamRequest\\";
 ",
                             "name": "index.d.ts",
                             "type": "file",
@@ -3929,9 +3705,6 @@ __exportStar(require(\\"./resources\\"), exports);
                       Object {
                         "contents": "export * as stream from \\"./stream\\";
 export * as streamBooleans from \\"./streamBooleans\\";
-export * as maybeStream from \\"./maybeStream\\";
-export * as maybeStreamWithQueryParam from \\"./maybeStreamWithQueryParam\\";
-export * from \\"./requests\\";
 ",
                         "name": "index.d.ts",
                         "type": "file",
@@ -3961,208 +3734,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== \\"default\\" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.maybeStreamWithQueryParam = exports.maybeStream = exports.streamBooleans = exports.stream = void 0;
+exports.streamBooleans = exports.stream = void 0;
 exports.stream = __importStar(require(\\"./stream\\"));
 exports.streamBooleans = __importStar(require(\\"./streamBooleans\\"));
-exports.maybeStream = __importStar(require(\\"./maybeStream\\"));
-exports.maybeStreamWithQueryParam = __importStar(require(\\"./maybeStreamWithQueryParam\\"));
-__exportStar(require(\\"./requests\\"), exports);
 ",
                         "name": "index.js",
                         "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-import * as serializers from \\"../../..\\";
-import * as core from \\"../../../../core\\";
-export declare const Response: core.serialization.Schema<serializers.file.maybeStream.Response.Raw, number>;
-export declare namespace Response {
-    type Raw = number;
-}
-export declare const StreamData: core.serialization.Schema<serializers.file.maybeStream.StreamData.Raw, boolean>;
-export declare namespace StreamData {
-    type Raw = boolean;
-}
-",
-                        "name": "maybeStream.d.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "\\"use strict\\";
-/**
- * This file was auto-generated by Fern from our API Definition.
- */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || (\\"get\\" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, \\"default\\", { enumerable: true, value: v });
-}) : function(o, v) {
-    o[\\"default\\"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== \\"default\\" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.StreamData = exports.Response = void 0;
-const core = __importStar(require(\\"../../../../core\\"));
-exports.Response = core.serialization.number();
-exports.StreamData = core.serialization.boolean();
-",
-                        "name": "maybeStream.js",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-import * as serializers from \\"../../..\\";
-import * as core from \\"../../../../core\\";
-export declare const Response: core.serialization.Schema<serializers.file.maybeStreamWithQueryParam.Response.Raw, number>;
-export declare namespace Response {
-    type Raw = number;
-}
-export declare const StreamData: core.serialization.Schema<serializers.file.maybeStreamWithQueryParam.StreamData.Raw, boolean>;
-export declare namespace StreamData {
-    type Raw = boolean;
-}
-",
-                        "name": "maybeStreamWithQueryParam.d.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "\\"use strict\\";
-/**
- * This file was auto-generated by Fern from our API Definition.
- */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || (\\"get\\" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, \\"default\\", { enumerable: true, value: v });
-}) : function(o, v) {
-    o[\\"default\\"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== \\"default\\" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.StreamData = exports.Response = void 0;
-const core = __importStar(require(\\"../../../../core\\"));
-exports.Response = core.serialization.number();
-exports.StreamData = core.serialization.boolean();
-",
-                        "name": "maybeStreamWithQueryParam.js",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": Array [
-                          Object {
-                            "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-import * as serializers from \\"../../../..\\";
-import * as FernApi from \\"../../../../../api\\";
-import * as core from \\"../../../../../core\\";
-export declare const MaybeStreamRequest: core.serialization.Schema<serializers.MaybeStreamRequest.Raw, FernApi.MaybeStreamRequest>;
-export declare namespace MaybeStreamRequest {
-    interface Raw {
-        foo: string;
-        stream?: boolean | null;
-    }
-}
-",
-                            "name": "MaybeStreamRequest.d.ts",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "\\"use strict\\";
-/**
- * This file was auto-generated by Fern from our API Definition.
- */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || (\\"get\\" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, \\"default\\", { enumerable: true, value: v });
-}) : function(o, v) {
-    o[\\"default\\"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== \\"default\\" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.MaybeStreamRequest = void 0;
-const core = __importStar(require(\\"../../../../../core\\"));
-exports.MaybeStreamRequest = core.serialization.object({
-    foo: core.serialization.string(),
-    stream: core.serialization.boolean().optional(),
-});
-",
-                            "name": "MaybeStreamRequest.js",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "export { MaybeStreamRequest } from \\"./MaybeStreamRequest\\";
-",
-                            "name": "index.d.ts",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "\\"use strict\\";
-Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.MaybeStreamRequest = void 0;
-var MaybeStreamRequest_1 = require(\\"./MaybeStreamRequest\\");
-Object.defineProperty(exports, \\"MaybeStreamRequest\\", { enumerable: true, get: function () { return MaybeStreamRequest_1.MaybeStreamRequest; } });
-",
-                            "name": "index.js",
-                            "type": "file",
-                          },
-                        ],
-                        "name": "requests",
-                        "type": "directory",
                       },
                       Object {
                         "contents": "/**
@@ -4394,7 +3972,6 @@ __exportStar(require(\\"./StreamPart\\"), exports);
               Object {
                 "contents": "export * as file from \\"./file\\";
 export * from \\"./file/types\\";
-export * from \\"./file/client/requests\\";
 ",
                 "name": "index.d.ts",
                 "type": "file",
@@ -4431,7 +4008,6 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.file = void 0;
 exports.file = __importStar(require(\\"./file\\"));
 __exportStar(require(\\"./file/types\\"), exports);
-__exportStar(require(\\"./file/client/requests\\"), exports);
 ",
                 "name": "index.js",
                 "type": "file",
@@ -4532,7 +4108,6 @@ import { default as URLSearchParams } from \\"@ungap/url-search-params\\";
 import * as serializers from \\"../../../../serialization\\";
 import * as environments from \\"../../../../environments\\";
 import urlJoin from \\"url-join\\";
-import * as errors from \\"../../../../errors\\";
 
 export declare namespace File_ {
     interface Options {
@@ -4648,201 +4223,6 @@ export class File_ {
         });
         return _response.data;
     }
-
-    public maybeStream(
-        param: string,
-        request: FernApi.MaybeStreamRequest & {
-            stream?: false;
-        }
-    ): Promise<number>;
-    public maybeStream(
-        param: string,
-        request: FernApi.MaybeStreamRequest & {
-            stream: true;
-        },
-        cb: (data: boolean) => void,
-        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">
-    ): Promise<stream.Readable>;
-    public async maybeStream(
-        param: string,
-        request: FernApi.MaybeStreamRequest,
-        cb?: (data: boolean) => void,
-        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">
-    ): Promise<number | stream.Readable> {
-        if (request.stream) {
-            const _queue = new core.CallbackQueue();
-            const _response = await (this._options.streamingFetcher ?? core.streamingFetcher)({
-                url: urlJoin(environments.FernApiEnvironment.Production, \`/\${param}/maybe-stream\`),
-                method: \\"POST\\",
-                headers: {
-                    \\"X-Fern-Language\\": \\"JavaScript\\",
-                    \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
-                    \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
-                },
-                body: await serializers.MaybeStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-                timeoutMs: 2000,
-                onData: _queue.wrap(async (data) => {
-                    const parsed = await serializers.file.maybeStream.StreamData.parse(data, {
-                        unrecognizedObjectKeys: \\"passthrough\\",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: [\\"response\\"],
-                    });
-                    if (parsed.ok) {
-                        cb?.(parsed.value);
-                    } else {
-                        opts?.onError?.(parsed.errors);
-                    }
-                }),
-                onError: opts?.onError != null ? _queue.wrap(opts.onError) : undefined,
-                onFinish: opts?.onFinish != null ? _queue.wrap(opts.onFinish) : undefined,
-                abortController: opts?.abortController,
-            });
-            return _response.data;
-        } else {
-            const _response = await (this._options.fetcher ?? core.fetcher)({
-                url: urlJoin(environments.FernApiEnvironment.Production, \`/\${param}/maybe-stream\`),
-                method: \\"POST\\",
-                headers: {
-                    \\"X-Fern-Language\\": \\"JavaScript\\",
-                    \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
-                    \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
-                },
-                contentType: \\"application/json\\",
-                body: await serializers.MaybeStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-                timeoutMs: 2000,
-            });
-            if (_response.ok) {
-                return await serializers.file.maybeStream.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: \\"passthrough\\",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: [\\"response\\"],
-                });
-            }
-            if (_response.error.reason === \\"status-code\\") {
-                throw new errors.FernApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case \\"non-json\\":
-                    throw new errors.FernApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                    });
-                case \\"timeout\\":
-                    throw new errors.FernApiTimeoutError();
-                case \\"unknown\\":
-                    throw new errors.FernApiError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        }
-    }
-
-    /**
-     * I am some docs
-     */
-    public maybeStreamWithQueryParam(
-        param: string,
-        request: FernApi.MaybeStreamWithQueryParamRequest & {
-            stream?: false;
-        }
-    ): Promise<number>;
-    public maybeStreamWithQueryParam(
-        param: string,
-        request: FernApi.MaybeStreamWithQueryParamRequest & {
-            stream: true;
-        },
-        cb: (data: boolean) => void,
-        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">
-    ): Promise<stream.Readable>;
-    public async maybeStreamWithQueryParam(
-        param: string,
-        request: FernApi.MaybeStreamWithQueryParamRequest = {},
-        cb?: (data: boolean) => void,
-        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">
-    ): Promise<number | stream.Readable> {
-        const { stream } = request;
-        const _queryParams = new URLSearchParams();
-        if (stream != null) {
-            _queryParams.append(\\"stream\\", stream.toString());
-        }
-
-        if (stream) {
-            const _queue = new core.CallbackQueue();
-            const _response = await (this._options.streamingFetcher ?? core.streamingFetcher)({
-                url: urlJoin(environments.FernApiEnvironment.Production, \`/\${param}/maybe-stream\`),
-                method: \\"POST\\",
-                headers: {
-                    \\"X-Fern-Language\\": \\"JavaScript\\",
-                    \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
-                    \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
-                },
-                queryParameters: _queryParams,
-                timeoutMs: 2000,
-                onData: _queue.wrap(async (data) => {
-                    const parsed = await serializers.file.maybeStreamWithQueryParam.StreamData.parse(data, {
-                        unrecognizedObjectKeys: \\"passthrough\\",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: [\\"response\\"],
-                    });
-                    if (parsed.ok) {
-                        cb?.(parsed.value);
-                    } else {
-                        opts?.onError?.(parsed.errors);
-                    }
-                }),
-                onError: opts?.onError != null ? _queue.wrap(opts.onError) : undefined,
-                onFinish: opts?.onFinish != null ? _queue.wrap(opts.onFinish) : undefined,
-                abortController: opts?.abortController,
-            });
-            return _response.data;
-        } else {
-            const _response = await (this._options.fetcher ?? core.fetcher)({
-                url: urlJoin(environments.FernApiEnvironment.Production, \`/\${param}/maybe-stream\`),
-                method: \\"POST\\",
-                headers: {
-                    \\"X-Fern-Language\\": \\"JavaScript\\",
-                    \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
-                    \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
-                },
-                contentType: \\"application/json\\",
-                queryParameters: _queryParams,
-                timeoutMs: 2000,
-            });
-            if (_response.ok) {
-                return await serializers.file.maybeStreamWithQueryParam.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: \\"passthrough\\",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    breadcrumbsPrefix: [\\"response\\"],
-                });
-            }
-            if (_response.error.reason === \\"status-code\\") {
-                throw new errors.FernApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.body,
-                });
-            }
-            switch (_response.error.reason) {
-                case \\"non-json\\":
-                    throw new errors.FernApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                    });
-                case \\"timeout\\":
-                    throw new errors.FernApiTimeoutError();
-                case \\"unknown\\":
-                    throw new errors.FernApiError({
-                        message: _response.error.errorMessage,
-                    });
-            }
-        }
-    }
 }
 ",
                         "name": "Client.ts",
@@ -4861,31 +4241,6 @@ export class File_ {
  * This file was auto-generated by Fern from our API Definition.
  */
 
-export interface MaybeStreamRequest {
-    foo: string;
-    stream?: boolean;
-}
-",
-                            "name": "MaybeStreamRequest.ts",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-export interface MaybeStreamWithQueryParamRequest {
-    stream?: boolean;
-}
-",
-                            "name": "MaybeStreamWithQueryParamRequest.ts",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
 export interface StreamRequest {
     query?: string;
     body: boolean;
@@ -4896,8 +4251,6 @@ export interface StreamRequest {
                           },
                           Object {
                             "contents": "export { StreamRequest } from \\"./StreamRequest\\";
-export { MaybeStreamRequest } from \\"./MaybeStreamRequest\\";
-export { MaybeStreamWithQueryParamRequest } from \\"./MaybeStreamWithQueryParamRequest\\";
 ",
                             "name": "index.ts",
                             "type": "file",
@@ -7583,101 +6936,9 @@ export { FernApiError, FernApiTimeoutError } from \\"./errors\\";
                       Object {
                         "contents": "export * as stream from \\"./stream\\";
 export * as streamBooleans from \\"./streamBooleans\\";
-export * as maybeStream from \\"./maybeStream\\";
-export * as maybeStreamWithQueryParam from \\"./maybeStreamWithQueryParam\\";
-export * from \\"./requests\\";
 ",
                         "name": "index.ts",
                         "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<serializers.file.maybeStream.Response.Raw, number> =
-    core.serialization.number();
-
-export declare namespace Response {
-    type Raw = number;
-}
-
-export const StreamData: core.serialization.Schema<serializers.file.maybeStream.StreamData.Raw, boolean> =
-    core.serialization.boolean();
-
-export declare namespace StreamData {
-    type Raw = boolean;
-}
-",
-                        "name": "maybeStream.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../..\\";
-import * as core from \\"../../../../core\\";
-
-export const Response: core.serialization.Schema<serializers.file.maybeStreamWithQueryParam.Response.Raw, number> =
-    core.serialization.number();
-
-export declare namespace Response {
-    type Raw = number;
-}
-
-export const StreamData: core.serialization.Schema<serializers.file.maybeStreamWithQueryParam.StreamData.Raw, boolean> =
-    core.serialization.boolean();
-
-export declare namespace StreamData {
-    type Raw = boolean;
-}
-",
-                        "name": "maybeStreamWithQueryParam.ts",
-                        "type": "file",
-                      },
-                      Object {
-                        "contents": Array [
-                          Object {
-                            "contents": "/**
- * This file was auto-generated by Fern from our API Definition.
- */
-
-import * as serializers from \\"../../../..\\";
-import * as FernApi from \\"../../../../../api\\";
-import * as core from \\"../../../../../core\\";
-
-export const MaybeStreamRequest: core.serialization.Schema<
-    serializers.MaybeStreamRequest.Raw,
-    FernApi.MaybeStreamRequest
-> = core.serialization.object({
-    foo: core.serialization.string(),
-    stream: core.serialization.boolean().optional(),
-});
-
-export declare namespace MaybeStreamRequest {
-    interface Raw {
-        foo: string;
-        stream?: boolean | null;
-    }
-}
-",
-                            "name": "MaybeStreamRequest.ts",
-                            "type": "file",
-                          },
-                          Object {
-                            "contents": "export { MaybeStreamRequest } from \\"./MaybeStreamRequest\\";
-",
-                            "name": "index.ts",
-                            "type": "file",
-                          },
-                        ],
-                        "name": "requests",
-                        "type": "directory",
                       },
                       Object {
                         "contents": "/**
@@ -7768,7 +7029,6 @@ export declare namespace StreamPart {
               Object {
                 "contents": "export * as file from \\"./file\\";
 export * from \\"./file/types\\";
-export * from \\"./file/client/requests\\";
 ",
                 "name": "index.ts",
                 "type": "file",

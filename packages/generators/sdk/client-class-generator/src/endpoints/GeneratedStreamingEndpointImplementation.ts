@@ -60,34 +60,19 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return [];
     }
 
-    public getSignature(
-        context: SdkContext,
-        {
-            requestParameterIntersection,
-            excludeInitializers = false,
-        }: { requestParameterIntersection?: ts.TypeNode; excludeInitializers?: boolean } = {}
-    ): EndpointSignature {
+    public getSignature(context: SdkContext): EndpointSignature {
         return {
-            parameters: this.getEndpointParameters(context, {
-                requestParameterIntersection,
-                excludeInitializers,
-            }),
+            parameters: this.getEndpointParameters(context),
             returnTypeWithoutPromise: context.externalDependencies.stream.Readable._getReferenceToType(),
         };
     }
 
-    private getEndpointParameters(
-        context: SdkContext,
-        {
-            requestParameterIntersection,
-            excludeInitializers,
-        }: { requestParameterIntersection: ts.TypeNode | undefined; excludeInitializers: boolean }
-    ): OptionalKind<ParameterDeclarationStructure>[] {
+    private getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
+        if (this.response.dataEventType.type === "text") {
+            throw new Error("Non-json responses are not supportd");
+        }
         return [
-            ...this.request.getEndpointParameters(context, {
-                requestParameterIntersection,
-                excludeInitializers,
-            }),
+            ...this.request.getEndpointParameters(context),
             {
                 name: GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME,
                 type: getTextOfTsNode(
@@ -100,7 +85,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                                 undefined,
                                 GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME,
                                 undefined,
-                                context.type.getReferenceToType(this.response.dataEventType).typeNode
+                                context.type.getReferenceToType(this.response.dataEventType.json).typeNode
                             ),
                         ],
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
@@ -147,10 +132,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
-        return [
-            ...this.getRequestBuilderStatements(context),
-            ...this.invokeFetcher(context, { isCallbackOptional: false }),
-        ];
+        return [...this.getRequestBuilderStatements(context), ...this.invokeFetcher(context)];
     }
 
     public getRequestBuilderStatements(context: SdkContext): ts.Statement[] {
@@ -172,7 +154,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         }
     }
 
-    public invokeFetcher(context: SdkContext, { isCallbackOptional }: { isCallbackOptional: boolean }): ts.Statement[] {
+    public invokeFetcher(context: SdkContext): ts.Statement[] {
         const PARSED_DATA_VARIABLE_NAME = "parsed";
 
         const fetcherArgs: Fetcher.Args = {
@@ -237,24 +219,13 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                                                         parsedDataVariableName: PARSED_DATA_VARIABLE_NAME,
                                                         visitValid: (validData) => [
                                                             ts.factory.createExpressionStatement(
-                                                                isCallbackOptional
-                                                                    ? ts.factory.createCallChain(
-                                                                          ts.factory.createIdentifier(
-                                                                              GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME
-                                                                          ),
-                                                                          ts.factory.createToken(
-                                                                              ts.SyntaxKind.QuestionDotToken
-                                                                          ),
-                                                                          undefined,
-                                                                          [validData]
-                                                                      )
-                                                                    : ts.factory.createCallExpression(
-                                                                          ts.factory.createIdentifier(
-                                                                              GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME
-                                                                          ),
-                                                                          undefined,
-                                                                          [validData]
-                                                                      )
+                                                                ts.factory.createCallExpression(
+                                                                    ts.factory.createIdentifier(
+                                                                        GeneratedStreamingEndpointImplementation.CB_CALLBACK_NAME
+                                                                    ),
+                                                                    undefined,
+                                                                    [validData]
+                                                                )
                                                             ),
                                                         ],
                                                         visitInvalid: (errors) => [
