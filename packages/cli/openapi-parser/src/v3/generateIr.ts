@@ -1,5 +1,5 @@
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir/_types";
+import { OpenAPIFile, SecurityScheme } from "@fern-fern/openapi-ir-model/ir/_types";
 import { OpenAPIV3 } from "openapi-types";
 import { convertPathItem } from "./converters/convertPathItem";
 import { convertSchema } from "./converters/convertSchemas";
@@ -9,7 +9,26 @@ import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIFile {
-    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext });
+    const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
+        Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
+            const convertedSecurityScheme = convertSecurityScheme(securityScheme);
+            if (convertedSecurityScheme == null) {
+                return [];
+            }
+            return [key, convertSecurityScheme(securityScheme)];
+        })
+    );
+    const authHeaders = new Set(
+        ...Object.entries(securitySchemes).map(([_, securityScheme]) => {
+            if (securityScheme.type === "basic" || securityScheme.type === "bearer") {
+                return "Authorization";
+            } else if (securityScheme.type === "header") {
+                return securityScheme.headerName;
+            }
+            return null;
+        })
+    );
+    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders });
     const variables = getVariableDefinitions(openApi);
     const endpoints = Object.entries(openApi.paths).flatMap(([path, pathItem]) => {
         if (pathItem == null) {
@@ -35,15 +54,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 return [key, convertSchema(schema, false, context, [key])];
             })
         ),
-        securitySchemes: Object.fromEntries(
-            Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-                const convertedSecurityScheme = convertSecurityScheme(securityScheme);
-                if (convertedSecurityScheme == null) {
-                    return [];
-                }
-                return [key, convertSecurityScheme(securityScheme)];
-            })
-        ),
+        securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         errors: context.getErrors(),
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
